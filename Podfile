@@ -3,6 +3,8 @@
 
 target 'BlockEQ' do
   # Pods for BlockEQ
+  use_frameworks!
+
   pod 'stellar-ios-mac-sdk'
 
   target 'BlockEQTests' do
