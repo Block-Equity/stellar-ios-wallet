@@ -8,9 +8,10 @@ The open source BlockEQ Stellar wallet for iOS supports:
  * Custom payment keyboard.
  * Quick type support from wordlist used to generate mnemonics.
  * Public account address display in QR code format with the ability to copy to clipboard.
- * Testnet support with 
+ * Support for both testNet and production.
  
 ## 24 word seed generation
+
 
 ![img_0231 2](https://user-images.githubusercontent.com/1127325/37441297-1c2b6542-27d7-11e8-81d9-b0a80662747c.PNG)
 
@@ -18,13 +19,13 @@ The open source BlockEQ Stellar wallet for iOS supports:
 ## 4 step mnemonic confirmation with custom quicktype support from word list
 
   
-![img_0233](https://user-images.githubusercontent.com/1127325/37440755-86c2ce7a-27d4-11e8-92cd-d24403eaf777.PNG | width=200)
+![img_0233](https://user-images.githubusercontent.com/1127325/37441403-9bc7aa22-27d7-11e8-9edf-975645350406.PNG)
 
   
 ## Account generation using recovery phrase
 
 
-![img_0234](https://user-images.githubusercontent.com/1127325/37440825-e4c9c6ae-27d4-11e8-85ed-469b5be9780d.PNG | width=200)
+![img_0234](https://user-images.githubusercontent.com/1127325/37441421-b4b599e0-27d7-11e8-86ad-405d759f01f6.PNG)
 
 
 ## Balance and payment history display
@@ -49,3 +50,9 @@ The open source BlockEQ Stellar wallet for iOS supports:
 
 
 ![img_0242](https://user-images.githubusercontent.com/1127325/37441303-22a22f46-27d7-11e8-832e-f34e3cc83884.PNG)
+
+
+## Pinview (Integration pending)
+
+![img_0235](https://user-images.githubusercontent.com/1127325/37441476-fbadbe86-27d7-11e8-9eb7-880e7447c976.PNG)
+
