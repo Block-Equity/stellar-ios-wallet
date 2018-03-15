@@ -12,6 +12,10 @@ The open source BlockEQ Stellar wallet for iOS supports:
  
 Our iOS app is built using the amazing [Soneso open source stellar SDK](https://github.com/Soneso/stellar-ios-mac-sdk). We're proud to have a contributed a small but meaningful amount of code to the SDK.
 
+# Release status
+
+We are currently in alpha and do not recommend you use this application as is, for real lumens just yet. We plan on releasing our application for beta testing very soon.  
+
 
 ## 24 word seed generation
 
