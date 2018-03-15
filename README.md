@@ -12,8 +12,7 @@ The open source BlockEQ Stellar wallet for iOS supports:
  
 ## 24 word seed generation
 
- 
-![img_0231](https://user-images.githubusercontent.com/1127325/37440725-5e5b1d3e-27d4-11e8-91a2-cf6bdf282460.PNG | width=200)
+![img_0231](https://user-images.githubusercontent.com/1127325/37441204-8e5ce15a-27d6-11e8-99b7-0f1e43f75ceb.PNG)
 
  
 ## 4 step mnemonic confirmation with custom quicktype support from word list
