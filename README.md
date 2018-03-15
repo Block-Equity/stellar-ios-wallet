@@ -12,7 +12,7 @@ The open source BlockEQ Stellar wallet for iOS supports:
  
 ## 24 word seed generation
 
-![img_0231](https://user-images.githubusercontent.com/1127325/37441204-8e5ce15a-27d6-11e8-99b7-0f1e43f75ceb.PNG)
+![img_0231 2](https://user-images.githubusercontent.com/1127325/37441297-1c2b6542-27d7-11e8-81d9-b0a80662747c.PNG)
 
  
 ## 4 step mnemonic confirmation with custom quicktype support from word list
@@ -30,22 +30,22 @@ The open source BlockEQ Stellar wallet for iOS supports:
 ## Balance and payment history display
 
 
-![img_0240](https://user-images.githubusercontent.com/1127325/37440873-150d3c7e-27d5-11e8-88b4-5ed1fb25a7e8.PNG | width=200)
+![img_0240](https://user-images.githubusercontent.com/1127325/37441304-2485e7bc-27d7-11e8-88f7-009faff31c03.PNG)
 
 
 ## QR Code scanning for recieving addresses
 
 
-![img_bcf59e692d7e-1](https://user-images.githubusercontent.com/1127325/37440897-31d3f884-27d5-11e8-805f-cfb57ca9c942.jpeg | width=200)
+![img_bcf59e692d7e-1](https://user-images.githubusercontent.com/1127325/37441306-274f6450-27d7-11e8-99a4-dc2fdb3b3a0c.jpeg)
 
 
 ## Custom payment keyboard
 
 
-![img_0243](https://user-images.githubusercontent.com/1127325/37440922-4f363c52-27d5-11e8-9174-0e63064f3176.PNG | width=200)
+![img_0243](https://user-images.githubusercontent.com/1127325/37441301-20a4cc6c-27d7-11e8-8974-b0949324438e.PNG)
 
 
 ## Public account address display
 
 
-![img_0242](https://user-images.githubusercontent.com/1127325/37441008-a7baa318-27d5-11e8-9d96-3969e12777c1.PNG | width=200)
+![img_0242](https://user-images.githubusercontent.com/1127325/37441303-22a22f46-27d7-11e8-832e-f34e3cc83884.PNG)
