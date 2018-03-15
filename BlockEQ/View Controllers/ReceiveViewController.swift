@@ -21,8 +21,22 @@ class ReceiveViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    init() {
+    var address: String = ""
+    
+    @IBAction func copyAddress() {
+        if let addressText = addressLabel.text, !addressText.isEmpty {
+            UIPasteboard.general.string = addressLabel.text
+            
+            let alert = UIAlertController(title: "Your wallet address has been successfully copied.", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+    }
+    
+    init(address: String) {
         super.init(nibName: String(describing: ReceiveViewController.self), bundle: nil)
+        self.address = address
     }
 
     override func viewDidLoad() {
@@ -34,7 +48,7 @@ class ReceiveViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        displayGeneratedAddress(value: "GDRXE2BQUC3AZNPVFSCEZ76NJ3WWL25FYFK6RGZGIEKWE4SOOHSUJUJ6")
+        displayGeneratedAddress(value: address)
     }
 
     func setupView() {
@@ -54,7 +68,7 @@ class ReceiveViewController: UIViewController {
         addressHolderView.backgroundColor = Colors.lightBackground
         view.backgroundColor = Colors.lightBackground
         
-        addressLabel.text = "GDRXE2BQUC3AZNPVFSCEZ76NJ3WWL25FYFK6RGZGIEKWE4SOOHSUJUJ6"
+        addressLabel.text = address
     }
     
     @objc func dismissView() {

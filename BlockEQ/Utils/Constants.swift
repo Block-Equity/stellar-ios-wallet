@@ -32,3 +32,9 @@ public struct Alphas {
     static let semiTransparent = CGFloat(0.5)
     static let transparent = CGFloat(0.2)
 }
+
+public struct HorizonServer {
+    static let production = "https://horizon.stellar.org"
+    static let test = "https://horizon-testnet.stellar.org"
+    static let url = HorizonServer.production
+}

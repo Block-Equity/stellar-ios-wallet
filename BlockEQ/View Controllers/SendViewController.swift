@@ -18,9 +18,14 @@ class SendViewController: UIViewController {
     @IBOutlet var sendAddressTextField: UITextField!
     
     var safeAreaPadding: CGFloat = 20.0
+    var stellarAccount: StellarAccount = StellarAccount()
     
     @IBAction func addAmount() {
-        let sendAmountViewController = SendAmountViewController()
+        guard let receiver = sendAddressTextField.text, !receiver.isEmpty else {
+            return
+        }
+        
+        let sendAmountViewController = SendAmountViewController(stellarAccount: stellarAccount, reciever: receiver)
         
         navigationController?.pushViewController(sendAmountViewController, animated: true)
     }
@@ -37,8 +42,10 @@ class SendViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    init() {
+    init(stellarAccount: StellarAccount) {
         super.init(nibName: String(describing: SendViewController.self), bundle: nil)
+        
+        self.stellarAccount = stellarAccount
     }
 
     override func viewDidLoad() {
@@ -72,6 +79,8 @@ class SendViewController: UIViewController {
         addressHolderView.backgroundColor = Colors.lightBackground
         holdingView.backgroundColor = Colors.lightBackground
         view.backgroundColor = Colors.primaryDark
+        
+        balanceLabel.text = "\(stellarAccount.balance) XLM"
     }
     
     func addKeyboardNotifications() {

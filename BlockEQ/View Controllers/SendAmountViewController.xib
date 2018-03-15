@@ -12,8 +12,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SendAmountViewController" customModule="BlockEQ" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="JOk-TW-ivb" id="S0Y-gi-43o"/>
                 <outlet property="amountLabel" destination="idT-6f-LxP" id="Vvu-pm-Z7i"/>
                 <outlet property="currencyLabel" destination="RQc-ir-UP8" id="x0X-t5-hYd"/>
+                <outlet property="indicatorTitle" destination="6Dv-X5-4AL" id="Rvf-9k-dYK"/>
+                <outlet property="indicatorView" destination="20p-6g-6PR" id="dRF-7j-q3G"/>
                 <outlet property="keyboardHolderView" destination="BJS-CT-fsj" id="PMD-sb-6M0"/>
                 <outlet property="keyboardPad0" destination="b5t-XX-9C1" id="A7n-Rr-qZK"/>
                 <outlet property="keyboardPad1" destination="SjD-E6-kbK" id="szs-Xa-64f"/>
@@ -293,7 +296,40 @@
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                     <state key="normal" title="Send"/>
+                    <connections>
+                        <action selector="sendPayment" destination="-1" eventType="touchUpInside" id="Pay-du-S4L"/>
+                    </connections>
                 </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="20p-6g-6PR">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="JOk-TW-ivb">
+                            <rect key="frame" x="177" y="323" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="20" id="CSn-ai-k2v"/>
+                                <constraint firstAttribute="height" constant="20" id="ReC-Xc-M6l"/>
+                            </constraints>
+                            <color key="color" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </activityIndicatorView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sending payment..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Dv-X5-4AL">
+                            <rect key="frame" x="16" y="287" width="343" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="Jhx-oD-pel"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="0.94999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="JOk-TW-ivb" firstAttribute="centerX" secondItem="20p-6g-6PR" secondAttribute="centerX" id="08T-8A-xMb"/>
+                        <constraint firstItem="6Dv-X5-4AL" firstAttribute="leading" secondItem="20p-6g-6PR" secondAttribute="leading" constant="16" id="DWo-Wl-ZBW"/>
+                        <constraint firstItem="JOk-TW-ivb" firstAttribute="centerY" secondItem="20p-6g-6PR" secondAttribute="centerY" id="LhL-ug-GLV"/>
+                        <constraint firstAttribute="trailing" secondItem="6Dv-X5-4AL" secondAttribute="trailing" constant="16" id="msr-2y-sUn"/>
+                        <constraint firstItem="JOk-TW-ivb" firstAttribute="top" secondItem="6Dv-X5-4AL" secondAttribute="bottom" constant="15" id="zvS-FB-KaP"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -303,13 +339,17 @@
                 <constraint firstAttribute="trailing" secondItem="oO2-oC-t30" secondAttribute="trailing" id="FUg-Bg-AAP"/>
                 <constraint firstItem="ltM-8T-Caw" firstAttribute="top" secondItem="oO2-oC-t30" secondAttribute="bottom" id="GdV-PK-FgH"/>
                 <constraint firstItem="oO2-oC-t30" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="IHe-Nn-BKg"/>
+                <constraint firstItem="20p-6g-6PR" firstAttribute="leading" secondItem="Ov4-Rg-t9P" secondAttribute="leading" id="Quq-B1-zb8"/>
                 <constraint firstItem="eVG-Ff-eiy" firstAttribute="trailing" secondItem="Ov4-Rg-t9P" secondAttribute="trailing" id="WH4-oj-2Xz"/>
                 <constraint firstItem="BJS-CT-fsj" firstAttribute="top" secondItem="ltM-8T-Caw" secondAttribute="bottom" id="Yy5-5n-8HY"/>
                 <constraint firstItem="eVG-Ff-eiy" firstAttribute="top" secondItem="BJS-CT-fsj" secondAttribute="bottom" id="bNd-2E-kBq"/>
                 <constraint firstItem="oO2-oC-t30" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bPx-sf-98c"/>
                 <constraint firstItem="ltM-8T-Caw" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="jw9-Tp-3wK"/>
                 <constraint firstItem="ltM-8T-Caw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="k2H-zr-M5T"/>
+                <constraint firstItem="20p-6g-6PR" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="kLb-hX-3L4"/>
                 <constraint firstItem="BJS-CT-fsj" firstAttribute="leading" secondItem="Ov4-Rg-t9P" secondAttribute="leading" id="m71-yG-UsP"/>
+                <constraint firstItem="20p-6g-6PR" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="q2y-Fg-Qui"/>
+                <constraint firstItem="20p-6g-6PR" firstAttribute="trailing" secondItem="Ov4-Rg-t9P" secondAttribute="trailing" id="wdM-RP-SlB"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Ov4-Rg-t9P"/>
             <point key="canvasLocation" x="-171.5" y="0.5"/>

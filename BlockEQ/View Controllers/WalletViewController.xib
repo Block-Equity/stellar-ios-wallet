@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WalletViewController" customModule="BlockEQ" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="XTw-X2-zen" id="AGu-jf-2CW"/>
                 <outlet property="collectionView" destination="7gV-QE-QZ2" id="DCF-1B-bjs"/>
                 <outlet property="logoImageView" destination="PSG-hA-d0V" id="lIG-qn-FiV"/>
                 <outlet property="pageControl" destination="nLk-Zq-d0C" id="4Ts-3C-DLs"/>
@@ -34,7 +35,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="255"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="nLk-Zq-d0C">
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="nLk-Zq-d0C">
                                 <rect key="frame" x="16" y="220" width="343" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="kuI-an-vTN"/>
@@ -57,6 +58,13 @@
                                     <outlet property="delegate" destination="-1" id="oqy-1K-OOp"/>
                                 </connections>
                             </collectionView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="XTw-X2-zen">
+                                <rect key="frame" x="177" y="117.5" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="T6Q-BM-bwb"/>
+                                    <constraint firstAttribute="height" constant="20" id="TF2-9F-wYu"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -66,7 +74,9 @@
                             <constraint firstItem="7gV-QE-QZ2" firstAttribute="leading" secondItem="jUg-o4-zFw" secondAttribute="leading" id="bJw-Xn-9gz"/>
                             <constraint firstAttribute="trailing" secondItem="nLk-Zq-d0C" secondAttribute="trailing" constant="16" id="coW-ea-ojO"/>
                             <constraint firstAttribute="bottom" secondItem="nLk-Zq-d0C" secondAttribute="bottom" constant="15" id="ejb-ov-VWF"/>
+                            <constraint firstItem="XTw-X2-zen" firstAttribute="centerX" secondItem="jUg-o4-zFw" secondAttribute="centerX" id="kgc-6R-yMf"/>
                             <constraint firstAttribute="trailing" secondItem="7gV-QE-QZ2" secondAttribute="trailing" id="q5Y-zr-fgZ"/>
+                            <constraint firstItem="XTw-X2-zen" firstAttribute="centerY" secondItem="jUg-o4-zFw" secondAttribute="centerY" id="qG1-d0-aoU"/>
                         </constraints>
                     </view>
                     <connections>

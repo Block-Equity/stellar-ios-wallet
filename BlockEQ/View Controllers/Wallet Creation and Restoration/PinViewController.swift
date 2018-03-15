@@ -22,6 +22,7 @@ class PinViewController: UIViewController {
     
     var pinViews: [PinView]!
     var previousPin: String!
+    var mnemonic = ""
     
     @IBAction func textFieldDidChange() {
         guard let digits = textField.text, digits.count < 5 else {
@@ -68,10 +69,11 @@ class PinViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    init(pin: String?) {
+    init(pin: String?, mnemonic: String) {
         super.init(nibName: String(describing: PinViewController.self), bundle: nil)
         
-        previousPin = pin
+        self.previousPin = pin
+        self.mnemonic = mnemonic
     }
     
     override func viewDidLoad() {
@@ -117,11 +119,13 @@ class PinViewController: UIViewController {
     }
     
     func displayPinMismatchError() {
-        print("Pin Mismatch`1")
+        let alert = UIAlertController(title: "Pin error", message: "Sorry your pin did not match. Please try again.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func confirmPin(pin: String) {
-        let pinViewController = PinViewController(pin: pin)
+        let pinViewController = PinViewController(pin: pin, mnemonic: mnemonic)
         
         navigationController?.pushViewController(pinViewController, animated: true)
     }
@@ -129,7 +133,7 @@ class PinViewController: UIViewController {
     func savePin() {
         let appNavController = navigationController as! AppNavigationController
         
-        appNavController.accountCreationDelegate?.createAccount(from: "")
+        appNavController.accountCreationDelegate?.createAccount(mnemonic: mnemonic)
         
         view.endEditing(true)
         

@@ -1,12 +1,15 @@
 PODS:
+  - KeychainSwift (10.0.0)
   - stellar-ios-mac-sdk (1.1.1)
 
 DEPENDENCIES:
+  - KeychainSwift (~> 10.0)
   - stellar-ios-mac-sdk
 
 SPEC CHECKSUMS:
+  KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
   stellar-ios-mac-sdk: 8668be22556f82acaac9ccd841622421a3abc244
 
-PODFILE CHECKSUM: 4c4250258a7c1aa947ca640555576e43621936a0
+PODFILE CHECKSUM: e0d1e212cd3f0f6fbf970b0d44a46fc06c904cf4
 
 COCOAPODS: 1.3.1
