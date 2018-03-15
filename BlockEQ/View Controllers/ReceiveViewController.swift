@@ -52,7 +52,7 @@ class ReceiveViewController: UIViewController {
     }
 
     func setupView() {
-        navigationItem.title = "My New Wallet"
+        navigationItem.title = "My Wallet"
         
         let image = UIImage(named:"close")
         let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))

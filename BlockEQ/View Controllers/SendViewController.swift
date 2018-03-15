@@ -66,7 +66,7 @@ class SendViewController: UIViewController {
     }
     
     func setupView() {
-        navigationItem.title = "My New Wallet"
+        navigationItem.title = "My Wallet"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         let image = UIImage(named:"close")

@@ -125,7 +125,7 @@ class WalletViewController: UIViewController {
         
         paymentTransactions.removeAll()
         
-        sdk.payments.getPayments(forAccount: accountId, limit: 10) { response in
+        sdk.payments.getPayments(forAccount: accountId, order:Order.descending, limit: 10) { response in
             switch response {
             case .success(let paymentsResponse):
                 for payment in paymentsResponse.records {
