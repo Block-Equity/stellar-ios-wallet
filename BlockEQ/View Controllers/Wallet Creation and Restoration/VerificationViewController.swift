@@ -6,6 +6,7 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
+import stellarsdk
 import UIKit
 
 class VerificationViewController: UIViewController {
@@ -41,15 +42,21 @@ class VerificationViewController: UIViewController {
     var questionWords: [String] = []
     var currentWord: String = ""
     var mnemonic: String = ""
-    
-    let wordList = ["bench", "hurt", "jump", "file", "august", "wise", "shallow", "faculty", "impulse", "spring", "exact", "slush", "thunder", "author", "capable", "act", "festival", "slice", "deposit", "sauce", "coconut", "afford", "frown", "better"]
  
     @IBAction func nextButtonSelected() {
         switch type {
         case .questions:
             validateAnswer()
         default:
-            setPin()
+            guard var mnemonicString = textView.text, !mnemonicString.isEmpty else {
+                return
+            }
+            
+            let lastCharater = mnemonicString.last
+            if lastCharater == " " {
+                mnemonicString = String(mnemonicString.dropLast())
+            }
+            setPin(mnemonic: mnemonicString)
         }
     }
     
@@ -135,7 +142,9 @@ class VerificationViewController: UIViewController {
     
     func getAutocompleteSuggestions(userText: String) -> [String]{
         var possibleMatches: [String] = []
-        for item in wordList {
+        let language: WordList = .english
+        
+        for item in language.englishWords {
             let myString:NSString! = item as NSString
             let substringRange :NSRange! = myString.range(of: userText)
             
@@ -149,7 +158,7 @@ class VerificationViewController: UIViewController {
     func validateAnswer() {
         if textView.text == currentWord {
             if questionsAnswered == 4 {
-                setPin()
+                setPin(mnemonic: mnemonic)
             } else {
                 textView.text = ""
                 setQuestion(animated: true)
@@ -173,7 +182,7 @@ class VerificationViewController: UIViewController {
         let randomIndex = Int(arc4random_uniform(UInt32(questionWords.count)))
         currentWord = questionWords[randomIndex]
         
-        if let indexOfWord = wordList.index(of: currentWord) {
+        if let indexOfWord = mnemonic.components(separatedBy: " ").index(of: currentWord) {
             questionTitleLabel.text = "What was the word \(String(describing: indexOfWord + 1))?"
             questionWords.remove(at: randomIndex)
             questionsAnswered += 1
@@ -194,8 +203,8 @@ class VerificationViewController: UIViewController {
         }
     }
     
-    func setPin() {
-        let pinViewController = PinViewController(pin: nil)
+    func setPin(mnemonic: String) {
+        let pinViewController = PinViewController(pin: nil, mnemonic: mnemonic)
         
         navigationController?.pushViewController(pinViewController, animated: true)
     }

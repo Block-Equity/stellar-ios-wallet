@@ -30,7 +30,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="Ydo-S4-CAJ"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My First Wallet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nt5-pT-CkO">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Wallet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nt5-pT-CkO">
                                 <rect key="frame" x="16" y="18" width="288" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="q1b-Vf-auI"/>
@@ -49,13 +49,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1,000,000.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="G9b-6x-tM5">
-                                <rect key="frame" x="16" y="55" width="288" height="91"/>
+                                <rect key="frame" x="16" y="55" width="288" height="109"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="34"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CA $0.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZL-wA-eP9">
-                                <rect key="frame" x="16" y="146" width="288" height="16"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CA $0.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZL-wA-eP9">
+                                <rect key="frame" x="16" y="164" width="288" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="kdC-TB-jUa"/>
                                 </constraints>
@@ -78,7 +78,7 @@
                             <constraint firstAttribute="trailing" secondItem="dZL-wA-eP9" secondAttribute="trailing" constant="16" id="fnS-vU-DvZ"/>
                             <constraint firstAttribute="trailing" secondItem="Nt5-pT-CkO" secondAttribute="trailing" constant="16" id="fwQ-Tf-p5e"/>
                             <constraint firstItem="dZL-wA-eP9" firstAttribute="leading" secondItem="Lba-n1-BZI" secondAttribute="leading" constant="16" id="hXz-WP-orM"/>
-                            <constraint firstAttribute="bottom" secondItem="dZL-wA-eP9" secondAttribute="bottom" constant="18" id="nT0-TU-JGr"/>
+                            <constraint firstAttribute="bottom" secondItem="dZL-wA-eP9" secondAttribute="bottom" id="nT0-TU-JGr"/>
                             <constraint firstItem="dZL-wA-eP9" firstAttribute="top" secondItem="G9b-6x-tM5" secondAttribute="bottom" id="nnd-rH-xVi"/>
                             <constraint firstItem="EQH-HH-XpQ" firstAttribute="top" secondItem="Nt5-pT-CkO" secondAttribute="bottom" constant="5" id="tCn-6K-dh7"/>
                             <constraint firstAttribute="trailing" secondItem="G9b-6x-tM5" secondAttribute="trailing" constant="16" id="tvU-lG-sBF"/>

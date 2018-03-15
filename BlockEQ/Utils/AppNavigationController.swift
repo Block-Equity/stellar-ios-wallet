@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AccountCreationDelegate: class {
-    func createAccount(from mnemonic: String)
+    func createAccount(mnemonic: String)
 }
 
 class AppNavigationController: UINavigationController {

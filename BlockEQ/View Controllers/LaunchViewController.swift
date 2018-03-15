@@ -6,6 +6,7 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
+import stellarsdk
 import UIKit
 
 class LaunchViewController: UIViewController {
@@ -14,6 +15,8 @@ class LaunchViewController: UIViewController {
     @IBOutlet var createWalletButton: UIButton!
     @IBOutlet var importWalletButton: UIButton!
     @IBOutlet var logoImageView: UIImageView!
+    
+    let sdk = StellarSDK(withHorizonUrl: HorizonServer.url)
     
     @IBAction func createNewWallet() {
         let mnemonicViewController = MnemonicViewController()
@@ -43,6 +46,7 @@ class LaunchViewController: UIViewController {
         super.viewDidLoad()
         
         setupView()
+        checkForExistingAccount()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -66,12 +70,51 @@ class LaunchViewController: UIViewController {
         view.gradientLayer.gradient = GradientPoint.topBottom.draw()
     }
     
-    func createAccount() {
-        hideButtons()
-    
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.displayWallet()
+    func checkForExistingAccount() {
+        if let _ = KeychainHelper.getAccountId(), KeychainHelper.isExistingInstance() {
+            hideButtons()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.displayWallet()
+            }
+        } else {
+            KeychainHelper.clearAll()
         }
+    }
+    
+    func createStellarAccount(mnemonic: String) {
+        hideButtons()
+        
+        let keyPair = try! Wallet.createKeyPair(mnemonic: mnemonic, passphrase: nil, index: 0)
+        
+        let publicKeyData = NSData(bytes: keyPair.publicKey.bytes, length: keyPair.publicKey.bytes.count) as Data
+        let privateBytes = keyPair.privateKey?.bytes ?? [UInt8]()
+        let privateKeyData = NSData(bytes: privateBytes, length: privateBytes.count) as Data
+        
+        KeychainHelper.save(accountId: keyPair.accountId)
+        KeychainHelper.save(publicKey: publicKeyData)
+        KeychainHelper.save(privateKey: privateKeyData)
+        
+        print(keyPair.secretSeed)
+        
+        /// Use friendbot to fund test account
+        /*
+        sdk.accounts.createTestAccount(accountId: keyPair.accountId) { (response) -> (Void) in
+            switch response {
+            case .success(let data):
+                print("Details: \(data)")
+                DispatchQueue.main.async {
+                    self.displayWallet()
+                }
+                
+            case .failure(let error):
+                print("Error: \(error)")
+                DispatchQueue.main.async {
+                    self.displayWallet()
+                }
+            }
+        }*/
+        
+        self.displayWallet()
     }
     
     func hideButtons() {
@@ -94,7 +137,7 @@ class LaunchViewController: UIViewController {
 }
 
 extension LaunchViewController: AccountCreationDelegate {
-    func createAccount(from mnemonic: String) {
-        createAccount()
+    func createAccount(mnemonic: String) {
+        createStellarAccount(mnemonic: mnemonic)
     }
 }

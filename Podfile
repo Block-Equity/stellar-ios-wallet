@@ -6,6 +6,7 @@ target 'BlockEQ' do
   use_frameworks!
 
   pod 'stellar-ios-mac-sdk'
+  pod 'KeychainSwift', '~> 10.0'
 
   target 'BlockEQTests' do
     inherit! :search_paths
