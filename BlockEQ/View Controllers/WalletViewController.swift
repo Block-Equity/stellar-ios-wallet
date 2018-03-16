@@ -52,6 +52,9 @@ class WalletViewController: UIViewController {
         super.viewDidLoad()
 
         setupView()
+        getAccountDetails()
+        getPaymentTransactions()
+        streamPaymentResponses()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,9 +62,6 @@ class WalletViewController: UIViewController {
         
         navigationItem.setHidesBackButton(true, animated: false)
         navigationController?.setNavigationBarHidden(false, animated: true)
-        
-        getAccountDetails()
-        getPaymentTransactions()
     }
     
     func setupView() {
@@ -154,6 +154,36 @@ class WalletViewController: UIViewController {
                 }
             case .failure(let error):
                 print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func streamPaymentResponses() {
+        guard let accountId = KeychainHelper.getAccountId() else {
+            return
+        }
+        
+        sdk.payments.stream(for: .paymentsForAccount(account: accountId, cursor: "now")).onReceive { (response) -> (Void) in
+            switch response {
+            case .open:
+                break
+            case .response(let id, let operationResponse):
+                if let paymentResponse = operationResponse as? PaymentOperationResponse {
+                    switch paymentResponse.assetType {
+                    case AssetTypeAsString.NATIVE:
+                        print("Payment of \(paymentResponse.amount) XLM from \(paymentResponse.sourceAccount) received -  id \(id)" )
+                        self.getAccountDetails()
+                        self.getPaymentTransactions()
+                    default:
+                        print("Payment of \(paymentResponse.amount) \(paymentResponse.assetCode!) from \(paymentResponse.sourceAccount) received -  id \(id)" )
+                    }
+                }
+            case .error(let error):
+                if let horizonRequestError = error as? HorizonRequestError {
+                    StellarSDKLog.printHorizonRequestErrorMessage(tag:"Receive payment", horizonRequestError:horizonRequestError)
+                } else {
+                    print("Error \(error?.localizedDescription ?? "")")
+                }
             }
         }
     }
