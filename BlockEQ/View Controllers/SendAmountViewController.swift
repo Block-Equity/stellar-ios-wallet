@@ -124,7 +124,7 @@ class SendAmountViewController: UIViewController {
     }
     
     func displayTransactionError() {
-        indicatorView.isHidden = false
+        indicatorView.isHidden = true
         
         let alert = UIAlertController(title: "Transaction error", message: "There was an error processing this transaction. Please try again later.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
@@ -138,6 +138,7 @@ class SendAmountViewController: UIViewController {
 extension SendAmountViewController {
     func signAndPostPaymentTransaction(to accountId: String, amount: Decimal) {
         indicatorView.isHidden = false
+        
         
         if let privateKeyData =  KeychainHelper.getPrivateKey(), let publicKeyData =  KeychainHelper.getPublicKey()  {
             
@@ -159,7 +160,7 @@ extension SendAmountViewController {
                                                           operations: [paymentOperation],
                                                           memo: Memo.none,
                                                           timeBounds:nil)
-                        try transaction.sign(keyPair: sourceKeyPair, network: Network.testnet)
+                        try transaction.sign(keyPair: sourceKeyPair, network: Network.public)
                         
                         try self.sdk.transactions.submitTransaction(transaction: transaction) { (response) -> (Void) in
                             switch response {
@@ -168,8 +169,11 @@ extension SendAmountViewController {
                                 DispatchQueue.main.async {
                                     self.dismissView()
                                 }
-                            case .failure(_):
-                                self.displayTransactionError()
+                            case .failure(let error):
+                                StellarSDKLog.printHorizonRequestErrorMessage(tag:"SRP Prod", horizonRequestError:error)
+                                DispatchQueue.main.async {
+                                    self.displayTransactionError()
+                                }
                             }
                         }
                     }
@@ -177,8 +181,10 @@ extension SendAmountViewController {
                         self.displayTransactionError()
                     }
                 case .failure(let error):
-                    print(error.localizedDescription)
-                    self.displayTransactionError()
+                    StellarSDKLog.printHorizonRequestErrorMessage(tag:"SRP Prod", horizonRequestError:error)
+                    DispatchQueue.main.async {
+                        self.displayTransactionError()
+                    }
                 }
             }
         }
