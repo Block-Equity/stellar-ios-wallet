@@ -52,8 +52,6 @@ class WalletViewController: UIViewController {
         super.viewDidLoad()
 
         setupView()
-        getAccountDetails()
-        getPaymentTransactions()
         streamPaymentResponses()
     }
     
@@ -62,6 +60,9 @@ class WalletViewController: UIViewController {
         
         navigationItem.setHidesBackButton(true, animated: false)
         navigationController?.setNavigationBarHidden(false, animated: true)
+        
+        getAccountDetails()
+        getPaymentTransactions()
     }
     
     func setupView() {
@@ -171,7 +172,7 @@ class WalletViewController: UIViewController {
                 if let paymentResponse = operationResponse as? PaymentOperationResponse {
                     switch paymentResponse.assetType {
                     case AssetTypeAsString.NATIVE:
-                        print("Payment of \(paymentResponse.amount) XLM from \(paymentResponse.sourceAccount) received -  id \(id)" )
+                       // print("Payment of \(paymentResponse.amount) XLM from \(paymentResponse.sourceAccount) received -  id \(id)" )
                         self.getAccountDetails()
                         self.getPaymentTransactions()
                     default:
@@ -182,7 +183,7 @@ class WalletViewController: UIViewController {
                 if let horizonRequestError = error as? HorizonRequestError {
                     StellarSDKLog.printHorizonRequestErrorMessage(tag:"Receive payment", horizonRequestError:horizonRequestError)
                 } else {
-                    print("Error \(error?.localizedDescription ?? "")")
+                    //print("Error \(error?.localizedDescription ?? "")")
                 }
             }
         }
