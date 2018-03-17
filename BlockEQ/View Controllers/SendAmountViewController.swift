@@ -43,7 +43,7 @@ class SendAmountViewController: UIViewController {
             return
         }
         
-        signAndPostPaymentTransaction(to: receiver, amount: Decimal(string: amount)!)
+        checkForValidAccount(account: receiver, amount: Decimal(string: amount)!)
     }
     
     @IBAction func keyboardTapped(sender: UIButton) {
@@ -136,9 +136,73 @@ class SendAmountViewController: UIViewController {
  * Sending payment.
  */
 extension SendAmountViewController {
+    func checkForValidAccount(account accountId: String, amount: Decimal) {
+        sdk.accounts.getAccountDetails(accountId: accountId) { (response) -> (Void) in
+            switch response {
+            case .success(let accountDetails):
+                print("Details: \(accountDetails.accountId, accountDetails.balances[0].balance)")
+                self.signAndPostPaymentTransaction(to: accountId, amount: amount)
+            case .failure(let error):
+                print("Account Error: \(error)")
+                self.createReceiver(account: accountId, amount: amount)
+            }
+        }
+    }
+    
+    func createReceiver(account accountId: String, amount: Decimal) {
+        if let privateKeyData =  KeychainHelper.getPrivateKey(), let publicKeyData =  KeychainHelper.getPublicKey()  {
+            
+            let publicBytes: [UInt8] = [UInt8](publicKeyData)
+            let privateBytes: [UInt8] = [UInt8](privateKeyData)
+            
+            let sourceKeyPair = try! KeyPair(publicKey: PublicKey(publicBytes), privateKey: PrivateKey(privateBytes))
+            let destinationKeyPair = try! KeyPair(publicKey: PublicKey.init(accountId: accountId), privateKey: nil)
+            
+            sdk.accounts.getAccountDetails(accountId: sourceKeyPair.accountId) { (response) -> (Void) in
+                switch response {
+                case .success(let accountResponse): 
+                    do {
+                        let createAccount = CreateAccountOperation(destination: destinationKeyPair, startBalance: amount)
+                        
+                        let transaction = try Transaction(sourceAccount: accountResponse,
+                                                         operations: [createAccount],
+                                                         memo: Memo.none,
+                                                         timeBounds:nil)
+                        
+                        try transaction.sign(keyPair: sourceKeyPair, network: Network.public)
+                        
+                        try self.sdk.transactions.submitTransaction(transaction: transaction) { (response) -> (Void) in
+                            switch response {
+                            case .success(_):
+                                print("Transaction successful.")
+                                DispatchQueue.main.async {
+                                    self.dismissView()
+                                }
+
+                            case .failure(let error):
+                                StellarSDKLog.printHorizonRequestErrorMessage(tag:"Create account", horizonRequestError: error)
+                                DispatchQueue.main.async {
+                                    self.displayTransactionError()
+                                }
+                            }
+                        }
+                    } catch {
+                        DispatchQueue.main.async {
+                            self.displayTransactionError()
+                        }
+                    }
+                case .failure(let error): // error loading account details
+                    StellarSDKLog.printHorizonRequestErrorMessage(tag:"Error:", horizonRequestError: error)
+                    DispatchQueue.main.async {
+                        self.displayTransactionError()
+                    }
+                }
+            }
+        }
+    }
+    
     func signAndPostPaymentTransaction(to accountId: String, amount: Decimal) {
         indicatorView.isHidden = false
-        
         
         if let privateKeyData =  KeychainHelper.getPrivateKey(), let publicKeyData =  KeychainHelper.getPublicKey()  {
             
