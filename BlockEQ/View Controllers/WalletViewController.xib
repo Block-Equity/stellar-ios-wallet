@@ -32,10 +32,10 @@
                     <rect key="frame" x="0.0" y="20" width="375" height="597"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <view key="tableHeaderView" contentMode="scaleToFill" id="jUg-o4-zFw">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="255"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="nLk-Zq-d0C">
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="nLk-Zq-d0C">
                                 <rect key="frame" x="16" y="220" width="343" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="kuI-an-vTN"/>
@@ -59,7 +59,7 @@
                                 </connections>
                             </collectionView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="XTw-X2-zen">
-                                <rect key="frame" x="177" y="117.5" width="20" height="20"/>
+                                <rect key="frame" x="177" y="110" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="T6Q-BM-bwb"/>
                                     <constraint firstAttribute="height" constant="20" id="TF2-9F-wYu"/>
@@ -73,7 +73,7 @@
                             <constraint firstItem="7gV-QE-QZ2" firstAttribute="top" secondItem="jUg-o4-zFw" secondAttribute="top" id="Gec-DI-UWh"/>
                             <constraint firstItem="7gV-QE-QZ2" firstAttribute="leading" secondItem="jUg-o4-zFw" secondAttribute="leading" id="bJw-Xn-9gz"/>
                             <constraint firstAttribute="trailing" secondItem="nLk-Zq-d0C" secondAttribute="trailing" constant="16" id="coW-ea-ojO"/>
-                            <constraint firstAttribute="bottom" secondItem="nLk-Zq-d0C" secondAttribute="bottom" constant="15" id="ejb-ov-VWF"/>
+                            <constraint firstAttribute="bottom" secondItem="nLk-Zq-d0C" secondAttribute="bottom" id="ejb-ov-VWF"/>
                             <constraint firstItem="XTw-X2-zen" firstAttribute="centerX" secondItem="jUg-o4-zFw" secondAttribute="centerX" id="kgc-6R-yMf"/>
                             <constraint firstAttribute="trailing" secondItem="7gV-QE-QZ2" secondAttribute="trailing" id="q5Y-zr-fgZ"/>
                             <constraint firstItem="XTw-X2-zen" firstAttribute="centerY" secondItem="jUg-o4-zFw" secondAttribute="centerY" id="qG1-d0-aoU"/>
