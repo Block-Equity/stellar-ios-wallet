@@ -23,16 +23,6 @@ class PaymentTransaction: NSObject {
         return dateString
     }
     
-    var formattedActivity: String {
-        if isAccountCreated {
-            return "Account Created"
-        }
-        if isReceived {
-            return "Received"
-        }
-        return "Sent"
-    }
-    
     var formattedAmount: String {
         guard let floatValue = Float(amount) else {
             return ""
