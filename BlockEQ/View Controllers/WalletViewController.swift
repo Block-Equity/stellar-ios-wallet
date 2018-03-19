@@ -232,8 +232,9 @@ extension WalletViewController: UITableViewDataSource {
         
         let paymentTransaction = paymentTransactions[indexPath.row]
         cell.amountLabel.text = paymentTransaction.formattedAmount
-        cell.activityLabel.text = paymentTransaction.formattedActivity
         cell.dateLabel.text = paymentTransaction.formattedDate
+        cell.setTitle(isAccountCreated: paymentTransaction.isAccountCreated, isPaymentReceived: paymentTransaction.isReceived)
+        
         return cell
     }
 }
