@@ -42,6 +42,8 @@
 		EC2015FA20533A89009A73C8 /* MnemonicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2015F820533A89009A73C8 /* MnemonicViewController.swift */; };
 		EC2015FB20533A89009A73C8 /* MnemonicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC2015F920533A89009A73C8 /* MnemonicViewController.xib */; };
 		EC20160120536C68009A73C8 /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC20160020536C68009A73C8 /* PillView.swift */; };
+		EC26838F2062AD830085CAAF /* AccountOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC26838E2062AD830085CAAF /* AccountOperation.swift */; };
+		EC2683912062C7CA0085CAAF /* PaymentTransactionOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2683902062C7CA0085CAAF /* PaymentTransactionOperation.swift */; };
 		EC3609FD20560FDB00FC31F9 /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3609FB20560FDB00FC31F9 /* ScanViewController.swift */; };
 		EC3609FE20560FDB00FC31F9 /* ScanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC3609FC20560FDB00FC31F9 /* ScanViewController.xib */; };
 		EC360A032056181E00FC31F9 /* VerificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC360A012056181E00FC31F9 /* VerificationViewController.xib */; };
@@ -118,6 +120,8 @@
 		EC2015F820533A89009A73C8 /* MnemonicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicViewController.swift; sourceTree = "<group>"; };
 		EC2015F920533A89009A73C8 /* MnemonicViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MnemonicViewController.xib; sourceTree = "<group>"; };
 		EC20160020536C68009A73C8 /* PillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillView.swift; sourceTree = "<group>"; };
+		EC26838E2062AD830085CAAF /* AccountOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountOperation.swift; sourceTree = "<group>"; };
+		EC2683902062C7CA0085CAAF /* PaymentTransactionOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTransactionOperation.swift; sourceTree = "<group>"; };
 		EC3609FB20560FDB00FC31F9 /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
 		EC3609FC20560FDB00FC31F9 /* ScanViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanViewController.xib; sourceTree = "<group>"; };
 		EC360A012056181E00FC31F9 /* VerificationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VerificationViewController.xib; sourceTree = "<group>"; };
@@ -212,9 +216,9 @@
 				EC2015A82052D968009A73C8 /* AppDelegate.swift */,
 				EC2015DF2052E63D009A73C8 /* Extensions */,
 				EC72C0B520597CAD00141D6F /* Objects */,
-				EC2015D62052DB34009A73C8 /* View Controllers */,
-				EC2015EF2053181C009A73C8 /* Views */,
 				EC26838D20629D1B0085CAAF /* Operations */,
+				EC2015EF2053181C009A73C8 /* Views */,
+				EC2015D62052DB34009A73C8 /* View Controllers */,
 				EC2015E32052E881009A73C8 /* Utils */,
 				EC2015AF2052D968009A73C8 /* Assets.xcassets */,
 				EC2015B12052D968009A73C8 /* LaunchScreen.storyboard */,
@@ -311,6 +315,8 @@
 		EC26838D20629D1B0085CAAF /* Operations */ = {
 			isa = PBXGroup;
 			children = (
+				EC26838E2062AD830085CAAF /* AccountOperation.swift */,
+				EC2683902062C7CA0085CAAF /* PaymentTransactionOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -650,6 +656,7 @@
 				EC20160120536C68009A73C8 /* PillView.swift in Sources */,
 				EC2015F520531963009A73C8 /* NibLoader.swift in Sources */,
 				EC2015E92052EAC7009A73C8 /* WalletTitleViewController.swift in Sources */,
+				EC2683912062C7CA0085CAAF /* PaymentTransactionOperation.swift in Sources */,
 				EC0B19262054BC3B0052802C /* AppNavigationController.swift in Sources */,
 				EC1CEE5320577E880005F74E /* WordSuggestionCell.swift in Sources */,
 				EC42584B2054E346000941B5 /* SendViewController.swift in Sources */,
@@ -666,6 +673,7 @@
 				EC2015FA20533A89009A73C8 /* MnemonicViewController.swift in Sources */,
 				EC0B191A205465BF0052802C /* WalletCell.swift in Sources */,
 				EC72C0B420597CA600141D6F /* StellarAccount.swift in Sources */,
+				EC26838F2062AD830085CAAF /* AccountOperation.swift in Sources */,
 				EC2015DD2052E071009A73C8 /* WalletViewController.swift in Sources */,
 				EC1CEE4F205774E70005F74E /* VerificationViewController.swift in Sources */,
 				EC72C0B22059742900141D6F /* KeychainHelper.swift in Sources */,
