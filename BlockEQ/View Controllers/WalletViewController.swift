@@ -6,7 +6,6 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
-import stellarsdk
 import UIKit
 
 class WalletViewController: UIViewController {
@@ -20,7 +19,6 @@ class WalletViewController: UIViewController {
     @IBOutlet var tableViewHeaderRightLabel: UILabel!
     @IBOutlet var logoImageView: UIImageView!
     
-    let sdk = StellarSDK(withHorizonUrl: HorizonServer.url)
     var accounts: [StellarAccount] = []
     var paymentTransactions: [PaymentTransaction] = []
     
@@ -52,7 +50,7 @@ class WalletViewController: UIViewController {
         super.viewDidLoad()
 
         setupView()
-        streamPaymentResponses()
+        checkForPaymentReceived()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,113 +78,6 @@ class WalletViewController: UIViewController {
         pageControl.pageIndicatorTintColor = Colors.primaryDarkTransparent
         tableView.backgroundColor = Colors.lightBackground
         view.backgroundColor = Colors.primaryDark
-    }
-    
-    func getAccountDetails() {
-        guard let accountId = KeychainHelper.getAccountId() else {
-            return
-        }
-        
-        accounts.removeAll()
-        
-        sdk.accounts.getAccountDetails(accountId: accountId) { (response) -> (Void) in
-            switch response {
-            case .success(let accountDetails):
-                print("Details: \(accountDetails.accountId, accountDetails.balances[0].balance)")
-                let stellarAccount = StellarAccount()
-                stellarAccount.accountId = accountDetails.accountId
-                stellarAccount.balance = accountDetails.balances[0].balance
-                
-                self.accounts.append(stellarAccount)
-                
-                DispatchQueue.main.async {
-                    self.pageControl.numberOfPages = self.accounts.count
-                    self.collectionView.reloadData()
-                    self.activityIndicator.stopAnimating()
-                }
-            case .failure(let error):
-                print("Error: \(error)")
-                DispatchQueue.main.async {
-                    let stellarAccount = StellarAccount()
-                    stellarAccount.accountId = accountId
-                    stellarAccount.balance = "0.00"
-                    
-                    self.accounts.append(stellarAccount)
-                    self.collectionView.reloadData()
-                    self.activityIndicator.stopAnimating()
-                }
-            }
-        }
-    }
-    
-    func getPaymentTransactions() {
-        guard let accountId = KeychainHelper.getAccountId() else {
-            return
-        }
-        
-        paymentTransactions.removeAll()
-        
-        sdk.payments.getPayments(forAccount: accountId, order:Order.descending, limit: 10) { response in
-            switch response {
-            case .success(let paymentsResponse):
-                for payment in paymentsResponse.records {
-                    if let paymentResponse = payment as? PaymentOperationResponse {
-                        if (paymentResponse.assetType == AssetTypeAsString.NATIVE) {
-                            let paymentTransaction = PaymentTransaction()
-                            paymentTransaction.amount = paymentResponse.amount
-                            paymentTransaction.date = paymentResponse.createdAt
-                            paymentTransaction.isReceived = paymentResponse.from != accountId ? true : false
-                            
-                            self.paymentTransactions.append(paymentTransaction)
-                        }
-                    }
-                    
-                    if let paymentResponse = payment as? AccountCreatedOperationResponse {
-                        let paymentTransaction = PaymentTransaction()
-                        paymentTransaction.amount = String(describing: paymentResponse.startingBalance)
-                        paymentTransaction.date = paymentResponse.createdAt
-                        paymentTransaction.isAccountCreated = true
-                        
-                        self.paymentTransactions.append(paymentTransaction)
-                    }
-                }
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
-    func streamPaymentResponses() {
-        guard let accountId = KeychainHelper.getAccountId() else {
-            return
-        }
-        
-        sdk.payments.stream(for: .paymentsForAccount(account: accountId, cursor: "now")).onReceive { (response) -> (Void) in
-            switch response {
-            case .open:
-                break
-            case .response(let id, let operationResponse):
-                if let paymentResponse = operationResponse as? PaymentOperationResponse {
-                    switch paymentResponse.assetType {
-                    case AssetTypeAsString.NATIVE:
-                       // print("Payment of \(paymentResponse.amount) XLM from \(paymentResponse.sourceAccount) received -  id \(id)" )
-                        self.getAccountDetails()
-                        self.getPaymentTransactions()
-                    default:
-                        print("Payment of \(paymentResponse.amount) \(paymentResponse.assetCode!) from \(paymentResponse.sourceAccount) received -  id \(id)" )
-                    }
-                }
-            case .error(let error):
-                if let horizonRequestError = error as? HorizonRequestError {
-                    StellarSDKLog.printHorizonRequestErrorMessage(tag:"Receive payment", horizonRequestError:horizonRequestError)
-                } else {
-                    //print("Error \(error?.localizedDescription ?? "")")
-                }
-            }
-        }
     }
 }
 
@@ -249,6 +140,59 @@ extension WalletViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if scrollView == collectionView {
             pageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+        }
+    }
+}
+
+/*
+ * Operations
+ */
+extension WalletViewController {
+    func getAccountDetails() {
+        guard let accountId = KeychainHelper.getAccountId() else {
+            return
+        }
+        
+        AccountOperation.getAccountDetails(accountId: accountId) { responseAccounts in
+            self.accounts = responseAccounts
+            
+            if responseAccounts.isEmpty {
+                self.accounts.removeAll()
+                
+                let stellarAccount = StellarAccount()
+                stellarAccount.accountId = accountId
+                stellarAccount.balance = "0.00"
+                
+                self.accounts.append(stellarAccount)
+            }
+            
+            self.collectionView.reloadData()
+            self.activityIndicator.stopAnimating()
+        }
+    }
+    
+    func getPaymentTransactions() {
+        guard let accountId = KeychainHelper.getAccountId() else {
+            return
+        }
+        
+        PaymentTransactionOperation.getTransactions(accountId: accountId) { transactions in
+            self.paymentTransactions = transactions
+            
+            self.tableView.reloadData()
+        }
+    }
+    
+    func checkForPaymentReceived() {
+        guard let accountId = KeychainHelper.getAccountId() else {
+            return
+        }
+        
+        PaymentTransactionOperation.receivedPayment(accountId: accountId) { received in
+            if (received) {
+                self.getAccountDetails()
+                self.getPaymentTransactions()
+            }
         }
     }
 }

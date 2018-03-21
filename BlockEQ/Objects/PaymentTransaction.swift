@@ -6,6 +6,7 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
+import stellarsdk
 import Foundation
 
 class PaymentTransaction: NSObject {
@@ -13,6 +14,7 @@ class PaymentTransaction: NSObject {
     var isReceived = false
     var isAccountCreated = false
     var date: Date = Date()
+    var assetType = AssetTypeAsString.NATIVE
     
     var formattedDate: String {
         let dateFormatter = DateFormatter()

@@ -16,8 +16,6 @@ class LaunchViewController: UIViewController {
     @IBOutlet var importWalletButton: UIButton!
     @IBOutlet var logoImageView: UIImageView!
     
-    let sdk = StellarSDK(withHorizonUrl: HorizonServer.url)
-    
     @IBAction func createNewWallet() {
         let mnemonicViewController = MnemonicViewController()
         let navigationController = AppNavigationController(rootViewController: mnemonicViewController)
@@ -93,26 +91,6 @@ class LaunchViewController: UIViewController {
         KeychainHelper.save(accountId: keyPair.accountId)
         KeychainHelper.save(publicKey: publicKeyData)
         KeychainHelper.save(privateKey: privateKeyData)
-        
-        print(keyPair.secretSeed)
-        
-        /// Use friendbot to fund test account
-        /*
-        sdk.accounts.createTestAccount(accountId: keyPair.accountId) { (response) -> (Void) in
-            switch response {
-            case .success(let data):
-                print("Details: \(data)")
-                DispatchQueue.main.async {
-                    self.displayWallet()
-                }
-                
-            case .failure(let error):
-                print("Error: \(error)")
-                DispatchQueue.main.async {
-                    self.displayWallet()
-                }
-            }
-        }*/
         
         self.displayWallet()
     }
