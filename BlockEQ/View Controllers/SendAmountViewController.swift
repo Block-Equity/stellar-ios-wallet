@@ -6,7 +6,6 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
-import stellarsdk
 import UIKit
 
 class SendAmountViewController: UIViewController {
@@ -30,8 +29,6 @@ class SendAmountViewController: UIViewController {
     @IBOutlet var keyboardPad0: UIButton!
     @IBOutlet var keyboardPadBackspace: UIButton!
     @IBOutlet var sendAddressLabel: UILabel!
-    
-    let sdk = StellarSDK(withHorizonUrl: HorizonServer.url)
     
     var keyboardPads: [UIButton]!
     var receiver: String = ""
@@ -137,125 +134,33 @@ class SendAmountViewController: UIViewController {
  */
 extension SendAmountViewController {
     func checkForValidAccount(account accountId: String, amount: Decimal) {
-        sdk.accounts.getAccountDetails(accountId: accountId) { (response) -> (Void) in
-            switch response {
-            case .success(let accountDetails):
-                print("Details: \(accountDetails.accountId, accountDetails.balances[0].balance)")
-                self.signAndPostPaymentTransaction(to: accountId, amount: amount)
-            case .failure(let error):
-                print("Account Error: \(error)")
-                self.createReceiver(account: accountId, amount: amount)
+        self.indicatorView.isHidden = false
+        
+        AccountOperation.getAccountDetails(accountId: accountId) { accounts in
+            if accounts.count > 0 {
+                self.postPaymentTransaction(accountId: accountId, amount: amount)
+            } else {
+                self.fundNewAccount(account: accountId, amount: amount)
             }
         }
     }
     
-    func createReceiver(account accountId: String, amount: Decimal) {
-        DispatchQueue.main.async {
-            self.indicatorView.isHidden = false
-        }
-        
-        if let privateKeyData =  KeychainHelper.getPrivateKey(), let publicKeyData =  KeychainHelper.getPublicKey()  {
-            
-            let publicBytes: [UInt8] = [UInt8](publicKeyData)
-            let privateBytes: [UInt8] = [UInt8](privateKeyData)
-            
-            let sourceKeyPair = try! KeyPair(publicKey: PublicKey(publicBytes), privateKey: PrivateKey(privateBytes))
-            let destinationKeyPair = try! KeyPair(publicKey: PublicKey.init(accountId: accountId), privateKey: nil)
-            
-            sdk.accounts.getAccountDetails(accountId: sourceKeyPair.accountId) { (response) -> (Void) in
-                switch response {
-                case .success(let accountResponse): 
-                    do {
-                        let createAccount = CreateAccountOperation(destination: destinationKeyPair, startBalance: amount)
-                        
-                        let transaction = try Transaction(sourceAccount: accountResponse,
-                                                         operations: [createAccount],
-                                                         memo: Memo.none,
-                                                         timeBounds:nil)
-                        
-                        try transaction.sign(keyPair: sourceKeyPair, network: Network.public)
-                        
-                        try self.sdk.transactions.submitTransaction(transaction: transaction) { (response) -> (Void) in
-                            switch response {
-                            case .success(_):
-                                print("Transaction successful.")
-                                DispatchQueue.main.async {
-                                    self.dismissView()
-                                }
-
-                            case .failure(let error):
-                                StellarSDKLog.printHorizonRequestErrorMessage(tag:"Create account", horizonRequestError: error)
-                                DispatchQueue.main.async {
-                                    self.displayTransactionError()
-                                }
-                            }
-                        }
-                    } catch {
-                        DispatchQueue.main.async {
-                            self.displayTransactionError()
-                        }
-                    }
-                case .failure(let error): // error loading account details
-                    StellarSDKLog.printHorizonRequestErrorMessage(tag:"Error:", horizonRequestError: error)
-                    DispatchQueue.main.async {
-                        self.displayTransactionError()
-                    }
-                }
+    func fundNewAccount(account accountId: String, amount: Decimal) {
+        AccountOperation.createNewAccount(accountId: accountId, amount: amount) { completed in
+            if completed {
+                self.dismissView()
+            } else {
+                self.displayTransactionError()
             }
         }
     }
     
-    func signAndPostPaymentTransaction(to accountId: String, amount: Decimal) {
-        DispatchQueue.main.async {
-            self.indicatorView.isHidden = false
-        }
-        
-        if let privateKeyData =  KeychainHelper.getPrivateKey(), let publicKeyData =  KeychainHelper.getPublicKey()  {
-            
-            let publicBytes: [UInt8] = [UInt8](publicKeyData)
-            let privateBytes: [UInt8] = [UInt8](privateKeyData)
-            
-            let sourceKeyPair = try! KeyPair(publicKey: PublicKey(publicBytes), privateKey: PrivateKey(privateBytes))
-            let destinationKeyPair = try! KeyPair(publicKey: PublicKey.init(accountId: accountId), privateKey: nil)
-            
-            sdk.accounts.getAccountDetails(accountId: sourceKeyPair.accountId) { (response) -> (Void) in
-                switch response {
-                case .success(let accountResponse):
-                    do {
-                        let paymentOperation = PaymentOperation(sourceAccount: sourceKeyPair,
-                                                                destination: destinationKeyPair,
-                                                                asset: Asset(type: AssetType.ASSET_TYPE_NATIVE)!,
-                                                                amount: amount)
-                        let transaction = try Transaction(sourceAccount: accountResponse,
-                                                          operations: [paymentOperation],
-                                                          memo: Memo.none,
-                                                          timeBounds:nil)
-                        try transaction.sign(keyPair: sourceKeyPair, network: Network.public)
-                        
-                        try self.sdk.transactions.submitTransaction(transaction: transaction) { (response) -> (Void) in
-                            switch response {
-                            case .success(_):
-                                print("Transaction successful.")
-                                DispatchQueue.main.async {
-                                    self.dismissView()
-                                }
-                            case .failure(let error):
-                                StellarSDKLog.printHorizonRequestErrorMessage(tag:"SRP Prod", horizonRequestError:error)
-                                DispatchQueue.main.async {
-                                    self.displayTransactionError()
-                                }
-                            }
-                        }
-                    }
-                    catch {
-                        self.displayTransactionError()
-                    }
-                case .failure(let error):
-                    StellarSDKLog.printHorizonRequestErrorMessage(tag:"SRP Prod", horizonRequestError:error)
-                    DispatchQueue.main.async {
-                        self.displayTransactionError()
-                    }
-                }
+    func postPaymentTransaction(accountId: String, amount: Decimal) {
+        PaymentTransactionOperation.postPayment(accountId: accountId, amount: amount) { completed in
+            if completed {
+                self.dismissView()
+            } else {
+                self.displayTransactionError()
             }
         }
     }

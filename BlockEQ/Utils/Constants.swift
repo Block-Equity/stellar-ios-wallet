@@ -6,6 +6,7 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
+import stellarsdk
 import UIKit
 
 struct Colors {
@@ -39,4 +40,9 @@ public struct HorizonServer {
     static let production = "https://horizon.stellar.org"
     static let test = "https://horizon-testnet.stellar.org"
     static let url = HorizonServer.production
+}
+
+public struct Stellar {
+    static let sdk = StellarSDK(withHorizonUrl: HorizonServer.url)
+    static let network = Network.public
 }

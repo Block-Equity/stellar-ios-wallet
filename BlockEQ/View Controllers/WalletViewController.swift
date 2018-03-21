@@ -6,7 +6,6 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
-import stellarsdk
 import UIKit
 
 class WalletViewController: UIViewController {
@@ -20,7 +19,6 @@ class WalletViewController: UIViewController {
     @IBOutlet var tableViewHeaderRightLabel: UILabel!
     @IBOutlet var logoImageView: UIImageView!
     
-    let sdk = StellarSDK(withHorizonUrl: HorizonServer.url)
     var accounts: [StellarAccount] = []
     var paymentTransactions: [PaymentTransaction] = []
     

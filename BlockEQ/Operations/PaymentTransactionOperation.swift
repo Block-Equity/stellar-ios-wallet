@@ -10,13 +10,11 @@ import stellarsdk
 import UIKit
 
 class PaymentTransactionOperation: NSObject {
-    static let sdk = StellarSDK(withHorizonUrl: HorizonServer.url)
-    
     static func getTransactions(accountId: String, completion: @escaping ([PaymentTransaction]) -> Void) {
         
         var paymentTransactions: [PaymentTransaction] = []
         
-        sdk.payments.getPayments(forAccount: accountId, order:Order.descending, limit: 20) { response in
+        Stellar.sdk.payments.getPayments(forAccount: accountId, order:Order.descending, limit: 20) { response in
             switch response {
             case .success(let paymentsResponse):
                 for payment in paymentsResponse.records {
@@ -54,12 +52,12 @@ class PaymentTransactionOperation: NSObject {
     }
     
     static func receivedPayment(accountId: String, completion: @escaping (Bool) -> Void) {
-        sdk.payments.stream(for: .paymentsForAccount(account: accountId, cursor: "now")).onReceive { (response) -> (Void) in
+        Stellar.sdk.payments.stream(for: .paymentsForAccount(account: accountId, cursor: "now")).onReceive { (response) -> (Void) in
             switch response {
             case .open:
                 break
-            case .response(let id, let operationResponse):
-                if let paymentResponse = operationResponse as? PaymentOperationResponse {
+            case .response(_, let operationResponse):
+                if operationResponse is PaymentOperationResponse {
                     DispatchQueue.main.async {
                         completion(true)
                     }
@@ -70,6 +68,73 @@ class PaymentTransactionOperation: NSObject {
                     DispatchQueue.main.async {
                         completion(false)
                     }
+                }
+            }
+        }
+    }
+    
+    static func postPayment(accountId: String, amount: Decimal, completion: @escaping (Bool) -> Void) {
+        guard let privateKeyData = KeychainHelper.getPrivateKey(), let publicKeyData = KeychainHelper.getPublicKey() else {
+            DispatchQueue.main.async {
+                completion(false)
+            }
+            return
+        }
+        
+        let publicBytes: [UInt8] = [UInt8](publicKeyData)
+        let privateBytes: [UInt8] = [UInt8](privateKeyData)
+        
+        guard let sourceKeyPair = try? KeyPair(publicKey: PublicKey(publicBytes), privateKey: PrivateKey(privateBytes)) else {
+            DispatchQueue.main.async {
+                completion(false)
+            }
+            return
+        }
+        
+        guard  let destinationKeyPair = try? KeyPair(publicKey: PublicKey.init(accountId: accountId), privateKey: nil) else {
+            DispatchQueue.main.async {
+                completion(false)
+            }
+            return
+        }
+        
+        Stellar.sdk.accounts.getAccountDetails(accountId: sourceKeyPair.accountId) { (response) -> (Void) in
+            switch response {
+            case .success(let accountResponse):
+                do {
+                    let paymentOperation = PaymentOperation(sourceAccount: sourceKeyPair,
+                                                            destination: destinationKeyPair,
+                                                            asset: Asset(type: AssetType.ASSET_TYPE_NATIVE)!,
+                                                            amount: amount)
+                    let transaction = try Transaction(sourceAccount: accountResponse,
+                                                      operations: [paymentOperation],
+                                                      memo: Memo.none,
+                                                      timeBounds:nil)
+                    try transaction.sign(keyPair: sourceKeyPair, network: Stellar.network)
+                    
+                    try Stellar.sdk.transactions.submitTransaction(transaction: transaction) { (response) -> (Void) in
+                        switch response {
+                        case .success(_):
+                            DispatchQueue.main.async {
+                                completion(true)
+                            }
+                        case .failure(let error):
+                            StellarSDKLog.printHorizonRequestErrorMessage(tag:"Post Payment Error", horizonRequestError:error)
+                            DispatchQueue.main.async {
+                                completion(false)
+                            }
+                        }
+                    }
+                }
+                catch {
+                    DispatchQueue.main.async {
+                        completion(false)
+                    }
+                }
+            case .failure(let error):
+                StellarSDKLog.printHorizonRequestErrorMessage(tag:"Post Payment Error", horizonRequestError:error)
+                DispatchQueue.main.async {
+                    completion(false)
                 }
             }
         }
