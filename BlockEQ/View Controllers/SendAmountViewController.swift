@@ -150,6 +150,10 @@ extension SendAmountViewController {
     }
     
     func createReceiver(account accountId: String, amount: Decimal) {
+        DispatchQueue.main.async {
+            self.indicatorView.isHidden = false
+        }
+        
         if let privateKeyData =  KeychainHelper.getPrivateKey(), let publicKeyData =  KeychainHelper.getPublicKey()  {
             
             let publicBytes: [UInt8] = [UInt8](publicKeyData)
@@ -202,7 +206,9 @@ extension SendAmountViewController {
     }
     
     func signAndPostPaymentTransaction(to accountId: String, amount: Decimal) {
-        indicatorView.isHidden = false
+        DispatchQueue.main.async {
+            self.indicatorView.isHidden = false
+        }
         
         if let privateKeyData =  KeychainHelper.getPrivateKey(), let publicKeyData =  KeychainHelper.getPublicKey()  {
             
