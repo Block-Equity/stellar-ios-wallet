@@ -47,8 +47,12 @@ class LaunchViewController: UIViewController {
         checkForExistingAccount()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = true
         
         showButtons()
     }

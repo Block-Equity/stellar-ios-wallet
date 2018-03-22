@@ -72,12 +72,50 @@ class WalletViewController: UIViewController {
         
         navigationItem.titleView = logoImageView
         
+        let image = UIImage(named:"settings")
+        let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.displayOptions))
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+        
         tableViewHeaderLeftLabel.textColor = Colors.darkGrayTransparent
         tableViewHeaderRightLabel.textColor = Colors.darkGrayTransparent
         pageControl.currentPageIndicatorTintColor = Colors.primaryDark
         pageControl.pageIndicatorTintColor = Colors.primaryDarkTransparent
         tableView.backgroundColor = Colors.lightBackground
         view.backgroundColor = Colors.primaryDark
+    }
+    
+    @objc func displayOptions() {
+        let alertController = UIAlertController(title: "Options", message: nil, preferredStyle: .actionSheet)
+        
+        let sendButton = UIAlertAction(title: "Clear Wallet", style: .default, handler: { (action) -> Void in
+            alertController.dismiss(animated: true, completion: nil)
+            
+            self.clearWallet()
+        })
+
+        let cancelButton = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+        
+        alertController.addAction(sendButton)
+        alertController.addAction(cancelButton)
+        
+        navigationController?.present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc func clearWallet() {
+        let alertController = UIAlertController(title: "Are you sure you want to clear this wallet?", message: nil, preferredStyle: .alert)
+        
+        let yesButton = UIAlertAction(title: "Yes", style: .destructive, handler: { (action) -> Void in
+            KeychainHelper.clearAll()
+            
+            self.navigationController?.popViewController(animated: true)
+        })
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        
+        alertController.addAction(cancelButton)
+        alertController.addAction(yesButton)
+        
+        navigationController?.present(alertController, animated: true, completion: nil)
     }
 }
 
