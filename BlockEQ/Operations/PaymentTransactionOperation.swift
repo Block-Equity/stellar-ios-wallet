@@ -19,7 +19,6 @@ class PaymentTransactionOperation: NSObject {
             case .success(let paymentsResponse):
                 for payment in paymentsResponse.records {
                     if let paymentResponse = payment as? PaymentOperationResponse {
-                        
                         let paymentTransaction = getPaymentTransaction(amount: paymentResponse.amount,
                                                                        assetType: paymentResponse.assetType,
                                                                        date: paymentResponse.createdAt,
@@ -145,6 +144,7 @@ class PaymentTransactionOperation: NSObject {
         paymentTransaction.amount = amount
         paymentTransaction.date = date
         paymentTransaction.isReceived = isPaymentReceived
+        paymentTransaction.isAccountCreated = isAccountCreated
         paymentTransaction.assetType = assetType
         
         return paymentTransaction

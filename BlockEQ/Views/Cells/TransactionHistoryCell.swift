@@ -20,7 +20,7 @@ class TransactionHistoryCell: UITableViewCell {
     enum TransactionType: String {
         case sent = "Sent"
         case received = "Received"
-        case created = "Account Created"
+        case created = "Account Funded"
         
         var color: UIColor {
             switch self {
