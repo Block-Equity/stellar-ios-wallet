@@ -47,12 +47,6 @@ class LaunchViewController: UIViewController {
         checkForExistingAccount()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        showButtons()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -117,6 +111,10 @@ class LaunchViewController: UIViewController {
         let walletViewController = WalletViewController()
         
         navigationController?.pushViewController(walletViewController, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.showButtons()
+        }
     }
 }
 
