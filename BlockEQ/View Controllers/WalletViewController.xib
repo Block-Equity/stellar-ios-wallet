@@ -14,6 +14,8 @@
             <connections>
                 <outlet property="activityIndicator" destination="XTw-X2-zen" id="AGu-jf-2CW"/>
                 <outlet property="collectionView" destination="7gV-QE-QZ2" id="DCF-1B-bjs"/>
+                <outlet property="emptyView" destination="vYT-Yd-cac" id="JER-rO-97v"/>
+                <outlet property="emptyViewTitleLabel" destination="usa-Ff-oFo" id="TgW-rh-yDQ"/>
                 <outlet property="logoImageView" destination="PSG-hA-d0V" id="lIG-qn-FiV"/>
                 <outlet property="pageControl" destination="nLk-Zq-d0C" id="4Ts-3C-DLs"/>
                 <outlet property="tableView" destination="RND-qr-8sK" id="KCK-vC-wWn"/>
@@ -189,6 +191,38 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="nEb-oZ-2jC"/>
             <point key="canvasLocation" x="34" y="491"/>
+        </view>
+        <view contentMode="scaleToFill" id="vYT-Yd-cac">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are no transactions." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="usa-Ff-oFo">
+                    <rect key="frame" x="16" y="0.0" width="343" height="79"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RpC-YU-j3c">
+                    <rect key="frame" x="0.0" y="79" width="375" height="1"/>
+                    <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="we0-GK-crs"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="usa-Ff-oFo" firstAttribute="top" secondItem="xyy-XQ-Bj5" secondAttribute="top" id="1y6-S3-g5G"/>
+                <constraint firstItem="usa-Ff-oFo" firstAttribute="leading" secondItem="xyy-XQ-Bj5" secondAttribute="leading" constant="16" id="5ha-8h-9vQ"/>
+                <constraint firstItem="xyy-XQ-Bj5" firstAttribute="trailing" secondItem="usa-Ff-oFo" secondAttribute="trailing" constant="16" id="KEc-lT-ai4"/>
+                <constraint firstAttribute="trailing" secondItem="RpC-YU-j3c" secondAttribute="trailing" id="LGm-Ai-qRD"/>
+                <constraint firstItem="RpC-YU-j3c" firstAttribute="bottom" secondItem="xyy-XQ-Bj5" secondAttribute="bottom" id="LKa-Z5-4Yv"/>
+                <constraint firstItem="RpC-YU-j3c" firstAttribute="top" secondItem="usa-Ff-oFo" secondAttribute="bottom" id="jae-q2-7bc"/>
+                <constraint firstItem="RpC-YU-j3c" firstAttribute="leading" secondItem="vYT-Yd-cac" secondAttribute="leading" id="qyk-n4-xP0"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="xyy-XQ-Bj5"/>
+            <point key="canvasLocation" x="34" y="652"/>
         </view>
         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoWhite" id="PSG-hA-d0V">
             <rect key="frame" x="0.0" y="0.0" width="60" height="22"/>
