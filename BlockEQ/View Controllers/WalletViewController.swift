@@ -12,6 +12,8 @@ class WalletViewController: UIViewController {
     
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet var emptyViewTitleLabel: UILabel!
+    @IBOutlet var emptyView: UIView!
     @IBOutlet var pageControl: UIPageControl!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var tableViewHeader: UIView!
@@ -21,6 +23,8 @@ class WalletViewController: UIViewController {
     
     var accounts: [StellarAccount] = []
     var paymentTransactions: [PaymentTransaction] = []
+    var isLoadingTransactionsOnViewLoad = true
+    var timer : DispatchSourceTimer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main)
     
     @IBAction func receiveFunds() {
         let currentStellarAccount = accounts[pageControl.currentPage]
@@ -51,6 +55,7 @@ class WalletViewController: UIViewController {
 
         setupView()
         checkForPaymentReceived()
+        startPollingForAccountFunding()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,6 +66,10 @@ class WalletViewController: UIViewController {
         
         getAccountDetails()
         getPaymentTransactions()
+    }
+    
+    deinit {
+        stopTimer()
     }
     
     func setupView() {
@@ -76,12 +85,27 @@ class WalletViewController: UIViewController {
         let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.displayOptions))
         navigationItem.rightBarButtonItem = rightBarButtonItem
         
+        emptyViewTitleLabel.textColor = Colors.darkGray
         tableViewHeaderLeftLabel.textColor = Colors.darkGrayTransparent
         tableViewHeaderRightLabel.textColor = Colors.darkGrayTransparent
         pageControl.currentPageIndicatorTintColor = Colors.primaryDark
         pageControl.pageIndicatorTintColor = Colors.primaryDarkTransparent
         tableView.backgroundColor = Colors.lightBackground
         view.backgroundColor = Colors.primaryDark
+    }
+    
+    func startPollingForAccountFunding() {
+        timer.schedule(deadline: .now(), repeating: .seconds(30))
+        timer.setEventHandler {
+            self.getAccountDetails()
+            self.getPaymentTransactions()
+        }
+        
+        timer.resume()
+    }
+    
+    func stopTimer() {
+        timer.cancel()
     }
     
     @objc func displayOptions() {
@@ -142,18 +166,39 @@ extension WalletViewController: UICollectionViewDelegateFlowLayout {
 
 extension WalletViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return paymentTransactions.count
+        switch section {
+        case 0:
+            return paymentTransactions.count
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return tableViewHeader
+        switch section {
+        case 0:
+            return tableViewHeader
+        default:
+            if isLoadingTransactionsOnViewLoad {
+                return emptyView
+            }
+           return nil
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return tableViewHeader.frame.size.height
+        switch section {
+        case 0:
+            return tableViewHeader.frame.size.height
+        default:
+            if isLoadingTransactionsOnViewLoad {
+                return emptyView.frame.size.height
+            }
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -217,6 +262,10 @@ extension WalletViewController {
         PaymentTransactionOperation.getTransactions(accountId: accountId) { transactions in
             self.paymentTransactions = transactions
             
+            if self.paymentTransactions.count > 0 {
+                self.isLoadingTransactionsOnViewLoad = false
+                self.stopTimer()
+            }
             self.tableView.reloadData()
         }
     }
