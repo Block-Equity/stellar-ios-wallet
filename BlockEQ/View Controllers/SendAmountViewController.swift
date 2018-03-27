@@ -28,7 +28,10 @@ class SendAmountViewController: UIViewController {
     @IBOutlet var keyboardPadDot: UIButton!
     @IBOutlet var keyboardPad0: UIButton!
     @IBOutlet var keyboardPadBackspace: UIButton!
+    @IBOutlet var memoIdLabel: UILabel!
+    @IBOutlet var memoIdTextField: UITextField!
     @IBOutlet var sendAddressLabel: UILabel!
+    @IBOutlet var toolBar: UIToolbar!
     
     var keyboardPads: [UIButton]!
     var receiver: String = ""
@@ -40,7 +43,11 @@ class SendAmountViewController: UIViewController {
             return
         }
         
-        checkForValidAccount(account: receiver, amount: Decimal(string: amount)!)
+        if KeychainHelper.checkPinWhenSendingPayment() {
+            displayPin()
+        } else {
+            checkForValidAccount(account: receiver, amount: Decimal(string: amount)!)
+        }
     }
     
     @IBAction func keyboardTapped(sender: UIButton) {
@@ -100,6 +107,8 @@ class SendAmountViewController: UIViewController {
         amountLabel.textColor = Colors.primaryDark
         currencyLabel.textColor = Colors.darkGrayTransparent
         keyboardHolderView.backgroundColor = Colors.lightBackground
+        memoIdLabel.textColor = Colors.darkGray
+        memoIdTextField.textColor = Colors.darkGray
         view.backgroundColor = Colors.primaryDark
         
         sendAddressLabel.text = "To: \(receiver)"
@@ -120,12 +129,38 @@ class SendAmountViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    func displayPin() {
+        let pinViewController = PinViewController(pin: KeychainHelper.getPin(), mnemonic: nil, isSendingPayment: false, isEnteringApp: true)
+        pinViewController.delegate = self
+        let navigationController = AppNavigationController(rootViewController: pinViewController)
+        
+        present(navigationController, animated: true, completion: nil)
+    }
+    
     func displayTransactionError() {
         indicatorView.isHidden = true
         
         let alert = UIAlertController(title: "Transaction error", message: "There was an error processing this transaction. Please try again later.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
+    }
+}
+
+extension SendAmountViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        
+        return true
+    }
+}
+
+extension SendAmountViewController: PinViewControllerDelegate {
+    func pinConfirmationSucceeded() {
+        guard let amount = amountLabel.text, !amount.isEmpty, amount != "0" else {
+            return
+        }
+        
+       checkForValidAccount(account: receiver, amount: Decimal(string: amount)!)
     }
 }
 

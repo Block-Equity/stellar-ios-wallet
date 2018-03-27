@@ -204,7 +204,7 @@ class VerificationViewController: UIViewController {
     }
     
     func setPin(mnemonic: String) {
-        let pinViewController = PinViewController(pin: nil, mnemonic: mnemonic)
+        let pinViewController = PinViewController(pin: nil, mnemonic: mnemonic, isSendingPayment: false, isEnteringApp: false)
         
         navigationController?.pushViewController(pinViewController, animated: true)
     }

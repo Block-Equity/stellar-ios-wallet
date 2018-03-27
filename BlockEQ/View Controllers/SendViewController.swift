@@ -17,7 +17,6 @@ class SendViewController: UIViewController {
     @IBOutlet var sendTitleLabel: UILabel!
     @IBOutlet var sendAddressTextField: UITextField!
     
-    var safeAreaPadding: CGFloat = 20.0
     var stellarAccount: StellarAccount = StellarAccount()
     
     @IBAction func addAmount() {
@@ -25,16 +24,17 @@ class SendViewController: UIViewController {
             return
         }
         
-        let sendAmountViewController = SendAmountViewController(stellarAccount: stellarAccount, reciever: receiver)
+        view.endEditing(true)
         
+        let sendAmountViewController = SendAmountViewController(stellarAccount: stellarAccount, reciever: receiver)
         navigationController?.pushViewController(sendAmountViewController, animated: true)
     }
     
     @IBAction func scanQRCode() {
         let scanViewController = ScanViewController()
         scanViewController.delegate = self
-        let navigationController = AppNavigationController(rootViewController: scanViewController)
         
+        let navigationController = AppNavigationController(rootViewController: scanViewController)
         present(navigationController, animated: true, completion: nil)
     }
     
@@ -58,13 +58,15 @@ class SendViewController: UIViewController {
         super.viewWillAppear(animated)
         
         addKeyboardNotifications()
+        
+        setViewStateToNotEditing()
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        viewDidDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         
         removeKeyboardNotifications()
     }
-    
+
     func setupView() {
         navigationItem.title = "My Wallet"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -83,26 +85,37 @@ class SendViewController: UIViewController {
         balanceLabel.text = "\(stellarAccount.balance) XLM"
     }
     
-    func addKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    func setViewStateToNotEditing() {
+        view.endEditing(true)
+        
+        bottomLayoutConstraint.constant = 0.0
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            let statusBarHeight = UIApplication.shared.statusBarFrame.height - safeAreaPadding
-            bottomLayoutConstraint.constant = keyboardSize.size.height + statusBarHeight
-            
-            if let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double {
-                UIView.animate(withDuration: duration, animations: {
-                    self.view.layoutIfNeeded()
-                })
-            }
+    func addKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillChange), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+    }
+
+    @objc private func keyboardWillChange(_ notification: Notification) {
+        guard let userInfo = (notification as Notification).userInfo, let value = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
+        let newHeight: CGFloat
+        if #available(iOS 11.0, *) {
+            newHeight = value.cgRectValue.height - view.safeAreaInsets.bottom
+        } else {
+            newHeight = value.cgRectValue.height
+        }
+        
+        bottomLayoutConstraint.constant = newHeight
+        
+        if let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double {
+            UIView.animate(withDuration: duration, animations: {
+                self.view.layoutIfNeeded()
+            })
         }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-        bottomLayoutConstraint.constant = 0
+        bottomLayoutConstraint.constant = 0.0
         
         if let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double {
             UIView.animate(withDuration: duration, animations: {
