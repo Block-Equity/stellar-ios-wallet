@@ -420,7 +420,7 @@
 				TargetAttributes = {
 					EC2015A42052D968009A73C8 = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					EC2015B82052D968009A73C8 = {
 						CreatedOnToolsVersion = 9.2;
@@ -836,12 +836,15 @@
 			baseConfigurationReference = 624B50722A9FCCC360CC73E3 /* Pods-BlockEQ.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2C24FP5V5L;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 3C29DJ86C6;
 				INFOPLIST_FILE = BlockEQ/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.blockeq.BlockEQ;
+				PRODUCT_BUNDLE_IDENTIFIER = com.blockeqiOS.BlockEQ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "031b9826-9079-477a-aa76-de811c5fe517";
+				PROVISIONING_PROFILE_SPECIFIER = BlockEQDevelopment;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -852,12 +855,16 @@
 			baseConfigurationReference = EA487049D94C0F37E5791674 /* Pods-BlockEQ.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2C24FP5V5L;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: The Working Group Inc";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The Working Group Inc";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 3C29DJ86C6;
 				INFOPLIST_FILE = BlockEQ/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.blockeq.BlockEQ;
+				PRODUCT_BUNDLE_IDENTIFIER = com.blockeqiOS.BlockEQ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "e5ab459e-b1ab-47dd-bee0-df3bed5e2fd9";
+				PROVISIONING_PROFILE_SPECIFIER = BlockEQ;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
