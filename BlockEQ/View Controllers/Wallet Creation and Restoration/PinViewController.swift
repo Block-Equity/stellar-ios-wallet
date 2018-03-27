@@ -159,12 +159,12 @@ class PinViewController: UIViewController {
     }
     
     func savePin(pin: String) {
+        let appNavController = navigationController as! AppNavigationController
+        appNavController.accountCreationDelegate?.createAccount(mnemonic: mnemonic)
+        
         KeychainHelper.save(pin: pin)
         KeychainHelper.setPinWhenEnteringApp(shouldSet: true)
         KeychainHelper.setPinWhenSendingPayment(shouldSet: true)
-        
-        let appNavController = navigationController as! AppNavigationController
-        appNavController.accountCreationDelegate?.createAccount(mnemonic: mnemonic)
         
         dismissView()
     }

@@ -114,10 +114,7 @@ class WalletViewController: UIViewController {
         let mnemonicButton = UIAlertAction(title: "View Seed Phrase", style: .default, handler: { (action) -> Void in
             alertController.dismiss(animated: true, completion: nil)
             
-            let mnemonicViewController = MnemonicViewController(mnemonic: KeychainHelper.getMnemonic(), shouldSetPin: false)
-            let navigationController = AppNavigationController(rootViewController: mnemonicViewController)
-            
-            self.present(navigationController, animated: true, completion: nil)
+            self.displayPin()
         })
         
         let clearWalletButton = UIAlertAction(title: "Clear Wallet", style: .default, handler: { (action) -> Void in
@@ -150,6 +147,14 @@ class WalletViewController: UIViewController {
         alertController.addAction(yesButton)
         
         navigationController?.present(alertController, animated: true, completion: nil)
+    }
+    
+    func displayPin() {
+        let pinViewController = PinViewController(pin: KeychainHelper.getPin(), mnemonic: nil, isSendingPayment: true, isEnteringApp: false)
+        pinViewController.delegate = self
+        let navigationController = AppNavigationController(rootViewController: pinViewController)
+        
+        present(navigationController, animated: true, completion: nil)
     }
 }
 
@@ -233,6 +238,17 @@ extension WalletViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if scrollView == collectionView {
             pageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+        }
+    }
+}
+
+extension WalletViewController: PinViewControllerDelegate {
+    func pinConfirmationSucceeded() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let mnemonicViewController = MnemonicViewController(mnemonic: KeychainHelper.getMnemonic(), shouldSetPin: false)
+            let navigationController = AppNavigationController(rootViewController: mnemonicViewController)
+            
+            self.present(navigationController, animated: true, completion: nil)
         }
     }
 }

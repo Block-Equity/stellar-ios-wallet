@@ -90,5 +90,9 @@ class KeychainHelper: NSObject {
     
     public static func clearAll() {
         KeychainSwift().clear()
+        
+        UserDefaults.standard.set(false, forKey: isEnteringAppKey)
+        UserDefaults.standard.set(false, forKey: isSendingPaymentKey)
+        UserDefaults.standard.synchronize()
     }
 }

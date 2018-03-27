@@ -45,7 +45,6 @@ class LaunchViewController: UIViewController {
         
         setupView()
         checkForExistingAccount()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
