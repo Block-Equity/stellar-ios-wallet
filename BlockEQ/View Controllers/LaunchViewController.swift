@@ -45,6 +45,7 @@ class LaunchViewController: UIViewController {
         
         setupView()
         checkForExistingAccount()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,6 +72,7 @@ class LaunchViewController: UIViewController {
     func checkForExistingAccount() {
         if let _ = KeychainHelper.getAccountId(), KeychainHelper.isExistingInstance() {
             hideButtons()
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.displayWallet()
             }

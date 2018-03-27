@@ -36,6 +36,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="150" id="X2s-CM-6Vh"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -128,12 +129,12 @@
             <subviews>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tbP-7l-CPQ">
                     <rect key="frame" x="0.0" y="50" width="375" height="40"/>
-                    <color key="backgroundColor" red="0.81992548704147339" green="0.83505350351333618" blue="0.85882049798965454" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <color key="backgroundColor" red="0.81960784313725488" green="0.83529411764705885" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="fdh-bm-BOd"/>
                     </constraints>
                     <items/>
-                    <color key="barTintColor" red="0.72976213693618774" green="0.74877750873565674" blue="0.77254676818847656" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <color key="barTintColor" red="0.72941176470588232" green="0.74901960784313726" blue="0.77254901960784317" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 </toolbar>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QNY-cd-5bI" customClass="AppButton" customModule="BlockEQ" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>

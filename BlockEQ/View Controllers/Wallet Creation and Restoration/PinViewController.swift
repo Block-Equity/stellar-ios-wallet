@@ -9,6 +9,10 @@
 import UIKit
 import Foundation
 
+protocol PinViewControllerDelegate: class {
+    func pinConfirmationSucceeded()
+}
+
 class PinViewController: UIViewController {
     
     @IBOutlet var textField: UITextField!
@@ -22,7 +26,11 @@ class PinViewController: UIViewController {
     
     var pinViews: [PinView]!
     var previousPin: String!
-    var mnemonic = ""
+    var mnemonic: String!
+    var isSendingPayment: Bool = false
+    var isEnteringApp: Bool = false
+    
+    weak var delegate: PinViewControllerDelegate?
     
     @IBAction func textFieldDidChange() {
         guard let digits = textField.text, digits.count < 5 else {
@@ -56,7 +64,13 @@ class PinViewController: UIViewController {
         
         if let pinToConfirm = previousPin {
             if pin == pinToConfirm {
-                savePin(pin: pin)
+                if isSendingPayment || isEnteringApp {
+                    delegate?.pinConfirmationSucceeded()
+                    
+                    dismissView()
+                } else {
+                    savePin(pin: pin)
+                }
             } else {
                 displayPinMismatchError()
             }
@@ -69,11 +83,13 @@ class PinViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    init(pin: String?, mnemonic: String) {
+    init(pin: String?, mnemonic: String?, isSendingPayment: Bool, isEnteringApp: Bool) {
         super.init(nibName: String(describing: PinViewController.self), bundle: nil)
         
         self.previousPin = pin
         self.mnemonic = mnemonic
+        self.isSendingPayment = isSendingPayment
+        self.isEnteringApp = isEnteringApp
     }
     
     override func viewDidLoad() {
@@ -103,6 +119,12 @@ class PinViewController: UIViewController {
        
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
+        if isSendingPayment {
+            let image = UIImage(named:"close")
+            let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
+            navigationItem.leftBarButtonItem = leftBarButtonItem
+        }
+        
         nextButton.backgroundColor = Colors.tertiaryDark
         pinViewHolder.backgroundColor = Colors.primaryDark
         view.backgroundColor = Colors.primaryDark
@@ -118,6 +140,12 @@ class PinViewController: UIViewController {
         }
     }
     
+    @objc func dismissView() {
+        view.endEditing(true)
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
     func displayPinMismatchError() {
         let alert = UIAlertController(title: "Pin error", message: "Sorry your pin did not match. Please try again.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
@@ -125,20 +153,19 @@ class PinViewController: UIViewController {
     }
     
     func confirmPin(pin: String) {
-        let pinViewController = PinViewController(pin: pin, mnemonic: mnemonic)
+        let pinViewController = PinViewController(pin: pin, mnemonic: mnemonic, isSendingPayment: isSendingPayment, isEnteringApp: isEnteringApp)
         
         navigationController?.pushViewController(pinViewController, animated: true)
     }
     
     func savePin(pin: String) {
         KeychainHelper.save(pin: pin)
+        KeychainHelper.setPinWhenEnteringApp(shouldSet: true)
+        KeychainHelper.setPinWhenSendingPayment(shouldSet: true)
         
         let appNavController = navigationController as! AppNavigationController
-        
         appNavController.accountCreationDelegate?.createAccount(mnemonic: mnemonic)
         
-        view.endEditing(true)
-        
-        dismiss(animated: true, completion: nil)
+        dismissView()
     }
 }
