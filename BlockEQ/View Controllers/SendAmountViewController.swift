@@ -130,7 +130,7 @@ class SendAmountViewController: UIViewController {
     }
     
     func displayPin() {
-        let pinViewController = PinViewController(pin: KeychainHelper.getPin(), mnemonic: nil, isSendingPayment: false, isEnteringApp: true)
+        let pinViewController = PinViewController(pin: KeychainHelper.getPin(), mnemonic: nil, isSendingPayment: true, isEnteringApp: false)
         pinViewController.delegate = self
         let navigationController = AppNavigationController(rootViewController: pinViewController)
         
