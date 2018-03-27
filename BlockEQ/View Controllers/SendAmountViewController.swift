@@ -191,7 +191,13 @@ extension SendAmountViewController {
     }
     
     func postPaymentTransaction(accountId: String, amount: Decimal) {
-        PaymentTransactionOperation.postPayment(accountId: accountId, amount: amount) { completed in
+        var memoId = ""
+        
+        if let memoIdString = memoIdTextField.text {
+            memoId = memoIdString
+        }
+        
+        PaymentTransactionOperation.postPayment(accountId: accountId, amount: amount, memoId: memoId) { completed in
             if completed {
                 self.dismissView()
             } else {

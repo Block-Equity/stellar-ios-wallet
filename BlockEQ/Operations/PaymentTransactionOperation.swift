@@ -72,7 +72,7 @@ class PaymentTransactionOperation: NSObject {
         }
     }
     
-    static func postPayment(accountId: String, amount: Decimal, completion: @escaping (Bool) -> Void) {
+    static func postPayment(accountId: String, amount: Decimal, memoId: String, completion: @escaping (Bool) -> Void) {
         guard let privateKeyData = KeychainHelper.getPrivateKey(), let publicKeyData = KeychainHelper.getPublicKey() else {
             DispatchQueue.main.async {
                 completion(false)
@@ -107,7 +107,7 @@ class PaymentTransactionOperation: NSObject {
                                                             amount: amount)
                     let transaction = try Transaction(sourceAccount: accountResponse,
                                                       operations: [paymentOperation],
-                                                      memo: Memo.none,
+                                                      memo: Memo.init(text: memoId),
                                                       timeBounds:nil)
                     try transaction.sign(keyPair: sourceKeyPair, network: Stellar.network)
                     
