@@ -76,7 +76,7 @@
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                     <connections>
-                        <action selector="confirmPhrase" destination="-1" eventType="touchUpInside" id="EhY-ez-9gd"/>
+                        <action selector="setPin" destination="-1" eventType="touchUpInside" id="Kzr-5a-Ojg"/>
                     </connections>
                 </button>
             </subviews>
