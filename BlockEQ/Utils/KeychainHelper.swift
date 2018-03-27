@@ -12,11 +12,16 @@ import UIKit
 import Foundation
 
 class KeychainHelper: NSObject {
+    static let mnemonicKeyValue = "mnemonic"
     static let accountIdKeyValue = "accountId"
     static let publicKeyValue = "publicKey"
     static let privateKeyValue = "privateKey"
     static let pinKeyValue = "pin"
     static let isFreshInstall = "isFreshInstall"
+    
+    public static func save(mnemonic: String) {
+        KeychainSwift().set(mnemonic, forKey: mnemonicKeyValue)
+    }
     
     public static func save(accountId: String) {
         KeychainSwift().set(accountId, forKey: accountIdKeyValue)
@@ -32,6 +37,10 @@ class KeychainHelper: NSObject {
     
     public static func save(pin: String) {
         KeychainSwift().set(pin, forKey: pinKeyValue)
+    }
+    
+    public static func getMnemonic() -> String? {
+        return KeychainSwift().get(mnemonicKeyValue)
     }
     
     public static func getAccountId() -> String? {

@@ -111,15 +111,25 @@ class WalletViewController: UIViewController {
     @objc func displayOptions() {
         let alertController = UIAlertController(title: "Options", message: nil, preferredStyle: .actionSheet)
         
-        let sendButton = UIAlertAction(title: "Clear Wallet", style: .default, handler: { (action) -> Void in
+        let mnemonicButton = UIAlertAction(title: "View Seed Phrase", style: .default, handler: { (action) -> Void in
+            alertController.dismiss(animated: true, completion: nil)
+            
+            let mnemonicViewController = MnemonicViewController(mnemonic: KeychainHelper.getMnemonic(), shouldSetPin: false)
+            let navigationController = AppNavigationController(rootViewController: mnemonicViewController)
+            
+            self.present(navigationController, animated: true, completion: nil)
+        })
+        
+        let clearWalletButton = UIAlertAction(title: "Clear Wallet", style: .default, handler: { (action) -> Void in
             alertController.dismiss(animated: true, completion: nil)
             
             self.clearWallet()
         })
-
+        
         let cancelButton = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
         
-        alertController.addAction(sendButton)
+        alertController.addAction(mnemonicButton)
+        alertController.addAction(clearWalletButton)
         alertController.addAction(cancelButton)
         
         navigationController?.present(alertController, animated: true, completion: nil)

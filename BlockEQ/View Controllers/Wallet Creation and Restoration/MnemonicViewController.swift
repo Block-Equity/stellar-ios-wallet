@@ -16,20 +16,38 @@ class MnemonicViewController: UIViewController {
     @IBOutlet var mnemonicHolderView: UIView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
-    var mnemonic = ""
+    var mnemonic: String!
+    var shouldSetPin: Bool = false
     
+    // Going directly to pin instead of confirming phrase for a smoother user experience.
+    /*
     @IBAction func confirmPhrase() {
         let verificationViewController = VerificationViewController(type: .questions, mnemonic: mnemonic)
         
         navigationController?.pushViewController(verificationViewController, animated: true)
+    }*/
+    
+    @IBAction func setPin() {
+        if shouldSetPin {
+            KeychainHelper.save(mnemonic: mnemonic)
+            
+            let pinViewController = PinViewController(pin: nil, mnemonic: mnemonic)
+            
+            navigationController?.pushViewController(pinViewController, animated: true)
+        } else {
+            dismissView()
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    init() {
+    init(mnemonic: String?, shouldSetPin: Bool) {
         super.init(nibName: String(describing: MnemonicViewController.self), bundle: nil)
+        
+        self.mnemonic = mnemonic
+        self.shouldSetPin = shouldSetPin
     }
 
     override func viewDidLoad() {
@@ -62,7 +80,10 @@ class MnemonicViewController: UIViewController {
     func generateMnemonic() {
         activityIndicator.stopAnimating()
         
-        mnemonic = Wallet.generate24WordMnemonic()
+        if mnemonic == nil {
+            mnemonic = Wallet.generate24WordMnemonic()
+        }
+        
         let words = mnemonic.components(separatedBy: " ")
         
         var originX: CGFloat = 0.0

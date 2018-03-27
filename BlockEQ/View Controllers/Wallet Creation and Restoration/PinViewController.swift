@@ -56,7 +56,7 @@ class PinViewController: UIViewController {
         
         if let pinToConfirm = previousPin {
             if pin == pinToConfirm {
-                savePin()
+                savePin(pin: pin)
             } else {
                 displayPinMismatchError()
             }
@@ -130,7 +130,9 @@ class PinViewController: UIViewController {
         navigationController?.pushViewController(pinViewController, animated: true)
     }
     
-    func savePin() {
+    func savePin(pin: String) {
+        KeychainHelper.save(pin: pin)
+        
         let appNavController = navigationController as! AppNavigationController
         
         appNavController.accountCreationDelegate?.createAccount(mnemonic: mnemonic)

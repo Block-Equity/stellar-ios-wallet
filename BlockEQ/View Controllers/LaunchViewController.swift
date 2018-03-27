@@ -17,7 +17,7 @@ class LaunchViewController: UIViewController {
     @IBOutlet var logoImageView: UIImageView!
     
     @IBAction func createNewWallet() {
-        let mnemonicViewController = MnemonicViewController()
+        let mnemonicViewController = MnemonicViewController(mnemonic: nil, shouldSetPin: true)
         let navigationController = AppNavigationController(rootViewController: mnemonicViewController)
         navigationController.accountCreationDelegate = self
 

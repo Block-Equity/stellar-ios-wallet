@@ -221,8 +221,12 @@ extension VerificationViewController: UITextViewDelegate {
         }
         
         collectionView.reloadData()
-        
+
         return true
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        highlightWrongWords(targetString: textView.text)
     }
 }
 
@@ -254,12 +258,55 @@ extension VerificationViewController: UICollectionViewDelegate {
         }
         
         clearSuggestions(reload: true)
+        
+        highlightWrongWords(targetString: textView.text)
     }
 }
 
 extension VerificationViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: UIScreen.main.bounds.size.width / 3, height: collectionView.frame.size.height)
+    }
+}
+
+extension VerificationViewController {
+    func highlightWrongWords(targetString: String) {
+        let attributedString = NSMutableAttributedString(string: targetString)
+        let range = NSRange(location: 0, length: targetString.utf16.count)
+        attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: Colors.black, range: range)
+        attributedString.addAttribute(NSAttributedStringKey.font, value: UIFont.systemFont(ofSize: 16.0), range: range)
+        
+        let words = getWords(string: targetString)
+        
+        for word in words {
+            if !isReal(word: word) {
+                textView.attributedText = getHighlightedAttributedString(attributedString: attributedString, word: word, in: targetString, highlightColor: Colors.red)
+            } else {
+                 textView.attributedText = getHighlightedAttributedString(attributedString: attributedString, word: word, in: targetString, highlightColor: Colors.black)
+            }
+        }
+    }
+    
+    func getHighlightedAttributedString(attributedString: NSMutableAttributedString, word: String, in targetString: String, highlightColor: UIColor) -> NSMutableAttributedString {
+        do {
+            let regex = try NSRegularExpression(pattern: word, options: .caseInsensitive)
+            let range = NSRange(location: 0, length: targetString.utf16.count)
+            for match in regex.matches(in: targetString, options: .withTransparentBounds, range: range) {
+                attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: highlightColor, range: match.range)
+            }
+            
+            return attributedString
+        } catch _ {
+            return attributedString
+        }
+    }
+    
+    func isReal(word: String) -> Bool {
+        let checker = UITextChecker()
+        let range = NSRange(location: 0, length: word.utf16.count)
+        let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
+        
+        return misspelledRange.location == NSNotFound
     }
 }
 
