@@ -97,6 +97,10 @@ class SendAmountViewController: UIViewController {
         amountLabel.text = sendingAmount.count > 0 ? sendingAmount : "0"
     }
     
+    @IBAction func clearTextfield() {
+        view.endEditing(true)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -134,6 +138,8 @@ class SendAmountViewController: UIViewController {
         view.backgroundColor = Colors.primaryDark
         
         sendAddressLabel.text = "To: \(receiver)"
+        
+        memoIdTextField.inputAccessoryView = toolBar
 
         keyboardPads = [keyboardPad0, keyboardPad1, keyboardPad2, keyboardPad3, keyboardPad4, keyboardPad5, keyboardPad6, keyboardPad7, keyboardPad8, keyboardPad9, keyboardPadDot, keyboardPadBackspace]
         

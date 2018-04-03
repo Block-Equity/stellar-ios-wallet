@@ -147,6 +147,12 @@ class PinViewController: UIViewController {
     }
     
     func displayPinMismatchError() {
+        for pinView in pinViews {
+            pinView.setEmpty()
+        }
+        
+        textField.text = ""
+        
         let alert = UIAlertController(title: "Pin error", message: "Sorry your pin did not match. Please try again.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
