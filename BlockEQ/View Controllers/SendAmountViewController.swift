@@ -37,9 +37,11 @@ class SendAmountViewController: UIViewController {
     var receiver: String = ""
     var sendingAmount: String = ""
     var stellarAccount: StellarAccount = StellarAccount()
+    let decimalCountRestriction = 7
+    let decimalDotSize = 1
     
     @IBAction func sendPayment() {
-        guard let amount = amountLabel.text, !amount.isEmpty, amount != "0" else {
+        guard let amount = amountLabel.text, !amount.isEmpty, amount != "0", isValidSendAmount(amount: amount) else {
             return
         }
         
@@ -57,6 +59,8 @@ class SendAmountViewController: UIViewController {
                 sendingAmount.remove(at: sendingAmount.index(before: sendingAmount.endIndex))
             } else {
                 sendingAmount = ""
+                
+                amountLabel.textColor = Colors.primaryDark
             }
         } else if keyboardPad == keyboardPadDot {
             if sendingAmount.count == 0 {
@@ -72,6 +76,24 @@ class SendAmountViewController: UIViewController {
             }
         }
         
+        if sendingAmount.contains(".") {
+            let array = sendingAmount.components(separatedBy: ".")
+            if array.count > 1 {
+                let decimals = array[1].count
+                if decimals > decimalCountRestriction {
+                    let substring = sendingAmount.prefix(array[0].count + decimalCountRestriction + decimalDotSize)
+                    
+                    sendingAmount = String(substring)
+                }
+            }
+        }
+        
+        if isValidSendAmount(amount: sendingAmount) {
+            amountLabel.textColor = Colors.primaryDark
+        } else {
+            amountLabel.textColor = Colors.red
+        }
+        
         amountLabel.text = sendingAmount.count > 0 ? sendingAmount : "0"
     }
     
@@ -84,6 +106,8 @@ class SendAmountViewController: UIViewController {
         
         self.receiver = reciever
         self.stellarAccount = stellarAccount
+        
+        navigationItem.title = "\(stellarAccount.balance) XLM"
     }
 
     override func viewDidLoad() {
@@ -93,8 +117,6 @@ class SendAmountViewController: UIViewController {
     }
     
     func setupView() {
-        navigationItem.title = "My Wallet"
-        
         let image = UIImage(named:"close")
         let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
@@ -144,6 +166,14 @@ class SendAmountViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
+    
+    func isValidSendAmount(amount: String) -> Bool {
+        if let totalAmountAvailable = Double(stellarAccount.balance), let totalSendable = Double(amount) {
+            return totalSendable <= totalAmountAvailable
+        }
+        
+        return true
+    }
 }
 
 extension SendAmountViewController: UITextFieldDelegate {
@@ -159,8 +189,8 @@ extension SendAmountViewController: PinViewControllerDelegate {
         guard let amount = amountLabel.text, !amount.isEmpty, amount != "0" else {
             return
         }
-        
-       checkForValidAccount(account: receiver, amount: Decimal(string: amount)!)
+
+        checkForValidAccount(account: receiver, amount: Decimal(string: amount)!)
     }
 }
 

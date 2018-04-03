@@ -94,7 +94,7 @@
                             <rect key="frame" x="81" y="1" width="278" height="53"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" returnKeyType="done"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="ZMQ-lH-aRE"/>
                             </connections>
