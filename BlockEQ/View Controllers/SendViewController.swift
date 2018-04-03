@@ -20,7 +20,9 @@ class SendViewController: UIViewController {
     var stellarAccount: StellarAccount = StellarAccount()
     
     @IBAction func addAmount() {
-        guard let receiver = sendAddressTextField.text, !receiver.isEmpty else {
+        
+        guard let receiver = sendAddressTextField.text, !receiver.isEmpty, receiver.count > 20, receiver != KeychainHelper.getAccountId() else {
+            sendAddressTextField.shake()
             return
         }
         

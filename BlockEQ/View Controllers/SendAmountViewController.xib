@@ -94,7 +94,7 @@
                             <rect key="frame" x="81" y="1" width="278" height="53"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" returnKeyType="done"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="ZMQ-lH-aRE"/>
                             </connections>
@@ -412,11 +412,14 @@
             <items>
                 <barButtonItem style="plain" systemItem="flexibleSpace" id="a5z-DY-tHS"/>
                 <barButtonItem title="Done" style="plain" id="Ms2-VV-QWl">
-                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <connections>
+                        <action selector="clearTextfield" destination="-1" id="z8h-Ls-ZTd"/>
+                    </connections>
                 </barButtonItem>
             </items>
             <color key="barTintColor" red="0.72941176470588232" green="0.74901960784313726" blue="0.77254901960784317" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <point key="canvasLocation" x="550" y="571"/>
+            <point key="canvasLocation" x="-166" y="484"/>
         </toolbar>
     </objects>
     <resources>

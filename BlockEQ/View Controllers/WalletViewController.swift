@@ -24,6 +24,7 @@ class WalletViewController: UIViewController {
     var accounts: [StellarAccount] = []
     var paymentTransactions: [PaymentTransaction] = []
     var isLoadingTransactionsOnViewLoad = true
+    var isShowingSeed = true
     var timer : DispatchSourceTimer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main)
     
     @IBAction func receiveFunds() {
@@ -114,7 +115,7 @@ class WalletViewController: UIViewController {
         let mnemonicButton = UIAlertAction(title: "View Seed Phrase", style: .default, handler: { (action) -> Void in
             alertController.dismiss(animated: true, completion: nil)
             
-            self.displayPin()
+            self.displayPin(isShowingSeed: true)
         })
         
         let clearWalletButton = UIAlertAction(title: "Clear Wallet", style: .default, handler: { (action) -> Void in
@@ -136,9 +137,7 @@ class WalletViewController: UIViewController {
         let alertController = UIAlertController(title: "Are you sure you want to clear this wallet?", message: nil, preferredStyle: .alert)
         
         let yesButton = UIAlertAction(title: "Yes", style: .destructive, handler: { (action) -> Void in
-            KeychainHelper.clearAll()
-            
-            self.navigationController?.popViewController(animated: true)
+           self.displayPin(isShowingSeed: false)
         })
         
         let cancelButton = UIAlertAction(title: "Cancel", style: .default, handler: nil)
@@ -149,7 +148,9 @@ class WalletViewController: UIViewController {
         navigationController?.present(alertController, animated: true, completion: nil)
     }
     
-    func displayPin() {
+    func displayPin(isShowingSeed: Bool) {
+        self.isShowingSeed = isShowingSeed
+        
         let pinViewController = PinViewController(pin: KeychainHelper.getPin(), mnemonic: nil, isSendingPayment: true, isEnteringApp: false)
         pinViewController.delegate = self
         let navigationController = AppNavigationController(rootViewController: pinViewController)
@@ -245,10 +246,16 @@ extension WalletViewController: UIScrollViewDelegate {
 extension WalletViewController: PinViewControllerDelegate {
     func pinConfirmationSucceeded() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            let mnemonicViewController = MnemonicViewController(mnemonic: KeychainHelper.getMnemonic(), shouldSetPin: false)
-            let navigationController = AppNavigationController(rootViewController: mnemonicViewController)
-            
-            self.present(navigationController, animated: true, completion: nil)
+            if self.isShowingSeed {
+                let mnemonicViewController = MnemonicViewController(mnemonic: KeychainHelper.getMnemonic(), shouldSetPin: false)
+                let navigationController = AppNavigationController(rootViewController: mnemonicViewController)
+                
+                self.present(navigationController, animated: true, completion: nil)
+            } else {
+                KeychainHelper.clearAll()
+                
+                self.navigationController?.popViewController(animated: true)
+            }
         }
     }
 }

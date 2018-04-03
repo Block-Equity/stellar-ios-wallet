@@ -107,7 +107,7 @@ class PaymentTransactionOperation: NSObject {
                                                             amount: amount)
                     let transaction = try Transaction(sourceAccount: accountResponse,
                                                       operations: [paymentOperation],
-                                                      memo: Memo.init(text: memoId),
+                                                      memo: Memo.id(UInt64(memoId)!),
                                                       timeBounds:nil)
                     try transaction.sign(keyPair: sourceKeyPair, network: Stellar.network)
                     
