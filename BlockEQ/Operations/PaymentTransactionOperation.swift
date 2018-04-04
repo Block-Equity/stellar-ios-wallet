@@ -98,6 +98,14 @@ class PaymentTransactionOperation: NSObject {
         }
         
         Stellar.sdk.accounts.getAccountDetails(accountId: sourceKeyPair.accountId) { (response) -> (Void) in
+            var memo = Memo.none
+            
+            if !memoId.isEmpty {
+                if let memoNumber = UInt64(memoId) {
+                    memo = Memo.id(memoNumber)
+                }
+            }
+            
             switch response {
             case .success(let accountResponse):
                 do {
@@ -107,7 +115,7 @@ class PaymentTransactionOperation: NSObject {
                                                             amount: amount)
                     let transaction = try Transaction(sourceAccount: accountResponse,
                                                       operations: [paymentOperation],
-                                                      memo: Memo.id(UInt64(memoId)!),
+                                                      memo: memo,
                                                       timeBounds:nil)
                     try transaction.sign(keyPair: sourceKeyPair, network: Stellar.network)
                     
