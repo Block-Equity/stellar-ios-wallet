@@ -18,6 +18,7 @@ class SendViewController: UIViewController {
     @IBOutlet var sendAddressTextField: UITextField!
     
     var stellarAccount: StellarAccount = StellarAccount()
+    var currentAssetIndex = 0
     
     @IBAction func addAmount() {
         
@@ -28,7 +29,7 @@ class SendViewController: UIViewController {
         
         view.endEditing(true)
         
-        let sendAmountViewController = SendAmountViewController(stellarAccount: stellarAccount, reciever: receiver)
+        let sendAmountViewController = SendAmountViewController(stellarAccount: stellarAccount, currentAssetIndex: currentAssetIndex, reciever: receiver)
         navigationController?.pushViewController(sendAmountViewController, animated: true)
     }
     
@@ -44,10 +45,11 @@ class SendViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    init(stellarAccount: StellarAccount) {
+    init(stellarAccount: StellarAccount, currentAssetIndex: Int) {
         super.init(nibName: String(describing: SendViewController.self), bundle: nil)
         
         self.stellarAccount = stellarAccount
+        self.currentAssetIndex = currentAssetIndex
     }
 
     override func viewDidLoad() {
@@ -84,7 +86,7 @@ class SendViewController: UIViewController {
         holdingView.backgroundColor = Colors.lightBackground
         view.backgroundColor = Colors.primaryDark
         
-        balanceLabel.text = "\(stellarAccount.balance) XLM"
+        balanceLabel.text = "\(stellarAccount.assets[currentAssetIndex].balance) XLM"
     }
     
     func setViewStateToNotEditing() {

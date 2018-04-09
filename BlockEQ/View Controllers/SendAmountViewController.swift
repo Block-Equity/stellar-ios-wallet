@@ -39,6 +39,7 @@ class SendAmountViewController: UIViewController {
     var stellarAccount: StellarAccount = StellarAccount()
     let decimalCountRestriction = 7
     let decimalDotSize = 1
+    var currentAssetIndex = 0
     
     @IBAction func sendPayment() {
         guard let amount = amountLabel.text, !amount.isEmpty, amount != "0", isValidSendAmount(amount: amount) else {
@@ -105,13 +106,14 @@ class SendAmountViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    init(stellarAccount: StellarAccount, reciever: String) {
+    init(stellarAccount: StellarAccount, currentAssetIndex: Int, reciever: String) {
         super.init(nibName: String(describing: SendAmountViewController.self), bundle: nil)
         
         self.receiver = reciever
         self.stellarAccount = stellarAccount
+        self.currentAssetIndex = currentAssetIndex
         
-        navigationItem.title = "\(stellarAccount.balance) XLM"
+        navigationItem.title = "\(stellarAccount.assets[currentAssetIndex].balance) XLM"
     }
 
     override func viewDidLoad() {
@@ -174,7 +176,7 @@ class SendAmountViewController: UIViewController {
     }
     
     func isValidSendAmount(amount: String) -> Bool {
-        if let totalAmountAvailable = Double(stellarAccount.balance), let totalSendable = Double(amount) {
+        if let totalAmountAvailable = Double(stellarAccount.assets[currentAssetIndex].balance), let totalSendable = Double(amount) {
             return totalSendable <= totalAmountAvailable
         }
         

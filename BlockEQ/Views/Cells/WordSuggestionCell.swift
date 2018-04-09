@@ -23,7 +23,7 @@ class WordSuggestionCell: UICollectionViewCell {
     override var isHighlighted: Bool {
         didSet {
             contentView.backgroundColor = isHighlighted ? Colors.lightGray : nil
-            titleLabel.textColor = isHighlighted ? Colors.darkGray: Colors.white
+            titleLabel.textColor = isHighlighted ? Colors.darkGray : Colors.white
         }
     }
 }

@@ -6,6 +6,8 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
+import stellarsdk
+import SideMenu
 import UIKit
 
 class WalletViewController: UIViewController {
@@ -21,11 +23,14 @@ class WalletViewController: UIViewController {
     @IBOutlet var tableViewHeaderRightLabel: UILabel!
     @IBOutlet var logoImageView: UIImageView!
     
+    let sideMenuViewController = SideMenuViewController()
+    
     var accounts: [StellarAccount] = []
     var paymentTransactions: [PaymentTransaction] = []
     var isLoadingTransactionsOnViewLoad = true
     var isShowingSeed = true
     var timer : DispatchSourceTimer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main)
+    var currentAssetIndex = 0
     
     @IBAction func receiveFunds() {
         let currentStellarAccount = accounts[pageControl.currentPage]
@@ -37,7 +42,7 @@ class WalletViewController: UIViewController {
     
     @IBAction func sendFunds() {
         let currentStellarAccount = accounts[pageControl.currentPage]
-        let sendViewController = SendViewController(stellarAccount: currentStellarAccount)
+        let sendViewController = SendViewController(stellarAccount: currentStellarAccount, currentAssetIndex: currentAssetIndex)
         let navigationController = AppNavigationController(rootViewController: sendViewController)
         
         present(navigationController, animated: true, completion: nil)
@@ -54,6 +59,7 @@ class WalletViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupSideMenu()
         setupView()
         checkForPaymentReceived()
         startPollingForAccountFunding()
@@ -73,6 +79,15 @@ class WalletViewController: UIViewController {
         stopTimer()
     }
     
+    func setupSideMenu() {
+        sideMenuViewController.delegate = self
+        
+        SideMenuManager.default.menuLeftNavigationController = SideMenuNavController(rootViewController: sideMenuViewController)
+        SideMenuManager.default.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
+        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view, forMenu: .left)
+        SideMenuManager.default.menuAnimationBackgroundColor = UIColor.clear
+    }
+    
     func setupView() {
         let collectionViewNib = UINib(nibName: WalletCell.cellIdentifier, bundle: nil)
         collectionView.register(collectionViewNib, forCellWithReuseIdentifier: WalletCell.cellIdentifier)
@@ -82,8 +97,12 @@ class WalletViewController: UIViewController {
         
         navigationItem.titleView = logoImageView
         
-        let image = UIImage(named:"settings")
-        let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.displayOptions))
+        let imageMenu = UIImage(named:"menu")
+        let leftBarButtonItem = UIBarButtonItem(image: imageMenu, style: .plain, target: self, action: #selector(self.displayMenu))
+        navigationItem.leftBarButtonItem = leftBarButtonItem
+        
+        let imageSettings = UIImage(named:"settings")
+        let rightBarButtonItem = UIBarButtonItem(image: imageSettings, style: .plain, target: self, action: #selector(self.displayOptions))
         navigationItem.rightBarButtonItem = rightBarButtonItem
         
         emptyViewTitleLabel.textColor = Colors.darkGray
@@ -107,6 +126,10 @@ class WalletViewController: UIViewController {
     
     func stopTimer() {
         timer.cancel()
+    }
+    
+    @objc func displayMenu() {
+        present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
     }
     
     @objc func displayOptions() {
@@ -168,7 +191,7 @@ extension WalletViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WalletCell.cellIdentifier, for: indexPath) as! WalletCell
         let stellarAccount = accounts[indexPath.row]
         
-        cell.amountLabel.text = stellarAccount.formattedBalance
+        cell.amountLabel.text = stellarAccount.assets[currentAssetIndex].formattedBalance
         
         return cell
     }
@@ -184,6 +207,7 @@ extension WalletViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
@@ -260,6 +284,12 @@ extension WalletViewController: PinViewControllerDelegate {
     }
 }
 
+extension WalletViewController: SideMenuViewControllerDelegate {
+    func didSelect(asset: Assets.AssetType) {
+        
+    }
+}
+
 /*
  * Operations
  */
@@ -277,11 +307,18 @@ extension WalletViewController {
                 
                 let stellarAccount = StellarAccount()
                 stellarAccount.accountId = accountId
-                stellarAccount.balance = "0.00"
+                
+                let stellarAsset = StellarAsset()
+                stellarAsset.balance = "0.00"
+                stellarAsset.assetType = AssetTypeAsString.NATIVE
+                
+                stellarAccount.assets.removeAll()
+                stellarAccount.assets.append(stellarAsset)
                 
                 self.accounts.append(stellarAccount)
             }
             
+            self.sideMenuViewController.updateMenu(stellarAccount: self.accounts[0])
             self.collectionView.reloadData()
             self.activityIndicator.stopAnimating()
         }
