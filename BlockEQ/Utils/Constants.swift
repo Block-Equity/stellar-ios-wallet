@@ -61,7 +61,6 @@ public struct Assets {
                 return "PTS"
             case .cad:
                 return "CAD"
-                
             }
         }
         
