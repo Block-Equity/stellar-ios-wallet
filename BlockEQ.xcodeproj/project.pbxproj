@@ -61,6 +61,8 @@
 		EC72C0B72059EF7C00141D6F /* PaymentTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC72C0B62059EF7C00141D6F /* PaymentTransaction.swift */; };
 		ECB2F081207BF45E00F53798 /* StellarAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB2F080207BF45E00F53798 /* StellarAsset.swift */; };
 		ECC47A6920589F92002BA573 /* UIView+Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC47A6820589F92002BA573 /* UIView+Shake.swift */; };
+		ECD3A352207D2CE5000609A0 /* WalletItemActivateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD3A350207D2CE5000609A0 /* WalletItemActivateCell.swift */; };
+		ECD3A353207D2CE5000609A0 /* WalletItemActivateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECD3A351207D2CE5000609A0 /* WalletItemActivateCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +147,8 @@
 		EC72C0B62059EF7C00141D6F /* PaymentTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTransaction.swift; sourceTree = "<group>"; };
 		ECB2F080207BF45E00F53798 /* StellarAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarAsset.swift; sourceTree = "<group>"; };
 		ECC47A6820589F92002BA573 /* UIView+Shake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shake.swift"; sourceTree = "<group>"; };
+		ECD3A350207D2CE5000609A0 /* WalletItemActivateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletItemActivateCell.swift; sourceTree = "<group>"; };
+		ECD3A351207D2CE5000609A0 /* WalletItemActivateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletItemActivateCell.xib; sourceTree = "<group>"; };
 		F841B5704ACF1CA64264F2A4 /* Pods-BlockEQTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQTests/Pods-BlockEQTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F96BA337147C641F27202448 /* Pods-BlockEQUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQUITests/Pods-BlockEQUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -198,6 +202,8 @@
 				EC1CEE5220577E880005F74E /* WordSuggestionCell.xib */,
 				EC581C7620769E0A003A397E /* WalletItemCell.swift */,
 				EC581C7720769E0A003A397E /* WalletItemCell.xib */,
+				ECD3A350207D2CE5000609A0 /* WalletItemActivateCell.swift */,
+				ECD3A351207D2CE5000609A0 /* WalletItemActivateCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -479,6 +485,7 @@
 			files = (
 				EC0B192320549B240052802C /* ReceiveViewController.xib in Resources */,
 				EC2015FB20533A89009A73C8 /* MnemonicViewController.xib in Resources */,
+				ECD3A353207D2CE5000609A0 /* WalletItemActivateCell.xib in Resources */,
 				EC0B191B205465BF0052802C /* WalletCell.xib in Resources */,
 				EC3609FE20560FDB00FC31F9 /* ScanViewController.xib in Resources */,
 				EC2015DA2052DB6D009A73C8 /* LaunchViewController.xib in Resources */,
@@ -673,6 +680,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECD3A352207D2CE5000609A0 /* WalletItemActivateCell.swift in Sources */,
 				EC72C0B72059EF7C00141D6F /* PaymentTransaction.swift in Sources */,
 				EC2015F720532F4B009A73C8 /* AppButton.swift in Sources */,
 				EC20160120536C68009A73C8 /* PillView.swift in Sources */,

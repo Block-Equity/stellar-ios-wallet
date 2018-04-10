@@ -13,6 +13,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SideMenuViewController" customModule="BlockEQ" customModuleProvider="target">
             <connections>
                 <outlet property="tableView" destination="Mz8-Jj-mUP" id="ooS-XE-AgF"/>
+                <outlet property="tableViewHeader" destination="qf0-pR-vkv" id="2gj-iX-s6x"/>
+                <outlet property="tableViewHeaderTitleLabel" destination="7pK-7m-cCt" id="92L-Je-wRN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -39,6 +41,38 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="49" y="-449"/>
+        </view>
+        <view contentMode="scaleToFill" id="qf0-pR-vkv">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SUPPORTED ASSETS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7pK-7m-cCt">
+                    <rect key="frame" x="16" y="0.0" width="343" height="39"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XWs-hi-oyd">
+                    <rect key="frame" x="0.0" y="39" width="375" height="1"/>
+                    <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="qvf-Lu-KYb"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="XWs-hi-oyd" firstAttribute="top" secondItem="7pK-7m-cCt" secondAttribute="bottom" id="7tZ-ZT-DmK"/>
+                <constraint firstItem="XWs-hi-oyd" firstAttribute="leading" secondItem="qf0-pR-vkv" secondAttribute="leading" id="DLg-8X-kvn"/>
+                <constraint firstItem="7pK-7m-cCt" firstAttribute="top" secondItem="PG5-EE-bAG" secondAttribute="top" id="QgX-OD-bf2"/>
+                <constraint firstItem="XWs-hi-oyd" firstAttribute="bottom" secondItem="PG5-EE-bAG" secondAttribute="bottom" id="VRJ-aH-sNZ"/>
+                <constraint firstItem="PG5-EE-bAG" firstAttribute="trailing" secondItem="7pK-7m-cCt" secondAttribute="trailing" constant="16" id="azp-b0-YsU"/>
+                <constraint firstItem="7pK-7m-cCt" firstAttribute="leading" secondItem="PG5-EE-bAG" secondAttribute="leading" constant="16" id="seA-0Z-BgY"/>
+                <constraint firstAttribute="trailing" secondItem="XWs-hi-oyd" secondAttribute="trailing" id="tig-Qk-KrL"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="PG5-EE-bAG"/>
+            <point key="canvasLocation" x="34" y="491"/>
         </view>
     </objects>
 </document>

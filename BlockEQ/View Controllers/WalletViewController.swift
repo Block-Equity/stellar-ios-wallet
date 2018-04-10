@@ -288,6 +288,11 @@ extension WalletViewController: SideMenuViewControllerDelegate {
     func didSelect(asset: Assets.AssetType) {
         
     }
+    
+    func reloadAssets() {
+        getAccountDetails()
+        getPaymentTransactions()
+    }
 }
 
 /*

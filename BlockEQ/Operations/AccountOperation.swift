@@ -21,17 +21,17 @@ public class AccountOperation {
                 stellarAccount.accountId = accountDetails.accountId
                 stellarAccount.assets.removeAll()
                 
-                print("Total number of accounts", accountDetails.balances.count)
-                
                 for accountDetail in accountDetails.balances {
                     let stellarAsset = StellarAsset()
                     stellarAsset.assetType = accountDetail.assetType
                     stellarAsset.balance = accountDetail.balance
                     stellarAsset.assetCode = accountDetail.assetCode
                     stellarAsset.assetIssuer = accountDetail.assetIssuer
-                    print("Asset Type", accountDetail.assetType)
-                    print("Balance", accountDetail.balance)
-                    stellarAccount.assets.append(stellarAsset)
+                    if accountDetail.assetType == AssetTypeAsString.NATIVE {
+                        stellarAccount.assets.insert(stellarAsset, at: 0)
+                    } else{
+                        stellarAccount.assets.append(stellarAsset)
+                    }
                 }
                                 
                 accounts.append(stellarAccount)

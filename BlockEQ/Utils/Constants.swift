@@ -27,6 +27,7 @@ struct Colors {
     static let white = UIColor.white
     static let whiteTransparent = UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: Alphas.transparent)
     static let green = UIColor(red: 72.0/255.0, green: 209.0/255.0, blue: 72.0/255.0, alpha: Alphas.opaque)
+    static let greenTransparent = UIColor(red: 72.0/255.0, green: 209.0/255.0, blue: 72.0/255.0, alpha: Alphas.opaqueTransparent)
     static let red = UIColor(red: 255.0/255.0, green: 105.0/255.0, blue: 97.0/255.0, alpha: Alphas.opaque)
     static let transparent = UIColor.clear
 }
@@ -51,18 +52,28 @@ public struct Stellar {
 
 public struct Assets {
     enum AssetType: String {
-        case lumens = "Lumens"
         case points = "Points"
+        case cad = "Canadian Dollar"
         
         var shortForm: String {
             switch self {
-            case .lumens:
-                return "XLM"
             case .points:
                 return "PTS"
+            case .cad:
+                return "CAD"
+                
+            }
+        }
+        
+        var issuerAccount: String {
+            switch self {
+            case .points:
+                return "GAFM3KFVOYHOLG44ELNUCBUY37B53ZPD2V2MHFNDMF3QLQ6DB355XLIJ"
+            case .cad:
+                return "GAFM3KFVOYHOLG44ELNUCBUY37B53ZPD2V2MHFNDMF3QLQ6DB355XLIJ"
             }
         }
     }
     
-    static let all: [AssetType] = [.lumens, .points]
+    static let all: [AssetType] = [.points]
 }
