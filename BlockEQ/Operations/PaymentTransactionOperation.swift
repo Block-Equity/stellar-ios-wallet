@@ -10,7 +10,7 @@ import stellarsdk
 import UIKit
 
 class PaymentTransactionOperation: NSObject {
-    static func getTransactions(accountId: String, completion: @escaping ([PaymentTransaction]) -> Void) {
+    static func getTransactions(accountId: String, stellarAsset: StellarAsset, completion: @escaping ([PaymentTransaction]) -> Void) {
         
         var paymentTransactions: [PaymentTransaction] = []
         
@@ -18,7 +18,7 @@ class PaymentTransactionOperation: NSObject {
             switch response {
             case .success(let paymentsResponse):
                 for payment in paymentsResponse.records {
-                    if let paymentResponse = payment as? PaymentOperationResponse {
+                    if let paymentResponse = payment as? PaymentOperationResponse, paymentResponse.assetCode == stellarAsset.assetCode, paymentResponse.assetType == stellarAsset.assetType {
                         let paymentTransaction = getPaymentTransaction(amount: paymentResponse.amount,
                                                                        assetType: paymentResponse.assetType,
                                                                        date: paymentResponse.createdAt,
@@ -28,7 +28,7 @@ class PaymentTransactionOperation: NSObject {
                         paymentTransactions.append(paymentTransaction)
                     }
                     
-                    if let paymentResponse = payment as? AccountCreatedOperationResponse {
+                    if let paymentResponse = payment as? AccountCreatedOperationResponse, stellarAsset.assetType == AssetTypeAsString.NATIVE  {
                         let paymentTransaction = getPaymentTransaction(amount: String(describing: paymentResponse.startingBalance),
                                                                        assetType: AssetTypeAsString.NATIVE,
                                                                        date: paymentResponse.createdAt,
@@ -72,7 +72,7 @@ class PaymentTransactionOperation: NSObject {
         }
     }
     
-    static func postPayment(accountId: String, amount: Decimal, memoId: String, completion: @escaping (Bool) -> Void) {
+    static func postPayment(accountId: String, amount: Decimal, memoId: String, stellarAsset: StellarAsset, completion: @escaping (Bool) -> Void) {
         guard let privateKeyData = KeychainHelper.getPrivateKey(), let publicKeyData = KeychainHelper.getPublicKey() else {
             DispatchQueue.main.async {
                 completion(false)
@@ -109,9 +109,24 @@ class PaymentTransactionOperation: NSObject {
             switch response {
             case .success(let accountResponse):
                 do {
+                
+                    let asset: Asset!
+                    if stellarAsset.assetType == AssetTypeAsString.NATIVE {
+                        asset = Asset(type: AssetType.ASSET_TYPE_NATIVE)!
+                    } else {
+                        guard  let issuerKeyPair = try? KeyPair(publicKey: PublicKey.init(accountId: stellarAsset.assetIssuer!), privateKey: nil) else {
+                            DispatchQueue.main.async {
+                                completion(false)
+                            }
+                            return
+                        }
+                        
+                        asset = Asset(type: AssetType.ASSET_TYPE_CREDIT_ALPHANUM4, code: stellarAsset.assetCode, issuer: issuerKeyPair)
+                    }
+                    
                     let paymentOperation = PaymentOperation(sourceAccount: sourceKeyPair,
                                                             destination: destinationKeyPair,
-                                                            asset: Asset(type: AssetType.ASSET_TYPE_NATIVE)!,
+                                                            asset: asset,
                                                             amount: amount)
                     let transaction = try Transaction(sourceAccount: accountResponse,
                                                       operations: [paymentOperation],
@@ -140,6 +155,79 @@ class PaymentTransactionOperation: NSObject {
                 }
             case .failure(let error):
                 StellarSDKLog.printHorizonRequestErrorMessage(tag:"Post Payment Error", horizonRequestError:error)
+                DispatchQueue.main.async {
+                    completion(false)
+                }
+            }
+        }
+    }
+    
+    static func changeTrust(issuerAccountId: String, assetCode: String, completion: @escaping (Bool) -> Void) {
+        guard let privateKeyData = KeychainHelper.getPrivateKey(), let publicKeyData = KeychainHelper.getPublicKey() else {
+            DispatchQueue.main.async {
+                completion(false)
+            }
+            return
+        }
+        
+        let publicBytes: [UInt8] = [UInt8](publicKeyData)
+        let privateBytes: [UInt8] = [UInt8](privateKeyData)
+        
+        guard let sourceKeyPair = try? KeyPair(publicKey: PublicKey(publicBytes), privateKey: PrivateKey(privateBytes)) else {
+            DispatchQueue.main.async {
+                completion(false)
+            }
+            return
+        }
+        
+        guard  let issuerKeyPair = try? KeyPair(publicKey: PublicKey.init(accountId: issuerAccountId), privateKey: nil) else {
+            DispatchQueue.main.async {
+                completion(false)
+            }
+            return
+        }
+        
+        guard let asset = Asset.init(type: AssetType.ASSET_TYPE_CREDIT_ALPHANUM4, code: assetCode, issuer: issuerKeyPair) else {
+            DispatchQueue.main.async {
+                completion(false)
+            }
+            return
+        }
+        
+        Stellar.sdk.accounts.getAccountDetails(accountId: sourceKeyPair.accountId) { (response) -> (Void) in
+
+            switch response {
+            case .success(let accountResponse):
+                do {
+                    let changeTrustOperation = ChangeTrustOperation(sourceAccount: sourceKeyPair, asset: asset, limit: 10000000000)
+                    
+                    let transaction = try Transaction(sourceAccount: accountResponse,
+                                                      operations: [changeTrustOperation],
+                                                      memo: Memo.none,
+                                                      timeBounds:nil)
+                    try transaction.sign(keyPair: sourceKeyPair, network: Stellar.network)
+                    
+                    try Stellar.sdk.transactions.submitTransaction(transaction: transaction) { (response) -> (Void) in
+                        switch response {
+                        case .success(_):
+                            DispatchQueue.main.async {
+                                completion(true)
+                            }
+                        case .failure(let error):
+                            StellarSDKLog.printHorizonRequestErrorMessage(tag:"Post Change Trust Error", horizonRequestError:error)
+                            DispatchQueue.main.async {
+                                completion(false)
+                            }
+                        }
+                    }
+                }
+                catch {
+                    DispatchQueue.main.async {
+                        completion(false)
+                    }
+                }
+            case .failure(let error):
+                StellarSDKLog.printHorizonRequestErrorMessage(tag:"Post Change Trust Error", horizonRequestError:error)
                 DispatchQueue.main.async {
                     completion(false)
                 }

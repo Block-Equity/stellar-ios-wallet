@@ -10,13 +10,5 @@ import UIKit
 
 class StellarAccount: NSObject {
     var accountId = ""
-    var balance = ""
-    
-    var formattedBalance: String {
-        guard let floatValue = Float(balance) else {
-            return ""
-        }
-        
-        return String(format: "%.2f", floatValue)
-    }
+    var assets: [StellarAsset] = []
 }

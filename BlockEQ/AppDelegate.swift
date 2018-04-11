@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let launchNavController = AppNavigationController.init(rootViewController: launchViewController)
         
         window = window ?? UIWindow(frame: CGRect(origin: CGPoint.zero, size: UIScreen.main.bounds.size))
-        window?.backgroundColor = Colors.primaryDark
         window?.rootViewController = launchNavController
         window?.makeKeyAndVisible()
         

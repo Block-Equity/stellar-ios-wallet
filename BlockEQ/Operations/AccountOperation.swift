@@ -19,8 +19,21 @@ public class AccountOperation {
             case .success(let accountDetails):
                 let stellarAccount = StellarAccount()
                 stellarAccount.accountId = accountDetails.accountId
-                stellarAccount.balance = accountDetails.balances[0].balance
+                stellarAccount.assets.removeAll()
                 
+                for accountDetail in accountDetails.balances {
+                    let stellarAsset = StellarAsset()
+                    stellarAsset.assetType = accountDetail.assetType
+                    stellarAsset.balance = accountDetail.balance
+                    stellarAsset.assetCode = accountDetail.assetCode
+                    stellarAsset.assetIssuer = accountDetail.assetIssuer
+                    if accountDetail.assetType == AssetTypeAsString.NATIVE {
+                        stellarAccount.assets.insert(stellarAsset, at: 0)
+                    } else{
+                        stellarAccount.assets.append(stellarAsset)
+                    }
+                }
+                                
                 accounts.append(stellarAccount)
                 
                 DispatchQueue.main.async {
