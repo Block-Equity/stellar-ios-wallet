@@ -75,6 +75,7 @@ class SideMenuViewController: UIViewController {
     }
     
     func updateMenu(stellarAccount: StellarAccount) {
+        
         self.stellarAccount = stellarAccount
         
         updatedSupportedAssets.removeAll()
@@ -191,7 +192,8 @@ extension SideMenuViewController: UITableViewDelegate {
  */
 extension SideMenuViewController {
     func createTrustLine(asset: Assets.AssetType) {
-        PaymentTransactionOperation.changeTrust(issuerAccountId: asset.issuerAccount, assetCode: asset.shortForm) { completed in
+        PaymentTransactionOperation.changeTrust(issuerAccountId: asset.issuerAccount, assetCode: asset.shortForm) { completed
+            in
             if completed {
                 print("Asset added")
                 self.delegate?.reloadAssets()

@@ -236,7 +236,9 @@ extension SendAmountViewController {
             memoId = memoIdString
         }
         
-        PaymentTransactionOperation.postPayment(accountId: accountId, amount: amount, memoId: memoId) { completed in
+        let stellarAsset = stellarAccount.assets[currentAssetIndex]
+        
+        PaymentTransactionOperation.postPayment(accountId: accountId, amount: amount, memoId: memoId, stellarAsset: stellarAsset) { completed in
             if completed {
                 self.dismissView()
             } else {

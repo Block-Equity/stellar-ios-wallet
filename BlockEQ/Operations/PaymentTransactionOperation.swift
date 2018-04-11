@@ -72,7 +72,7 @@ class PaymentTransactionOperation: NSObject {
         }
     }
     
-    static func postPayment(accountId: String, amount: Decimal, memoId: String, completion: @escaping (Bool) -> Void) {
+    static func postPayment(accountId: String, amount: Decimal, memoId: String, stellarAsset: StellarAsset, completion: @escaping (Bool) -> Void) {
         guard let privateKeyData = KeychainHelper.getPrivateKey(), let publicKeyData = KeychainHelper.getPublicKey() else {
             DispatchQueue.main.async {
                 completion(false)
@@ -109,9 +109,24 @@ class PaymentTransactionOperation: NSObject {
             switch response {
             case .success(let accountResponse):
                 do {
+                
+                    let asset: Asset!
+                    if stellarAsset.assetType == AssetTypeAsString.NATIVE {
+                        asset = Asset(type: AssetType.ASSET_TYPE_NATIVE)!
+                    } else {
+                        guard  let issuerKeyPair = try? KeyPair(publicKey: PublicKey.init(accountId: stellarAsset.assetIssuer!), privateKey: nil) else {
+                            DispatchQueue.main.async {
+                                completion(false)
+                            }
+                            return
+                        }
+                        
+                        asset = Asset(type: AssetType.ASSET_TYPE_CREDIT_ALPHANUM4, code: stellarAsset.assetCode, issuer: issuerKeyPair)
+                    }
+                    
                     let paymentOperation = PaymentOperation(sourceAccount: sourceKeyPair,
                                                             destination: destinationKeyPair,
-                                                            asset: Asset(type: AssetType.ASSET_TYPE_NATIVE)!,
+                                                            asset: asset,
                                                             amount: amount)
                     let transaction = try Transaction(sourceAccount: accountResponse,
                                                       operations: [paymentOperation],

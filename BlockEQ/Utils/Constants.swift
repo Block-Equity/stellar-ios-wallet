@@ -67,12 +67,12 @@ public struct Assets {
         var issuerAccount: String {
             switch self {
             case .points:
-                return "GAFM3KFVOYHOLG44ELNUCBUY37B53ZPD2V2MHFNDMF3QLQ6DB355XLIJ"
+                return "GBPG7KRYC3PTKHBXQGRD3GMZ5DB4C3D553ZN2ZLH57LBAQIULVY46Z5F"
             case .cad:
                 return "GAFM3KFVOYHOLG44ELNUCBUY37B53ZPD2V2MHFNDMF3QLQ6DB355XLIJ"
             }
         }
     }
     
-    static let all: [AssetType] = [.points]
+    static let all: [AssetType] = [.points, .cad]
 }
