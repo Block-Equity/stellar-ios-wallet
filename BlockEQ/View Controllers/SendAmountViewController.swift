@@ -10,11 +10,8 @@ import UIKit
 
 class SendAmountViewController: UIViewController {
 
-    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var amountLabel: UILabel!
     @IBOutlet var currencyLabel: UILabel!
-    @IBOutlet var indicatorView: UIView!
-    @IBOutlet var indicatorTitle: UILabel!
     @IBOutlet var keyboardHolderView: UIView!
     @IBOutlet var keyboardPad1: UIButton!
     @IBOutlet var keyboardPad2: UIButton!
@@ -33,12 +30,13 @@ class SendAmountViewController: UIViewController {
     @IBOutlet var sendAddressLabel: UILabel!
     @IBOutlet var toolBar: UIToolbar!
     
+    let decimalCountRestriction = 7
+    let decimalDotSize = 1
+    
     var keyboardPads: [UIButton]!
     var receiver: String = ""
     var sendingAmount: String = ""
     var stellarAccount: StellarAccount = StellarAccount()
-    let decimalCountRestriction = 7
-    let decimalDotSize = 1
     var currentAssetIndex = 0
     
     @IBAction func sendPayment() {
@@ -126,11 +124,7 @@ class SendAmountViewController: UIViewController {
         let image = UIImage(named:"close")
         let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
-        
-        indicatorView.isHidden = true
-    
-        activityIndicator.tintColor = Colors.darkGray
-        indicatorTitle.textColor = Colors.darkGray
+
         sendAddressLabel.textColor = Colors.darkGray
         amountLabel.textColor = Colors.primaryDark
         currencyLabel.textColor = Colors.darkGrayTransparent
@@ -169,7 +163,7 @@ class SendAmountViewController: UIViewController {
     }
     
     func displayTransactionError() {
-        indicatorView.isHidden = true
+        hideHud()
         
         let alert = UIAlertController(title: "Transaction error", message: "There was an error processing this transaction. Please try again later.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
@@ -182,6 +176,16 @@ class SendAmountViewController: UIViewController {
         }
         
         return true
+    }
+    
+    func showHud() {
+        let hud = MBProgressHUD.showAdded(to: (navigationController?.view)!, animated: true)
+        hud.label.text = "Sending Payment..."
+        hud.mode = .indeterminate
+    }
+    
+    func hideHud() {
+        MBProgressHUD.hide(for: (navigationController?.view)!, animated: true)
     }
 }
 
@@ -208,7 +212,7 @@ extension SendAmountViewController: PinViewControllerDelegate {
  */
 extension SendAmountViewController {
     func checkForValidAccount(account accountId: String, amount: Decimal) {
-        self.indicatorView.isHidden = false
+        showHud()
         
         AccountOperation.getAccountDetails(accountId: accountId) { accounts in
             if accounts.count > 0 {

@@ -98,6 +98,16 @@ class SideMenuViewController: UIViewController {
         
         tableView.reloadData()
     }
+    
+    func showHud() {
+        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+        hud.label.text = "Activating Account..."
+        hud.mode = .indeterminate
+    }
+    
+    func hideHud() {
+        MBProgressHUD.hide(for: UIApplication.shared.keyWindow!, animated: true)
+    }
 }
 
 extension SideMenuViewController: UITableViewDataSource {
@@ -192,12 +202,15 @@ extension SideMenuViewController: UITableViewDelegate {
  */
 extension SideMenuViewController {
     func createTrustLine(asset: Assets.AssetType) {
+        showHud()
+        
         PaymentTransactionOperation.changeTrust(issuerAccountId: asset.issuerAccount, assetCode: asset.shortForm) { completed
             in
             if completed {
-                print("Asset added")
                 self.delegate?.reloadAssets()
             }
+            
+            self.hideHud()
         }
     }
 }

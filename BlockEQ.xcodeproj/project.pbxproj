@@ -59,6 +59,7 @@
 		EC72C0B22059742900141D6F /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC72C0B12059742900141D6F /* KeychainHelper.swift */; };
 		EC72C0B420597CA600141D6F /* StellarAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC72C0B320597CA600141D6F /* StellarAccount.swift */; };
 		EC72C0B72059EF7C00141D6F /* PaymentTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC72C0B62059EF7C00141D6F /* PaymentTransaction.swift */; };
+		ECB1D958207E966D0088826D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB1D956207E966D0088826D /* MBProgressHUD.m */; };
 		ECB2F081207BF45E00F53798 /* StellarAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB2F080207BF45E00F53798 /* StellarAsset.swift */; };
 		ECC47A6920589F92002BA573 /* UIView+Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC47A6820589F92002BA573 /* UIView+Shake.swift */; };
 		ECD3A352207D2CE5000609A0 /* WalletItemActivateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD3A350207D2CE5000609A0 /* WalletItemActivateCell.swift */; };
@@ -145,6 +146,9 @@
 		EC72C0B12059742900141D6F /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		EC72C0B320597CA600141D6F /* StellarAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarAccount.swift; sourceTree = "<group>"; };
 		EC72C0B62059EF7C00141D6F /* PaymentTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTransaction.swift; sourceTree = "<group>"; };
+		ECB1D951207E94770088826D /* BlockEQ-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BlockEQ-Bridging-Header.h"; sourceTree = "<group>"; };
+		ECB1D956207E966D0088826D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		ECB1D957207E966D0088826D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		ECB2F080207BF45E00F53798 /* StellarAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarAsset.swift; sourceTree = "<group>"; };
 		ECC47A6820589F92002BA573 /* UIView+Shake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shake.swift"; sourceTree = "<group>"; };
 		ECD3A350207D2CE5000609A0 /* WalletItemActivateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletItemActivateCell.swift; sourceTree = "<group>"; };
@@ -242,6 +246,7 @@
 				EC2015E32052E881009A73C8 /* Utils */,
 				EC2015AF2052D968009A73C8 /* Assets.xcassets */,
 				EC2015B12052D968009A73C8 /* LaunchScreen.storyboard */,
+				ECB1D951207E94770088826D /* BlockEQ-Bridging-Header.h */,
 				EC2015B42052D968009A73C8 /* Info.plist */,
 			);
 			path = BlockEQ;
@@ -299,6 +304,7 @@
 		EC2015E32052E881009A73C8 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				ECB1D955207E965C0088826D /* Progress HUD */,
 				EC2015E42052E8AA009A73C8 /* Constants.swift */,
 				EC2015F420531963009A73C8 /* NibLoader.swift */,
 				EC0B19252054BC3B0052802C /* AppNavigationController.swift */,
@@ -352,6 +358,15 @@
 				EC72C0B62059EF7C00141D6F /* PaymentTransaction.swift */,
 			);
 			path = Objects;
+			sourceTree = "<group>";
+		};
+		ECB1D955207E965C0088826D /* Progress HUD */ = {
+			isa = PBXGroup;
+			children = (
+				ECB1D957207E966D0088826D /* MBProgressHUD.h */,
+				ECB1D956207E966D0088826D /* MBProgressHUD.m */,
+			);
+			path = "Progress HUD";
 			sourceTree = "<group>";
 		};
 		FE9E1533DC165F0F40C6BF28 /* Pods */ = {
@@ -444,6 +459,7 @@
 				TargetAttributes = {
 					EC2015A42052D968009A73C8 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Manual;
 					};
 					EC2015B82052D968009A73C8 = {
@@ -684,6 +700,7 @@
 				EC72C0B72059EF7C00141D6F /* PaymentTransaction.swift in Sources */,
 				EC2015F720532F4B009A73C8 /* AppButton.swift in Sources */,
 				EC20160120536C68009A73C8 /* PillView.swift in Sources */,
+				ECB1D958207E966D0088826D /* MBProgressHUD.m in Sources */,
 				EC2015F520531963009A73C8 /* NibLoader.swift in Sources */,
 				EC581C7220766BA8003A397E /* SideMenuViewController.swift in Sources */,
 				EC2015E92052EAC7009A73C8 /* WalletTitleViewController.swift in Sources */,
@@ -870,6 +887,7 @@
 			baseConfigurationReference = 624B50722A9FCCC360CC73E3 /* Pods-BlockEQ.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 3C29DJ86C6;
@@ -879,6 +897,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "031b9826-9079-477a-aa76-de811c5fe517";
 				PROVISIONING_PROFILE_SPECIFIER = BlockEQDevelopment;
+				SWIFT_OBJC_BRIDGING_HEADER = "BlockEQ/BlockEQ-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -889,6 +909,7 @@
 			baseConfigurationReference = EA487049D94C0F37E5791674 /* Pods-BlockEQ.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: The Working Group Inc";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
@@ -899,6 +920,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "e5ab459e-b1ab-47dd-bee0-df3bed5e2fd9";
 				PROVISIONING_PROFILE_SPECIFIER = BlockEQ;
+				SWIFT_OBJC_BRIDGING_HEADER = "BlockEQ/BlockEQ-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
