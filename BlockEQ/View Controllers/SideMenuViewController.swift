@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SideMenuViewControllerDelegate: class {
-    func didSelect(asset: Assets.AssetType)
+    func didSelectAsset(index: Int)
     func reloadAssets()
 }
 
@@ -174,6 +174,8 @@ extension SideMenuViewController: UITableViewDelegate {
         switch indexPath.section {
         case SectionType.userAssets.rawValue:
             selectedIndexPath = indexPath
+            
+            delegate?.didSelectAsset(index: indexPath.row)
             
             dismiss(animated: true, completion: nil)
         default:

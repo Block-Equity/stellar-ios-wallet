@@ -113,7 +113,7 @@ class SendAmountViewController: UIViewController {
         self.stellarAccount = stellarAccount
         self.currentAssetIndex = currentAssetIndex
         
-        navigationItem.title = "\(stellarAccount.assets[currentAssetIndex].balance) XLM"
+        navigationItem.title = "\(stellarAccount.assets[currentAssetIndex].formattedBalance) \(stellarAccount.assets[currentAssetIndex].shortCode)"
     }
 
     override func viewDidLoad() {
@@ -139,6 +139,7 @@ class SendAmountViewController: UIViewController {
         memoIdTextField.textColor = Colors.darkGray
         view.backgroundColor = Colors.primaryDark
         
+        currencyLabel.text = stellarAccount.assets[currentAssetIndex].shortCode
         sendAddressLabel.text = "To: \(receiver)"
         
         memoIdTextField.inputAccessoryView = toolBar

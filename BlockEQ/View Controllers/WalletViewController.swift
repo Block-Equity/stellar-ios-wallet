@@ -72,7 +72,6 @@ class WalletViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         
         getAccountDetails()
-        getPaymentTransactions()
     }
     
     deinit {
@@ -118,7 +117,6 @@ class WalletViewController: UIViewController {
         timer.schedule(deadline: .now(), repeating: .seconds(30))
         timer.setEventHandler {
             self.getAccountDetails()
-            self.getPaymentTransactions()
         }
         
         timer.resume()
@@ -192,6 +190,7 @@ extension WalletViewController: UICollectionViewDataSource {
         let stellarAccount = accounts[indexPath.row]
         
         cell.amountLabel.text = stellarAccount.assets[currentAssetIndex].formattedBalance
+        cell.currencyLabel.text = stellarAccount.assets[currentAssetIndex].shortCode
         
         return cell
     }
@@ -222,7 +221,7 @@ extension WalletViewController: UITableViewDataSource {
         case 0:
             return tableViewHeader
         default:
-            if isLoadingTransactionsOnViewLoad {
+            if isLoadingTransactionsOnViewLoad || paymentTransactions.count == 0  {
                 return emptyView
             }
            return nil
@@ -234,7 +233,7 @@ extension WalletViewController: UITableViewDataSource {
         case 0:
             return tableViewHeader.frame.size.height
         default:
-            if isLoadingTransactionsOnViewLoad {
+            if isLoadingTransactionsOnViewLoad || paymentTransactions.count == 0 {
                 return emptyView.frame.size.height
             }
             return 0
@@ -285,13 +284,14 @@ extension WalletViewController: PinViewControllerDelegate {
 }
 
 extension WalletViewController: SideMenuViewControllerDelegate {
-    func didSelect(asset: Assets.AssetType) {
+    func didSelectAsset(index: Int) {
+        currentAssetIndex = index
         
+        getAccountDetails()
     }
     
     func reloadAssets() {
         getAccountDetails()
-        getPaymentTransactions()
     }
 }
 
@@ -323,9 +323,10 @@ extension WalletViewController {
                 self.accounts.append(stellarAccount)
             }
             
-            self.sideMenuViewController.updateMenu(stellarAccount: self.accounts[0])
+            self.sideMenuViewController.updateMenu(stellarAccount: self.accounts[self.pageControl.currentPage])
             self.collectionView.reloadData()
             self.activityIndicator.stopAnimating()
+            self.getPaymentTransactions()
         }
     }
     
@@ -334,7 +335,9 @@ extension WalletViewController {
             return
         }
         
-        PaymentTransactionOperation.getTransactions(accountId: accountId) { transactions in
+        let stellarAsset = self.accounts[pageControl.currentPage].assets[currentAssetIndex]
+        
+        PaymentTransactionOperation.getTransactions(accountId: accountId, stellarAsset: stellarAsset) { transactions in
             self.paymentTransactions = transactions
             
             if self.paymentTransactions.count > 0 {
@@ -353,7 +356,6 @@ extension WalletViewController {
         PaymentTransactionOperation.receivedPayment(accountId: accountId) { received in
             if (received) {
                 self.getAccountDetails()
-                self.getPaymentTransactions()
             }
         }
     }

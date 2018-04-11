@@ -86,7 +86,7 @@ class SendViewController: UIViewController {
         holdingView.backgroundColor = Colors.lightBackground
         view.backgroundColor = Colors.primaryDark
         
-        balanceLabel.text = "\(stellarAccount.assets[currentAssetIndex].balance) XLM"
+        balanceLabel.text = "\(stellarAccount.assets[currentAssetIndex].formattedBalance) \(stellarAccount.assets[currentAssetIndex].shortCode)"
     }
     
     func setViewStateToNotEditing() {

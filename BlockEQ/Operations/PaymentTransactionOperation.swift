@@ -10,7 +10,7 @@ import stellarsdk
 import UIKit
 
 class PaymentTransactionOperation: NSObject {
-    static func getTransactions(accountId: String, completion: @escaping ([PaymentTransaction]) -> Void) {
+    static func getTransactions(accountId: String, stellarAsset: StellarAsset, completion: @escaping ([PaymentTransaction]) -> Void) {
         
         var paymentTransactions: [PaymentTransaction] = []
         
@@ -18,7 +18,7 @@ class PaymentTransactionOperation: NSObject {
             switch response {
             case .success(let paymentsResponse):
                 for payment in paymentsResponse.records {
-                    if let paymentResponse = payment as? PaymentOperationResponse {
+                    if let paymentResponse = payment as? PaymentOperationResponse, paymentResponse.assetCode == stellarAsset.assetCode, paymentResponse.assetType == stellarAsset.assetType {
                         let paymentTransaction = getPaymentTransaction(amount: paymentResponse.amount,
                                                                        assetType: paymentResponse.assetType,
                                                                        date: paymentResponse.createdAt,
@@ -28,7 +28,7 @@ class PaymentTransactionOperation: NSObject {
                         paymentTransactions.append(paymentTransaction)
                     }
                     
-                    if let paymentResponse = payment as? AccountCreatedOperationResponse {
+                    if let paymentResponse = payment as? AccountCreatedOperationResponse, stellarAsset.assetType == AssetTypeAsString.NATIVE  {
                         let paymentTransaction = getPaymentTransaction(amount: String(describing: paymentResponse.startingBalance),
                                                                        assetType: AssetTypeAsString.NATIVE,
                                                                        date: paymentResponse.createdAt,
@@ -184,7 +184,7 @@ class PaymentTransactionOperation: NSObject {
             switch response {
             case .success(let accountResponse):
                 do {
-                    let changeTrustOperation = ChangeTrustOperation(sourceAccount: sourceKeyPair, asset: asset, limit: Decimal.greatestFiniteMagnitude)
+                    let changeTrustOperation = ChangeTrustOperation(sourceAccount: sourceKeyPair, asset: asset, limit: 10000000000)
                     
                     let transaction = try Transaction(sourceAccount: accountResponse,
                                                       operations: [changeTrustOperation],
