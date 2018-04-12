@@ -11,6 +11,7 @@ import UIKit
 class WalletItemActivateCell: UITableViewCell {
     
     @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var iconImageView: UIImageView!
     
     static let cellIdentifier = "WalletItemActivateCell"
 
@@ -34,7 +35,7 @@ class WalletItemActivateCell: UITableViewCell {
     }
     
     func setRowColor(selected: Bool) {
-        contentView.backgroundColor =  selected ? Colors.greenTransparent : Colors.green
-        //titleLabel.textColor = selected ? Colors.primaryDark : Colors.darkGray
+        contentView.backgroundColor =  selected ? Colors.lightBlue : Colors.white
+        titleLabel.textColor = selected ? Colors.primaryDark : Colors.darkGray
     }
 }

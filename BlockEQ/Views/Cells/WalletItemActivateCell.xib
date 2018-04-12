@@ -20,11 +20,23 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Points" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="71L-tj-YwQ">
-                        <rect key="frame" x="16" y="0.0" width="288" height="76.5"/>
-                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                        <rect key="frame" x="62" y="0.0" width="242" height="76.5"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="078-qo-qnz">
+                        <rect key="frame" x="16" y="21" width="36" height="36"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="36" id="CSr-HL-V35"/>
+                            <constraint firstAttribute="height" constant="36" id="oxv-XA-kbj"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <integer key="value" value="3"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h9c-Ow-y3n">
                         <rect key="frame" x="0.0" y="76.5" width="320" height="1"/>
                         <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
@@ -36,15 +48,18 @@
                 <constraints>
                     <constraint firstItem="h9c-Ow-y3n" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ATR-2C-wcP"/>
                     <constraint firstAttribute="trailing" secondItem="71L-tj-YwQ" secondAttribute="trailing" constant="16" id="Hod-Cx-EIt"/>
+                    <constraint firstItem="71L-tj-YwQ" firstAttribute="leading" secondItem="078-qo-qnz" secondAttribute="trailing" constant="10" id="MZR-7V-6uD"/>
                     <constraint firstAttribute="bottom" secondItem="h9c-Ow-y3n" secondAttribute="bottom" id="aAl-AD-iqi"/>
+                    <constraint firstItem="078-qo-qnz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gpD-o5-TVd"/>
                     <constraint firstItem="h9c-Ow-y3n" firstAttribute="top" secondItem="71L-tj-YwQ" secondAttribute="bottom" id="h96-LQ-OwF"/>
                     <constraint firstAttribute="trailing" secondItem="h9c-Ow-y3n" secondAttribute="trailing" id="iAN-az-3BB"/>
+                    <constraint firstItem="078-qo-qnz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="uom-gE-tQo"/>
                     <constraint firstItem="71L-tj-YwQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="wZ2-TK-3LY"/>
-                    <constraint firstItem="71L-tj-YwQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="zWA-6b-62x"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="iconImageView" destination="078-qo-qnz" id="Lir-V7-iva"/>
                 <outlet property="titleLabel" destination="71L-tj-YwQ" id="QoG-U1-zbZ"/>
             </connections>
             <point key="canvasLocation" x="34" y="73"/>
