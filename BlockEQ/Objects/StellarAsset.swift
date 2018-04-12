@@ -23,14 +23,6 @@ class StellarAsset: NSObject {
         return String(format: "%.2f", floatValue)
     }
     
-    var name: String {
-        if assetType == AssetTypeAsString.NATIVE {
-            return "Stellar Lumens"
-        } else {
-            return assetCode!
-        }
-    }
-    
     var shortCode: String {
         if assetType == AssetTypeAsString.NATIVE {
             return "XLM"

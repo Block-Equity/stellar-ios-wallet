@@ -29,6 +29,7 @@ struct Colors {
     static let green = UIColor(red: 72.0/255.0, green: 209.0/255.0, blue: 72.0/255.0, alpha: Alphas.opaque)
     static let greenTransparent = UIColor(red: 72.0/255.0, green: 209.0/255.0, blue: 72.0/255.0, alpha: Alphas.opaqueTransparent)
     static let red = UIColor(red: 255.0/255.0, green: 105.0/255.0, blue: 97.0/255.0, alpha: Alphas.opaque)
+    static let stellarBlue = UIColor(red: 205.0/255.0, green: 224.0/255.0, blue: 232.0/255.0, alpha: Alphas.opaque)
     static let transparent = UIColor.clear
 }
 
@@ -51,9 +52,9 @@ public struct Stellar {
 }
 
 public struct Assets {
-    enum AssetType: String {
-        case points = "Points"
-        case cad = "Canadian Dollar"
+    enum AssetType: Int {
+        case points
+        case cad
         
         var shortForm: String {
             switch self {
@@ -75,4 +76,38 @@ public struct Assets {
     }
     
     static let all: [AssetType] = [.points, .cad]
+    
+    static func displayTitle(shortCode: String) -> String {
+        if shortCode == "XLM" {
+            return "Stellar Lumens"
+        } else if shortCode == "PTS" {
+            return "Block Points"
+        } else if shortCode == "CAD" {
+            return "Canadian Dollar"
+        }
+        return ""
+    }
+    
+    static func displayImage(shortCode: String) -> UIImage? {
+        if shortCode == "XLM" {
+            return UIImage(named: "stellar")
+        } else if shortCode == "PTS" {
+            return UIImage(named: "blockpoints")
+        } else if shortCode == "CAD" {
+            return UIImage(named: "canada")
+        }
+        return UIImage(named: "")
+    }
+    
+    static func displayImageBackgroundColor(shortCode: String) -> UIColor {
+        if shortCode == "XLM" {
+            return Colors.stellarBlue
+        } else if shortCode == "PTS" {
+            return Colors.primaryDark
+        } else if shortCode == "CAD" {
+            return Colors.white
+        }
+        return Colors.white
+    }
 }
+

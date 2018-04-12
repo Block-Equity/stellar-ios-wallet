@@ -121,7 +121,7 @@
                 <constraint firstItem="1RZ-No-B37" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="zWX-7s-we5"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="-24.5" y="-39.5"/>
+            <point key="canvasLocation" x="54" y="-94"/>
         </view>
         <view contentMode="scaleToFill" id="6gk-Er-zug">
             <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>

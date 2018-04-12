@@ -24,6 +24,7 @@ class WalletViewController: UIViewController {
     @IBOutlet var logoImageView: UIImageView!
     
     let sideMenuViewController = SideMenuViewController()
+    let sideMenuMargin: CGFloat = UIScreen.main.bounds.size.width * 0.16
     
     var accounts: [StellarAccount] = []
     var paymentTransactions: [PaymentTransaction] = []
@@ -80,7 +81,7 @@ class WalletViewController: UIViewController {
     
     func setupSideMenu() {
         sideMenuViewController.delegate = self
-        
+        SideMenuManager.default.menuWidth = UIScreen.main.bounds.size.width - sideMenuMargin
         SideMenuManager.default.menuLeftNavigationController = SideMenuNavController(rootViewController: sideMenuViewController)
         SideMenuManager.default.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
         SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view, forMenu: .left)
@@ -189,7 +190,12 @@ extension WalletViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WalletCell.cellIdentifier, for: indexPath) as! WalletCell
         let stellarAccount = accounts[indexPath.row]
         
-        cell.amountLabel.text = stellarAccount.assets[currentAssetIndex].formattedBalance
+        if isLoadingTransactionsOnViewLoad {
+            cell.amountLabel.text = ""
+        } else {
+            cell.amountLabel.text = stellarAccount.assets[currentAssetIndex].formattedBalance
+        }
+        
         cell.currencyLabel.text = stellarAccount.assets[currentAssetIndex].shortCode
         
         return cell
@@ -221,7 +227,7 @@ extension WalletViewController: UITableViewDataSource {
         case 0:
             return tableViewHeader
         default:
-            if isLoadingTransactionsOnViewLoad || paymentTransactions.count == 0  {
+            if isLoadingTransactionsOnViewLoad && !activityIndicator.isAnimating {
                 return emptyView
             }
            return nil
@@ -233,7 +239,7 @@ extension WalletViewController: UITableViewDataSource {
         case 0:
             return tableViewHeader.frame.size.height
         default:
-            if isLoadingTransactionsOnViewLoad || paymentTransactions.count == 0 {
+            if isLoadingTransactionsOnViewLoad && !activityIndicator.isAnimating {
                 return emptyView.frame.size.height
             }
             return 0
@@ -287,7 +293,15 @@ extension WalletViewController: SideMenuViewControllerDelegate {
     func didSelectAsset(index: Int) {
         currentAssetIndex = index
         
-        getAccountDetails()
+        isLoadingTransactionsOnViewLoad = true
+        activityIndicator.startAnimating()
+        paymentTransactions.removeAll()
+        collectionView.reloadData()
+        tableView.reloadData()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.getAccountDetails()
+        }
     }
     
     func reloadAssets() {
@@ -324,8 +338,6 @@ extension WalletViewController {
             }
             
             self.sideMenuViewController.updateMenu(stellarAccount: self.accounts[self.pageControl.currentPage])
-            self.collectionView.reloadData()
-            self.activityIndicator.stopAnimating()
             self.getPaymentTransactions()
         }
     }
@@ -344,6 +356,8 @@ extension WalletViewController {
                 self.isLoadingTransactionsOnViewLoad = false
                 self.stopTimer()
             }
+            self.activityIndicator.stopAnimating()
+            self.collectionView.reloadData()
             self.tableView.reloadData()
         }
     }

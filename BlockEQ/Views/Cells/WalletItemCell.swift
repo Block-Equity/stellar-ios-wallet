@@ -16,6 +16,7 @@ class WalletItemCell: UITableViewCell {
     
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var amountLabel: UILabel!
+    @IBOutlet var iconImageView: UIImageView!
     
     static let cellIdentifier = "WalletItemCell"
 
