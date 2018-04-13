@@ -70,7 +70,7 @@ public struct Assets {
             case .points:
                 return "GBPG7KRYC3PTKHBXQGRD3GMZ5DB4C3D553ZN2ZLH57LBAQIULVY46Z5F"
             case .cad:
-                return "GAFM3KFVOYHOLG44ELNUCBUY37B53ZPD2V2MHFNDMF3QLQ6DB355XLIJ"
+                return "GABK2IHWW7BCRPP3BL6WMOMDBPHCBJR2SLP5HAUBYKNZG5J5RJSROS5S"
             }
         }
     }
