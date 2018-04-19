@@ -29,8 +29,6 @@ class MnemonicViewController: UIViewController {
     
     @IBAction func setPin() {
         if shouldSetPin {
-            KeychainHelper.save(mnemonic: mnemonic)
-            
             let pinViewController = PinViewController(pin: nil, mnemonic: mnemonic, isSendingPayment: false, isEnteringApp: false)
             
             navigationController?.pushViewController(pinViewController, animated: true)

@@ -70,13 +70,14 @@ class LaunchViewController: UIViewController {
     
     func checkForExistingAccount() {
         if let _ = KeychainHelper.getAccountId(), KeychainHelper.isExistingInstance() {
+            print("Displaying wallet")
             hideButtons()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.displayWallet()
             }
         } else {
-            KeychainHelper.clearAll()
+            showButtons()
         }
     }
     
@@ -89,6 +90,8 @@ class LaunchViewController: UIViewController {
         let privateBytes = keyPair.privateKey?.bytes ?? [UInt8]()
         let privateKeyData = NSData(bytes: privateBytes, length: privateBytes.count) as Data
         
+        print("Saving wallet items")
+        KeychainHelper.save(mnemonic: mnemonic)
         KeychainHelper.save(accountId: keyPair.accountId)
         KeychainHelper.save(publicKey: publicKeyData)
         KeychainHelper.save(privateKey: privateKeyData)

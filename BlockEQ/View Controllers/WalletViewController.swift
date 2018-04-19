@@ -30,8 +30,9 @@ class WalletViewController: UIViewController {
     var paymentTransactions: [PaymentTransaction] = []
     var isLoadingTransactionsOnViewLoad = true
     var isShowingSeed = true
-    var timer : DispatchSourceTimer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main)
+    var timer: DispatchSourceTimer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main)
     var currentAssetIndex = 0
+    var paymentStream: Any!
     
     @IBAction func receiveFunds() {
         let currentStellarAccount = accounts[pageControl.currentPage]
@@ -65,7 +66,7 @@ class WalletViewController: UIViewController {
         checkForPaymentReceived()
         startPollingForAccountFunding()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -77,6 +78,7 @@ class WalletViewController: UIViewController {
     
     deinit {
         stopTimer()
+        paymentStream = nil
     }
     
     func setupSideMenu() {
@@ -281,6 +283,7 @@ extension WalletViewController: PinViewControllerDelegate {
                 
                 self.present(navigationController, animated: true, completion: nil)
             } else {
+                self.paymentStream = nil
                 KeychainHelper.clearAll()
                 
                 self.navigationController?.popViewController(animated: true)
@@ -367,9 +370,23 @@ extension WalletViewController {
             return
         }
         
-        PaymentTransactionOperation.receivedPayment(accountId: accountId) { received in
-            if (received) {
-                self.getAccountDetails()
+        paymentStream = Stellar.sdk.payments.stream(for: .paymentsForAccount(account: accountId, cursor: "now")).onReceive { (response) -> (Void) in
+            switch response {
+            case .open:
+                break
+            case .response(_, let operationResponse):
+                print("Streaming")
+                if operationResponse is PaymentOperationResponse {
+                    DispatchQueue.main.async {
+                         self.getAccountDetails()
+                    }
+                }
+            case .error(let error):
+                print("Streaming error")
+                if let horizonRequestError = error as? HorizonRequestError {
+                    StellarSDKLog.printHorizonRequestErrorMessage(tag:"Receive payment", horizonRequestError:horizonRequestError)
+                   
+                }
             }
         }
     }
