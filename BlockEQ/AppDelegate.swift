@@ -55,15 +55,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func displayPin() {
         if KeychainHelper.checkPinWhenEnteringApp() {
-            pinViewController = PinViewController(pin: KeychainHelper.getPin(), mnemonic: nil, isSendingPayment: false, isEnteringApp: true)
-            let navigationController = AppNavigationController(rootViewController: pinViewController)
-            
-            if let controller = UIApplication.shared.keyWindow?.rootViewController?.presentedViewController {
-                controller.present(navigationController, animated: false, completion: nil)
-            } else {
-                window?.rootViewController?.present(navigationController, animated: false, completion: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.pinViewController = PinViewController(pin: KeychainHelper.getPin(), mnemonic: nil, isSendingPayment: false, isEnteringApp: true)
+                let navigationController = AppNavigationController(rootViewController: self.pinViewController)
+                
+                if let controller = UIApplication.shared.keyWindow?.rootViewController?.presentedViewController {
+                    controller.present(navigationController, animated: true, completion: nil)
+                } else {
+                    self.window?.rootViewController?.present(navigationController, animated: true, completion: nil)
+                }
             }
-
         }
     }
 }

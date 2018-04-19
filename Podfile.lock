@@ -1,7 +1,7 @@
 PODS:
   - KeychainSwift (10.0.0)
   - SideMenu (3.1.5)
-  - stellar-ios-mac-sdk (1.1.1)
+  - stellar-ios-mac-sdk (1.1.3)
 
 DEPENDENCIES:
   - KeychainSwift (~> 10.0)
@@ -11,7 +11,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
   SideMenu: 47dbf9e4d878062d8994aed43f6e4bf6c1fea30b
-  stellar-ios-mac-sdk: 8668be22556f82acaac9ccd841622421a3abc244
+  stellar-ios-mac-sdk: 30ea8f8a15737b6c01f6356b9434fae237d5316a
 
 PODFILE CHECKSUM: aafa0eecab02f110e8763c166e8bcb817f7ada6c
 

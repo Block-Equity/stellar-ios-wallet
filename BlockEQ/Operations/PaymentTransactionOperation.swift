@@ -50,28 +50,6 @@ class PaymentTransactionOperation: NSObject {
         }
     }
     
-    static func receivedPayment(accountId: String, completion: @escaping (Bool) -> Void) {
-        Stellar.sdk.payments.stream(for: .paymentsForAccount(account: accountId, cursor: "now")).onReceive { (response) -> (Void) in
-            switch response {
-            case .open:
-                break
-            case .response(_, let operationResponse):
-                if operationResponse is PaymentOperationResponse {
-                    DispatchQueue.main.async {
-                        completion(true)
-                    }
-                }
-            case .error(let error):
-                if let horizonRequestError = error as? HorizonRequestError {
-                    StellarSDKLog.printHorizonRequestErrorMessage(tag:"Receive payment", horizonRequestError:horizonRequestError)
-                    DispatchQueue.main.async {
-                        completion(false)
-                    }
-                }
-            }
-        }
-    }
-    
     static func postPayment(accountId: String, amount: Decimal, memoId: String, stellarAsset: StellarAsset, completion: @escaping (Bool) -> Void) {
         guard let privateKeyData = KeychainHelper.getPrivateKey(), let publicKeyData = KeychainHelper.getPublicKey() else {
             DispatchQueue.main.async {
@@ -109,7 +87,6 @@ class PaymentTransactionOperation: NSObject {
             switch response {
             case .success(let accountResponse):
                 do {
-                
                     let asset: Asset!
                     if stellarAsset.assetType == AssetTypeAsString.NATIVE {
                         asset = Asset(type: AssetType.ASSET_TYPE_NATIVE)!
