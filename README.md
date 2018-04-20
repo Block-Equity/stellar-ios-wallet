@@ -16,7 +16,7 @@ We would also like to credit [@grphc-dsgnr](https://github.com/grphc-dsgnr) for 
 
 # Release status
 
-We are currently in alpha and do not recommend you use this application as is, for real lumens just yet. We plan on releasing our application for beta testing very soon.  
+We are now in Beta. We support your stellar assets out of the box, including 2 of ours, as well as let you set your inflation pool destination. 
 
 
 ## 24 word seed generation
