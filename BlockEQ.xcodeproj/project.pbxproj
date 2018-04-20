@@ -900,6 +900,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 3C29DJ86C6;
 				INFOPLIST_FILE = BlockEQ/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blockeqiOS.BlockEQ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -923,6 +924,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 3C29DJ86C6;
 				INFOPLIST_FILE = BlockEQ/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blockeqiOS.BlockEQ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
