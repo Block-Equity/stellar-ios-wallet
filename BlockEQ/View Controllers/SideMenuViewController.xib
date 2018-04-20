@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SideMenuViewController" customModule="BlockEQ" customModuleProvider="target">
             <connections>
+                <outlet property="inflationButton" destination="imy-G6-AT0" id="bM2-dj-9et"/>
                 <outlet property="tableView" destination="Mz8-Jj-mUP" id="ooS-XE-AgF"/>
                 <outlet property="tableViewHeader" destination="qf0-pR-vkv" id="2gj-iX-s6x"/>
                 <outlet property="tableViewHeaderTitleLabel" destination="7pK-7m-cCt" id="92L-Je-wRN"/>
@@ -24,23 +25,52 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Mz8-Jj-mUP">
-                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                    <rect key="frame" x="0.0" y="20" width="375" height="587"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="X2S-UT-dVR"/>
                         <outlet property="delegate" destination="-1" id="h08-OB-21V"/>
                     </connections>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OR9-bb-Wwy">
+                    <rect key="frame" x="0.0" y="607" width="375" height="60"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="imy-G6-AT0">
+                            <rect key="frame" x="16" y="10" width="343" height="40"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                            <state key="normal" title="Set Inflation "/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <integer key="value" value="2"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="setInflation" destination="-1" eventType="touchUpInside" id="ePc-Be-GhF"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="imy-G6-AT0" secondAttribute="trailing" constant="16" id="2tJ-XX-SA0"/>
+                        <constraint firstItem="imy-G6-AT0" firstAttribute="leading" secondItem="OR9-bb-Wwy" secondAttribute="leading" constant="16" id="3u9-Du-ua2"/>
+                        <constraint firstAttribute="bottom" secondItem="imy-G6-AT0" secondAttribute="bottom" constant="10" id="AIw-Dm-6ye"/>
+                        <constraint firstItem="imy-G6-AT0" firstAttribute="top" secondItem="OR9-bb-Wwy" secondAttribute="top" constant="10" id="fSM-TO-vhE"/>
+                        <constraint firstAttribute="height" constant="60" id="x2T-aA-4O6"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="OR9-bb-Wwy" secondAttribute="bottom" id="0vp-aH-lB9"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Mz8-Jj-mUP" secondAttribute="trailing" id="875-4g-7Be"/>
                 <constraint firstItem="Mz8-Jj-mUP" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="YBe-ho-7NI"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="OR9-bb-Wwy" secondAttribute="trailing" id="aAZ-gn-Ntg"/>
                 <constraint firstItem="Mz8-Jj-mUP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="aDP-kO-dj5"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Mz8-Jj-mUP" secondAttribute="bottom" id="g5x-cF-R9w"/>
+                <constraint firstItem="OR9-bb-Wwy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="asL-YW-fZh"/>
+                <constraint firstItem="OR9-bb-Wwy" firstAttribute="top" secondItem="Mz8-Jj-mUP" secondAttribute="bottom" id="eG8-cn-VwP"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="49" y="-449"/>
+            <point key="canvasLocation" x="48.5" y="-449.5"/>
         </view>
         <view contentMode="scaleToFill" id="qf0-pR-vkv">
             <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>

@@ -78,7 +78,6 @@ class WalletViewController: UIViewController {
     
     deinit {
         stopTimer()
-        paymentStream = nil
     }
     
     func setupSideMenu() {
@@ -375,17 +374,14 @@ extension WalletViewController {
             case .open:
                 break
             case .response(_, let operationResponse):
-                print("Streaming")
                 if operationResponse is PaymentOperationResponse {
                     DispatchQueue.main.async {
                          self.getAccountDetails()
                     }
                 }
             case .error(let error):
-                print("Streaming error")
                 if let horizonRequestError = error as? HorizonRequestError {
                     StellarSDKLog.printHorizonRequestErrorMessage(tag:"Receive payment", horizonRequestError:horizonRequestError)
-                   
                 }
             }
         }

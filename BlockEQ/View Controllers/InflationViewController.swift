@@ -13,18 +13,32 @@ class InflationViewController: UIViewController {
     @IBOutlet var bottomLayoutConstraint: NSLayoutConstraint!
     @IBOutlet var holdingView: UIView!
     @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var subtitleLabel: UILabel!
     @IBOutlet var destinationAddressTextField: UITextField!
     
+    let lumenautInflationDestination = "GCCD6AJOYZCUAQLX32ZJF2MKFFAUJ53PVCFQI3RHWKL3V47QYE2BNAUT"
+    
     @IBAction func addInflationDestination() {
-        
-        guard let receiver = destinationAddressTextField.text, !receiver.isEmpty, receiver.count > 20, receiver != KeychainHelper.getAccountId() else {
+        guard let inflationDestination = destinationAddressTextField.text, !inflationDestination.isEmpty, inflationDestination.count > 20, inflationDestination != KeychainHelper.getAccountId() else {
             destinationAddressTextField.shake()
             return
         }
         
-        view.endEditing(true)
+        showHud()
         
-        dismissView()
+        AccountOperation.setInflationDestination(accountId: inflationDestination) { (completed) in
+            self.hideHud()
+            
+            if completed {
+                self.view.endEditing(true)
+                
+                self.dismissView()
+            } else {
+                let alert = UIAlertController(title: "Inflation Destination Error", message: "Sorry we were unable to set your inflation destination. Please check that your destination address is correct and try again.", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     @IBAction func scanQRCode() {
@@ -63,7 +77,7 @@ class InflationViewController: UIViewController {
     }
     
     func setupView() {
-        navigationItem.title = "Inflation Destination"
+        navigationItem.title = "Set Inflation"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         let image = UIImage(named:"close")
@@ -71,10 +85,13 @@ class InflationViewController: UIViewController {
         navigationItem.leftBarButtonItem = leftBarButtonItem
     
         titleLabel.textColor = Colors.darkGrayTransparent
+        subtitleLabel.textColor = Colors.darkGray
         destinationAddressTextField.textColor = Colors.darkGray
         addressHolderView.backgroundColor = Colors.lightBackground
         holdingView.backgroundColor = Colors.lightBackground
         view.backgroundColor = Colors.primaryDark
+        
+        destinationAddressTextField.text = lumenautInflationDestination
     }
     
     func setViewStateToNotEditing() {
@@ -119,6 +136,16 @@ class InflationViewController: UIViewController {
     func removeKeyboardNotifications() {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func showHud() {
+        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+        hud.label.text = "Setting Inflation Destination..."
+        hud.mode = .indeterminate
+    }
+    
+    func hideHud() {
+        MBProgressHUD.hide(for: UIApplication.shared.keyWindow!, animated: true)
     }
     
     @objc func dismissView() {

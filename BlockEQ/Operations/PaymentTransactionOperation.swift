@@ -42,7 +42,6 @@ class PaymentTransactionOperation: NSObject {
                     completion(paymentTransactions)
                 }
             case .failure(let error):
-                print(error.localizedDescription)
                 DispatchQueue.main.async {
                     completion(paymentTransactions)
                 }

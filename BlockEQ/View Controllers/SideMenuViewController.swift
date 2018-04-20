@@ -15,6 +15,7 @@ protocol SideMenuViewControllerDelegate: class {
 
 class SideMenuViewController: UIViewController {
     
+    @IBOutlet var inflationButton: UIButton!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var tableViewHeader: UIView!
     @IBOutlet var tableViewHeaderTitleLabel: UILabel!
@@ -31,6 +32,13 @@ class SideMenuViewController: UIViewController {
     var selectedIndexPath: IndexPath = IndexPath(row: 0, section: 0)
     var stellarAccount = StellarAccount()
     var updatedSupportedAssets: [Assets.AssetType] = []
+    
+    @IBAction func setInflation() {
+        let inflationViewController = InflationViewController()
+        let navigationController = AppNavigationController(rootViewController: inflationViewController)
+        
+        present(navigationController, animated: true, completion: nil)
+    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -49,8 +57,12 @@ class SideMenuViewController: UIViewController {
     func setupView() {
         addNavigationHeader()
         
+        inflationButton.setTitleColor(Colors.white, for: .normal)
+        inflationButton.backgroundColor = Colors.green
         tableViewHeader.backgroundColor = Colors.lightBackground
         tableViewHeaderTitleLabel.textColor = Colors.darkGray
+        
+        inflationButton.setTitle("Set Inflation", for: .normal)
         
         let tableViewNibUserAssets = UINib(nibName: WalletItemCell.cellIdentifier, bundle: nil)
         tableView.register(tableViewNibUserAssets, forCellReuseIdentifier: WalletItemCell.cellIdentifier)
@@ -93,8 +105,6 @@ class SideMenuViewController: UIViewController {
                 updatedSupportedAssets.append(supportedAsset)
             }
         }
-        
-        print(updatedSupportedAssets.count)
         
         tableView.reloadData()
     }

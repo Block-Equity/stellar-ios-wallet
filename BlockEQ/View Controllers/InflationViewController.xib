@@ -16,6 +16,7 @@
                 <outlet property="bottomLayoutConstraint" destination="uSt-gy-njY" id="8sZ-V6-ihj"/>
                 <outlet property="destinationAddressTextField" destination="Ty0-tb-GpL" id="2Ob-cz-3EW"/>
                 <outlet property="holdingView" destination="Cnw-RV-aZW" id="gwp-3n-MIX"/>
+                <outlet property="subtitleLabel" destination="Ixc-oM-t6Z" id="aG8-HI-2bm"/>
                 <outlet property="titleLabel" destination="6X6-vS-29n" id="hvQ-w8-YLS"/>
                 <outlet property="view" destination="OFn-X2-fqL" id="eTd-xP-Nmh"/>
             </connections>
@@ -29,7 +30,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="617"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JJb-Zl-NXH">
-                            <rect key="frame" x="0.0" y="55" width="375" height="145"/>
+                            <rect key="frame" x="0.0" y="55" width="375" height="241"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="INFLATION DESTINATION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6X6-vS-29n">
                                     <rect key="frame" x="16" y="20" width="343" height="16"/>
@@ -57,7 +58,7 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                             <connections>
-                                                <action selector="scanQRCode" destination="-1" eventType="touchUpInside" id="3yS-aj-yEZ"/>
+                                                <action selector="addInflationDestination" destination="-1" eventType="touchUpInside" id="Qnl-cz-3gT"/>
                                             </connections>
                                         </button>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ty0-tb-GpL">
@@ -85,18 +86,32 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ng-RX-qr4">
-                                    <rect key="frame" x="0.0" y="144" width="375" height="1"/>
+                                    <rect key="frame" x="0.0" y="240" width="375" height="1"/>
                                     <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="Auo-3g-Lq3"/>
                                     </constraints>
                                 </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ixc-oM-t6Z">
+                                    <rect key="frame" x="16" y="136" width="343" height="84"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" id="j0W-tc-kA2"/>
+                                    </constraints>
+                                    <string key="text">We recommend setting your inflation destination to the lumenaut community pool (entered above), which pays out 100% of inflation proceeds  every Tuesday without taking any fees. You can change it to any other pool should you prefer to.</string>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
+                                <constraint firstItem="Ixc-oM-t6Z" firstAttribute="top" secondItem="QZr-4G-9sF" secondAttribute="bottom" constant="25" id="3pJ-Zk-yHi"/>
+                                <constraint firstItem="2ng-RX-qr4" firstAttribute="top" secondItem="Ixc-oM-t6Z" secondAttribute="bottom" constant="20" id="3sJ-ry-HpW"/>
                                 <constraint firstItem="QZr-4G-9sF" firstAttribute="leading" secondItem="JJb-Zl-NXH" secondAttribute="leading" constant="16" id="Bla-Ee-zSy"/>
+                                <constraint firstAttribute="trailing" secondItem="Ixc-oM-t6Z" secondAttribute="trailing" constant="16" id="GKd-ie-5TX"/>
+                                <constraint firstItem="Ixc-oM-t6Z" firstAttribute="leading" secondItem="JJb-Zl-NXH" secondAttribute="leading" constant="16" id="IXp-vP-kUO"/>
                                 <constraint firstAttribute="trailing" secondItem="QZr-4G-9sF" secondAttribute="trailing" constant="16" id="JXD-gu-g2K"/>
-                                <constraint firstAttribute="height" constant="145" id="KU9-fw-zSh"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" id="KU9-fw-zSh"/>
                                 <constraint firstItem="6X6-vS-29n" firstAttribute="leading" secondItem="JJb-Zl-NXH" secondAttribute="leading" constant="16" id="Sna-HZ-Jgg"/>
                                 <constraint firstAttribute="trailing" secondItem="6X6-vS-29n" secondAttribute="trailing" constant="16" id="X2W-li-Szq"/>
                                 <constraint firstAttribute="bottom" secondItem="2ng-RX-qr4" secondAttribute="bottom" id="a7F-Kk-ZYY"/>
@@ -121,7 +136,7 @@
                         <constraint firstAttribute="height" constant="50" id="qFi-Ya-4ml"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
-                    <state key="normal" title="Next">
+                    <state key="normal" title="Save">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                     <userDefinedRuntimeAttributes>
@@ -129,6 +144,9 @@
                             <integer key="value" value="2"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="addInflationDestination" destination="-1" eventType="touchUpInside" id="5tZ-vA-3bo"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
