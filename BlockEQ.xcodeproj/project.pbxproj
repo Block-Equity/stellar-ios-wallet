@@ -64,6 +64,8 @@
 		ECC47A6920589F92002BA573 /* UIView+Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC47A6820589F92002BA573 /* UIView+Shake.swift */; };
 		ECD3A352207D2CE5000609A0 /* WalletItemActivateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD3A350207D2CE5000609A0 /* WalletItemActivateCell.swift */; };
 		ECD3A353207D2CE5000609A0 /* WalletItemActivateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECD3A351207D2CE5000609A0 /* WalletItemActivateCell.xib */; };
+		ECF9F44B208937E400160843 /* InflationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF9F449208937E400160843 /* InflationViewController.swift */; };
+		ECF9F44C208937E400160843 /* InflationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECF9F44A208937E400160843 /* InflationViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -153,6 +155,8 @@
 		ECC47A6820589F92002BA573 /* UIView+Shake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shake.swift"; sourceTree = "<group>"; };
 		ECD3A350207D2CE5000609A0 /* WalletItemActivateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletItemActivateCell.swift; sourceTree = "<group>"; };
 		ECD3A351207D2CE5000609A0 /* WalletItemActivateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletItemActivateCell.xib; sourceTree = "<group>"; };
+		ECF9F449208937E400160843 /* InflationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InflationViewController.swift; sourceTree = "<group>"; };
+		ECF9F44A208937E400160843 /* InflationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InflationViewController.xib; sourceTree = "<group>"; };
 		F841B5704ACF1CA64264F2A4 /* Pods-BlockEQTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQTests/Pods-BlockEQTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F96BA337147C641F27202448 /* Pods-BlockEQUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQUITests/Pods-BlockEQUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -288,6 +292,8 @@
 				EC3609FC20560FDB00FC31F9 /* ScanViewController.xib */,
 				EC581C7020766BA8003A397E /* SideMenuViewController.swift */,
 				EC581C7120766BA8003A397E /* SideMenuViewController.xib */,
+				ECF9F449208937E400160843 /* InflationViewController.swift */,
+				ECF9F44A208937E400160843 /* InflationViewController.xib */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -460,7 +466,7 @@
 					EC2015A42052D968009A73C8 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 0920;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					EC2015B82052D968009A73C8 = {
 						CreatedOnToolsVersion = 9.2;
@@ -506,6 +512,7 @@
 				EC3609FE20560FDB00FC31F9 /* ScanViewController.xib in Resources */,
 				EC2015DA2052DB6D009A73C8 /* LaunchViewController.xib in Resources */,
 				EC2015DE2052E071009A73C8 /* WalletViewController.xib in Resources */,
+				ECF9F44C208937E400160843 /* InflationViewController.xib in Resources */,
 				EC0B191F205486AB0052802C /* TransactionHistoryCell.xib in Resources */,
 				EC2015EE2052FD1A009A73C8 /* PinViewController.xib in Resources */,
 				EC581C7320766BA8003A397E /* SideMenuViewController.xib in Resources */,
@@ -707,6 +714,7 @@
 				EC2683912062C7CA0085CAAF /* PaymentTransactionOperation.swift in Sources */,
 				EC0B19262054BC3B0052802C /* AppNavigationController.swift in Sources */,
 				EC581C75207676D1003A397E /* SideMenuNavController.swift in Sources */,
+				ECF9F44B208937E400160843 /* InflationViewController.swift in Sources */,
 				EC1CEE5320577E880005F74E /* WordSuggestionCell.swift in Sources */,
 				EC42584B2054E346000941B5 /* SendViewController.swift in Sources */,
 				ECB2F081207BF45E00F53798 /* StellarAsset.swift in Sources */,
@@ -889,14 +897,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 3C29DJ86C6;
 				INFOPLIST_FILE = BlockEQ/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blockeqiOS.BlockEQ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "031b9826-9079-477a-aa76-de811c5fe517";
+				PROVISIONING_PROFILE_SPECIFIER = BlockEQDevelopment;
 				SWIFT_OBJC_BRIDGING_HEADER = "BlockEQ/BlockEQ-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -911,15 +919,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: The Working Group Inc";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The Working Group Inc";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 3C29DJ86C6;
 				INFOPLIST_FILE = BlockEQ/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blockeqiOS.BlockEQ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "e5ab459e-b1ab-47dd-bee0-df3bed5e2fd9";
+				PROVISIONING_PROFILE_SPECIFIER = BlockEQ;
 				SWIFT_OBJC_BRIDGING_HEADER = "BlockEQ/BlockEQ-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
