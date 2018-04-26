@@ -14,7 +14,7 @@ class PaymentTransactionOperation: NSObject {
         
         var paymentTransactions: [PaymentTransaction] = []
         
-        Stellar.sdk.payments.getPayments(forAccount: accountId, order:Order.descending, limit: 20) { response in
+        Stellar.sdk.payments.getPayments(forAccount: accountId, order:Order.descending, limit: 200) { response in
             switch response {
             case .success(let paymentsResponse):
                 for payment in paymentsResponse.records {
@@ -41,7 +41,7 @@ class PaymentTransactionOperation: NSObject {
                 DispatchQueue.main.async {
                     completion(paymentTransactions)
                 }
-            case .failure(let error):
+            case .failure(_):
                 DispatchQueue.main.async {
                     completion(paymentTransactions)
                 }
@@ -212,7 +212,7 @@ class PaymentTransactionOperation: NSObject {
     }
     
     static private func getPaymentTransaction(amount: String, assetType: String, date: Date, isAccountCreated: Bool, isPaymentReceived: Bool) -> PaymentTransaction {
-         let paymentTransaction = PaymentTransaction()
+        let paymentTransaction = PaymentTransaction()
         paymentTransaction.amount = amount
         paymentTransaction.date = date
         paymentTransaction.isReceived = isPaymentReceived
