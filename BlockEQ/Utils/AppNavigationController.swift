@@ -14,7 +14,9 @@ protocol AccountCreationDelegate: class {
 
 class AppNavigationController: UINavigationController {
     weak var accountCreationDelegate: AccountCreationDelegate?
-    
+
+    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
