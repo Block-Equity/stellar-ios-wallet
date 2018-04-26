@@ -53,6 +53,10 @@ class LaunchViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     func setupView() {
         UIApplication.shared.statusBarStyle = .lightContent
         
