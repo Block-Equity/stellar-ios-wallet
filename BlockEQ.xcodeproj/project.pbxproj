@@ -10,6 +10,18 @@
 		26BB0291965990A98D4BF0BB /* Pods_BlockEQTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B1C324671F6269D8DB10A7 /* Pods_BlockEQTests.framework */; };
 		A6066F61786CC7405A06A52A /* Pods_BlockEQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2BFC2D9DF7C32F6D40C804F /* Pods_BlockEQ.framework */; };
 		BCB2B19D8A0C42DDC9D826C1 /* Pods_BlockEQUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6912708A90B522F68A7AFA11 /* Pods_BlockEQUITests.framework */; };
+		C553ACBC2091572800B2379B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C553ACBA2091572800B2379B /* Localizable.strings */; };
+		C589FF2A20902CCC00F5F308 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C589FF2920902CCC00F5F308 /* SettingsViewController.swift */; };
+		C589FF2C20902CE300F5F308 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C589FF2B20902CE300F5F308 /* SettingsViewController.xib */; };
+		C5AB412F20902E4800096A29 /* SettingNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB412E20902E4800096A29 /* SettingNode.swift */; };
+		C5AB413120902F7500096A29 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB413020902F7500096A29 /* String+Localization.swift */; };
+		C5AB41332090369000096A29 /* EQSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB41322090369000096A29 /* EQSettings.swift */; };
+		C5AB41352090420D00096A29 /* SettingsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB41342090420D00096A29 /* SettingsDelegate.swift */; };
+		C5AB4137209042E800096A29 /* UITableView+ReusableCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB4136209042E800096A29 /* UITableView+ReusableCells.swift */; };
+		C5AB41392090430900096A29 /* UICollectionView+ReusableCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB41382090430900096A29 /* UICollectionView+ReusableCells.swift */; };
+		C5AB413B2090433000096A29 /* UIView+ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB413A2090433000096A29 /* UIView+ReusableView.swift */; };
+		C5AB413D2090436700096A29 /* UIView+NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB413C2090436700096A29 /* UIView+NibLoadableView.swift */; };
+		C5CB9C1420914F64000F4181 /* SettingsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB9C1320914F64000F4181 /* SettingsContainerViewController.swift */; };
 		EC0B191A205465BF0052802C /* WalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0B1918205465BF0052802C /* WalletCell.swift */; };
 		EC0B191B205465BF0052802C /* WalletCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC0B1919205465BF0052802C /* WalletCell.xib */; };
 		EC0B191E205486AB0052802C /* TransactionHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0B191C205486AB0052802C /* TransactionHistoryCell.swift */; };
@@ -92,6 +104,18 @@
 		6978359A021C7947F1C6AC48 /* Pods-BlockEQTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQTests/Pods-BlockEQTests.release.xcconfig"; sourceTree = "<group>"; };
 		89B1C324671F6269D8DB10A7 /* Pods_BlockEQTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockEQTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2BFC2D9DF7C32F6D40C804F /* Pods_BlockEQ.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockEQ.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C553ACBB2091572800B2379B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C589FF2920902CCC00F5F308 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		C589FF2B20902CE300F5F308 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		C5AB412E20902E4800096A29 /* SettingNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNode.swift; sourceTree = "<group>"; };
+		C5AB413020902F7500096A29 /* String+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
+		C5AB41322090369000096A29 /* EQSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EQSettings.swift; sourceTree = "<group>"; };
+		C5AB41342090420D00096A29 /* SettingsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDelegate.swift; sourceTree = "<group>"; };
+		C5AB4136209042E800096A29 /* UITableView+ReusableCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+ReusableCells.swift"; sourceTree = "<group>"; };
+		C5AB41382090430900096A29 /* UICollectionView+ReusableCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+ReusableCells.swift"; sourceTree = "<group>"; };
+		C5AB413A2090433000096A29 /* UIView+ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ReusableView.swift"; sourceTree = "<group>"; };
+		C5AB413C2090436700096A29 /* UIView+NibLoadableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NibLoadableView.swift"; sourceTree = "<group>"; };
+		C5CB9C1320914F64000F4181 /* SettingsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsContainerViewController.swift; sourceTree = "<group>"; };
 		EA487049D94C0F37E5791674 /* Pods-BlockEQ.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQ.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQ/Pods-BlockEQ.release.xcconfig"; sourceTree = "<group>"; };
 		EC0B1918205465BF0052802C /* WalletCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCell.swift; sourceTree = "<group>"; };
 		EC0B1919205465BF0052802C /* WalletCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletCell.xib; sourceTree = "<group>"; };
@@ -199,6 +223,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C589FF2820902CAC00F5F308 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C589FF2920902CCC00F5F308 /* SettingsViewController.swift */,
+				C589FF2B20902CE300F5F308 /* SettingsViewController.xib */,
+				C5AB412E20902E4800096A29 /* SettingNode.swift */,
+				C5AB41322090369000096A29 /* EQSettings.swift */,
+				C5AB41342090420D00096A29 /* SettingsDelegate.swift */,
+				C5CB9C1320914F64000F4181 /* SettingsContainerViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		EC0B1917205463DC0052802C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -252,6 +289,7 @@
 				EC2015B12052D968009A73C8 /* LaunchScreen.storyboard */,
 				ECB1D951207E94770088826D /* BlockEQ-Bridging-Header.h */,
 				EC2015B42052D968009A73C8 /* Info.plist */,
+				C553ACBA2091572800B2379B /* Localizable.strings */,
 			);
 			path = BlockEQ;
 			sourceTree = "<group>";
@@ -277,6 +315,7 @@
 		EC2015D62052DB34009A73C8 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C589FF2820902CAC00F5F308 /* Settings */,
 				EC2015E62052EA92009A73C8 /* Wallet Creation and Restoration */,
 				EC2015D72052DB6D009A73C8 /* LaunchViewController.swift */,
 				EC2015D82052DB6D009A73C8 /* LaunchViewController.xib */,
@@ -303,6 +342,11 @@
 			children = (
 				EC2015E12052E6B6009A73C8 /* UIColor+Gradient.swift */,
 				ECC47A6820589F92002BA573 /* UIView+Shake.swift */,
+				C5AB413020902F7500096A29 /* String+Localization.swift */,
+				C5AB4136209042E800096A29 /* UITableView+ReusableCells.swift */,
+				C5AB41382090430900096A29 /* UICollectionView+ReusableCells.swift */,
+				C5AB413A2090433000096A29 /* UIView+ReusableView.swift */,
+				C5AB413C2090436700096A29 /* UIView+NibLoadableView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -400,7 +444,6 @@
 				EC2015A22052D968009A73C8 /* Frameworks */,
 				EC2015A32052D968009A73C8 /* Resources */,
 				1460EE326A7D66920C4BF68D /* [CP] Embed Pods Frameworks */,
-				AD8121D6F76BA26B4F41D44C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -419,8 +462,6 @@
 				EC2015B52052D968009A73C8 /* Sources */,
 				EC2015B62052D968009A73C8 /* Frameworks */,
 				EC2015B72052D968009A73C8 /* Resources */,
-				143A290FBBBD999447CB8E18 /* [CP] Embed Pods Frameworks */,
-				378E942050EAAA9EB64D165B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -440,8 +481,6 @@
 				EC2015C02052D968009A73C8 /* Sources */,
 				EC2015C12052D968009A73C8 /* Frameworks */,
 				EC2015C22052D968009A73C8 /* Resources */,
-				C32EAF2867A7C36F0DFDE5DD /* [CP] Embed Pods Frameworks */,
-				5F25CCF453496BED8E5E07E1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -507,6 +546,7 @@
 			files = (
 				EC0B192320549B240052802C /* ReceiveViewController.xib in Resources */,
 				EC2015FB20533A89009A73C8 /* MnemonicViewController.xib in Resources */,
+				C553ACBC2091572800B2379B /* Localizable.strings in Resources */,
 				ECD3A353207D2CE5000609A0 /* WalletItemActivateCell.xib in Resources */,
 				EC0B191B205465BF0052802C /* WalletCell.xib in Resources */,
 				EC3609FE20560FDB00FC31F9 /* ScanViewController.xib in Resources */,
@@ -524,6 +564,7 @@
 				EC4258502054EE76000941B5 /* SendAmountViewController.xib in Resources */,
 				EC2015B32052D968009A73C8 /* LaunchScreen.storyboard in Resources */,
 				EC2015EA2052EAC7009A73C8 /* WalletTitleViewController.xib in Resources */,
+				C589FF2C20902CE300F5F308 /* SettingsViewController.xib in Resources */,
 				EC2015B02052D968009A73C8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -545,21 +586,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		143A290FBBBD999447CB8E18 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BlockEQTests/Pods-BlockEQTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		1460EE326A7D66920C4BF68D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -600,36 +626,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		378E942050EAAA9EB64D165B /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BlockEQTests/Pods-BlockEQTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5F25CCF453496BED8E5E07E1 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BlockEQUITests/Pods-BlockEQUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		92CF3F427ACF43BE58E4EE44 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -666,36 +662,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AD8121D6F76BA26B4F41D44C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BlockEQ/Pods-BlockEQ-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C32EAF2867A7C36F0DFDE5DD /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BlockEQUITests/Pods-BlockEQUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -706,11 +672,13 @@
 				ECD3A352207D2CE5000609A0 /* WalletItemActivateCell.swift in Sources */,
 				EC72C0B72059EF7C00141D6F /* PaymentTransaction.swift in Sources */,
 				EC2015F720532F4B009A73C8 /* AppButton.swift in Sources */,
+				C5AB413D2090436700096A29 /* UIView+NibLoadableView.swift in Sources */,
 				EC20160120536C68009A73C8 /* PillView.swift in Sources */,
 				ECB1D958207E966D0088826D /* MBProgressHUD.m in Sources */,
 				EC2015F520531963009A73C8 /* NibLoader.swift in Sources */,
 				EC581C7220766BA8003A397E /* SideMenuViewController.swift in Sources */,
 				EC2015E92052EAC7009A73C8 /* WalletTitleViewController.swift in Sources */,
+				C5AB413B2090433000096A29 /* UIView+ReusableView.swift in Sources */,
 				EC2683912062C7CA0085CAAF /* PaymentTransactionOperation.swift in Sources */,
 				EC0B19262054BC3B0052802C /* AppNavigationController.swift in Sources */,
 				EC581C75207676D1003A397E /* SideMenuNavController.swift in Sources */,
@@ -719,24 +687,32 @@
 				EC42584B2054E346000941B5 /* SendViewController.swift in Sources */,
 				ECB2F081207BF45E00F53798 /* StellarAsset.swift in Sources */,
 				EC42584F2054EE76000941B5 /* SendAmountViewController.swift in Sources */,
+				C5AB41352090420D00096A29 /* SettingsDelegate.swift in Sources */,
 				EC3609FD20560FDB00FC31F9 /* ScanViewController.swift in Sources */,
 				EC2015E52052E8AA009A73C8 /* Constants.swift in Sources */,
 				EC2015F12053185A009A73C8 /* PinView.swift in Sources */,
 				EC2015ED2052FD1A009A73C8 /* PinViewController.swift in Sources */,
 				EC0B192220549B240052802C /* ReceiveViewController.swift in Sources */,
+				C5AB41392090430900096A29 /* UICollectionView+ReusableCells.swift in Sources */,
 				ECC47A6920589F92002BA573 /* UIView+Shake.swift in Sources */,
 				EC0B191E205486AB0052802C /* TransactionHistoryCell.swift in Sources */,
+				C589FF2A20902CCC00F5F308 /* SettingsViewController.swift in Sources */,
+				C5CB9C1420914F64000F4181 /* SettingsContainerViewController.swift in Sources */,
+				C5AB41332090369000096A29 /* EQSettings.swift in Sources */,
 				EC2015A92052D968009A73C8 /* AppDelegate.swift in Sources */,
 				EC2015D92052DB6D009A73C8 /* LaunchViewController.swift in Sources */,
+				C5AB4137209042E800096A29 /* UITableView+ReusableCells.swift in Sources */,
 				EC2015FA20533A89009A73C8 /* MnemonicViewController.swift in Sources */,
 				EC0B191A205465BF0052802C /* WalletCell.swift in Sources */,
 				EC72C0B420597CA600141D6F /* StellarAccount.swift in Sources */,
 				EC26838F2062AD830085CAAF /* AccountOperation.swift in Sources */,
 				EC581C7820769E0A003A397E /* WalletItemCell.swift in Sources */,
 				EC2015DD2052E071009A73C8 /* WalletViewController.swift in Sources */,
+				C5AB412F20902E4800096A29 /* SettingNode.swift in Sources */,
 				EC1CEE4F205774E70005F74E /* VerificationViewController.swift in Sources */,
 				EC72C0B22059742900141D6F /* KeychainHelper.swift in Sources */,
 				EC2015E22052E6B6009A73C8 /* UIColor+Gradient.swift in Sources */,
+				C5AB413120902F7500096A29 /* String+Localization.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -772,6 +748,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		C553ACBA2091572800B2379B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C553ACBB2091572800B2379B /* Base */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		EC2015B12052D968009A73C8 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -787,6 +771,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -846,6 +831,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

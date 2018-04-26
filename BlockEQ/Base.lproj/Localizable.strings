@@ -1,0 +1,20 @@
+/* 
+  Localizable.strings
+  BlockEQ
+
+  Created by Nick DiZazzo on 2018-04-25.
+  Copyright © 2018 Satraj Bambra. All rights reserved.
+*/
+
+"SETTINGS_SECTION_WALLET" = "Wallet";
+"SETTINGS_SECTION_COMMUNITY" = "Community";
+"SETTINGS_SECTION_DEBUG" = "Debug";
+
+"SETTINGS_OPTION_SEED_PHRASE" = "View Seed Phrase";
+"SETTINGS_OPTION_CLEAR_WALLET" = "Clear Wallet";
+"SETTINGS_OPTION_REVIEW" = "Review App";
+"SETTINGS_OPTION_SHARE" = "Share";
+"SETTINGS_OPTION_PRIVACY" = "Privacy Policy";
+"SETTINGS_OPTION_TERMS" = "Terms of Service";
+"SETTINGS_OPTION_SUPPORT" = "Support";
+"SETTINGS_OPTION_DISABLE_PIN_CHECK" = "Disable Pin Verification";

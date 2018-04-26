@@ -133,52 +133,11 @@ class WalletViewController: UIViewController {
     }
     
     @objc func displayOptions() {
-        let alertController = UIAlertController(title: "Options", message: nil, preferredStyle: .actionSheet)
-        
-        let mnemonicButton = UIAlertAction(title: "View Seed Phrase", style: .default, handler: { (action) -> Void in
-            alertController.dismiss(animated: true, completion: nil)
-            
-            self.displayPin(isShowingSeed: true)
-        })
-        
-        let clearWalletButton = UIAlertAction(title: "Clear Wallet", style: .default, handler: { (action) -> Void in
-            alertController.dismiss(animated: true, completion: nil)
-            
-            self.clearWallet()
-        })
-        
-        let cancelButton = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
-        
-        alertController.addAction(mnemonicButton)
-        alertController.addAction(clearWalletButton)
-        alertController.addAction(cancelButton)
-        
-        navigationController?.present(alertController, animated: true, completion: nil)
-    }
-    
-    @objc func clearWallet() {
-        let alertController = UIAlertController(title: "Are you sure you want to clear this wallet?", message: nil, preferredStyle: .alert)
-        
-        let yesButton = UIAlertAction(title: "Yes", style: .destructive, handler: { (action) -> Void in
-           self.displayPin(isShowingSeed: false)
-        })
-        
-        let cancelButton = UIAlertAction(title: "Cancel", style: .default, handler: nil)
-        
-        alertController.addAction(cancelButton)
-        alertController.addAction(yesButton)
-        
-        navigationController?.present(alertController, animated: true, completion: nil)
-    }
-    
-    func displayPin(isShowingSeed: Bool) {
-        self.isShowingSeed = isShowingSeed
-        
-        let pinViewController = PinViewController(pin: KeychainHelper.getPin(), mnemonic: nil, isSendingPayment: true, isEnteringApp: false)
-        pinViewController.delegate = self
-        let navigationController = AppNavigationController(rootViewController: pinViewController)
-        
-        present(navigationController, animated: true, completion: nil)
+        let settingsController = SettingsViewController(options: EQSettings().options)
+        settingsController.delegate = self
+
+        let settingsContainer = SettingsContainerViewController(rootViewController: settingsController)
+        navigationController?.present(settingsContainer, animated: true, completion: nil)
     }
 }
 
@@ -388,4 +347,37 @@ extension WalletViewController {
     }
 }
 
+extension WalletViewController: SettingsDelegate {
+    func selected(setting: SettingNode) {
+        switch setting {
+        case .node(_, let identifier, _) where identifier == "wallet-view-seed": displayPin(isShowingSeed: true)
+        case .node(_, let identifier, _) where identifier == "wallet-clear": clearWallet()
+        default: print("Selected: \(String(describing: setting.name))")
+        }
+    }
 
+    func clearWallet() {
+        let alertController = UIAlertController(title: "Are you sure you want to clear this wallet?", message: nil, preferredStyle: .alert)
+
+        let yesButton = UIAlertAction(title: "Clear", style: .destructive, handler: { (action) -> Void in
+            self.displayPin(isShowingSeed: false)
+        })
+
+        let cancelButton = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+
+        alertController.addAction(cancelButton)
+        alertController.addAction(yesButton)
+
+        navigationController?.present(alertController, animated: true, completion: nil)
+    }
+
+    func displayPin(isShowingSeed: Bool) {
+        self.isShowingSeed = isShowingSeed
+
+        let pinViewController = PinViewController(pin: KeychainHelper.getPin(), mnemonic: nil, isSendingPayment: true, isEnteringApp: false)
+        pinViewController.delegate = self
+        let navigationController = AppNavigationController(rootViewController: pinViewController)
+
+        present(navigationController, animated: true, completion: nil)
+    }
+}

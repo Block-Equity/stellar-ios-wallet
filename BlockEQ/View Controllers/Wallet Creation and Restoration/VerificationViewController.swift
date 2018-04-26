@@ -152,7 +152,7 @@ class VerificationViewController: UIViewController {
                 possibleMatches.append(item)
             }
         }
-        return possibleMatches.enumerated().flatMap{ $0.offset < 3 ? $0.element : nil }
+        return possibleMatches.enumerated().compactMap{ $0.offset < 3 ? $0.element : nil }
     }
     
     func validateAnswer() {
