@@ -212,7 +212,7 @@ class PaymentTransactionOperation: NSObject {
     }
     
     static private func getPaymentTransaction(amount: String, assetType: String, date: Date, isAccountCreated: Bool, isPaymentReceived: Bool) -> PaymentTransaction {
-         let paymentTransaction = PaymentTransaction()
+        let paymentTransaction = PaymentTransaction()
         paymentTransaction.amount = amount
         paymentTransaction.date = date
         paymentTransaction.isReceived = isPaymentReceived
