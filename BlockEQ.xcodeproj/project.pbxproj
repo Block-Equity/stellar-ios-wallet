@@ -21,7 +21,6 @@
 		C5AB41392090430900096A29 /* UICollectionView+ReusableCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB41382090430900096A29 /* UICollectionView+ReusableCells.swift */; };
 		C5AB413B2090433000096A29 /* UIView+ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB413A2090433000096A29 /* UIView+ReusableView.swift */; };
 		C5AB413D2090436700096A29 /* UIView+NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB413C2090436700096A29 /* UIView+NibLoadableView.swift */; };
-		C5AB413F209043BD00096A29 /* StaticSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB413E209043BD00096A29 /* StaticSettingCell.swift */; };
 		C5CB9C1420914F64000F4181 /* SettingsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB9C1320914F64000F4181 /* SettingsContainerViewController.swift */; };
 		EC0B191A205465BF0052802C /* WalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0B1918205465BF0052802C /* WalletCell.swift */; };
 		EC0B191B205465BF0052802C /* WalletCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC0B1919205465BF0052802C /* WalletCell.xib */; };
@@ -116,7 +115,6 @@
 		C5AB41382090430900096A29 /* UICollectionView+ReusableCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+ReusableCells.swift"; sourceTree = "<group>"; };
 		C5AB413A2090433000096A29 /* UIView+ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ReusableView.swift"; sourceTree = "<group>"; };
 		C5AB413C2090436700096A29 /* UIView+NibLoadableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NibLoadableView.swift"; sourceTree = "<group>"; };
-		C5AB413E209043BD00096A29 /* StaticSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticSettingCell.swift; sourceTree = "<group>"; };
 		C5CB9C1320914F64000F4181 /* SettingsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsContainerViewController.swift; sourceTree = "<group>"; };
 		EA487049D94C0F37E5791674 /* Pods-BlockEQ.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQ.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQ/Pods-BlockEQ.release.xcconfig"; sourceTree = "<group>"; };
 		EC0B1918205465BF0052802C /* WalletCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCell.swift; sourceTree = "<group>"; };
@@ -251,7 +249,6 @@
 				EC581C7720769E0A003A397E /* WalletItemCell.xib */,
 				ECD3A350207D2CE5000609A0 /* WalletItemActivateCell.swift */,
 				ECD3A351207D2CE5000609A0 /* WalletItemActivateCell.xib */,
-				C5AB413E209043BD00096A29 /* StaticSettingCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -698,7 +695,6 @@
 				EC0B192220549B240052802C /* ReceiveViewController.swift in Sources */,
 				C5AB41392090430900096A29 /* UICollectionView+ReusableCells.swift in Sources */,
 				ECC47A6920589F92002BA573 /* UIView+Shake.swift in Sources */,
-				C5AB413F209043BD00096A29 /* StaticSettingCell.swift in Sources */,
 				EC0B191E205486AB0052802C /* TransactionHistoryCell.swift in Sources */,
 				C589FF2A20902CCC00F5F308 /* SettingsViewController.swift in Sources */,
 				C5CB9C1420914F64000F4181 /* SettingsContainerViewController.swift in Sources */,

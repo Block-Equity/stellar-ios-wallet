@@ -17,12 +17,7 @@ final class SettingsContainerViewController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupView()
         setupStyle()
-    }
-
-    func setupView() {
-
     }
 
     func setupStyle() {

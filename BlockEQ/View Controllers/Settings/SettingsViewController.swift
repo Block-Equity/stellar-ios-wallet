@@ -61,12 +61,14 @@ final class SettingsViewController: UIViewController {
         tableView.dataSource = self
 
         let closeButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissSettings))
-        closeButton.tintColor = .black
         navigationItem.rightBarButtonItem = closeButton
     }
 
     func setupStyle() {
         title = "Settings".localized()
+        
+        let closeButton = navigationItem.rightBarButtonItem
+        closeButton?.tintColor = .black
     }
 
     @objc internal func dismissSettings(sender: UIBarButtonItem) {
