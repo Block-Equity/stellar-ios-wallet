@@ -111,3 +111,33 @@ public struct Assets {
     }
 }
 
+enum MenuItem {
+    case wallet
+    case trading
+    case settings
+
+    var identifier: String {
+        switch self {
+        case .wallet: return "menu-wallet"
+        case .trading: return "menu-trading"
+        case .settings: return "menu-settings"
+        }
+    }
+
+    var title: String {
+        switch self {
+        case .wallet: return "MENU_OPTION_WALLETS".localized()
+        case .trading: return "MENU_OPTION_TRADING".localized()
+        case .settings: return "MENU_OPTION_SETTINGS".localized()
+        }
+    }
+
+    var icon: UIImage? {
+        switch self {
+        case .wallet: return UIImage(named: "wallet")
+        case .trading: return UIImage(named: "trading")
+        case .settings: return UIImage(named: "settings")
+        }
+    }
+}
+

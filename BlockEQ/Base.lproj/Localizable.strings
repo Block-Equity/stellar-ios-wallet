@@ -6,6 +6,10 @@
   Copyright © 2018 Satraj Bambra. All rights reserved.
 */
 
+"MENU_OPTION_WALLETS" = "Wallets";
+"MENU_OPTION_TRADING" = "Trading";
+"MENU_OPTION_SETTINGS" = "Settings";
+
 "SETTINGS_SECTION_WALLET" = "Wallet";
 "SETTINGS_SECTION_COMMUNITY" = "Community";
 "SETTINGS_SECTION_DEBUG" = "Debug";
