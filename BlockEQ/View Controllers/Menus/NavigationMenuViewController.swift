@@ -50,7 +50,7 @@ final class NavigationMenuViewController: UIViewController {
     }
 
     func setupStyle() {
-        imageView.image = UIImage(named: "background")
+        imageView.image = UIImage(named: "bg")
         imageView.contentMode = .scaleAspectFill
         logoImageView.image = UIImage(named: "logo")
         backgroundView.backgroundColor = UIColor(red:0.008, green:0.283, blue:0.657, alpha:1.000) // TODO: fix me
