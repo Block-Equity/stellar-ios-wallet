@@ -45,6 +45,8 @@ final class NavigationMenuViewController: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.delegate = self
         tableView.dataSource = self
+
+        navigationController?.isNavigationBarHidden = true
     }
 
     func setupStyle() {

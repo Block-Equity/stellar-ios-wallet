@@ -24,6 +24,7 @@
 		C5AB41392090430900096A29 /* UICollectionView+ReusableCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB41382090430900096A29 /* UICollectionView+ReusableCells.swift */; };
 		C5AB413B2090433000096A29 /* UIView+ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB413A2090433000096A29 /* UIView+ReusableView.swift */; };
 		C5AB413D2090436700096A29 /* UIView+NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB413C2090436700096A29 /* UIView+NibLoadableView.swift */; };
+		C5AF7C8A2094B60A00F99835 /* UIImage+CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AF7C892094B60A00F99835 /* UIImage+CALayer.swift */; };
 		C5CB9C1420914F64000F4181 /* SettingsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB9C1320914F64000F4181 /* SettingsContainerViewController.swift */; };
 		EC0B191A205465BF0052802C /* WalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0B1918205465BF0052802C /* WalletCell.swift */; };
 		EC0B191B205465BF0052802C /* WalletCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC0B1919205465BF0052802C /* WalletCell.xib */; };
@@ -121,6 +122,7 @@
 		C5AB41382090430900096A29 /* UICollectionView+ReusableCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+ReusableCells.swift"; sourceTree = "<group>"; };
 		C5AB413A2090433000096A29 /* UIView+ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ReusableView.swift"; sourceTree = "<group>"; };
 		C5AB413C2090436700096A29 /* UIView+NibLoadableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NibLoadableView.swift"; sourceTree = "<group>"; };
+		C5AF7C892094B60A00F99835 /* UIImage+CALayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+CALayer.swift"; sourceTree = "<group>"; };
 		C5CB9C1320914F64000F4181 /* SettingsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsContainerViewController.swift; sourceTree = "<group>"; };
 		EA487049D94C0F37E5791674 /* Pods-BlockEQ.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQ.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQ/Pods-BlockEQ.release.xcconfig"; sourceTree = "<group>"; };
 		EC0B1918205465BF0052802C /* WalletCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCell.swift; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 		EC2015DF2052E63D009A73C8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C5AF7C892094B60A00F99835 /* UIImage+CALayer.swift */,
 				EC2015E12052E6B6009A73C8 /* UIColor+Gradient.swift */,
 				ECC47A6820589F92002BA573 /* UIView+Shake.swift */,
 				C5AB413020902F7500096A29 /* String+Localization.swift */,
@@ -699,6 +702,7 @@
 				C5AB413B2090433000096A29 /* UIView+ReusableView.swift in Sources */,
 				EC2683912062C7CA0085CAAF /* PaymentTransactionOperation.swift in Sources */,
 				EC0B19262054BC3B0052802C /* AppNavigationController.swift in Sources */,
+				C5AF7C8A2094B60A00F99835 /* UIImage+CALayer.swift in Sources */,
 				EC581C75207676D1003A397E /* SideMenuNavController.swift in Sources */,
 				ECF9F44B208937E400160843 /* InflationViewController.swift in Sources */,
 				EC1CEE5320577E880005F74E /* WordSuggestionCell.swift in Sources */,

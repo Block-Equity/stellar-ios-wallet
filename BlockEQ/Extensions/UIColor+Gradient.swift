@@ -80,3 +80,14 @@ extension GradientViewProvider where Self: UIView {
 extension UIView: GradientViewProvider {
     typealias GradientViewType = GradientLayer
 }
+
+extension CAGradientLayer {
+    static func simpleGradient(width: CGFloat, height: CGFloat, colors: [CGColor]) -> CAGradientLayer {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = colors
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradientLayer.frame = CGRect(origin: .zero, size: CGSize(width: width, height: height))
+        return gradientLayer
+    }
+}
