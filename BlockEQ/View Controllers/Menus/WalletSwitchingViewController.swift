@@ -1,5 +1,5 @@
 //
-//  SideMenuViewController.swift
+//  WalletSwitchingViewController.swift
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-04-05.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol SideMenuViewControllerDelegate: class {
+protocol WalletSwitchingViewControllerDelegate: class {
     func didSelectAsset(index: Int)
     func reloadAssets()
 }
 
-class SideMenuViewController: UIViewController {
+final class WalletSwitchingViewController: UIViewController {
     
     @IBOutlet var inflationButton: UIButton!
     @IBOutlet var tableView: UITableView!
@@ -28,7 +28,7 @@ class SideMenuViewController: UIViewController {
     let sections: [SectionType] = [.userAssets, .supportedAssets]
     let margin: CGFloat = 16.0
     
-    weak var delegate: SideMenuViewControllerDelegate?
+    weak var delegate: WalletSwitchingViewControllerDelegate?
     var selectedIndexPath: IndexPath = IndexPath(row: 0, section: 0)
     var stellarAccount = StellarAccount()
     var updatedSupportedAssets: [Assets.AssetType] = []
@@ -45,7 +45,7 @@ class SideMenuViewController: UIViewController {
     }
     
     init() {
-        super.init(nibName: String(describing: SideMenuViewController.self), bundle: nil)
+        super.init(nibName: String(describing: WalletSwitchingViewController.self), bundle: nil)
     }
 
     override func viewDidLoad() {
@@ -120,7 +120,7 @@ class SideMenuViewController: UIViewController {
     }
 }
 
-extension SideMenuViewController: UITableViewDataSource {
+extension WalletSwitchingViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
@@ -194,7 +194,7 @@ extension SideMenuViewController: UITableViewDataSource {
     }
 }
 
-extension SideMenuViewController: UITableViewDelegate {
+extension WalletSwitchingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case SectionType.userAssets.rawValue:
@@ -214,7 +214,7 @@ extension SideMenuViewController: UITableViewDelegate {
 /*
  * Operations
  */
-extension SideMenuViewController {
+extension WalletSwitchingViewController {
     func createTrustLine(asset: Assets.AssetType) {
         showHud()
         
