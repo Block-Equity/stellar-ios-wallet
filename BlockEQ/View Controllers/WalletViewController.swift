@@ -7,7 +7,6 @@
 //
 
 import stellarsdk
-import SideMenu
 import UIKit
 
 class WalletViewController: UIViewController {
@@ -22,10 +21,10 @@ class WalletViewController: UIViewController {
     @IBOutlet var tableViewHeaderLeftLabel: UILabel!
     @IBOutlet var tableViewHeaderRightLabel: UILabel!
     @IBOutlet var logoImageView: UIImageView!
-    
+
+    var navigationContainer: AppNavigationController?
     let walletSwitchingViewController = WalletSwitchingViewController()
     let navigationMenuViewController = NavigationMenuViewController()
-    let sideMenuMargin: CGFloat = UIScreen.main.bounds.size.width * 0.16
     
     var accounts: [StellarAccount] = []
     var paymentTransactions: [PaymentTransaction] = []
@@ -53,16 +52,22 @@ class WalletViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        navigationContainer = AppNavigationController(rootViewController: walletSwitchingViewController)
+        walletSwitchingViewController.delegate = self
+        navigationMenuViewController.delegate = self
     }
     
     init() {
         super.init(nibName: String(describing: WalletViewController.self), bundle: nil)
+        navigationContainer = AppNavigationController(rootViewController: walletSwitchingViewController)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupSideMenu()
+        walletSwitchingViewController.delegate = self
+        navigationMenuViewController.delegate = self
+
         setupView()
         checkForPaymentReceived()
         startPollingForAccountFunding()
@@ -81,18 +86,6 @@ class WalletViewController: UIViewController {
         stopTimer()
     }
     
-    func setupSideMenu() {
-        walletSwitchingViewController.delegate = self
-        navigationMenuViewController.delegate = self
-        SideMenuManager.default.menuWidth = UIScreen.main.bounds.size.width - sideMenuMargin
-        SideMenuManager.default.menuRightNavigationController = SideMenuNavController(rootViewController: walletSwitchingViewController)
-        SideMenuManager.default.menuLeftNavigationController = SideMenuNavController(rootViewController: navigationMenuViewController)
-        SideMenuManager.default.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
-        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view, forMenu: .right)
-        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view, forMenu: .left)
-        SideMenuManager.default.menuAnimationBackgroundColor = UIColor.clear
-    }
-    
     func setupView() {
         let collectionViewNib = UINib(nibName: WalletCell.cellIdentifier, bundle: nil)
         collectionView.register(collectionViewNib, forCellWithReuseIdentifier: WalletCell.cellIdentifier)
@@ -101,14 +94,10 @@ class WalletViewController: UIViewController {
         tableView.register(tableViewNib, forCellReuseIdentifier: TransactionHistoryCell.cellIdentifier)
         
         navigationItem.titleView = logoImageView
-        
-        let imageMenu = UIImage(named:"menu")
-        let leftBarButtonItem = UIBarButtonItem(image: imageMenu, style: .plain, target: self, action: #selector(self.displayNavigation))
-        navigationItem.leftBarButtonItem = leftBarButtonItem
-        
+
         let imageSettings = UIImage(named:"wallet")
-        let rightBarButtonItem = UIBarButtonItem(image: imageSettings, style: .plain, target: self, action: #selector(self.displayMenu))
-        navigationItem.rightBarButtonItem = rightBarButtonItem
+        let leftBarButtonItem = UIBarButtonItem(image: imageSettings, style: .plain, target: self, action: #selector(self.displayMenu))
+        navigationItem.leftBarButtonItem = leftBarButtonItem
         
         emptyViewTitleLabel.textColor = Colors.darkGray
         tableViewHeaderLeftLabel.textColor = Colors.darkGrayTransparent
@@ -133,11 +122,15 @@ class WalletViewController: UIViewController {
     }
     
     @objc func displayMenu() {
-        present(SideMenuManager.default.menuRightNavigationController!, animated: true, completion: nil)
+        guard let viewController = self.navigationContainer else {
+            return
+        }
+
+        present(viewController, animated: true, completion: nil)
     }
     
     @objc func displayNavigation() {
-        present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
+        print("DO SOMETHING")
     }
 }
 
@@ -251,6 +244,11 @@ extension WalletViewController: PinViewControllerDelegate {
 }
 
 extension WalletViewController: WalletSwitchingViewControllerDelegate {
+    func didSelectSetInflation() {
+        let inflationViewController = InflationViewController()
+        self.navigationContainer?.pushViewController(inflationViewController, animated: true)
+    }
+
     func didSelectAsset(index: Int) {
         currentAssetIndex = index
         
@@ -392,7 +390,6 @@ extension WalletViewController: NavigationMenuViewControllerDelegate {
             settingsController.delegate = self
 
             let settingsContainer = SettingsContainerViewController(rootViewController: settingsController)
-            SideMenuManager.default.menuLeftNavigationController?.dismiss(animated: true, completion: nil)
             navigationController?.present(settingsContainer, animated: true, completion: nil)
         }
     }

@@ -79,11 +79,7 @@ class InflationViewController: UIViewController {
     func setupView() {
         navigationItem.title = "Set Inflation"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        
-        let image = UIImage(named:"close")
-        let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
-        navigationItem.leftBarButtonItem = leftBarButtonItem
-    
+
         titleLabel.textColor = Colors.darkGrayTransparent
         subtitleLabel.textColor = Colors.darkGray
         destinationAddressTextField.textColor = Colors.darkGray
