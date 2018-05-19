@@ -16,10 +16,8 @@ class ReceiveViewController: UIViewController {
     @IBOutlet var addressHolderView: UIView!
     @IBOutlet var imageViewHolder: UIView!
     @IBOutlet var imageView: UIImageView!
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     
     var address: String = ""
     
@@ -27,7 +25,10 @@ class ReceiveViewController: UIViewController {
         if let addressText = addressLabel.text, !addressText.isEmpty {
             UIPasteboard.general.string = addressLabel.text
             
-            let alert = UIAlertController(title: "Your wallet address has been successfully copied.", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Your wallet address has been successfully copied.",
+                                          message: nil,
+                                          preferredStyle: UIAlertControllerStyle.alert)
+
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
@@ -37,6 +38,11 @@ class ReceiveViewController: UIViewController {
     init(address: String) {
         super.init(nibName: String(describing: ReceiveViewController.self), bundle: nil)
         self.address = address
+    }
+
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
 
     override func viewDidLoad() {
@@ -52,11 +58,7 @@ class ReceiveViewController: UIViewController {
     }
 
     func setupView() {
-        navigationItem.title = "My Wallet"
-        
-        let image = UIImage(named:"close")
-        let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
-        navigationItem.leftBarButtonItem = leftBarButtonItem
+        navigationItem.title = "Receive Funds"
         
         imageViewHolder.layer.shadowColor = Colors.shadowGray.cgColor
         imageViewHolder.layer.shadowOpacity = Float(Alphas.transparent)

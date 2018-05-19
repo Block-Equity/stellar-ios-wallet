@@ -39,14 +39,6 @@ final class WalletSwitchingViewController: UIViewController {
     @IBAction func setInflation() {
         delegate?.didSelectSetInflation()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    init() {
-        super.init(nibName: String(describing: WalletSwitchingViewController.self), bundle: nil)
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

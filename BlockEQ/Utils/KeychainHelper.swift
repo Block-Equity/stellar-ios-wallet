@@ -95,4 +95,12 @@ class KeychainHelper: NSObject {
         UserDefaults.standard.set(false, forKey: isSendingPaymentKey)
         UserDefaults.standard.synchronize()
     }
+
+    public static func checkPin(inPin: String, comparePin: String? = getPin()) -> Bool {
+        if inPin == comparePin && !inPin.isEmpty {
+            return true
+        }
+
+        return false
+    }
 }

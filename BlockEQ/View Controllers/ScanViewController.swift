@@ -33,14 +33,6 @@ class ScanViewController: UIViewController {
                                       AVMetadataObject.ObjectType.dataMatrix,
                                       AVMetadataObject.ObjectType.interleaved2of5,
                                       AVMetadataObject.ObjectType.qr]
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    init() {
-        super.init(nibName: String(describing: ScanViewController.self), bundle: nil)
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

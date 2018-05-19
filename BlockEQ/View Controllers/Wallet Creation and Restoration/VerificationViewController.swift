@@ -6,8 +6,12 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
-import stellarsdk
 import UIKit
+import stellarsdk
+
+protocol VerificationViewControllerDelegate: AnyObject {
+    func validatedAccount(_ vc: VerificationViewController, mnemonic: String)
+}
 
 class VerificationViewController: UIViewController {
     
@@ -21,7 +25,9 @@ class VerificationViewController: UIViewController {
     @IBOutlet var questionTitleLabel: UILabel!
     @IBOutlet var questionSubtitleLabel: UILabel!
     @IBOutlet var questionViewHeightConstraint: NSLayoutConstraint!
-    
+
+    weak var delegate: VerificationViewControllerDelegate?
+
     public enum VerificationType {
         case recovery
         case confirmation
@@ -56,7 +62,8 @@ class VerificationViewController: UIViewController {
             if lastCharater == " " {
                 mnemonicString = String(mnemonicString.dropLast())
             }
-            setPin(mnemonic: mnemonicString)
+
+            delegate?.validatedAccount(self, mnemonic: mnemonicString)
         }
     }
     
@@ -158,7 +165,7 @@ class VerificationViewController: UIViewController {
     func validateAnswer() {
         if textView.text == currentWord {
             if questionsAnswered == 4 {
-                setPin(mnemonic: mnemonic)
+                delegate?.validatedAccount(self, mnemonic: mnemonic)
             } else {
                 textView.text = ""
                 setQuestion(animated: true)
@@ -201,14 +208,6 @@ class VerificationViewController: UIViewController {
                 self.view.layoutIfNeeded()
             }
         }
-    }
-    
-    func setPin(mnemonic: String) {
-        KeychainHelper.save(mnemonic: mnemonic)
-        
-        let pinViewController = PinViewController(pin: nil, mnemonic: mnemonic, isSendingPayment: false, isEnteringApp: false)
-        
-        navigationController?.pushViewController(pinViewController, animated: true)
     }
 }
 

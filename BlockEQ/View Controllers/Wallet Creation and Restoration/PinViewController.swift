@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 
 protocol PinViewControllerDelegate: class {
-    func pinConfirmationSucceeded()
+    func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool)
 }
 
 class PinViewController: UIViewController {
@@ -25,92 +25,48 @@ class PinViewController: UIViewController {
     @IBOutlet var pinView4: PinView!
     
     var pinViews: [PinView]!
-    var previousPin: String!
-    var mnemonic: String!
-    var isSendingPayment: Bool = false
-    var isEnteringApp: Bool = false
+    var pin: String = ""
+    var isConfirming: Bool = false
+    var isCloseDisplayed: Bool = false
+    var shouldSavePin: Bool = false
     
     weak var delegate: PinViewControllerDelegate?
-    
-    @IBAction func textFieldDidChange() {
-        guard let digits = textField.text, digits.count < 5 else {
-            if let text = textField.text {
-                let index4 = text.index(text.startIndex, offsetBy: 4)
-                
-                textField.text = String(text[..<index4])
-            }
-            return
-        }
-        
-        for (index, pinView) in pinViews.enumerated() {
-            if (index < digits.count) {
-                pinView.setFilled()
-            } else {
-                pinView.setEmpty()
-            }
-        }
-        
-        if digits.count == 4 {
-            nextButton.setEnabled()
-        } else {
-            nextButton.setDisabled()
-        }
-    }
-    
-    @IBAction func selectNext() {
-        guard let pin = textField.text else {
-            return
-        }
-        
-        if let pinToConfirm = previousPin {
-            if pin == pinToConfirm {
-                if isSendingPayment || isEnteringApp {
-                    delegate?.pinConfirmationSucceeded()
-                    
-                    dismissView()
-                } else {
-                    savePin(pin: pin)
-                }
-            } else {
-                displayPinMismatchError()
-            }
-        } else {
-            confirmPin(pin: pin)
-        }
-    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    init(pin: String?, mnemonic: String?, isSendingPayment: Bool, isEnteringApp: Bool) {
+    init(pin: String?, confirming: Bool, isCloseDisplayed: Bool, shouldSavePin: Bool) {
         super.init(nibName: String(describing: PinViewController.self), bundle: nil)
-        
-        self.previousPin = pin
-        self.mnemonic = mnemonic
-        self.isSendingPayment = isSendingPayment
-        self.isEnteringApp = isEnteringApp
+        self.pin = pin ?? ""
+        self.isConfirming = confirming
+        self.isCloseDisplayed = isCloseDisplayed
+        self.shouldSavePin = shouldSavePin
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         textField.becomeFirstResponder()
+        textField.text = pin
     }
 
     func setupView() {
-        if let _ = previousPin {
+
+        if isConfirming {
+            title = "Confirm Pin"
             navigationItem.title = "Confirm Pin"
             navigationItem.setHidesBackButton(false, animated: false)
             
             nextButton.setTitle("Confirm", for: .normal)
         } else {
+            title = "Create Pin"
             navigationItem.title = "Create Pin"
             navigationItem.setHidesBackButton(true, animated: false)
             
@@ -119,7 +75,7 @@ class PinViewController: UIViewController {
        
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
-        if isSendingPayment {
+        if isCloseDisplayed {
             let image = UIImage(named:"close")
             let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
             navigationItem.leftBarButtonItem = leftBarButtonItem
@@ -145,6 +101,43 @@ class PinViewController: UIViewController {
         
         dismiss(animated: true, completion: nil)
     }
+
+    @IBAction func textFieldDidChange() {
+        guard let digits = textField.text, digits.count < 5 else {
+            if let text = textField.text {
+                let index4 = text.index(text.startIndex, offsetBy: 4)
+
+                textField.text = String(text[..<index4])
+            }
+            return
+        }
+
+        for (index, pinView) in pinViews.enumerated() {
+            if (index < digits.count) {
+                pinView.setFilled()
+            } else {
+                pinView.setEmpty()
+            }
+        }
+
+        if digits.count == 4 {
+            nextButton.setEnabled()
+        } else {
+            nextButton.setDisabled()
+        }
+    }
+
+    @IBAction func selectNext() {
+        guard let pin = textField.text else {
+            return
+        }
+
+        delegate?.pinEntryCompleted(self, pin: pin, save: shouldSavePin)
+
+        if isCloseDisplayed {
+            dismissView()
+        }
+    }
     
     func displayPinMismatchError() {
         for pinView in pinViews {
@@ -153,25 +146,12 @@ class PinViewController: UIViewController {
         
         textField.text = ""
         
-        let alert = UIAlertController(title: "Pin error", message: "Sorry your pin did not match. Please try again.", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Pin error",
+                                      message: "Sorry your pin did not match. Please try again.",
+                                      preferredStyle: UIAlertControllerStyle.alert)
+        
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func confirmPin(pin: String) {
-        let pinViewController = PinViewController(pin: pin, mnemonic: mnemonic, isSendingPayment: isSendingPayment, isEnteringApp: isEnteringApp)
-        
-        navigationController?.pushViewController(pinViewController, animated: true)
-    }
-    
-    func savePin(pin: String) {
-        let appNavController = navigationController as! AppNavigationController
-        appNavController.accountCreationDelegate?.createAccount(mnemonic: mnemonic)
-        
-        KeychainHelper.save(pin: pin)
-        KeychainHelper.setPinWhenEnteringApp(shouldSet: true)
-        KeychainHelper.setPinWhenSendingPayment(shouldSet: true)
-        
-        dismissView()
+
+        present(alert, animated: true, completion: nil)
     }
 }

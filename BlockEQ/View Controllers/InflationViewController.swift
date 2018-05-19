@@ -49,14 +49,6 @@ class InflationViewController: UIViewController {
         present(navigationController, animated: true, completion: nil)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    init() {
-        super.init(nibName: String(describing: InflationViewController.self), bundle: nil)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -11,8 +11,6 @@
 		A6066F61786CC7405A06A52A /* Pods_BlockEQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2BFC2D9DF7C32F6D40C804F /* Pods_BlockEQ.framework */; };
 		BCB2B19D8A0C42DDC9D826C1 /* Pods_BlockEQUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6912708A90B522F68A7AFA11 /* Pods_BlockEQUITests.framework */; };
 		C553ACBC2091572800B2379B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C553ACBA2091572800B2379B /* Localizable.strings */; };
-		C553ACC22092CA6600B2379B /* NavigationMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C553ACC12092CA6600B2379B /* NavigationMenuViewController.swift */; };
-		C553ACC52092CA8100B2379B /* NavigationMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C553ACC42092CA8100B2379B /* NavigationMenuViewController.xib */; };
 		C589FF2A20902CCC00F5F308 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C589FF2920902CCC00F5F308 /* SettingsViewController.swift */; };
 		C589FF2C20902CE300F5F308 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C589FF2B20902CE300F5F308 /* SettingsViewController.xib */; };
 		C593C46E2092E51A00D6047F /* NavigationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593C46D2092E51A00D6047F /* NavigationCell.swift */; };
@@ -26,6 +24,11 @@
 		C5AB413D2090436700096A29 /* UIView+NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB413C2090436700096A29 /* UIView+NibLoadableView.swift */; };
 		C5AF7C8A2094B60A00F99835 /* UIImage+CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AF7C892094B60A00F99835 /* UIImage+CALayer.swift */; };
 		C5CB9C1420914F64000F4181 /* SettingsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB9C1320914F64000F4181 /* SettingsContainerViewController.swift */; };
+		C5E8594620AFAFD100B77289 /* AppTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E8594520AFAFD100B77289 /* AppTabController.swift */; };
+		C5E8594920AFB45E00B77289 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E8594820AFB45E00B77289 /* ContainerViewController.swift */; };
+		C5E8594B20AFB47900B77289 /* AppTabController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5E8594A20AFB47900B77289 /* AppTabController.xib */; };
+		C5E8594E20AFCC0E00B77289 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E8594D20AFCC0E00B77289 /* ApplicationCoordinator.swift */; };
+		C5E8595020AFF09800B77289 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E8594F20AFF09800B77289 /* OnboardingCoordinator.swift */; };
 		EC0B191A205465BF0052802C /* WalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0B1918205465BF0052802C /* WalletCell.swift */; };
 		EC0B191B205465BF0052802C /* WalletCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC0B1919205465BF0052802C /* WalletCell.xib */; };
 		EC0B191E205486AB0052802C /* TransactionHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0B191C205486AB0052802C /* TransactionHistoryCell.swift */; };
@@ -108,8 +111,6 @@
 		89B1C324671F6269D8DB10A7 /* Pods_BlockEQTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockEQTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2BFC2D9DF7C32F6D40C804F /* Pods_BlockEQ.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockEQ.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C553ACBB2091572800B2379B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
-		C553ACC12092CA6600B2379B /* NavigationMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationMenuViewController.swift; sourceTree = "<group>"; };
-		C553ACC42092CA8100B2379B /* NavigationMenuViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NavigationMenuViewController.xib; sourceTree = "<group>"; };
 		C589FF2920902CCC00F5F308 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C589FF2B20902CE300F5F308 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		C593C46D2092E51A00D6047F /* NavigationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCell.swift; sourceTree = "<group>"; };
@@ -123,6 +124,11 @@
 		C5AB413C2090436700096A29 /* UIView+NibLoadableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NibLoadableView.swift"; sourceTree = "<group>"; };
 		C5AF7C892094B60A00F99835 /* UIImage+CALayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+CALayer.swift"; sourceTree = "<group>"; };
 		C5CB9C1320914F64000F4181 /* SettingsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsContainerViewController.swift; sourceTree = "<group>"; };
+		C5E8594520AFAFD100B77289 /* AppTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabController.swift; sourceTree = "<group>"; };
+		C5E8594820AFB45E00B77289 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		C5E8594A20AFB47900B77289 /* AppTabController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppTabController.xib; sourceTree = "<group>"; };
+		C5E8594D20AFCC0E00B77289 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
+		C5E8594F20AFF09800B77289 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
 		EA487049D94C0F37E5791674 /* Pods-BlockEQ.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQ.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQ/Pods-BlockEQ.release.xcconfig"; sourceTree = "<group>"; };
 		EC0B1918205465BF0052802C /* WalletCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCell.swift; sourceTree = "<group>"; };
 		EC0B1919205465BF0052802C /* WalletCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletCell.xib; sourceTree = "<group>"; };
@@ -234,8 +240,6 @@
 			children = (
 				EC581C7020766BA8003A397E /* WalletSwitchingViewController.swift */,
 				EC581C7120766BA8003A397E /* WalletSwitchingViewController.xib */,
-				C553ACC12092CA6600B2379B /* NavigationMenuViewController.swift */,
-				C553ACC42092CA8100B2379B /* NavigationMenuViewController.xib */,
 			);
 			path = Menus;
 			sourceTree = "<group>";
@@ -251,6 +255,25 @@
 				C5CB9C1320914F64000F4181 /* SettingsContainerViewController.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		C5E8594720AFB45000B77289 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				C5E8594820AFB45E00B77289 /* ContainerViewController.swift */,
+				C5E8594520AFAFD100B77289 /* AppTabController.swift */,
+				C5E8594A20AFB47900B77289 /* AppTabController.xib */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		C5E8594C20AFCC0000B77289 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				C5E8594D20AFCC0E00B77289 /* ApplicationCoordinator.swift */,
+				C5E8594F20AFF09800B77289 /* OnboardingCoordinator.swift */,
+			);
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		EC0B1917205463DC0052802C /* Cells */ = {
@@ -296,6 +319,7 @@
 		EC2015A72052D968009A73C8 /* BlockEQ */ = {
 			isa = PBXGroup;
 			children = (
+				C5E8594C20AFCC0000B77289 /* Coordinators */,
 				EC2015A82052D968009A73C8 /* AppDelegate.swift */,
 				EC2015DF2052E63D009A73C8 /* Extensions */,
 				EC72C0B520597CAD00141D6F /* Objects */,
@@ -333,6 +357,7 @@
 		EC2015D62052DB34009A73C8 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C5E8594720AFB45000B77289 /* Application */,
 				C553ACC32092CA6B00B2379B /* Menus */,
 				C589FF2820902CAC00F5F308 /* Settings */,
 				EC2015E62052EA92009A73C8 /* Wallet Creation and Restoration */,
@@ -578,7 +603,7 @@
 				EC581C7920769E0A003A397E /* WalletItemCell.xib in Resources */,
 				EC42584C2054E346000941B5 /* SendViewController.xib in Resources */,
 				EC1CEE5420577E880005F74E /* WordSuggestionCell.xib in Resources */,
-				C553ACC52092CA8100B2379B /* NavigationMenuViewController.xib in Resources */,
+				C5E8594B20AFB47900B77289 /* AppTabController.xib in Resources */,
 				EC4258502054EE76000941B5 /* SendAmountViewController.xib in Resources */,
 				EC2015B32052D968009A73C8 /* LaunchScreen.storyboard in Resources */,
 				EC2015EA2052EAC7009A73C8 /* WalletTitleViewController.xib in Resources */,
@@ -695,6 +720,8 @@
 				EC581C7220766BA8003A397E /* WalletSwitchingViewController.swift in Sources */,
 				EC2015E92052EAC7009A73C8 /* WalletTitleViewController.swift in Sources */,
 				C5AB413B2090433000096A29 /* UIView+ReusableView.swift in Sources */,
+				C5E8595020AFF09800B77289 /* OnboardingCoordinator.swift in Sources */,
+				C5E8594920AFB45E00B77289 /* ContainerViewController.swift in Sources */,
 				EC2683912062C7CA0085CAAF /* PaymentTransactionOperation.swift in Sources */,
 				EC0B19262054BC3B0052802C /* AppNavigationController.swift in Sources */,
 				C5AF7C8A2094B60A00F99835 /* UIImage+CALayer.swift in Sources */,
@@ -708,6 +735,7 @@
 				EC3609FD20560FDB00FC31F9 /* ScanViewController.swift in Sources */,
 				EC2015E52052E8AA009A73C8 /* Constants.swift in Sources */,
 				EC2015F12053185A009A73C8 /* PinView.swift in Sources */,
+				C5E8594620AFAFD100B77289 /* AppTabController.swift in Sources */,
 				EC2015ED2052FD1A009A73C8 /* PinViewController.swift in Sources */,
 				EC0B192220549B240052802C /* ReceiveViewController.swift in Sources */,
 				C5AB41392090430900096A29 /* UICollectionView+ReusableCells.swift in Sources */,
@@ -718,7 +746,6 @@
 				C5AB41332090369000096A29 /* EQSettings.swift in Sources */,
 				EC2015A92052D968009A73C8 /* AppDelegate.swift in Sources */,
 				EC2015D92052DB6D009A73C8 /* LaunchViewController.swift in Sources */,
-				C553ACC22092CA6600B2379B /* NavigationMenuViewController.swift in Sources */,
 				C5AB4137209042E800096A29 /* UITableView+ReusableCells.swift in Sources */,
 				EC2015FA20533A89009A73C8 /* MnemonicViewController.swift in Sources */,
 				EC0B191A205465BF0052802C /* WalletCell.swift in Sources */,
@@ -731,6 +758,7 @@
 				EC72C0B22059742900141D6F /* KeychainHelper.swift in Sources */,
 				EC2015E22052E6B6009A73C8 /* UIColor+Gradient.swift in Sources */,
 				C5AB413120902F7500096A29 /* String+Localization.swift in Sources */,
+				C5E8594E20AFCC0E00B77289 /* ApplicationCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

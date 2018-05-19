@@ -38,6 +38,6 @@ struct EQSettings {
 
     let debugSettings = SettingNode.section(
         name: "SETTINGS_SECTION_DEBUG".localized(),
-        items: [SettingNode.node(name: "SETTINGS_OPTION_DISABLE_PIN_CHECK".localized(), identifier: "debug-disable-pin", enabled: false)
+        items: [SettingNode.node(name: "SETTINGS_OPTION_DISABLE_PIN_CHECK".localized(), identifier: "debug-disable-pin", enabled: true)
         ])
 }

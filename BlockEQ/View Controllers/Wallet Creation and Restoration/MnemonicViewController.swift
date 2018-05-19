@@ -9,15 +9,22 @@
 import stellarsdk
 import UIKit
 
+protocol MnemonicViewControllerDelegate: AnyObject {
+    func confirmedWrittenMnemonic(_ vc: MnemonicViewController, mnemonic: String)
+}
+
 class MnemonicViewController: UIViewController {
     
     @IBOutlet var holderView: UIView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var mnemonicHolderView: UIView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
-    
+    @IBOutlet weak var confirmationButton: AppButton!
+
+    weak var delegate: MnemonicViewControllerDelegate?
+
     var mnemonic: String!
-    var shouldSetPin: Bool = false
+    var hideConfirmation: Bool = false
     
     // Going directly to pin instead of confirming phrase for a smoother user experience.
     /*
@@ -27,43 +34,39 @@ class MnemonicViewController: UIViewController {
         navigationController?.pushViewController(verificationViewController, animated: true)
     }*/
     
-    @IBAction func setPin() {
-        if shouldSetPin {
-            let pinViewController = PinViewController(pin: nil, mnemonic: mnemonic, isSendingPayment: false, isEnteringApp: false)
-            
-            navigationController?.pushViewController(pinViewController, animated: true)
-        } else {
-            dismissView()
-        }
+    @IBAction func confirmedWrittenDown(_ sender: Any) {
+        delegate?.confirmedWrittenMnemonic(self, mnemonic: mnemonic)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    init(mnemonic: String?, shouldSetPin: Bool) {
+    init(mnemonic: String?, shouldSetPin: Bool, hideConfirmation: Bool = false) {
         super.init(nibName: String(describing: MnemonicViewController.self), bundle: nil)
         
         self.mnemonic = mnemonic
-        self.shouldSetPin = shouldSetPin
+        self.hideConfirmation = hideConfirmation
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
         generateMnemonic()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.confirmationButton.isHidden = self.hideConfirmation
     }
     
     func setupView() {
         navigationItem.title = "Secret Phrase"
+        title = "Secret Phrase"
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        
-        let image = UIImage(named:"close")
-        let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
-        navigationItem.leftBarButtonItem = leftBarButtonItem
-        
+
         holderView.backgroundColor = Colors.lightBackground
         titleLabel.textColor = Colors.darkGray
         view.backgroundColor = Colors.primaryDark
