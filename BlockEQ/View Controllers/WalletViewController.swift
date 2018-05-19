@@ -98,6 +98,10 @@ class WalletViewController: UIViewController {
         let imageSettings = UIImage(named:"wallet")
         let leftBarButtonItem = UIBarButtonItem(image: imageSettings, style: .plain, target: self, action: #selector(self.displayMenu))
         navigationItem.leftBarButtonItem = leftBarButtonItem
+
+        let imageSend = UIImage(named:"send")
+        let rightBarButtonItem = UIBarButtonItem(image: imageSend, style: .plain, target: self, action: #selector(self.sendFunds))
+        navigationItem.rightBarButtonItem = rightBarButtonItem
         
         emptyViewTitleLabel.textColor = Colors.darkGray
         tableViewHeaderLeftLabel.textColor = Colors.darkGrayTransparent
@@ -105,7 +109,7 @@ class WalletViewController: UIViewController {
         pageControl.currentPageIndicatorTintColor = Colors.primaryDark
         pageControl.pageIndicatorTintColor = Colors.primaryDarkTransparent
         tableView.backgroundColor = Colors.lightBackground
-        view.backgroundColor = Colors.primaryDark
+//        view.backgroundColor = Colors.primaryDark
     }
     
     func startPollingForAccountFunding() {

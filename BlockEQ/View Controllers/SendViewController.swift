@@ -76,8 +76,8 @@ class SendViewController: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         let image = UIImage(named:"close")
-        let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
-        navigationItem.leftBarButtonItem = leftBarButtonItem
+        let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
+        navigationItem.rightBarButtonItem = rightBarButtonItem
         
         balanceLabel.textColor = Colors.black
         sendTitleLabel.textColor = Colors.darkGrayTransparent
