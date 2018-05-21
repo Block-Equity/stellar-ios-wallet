@@ -12,60 +12,85 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var pinViewController: PinViewController!
+
+    var pinViewController: PinViewController?
+    let container = WrapperVC()
+    let appCoordinator = ApplicationCoordinator()
+    let onboardingCoordinator = OnboardingCoordinator()
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let launchViewController = LaunchViewController()
-        let launchNavController = AppNavigationController.init(rootViewController: launchViewController)
-        
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
         window = window ?? UIWindow(frame: CGRect(origin: CGPoint.zero, size: UIScreen.main.bounds.size))
-        window?.rootViewController = launchNavController
+        window?.rootViewController = container
         window?.makeKeyAndVisible()
-        
+
+        onboardingCoordinator.delegate = self
+
+        if KeychainHelper.getAccountId() == nil {
+            container.moveToViewController(onboardingCoordinator.navController,
+                                           fromViewController: nil,
+                                           animated: false,
+                                           completion: nil)
+        } else {
+            container.moveToViewController(appCoordinator.tabController,
+                                           fromViewController: nil,
+                                           animated: false,
+                                           completion: {
+                                            self.appCoordinator.tabController.moveTo(tab: .assets)
+            })
+        }
+
         displayPin()
+
         
         return true
     }
 
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-    }
-
     func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         if let pinController = pinViewController {
             pinController.dismiss(animated: false, completion: nil)
         }
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         displayPin()
     }
 
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    }
-
     func displayPin() {
-        if KeychainHelper.checkPinWhenEnteringApp() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.pinViewController = PinViewController(pin: KeychainHelper.getPin(), mnemonic: nil, isSendingPayment: false, isEnteringApp: true)
-                let navigationController = AppNavigationController(rootViewController: self.pinViewController)
-                
-                if let controller = UIApplication.shared.keyWindow?.rootViewController?.presentedViewController {
-                    controller.present(navigationController, animated: true, completion: nil)
-                } else {
-                    self.window?.rootViewController?.present(navigationController, animated: true, completion: nil)
-                }
-            }
+        guard KeychainHelper.checkPinWhenEnteringApp() else {
+            return
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let pinVC = PinViewController(pin: nil, confirming: true, isCloseDisplayed: false, shouldSavePin: false)
+            pinVC.delegate = self
+
+            let navigationController = AppNavigationController(rootViewController: pinVC)
+            self.pinViewController = pinVC
+
+            self.container.present(navigationController, animated: true, completion: nil)
         }
     }
 }
 
+extension AppDelegate: OnboardingCoordinatorDelegate {
+    func onboardingCompleted() {
+        container.moveToViewController(appCoordinator.tabController,
+                                       fromViewController: onboardingCoordinator.navController,
+                                       animated: true,
+                                       completion: {
+                                        self.appCoordinator.tabController.moveTo(tab: .assets)
+        })
+    }
+}
+
+extension AppDelegate: PinViewControllerDelegate {
+    func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool) {
+        if KeychainHelper.checkPin(inPin: pin) {
+            vc.parent?.dismiss(animated: true, completion: nil)
+        } else {
+            vc.displayPinMismatchError()
+        }
+    }
+}

@@ -155,9 +155,9 @@ class SendAmountViewController: UIViewController {
     }
     
     func displayPin() {
-        let pinViewController = PinViewController(pin: KeychainHelper.getPin(), mnemonic: nil, isSendingPayment: true, isEnteringApp: false)
-        pinViewController.delegate = self
+        let pinViewController = PinViewController(pin: KeychainHelper.getPin(), confirming: false, isCloseDisplayed: true, shouldSavePin: false)
         let navigationController = AppNavigationController(rootViewController: pinViewController)
+        pinViewController.delegate = self
         
         present(navigationController, animated: true, completion: nil)
     }
@@ -198,7 +198,7 @@ extension SendAmountViewController: UITextFieldDelegate {
 }
 
 extension SendAmountViewController: PinViewControllerDelegate {
-    func pinConfirmationSucceeded() {
+    func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool) {
         guard let amount = amountLabel.text, !amount.isEmpty, amount != "0" else {
             return
         }

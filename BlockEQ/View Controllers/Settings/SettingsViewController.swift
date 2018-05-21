@@ -32,8 +32,8 @@ final class SettingsViewController: UIViewController {
     /// The object to delegate to when a setting is selected or changed. Automatically passed to new view controllers.
     weak var delegate: SettingsDelegate?
 
-    /// The setings view controller requires a dark navigation bar
-    override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
+    /// The settings view controller requires a light navigation bar
+    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
 
     /// Convenience initializer that provides a settings menu based on a list of hierarchical set of settings nodes.
     ///
@@ -59,9 +59,6 @@ final class SettingsViewController: UIViewController {
         tableView.registerHeader(type: UppercasedTableViewHeader.self)
         tableView.delegate = self
         tableView.dataSource = self
-
-        let closeButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissSettings))
-        navigationItem.rightBarButtonItem = closeButton
     }
 
     func setupStyle() {
@@ -88,9 +85,7 @@ extension SettingsViewController: UITableViewDataSource {
         let settingSection = optionList[indexPath.section]
         let settingNode = settingSection.subnode(row: indexPath.row)
         if settingNode?.enabled ?? false {
-            dismiss(animated: true, completion: {
-                self.delegate?.selected(setting: node)
-            })
+            self.delegate?.selected(setting: node)
         }
     }
 }

@@ -49,14 +49,6 @@ class InflationViewController: UIViewController {
         present(navigationController, animated: true, completion: nil)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    init() {
-        super.init(nibName: String(describing: InflationViewController.self), bundle: nil)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -79,11 +71,7 @@ class InflationViewController: UIViewController {
     func setupView() {
         navigationItem.title = "Set Inflation"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        
-        let image = UIImage(named:"close")
-        let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
-        navigationItem.leftBarButtonItem = leftBarButtonItem
-    
+
         titleLabel.textColor = Colors.darkGrayTransparent
         subtitleLabel.textColor = Colors.darkGray
         destinationAddressTextField.textColor = Colors.darkGray

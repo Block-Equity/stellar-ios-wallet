@@ -8,12 +8,7 @@
 
 import UIKit
 
-protocol AccountCreationDelegate: class {
-    func createAccount(mnemonic: String)
-}
-
 class AppNavigationController: UINavigationController {
-    weak var accountCreationDelegate: AccountCreationDelegate?
 
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
 

@@ -10,16 +10,19 @@ import UIKit
 
 protocol WalletSwitchingViewControllerDelegate: class {
     func didSelectAsset(index: Int)
+    func didSelectSetInflation()
     func reloadAssets()
 }
 
 final class WalletSwitchingViewController: UIViewController {
     
     @IBOutlet var inflationButton: UIButton!
-    @IBOutlet var tableView: UITableView!
+    @IBOutlet var tableView: UITableView?
     @IBOutlet var tableViewHeader: UIView!
     @IBOutlet var tableViewHeaderTitleLabel: UILabel!
-    
+
+    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
+
     enum SectionType: Int {
         case userAssets
         case supportedAssets
@@ -34,18 +37,7 @@ final class WalletSwitchingViewController: UIViewController {
     var updatedSupportedAssets: [Assets.AssetType] = []
     
     @IBAction func setInflation() {
-        let inflationViewController = InflationViewController()
-        let navigationController = AppNavigationController(rootViewController: inflationViewController)
-        
-        present(navigationController, animated: true, completion: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    init() {
-        super.init(nibName: String(describing: WalletSwitchingViewController.self), bundle: nil)
+        delegate?.didSelectSetInflation()
     }
 
     override func viewDidLoad() {
@@ -56,7 +48,7 @@ final class WalletSwitchingViewController: UIViewController {
     
     func setupView() {
         addNavigationHeader()
-        
+
         inflationButton.setTitleColor(Colors.white, for: .normal)
         inflationButton.backgroundColor = Colors.green
         tableViewHeader.backgroundColor = Colors.lightBackground
@@ -65,25 +57,23 @@ final class WalletSwitchingViewController: UIViewController {
         inflationButton.setTitle("Set Inflation", for: .normal)
         
         let tableViewNibUserAssets = UINib(nibName: WalletItemCell.cellIdentifier, bundle: nil)
-        tableView.register(tableViewNibUserAssets, forCellReuseIdentifier: WalletItemCell.cellIdentifier)
+        tableView?.register(tableViewNibUserAssets, forCellReuseIdentifier: WalletItemCell.cellIdentifier)
         
         let tableViewNibSupportedAssets = UINib(nibName: WalletItemActivateCell.cellIdentifier, bundle: nil)
-        tableView.register(tableViewNibSupportedAssets, forCellReuseIdentifier: WalletItemActivateCell.cellIdentifier)
+        tableView?.register(tableViewNibSupportedAssets, forCellReuseIdentifier: WalletItemActivateCell.cellIdentifier)
     }
     
     func addNavigationHeader() {
-        let header = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.size.width, height: (navigationController?.navigationBar.frame.size.height)!))
-        header.backgroundColor = Colors.transparent
-        
-        let titleLabel = UILabel(frame: CGRect(x: margin, y: 0, width: header.frame.size.width - margin * 2, height: header.frame.size.height))
-        titleLabel.textColor = Colors.white
-        titleLabel.backgroundColor = Colors.transparent
-        titleLabel.text = "Wallets"
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 17.0)
-        
-        header.addSubview(titleLabel)
-        
-        navigationController?.navigationBar.addSubview(header)
+        self.title = "Wallets".localized()
+
+        let closeButton = UIImage(named: "close")
+        let rightBarButtonItem = UIBarButtonItem(image: closeButton, style: .plain, target: self, action: #selector(self.close))
+
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+    }
+
+    @objc func close() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     func updateMenu(stellarAccount: StellarAccount) {
@@ -106,7 +96,7 @@ final class WalletSwitchingViewController: UIViewController {
             }
         }
         
-        tableView.reloadData()
+        tableView?.reloadData()
     }
     
     func showHud() {
