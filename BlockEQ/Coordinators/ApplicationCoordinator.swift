@@ -20,7 +20,7 @@ final class ApplicationCoordinator {
     }()
 
     /// The view controller used for trading
-    lazy var tradingViewController: UIViewController = { return UIViewController() }()
+    lazy var tradeContainerViewController: UIViewController = { return TradingCoordinator().segmentController }()
 
     /// The view controller used to display settings options
     lazy var settingsViewConroller: SettingsViewController = {
@@ -56,19 +56,19 @@ extension ApplicationCoordinator: AppTabControllerDelegate {
         var vc: UIViewController
 
         switch appTab {
-        case .assets: vc = walletViewController
-        case .trading: vc = tradingViewController
-        case .receive:
-            // TODO: Accounts shouldn't live just on the wallet VC, need to refactor this eventually
-            var address = "default address"
-            if walletViewController.pageControl != nil {
-                let index = walletViewController.pageControl.currentPage
-                address = walletViewController.accounts[index].accountId
-            }
+            case .assets: vc = walletViewController
+            case .trading: vc = tradeContainerViewController
+            case .receive:
+                // TODO: Accounts shouldn't live just on the wallet VC, need to refactor this eventually
+                var address = "default address"
+                if walletViewController.pageControl != nil {
+                    let index = walletViewController.pageControl.currentPage
+                    address = walletViewController.accounts[index].accountId
+                }
 
-            receiveViewController.address = address
-            vc = receiveViewController
-        case .settings: vc = settingsViewConroller
+                receiveViewController.address = address
+                vc = receiveViewController
+            case .settings: vc = settingsViewConroller
         }
 
         let navWrapper = AppNavigationController(rootViewController: vc)

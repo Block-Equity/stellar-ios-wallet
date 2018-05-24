@@ -19,7 +19,7 @@ struct Colors {
     static let lightBackground = UIColor(red: 247.0/255.0, green: 247.0/255.0, blue: 247.0/255.0, alpha: Alphas.opaque)
     static let lightBlue = UIColor(red: 247.0/255.0, green: 249.0/255.0, blue: 253.0/255.0, alpha: Alphas.opaque)
     static let darkGray = UIColor(red: 74.0/255.0, green: 74.0/255.0, blue: 74.0/255.0, alpha: Alphas.opaque)
-    static let darkGrayTransparent = UIColor(red: 74.0/255.0, green: 74.0/255.0, blue: 74.0/255.0, alpha: Alphas.opaqueTransparent)
+    static let darkGrayTransparent = UIColor(red: 74.0/255.0, green: 74.0/255.0, blue: 74.0/255.0, alpha: Alphas.semiTransparent)
     static let lightGray = UIColor(red: 216.0/255.0, green: 216.0/255.0, blue: 216.0/255.0, alpha: Alphas.opaque)
     static let shadowGray = UIColor.lightGray
     static let black = UIColor.black

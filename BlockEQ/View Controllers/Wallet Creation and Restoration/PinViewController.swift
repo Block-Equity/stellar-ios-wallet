@@ -32,7 +32,7 @@ class PinViewController: UIViewController {
     
     weak var delegate: PinViewControllerDelegate?
 
-    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
+    override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

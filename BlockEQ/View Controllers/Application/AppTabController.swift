@@ -135,6 +135,11 @@ final class AppTabController: ContainerViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupView()
+    }
+    
+    func setupView() {
         tabBar.delegate = self
         tabBar.tintColor = Colors.primaryDark
         tabBar.setItems(tabItems, animated: false)

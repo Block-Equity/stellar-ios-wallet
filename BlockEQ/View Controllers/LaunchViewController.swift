@@ -42,13 +42,17 @@ class LaunchViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+         super.viewWillDisappear(animated)
+        
+        navigationController?.isNavigationBarHidden = false
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return .default
     }
     
     func setupView() {
-        UIApplication.shared.statusBarStyle = .lightContent
-        
         navigationController?.isNavigationBarHidden = true
         
         logoImageView.image = UIImage(named: "logo")

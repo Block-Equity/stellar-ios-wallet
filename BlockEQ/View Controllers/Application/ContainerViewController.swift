@@ -18,7 +18,7 @@ protocol ContainerProtocol: AnyObject {
 // using this class as a container for other view controllers, this will allow the proper status bar colour setting.
 class WrapperVC: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return childViewControllers.first?.preferredStatusBarStyle ?? .lightContent
+        return childViewControllers.first?.preferredStatusBarStyle ?? .default
     }
 }
 

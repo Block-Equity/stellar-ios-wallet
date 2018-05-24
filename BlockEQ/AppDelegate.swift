@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         onboardingCoordinator.delegate = self
 
-        if KeychainHelper.getAccountId() == nil {
+        if !KeychainHelper.isExistingInstance() {
             container.moveToViewController(onboardingCoordinator.navController,
                                            fromViewController: nil,
                                            animated: false,
@@ -43,7 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         displayPin()
 
-        
         return true
     }
 

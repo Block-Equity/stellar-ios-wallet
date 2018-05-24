@@ -21,7 +21,7 @@ final class WalletSwitchingViewController: UIViewController {
     @IBOutlet var tableViewHeader: UIView!
     @IBOutlet var tableViewHeaderTitleLabel: UILabel!
 
-    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
+    override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
 
     enum SectionType: Int {
         case userAssets

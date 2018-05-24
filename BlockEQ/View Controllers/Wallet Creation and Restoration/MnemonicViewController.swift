@@ -58,6 +58,7 @@ class MnemonicViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         self.confirmationButton.isHidden = self.hideConfirmation
     }
     
