@@ -76,6 +76,7 @@ class WalletViewController: UIViewController {
         let tableViewNib = UINib(nibName: TransactionHistoryCell.cellIdentifier, bundle: nil)
         tableView.register(tableViewNib, forCellReuseIdentifier: TransactionHistoryCell.cellIdentifier)
         
+        logoImageView.tintColor = Colors.primaryDark
         navigationItem.titleView = logoImageView
 
         let imageSettings = UIImage(named:"wallet")

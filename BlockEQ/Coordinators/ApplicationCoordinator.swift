@@ -11,6 +11,16 @@ import Foundation
 final class ApplicationCoordinator {
     /// The controller class that directs which view controller is currently displayed
     let tabController = AppTabController(tab: .assets)
+    
+    // The coordinator responsible for the trading flow
+    let tradingCoordinator = TradingCoordinator()
+    
+    /// The view that handles all switching in the header
+    lazy var tradeHeaderView: TradeHeaderView = {
+        let view = TradeHeaderView(frame: CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.size.width, height: 44.0)))
+        view.tradeHeaderViewDelegate = self
+        return view
+    }()
 
     /// The view controller used to list out the user's assets
     lazy var walletViewController: WalletViewController = {
@@ -19,16 +29,13 @@ final class ApplicationCoordinator {
         return vc
     }()
 
-    /// The view controller used for trading
-    lazy var tradingViewController: UIViewController = { return UIViewController() }()
-
     /// The view controller used to display settings options
     lazy var settingsViewConroller: SettingsViewController = {
         let vc = SettingsViewController(options: EQSettings().options)
         vc.delegate = self
         return vc
     }()
-
+    
     /// The view controller used for receiving funds
     lazy var receiveViewController: ReceiveViewController = {
         return ReceiveViewController(address: "permanent receive address")
@@ -45,9 +52,15 @@ final class ApplicationCoordinator {
 
     /// Most tabbed view controllers need the top navbar - so we wrap every tab in an inner AppNavigationController
     var wrappingNavController: AppNavigationController?
-
+    
     init() {
         tabController.tabDelegate = self
+    }
+}
+
+extension ApplicationCoordinator: TradeHeaderViewDelegate {
+    func switchedSegment(_ type: TradeSegment) {
+        tradingCoordinator.switchedSegment(type)
     }
 }
 
@@ -56,25 +69,33 @@ extension ApplicationCoordinator: AppTabControllerDelegate {
         var vc: UIViewController
 
         switch appTab {
-        case .assets: vc = walletViewController
-        case .trading: vc = tradingViewController
-        case .receive:
-            // TODO: Accounts shouldn't live just on the wallet VC, need to refactor this eventually
-            var address = "default address"
-            if walletViewController.pageControl != nil {
-                let index = walletViewController.pageControl.currentPage
-                address = walletViewController.accounts[index].accountId
-            }
+            case .assets: vc = walletViewController
+            case .trading: vc = tradingCoordinator.segmentController
+            case .receive:
+                // TODO: Accounts shouldn't live just on the wallet VC, need to refactor this eventually
+                var address = "default address"
+                if walletViewController.pageControl != nil {
+                    let index = walletViewController.pageControl.currentPage
+                    address = walletViewController.accounts[index].accountId
+                }
 
-            receiveViewController.address = address
-            vc = receiveViewController
-        case .settings: vc = settingsViewConroller
+                receiveViewController.address = address
+                vc = receiveViewController
+            case .settings: vc = settingsViewConroller
         }
 
         let navWrapper = AppNavigationController(rootViewController: vc)
         wrappingNavController = navWrapper
+        
+        setNavControllerHeader(type: appTab)
 
         tabController.setViewController(navWrapper, animated: false, completion: nil)
+    }
+    
+    func setNavControllerHeader(type: ApplicationTab) {
+        if type == .trading {
+            wrappingNavController?.navigationBar.addSubview(tradeHeaderView)
+        }
     }
 }
 

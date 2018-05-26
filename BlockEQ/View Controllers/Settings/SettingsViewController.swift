@@ -33,7 +33,7 @@ final class SettingsViewController: UIViewController {
     weak var delegate: SettingsDelegate?
 
     /// The settings view controller requires a light navigation bar
-    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
+    override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
 
     /// Convenience initializer that provides a settings menu based on a list of hierarchical set of settings nodes.
     ///

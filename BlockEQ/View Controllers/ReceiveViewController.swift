@@ -17,7 +17,7 @@ class ReceiveViewController: UIViewController {
     @IBOutlet var imageViewHolder: UIView!
     @IBOutlet var imageView: UIImageView!
 
-    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
+    override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
     
     var address: String = ""
     

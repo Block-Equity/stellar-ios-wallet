@@ -33,6 +33,7 @@ final class OnboardingCoordinator {
 
 extension OnboardingCoordinator: LaunchViewControllerDelegate {
     func requestedCreateNewWallet(_ vc: LaunchViewController) {
+        
         navController.pushViewController(mnemonicViewController, animated: true)
     }
 
@@ -43,17 +44,7 @@ extension OnboardingCoordinator: LaunchViewControllerDelegate {
 
 extension OnboardingCoordinator: MnemonicViewControllerDelegate {
     func confirmedWrittenMnemonic(_ vc: MnemonicViewController, mnemonic: String) {
-        let keyPair = try! Wallet.createKeyPair(mnemonic: mnemonic, passphrase: nil, index: 0)
-
-        let publicKeyData = NSData(bytes: keyPair.publicKey.bytes, length: keyPair.publicKey.bytes.count) as Data
-        let privateBytes = keyPair.privateKey?.bytes ?? [UInt8]()
-        let privateKeyData = NSData(bytes: privateBytes, length: privateBytes.count) as Data
-
-        print("Saving wallet items")
-        KeychainHelper.save(mnemonic: mnemonic)
-        KeychainHelper.save(accountId: keyPair.accountId)
-        KeychainHelper.save(publicKey: publicKeyData)
-        KeychainHelper.save(privateKey: privateKeyData)
+        saveMnemonic(mnemonic: mnemonic)
 
         let pinEntry = PinViewController(pin: nil, confirming: false, isCloseDisplayed: false, shouldSavePin: false)
         pinEntry.delegate = self
@@ -64,7 +55,7 @@ extension OnboardingCoordinator: MnemonicViewControllerDelegate {
 
 extension OnboardingCoordinator: VerificationViewControllerDelegate {
     func validatedAccount(_ vc: VerificationViewController, mnemonic: String) {
-        KeychainHelper.save(mnemonic: mnemonic)
+        saveMnemonic(mnemonic: mnemonic)
 
         let pinEntry = PinViewController(pin: nil, confirming: false, isCloseDisplayed: false, shouldSavePin: false)
         pinEntry.delegate = self
@@ -93,5 +84,21 @@ extension OnboardingCoordinator: PinViewControllerDelegate {
         } else {
             vc.displayPinMismatchError()
         }
+    }
+}
+
+extension OnboardingCoordinator {
+    func saveMnemonic(mnemonic: String) {
+        let keyPair = try! Wallet.createKeyPair(mnemonic: mnemonic, passphrase: nil, index: 0)
+        
+        let publicKeyData = NSData(bytes: keyPair.publicKey.bytes, length: keyPair.publicKey.bytes.count) as Data
+        let privateBytes = keyPair.privateKey?.bytes ?? [UInt8]()
+        let privateKeyData = NSData(bytes: privateBytes, length: privateBytes.count) as Data
+        
+        print("Saving wallet items")
+        KeychainHelper.save(mnemonic: mnemonic)
+        KeychainHelper.save(accountId: keyPair.accountId)
+        KeychainHelper.save(publicKey: publicKeyData)
+        KeychainHelper.save(privateKey: privateKeyData)
     }
 }
