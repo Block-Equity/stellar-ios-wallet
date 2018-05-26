@@ -27,21 +27,20 @@ final class TradingCoordinator {
     }()
     
     init() {
-        segmentController.tradeSegmentDelegate = self
+        //segmentController.tradeSegmentDelegate = self
         segmentController.setViewController(tradeViewController, animated: false, completion: nil)
     }
-}
-
-extension TradingCoordinator: TradeSegmentControllerDelegate {
+    
     func switchedSegment(_ type: TradeSegment) {
         var vc: UIViewController
         
         switch type {
-            case .trade: vc = tradeViewController
-            case .orderBook: vc = orderBookViewController
-            case .myOffers: vc = myOffersViewController
+        case .trade: vc = tradeViewController
+        case .orderBook: vc = orderBookViewController
+        case .myOffers: vc = myOffersViewController
         }
         
         segmentController.setViewController(vc, animated: false, completion: nil)
     }
 }
+

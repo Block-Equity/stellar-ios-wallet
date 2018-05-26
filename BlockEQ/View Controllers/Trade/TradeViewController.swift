@@ -33,8 +33,8 @@ class TradeViewController: UIViewController {
             }
         }
         
-        tradeFromButton.backgroundColor = Colors.darkGrayTransparent
-        tradeToButton.backgroundColor = Colors.darkGrayTransparent
+        tradeFromButton.backgroundColor = Colors.red
+        tradeToButton.backgroundColor = Colors.green
         tradeFromTextField.textColor = Colors.darkGray
         tradeToTextField.textColor = Colors.darkGray
     }

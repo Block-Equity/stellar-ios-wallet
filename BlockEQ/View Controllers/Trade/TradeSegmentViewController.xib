@@ -11,8 +11,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TradeSegmentViewController" customModule="BlockEQ" customModuleProvider="target">
             <connections>
-                <outlet property="segmentControl" destination="ClY-YG-ndK" id="AUR-f0-e3K"/>
-                <outlet property="segmentView" destination="L2G-Si-LBv" id="NqM-Rv-CYb"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="rOg-vF-dSU"/>
             </connections>
         </placeholder>
@@ -35,29 +33,6 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="-148" y="59"/>
-        </view>
-        <view contentMode="scaleToFill" id="L2G-Si-LBv">
-            <rect key="frame" x="0.0" y="0.0" width="254" height="40"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <subviews>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ClY-YG-ndK">
-                    <rect key="frame" x="0.0" y="0.0" width="254" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <segments>
-                        <segment title="Trade"/>
-                        <segment title="Order Book"/>
-                        <segment title="My Offers"/>
-                    </segments>
-                    <connections>
-                        <action selector="segmentSelected" destination="-1" eventType="valueChanged" id="0Ep-gV-sCT"/>
-                    </connections>
-                </segmentedControl>
-            </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="wKG-1y-43f"/>
-            <point key="canvasLocation" x="-149" y="472"/>
         </view>
     </objects>
 </document>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TradeHeaderView" customModule="BlockEQ" customModuleProvider="target">
+            <connections>
+                <outlet property="myOffersButton" destination="LL0-RG-bsh" id="hdy-1g-fHg"/>
+                <outlet property="orderBookButton" destination="BUf-Lg-GfR" id="R5z-1k-4e5"/>
+                <outlet property="sliderOriginConstraint" destination="HeU-a5-ZNb" id="9Ds-Iw-bcH"/>
+                <outlet property="tradeButton" destination="DQL-ew-GGD" id="JLN-GW-QR8"/>
+                <outlet property="view" destination="cN3-iZ-23Y" id="QxX-Iw-E4f"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="cN3-iZ-23Y">
+            <rect key="frame" x="0.0" y="0.0" width="502" height="54"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="POY-DW-D7T">
+                    <rect key="frame" x="0.0" y="53" width="502" height="1"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GZr-0E-XxZ">
+                            <rect key="frame" x="0.0" y="0.0" width="167.5" height="1"/>
+                            <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="GZr-0E-XxZ" firstAttribute="leading" secondItem="POY-DW-D7T" secondAttribute="leading" id="HeU-a5-ZNb"/>
+                        <constraint firstAttribute="bottom" secondItem="GZr-0E-XxZ" secondAttribute="bottom" id="U1T-bq-kEA"/>
+                        <constraint firstItem="GZr-0E-XxZ" firstAttribute="top" secondItem="POY-DW-D7T" secondAttribute="top" id="cU2-Yp-YBG"/>
+                        <constraint firstAttribute="height" constant="1.5" id="egT-Qz-Nzd"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DQL-ew-GGD">
+                    <rect key="frame" x="0.0" y="0.0" width="167.5" height="54"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                    <state key="normal" title="Trade"/>
+                    <connections>
+                        <action selector="selectedButtonWithSender:" destination="-1" eventType="touchUpInside" id="V4k-mT-sGU"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LL0-RG-bsh">
+                    <rect key="frame" x="334.5" y="0.0" width="167.5" height="54"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                    <state key="normal" title="My Offers"/>
+                    <connections>
+                        <action selector="selectedButtonWithSender:" destination="-1" eventType="touchUpInside" id="fen-FT-3ng"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BUf-Lg-GfR">
+                    <rect key="frame" x="167.5" y="0.0" width="167" height="54"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                    <state key="normal" title="Order Book"/>
+                    <connections>
+                        <action selector="selectedButtonWithSender:" destination="-1" eventType="touchUpInside" id="4tA-Cx-dX2"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="LL0-RG-bsh" firstAttribute="top" secondItem="iBU-X4-WUS" secondAttribute="top" id="BiB-x1-82G"/>
+                <constraint firstItem="LL0-RG-bsh" firstAttribute="width" secondItem="DQL-ew-GGD" secondAttribute="width" id="EiT-r3-0wE"/>
+                <constraint firstItem="LL0-RG-bsh" firstAttribute="leading" secondItem="BUf-Lg-GfR" secondAttribute="trailing" id="HUp-2H-fEB"/>
+                <constraint firstItem="POY-DW-D7T" firstAttribute="trailing" secondItem="iBU-X4-WUS" secondAttribute="trailing" id="NLs-gP-hkQ"/>
+                <constraint firstItem="BUf-Lg-GfR" firstAttribute="bottom" secondItem="iBU-X4-WUS" secondAttribute="bottom" id="NYt-PK-zoK"/>
+                <constraint firstItem="BUf-Lg-GfR" firstAttribute="leading" secondItem="DQL-ew-GGD" secondAttribute="trailing" id="ZBi-sP-1Os"/>
+                <constraint firstItem="POY-DW-D7T" firstAttribute="leading" secondItem="iBU-X4-WUS" secondAttribute="leading" id="dw3-CN-PiU"/>
+                <constraint firstItem="BUf-Lg-GfR" firstAttribute="height" secondItem="DQL-ew-GGD" secondAttribute="height" id="e1e-qY-b1b"/>
+                <constraint firstItem="DQL-ew-GGD" firstAttribute="bottom" secondItem="iBU-X4-WUS" secondAttribute="bottom" id="g5S-OZ-q1m"/>
+                <constraint firstItem="DQL-ew-GGD" firstAttribute="leading" secondItem="iBU-X4-WUS" secondAttribute="leading" id="h7y-KU-cpr"/>
+                <constraint firstItem="BUf-Lg-GfR" firstAttribute="top" secondItem="iBU-X4-WUS" secondAttribute="top" id="p6l-n0-mcJ"/>
+                <constraint firstItem="DQL-ew-GGD" firstAttribute="top" secondItem="iBU-X4-WUS" secondAttribute="top" id="qIm-Eo-VWY"/>
+                <constraint firstItem="LL0-RG-bsh" firstAttribute="bottom" secondItem="iBU-X4-WUS" secondAttribute="bottom" id="ryp-rl-qYw"/>
+                <constraint firstItem="iBU-X4-WUS" firstAttribute="trailing" secondItem="LL0-RG-bsh" secondAttribute="trailing" id="tJQ-tC-BSk"/>
+                <constraint firstItem="GZr-0E-XxZ" firstAttribute="width" secondItem="DQL-ew-GGD" secondAttribute="width" id="vBL-bW-xdo"/>
+                <constraint firstItem="BUf-Lg-GfR" firstAttribute="width" secondItem="DQL-ew-GGD" secondAttribute="width" id="vhn-ZR-f1W"/>
+                <constraint firstItem="LL0-RG-bsh" firstAttribute="height" secondItem="DQL-ew-GGD" secondAttribute="height" id="xqZ-zE-V54"/>
+                <constraint firstItem="POY-DW-D7T" firstAttribute="bottom" secondItem="iBU-X4-WUS" secondAttribute="bottom" id="ytu-Ky-zkX"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="iBU-X4-WUS"/>
+            <point key="canvasLocation" x="133" y="332"/>
+        </view>
+    </objects>
+</document>
