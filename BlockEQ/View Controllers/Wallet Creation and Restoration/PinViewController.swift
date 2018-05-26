@@ -14,16 +14,15 @@ protocol PinViewControllerDelegate: class {
 }
 
 class PinViewController: UIViewController {
-    
-    @IBOutlet var textField: UITextField!
-    @IBOutlet var nextButton: AppButton!
+
     @IBOutlet var buttonHolderView: UIView!
     @IBOutlet var pinViewHolder: UIView!
     @IBOutlet var pinView1: PinView!
     @IBOutlet var pinView2: PinView!
     @IBOutlet var pinView3: PinView!
     @IBOutlet var pinView4: PinView!
-    
+    @IBOutlet weak var keyboardView: KeyboardView!
+
     var pinViews: [PinView]!
     var pin: String = ""
     var isConfirming: Bool = false
@@ -50,27 +49,37 @@ class PinViewController: UIViewController {
         super.viewDidLoad()
         setupView()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        textField.becomeFirstResponder()
-        textField.text = pin
-    }
 
     func setupView() {
+        keyboardView.delegate = self
+        keyboardView.update(with: KeyboardViewModel(options: KeyboardOptions.all,
+                                                    buttons: [
+                                                        ("1", ""),
+                                                        ("2", "ABC"),
+                                                        ("3", "DEF"),
+                                                        ("4", "GHI"),
+                                                        ("5", "JKL"),
+                                                        ("6", "MNO"),
+                                                        ("7", "PQRS"),
+                                                        ("8", "TUV"),
+                                                        ("9", "WXYZ"),
+                                                        ("", ""),
+                                                        ("0", ""),
+                                                        ("R", "")],
+                                                    bottomLeftImage: nil,
+                                                    bottomRightImage: UIImage(named: "backspace"),
+                                                    labelColor: .white,
+                                                    buttonColor: .white,
+                                                    backgroundColor: .clear))
 
         if isConfirming {
             title = "Confirm Pin"
             navigationItem.title = "Confirm Pin"
             navigationItem.setHidesBackButton(false, animated: false)
-            
-            nextButton.setTitle("Confirm", for: .normal)
         } else {
             title = "Create Pin"
             navigationItem.title = "Create Pin"
             navigationItem.setHidesBackButton(true, animated: false)
-            
-            nextButton.setTitle("Next", for: .normal)
         }
        
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -80,14 +89,9 @@ class PinViewController: UIViewController {
             let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
             navigationItem.leftBarButtonItem = leftBarButtonItem
         }
-        
-        nextButton.backgroundColor = Colors.tertiaryDark
+
         pinViewHolder.backgroundColor = Colors.primaryDark
         view.backgroundColor = Colors.primaryDark
-        
-        nextButton.setDisabled()
-        
-        textField.inputAccessoryView = buttonHolderView
         
         pinViews = [pinView1, pinView2, pinView3, pinView4]
         
@@ -102,36 +106,7 @@ class PinViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
-    @IBAction func textFieldDidChange() {
-        guard let digits = textField.text, digits.count < 5 else {
-            if let text = textField.text {
-                let index4 = text.index(text.startIndex, offsetBy: 4)
-
-                textField.text = String(text[..<index4])
-            }
-            return
-        }
-
-        for (index, pinView) in pinViews.enumerated() {
-            if (index < digits.count) {
-                pinView.setFilled()
-            } else {
-                pinView.setEmpty()
-            }
-        }
-
-        if digits.count == 4 {
-            nextButton.setEnabled()
-        } else {
-            nextButton.setDisabled()
-        }
-    }
-
     @IBAction func selectNext() {
-        guard let pin = textField.text else {
-            return
-        }
-
         delegate?.pinEntryCompleted(self, pin: pin, save: shouldSavePin)
 
         if isCloseDisplayed {
@@ -143,8 +118,8 @@ class PinViewController: UIViewController {
         for pinView in pinViews {
             pinView.setEmpty()
         }
-        
-        textField.text = ""
+
+        pin = ""
         
         let alert = UIAlertController(title: "Pin error",
                                       message: "Sorry your pin did not match. Please try again.",
@@ -153,5 +128,32 @@ class PinViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
 
         present(alert, animated: true, completion: nil)
+    }
+}
+
+extension PinViewController: KeyboardViewDelegate {
+    func selected(key: KeyboardButton, action: UIEvent) {
+
+        switch key {
+        case .number(let num):
+            guard pin.count < 4 else { return }
+            pin += String(num)
+        case .right:
+            guard pin.count > 0 else { return }
+            let index = pin.index(pin.startIndex, offsetBy: pin.count-1)
+            pin = String(pin[..<index])
+        default: print("???")
+        }
+
+        for (index, pinView) in pinViews.enumerated() {
+            index < pin.count ? pinView.setFilled() : pinView.setEmpty()
+        }
+
+        if pin.count == 4 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                self.delegate?.pinEntryCompleted(self, pin: self.pin, save: self.shouldSavePin)
+                self.pin = ""
+            }
+        }
     }
 }
