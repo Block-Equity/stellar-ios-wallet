@@ -62,15 +62,19 @@ class TradeHeaderView: UIView {
         
         setSelected(selectedButton: tradeButton, animated: false)
     }
-
-    func setSelected(selectedButton: UIButton, animated: Bool) {
+    
+    func setTitleSelected(index: Int) {
         for button in buttons {
-            if button == selectedButton {
+            if button.tag == index {
                 button.setTitleColor(Colors.primaryDark, for: .normal)
             } else {
                 button.setTitleColor(Colors.darkGrayTransparent, for: .normal)
             }
         }
+    }
+
+    func setSelected(selectedButton: UIButton, animated: Bool) {
+        setTitleSelected(index: selectedButton.tag)
         
         sliderOriginConstraint.constant = selectedButton.frame.origin.x
         

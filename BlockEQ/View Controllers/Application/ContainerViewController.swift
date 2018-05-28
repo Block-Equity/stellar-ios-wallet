@@ -58,6 +58,17 @@ class ContainerViewController: UIViewController, ContainerProtocol {
 }
 
 extension UIViewController {
+    func addContentViewController(_ viewController: UIViewController, to view: UIView) {
+        addChildViewController(viewController)
+        addContentView(viewController.view, to: view)
+        viewController.didMove(toParentViewController: self)
+    }
+    
+    func addContentView(_ view: UIView, to holderView: UIView) {
+        adjustFrameForView(view)
+        holderView.addSubview(view)
+    }
+    
     func addContentViewController(_ viewController: UIViewController) {
         addChildViewController(viewController)
         addContentView(viewController.view)

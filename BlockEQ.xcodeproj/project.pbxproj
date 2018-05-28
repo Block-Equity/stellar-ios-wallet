@@ -74,6 +74,12 @@
 		EC42584C2054E346000941B5 /* SendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC42584A2054E346000941B5 /* SendViewController.xib */; };
 		EC42584F2054EE76000941B5 /* SendAmountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC42584D2054EE76000941B5 /* SendAmountViewController.swift */; };
 		EC4258502054EE76000941B5 /* SendAmountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC42584E2054EE76000941B5 /* SendAmountViewController.xib */; };
+		EC52B3C920BB746C006299A1 /* OrderBookHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC52B3C820BB746C006299A1 /* OrderBookHeaderView.swift */; };
+		EC52B3CB20BB7476006299A1 /* OrderBookHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC52B3CA20BB7476006299A1 /* OrderBookHeaderView.xib */; };
+		EC52B3CE20BBB1CB006299A1 /* OrderBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC52B3CC20BBB1CB006299A1 /* OrderBookCell.swift */; };
+		EC52B3CF20BBB1CB006299A1 /* OrderBookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC52B3CD20BBB1CB006299A1 /* OrderBookCell.xib */; };
+		EC52B3D220BC951F006299A1 /* OffersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC52B3D020BC951F006299A1 /* OffersCell.swift */; };
+		EC52B3D320BC951F006299A1 /* OffersCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC52B3D120BC951F006299A1 /* OffersCell.xib */; };
 		EC581C7220766BA8003A397E /* WalletSwitchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC581C7020766BA8003A397E /* WalletSwitchingViewController.swift */; };
 		EC581C7320766BA8003A397E /* WalletSwitchingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC581C7120766BA8003A397E /* WalletSwitchingViewController.xib */; };
 		EC581C7820769E0A003A397E /* WalletItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC581C7620769E0A003A397E /* WalletItemCell.swift */; };
@@ -194,6 +200,12 @@
 		EC42584A2054E346000941B5 /* SendViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendViewController.xib; sourceTree = "<group>"; };
 		EC42584D2054EE76000941B5 /* SendAmountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendAmountViewController.swift; sourceTree = "<group>"; };
 		EC42584E2054EE76000941B5 /* SendAmountViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendAmountViewController.xib; sourceTree = "<group>"; };
+		EC52B3C820BB746C006299A1 /* OrderBookHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookHeaderView.swift; sourceTree = "<group>"; };
+		EC52B3CA20BB7476006299A1 /* OrderBookHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderBookHeaderView.xib; sourceTree = "<group>"; };
+		EC52B3CC20BBB1CB006299A1 /* OrderBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookCell.swift; sourceTree = "<group>"; };
+		EC52B3CD20BBB1CB006299A1 /* OrderBookCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderBookCell.xib; sourceTree = "<group>"; };
+		EC52B3D020BC951F006299A1 /* OffersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersCell.swift; sourceTree = "<group>"; };
+		EC52B3D120BC951F006299A1 /* OffersCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OffersCell.xib; sourceTree = "<group>"; };
 		EC581C7020766BA8003A397E /* WalletSwitchingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletSwitchingViewController.swift; sourceTree = "<group>"; };
 		EC581C7120766BA8003A397E /* WalletSwitchingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletSwitchingViewController.xib; sourceTree = "<group>"; };
 		EC581C7620769E0A003A397E /* WalletItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletItemCell.swift; sourceTree = "<group>"; };
@@ -317,6 +329,10 @@
 				ECD3A350207D2CE5000609A0 /* WalletItemActivateCell.swift */,
 				ECD3A351207D2CE5000609A0 /* WalletItemActivateCell.xib */,
 				C593C46D2092E51A00D6047F /* NavigationCell.swift */,
+				EC52B3CC20BBB1CB006299A1 /* OrderBookCell.swift */,
+				EC52B3CD20BBB1CB006299A1 /* OrderBookCell.xib */,
+				EC52B3D020BC951F006299A1 /* OffersCell.swift */,
+				EC52B3D120BC951F006299A1 /* OffersCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -461,6 +477,8 @@
 				EC3DE2A020B8F9C300A6EC3C /* TradeHeaderView.xib */,
 				C525C97820B79695006C138F /* KeyboardView.xib */,
 				C525C97A20B79890006C138F /* KeyboardView.swift */,
+				EC52B3C820BB746C006299A1 /* OrderBookHeaderView.swift */,
+				EC52B3CA20BB7476006299A1 /* OrderBookHeaderView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -637,8 +655,10 @@
 				EC2015FB20533A89009A73C8 /* MnemonicViewController.xib in Resources */,
 				EC6EE88720B5C1320033C299 /* TradeSegmentViewController.xib in Resources */,
 				C553ACBC2091572800B2379B /* Localizable.strings in Resources */,
+				EC52B3D320BC951F006299A1 /* OffersCell.xib in Resources */,
 				ECD3A353207D2CE5000609A0 /* WalletItemActivateCell.xib in Resources */,
 				EC6EE89420B6005D0033C299 /* MyOffersViewController.xib in Resources */,
+				EC52B3CF20BBB1CB006299A1 /* OrderBookCell.xib in Resources */,
 				EC0B191B205465BF0052802C /* WalletCell.xib in Resources */,
 				EC3609FE20560FDB00FC31F9 /* ScanViewController.xib in Resources */,
 				EC6EE88C20B600070033C299 /* TradeViewController.xib in Resources */,
@@ -646,6 +666,7 @@
 				EC2015DE2052E071009A73C8 /* WalletViewController.xib in Resources */,
 				ECF9F44C208937E400160843 /* InflationViewController.xib in Resources */,
 				EC3DE2A120B8F9C300A6EC3C /* TradeHeaderView.xib in Resources */,
+				EC52B3CB20BB7476006299A1 /* OrderBookHeaderView.xib in Resources */,
 				EC0B191F205486AB0052802C /* TransactionHistoryCell.xib in Resources */,
 				EC2015EE2052FD1A009A73C8 /* PinViewController.xib in Resources */,
 				EC581C7320766BA8003A397E /* WalletSwitchingViewController.xib in Resources */,
@@ -783,11 +804,13 @@
 				ECF9F44B208937E400160843 /* InflationViewController.swift in Sources */,
 				EC1CEE5320577E880005F74E /* WordSuggestionCell.swift in Sources */,
 				EC42584B2054E346000941B5 /* SendViewController.swift in Sources */,
+				EC52B3C920BB746C006299A1 /* OrderBookHeaderView.swift in Sources */,
 				ECB2F081207BF45E00F53798 /* StellarAsset.swift in Sources */,
 				C593C46E2092E51A00D6047F /* NavigationCell.swift in Sources */,
 				EC42584F2054EE76000941B5 /* SendAmountViewController.swift in Sources */,
 				C5AB41352090420D00096A29 /* SettingsDelegate.swift in Sources */,
 				EC3609FD20560FDB00FC31F9 /* ScanViewController.swift in Sources */,
+				EC52B3D220BC951F006299A1 /* OffersCell.swift in Sources */,
 				EC2015E52052E8AA009A73C8 /* Constants.swift in Sources */,
 				EC2015F12053185A009A73C8 /* PinView.swift in Sources */,
 				C5E8594620AFAFD100B77289 /* AppTabController.swift in Sources */,
@@ -799,6 +822,7 @@
 				EC0B191E205486AB0052802C /* TransactionHistoryCell.swift in Sources */,
 				C589FF2A20902CCC00F5F308 /* SettingsViewController.swift in Sources */,
 				C5CB9C1420914F64000F4181 /* SettingsContainerViewController.swift in Sources */,
+				EC52B3CE20BBB1CB006299A1 /* OrderBookCell.swift in Sources */,
 				C5AB41332090369000096A29 /* EQSettings.swift in Sources */,
 				EC2015A92052D968009A73C8 /* AppDelegate.swift in Sources */,
 				EC2015D92052DB6D009A73C8 /* LaunchViewController.swift in Sources */,

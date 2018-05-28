@@ -8,39 +8,43 @@
 
 import Foundation
 
+protocol TradingCoordinatorDelegate: AnyObject {
+    func setScroll(offset: CGFloat, page: Int)
+}
+
 final class TradingCoordinator {
-    let segmentController = TradeSegmentViewController()
+    let segmentController: TradeSegmentViewController!
     
-    lazy var tradeViewController: TradeViewController = {
+    var delegate: TradingCoordinatorDelegate?
+    
+    var tradeViewController: TradeViewController = {
         let vc = TradeViewController()
         return vc
     }()
     
-    lazy var orderBookViewController: OrderBookViewController = {
+    var orderBookViewController: OrderBookViewController = {
         let vc = OrderBookViewController()
         return vc
     }()
     
-    lazy var myOffersViewController: MyOffersViewController = {
+    var myOffersViewController: MyOffersViewController = {
         let vc = MyOffersViewController()
         return vc
     }()
     
     init() {
-        //segmentController.tradeSegmentDelegate = self
-        segmentController.setViewController(tradeViewController, animated: false, completion: nil)
+        segmentController = TradeSegmentViewController(leftViewController: tradeViewController, middleViewController: orderBookViewController, rightViewController: myOffersViewController, totalPages: CGFloat(TradeSegment.all.count))
+        segmentController.tradeSegmentDelegate = self
     }
     
     func switchedSegment(_ type: TradeSegment) {
-        var vc: UIViewController
-        
-        switch type {
-        case .trade: vc = tradeViewController
-        case .orderBook: vc = orderBookViewController
-        case .myOffers: vc = myOffersViewController
-        }
-        
-        segmentController.setViewController(vc, animated: false, completion: nil)
+        segmentController.switchSegment(type)
+    }
+}
+
+extension TradingCoordinator: TradeSegmentControllerDelegate {
+    func setScroll(offset: CGFloat, page: Int) {
+        delegate?.setScroll(offset: offset, page: page)
     }
 }
 
