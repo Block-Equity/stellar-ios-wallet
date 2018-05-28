@@ -55,12 +55,20 @@ final class ApplicationCoordinator {
     
     init() {
         tabController.tabDelegate = self
+        tradingCoordinator.delegate = self
     }
 }
 
 extension ApplicationCoordinator: TradeHeaderViewDelegate {
     func switchedSegment(_ type: TradeSegment) {
         tradingCoordinator.switchedSegment(type)
+    }
+}
+
+extension ApplicationCoordinator: TradingCoordinatorDelegate {
+    func setScroll(offset: CGFloat, page: Int) {
+        tradeHeaderView.sliderOriginConstraint.constant = offset
+        tradeHeaderView.setTitleSelected(index: page)
     }
 }
 

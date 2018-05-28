@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="OffersCell" id="KGk-i7-Jjw" customClass="OffersCell" customModule="BlockEQ" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfV-Qc-0lF">
+                        <rect key="frame" x="0.0" y="42.5" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="x0C-zk-cNG"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bought 200 PTS using 1 XLM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ma8-ZD-7tG">
+                        <rect key="frame" x="16" y="0.0" width="288" height="42.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="wfV-Qc-0lF" secondAttribute="trailing" id="0MK-wL-uyQ"/>
+                    <constraint firstAttribute="trailing" secondItem="Ma8-ZD-7tG" secondAttribute="trailing" constant="16" id="6wk-eu-99a"/>
+                    <constraint firstItem="wfV-Qc-0lF" firstAttribute="top" secondItem="Ma8-ZD-7tG" secondAttribute="bottom" id="QCu-0a-9PU"/>
+                    <constraint firstItem="Ma8-ZD-7tG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="SOT-RX-h8S"/>
+                    <constraint firstItem="Ma8-ZD-7tG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="ZoQ-uL-Qa3"/>
+                    <constraint firstItem="wfV-Qc-0lF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="azo-Fd-CBN"/>
+                    <constraint firstAttribute="bottom" secondItem="wfV-Qc-0lF" secondAttribute="bottom" id="bxN-QQ-Vbd"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="offerLabel" destination="Ma8-ZD-7tG" id="12S-zK-lRq"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

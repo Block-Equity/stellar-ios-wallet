@@ -14,6 +14,7 @@ class TradeViewController: UIViewController {
     @IBOutlet var addAssetButton: UIButton!
     @IBOutlet var arrowImageView: UIImageView!
     @IBOutlet var buttonHolderView: UIView!
+    @IBOutlet var tableview: UITableView!
     @IBOutlet var tradeFromView: UIView!
     @IBOutlet var tradeToView: UIView!
     @IBOutlet var tradeFromButton: UIButton!
@@ -68,6 +69,7 @@ class TradeViewController: UIViewController {
         
         arrowImageView.tintColor = Colors.lightGray
         addAssetButton.backgroundColor = Colors.primaryDark
+        tableview.backgroundColor = Colors.lightBackground
         tradeFromButton.backgroundColor = Colors.red
         tradeToButton.backgroundColor = Colors.green
         tradeFromTextField.textColor = Colors.darkGray
