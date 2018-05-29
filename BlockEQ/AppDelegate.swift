@@ -62,13 +62,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            let pinVC = PinViewController(pin: nil, confirming: true, isCloseDisplayed: false, shouldSavePin: false)
+            let pinVC = PinViewController(mode: .dark, pin: nil, confirming: true, isCloseDisplayed: false, shouldSavePin: false)
             pinVC.delegate = self
 
-            let navigationController = AppNavigationController(rootViewController: pinVC)
             self.pinViewController = pinVC
 
-            self.container.present(navigationController, animated: true, completion: nil)
+            self.container.present(pinVC, animated: true, completion: nil)
         }
     }
 }
@@ -87,9 +86,9 @@ extension AppDelegate: OnboardingCoordinatorDelegate {
 extension AppDelegate: PinViewControllerDelegate {
     func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool) {
         if KeychainHelper.checkPin(inPin: pin) {
-            vc.parent?.dismiss(animated: true, completion: nil)
+            vc.dismiss(animated: true, completion: nil)
         } else {
-            vc.displayPinMismatchError()
+            vc.pinMismatchError()
         }
     }
 }

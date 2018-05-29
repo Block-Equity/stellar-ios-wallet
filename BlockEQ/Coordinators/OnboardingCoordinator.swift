@@ -46,7 +46,7 @@ extension OnboardingCoordinator: MnemonicViewControllerDelegate {
     func confirmedWrittenMnemonic(_ vc: MnemonicViewController, mnemonic: String) {
         saveMnemonic(mnemonic: mnemonic)
 
-        let pinEntry = PinViewController(pin: nil, confirming: false, isCloseDisplayed: false, shouldSavePin: false)
+        let pinEntry = PinViewController(mode: .dark, pin: nil, confirming: false, isCloseDisplayed: false, shouldSavePin: false)
         pinEntry.delegate = self
 
         navController.pushViewController(pinEntry, animated: true)
@@ -57,7 +57,7 @@ extension OnboardingCoordinator: VerificationViewControllerDelegate {
     func validatedAccount(_ vc: VerificationViewController, mnemonic: String) {
         saveMnemonic(mnemonic: mnemonic)
 
-        let pinEntry = PinViewController(pin: nil, confirming: false, isCloseDisplayed: false, shouldSavePin: false)
+        let pinEntry = PinViewController(mode: .dark, pin: nil, confirming: false, isCloseDisplayed: false, shouldSavePin: false)
         pinEntry.delegate = self
 
         navController.pushViewController(pinEntry, animated: true)
@@ -69,7 +69,7 @@ extension OnboardingCoordinator: PinViewControllerDelegate {
         if firstPin == nil {
             firstPin = pin
 
-            let pinConfirmation = PinViewController(pin: nil, confirming: true, isCloseDisplayed: false, shouldSavePin: true)
+            let pinConfirmation = PinViewController(mode: .dark, pin: nil, confirming: true, isCloseDisplayed: false, shouldSavePin: true)
             pinConfirmation.delegate = self
 
             navController.pushViewController(pinConfirmation, animated: true)
@@ -82,7 +82,7 @@ extension OnboardingCoordinator: PinViewControllerDelegate {
 
             delegate?.onboardingCompleted()
         } else {
-            vc.displayPinMismatchError()
+            vc.pinMismatchError()
         }
     }
 }

@@ -27,3 +27,6 @@
 "TITLE_TAB_TRADING" = "Trading";
 "TITLE_TAB_RECEIVE" = "Receive";
 "TITLE_TAB_SETTINGS" = "Settings";
+
+"PIN_ENTER_TITLE" = "Please enter your PIN code";
+"PIN_CREATE_TITLE" = "Please create a PIN code";

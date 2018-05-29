@@ -16,6 +16,7 @@
 		C589FF2A20902CCC00F5F308 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C589FF2920902CCC00F5F308 /* SettingsViewController.swift */; };
 		C589FF2C20902CE300F5F308 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C589FF2B20902CE300F5F308 /* SettingsViewController.xib */; };
 		C593C46E2092E51A00D6047F /* NavigationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593C46D2092E51A00D6047F /* NavigationCell.swift */; };
+		C595115620BB2B1B00843D33 /* PinDotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C595115520BB2B1B00843D33 /* PinDotView.swift */; };
 		C5AB412F20902E4800096A29 /* SettingNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB412E20902E4800096A29 /* SettingNode.swift */; };
 		C5AB413120902F7500096A29 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB413020902F7500096A29 /* String+Localization.swift */; };
 		C5AB41332090369000096A29 /* EQSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB41322090369000096A29 /* EQSettings.swift */; };
@@ -56,8 +57,6 @@
 		EC2015EA2052EAC7009A73C8 /* WalletTitleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC2015E82052EAC7009A73C8 /* WalletTitleViewController.xib */; };
 		EC2015ED2052FD1A009A73C8 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2015EB2052FD1A009A73C8 /* PinViewController.swift */; };
 		EC2015EE2052FD1A009A73C8 /* PinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC2015EC2052FD1A009A73C8 /* PinViewController.xib */; };
-		EC2015F12053185A009A73C8 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2015F02053185A009A73C8 /* PinView.swift */; };
-		EC2015F320531875009A73C8 /* PinView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC2015F220531875009A73C8 /* PinView.xib */; };
 		EC2015F520531963009A73C8 /* NibLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2015F420531963009A73C8 /* NibLoader.swift */; };
 		EC2015F720532F4B009A73C8 /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2015F620532F4B009A73C8 /* AppButton.swift */; };
 		EC2015FA20533A89009A73C8 /* MnemonicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2015F820533A89009A73C8 /* MnemonicViewController.swift */; };
@@ -135,6 +134,7 @@
 		C589FF2920902CCC00F5F308 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C589FF2B20902CE300F5F308 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		C593C46D2092E51A00D6047F /* NavigationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCell.swift; sourceTree = "<group>"; };
+		C595115520BB2B1B00843D33 /* PinDotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinDotView.swift; sourceTree = "<group>"; };
 		C5AB412E20902E4800096A29 /* SettingNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNode.swift; sourceTree = "<group>"; };
 		C5AB413020902F7500096A29 /* String+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
 		C5AB41322090369000096A29 /* EQSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EQSettings.swift; sourceTree = "<group>"; };
@@ -182,8 +182,6 @@
 		EC2015E82052EAC7009A73C8 /* WalletTitleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletTitleViewController.xib; sourceTree = "<group>"; };
 		EC2015EB2052FD1A009A73C8 /* PinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
 		EC2015EC2052FD1A009A73C8 /* PinViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PinViewController.xib; sourceTree = "<group>"; };
-		EC2015F02053185A009A73C8 /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
-		EC2015F220531875009A73C8 /* PinView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PinView.xib; sourceTree = "<group>"; };
 		EC2015F420531963009A73C8 /* NibLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoader.swift; sourceTree = "<group>"; };
 		EC2015F620532F4B009A73C8 /* AppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
 		EC2015F820533A89009A73C8 /* MnemonicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicViewController.swift; sourceTree = "<group>"; };
@@ -469,8 +467,6 @@
 			isa = PBXGroup;
 			children = (
 				EC0B1917205463DC0052802C /* Cells */,
-				EC2015F02053185A009A73C8 /* PinView.swift */,
-				EC2015F220531875009A73C8 /* PinView.xib */,
 				EC2015F620532F4B009A73C8 /* AppButton.swift */,
 				EC20160020536C68009A73C8 /* PillView.swift */,
 				EC3DE29E20B8F98C00A6EC3C /* TradeHeaderView.swift */,
@@ -479,6 +475,7 @@
 				C525C97A20B79890006C138F /* KeyboardView.swift */,
 				EC52B3C820BB746C006299A1 /* OrderBookHeaderView.swift */,
 				EC52B3CA20BB7476006299A1 /* OrderBookHeaderView.xib */,
+				C595115520BB2B1B00843D33 /* PinDotView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -671,7 +668,6 @@
 				EC2015EE2052FD1A009A73C8 /* PinViewController.xib in Resources */,
 				EC581C7320766BA8003A397E /* WalletSwitchingViewController.xib in Resources */,
 				EC360A032056181E00FC31F9 /* VerificationViewController.xib in Resources */,
-				EC2015F320531875009A73C8 /* PinView.xib in Resources */,
 				EC581C7920769E0A003A397E /* WalletItemCell.xib in Resources */,
 				EC42584C2054E346000941B5 /* SendViewController.xib in Resources */,
 				EC6EE89020B6004B0033C299 /* OrderBookViewController.xib in Resources */,
@@ -790,6 +786,7 @@
 				C5AB413D2090436700096A29 /* UIView+NibLoadableView.swift in Sources */,
 				EC20160120536C68009A73C8 /* PillView.swift in Sources */,
 				ECB1D958207E966D0088826D /* MBProgressHUD.m in Sources */,
+				C595115620BB2B1B00843D33 /* PinDotView.swift in Sources */,
 				EC6EE88B20B600070033C299 /* TradeViewController.swift in Sources */,
 				EC2015F520531963009A73C8 /* NibLoader.swift in Sources */,
 				EC581C7220766BA8003A397E /* WalletSwitchingViewController.swift in Sources */,
@@ -812,7 +809,6 @@
 				EC3609FD20560FDB00FC31F9 /* ScanViewController.swift in Sources */,
 				EC52B3D220BC951F006299A1 /* OffersCell.swift in Sources */,
 				EC2015E52052E8AA009A73C8 /* Constants.swift in Sources */,
-				EC2015F12053185A009A73C8 /* PinView.swift in Sources */,
 				C5E8594620AFAFD100B77289 /* AppTabController.swift in Sources */,
 				EC2015ED2052FD1A009A73C8 /* PinViewController.swift in Sources */,
 				EC0B192220549B240052802C /* ReceiveViewController.swift in Sources */,

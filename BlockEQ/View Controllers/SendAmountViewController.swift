@@ -155,7 +155,7 @@ class SendAmountViewController: UIViewController {
     }
     
     func displayPin() {
-        let pinViewController = PinViewController(pin: KeychainHelper.getPin(), confirming: false, isCloseDisplayed: true, shouldSavePin: false)
+        let pinViewController = PinViewController(mode: .dark, pin: KeychainHelper.getPin(), confirming: false, isCloseDisplayed: true, shouldSavePin: false)
         let navigationController = AppNavigationController(rootViewController: pinViewController)
         pinViewController.delegate = self
         

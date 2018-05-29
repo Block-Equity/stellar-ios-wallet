@@ -133,7 +133,8 @@ extension ApplicationCoordinator: SettingsDelegate {
     }
 
     func displayPin(isShowingSeed: Bool) {
-        let pinViewController = PinViewController(pin: nil,
+        let pinViewController = PinViewController(mode: .dark,
+                                                  pin: nil,
                                                   confirming: true,
                                                   isCloseDisplayed: false,
                                                   shouldSavePin: false)
@@ -155,7 +156,7 @@ extension ApplicationCoordinator: PinViewControllerDelegate {
             wrappingNavController?.popViewController(animated: false)
             wrappingNavController?.pushViewController(mnemonicViewController, animated: true)
         } else {
-            vc.displayPinMismatchError()
+            vc.pinMismatchError()
         }
     }
 }
