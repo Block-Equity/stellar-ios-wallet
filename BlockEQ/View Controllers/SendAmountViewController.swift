@@ -131,7 +131,6 @@ class SendAmountViewController: UIViewController {
         keyboardHolderView.backgroundColor = Colors.lightBackground
         memoIdLabel.textColor = Colors.darkGray
         memoIdTextField.textColor = Colors.darkGray
-        view.backgroundColor = Colors.primaryDark
         
         currencyLabel.text = stellarAccount.assets[currentAssetIndex].shortCode
         sendAddressLabel.text = "To: \(receiver)"
@@ -155,11 +154,19 @@ class SendAmountViewController: UIViewController {
     }
     
     func displayPin() {
+        /*
         let pinViewController = PinViewController(mode: .dark, pin: KeychainHelper.getPin(), confirming: false, isCloseDisplayed: true, shouldSavePin: false)
         let navigationController = AppNavigationController(rootViewController: pinViewController)
         pinViewController.delegate = self
         
-        present(navigationController, animated: true, completion: nil)
+        present(navigationController, animated: true, completion: nil)*/
+        
+        // TODO remove after testing
+        guard let amount = amountLabel.text, !amount.isEmpty, amount != "0" else {
+            return
+        }
+        
+        checkForValidAccount(account: receiver, amount: Decimal(string: amount)!)
     }
     
     func displayTransactionError() {

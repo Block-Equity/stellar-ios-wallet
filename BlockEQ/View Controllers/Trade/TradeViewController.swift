@@ -9,6 +9,28 @@
 import stellarsdk
 import UIKit
 
+enum BalanceType: Int {
+    case ten
+    case twentyFive
+    case fifty
+    case seventyFive
+    case hundred
+    
+    var value: Float {
+        switch self {
+        case .ten: return 0.10
+        case .twentyFive: return 0.25
+        case .fifty: return 0.50
+        case .seventyFive: return 0.75
+        case .hundred: return 1
+        }
+    }
+    
+    static var all: [BalanceType] {
+        return [.ten, .twentyFive, .fifty, .seventyFive, .hundred]
+    }
+}
+
 protocol TradeViewControllerDelegate: AnyObject {
     func getOrderBook(sellingAsset: StellarAsset, buyingAsset: StellarAsset)
 }
@@ -41,6 +63,13 @@ class TradeViewController: UIViewController {
     
     weak var delegate: TradeViewControllerDelegate?
     
+    @IBAction func setBalanceAmount(sender: UIButton) {
+        guard let floatBalance = Float(fromAsset.balance) else {
+            return
+        }
+        tradeFromTextField.text = String(floatBalance * BalanceType.all[sender.tag].value).decimalFormatted()
+    }
+    
     @IBAction func addAsset() {
         
     }
@@ -56,15 +85,21 @@ class TradeViewController: UIViewController {
             return
         }
         
+        dismissKeyboard()
         showHud()
         
-        TradeOperation.postTrade(amount: Decimal(string: tradeFromAmount)!,
-                                 numerator: Int(Float(tradeToAmount)! * 1000),
-                                 denominator: Int(Float(tradeFromAmount)! * 1000),
-                                 sellingAsset: fromAsset,
-                                 buyingAsset: toAsset) { completion in
+        TradeOperation.postTrade(amount: Decimal(string: tradeFromAmount)!, numerator: Int(Float(tradeToAmount)! * 1000000), denominator: Int(Float(tradeFromAmount)! * 1000000), sellingAsset: fromAsset, buyingAsset: toAsset) { completed in
             self.hideHud()
             self.getOrderBook()
+            
+            if !completed {
+                let alert = UIAlertController(title: "Trade Error", message: "Sorry your order could not be processed at this time. Please try again later.", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                self.tradeFromTextField.text = ""
+                self.tradeToTextField.text = ""
+            }
         }
     }
     
@@ -106,8 +141,6 @@ class TradeViewController: UIViewController {
         tradeToButton.backgroundColor = Colors.green
         tradeFromTextField.textColor = Colors.darkGray
         tradeToTextField.textColor = Colors.darkGray
-        tradeToView.backgroundColor = Colors.lightBackground
-        tradeFromView.backgroundColor = Colors.lightBackground
         view.backgroundColor = Colors.lightBackground
         
         for subview in buttonHolderView.subviews {

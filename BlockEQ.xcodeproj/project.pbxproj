@@ -85,6 +85,8 @@
 		EC581C7320766BA8003A397E /* WalletSwitchingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC581C7120766BA8003A397E /* WalletSwitchingViewController.xib */; };
 		EC581C7820769E0A003A397E /* WalletItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC581C7620769E0A003A397E /* WalletItemCell.swift */; };
 		EC581C7920769E0A003A397E /* WalletItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC581C7720769E0A003A397E /* WalletItemCell.xib */; };
+		EC64CF4F20BF05F5007FE199 /* OrderBookEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64CF4D20BF05F5007FE199 /* OrderBookEmptyCell.swift */; };
+		EC64CF5020BF05F5007FE199 /* OrderBookEmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC64CF4E20BF05F5007FE199 /* OrderBookEmptyCell.xib */; };
 		EC6EE88620B5C1320033C299 /* TradeSegmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6EE88420B5C1320033C299 /* TradeSegmentViewController.swift */; };
 		EC6EE88720B5C1320033C299 /* TradeSegmentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC6EE88520B5C1320033C299 /* TradeSegmentViewController.xib */; };
 		EC6EE88B20B600070033C299 /* TradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6EE88920B600070033C299 /* TradeViewController.swift */; };
@@ -212,6 +214,8 @@
 		EC581C7120766BA8003A397E /* WalletSwitchingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletSwitchingViewController.xib; sourceTree = "<group>"; };
 		EC581C7620769E0A003A397E /* WalletItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletItemCell.swift; sourceTree = "<group>"; };
 		EC581C7720769E0A003A397E /* WalletItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletItemCell.xib; sourceTree = "<group>"; };
+		EC64CF4D20BF05F5007FE199 /* OrderBookEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookEmptyCell.swift; sourceTree = "<group>"; };
+		EC64CF4E20BF05F5007FE199 /* OrderBookEmptyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderBookEmptyCell.xib; sourceTree = "<group>"; };
 		EC6EE88420B5C1320033C299 /* TradeSegmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradeSegmentViewController.swift; sourceTree = "<group>"; };
 		EC6EE88520B5C1320033C299 /* TradeSegmentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TradeSegmentViewController.xib; sourceTree = "<group>"; };
 		EC6EE88920B600070033C299 /* TradeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradeViewController.swift; sourceTree = "<group>"; };
@@ -335,6 +339,8 @@
 				EC52B3CD20BBB1CB006299A1 /* OrderBookCell.xib */,
 				EC52B3D020BC951F006299A1 /* OffersCell.swift */,
 				EC52B3D120BC951F006299A1 /* OffersCell.xib */,
+				EC64CF4D20BF05F5007FE199 /* OrderBookEmptyCell.swift */,
+				EC64CF4E20BF05F5007FE199 /* OrderBookEmptyCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -615,7 +621,7 @@
 					EC2015A42052D968009A73C8 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 0920;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					EC2015B82052D968009A73C8 = {
 						CreatedOnToolsVersion = 9.2;
@@ -683,6 +689,7 @@
 				C525C97920B79695006C138F /* KeyboardView.xib in Resources */,
 				EC2015B32052D968009A73C8 /* LaunchScreen.storyboard in Resources */,
 				EC2015EA2052EAC7009A73C8 /* WalletTitleViewController.xib in Resources */,
+				EC64CF5020BF05F5007FE199 /* OrderBookEmptyCell.xib in Resources */,
 				C589FF2C20902CE300F5F308 /* SettingsViewController.xib in Resources */,
 				EC2015B02052D968009A73C8 /* Assets.xcassets in Resources */,
 			);
@@ -815,6 +822,7 @@
 				C5AB41352090420D00096A29 /* SettingsDelegate.swift in Sources */,
 				EC3609FD20560FDB00FC31F9 /* ScanViewController.swift in Sources */,
 				EC52B3D220BC951F006299A1 /* OffersCell.swift in Sources */,
+				EC64CF4F20BF05F5007FE199 /* OrderBookEmptyCell.swift in Sources */,
 				EC2015E52052E8AA009A73C8 /* Constants.swift in Sources */,
 				C5E8594620AFAFD100B77289 /* AppTabController.swift in Sources */,
 				EC2015ED2052FD1A009A73C8 /* PinViewController.swift in Sources */,
@@ -1020,16 +1028,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3C29DJ86C6;
 				INFOPLIST_FILE = BlockEQ/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blockeqiOS.BlockEQ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "031b9826-9079-477a-aa76-de811c5fe517";
-				PROVISIONING_PROFILE_SPECIFIER = BlockEQDevelopment;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BlockEQ/BlockEQ-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -1043,17 +1052,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: The Working Group Inc";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The Working Group Inc";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3C29DJ86C6;
 				INFOPLIST_FILE = BlockEQ/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blockeqiOS.BlockEQ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e5ab459e-b1ab-47dd-bee0-df3bed5e2fd9";
-				PROVISIONING_PROFILE_SPECIFIER = BlockEQ;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BlockEQ/BlockEQ-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -19,8 +19,11 @@ class MyOffersViewController: UIViewController {
     }
     
     func setupView() {
-        let tableViewNib = UINib(nibName: OffersCell.cellIdentifier, bundle: nil)
-        tableView.register(tableViewNib, forCellReuseIdentifier: OffersCell.cellIdentifier)
+        let offersCellNib = UINib(nibName: OffersCell.cellIdentifier, bundle: nil)
+        tableView.register(offersCellNib, forCellReuseIdentifier: OffersCell.cellIdentifier)
+        
+        let orderBookEmptyNib = UINib(nibName: OrderBookEmptyCell.cellIdentifier, bundle: nil)
+        tableView.register(orderBookEmptyNib, forCellReuseIdentifier: OrderBookEmptyCell.cellIdentifier)
         
         tableView.backgroundColor = Colors.lightBackground
     }
@@ -28,11 +31,11 @@ class MyOffersViewController: UIViewController {
 
 extension MyOffersViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: OffersCell.cellIdentifier, for: indexPath) as! OffersCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: OrderBookEmptyCell.cellIdentifier, for: indexPath) as! OrderBookEmptyCell
         
         return cell
     }
@@ -40,6 +43,6 @@ extension MyOffersViewController: UITableViewDataSource {
 
 extension MyOffersViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return OffersCell.rowHeight
+        return OrderBookEmptyCell.rowHeight
     }
 }
