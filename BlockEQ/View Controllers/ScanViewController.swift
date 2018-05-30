@@ -38,6 +38,11 @@ class ScanViewController: UIViewController {
         super.viewDidLoad()
         
         setupView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         setupCamera()
     }
     
@@ -47,8 +52,6 @@ class ScanViewController: UIViewController {
         let image = UIImage(named:"close")
         let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.leftBarButtonItem = leftBarButtonItem
-        
-        view.backgroundColor = Colors.primaryDark
     }
     
     @objc func dismissView() {
@@ -81,7 +84,7 @@ class ScanViewController: UIViewController {
         
         videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        videoPreviewLayer?.frame = view.layer.bounds
+        videoPreviewLayer?.frame = CGRect(x: 0.0, y: 0.0, width: view.frame.size.width, height: view.frame.size.height)
         view.layer.addSublayer(videoPreviewLayer!)
         
         captureSession.startRunning()

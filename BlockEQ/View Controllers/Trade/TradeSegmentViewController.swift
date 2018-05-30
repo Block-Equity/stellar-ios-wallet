@@ -40,6 +40,7 @@ final class TradeSegmentViewController: UIViewController {
         setupView()
     }
     
+    
     func setupView() {
         scrollView.backgroundColor = Colors.lightBackground
     }

@@ -79,12 +79,10 @@ class WalletViewController: UIViewController {
         logoImageView.tintColor = Colors.primaryDark
         navigationItem.titleView = logoImageView
 
-        let imageSettings = UIImage(named:"wallet")
-        let leftBarButtonItem = UIBarButtonItem(image: imageSettings, style: .plain, target: self, action: #selector(self.displayWalletSwitcher))
+        let leftBarButtonItem = UIBarButtonItem(title: "Assets", style: .plain, target: self, action: #selector(self.displayWalletSwitcher))
         navigationItem.leftBarButtonItem = leftBarButtonItem
 
-        let imageSend = UIImage(named:"send")
-        let rightBarButtonItem = UIBarButtonItem(image: imageSend, style: .plain, target: self, action: #selector(self.sendFunds))
+        let rightBarButtonItem = UIBarButtonItem(title: "Send", style: .plain, target: self, action: #selector(self.sendFunds))
         navigationItem.rightBarButtonItem = rightBarButtonItem
         
         emptyViewTitleLabel.textColor = Colors.darkGray

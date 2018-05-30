@@ -75,15 +75,7 @@ class TradeHeaderView: UIView {
 
     func setSelected(selectedButton: UIButton, animated: Bool) {
         setTitleSelected(index: selectedButton.tag)
-        
-        sliderOriginConstraint.constant = selectedButton.frame.origin.x
-        
-        if animated {
-            UIView.animate(withDuration: 0.3) {
-                self.layoutIfNeeded()
-            }
-        }
-        
+
         tradeHeaderViewDelegate?.switchedSegment(TradeSegment.all[selectedButton.tag])
     }
 }
