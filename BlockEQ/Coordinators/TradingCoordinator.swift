@@ -35,6 +35,7 @@ final class TradingCoordinator {
     init() {
         segmentController = TradeSegmentViewController(leftViewController: tradeViewController, middleViewController: orderBookViewController, rightViewController: myOffersViewController, totalPages: CGFloat(TradeSegment.all.count))
         segmentController.tradeSegmentDelegate = self
+        tradeViewController.delegate = self
     }
     
     func switchedSegment(_ type: TradeSegment) {
@@ -45,6 +46,22 @@ final class TradingCoordinator {
 extension TradingCoordinator: TradeSegmentControllerDelegate {
     func setScroll(offset: CGFloat, page: Int) {
         delegate?.setScroll(offset: offset, page: page)
+    }
+}
+
+extension TradingCoordinator: TradeViewControllerDelegate {
+    func getOrderBook(sellingAsset: StellarAsset, buyingAsset: StellarAsset) {
+        requestOrderBook(sellingAsset: sellingAsset, buyingAsset: buyingAsset)
+    }
+}
+
+extension TradingCoordinator {
+    func requestOrderBook(sellingAsset: StellarAsset, buyingAsset: StellarAsset) {
+        TradeOperation.getOrderBook(sellingAsset: sellingAsset, buyingAsset: buyingAsset, completion: { response in
+            self.orderBookViewController.setOrderBook(orderBook: response, buyAsset: buyingAsset, sellAsset: sellingAsset)
+        }) { error in
+            print(error)
+        }
     }
 }
 

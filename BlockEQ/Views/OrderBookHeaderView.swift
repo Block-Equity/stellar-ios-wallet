@@ -48,19 +48,17 @@ class OrderBookHeaderView: UIView {
         case .buy:
             titleView.backgroundColor = Colors.green
             titleLabel.text = "Buy Offers"
-            option1Label.text = "\(sellAsset) Price"
-            option2Label.text = "\(buyAsset) Amount"
-            option3Label.text = "\(sellAsset) Amount"
         case .sell:
             titleView.backgroundColor = Colors.red
             titleLabel.text = "Sell Offers"
-            option1Label.text = "\(buyAsset) Amount"
-            option2Label.text = "\(sellAsset) Amount"
-            option3Label.text = "\(sellAsset) Price"
         }
         
         option1Label.textColor = Colors.darkGray
         option2Label.textColor = Colors.darkGray
         option3Label.textColor = Colors.darkGray
+        
+        option1Label.text = "\(buyAsset) Amount"
+        option2Label.text = "\(sellAsset) Amount"
+        option3Label.text = "\(sellAsset) Price"
     }
 }

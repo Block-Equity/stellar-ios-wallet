@@ -94,8 +94,7 @@ extension OnboardingCoordinator {
         let publicKeyData = NSData(bytes: keyPair.publicKey.bytes, length: keyPair.publicKey.bytes.count) as Data
         let privateBytes = keyPair.privateKey?.bytes ?? [UInt8]()
         let privateKeyData = NSData(bytes: privateBytes, length: privateBytes.count) as Data
-        
-        print("Saving wallet items")
+
         KeychainHelper.save(mnemonic: mnemonic)
         KeychainHelper.save(accountId: keyPair.accountId)
         KeychainHelper.save(publicKey: publicKeyData)

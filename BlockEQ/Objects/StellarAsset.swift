@@ -27,7 +27,10 @@ class StellarAsset: NSObject {
         if assetType == AssetTypeAsString.NATIVE {
             return "XLM"
         } else {
-            return assetCode!
+            if let code = assetCode {
+                return code
+            }
+            return ""
         }
     }
 }
