@@ -44,7 +44,7 @@ class SendAmountViewController: UIViewController {
             return
         }
         
-        if KeychainHelper.checkPinWhenSendingPayment() {
+        if PinOptionHelper.check(.pinOnPayment) {
             displayPin()
         } else {
             checkForValidAccount(account: receiver, amount: Decimal(string: amount)!)

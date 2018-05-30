@@ -9,5 +9,6 @@
 import Foundation
 
 protocol SettingsDelegate: AnyObject {
-    func selected(setting: SettingNode)
+    func selected(setting: SettingNode, value: String?)
+    func value(for setting: SettingNode) -> String
 }

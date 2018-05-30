@@ -13,48 +13,60 @@ import Foundation
 /// - node: A "leaf" setting, representing an option the user can adjust or change.
 /// - subsection: A "parent" that contains a subset of SettingNode objects, which can be subnodes or nodes.
 enum SettingNode {
-    case node(name: String, identifier: String, enabled: Bool)
-    indirect case section(name: String, items: [SettingNode])
+    enum NodeType {
+        case normal
+        case toggle
+    }
+
+    case node(name: String, identifier: String, enabled: Bool, type: NodeType)
+    indirect case section(name: String, identifier: String, items: [SettingNode])
 
     var count: Int {
         switch self {
-        case .section(_, let items): return items.count
+        case .section(_, _, let items): return items.count
         default: return 0
         }
     }
 
     var identifier: String {
         switch self {
-        case .node(_, let identifier, _): return identifier
-        case .section: return "UNSPECIFIED".localized()
+        case .node(_, let identifier, _, _): return identifier
+        case .section(_, let identifier, _): return identifier
         }
     }
 
     var name: String? {
         switch self {
-        case .node(let nodeName, _, _): return nodeName
-        case .section(let sectionName, _): return sectionName
+        case .node(let nodeName, _, _, _): return nodeName
+        case .section(let sectionName, _, _): return sectionName
         }
     }
 
     var enabled: Bool {
         switch self {
-        case .node(_, _, let enabled): return enabled
+        case .node(_, _, let enabled, _): return enabled
         default: return true
         }
     }
 
     var leaf: Bool {
         switch self {
-        case .node(_, _, _): return true
+        case .node(_, _, _, _): return true
         default: return false
+        }
+    }
+
+    var type: NodeType {
+        switch self {
+        case .node(_, _, _, let type): return type
+        default: return .normal
         }
     }
 
     func name(row: Int? = nil) -> String? {
         switch self {
-        case .node(let nodeName, _, _): return nodeName
-        case .section(let nodeName, let items):
+        case .node(let nodeName, _, _, _): return nodeName
+        case .section(let nodeName, _, let items):
             if let row = row {
                 return items[row].name()
             } else {
@@ -65,7 +77,7 @@ enum SettingNode {
 
     func subnode(row: Int) -> SettingNode? {
         switch self {
-        case .section(_, let items): return items[row]
+        case .section(_, _, let items): return items[row]
         default: return nil
         }
     }

@@ -9,6 +9,8 @@
 import Foundation
 
 final class ApplicationCoordinator {
+    typealias PinEntryCompletion = () -> Void
+
     /// The controller class that directs which view controller is currently displayed
     let tabController = AppTabController(tab: .assets)
     
@@ -30,8 +32,8 @@ final class ApplicationCoordinator {
     }()
 
     /// The view controller used to display settings options
-    lazy var settingsViewConroller: SettingsViewController = {
-        let vc = SettingsViewController(options: EQSettings().options)
+    lazy var settingsViewController: SettingsViewController = {
+        let vc = SettingsViewController(options: EQSettings().options, customTitle: "MENU_OPTION_SETTINGS".localized())
         vc.delegate = self
         return vc
     }()
@@ -52,6 +54,9 @@ final class ApplicationCoordinator {
 
     /// Most tabbed view controllers need the top navbar - so we wrap every tab in an inner AppNavigationController
     var wrappingNavController: AppNavigationController?
+
+    /// The completion handler to call when the pin view controller completes successfully
+    var pinCompletion: PinEntryCompletion?
     
     init() {
         tabController.tabDelegate = self
@@ -89,7 +94,7 @@ extension ApplicationCoordinator: AppTabControllerDelegate {
 
                 receiveViewController.address = address
                 vc = receiveViewController
-            case .settings: vc = settingsViewConroller
+            case .settings: vc = settingsViewController
         }
 
         let navWrapper = AppNavigationController(rootViewController: vc)
@@ -108,20 +113,50 @@ extension ApplicationCoordinator: AppTabControllerDelegate {
 }
 
 extension ApplicationCoordinator: SettingsDelegate {
-    func selected(setting: SettingNode) {
+    func selected(setting: SettingNode, value: String?) {
         switch setting {
-        case .node(_, let identifier, _) where identifier == "wallet-view-seed": displayPin(isShowingSeed: true)
-        case .node(_, let identifier, _) where identifier == "wallet-clear": clearWallet()
-        case .node(_, let identifier, _) where identifier == "debug-disable-pin": disablePinCheck()
-        default: print("Selected: \(String(describing: setting.name))")
+        case .node(_, let identifier, _, _) where identifier == "wallet-view-seed": displayPin() { self.displayMnemonic() }
+        case .node(_, let identifier, _, _) where identifier == "wallet-clear": clearWallet()
+        case .node(_, let identifier, _, _) where identifier.contains("security-pin"): managePin(identifier: identifier, newValue: value)
+        case .section(_, let identifier, _) where identifier == "section-security": pushAdvancedPinControl(with: setting)
+        default: print("Selected: \(String(describing: setting.name)) \(setting.identifier)")
         }
+    }
+
+    func value(for setting: SettingNode) -> String {
+        switch setting {
+        case .node(_, let identifier, _, _) where identifier == "security-pin-enabled": return String(PinOptionHelper.pinSetting(for: .pinEnabled))
+        case .node(_, let identifier, _, _) where identifier == "security-pin-launch": return String(PinOptionHelper.pinSetting(for: .pinOnLaunch))
+        case .node(_, let identifier, _, _) where identifier == "security-pin-payments": return String(PinOptionHelper.pinSetting(for: .pinOnPayment))
+        case .node(_, let identifier, _, _) where identifier == "security-pin-trading": return String(PinOptionHelper.pinSetting(for: .pinOnTrade))
+        case .node(_, let identifier, _, _) where identifier == "security-pin-mnemonic": return String(PinOptionHelper.pinSetting(for: .pinOnMnemonic))
+        default: return ""
+        }
+    }
+
+    func managePin(identifier: String, newValue: String?) {
+        guard let value = newValue else { return }
+
+        if let value = Bool(value), let option = PinOptionHelper.PinOption(rawValue: identifier) {
+            if option == .pinEnabled && !value {
+                displayPin() { PinOptionHelper.set(option: option, value: value) }
+            }
+
+            PinOptionHelper.set(option: option, value: value)
+        }
+    }
+
+    func pushAdvancedPinControl(with node: SettingNode) {
+        let viewController = SettingsViewController(options: [node], customTitle: node.name)
+        viewController.delegate = self
+        wrappingNavController?.pushViewController(viewController, animated: true)
     }
 
     func clearWallet() {
         let alertController = UIAlertController(title: "Are you sure you want to clear this wallet?", message: nil, preferredStyle: .alert)
 
         let yesButton = UIAlertAction(title: "Clear", style: .destructive, handler: { (action) -> Void in
-            self.displayPin(isShowingSeed: false)
+            self.displayPin() { print("TODO: Clear wallet") }
         })
 
         let cancelButton = UIAlertAction(title: "Cancel", style: .default, handler: nil)
@@ -132,7 +167,7 @@ extension ApplicationCoordinator: SettingsDelegate {
         wrappingNavController?.present(alertController, animated: true, completion: nil)
     }
 
-    func displayPin(isShowingSeed: Bool) {
+    func displayPin(_ completion: PinEntryCompletion? = nil) {
         let pinViewController = PinViewController(mode: .dark,
                                                   pin: nil,
                                                   confirming: true,
@@ -140,21 +175,24 @@ extension ApplicationCoordinator: SettingsDelegate {
                                                   shouldSavePin: false)
 
         pinViewController.delegate = self
+        pinCompletion = completion
 
-        wrappingNavController?.pushViewController(pinViewController, animated: true)
+        wrappingNavController?.present(pinViewController, animated: true)
     }
 
-    func disablePinCheck() {
-        KeychainHelper.setPinWhenEnteringApp(shouldSet: false)
+    func displayMnemonic() {
+        let mnemonicViewController = MnemonicViewController(mnemonic: KeychainHelper.getMnemonic(), shouldSetPin: false, hideConfirmation: true)
+        wrappingNavController?.pushViewController(mnemonicViewController, animated: true)
     }
 }
 
 extension ApplicationCoordinator: PinViewControllerDelegate {
     func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool) {
         if KeychainHelper.checkPin(inPin: pin) {
-            let mnemonicViewController = MnemonicViewController(mnemonic: KeychainHelper.getMnemonic(), shouldSetPin: false, hideConfirmation: true)
-            wrappingNavController?.popViewController(animated: false)
-            wrappingNavController?.pushViewController(mnemonicViewController, animated: true)
+            vc.dismiss(animated: true) {
+                self.pinCompletion?()
+                self.pinCompletion = nil
+            }
         } else {
             vc.pinMismatchError()
         }
