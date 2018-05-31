@@ -30,7 +30,7 @@ final class PinOptionHelper {
     }
 
     static func clear() {
-        set(option: .pinEnabled, value: true)
+        set(option: .pinEnabled, value: false)
         set(option: .pinOnLaunch, value: true)
         set(option: .pinOnTrade, value: true)
         set(option: .pinOnPayment, value: true)

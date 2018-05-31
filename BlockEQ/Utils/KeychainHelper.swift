@@ -68,6 +68,7 @@ final class KeychainHelper {
     }
 
     public static func clearAll() {
+        UserDefaults.standard.set(true, forKey: isFreshInstallKey)
         KeychainSwift().clear()
     }
 

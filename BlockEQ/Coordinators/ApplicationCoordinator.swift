@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol ApplicationCoordinatorDelegate: AnyObject {
+    func switchToOnboarding()
+}
+
 final class ApplicationCoordinator {
     typealias PinEntryCompletion = () -> Void
 
@@ -57,7 +61,9 @@ final class ApplicationCoordinator {
 
     /// The completion handler to call when the pin view controller completes successfully
     var pinCompletion: PinEntryCompletion?
-    
+
+    weak var delegate: ApplicationCoordinatorDelegate?
+
     init() {
         tabController.tabDelegate = self
         tradingCoordinator.delegate = self
@@ -156,7 +162,11 @@ extension ApplicationCoordinator: SettingsDelegate {
         let alertController = UIAlertController(title: "Are you sure you want to clear this wallet?", message: nil, preferredStyle: .alert)
 
         let yesButton = UIAlertAction(title: "Clear", style: .destructive, handler: { (action) -> Void in
-            self.displayPin() { print("TODO: Clear wallet") }
+            self.displayPin() {
+                KeychainHelper.clearAll()
+                PinOptionHelper.clear()
+                self.delegate?.switchToOnboarding()
+            }
         })
 
         let cancelButton = UIAlertAction(title: "Cancel", style: .default, handler: nil)

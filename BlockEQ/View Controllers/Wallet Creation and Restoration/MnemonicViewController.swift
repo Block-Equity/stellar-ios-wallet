@@ -26,26 +26,19 @@ class MnemonicViewController: UIViewController {
     var mnemonic: String!
     var hideConfirmation: Bool = false
     
-    // Going directly to pin instead of confirming phrase for a smoother user experience.
-    /*
-    @IBAction func confirmPhrase() {
-        let verificationViewController = VerificationViewController(type: .questions, mnemonic: mnemonic)
-        
-        navigationController?.pushViewController(verificationViewController, animated: true)
-    }*/
-    
     @IBAction func confirmedWrittenDown(_ sender: Any) {
         delegate?.confirmedWrittenMnemonic(self, mnemonic: mnemonic)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        self.mnemonic = Wallet.generate24WordMnemonic()
     }
     
     init(mnemonic: String?, shouldSetPin: Bool, hideConfirmation: Bool = false) {
         super.init(nibName: String(describing: MnemonicViewController.self), bundle: nil)
         
-        self.mnemonic = mnemonic
+        self.mnemonic = mnemonic ?? Wallet.generate24WordMnemonic()
         self.hideConfirmation = hideConfirmation
     }
 
@@ -53,7 +46,7 @@ class MnemonicViewController: UIViewController {
         super.viewDidLoad()
 
         setupView()
-        generateMnemonic()
+        generateMnemonicViews()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -79,12 +72,8 @@ class MnemonicViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    func generateMnemonic() {
+    func generateMnemonicViews() {
         activityIndicator.stopAnimating()
-        
-        if mnemonic == nil {
-            mnemonic = Wallet.generate24WordMnemonic()
-        }
         
         let words = mnemonic.components(separatedBy: " ")
         
