@@ -18,7 +18,7 @@ final class UppercasedTableViewHeader: UITableViewHeaderFooterView, ReusableView
 /// The SettingsViewController collects and presents a static list of options to the end-user.
 final class SettingsViewController: UIViewController {
 
-    private struct Constants {
+    internal struct Constants {
         static let headerIdentifier = "settings-header"
         static let headerHeight = CGFloat(35)
     }
@@ -38,9 +38,10 @@ final class SettingsViewController: UIViewController {
     /// Convenience initializer that provides a settings menu based on a list of hierarchical set of settings nodes.
     ///
     /// - Parameter options: The root of the settings nodes to represent in the contained table view.
-    init(options: [SettingNode]) {
+    init(options: [SettingNode], customTitle: String? = nil) {
         optionList = options
         super.init(nibName: nil, bundle: nil)
+        title = customTitle?.localized() ?? ""
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -57,13 +58,13 @@ final class SettingsViewController: UIViewController {
 
     func setupView() {
         tableView.registerHeader(type: UppercasedTableViewHeader.self)
+        tableView.registerCell(type: SettingsNormalCell.self)
+        tableView.registerCell(type: SettingsSwitchCell.self)
         tableView.delegate = self
         tableView.dataSource = self
     }
 
-    func setupStyle() {
-        title = "Settings".localized()
-        
+    func setupStyle() {        
         let closeButton = navigationItem.rightBarButtonItem
         closeButton?.tintColor = .black
     }
@@ -77,15 +78,14 @@ extension SettingsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        guard let node = optionList[indexPath.section].subnode(row: indexPath.row) else {
+        let settingSection = optionList[indexPath.section]
+        guard let settingNode = settingSection.subnode(row: indexPath.row) else {
             print("ERROR: Missing node for settings item selection at \(indexPath.row)")
             return
         }
 
-        let settingSection = optionList[indexPath.section]
-        let settingNode = settingSection.subnode(row: indexPath.row)
-        if settingNode?.enabled ?? false {
-            self.delegate?.selected(setting: node)
+        if settingNode.enabled && settingNode.type == .normal {
+            self.delegate?.selected(setting: settingNode, value: nil)
         }
     }
 }
@@ -94,21 +94,14 @@ extension SettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let settingSection = optionList[indexPath.section]
         let settingNode = settingSection.subnode(row: indexPath.row)
+        let cell = settingSection.cell(for: indexPath, tableView: tableView, viewController: self)
 
-        let cell = settingSection.cell(for: indexPath.row, tableView: tableView, viewController: self)
-        cell.selectionStyle = .none
-        cell.textLabel?.textColor = .gray
-
-        // If a setting node returns nil for a subnode - it's a leaf option and doesn't need a disclosure indicator
-        if let setting = settingNode, setting.leaf {
-            cell.accessoryType = .none
-        } else {
-            cell.accessoryType = .disclosureIndicator
-        }
-
-        if settingNode?.enabled ?? false {
-            cell.selectionStyle = .default
-            cell.textLabel?.textColor = .black
+        if let setting = settingNode, let settingCell = cell as? UpdatableCell {
+            settingCell.update(for: setting)
+            
+            if let cellValue = delegate?.value(for: setting) {
+                settingCell.setValue(cellValue)
+            }
         }
 
         return cell
@@ -133,20 +126,26 @@ extension SettingsViewController: UITableViewDelegate {
     }
 }
 
+extension SettingsViewController: SettingsSwitchCellDelegate {
+    func toggledSwitch(for node: SettingNode, enabled: Bool) {
+        delegate?.selected(setting: node, value: String(enabled))
+    }
+}
+
 extension SettingNode {
-    func cell(for row: Int, tableView: UITableView, viewController: UIViewController) -> UITableViewCell {
-        var cell: UITableViewCell
+    func cell(for indexPath: IndexPath, tableView: UITableView, viewController: SettingsViewController) -> UITableViewCell {
+        var cell: UITableViewCell!
 
-        let identifier = self.subnode(row: row)?.identifier
-
-        switch identifier {
-        default:
-            if let dequeuedCell = tableView.dequeueReusableCell(withIdentifier: "SettingsCellIdentifier") {
-                cell = dequeuedCell
-            } else {
-                cell = UITableViewCell(style: .default, reuseIdentifier: "SettingsCellIdentifier")
+        if let setting = self.subnode(row: indexPath.row) {
+            switch setting.type {
+            case .normal:
+                let normalCell: SettingsNormalCell = tableView.dequeueReusableCell(for: indexPath)
+                cell = normalCell
+            case .toggle:
+                let switchCell: SettingsSwitchCell = tableView.dequeueReusableCell(for: indexPath)
+                switchCell.delegate = viewController
+                cell = switchCell
             }
-            cell.textLabel?.text = self.name(row: row)
         }
 
         return cell

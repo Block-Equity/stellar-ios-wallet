@@ -57,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func displayPin() {
-        guard KeychainHelper.checkPinWhenEnteringApp() else {
+        guard PinOptionHelper.check(.pinOnLaunch) else {
             return
         }
 

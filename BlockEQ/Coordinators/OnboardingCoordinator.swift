@@ -76,8 +76,7 @@ extension OnboardingCoordinator: PinViewControllerDelegate {
         } else if KeychainHelper.checkPin(inPin: pin, comparePin: firstPin) {
             if save {
                 KeychainHelper.save(pin: pin)
-                KeychainHelper.setPinWhenEnteringApp(shouldSet: true)
-                KeychainHelper.setPinWhenSendingPayment(shouldSet: true)
+                PinOptionHelper.clear()
             }
 
             delegate?.onboardingCompleted()

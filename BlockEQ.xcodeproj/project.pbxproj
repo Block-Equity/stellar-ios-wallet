@@ -10,8 +10,11 @@
 		26BB0291965990A98D4BF0BB /* Pods_BlockEQTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B1C324671F6269D8DB10A7 /* Pods_BlockEQTests.framework */; };
 		A6066F61786CC7405A06A52A /* Pods_BlockEQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2BFC2D9DF7C32F6D40C804F /* Pods_BlockEQ.framework */; };
 		BCB2B19D8A0C42DDC9D826C1 /* Pods_BlockEQUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6912708A90B522F68A7AFA11 /* Pods_BlockEQUITests.framework */; };
+		C52186B920C06B8100FF2A76 /* PinOptionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52186B820C06B8100FF2A76 /* PinOptionHelper.swift */; };
 		C525C97920B79695006C138F /* KeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C525C97820B79695006C138F /* KeyboardView.xib */; };
 		C525C97B20B79890006C138F /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C525C97A20B79890006C138F /* KeyboardView.swift */; };
+		C53978CB20BF417100587D99 /* SettingsSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53978CA20BF417100587D99 /* SettingsSwitchCell.swift */; };
+		C53978CD20BF4EF000587D99 /* SettingsNormalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53978CC20BF4EF000587D99 /* SettingsNormalCell.swift */; };
 		C553ACBC2091572800B2379B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C553ACBA2091572800B2379B /* Localizable.strings */; };
 		C589FF2A20902CCC00F5F308 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C589FF2920902CCC00F5F308 /* SettingsViewController.swift */; };
 		C589FF2C20902CE300F5F308 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C589FF2B20902CE300F5F308 /* SettingsViewController.xib */; };
@@ -132,8 +135,11 @@
 		6978359A021C7947F1C6AC48 /* Pods-BlockEQTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQTests/Pods-BlockEQTests.release.xcconfig"; sourceTree = "<group>"; };
 		89B1C324671F6269D8DB10A7 /* Pods_BlockEQTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockEQTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2BFC2D9DF7C32F6D40C804F /* Pods_BlockEQ.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockEQ.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C52186B820C06B8100FF2A76 /* PinOptionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinOptionHelper.swift; sourceTree = "<group>"; };
 		C525C97820B79695006C138F /* KeyboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyboardView.xib; sourceTree = "<group>"; };
 		C525C97A20B79890006C138F /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
+		C53978CA20BF417100587D99 /* SettingsSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSwitchCell.swift; sourceTree = "<group>"; };
+		C53978CC20BF4EF000587D99 /* SettingsNormalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNormalCell.swift; sourceTree = "<group>"; };
 		C553ACBB2091572800B2379B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C589FF2920902CCC00F5F308 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C589FF2B20902CE300F5F308 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
@@ -341,6 +347,8 @@
 				EC52B3D120BC951F006299A1 /* OffersCell.xib */,
 				EC64CF4D20BF05F5007FE199 /* OrderBookEmptyCell.swift */,
 				EC64CF4E20BF05F5007FE199 /* OrderBookEmptyCell.xib */,
+				C53978CA20BF417100587D99 /* SettingsSwitchCell.swift */,
+				C53978CC20BF4EF000587D99 /* SettingsNormalCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -455,6 +463,7 @@
 				EC2015F420531963009A73C8 /* NibLoader.swift */,
 				EC0B19252054BC3B0052802C /* AppNavigationController.swift */,
 				EC72C0B12059742900141D6F /* KeychainHelper.swift */,
+				C52186B820C06B8100FF2A76 /* PinOptionHelper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -809,6 +818,7 @@
 				C5AB413B2090433000096A29 /* UIView+ReusableView.swift in Sources */,
 				C5E8595020AFF09800B77289 /* OnboardingCoordinator.swift in Sources */,
 				C5E8594920AFB45E00B77289 /* ContainerViewController.swift in Sources */,
+				C52186B920C06B8100FF2A76 /* PinOptionHelper.swift in Sources */,
 				EC2683912062C7CA0085CAAF /* PaymentTransactionOperation.swift in Sources */,
 				EC0B19262054BC3B0052802C /* AppNavigationController.swift in Sources */,
 				C5AF7C8A2094B60A00F99835 /* UIImage+CALayer.swift in Sources */,
@@ -830,6 +840,7 @@
 				C5AB41392090430900096A29 /* UICollectionView+ReusableCells.swift in Sources */,
 				ECC47A6920589F92002BA573 /* UIView+Shake.swift in Sources */,
 				EC6EE89320B6005D0033C299 /* MyOffersViewController.swift in Sources */,
+				C53978CB20BF417100587D99 /* SettingsSwitchCell.swift in Sources */,
 				EC0B191E205486AB0052802C /* TransactionHistoryCell.swift in Sources */,
 				C589FF2A20902CCC00F5F308 /* SettingsViewController.swift in Sources */,
 				C5CB9C1420914F64000F4181 /* SettingsContainerViewController.swift in Sources */,
@@ -837,6 +848,7 @@
 				C5AB41332090369000096A29 /* EQSettings.swift in Sources */,
 				EC2015A92052D968009A73C8 /* AppDelegate.swift in Sources */,
 				EC2015D92052DB6D009A73C8 /* LaunchViewController.swift in Sources */,
+				C53978CD20BF4EF000587D99 /* SettingsNormalCell.swift in Sources */,
 				C5AB4137209042E800096A29 /* UITableView+ReusableCells.swift in Sources */,
 				EC4BB64920BE4176008252AD /* String+DecimalFormatter.swift in Sources */,
 				EC2015FA20533A89009A73C8 /* MnemonicViewController.swift in Sources */,

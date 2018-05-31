@@ -75,6 +75,14 @@ class TradeViewController: UIViewController {
     }
     
     @IBAction func submitTrade() {
+        // TODO: Delegate back to the coordinator indicating we need to present a modal pin challenge
+        if PinOptionHelper.check(.pinOnTrade) {
+            let alert = UIAlertController(title: "Implement PIN", message: "Implement PIN challenge here", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+
         guard let tradeFromAmount = tradeFromTextField.text, !tradeFromAmount.isEmpty else {
             tradeFromTextField.shake()
             return
