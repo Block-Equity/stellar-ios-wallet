@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
 
         onboardingCoordinator.delegate = self
+        appCoordinator.delegate = self
 
         if KeychainHelper.getMnemonic() == nil {
             container.moveToViewController(onboardingCoordinator.navController,
@@ -69,6 +70,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             self.container.present(pinVC, animated: true, completion: nil)
         }
+    }
+}
+
+extension AppDelegate: ApplicationCoordinatorDelegate {
+    func switchToOnboarding() {
+        onboardingCoordinator.navController.popToRootViewController(animated: false)
+        container.moveToViewController(onboardingCoordinator.navController,
+                                       fromViewController: appCoordinator.tabController,
+                                       animated: true,
+                                       completion: nil)
     }
 }
 

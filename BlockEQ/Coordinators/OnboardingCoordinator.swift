@@ -17,7 +17,7 @@ final class OnboardingCoordinator {
     let navController: AppNavigationController
     let launchViewController = LaunchViewController()
     let verificationViewController = VerificationViewController(type: .recovery, mnemonic: "")
-    let mnemonicViewController = MnemonicViewController(mnemonic: nil, shouldSetPin: false, hideConfirmation: false)
+    var mnemonicViewController: MnemonicViewController?
 
     weak var delegate: OnboardingCoordinatorDelegate?
     var firstPin: String?
@@ -25,7 +25,6 @@ final class OnboardingCoordinator {
 
     init() {
         navController = AppNavigationController(rootViewController: launchViewController)
-        mnemonicViewController.delegate = self
         verificationViewController.delegate = self
         launchViewController.delegate = self
     }
@@ -33,8 +32,12 @@ final class OnboardingCoordinator {
 
 extension OnboardingCoordinator: LaunchViewControllerDelegate {
     func requestedCreateNewWallet(_ vc: LaunchViewController) {
-        
-        navController.pushViewController(mnemonicViewController, animated: true)
+        let mnemonicVC = MnemonicViewController(mnemonic: nil, shouldSetPin: false, hideConfirmation: false)
+        mnemonicVC.delegate = self
+
+        self.mnemonicViewController = mnemonicVC
+
+        navController.pushViewController(mnemonicVC, animated: true)
     }
 
     func requestedImportWallet(_ vc: LaunchViewController) {
@@ -76,7 +79,9 @@ extension OnboardingCoordinator: PinViewControllerDelegate {
         } else if KeychainHelper.checkPin(inPin: pin, comparePin: firstPin) {
             if save {
                 KeychainHelper.save(pin: pin)
-                PinOptionHelper.clear()
+                PinOptionHelper.set(option: .pinEnabled, value: true)
+                firstPin = nil
+                secondPin = nil
             }
 
             delegate?.onboardingCompleted()
