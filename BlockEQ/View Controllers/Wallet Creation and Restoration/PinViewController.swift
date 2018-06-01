@@ -11,6 +11,7 @@ import Foundation
 
 protocol PinViewControllerDelegate: class {
     func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool)
+    func pinEntryCancelled(_ vc: PinViewController)
 }
 
 class PinViewController: UIViewController {
@@ -174,7 +175,7 @@ extension PinViewController: KeyboardViewDelegate {
             let index = pin.index(pin.startIndex, offsetBy: pin.count-1)
             pin = String(pin[..<index])
         case .left where self.isCloseDisplayed == true:
-            self.dismiss(animated: true, completion: nil)
+            delegate?.pinEntryCancelled(self)
         default:
             print("Unhandled button")
         }

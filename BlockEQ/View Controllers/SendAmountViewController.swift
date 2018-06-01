@@ -205,6 +205,10 @@ extension SendAmountViewController: UITextFieldDelegate {
 }
 
 extension SendAmountViewController: PinViewControllerDelegate {
+    func pinEntryCancelled(_ vc: PinViewController) {
+        vc.dismiss(animated: true, completion: nil)
+    }
+
     func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool) {
         guard let amount = amountLabel.text, !amount.isEmpty, amount != "0" else {
             return

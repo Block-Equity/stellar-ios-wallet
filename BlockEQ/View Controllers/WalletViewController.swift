@@ -223,6 +223,10 @@ extension WalletViewController: UIScrollViewDelegate {
 }
 
 extension WalletViewController: PinViewControllerDelegate {
+    func pinEntryCancelled(_ vc: PinViewController) {
+        vc.dismiss(animated: true, completion: nil)
+    }
+
     func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             if self.isShowingSeed {
