@@ -66,72 +66,29 @@ class PinViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         impactGenerator.prepare()
-    }
-
-    func setupView() {
-        keyboardView.delegate = self
 
         var pinDotColor: UIColor
         var pinLineColor: UIColor
         var keyboardTextColor: UIColor
 
         if self.mode == .dark {
-            pinViewHolder.backgroundColor = Colors.primaryDark
-            view.backgroundColor = Colors.primaryDark
             keyboardTextColor = .white
             pinLineColor = Colors.white
             pinDotColor = Colors.tertiaryDark
-            titleLabel.textColor = Colors.white
         } else {
-            pinViewHolder.backgroundColor = .white
-            view.backgroundColor = .white
             keyboardTextColor = Colors.primaryDark
             pinLineColor = Colors.darkGray
             pinDotColor = Colors.primaryDark
-            titleLabel.textColor = Colors.primaryDark
         }
 
+        let kbButtons = isCloseDisplayed ? KeyboardHelper.cancelKeypadButtons : KeyboardHelper.basicKeypadButtons
         keyboardView.update(with: KeyboardViewModel(options: KeyboardOptions.all,
-                                                    buttons: [
-                                                        ("1", ""),
-                                                        ("2", "ABC"),
-                                                        ("3", "DEF"),
-                                                        ("4", "GHI"),
-                                                        ("5", "JKL"),
-                                                        ("6", "MNO"),
-                                                        ("7", "PQRS"),
-                                                        ("8", "TUV"),
-                                                        ("9", "WXYZ"),
-                                                        ("", ""),
-                                                        ("0", ""),
-                                                        ("R", "")],
+                                                    buttons: kbButtons,
                                                     bottomLeftImage: nil,
                                                     bottomRightImage: UIImage(named: "backspace"),
                                                     labelColor: keyboardTextColor,
                                                     buttonColor: keyboardTextColor,
                                                     backgroundColor: .clear))
-
-        if isConfirming {
-            titleLabel.text = "PIN_ENTER_TITLE".localized()
-            title = "Confirm Pin"
-            navigationItem.title = "Confirm Pin"
-            navigationItem.setHidesBackButton(false, animated: false)
-        } else {
-            titleLabel.text = "PIN_CREATE_TITLE".localized()
-            title = "Create Pin"
-            navigationItem.title = "Create Pin"
-            navigationItem.setHidesBackButton(true, animated: false)
-        }
-
-        logoImageView.image = UIImage(named: "logoWhite")
-       
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        
-        if isCloseDisplayed {
-            let image = UIImage(named:"close")
-            let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
-            navigationItem.leftBarButtonItem = leftBarButtonItem
-        }
 
         pinViews = [pinView1, pinView2, pinView3, pinView4]
 
@@ -147,10 +104,44 @@ class PinViewController: UIViewController {
             pinView.reset()
         }
     }
+
+    func setupView() {
+        if self.mode == .dark {
+            pinViewHolder.backgroundColor = Colors.primaryDark
+            view.backgroundColor = Colors.primaryDark
+            titleLabel.textColor = Colors.white
+        } else {
+            pinViewHolder.backgroundColor = .white
+            view.backgroundColor = .white
+            titleLabel.textColor = Colors.primaryDark
+        }
+
+        if isConfirming {
+            titleLabel.text = "PIN_ENTER_TITLE".localized()
+            title = "Confirm Pin"
+            navigationItem.title = "Confirm Pin"
+            navigationItem.setHidesBackButton(false, animated: false)
+        } else {
+            titleLabel.text = "PIN_CREATE_TITLE".localized()
+            title = "Create Pin"
+            navigationItem.title = "Create Pin"
+            navigationItem.setHidesBackButton(true, animated: false)
+        }
+
+        logoImageView.image = UIImage(named: "logoWhite")
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
+        if isCloseDisplayed {
+            let image = UIImage(named:"close")
+            let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
+            navigationItem.leftBarButtonItem = leftBarButtonItem
+        }
+
+        keyboardView.delegate = self
+    }
     
     @objc func dismissView() {
         view.endEditing(true)
-        
         dismiss(animated: true, completion: nil)
     }
     
@@ -182,7 +173,10 @@ extension PinViewController: KeyboardViewDelegate {
             guard pin.count > 0 else { return }
             let index = pin.index(pin.startIndex, offsetBy: pin.count-1)
             pin = String(pin[..<index])
-        default: print("???")
+        case .left where self.isCloseDisplayed == true:
+            self.dismiss(animated: true, completion: nil)
+        default:
+            print("Unhandled button")
         }
 
         for (index, pinView) in pinViews.enumerated() {
