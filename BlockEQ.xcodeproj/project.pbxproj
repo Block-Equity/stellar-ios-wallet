@@ -10,6 +10,7 @@
 		26BB0291965990A98D4BF0BB /* Pods_BlockEQTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B1C324671F6269D8DB10A7 /* Pods_BlockEQTests.framework */; };
 		A6066F61786CC7405A06A52A /* Pods_BlockEQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2BFC2D9DF7C32F6D40C804F /* Pods_BlockEQ.framework */; };
 		BCB2B19D8A0C42DDC9D826C1 /* Pods_BlockEQUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6912708A90B522F68A7AFA11 /* Pods_BlockEQUITests.framework */; };
+		C50F390220C0AE8100DABB14 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F390120C0AE8100DABB14 /* KeyboardHelper.swift */; };
 		C52186B920C06B8100FF2A76 /* PinOptionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52186B820C06B8100FF2A76 /* PinOptionHelper.swift */; };
 		C525C97920B79695006C138F /* KeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C525C97820B79695006C138F /* KeyboardView.xib */; };
 		C525C97B20B79890006C138F /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C525C97A20B79890006C138F /* KeyboardView.swift */; };
@@ -135,6 +136,7 @@
 		6978359A021C7947F1C6AC48 /* Pods-BlockEQTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQTests/Pods-BlockEQTests.release.xcconfig"; sourceTree = "<group>"; };
 		89B1C324671F6269D8DB10A7 /* Pods_BlockEQTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockEQTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2BFC2D9DF7C32F6D40C804F /* Pods_BlockEQ.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockEQ.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C50F390120C0AE8100DABB14 /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
 		C52186B820C06B8100FF2A76 /* PinOptionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinOptionHelper.swift; sourceTree = "<group>"; };
 		C525C97820B79695006C138F /* KeyboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyboardView.xib; sourceTree = "<group>"; };
 		C525C97A20B79890006C138F /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
@@ -464,6 +466,7 @@
 				EC0B19252054BC3B0052802C /* AppNavigationController.swift */,
 				EC72C0B12059742900141D6F /* KeychainHelper.swift */,
 				C52186B820C06B8100FF2A76 /* PinOptionHelper.swift */,
+				C50F390120C0AE8100DABB14 /* KeyboardHelper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -862,6 +865,7 @@
 				C5AB412F20902E4800096A29 /* SettingNode.swift in Sources */,
 				EC1CEE4F205774E70005F74E /* VerificationViewController.swift in Sources */,
 				EC72C0B22059742900141D6F /* KeychainHelper.swift in Sources */,
+				C50F390220C0AE8100DABB14 /* KeyboardHelper.swift in Sources */,
 				EC6EE88620B5C1320033C299 /* TradeSegmentViewController.swift in Sources */,
 				EC2015E22052E6B6009A73C8 /* UIColor+Gradient.swift in Sources */,
 				C525C97B20B79890006C138F /* KeyboardView.swift in Sources */,

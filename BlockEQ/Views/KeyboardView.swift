@@ -27,14 +27,35 @@ struct KeyboardOptions: OptionSet {
 }
 
 struct KeyboardViewModel {
+    typealias KeyboardButton = (title: String, label: String)
     var options: KeyboardOptions
-    var buttons: [(title: String, label: String)]
+    var buttons: [KeyboardButton]
     var bottomLeftImage: UIImage?
     var bottomRightImage: UIImage?
 
     var labelColor: UIColor
     var buttonColor: UIColor
     var backgroundColor: UIColor
+
+    var keyFont = UIFont.systemFont(ofSize: 24, weight: .medium)
+    var leftFont = UIFont.systemFont(ofSize: 14, weight: .medium)
+    var rightFont = UIFont.systemFont(ofSize: 14, weight: .medium)
+
+    init(options: KeyboardOptions,
+         buttons: [KeyboardButton],
+         bottomLeftImage: UIImage?,
+         bottomRightImage: UIImage?,
+         labelColor: UIColor,
+         buttonColor: UIColor,
+         backgroundColor: UIColor) {
+        self.options = options
+        self.buttons = buttons
+        self.bottomLeftImage = bottomLeftImage
+        self.bottomRightImage = bottomRightImage
+        self.labelColor = labelColor
+        self.buttonColor = buttonColor
+        self.backgroundColor = backgroundColor
+    }
 }
 
 class KeyboardView: UIView {
@@ -126,6 +147,7 @@ class KeyboardView: UIView {
         for button in keyButtons.enumerated() {
             keyButtons[button.offset].setTitle(viewModel.buttons[button.offset].title, for: .normal)
             keyButtons[button.offset].setTitleColor(viewModel.buttonColor, for: .normal)
+            keyButtons[button.offset].titleLabel?.font = viewModel.keyFont
         }
 
         let leftHidden = !viewModel.options.contains(.leftButton)
@@ -133,12 +155,14 @@ class KeyboardView: UIView {
         leftConfigurableLabel.isHidden = leftHidden
         leftConfigurableButton.setImage(viewModel.bottomLeftImage, for: .normal)
         leftConfigurableButton.tintColor = viewModel.buttonColor
+        leftConfigurableButton.titleLabel?.font = viewModel.leftFont
 
         let rightHidden = !viewModel.options.contains(.rightButton)
         rightConfigurableButton.isHidden = rightHidden
         rightConfigurableLabel.isHidden = rightHidden
         rightConfigurableButton.setImage(viewModel.bottomRightImage, for: .normal)
         rightConfigurableButton.tintColor = viewModel.buttonColor
+        rightConfigurableButton.titleLabel?.font = viewModel.rightFont
 
         if viewModel.bottomLeftImage != nil {
             leftConfigurableButton.setTitle(nil, for: .normal)

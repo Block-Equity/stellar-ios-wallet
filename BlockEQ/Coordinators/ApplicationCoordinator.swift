@@ -181,7 +181,7 @@ extension ApplicationCoordinator: SettingsDelegate {
         let pinViewController = PinViewController(mode: .dark,
                                                   pin: nil,
                                                   confirming: true,
-                                                  isCloseDisplayed: false,
+                                                  isCloseDisplayed: true,
                                                   shouldSavePin: false)
 
         pinViewController.delegate = self
