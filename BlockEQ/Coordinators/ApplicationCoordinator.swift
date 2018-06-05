@@ -62,6 +62,8 @@ final class ApplicationCoordinator {
     /// The completion handler to call when the pin view controller completes successfully
     var pinCompletion: PinEntryCompletion?
 
+    var temporaryPinSetting: Bool!
+
     weak var delegate: ApplicationCoordinatorDelegate?
 
     init() {
@@ -187,6 +189,9 @@ extension ApplicationCoordinator: SettingsDelegate {
         pinViewController.delegate = self
         pinCompletion = completion
 
+        // Temporarily store the setting for if PIN entry is enabled
+        temporaryPinSetting = PinOptionHelper.pinSetting(for: .pinEnabled)
+
         wrappingNavController?.present(pinViewController, animated: true)
     }
 
@@ -197,6 +202,15 @@ extension ApplicationCoordinator: SettingsDelegate {
 }
 
 extension ApplicationCoordinator: PinViewControllerDelegate {
+    func pinEntryCancelled(_ vc: PinViewController) {
+        vc.dismiss(animated: true, completion: nil)
+
+        // We need to re-set the PIN enabled setting, in the case the user cancels input
+        PinOptionHelper.set(option: .pinEnabled, value: temporaryPinSetting)
+
+        settingsViewController.tableView.reloadData()
+    }
+
     func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool) {
         if KeychainHelper.checkPin(inPin: pin) {
             vc.dismiss(animated: true) {

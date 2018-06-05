@@ -68,6 +68,10 @@ extension OnboardingCoordinator: VerificationViewControllerDelegate {
 }
 
 extension OnboardingCoordinator: PinViewControllerDelegate {
+    func pinEntryCancelled(_ vc: PinViewController) {
+        assert(false, "You shouldn't be able to dismiss the PIN entry during onboarding. Fix this!")
+    }
+
     func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool) {
         if firstPin == nil {
             firstPin = pin
