@@ -26,6 +26,31 @@ class TradeOperation: NSObject {
         }
     }
     
+    static func getOffers(completion: @escaping (PageResponse<OfferResponse>) -> Void, failure: @escaping (String) -> Void) {
+        guard let accountId = KeychainHelper.getAccountId() else {
+            DispatchQueue.main.async {
+                failure("No account found")
+            }
+            return
+        }
+        
+        print(accountId)
+        
+        Stellar.sdk.offers.getOffers(forAccount: accountId, cursor: nil, order: Order.descending, limit: 100) { response in
+            switch response {
+            case .success(let offerResponse):
+                DispatchQueue.main.async {
+                    completion(offerResponse)
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    StellarSDKLog.printHorizonRequestErrorMessage(tag:"Get Offers", horizonRequestError:error)
+                    failure(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
     static func postTrade(amount: Decimal, numerator: Int, denominator: Int, sellingAsset: StellarAsset, buyingAsset: StellarAsset, completion: @escaping (Bool) -> Void) {
         guard let privateKeyData = KeychainHelper.getPrivateKey(), let publicKeyData = KeychainHelper.getPublicKey() else {
             DispatchQueue.main.async {

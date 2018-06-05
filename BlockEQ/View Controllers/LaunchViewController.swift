@@ -77,7 +77,7 @@ class LaunchViewController: UIViewController {
         }
     }
     
-    func createStellarAccount(mnemonic: String) {
+    func createAccount(mnemonic: String) {
         hideButtons()
         displayWallet()
     }

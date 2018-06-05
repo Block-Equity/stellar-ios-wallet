@@ -62,6 +62,16 @@ extension TradingCoordinator {
         }) { error in
             print(error)
         }
+        
+        getPendingOffers()
+    }
+    
+    func getPendingOffers() {
+        TradeOperation.getOffers(completion: { response in
+            print(response.records.count)
+        }) { error in
+            print("Error", error)
+        }
     }
 }
 
