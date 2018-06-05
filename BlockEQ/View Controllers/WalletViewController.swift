@@ -280,7 +280,17 @@ extension WalletViewController {
         guard let accountId = KeychainHelper.getAccountId() else {
             return
         }
-        
+
+        guard self.accounts.count > 0 else {
+            return
+        }
+
+        let account = self.accounts[pageControl.currentPage]
+
+        guard account.assets.count > 0 else {
+            return
+        }
+
         let stellarAsset = self.accounts[pageControl.currentPage].assets[currentAssetIndex]
         
         PaymentTransactionOperation.getTransactions(accountId: accountId, stellarAsset: stellarAsset) { transactions in
