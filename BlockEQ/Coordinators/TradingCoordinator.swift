@@ -68,7 +68,7 @@ extension TradingCoordinator {
     
     func getPendingOffers() {
         TradeOperation.getOffers(completion: { response in
-            print(response.records.count)
+            self.myOffersViewController.setOffers(offers: response)
         }) { error in
             print("Error", error)
         }

@@ -14,7 +14,7 @@ class OrderBookCell: UITableViewCell {
     @IBOutlet weak var option3Label: UILabel!
     
     static let cellIdentifier = "OrderBookCell"
-    static let rowHeight: CGFloat = 40.0
+    static let rowHeight: CGFloat = 44.0
 
     override func awakeFromNib() {
         super.awakeFromNib()

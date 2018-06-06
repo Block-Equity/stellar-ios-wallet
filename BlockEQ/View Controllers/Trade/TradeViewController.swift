@@ -31,6 +31,15 @@ enum BalanceType: Int {
     }
 }
 
+enum TradeType: Int {
+    case market
+    case limit
+    
+    static var all: [TradeType] {
+        return [.market, .limit]
+    }
+}
+
 protocol TradeViewControllerDelegate: AnyObject {
     func getOrderBook(sellingAsset: StellarAsset, buyingAsset: StellarAsset)
 }
@@ -39,7 +48,9 @@ class TradeViewController: UIViewController {
     
     @IBOutlet var addAssetButton: UIButton!
     @IBOutlet var arrowImageView: UIImageView!
+    @IBOutlet var balanceLabel: UILabel!
     @IBOutlet var buttonHolderView: UIView!
+    @IBOutlet var segmentControl: UIView!
     @IBOutlet var tableview: UITableView!
     @IBOutlet var tradeFromView: UIView!
     @IBOutlet var tradeToView: UIView!
@@ -74,6 +85,10 @@ class TradeViewController: UIViewController {
         
     }
     
+    @IBAction func tradeTypeSwitched(sender: UISegmentedControl) {
+        set(tradeType: TradeType.all[sender.selectedSegmentIndex])
+    }
+    
     @IBAction func submitTrade() {
         // TODO: Delegate back to the coordinator indicating we need to present a modal pin challenge
         if PinOptionHelper.check(.pinOnTrade) {
@@ -96,7 +111,7 @@ class TradeViewController: UIViewController {
         dismissKeyboard()
         showHud()
         
-        TradeOperation.postTrade(amount: Decimal(string: tradeFromAmount)!, numerator: Int(Float(tradeToAmount)! * 1000000), denominator: Int(Float(tradeFromAmount)! * 1000000), sellingAsset: fromAsset, buyingAsset: toAsset) { completed in
+        TradeOperation.postTrade(amount: Decimal(string: tradeFromAmount)!, numerator: Int(Float(tradeToAmount)! * 1000000), denominator: Int(Float(tradeFromAmount)! * 1000000), sellingAsset: fromAsset, buyingAsset: toAsset, offerId: 0) { completed in
             self.hideHud()
             self.getOrderBook()
             
@@ -142,8 +157,10 @@ class TradeViewController: UIViewController {
         tradeToView.layer.borderWidth = 0.5
         tradeToView.layer.borderColor = Colors.green.cgColor
         
+        balanceLabel.textColor = Colors.darkGray
         arrowImageView.tintColor = Colors.lightGray
         addAssetButton.backgroundColor = Colors.primaryDark
+        segmentControl.tintColor = Colors.blueGray
         tableview.backgroundColor = Colors.lightBackground
         tradeFromButton.backgroundColor = Colors.red
         tradeToButton.backgroundColor = Colors.green
@@ -171,6 +188,21 @@ class TradeViewController: UIViewController {
         
         tradeFromSelectorTextField.inputView = tradeFromPickerView
         tradeToSelectorTextField.inputView = tradeToPickerView
+        
+        set(tradeType: .market)
+    }
+    
+    func set(tradeType: TradeType) {
+        switch tradeType {
+        case .market:
+            tradeToTextField.isEnabled = false
+            tradeToView.backgroundColor = Colors.lightBackground
+            break
+        case .limit:
+            tradeToTextField.isEnabled = true
+            tradeToView.backgroundColor = Colors.white
+            break
+        }
     }
     
     func setTradeSelectors(fromAsset: StellarAsset?, toAsset: StellarAsset?) {
@@ -198,6 +230,7 @@ class TradeViewController: UIViewController {
     func setTradeFromSelector() {
         if let toButtonText = tradeToButton.titleLabel?.text, !toButtonText.elementsEqual(fromAsset.shortCode) {
             tradeFromButton.setTitle(fromAsset.shortCode, for: .normal)
+            balanceLabel.text = "\(fromAsset.balance.decimalFormatted()) \(fromAsset.shortCode)"
             return
         }
         
@@ -206,6 +239,7 @@ class TradeViewController: UIViewController {
         }
         
         tradeFromButton.setTitle(fromAsset.shortCode, for: .normal)
+        balanceLabel.text = "\(fromAsset.balance.decimalFormatted()) \(fromAsset.shortCode)"
         
         toAssets = self.stellarAccount.assets
         toAssets.remove(at: removableIndex)
@@ -229,9 +263,9 @@ class TradeViewController: UIViewController {
         
         for asset in self.stellarAccount.assets {
             if tradeFromButton.titleLabel?.text != asset.shortCode {
-                print(fromAsset.shortCode)
                 fromAsset = asset
                 tradeFromButton.setTitle(fromAsset.shortCode, for: .normal)
+                balanceLabel.text = "\(fromAsset.balance.decimalFormatted()) \(fromAsset.shortCode)"
                 toAssetToRemove = fromAsset
                 break
             }

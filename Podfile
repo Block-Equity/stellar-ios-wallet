@@ -5,7 +5,7 @@ target 'BlockEQ' do
   # Pods for BlockEQ
   use_frameworks!
 
-  pod 'stellar-ios-mac-sdk'
+  pod 'stellar-ios-mac-sdk', :git => 'https://github.com/Soneso/stellar-ios-mac-sdk', :branch => 'master'
   pod 'KeychainSwift', '~> 10.0'
 
   target 'BlockEQTests' do
