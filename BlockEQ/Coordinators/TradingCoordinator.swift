@@ -59,6 +59,7 @@ extension TradingCoordinator {
     func requestOrderBook(sellingAsset: StellarAsset, buyingAsset: StellarAsset) {
         TradeOperation.getOrderBook(sellingAsset: sellingAsset, buyingAsset: buyingAsset, completion: { response in
             self.orderBookViewController.setOrderBook(orderBook: response, buyAsset: buyingAsset, sellAsset: sellingAsset)
+            self.tradeViewController.setMarketPrice(orderBook: response)
         }) { error in
             print(error)
         }

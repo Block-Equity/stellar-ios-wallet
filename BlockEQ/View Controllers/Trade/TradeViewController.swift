@@ -71,6 +71,8 @@ class TradeViewController: UIViewController {
     var toAssets: [StellarAsset] = []
     var fromAsset: StellarAsset!
     var toAsset: StellarAsset!
+    var currentTradeType: TradeType = .market
+    var currentMarketPrice: Float = 0.0
     
     weak var delegate: TradeViewControllerDelegate?
     
@@ -86,7 +88,19 @@ class TradeViewController: UIViewController {
     }
     
     @IBAction func tradeTypeSwitched(sender: UISegmentedControl) {
-        set(tradeType: TradeType.all[sender.selectedSegmentIndex])
+        currentTradeType = TradeType.all[sender.selectedSegmentIndex]
+        setTradeViews()
+    }
+    
+    @IBAction func tradeFromTextFieldDidChange() {
+        if currentTradeType == .market {
+            guard let tradeFromText = tradeFromTextField.text, !tradeFromText.isEmpty else {
+                tradeToTextField.text = ""
+                return
+            }
+            
+            setCalculatedMarketPrice(tradeFromText: tradeFromText)
+        }
     }
     
     @IBAction func submitTrade() {
@@ -189,14 +203,18 @@ class TradeViewController: UIViewController {
         tradeFromSelectorTextField.inputView = tradeFromPickerView
         tradeToSelectorTextField.inputView = tradeToPickerView
         
-        set(tradeType: .market)
+        setTradeViews()
     }
     
-    func set(tradeType: TradeType) {
-        switch tradeType {
+    func setTradeViews() {
+        switch currentTradeType {
         case .market:
             tradeToTextField.isEnabled = false
             tradeToView.backgroundColor = Colors.lightBackground
+            if let tradeFromText = tradeFromTextField.text {
+                setCalculatedMarketPrice(tradeFromText: tradeFromText)
+            }
+            
             break
         case .limit:
             tradeToTextField.isEnabled = true
@@ -295,6 +313,25 @@ class TradeViewController: UIViewController {
     func hideHud() {
         MBProgressHUD.hide(for: (navigationController?.view)!, animated: true)
     }
+    
+    func setMarketPrice(orderBook: OrderbookResponse) {
+        if orderBook.bids.count > 0 {
+            guard let bestPrice = Float(orderBook.bids[0].price) else {
+                return
+            }
+            
+            currentMarketPrice = bestPrice
+        }
+    }
+    
+    func setCalculatedMarketPrice(tradeFromText: String) {
+        guard let tradeFromValue = Float(tradeFromText) else {
+            return
+        }
+        
+        let toValue = tradeFromValue * currentMarketPrice
+        tradeToTextField.text = String(toValue).decimalFormatted()
+    }
 }
 
 extension TradeViewController: UIPickerViewDataSource {
@@ -326,6 +363,7 @@ extension TradeViewController: UIPickerViewDelegate {
         return "\(Assets.displayTitle(shortCode: toAssets[row].shortCode)) (\(toAssets[row].shortCode))"
     }
 }
+
 
 /*
  * Operations

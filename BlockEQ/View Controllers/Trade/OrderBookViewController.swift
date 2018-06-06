@@ -20,14 +20,14 @@ enum OrderBookType: Int {
 
 class OrderBookViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var tableHeaderLabel: UILabel!
+    @IBOutlet var tableHeaderView: UIView!
     
     var bids: [OrderbookOfferResponse] = []
     var asks: [OrderbookOfferResponse] = []
     var buyAsset: StellarAsset = StellarAsset()
     var sellAsset: StellarAsset = StellarAsset()
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,6 +42,8 @@ class OrderBookViewController: UIViewController {
         tableView.register(orderBookEmptyNib, forCellReuseIdentifier: OrderBookEmptyCell.cellIdentifier)
 
         tableView.backgroundColor = Colors.lightBackground
+        tableHeaderLabel.textColor = Colors.blueGray
+        tableHeaderView.backgroundColor = Colors.white
     }
     
     func setOrderBook(orderBook: OrderbookResponse, buyAsset: StellarAsset, sellAsset: StellarAsset) {
@@ -52,6 +54,8 @@ class OrderBookViewController: UIViewController {
         asks = orderBook.asks
         
         tableView.reloadData()
+        
+        tableHeaderLabel.text = "\(sellAsset.shortCode) - \(buyAsset.shortCode)"
     }
 }
 
