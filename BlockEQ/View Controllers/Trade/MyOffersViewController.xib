@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PLD-ho-Ios">
-                    <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                    <rect key="frame" x="0.0" y="63" width="375" height="555"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <view key="tableFooterView" contentMode="scaleToFill" id="H17-eE-lnc">
                         <rect key="frame" x="0.0" y="828" width="375" height="88"/>
@@ -36,7 +36,7 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="PLD-ho-Ios" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="P8M-Rh-Vt3"/>
+                <constraint firstItem="PLD-ho-Ios" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="-1" id="P8M-Rh-Vt3"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="PLD-ho-Ios" secondAttribute="bottom" id="jU4-I3-I2w"/>
                 <constraint firstItem="PLD-ho-Ios" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="y3N-Bz-6nZ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="PLD-ho-Ios" secondAttribute="trailing" id="zjS-2c-QWX"/>

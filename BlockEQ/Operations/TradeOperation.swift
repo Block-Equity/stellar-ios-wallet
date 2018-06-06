@@ -33,9 +33,7 @@ class TradeOperation: NSObject {
             }
             return
         }
-        
-        print(accountId)
-        
+
         Stellar.sdk.offers.getOffers(forAccount: accountId, cursor: nil, order: Order.descending, limit: 100) { response in
             switch response {
             case .success(let offerResponse):
@@ -51,7 +49,7 @@ class TradeOperation: NSObject {
         }
     }
     
-    static func postTrade(amount: Decimal, numerator: Int, denominator: Int, sellingAsset: StellarAsset, buyingAsset: StellarAsset, completion: @escaping (Bool) -> Void) {
+    static func postTrade(amount: Decimal, numerator: Int, denominator: Int, sellingAsset: StellarAsset, buyingAsset: StellarAsset, offerId: Int,  completion: @escaping (Bool) -> Void) {
         guard let privateKeyData = KeychainHelper.getPrivateKey(), let publicKeyData = KeychainHelper.getPublicKey() else {
             DispatchQueue.main.async {
                 completion(false)
@@ -82,13 +80,14 @@ class TradeOperation: NSObject {
                                                                     buying: buyAsset,
                                                                     amount: amount,
                                                                     price: Price(numerator: numerator, denominator: denominator),
-                                                                    offerId: 0)
+                                                                    offerId: UInt64(offerId))
 
                     let transaction = try Transaction(sourceAccount: accountResponse,
                                                       operations: [manageOfferOperation],
                                                       memo: Memo.none,
                                                       timeBounds:nil)
                     try transaction.sign(keyPair: sourceKeyPair, network: Stellar.network)
+                    
                     
                     try Stellar.sdk.transactions.submitTransaction(transaction: transaction) { (response) -> (Void) in
                         switch response {

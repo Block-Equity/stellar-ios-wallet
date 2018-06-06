@@ -31,6 +31,15 @@ enum BalanceType: Int {
     }
 }
 
+enum TradeType: Int {
+    case market
+    case limit
+    
+    static var all: [TradeType] {
+        return [.market, .limit]
+    }
+}
+
 protocol TradeViewControllerDelegate: AnyObject {
     func getOrderBook(sellingAsset: StellarAsset, buyingAsset: StellarAsset)
 }
@@ -39,7 +48,9 @@ class TradeViewController: UIViewController {
     
     @IBOutlet var addAssetButton: UIButton!
     @IBOutlet var arrowImageView: UIImageView!
+    @IBOutlet var balanceLabel: UILabel!
     @IBOutlet var buttonHolderView: UIView!
+    @IBOutlet var segmentControl: UIView!
     @IBOutlet var tableview: UITableView!
     @IBOutlet var tradeFromView: UIView!
     @IBOutlet var tradeToView: UIView!
@@ -60,6 +71,8 @@ class TradeViewController: UIViewController {
     var toAssets: [StellarAsset] = []
     var fromAsset: StellarAsset!
     var toAsset: StellarAsset!
+    var currentTradeType: TradeType = .market
+    var currentMarketPrice: Float = 0.0
     
     weak var delegate: TradeViewControllerDelegate?
     
@@ -72,6 +85,22 @@ class TradeViewController: UIViewController {
     
     @IBAction func addAsset() {
         
+    }
+    
+    @IBAction func tradeTypeSwitched(sender: UISegmentedControl) {
+        currentTradeType = TradeType.all[sender.selectedSegmentIndex]
+        setTradeViews()
+    }
+    
+    @IBAction func tradeFromTextFieldDidChange() {
+        if currentTradeType == .market {
+            guard let tradeFromText = tradeFromTextField.text, !tradeFromText.isEmpty else {
+                tradeToTextField.text = ""
+                return
+            }
+            
+            setCalculatedMarketPrice(tradeFromText: tradeFromText)
+        }
     }
     
     @IBAction func submitTrade() {
@@ -96,7 +125,7 @@ class TradeViewController: UIViewController {
         dismissKeyboard()
         showHud()
         
-        TradeOperation.postTrade(amount: Decimal(string: tradeFromAmount)!, numerator: Int(Float(tradeToAmount)! * 1000000), denominator: Int(Float(tradeFromAmount)! * 1000000), sellingAsset: fromAsset, buyingAsset: toAsset) { completed in
+        TradeOperation.postTrade(amount: Decimal(string: tradeFromAmount)!, numerator: Int(Float(tradeToAmount)! * 1000000), denominator: Int(Float(tradeFromAmount)! * 1000000), sellingAsset: fromAsset, buyingAsset: toAsset, offerId: 0) { completed in
             self.hideHud()
             self.getOrderBook()
             
@@ -142,8 +171,10 @@ class TradeViewController: UIViewController {
         tradeToView.layer.borderWidth = 0.5
         tradeToView.layer.borderColor = Colors.green.cgColor
         
+        balanceLabel.textColor = Colors.darkGray
         arrowImageView.tintColor = Colors.lightGray
         addAssetButton.backgroundColor = Colors.primaryDark
+        segmentControl.tintColor = Colors.blueGray
         tableview.backgroundColor = Colors.lightBackground
         tradeFromButton.backgroundColor = Colors.red
         tradeToButton.backgroundColor = Colors.green
@@ -171,6 +202,25 @@ class TradeViewController: UIViewController {
         
         tradeFromSelectorTextField.inputView = tradeFromPickerView
         tradeToSelectorTextField.inputView = tradeToPickerView
+        
+        setTradeViews()
+    }
+    
+    func setTradeViews() {
+        switch currentTradeType {
+        case .market:
+            tradeToTextField.isEnabled = false
+            tradeToView.backgroundColor = Colors.lightBackground
+            if let tradeFromText = tradeFromTextField.text {
+                setCalculatedMarketPrice(tradeFromText: tradeFromText)
+            }
+            
+            break
+        case .limit:
+            tradeToTextField.isEnabled = true
+            tradeToView.backgroundColor = Colors.white
+            break
+        }
     }
     
     func setTradeSelectors(fromAsset: StellarAsset?, toAsset: StellarAsset?) {
@@ -198,6 +248,7 @@ class TradeViewController: UIViewController {
     func setTradeFromSelector() {
         if let toButtonText = tradeToButton.titleLabel?.text, !toButtonText.elementsEqual(fromAsset.shortCode) {
             tradeFromButton.setTitle(fromAsset.shortCode, for: .normal)
+            balanceLabel.text = "\(fromAsset.balance.decimalFormatted()) \(fromAsset.shortCode)"
             return
         }
         
@@ -206,6 +257,7 @@ class TradeViewController: UIViewController {
         }
         
         tradeFromButton.setTitle(fromAsset.shortCode, for: .normal)
+        balanceLabel.text = "\(fromAsset.balance.decimalFormatted()) \(fromAsset.shortCode)"
         
         toAssets = self.stellarAccount.assets
         toAssets.remove(at: removableIndex)
@@ -229,9 +281,9 @@ class TradeViewController: UIViewController {
         
         for asset in self.stellarAccount.assets {
             if tradeFromButton.titleLabel?.text != asset.shortCode {
-                print(fromAsset.shortCode)
                 fromAsset = asset
                 tradeFromButton.setTitle(fromAsset.shortCode, for: .normal)
+                balanceLabel.text = "\(fromAsset.balance.decimalFormatted()) \(fromAsset.shortCode)"
                 toAssetToRemove = fromAsset
                 break
             }
@@ -260,6 +312,25 @@ class TradeViewController: UIViewController {
     
     func hideHud() {
         MBProgressHUD.hide(for: (navigationController?.view)!, animated: true)
+    }
+    
+    func setMarketPrice(orderBook: OrderbookResponse) {
+        if orderBook.bids.count > 0 {
+            guard let bestPrice = Float(orderBook.bids[0].price) else {
+                return
+            }
+            
+            currentMarketPrice = bestPrice
+        }
+    }
+    
+    func setCalculatedMarketPrice(tradeFromText: String) {
+        guard let tradeFromValue = Float(tradeFromText) else {
+            return
+        }
+        
+        let toValue = tradeFromValue * currentMarketPrice
+        tradeToTextField.text = String(toValue).decimalFormatted()
     }
 }
 
@@ -292,6 +363,7 @@ extension TradeViewController: UIPickerViewDelegate {
         return "\(Assets.displayTitle(shortCode: toAssets[row].shortCode)) (\(toAssets[row].shortCode))"
     }
 }
+
 
 /*
  * Operations

@@ -43,6 +43,9 @@
 		EC0B192220549B240052802C /* ReceiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0B192020549B240052802C /* ReceiveViewController.swift */; };
 		EC0B192320549B240052802C /* ReceiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC0B192120549B240052802C /* ReceiveViewController.xib */; };
 		EC0B19262054BC3B0052802C /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0B19252054BC3B0052802C /* AppNavigationController.swift */; };
+		EC11062120C7061700FD3684 /* MyOffersHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC11062020C7061700FD3684 /* MyOffersHeaderView.swift */; };
+		EC11062320C7062000FD3684 /* MyOffersHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC11062220C7062000FD3684 /* MyOffersHeaderView.xib */; };
+		EC11062520C7217F00FD3684 /* TradeScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC11062420C7217F00FD3684 /* TradeScrollView.swift */; };
 		EC1CEE4F205774E70005F74E /* VerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CEE4E205774E70005F74E /* VerificationViewController.swift */; };
 		EC1CEE5320577E880005F74E /* WordSuggestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CEE5120577E880005F74E /* WordSuggestionCell.swift */; };
 		EC1CEE5420577E880005F74E /* WordSuggestionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC1CEE5220577E880005F74E /* WordSuggestionCell.xib */; };
@@ -170,6 +173,9 @@
 		EC0B192020549B240052802C /* ReceiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiveViewController.swift; sourceTree = "<group>"; };
 		EC0B192120549B240052802C /* ReceiveViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReceiveViewController.xib; sourceTree = "<group>"; };
 		EC0B19252054BC3B0052802C /* AppNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
+		EC11062020C7061700FD3684 /* MyOffersHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOffersHeaderView.swift; sourceTree = "<group>"; };
+		EC11062220C7062000FD3684 /* MyOffersHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyOffersHeaderView.xib; sourceTree = "<group>"; };
+		EC11062420C7217F00FD3684 /* TradeScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradeScrollView.swift; sourceTree = "<group>"; };
 		EC1CEE4E205774E70005F74E /* VerificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerificationViewController.swift; sourceTree = "<group>"; };
 		EC1CEE5120577E880005F74E /* WordSuggestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordSuggestionCell.swift; sourceTree = "<group>"; };
 		EC1CEE5220577E880005F74E /* WordSuggestionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordSuggestionCell.xib; sourceTree = "<group>"; };
@@ -496,9 +502,12 @@
 				EC3DE2A020B8F9C300A6EC3C /* TradeHeaderView.xib */,
 				C525C97820B79695006C138F /* KeyboardView.xib */,
 				C525C97A20B79890006C138F /* KeyboardView.swift */,
+				EC11062020C7061700FD3684 /* MyOffersHeaderView.swift */,
+				EC11062220C7062000FD3684 /* MyOffersHeaderView.xib */,
 				EC52B3C820BB746C006299A1 /* OrderBookHeaderView.swift */,
 				EC52B3CA20BB7476006299A1 /* OrderBookHeaderView.xib */,
 				C595115520BB2B1B00843D33 /* PinDotView.swift */,
+				EC11062420C7217F00FD3684 /* TradeScrollView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -699,6 +708,7 @@
 				C5E8594B20AFB47900B77289 /* AppTabController.xib in Resources */,
 				EC4258502054EE76000941B5 /* SendAmountViewController.xib in Resources */,
 				C525C97920B79695006C138F /* KeyboardView.xib in Resources */,
+				EC11062320C7062000FD3684 /* MyOffersHeaderView.xib in Resources */,
 				EC2015B32052D968009A73C8 /* LaunchScreen.storyboard in Resources */,
 				EC2015EA2052EAC7009A73C8 /* WalletTitleViewController.xib in Resources */,
 				EC64CF5020BF05F5007FE199 /* OrderBookEmptyCell.xib in Resources */,
@@ -815,6 +825,7 @@
 				C595115620BB2B1B00843D33 /* PinDotView.swift in Sources */,
 				EC6EE88B20B600070033C299 /* TradeViewController.swift in Sources */,
 				EC2015F520531963009A73C8 /* NibLoader.swift in Sources */,
+				EC11062120C7061700FD3684 /* MyOffersHeaderView.swift in Sources */,
 				EC581C7220766BA8003A397E /* WalletSwitchingViewController.swift in Sources */,
 				EC2015E92052EAC7009A73C8 /* WalletTitleViewController.swift in Sources */,
 				EC6EE88F20B6004B0033C299 /* OrderBookViewController.swift in Sources */,
@@ -870,6 +881,7 @@
 				EC2015E22052E6B6009A73C8 /* UIColor+Gradient.swift in Sources */,
 				C525C97B20B79890006C138F /* KeyboardView.swift in Sources */,
 				C5AB413120902F7500096A29 /* String+Localization.swift in Sources */,
+				EC11062520C7217F00FD3684 /* TradeScrollView.swift in Sources */,
 				C5E8594E20AFCC0E00B77289 /* ApplicationCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
