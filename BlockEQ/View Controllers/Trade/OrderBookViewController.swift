@@ -25,8 +25,8 @@ class OrderBookViewController: UIViewController {
     
     var bids: [OrderbookOfferResponse] = []
     var asks: [OrderbookOfferResponse] = []
-    var buyAsset: StellarAsset = StellarAsset()
-    var sellAsset: StellarAsset = StellarAsset()
+    var buyAsset: StellarAsset = StellarAsset(assetType: AssetTypeAsString.NATIVE, assetCode: nil, assetIssuer: nil, balance: "")
+    var sellAsset: StellarAsset = StellarAsset(assetType: AssetTypeAsString.NATIVE, assetCode: nil, assetIssuer: nil, balance: "")
     
     override func viewDidLoad() {
         super.viewDidLoad()

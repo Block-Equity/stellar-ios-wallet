@@ -22,11 +22,8 @@ public class AccountOperation {
                 stellarAccount.assets.removeAll()
                 
                 for accountDetail in accountDetails.balances {
-                    let stellarAsset = StellarAsset()
-                    stellarAsset.assetType = accountDetail.assetType
-                    stellarAsset.balance = accountDetail.balance
-                    stellarAsset.assetCode = accountDetail.assetCode
-                    stellarAsset.assetIssuer = accountDetail.assetIssuer
+                    let stellarAsset = StellarAsset(assetType: accountDetail.assetType, assetCode: accountDetail.assetCode, assetIssuer: accountDetail.assetIssuer, balance: accountDetail.balance)
+                    
                     if accountDetail.assetType == AssetTypeAsString.NATIVE {
                         stellarAccount.assets.insert(stellarAsset, at: 0)
                     } else{

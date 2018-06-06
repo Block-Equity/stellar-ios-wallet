@@ -10,8 +10,29 @@ import stellarsdk
 import UIKit
 
 class PaymentTransactionOperation: NSObject {
-    static func getTransactions(accountId: String, stellarAsset: StellarAsset, completion: @escaping ([PaymentTransaction]) -> Void) {
+    static func getTransactions(accountId: String, stellarAsset: StellarAsset, completion: @escaping ([StellarEffect]) -> Void) {
+        Stellar.sdk.effects.getEffects(forAccount: accountId, from: nil, order: Order.descending, limit: 200) { response -> (Void) in
+            switch response {
+            case .success(let effectsResponse):
+                var stellarEffects: [StellarEffect] = []
+                
+                for effect in effectsResponse.records {
+                    stellarEffects.append(StellarEffect(effect: effect))
+                }
+                
+                DispatchQueue.main.async {
+                    completion(stellarEffects)
+                }
+                
+            case .failure(let error):
+                StellarSDKLog.printHorizonRequestErrorMessage(tag:"Error", horizonRequestError:error)
+                DispatchQueue.main.async {
+                    completion([])
+                }
+            }
+        }
         
+        /*
         var paymentTransactions: [PaymentTransaction] = []
         
         Stellar.sdk.payments.getPayments(forAccount: accountId, order:Order.descending, limit: 200) { response in
@@ -46,7 +67,7 @@ class PaymentTransactionOperation: NSObject {
                     completion(paymentTransactions)
                 }
             }
-        }
+        } */
     }
     
     static func postPayment(accountId: String, amount: Decimal, memoId: String, stellarAsset: StellarAsset, completion: @escaping (Bool) -> Void) {

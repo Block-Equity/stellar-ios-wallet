@@ -80,6 +80,7 @@
 		EC42584C2054E346000941B5 /* SendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC42584A2054E346000941B5 /* SendViewController.xib */; };
 		EC42584F2054EE76000941B5 /* SendAmountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC42584D2054EE76000941B5 /* SendAmountViewController.swift */; };
 		EC4258502054EE76000941B5 /* SendAmountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC42584E2054EE76000941B5 /* SendAmountViewController.xib */; };
+		EC48C1D520C82CF0009FDEBC /* StellarEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC48C1D420C82CF0009FDEBC /* StellarEffect.swift */; };
 		EC4BB64720BE2C28008252AD /* TradeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4BB64620BE2C28008252AD /* TradeOperation.swift */; };
 		EC4BB64920BE4176008252AD /* String+DecimalFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4BB64820BE4176008252AD /* String+DecimalFormatter.swift */; };
 		EC52B3C920BB746C006299A1 /* OrderBookHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC52B3C820BB746C006299A1 /* OrderBookHeaderView.swift */; };
@@ -216,6 +217,7 @@
 		EC42584A2054E346000941B5 /* SendViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendViewController.xib; sourceTree = "<group>"; };
 		EC42584D2054EE76000941B5 /* SendAmountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendAmountViewController.swift; sourceTree = "<group>"; };
 		EC42584E2054EE76000941B5 /* SendAmountViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendAmountViewController.xib; sourceTree = "<group>"; };
+		EC48C1D420C82CF0009FDEBC /* StellarEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarEffect.swift; sourceTree = "<group>"; };
 		EC4BB64620BE2C28008252AD /* TradeOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradeOperation.swift; sourceTree = "<group>"; };
 		EC4BB64820BE4176008252AD /* String+DecimalFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+DecimalFormatter.swift"; sourceTree = "<group>"; };
 		EC52B3C820BB746C006299A1 /* OrderBookHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookHeaderView.swift; sourceTree = "<group>"; };
@@ -543,6 +545,7 @@
 				ECB2F080207BF45E00F53798 /* StellarAsset.swift */,
 				EC72C0B320597CA600141D6F /* StellarAccount.swift */,
 				EC72C0B62059EF7C00141D6F /* PaymentTransaction.swift */,
+				EC48C1D420C82CF0009FDEBC /* StellarEffect.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -829,6 +832,7 @@
 				EC581C7220766BA8003A397E /* WalletSwitchingViewController.swift in Sources */,
 				EC2015E92052EAC7009A73C8 /* WalletTitleViewController.swift in Sources */,
 				EC6EE88F20B6004B0033C299 /* OrderBookViewController.swift in Sources */,
+				EC48C1D520C82CF0009FDEBC /* StellarEffect.swift in Sources */,
 				C5AB413B2090433000096A29 /* UIView+ReusableView.swift in Sources */,
 				C5E8595020AFF09800B77289 /* OnboardingCoordinator.swift in Sources */,
 				C5E8594920AFB45E00B77289 /* ContainerViewController.swift in Sources */,
