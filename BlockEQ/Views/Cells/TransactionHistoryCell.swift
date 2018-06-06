@@ -24,9 +24,4 @@ class TransactionHistoryCell: UITableViewCell {
         amountLabel.textColor = Colors.black
         dateLabel.textColor = Colors.blackTransparent
     }
-    
-    func setTitle(type: StellarEffectType) {
-        activityLabel.text = type.rawValue
-        transactionDisplayView.backgroundColor = type.color
-    }
 }

@@ -188,7 +188,8 @@ extension WalletViewController: UITableViewDataSource {
         
         cell.amountLabel.text = effect.formattedAmount
         cell.dateLabel.text = effect.formattedDate
-        cell.setTitle(type: effect.type)
+        cell.activityLabel.text = effect.type.rawValue
+        cell.transactionDisplayView.backgroundColor = effect.type.color
         
         return cell
     }
