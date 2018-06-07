@@ -174,6 +174,8 @@ extension WalletSwitchingViewController: UITableViewDataSource {
         }
     }
     
+    //TODO: Need to move to coordinator in order to show correct selection
+    /*
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case SectionType.userAssets.rawValue:
@@ -181,7 +183,7 @@ extension WalletSwitchingViewController: UITableViewDataSource {
         default:
             break
         }
-    }
+    }*/
 }
 
 extension WalletSwitchingViewController: UITableViewDelegate {

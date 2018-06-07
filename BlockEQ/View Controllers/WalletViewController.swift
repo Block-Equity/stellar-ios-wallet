@@ -186,10 +186,11 @@ extension WalletViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: TransactionHistoryCell.cellIdentifier, for: indexPath) as! TransactionHistoryCell
         let effect = effects[indexPath.row]
         
-        cell.amountLabel.text = effect.formattedAmount
+        let stellarAsset = self.accounts[pageControl.currentPage].assets[currentAssetIndex]
+        cell.amountLabel.text = effect.formattedTransactionAmount(asset: stellarAsset)
         cell.dateLabel.text = effect.formattedDate
-        cell.activityLabel.text = effect.type.rawValue
-        cell.transactionDisplayView.backgroundColor = effect.type.color
+        cell.activityLabel.text = effect.formattedDescription(asset: stellarAsset)
+        cell.transactionDisplayView.backgroundColor = effect.color(asset: stellarAsset)
         
         return cell
     }
