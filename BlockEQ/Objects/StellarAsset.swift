@@ -15,6 +15,13 @@ class StellarAsset: NSObject {
     var assetCode: String?
     var assetIssuer: String?
     
+    init(assetType: String, assetCode: String?, assetIssuer: String?, balance: String) {
+        self.assetType = assetType
+        self.assetCode = assetCode
+        self.assetIssuer = assetIssuer
+        self.balance = balance
+    }
+    
     var formattedBalance: String {
         guard let floatValue = Float(balance) else {
             return ""

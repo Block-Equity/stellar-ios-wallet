@@ -10,40 +10,34 @@ import stellarsdk
 import UIKit
 
 class PaymentTransactionOperation: NSObject {
-    static func getTransactions(accountId: String, stellarAsset: StellarAsset, completion: @escaping ([PaymentTransaction]) -> Void) {
-        
-        var paymentTransactions: [PaymentTransaction] = []
-        
-        Stellar.sdk.payments.getPayments(forAccount: accountId, order:Order.descending, limit: 200) { response in
+    static func getTransactions(accountId: String, stellarAsset: StellarAsset, completion: @escaping ([StellarEffect]) -> Void) {
+        Stellar.sdk.effects.getEffects(forAccount: accountId, from: nil, order: Order.descending, limit: 200) { response -> (Void) in
             switch response {
-            case .success(let paymentsResponse):
-                for payment in paymentsResponse.records {
-                    if let paymentResponse = payment as? PaymentOperationResponse, paymentResponse.assetCode == stellarAsset.assetCode, paymentResponse.assetType == stellarAsset.assetType {
-                        let paymentTransaction = getPaymentTransaction(amount: paymentResponse.amount,
-                                                                       assetType: paymentResponse.assetType,
-                                                                       date: paymentResponse.createdAt,
-                                                                       isAccountCreated: false,
-                                                                       isPaymentReceived: paymentResponse.from != accountId ? true : false)
-                        
-                        paymentTransactions.append(paymentTransaction)
-                    }
+            case .success(let effectsResponse):
+                var stellarEffects: [StellarEffect] = []
+                
+                for effect in effectsResponse.records {
+                    let stellarEffect = StellarEffect(effect: effect)
                     
-                    if let paymentResponse = payment as? AccountCreatedOperationResponse, stellarAsset.assetType == AssetTypeAsString.NATIVE  {
-                        let paymentTransaction = getPaymentTransaction(amount: String(describing: paymentResponse.startingBalance),
-                                                                       assetType: AssetTypeAsString.NATIVE,
-                                                                       date: paymentResponse.createdAt,
-                                                                       isAccountCreated: true,
-                                                                       isPaymentReceived: false)
-                        
-                        paymentTransactions.append(paymentTransaction)
+                    if stellarEffect.type == .trade {
+                        if stellarEffect.boughtAsset.assetType == stellarAsset.assetType && stellarEffect.boughtAsset.assetCode == stellarAsset.assetCode && stellarEffect.boughtAsset.assetIssuer == stellarAsset.assetIssuer || stellarEffect.soldAsset.assetType == stellarAsset.assetType && stellarEffect.soldAsset.assetCode == stellarAsset.assetCode && stellarEffect.soldAsset.assetIssuer == stellarAsset.assetIssuer {
+                            stellarEffects.append(stellarEffect)
+                        }
+                    } else if stellarEffect.type != .accountCreated {
+                        if  stellarEffect.asset.assetType == stellarAsset.assetType && stellarEffect.asset.assetCode == stellarAsset.assetCode && stellarEffect.asset.assetIssuer == stellarAsset.assetIssuer  {
+                            stellarEffects.append(stellarEffect)
+                        }
                     }
                 }
+                
                 DispatchQueue.main.async {
-                    completion(paymentTransactions)
+                    completion(stellarEffects)
                 }
-            case .failure(_):
+                
+            case .failure(let error):
+                StellarSDKLog.printHorizonRequestErrorMessage(tag:"Error", horizonRequestError:error)
                 DispatchQueue.main.async {
-                    completion(paymentTransactions)
+                    completion([])
                 }
             }
         }
@@ -209,16 +203,5 @@ class PaymentTransactionOperation: NSObject {
                 }
             }
         }
-    }
-    
-    static private func getPaymentTransaction(amount: String, assetType: String, date: Date, isAccountCreated: Bool, isPaymentReceived: Bool) -> PaymentTransaction {
-        let paymentTransaction = PaymentTransaction()
-        paymentTransaction.amount = amount
-        paymentTransaction.date = date
-        paymentTransaction.isReceived = isPaymentReceived
-        paymentTransaction.isAccountCreated = isAccountCreated
-        paymentTransaction.assetType = assetType
-        
-        return paymentTransaction
     }
 }

@@ -80,8 +80,11 @@
 		EC42584C2054E346000941B5 /* SendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC42584A2054E346000941B5 /* SendViewController.xib */; };
 		EC42584F2054EE76000941B5 /* SendAmountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC42584D2054EE76000941B5 /* SendAmountViewController.swift */; };
 		EC4258502054EE76000941B5 /* SendAmountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC42584E2054EE76000941B5 /* SendAmountViewController.xib */; };
+		EC48C1D520C82CF0009FDEBC /* StellarEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC48C1D420C82CF0009FDEBC /* StellarEffect.swift */; };
 		EC4BB64720BE2C28008252AD /* TradeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4BB64620BE2C28008252AD /* TradeOperation.swift */; };
 		EC4BB64920BE4176008252AD /* String+DecimalFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4BB64820BE4176008252AD /* String+DecimalFormatter.swift */; };
+		EC4F65FE20C8CD2C0036293D /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F65FD20C8CD2C0036293D /* Date+Format.swift */; };
+		EC4F660020C8CF0C0036293D /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F65FF20C8CF0C0036293D /* String+Date.swift */; };
 		EC52B3C920BB746C006299A1 /* OrderBookHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC52B3C820BB746C006299A1 /* OrderBookHeaderView.swift */; };
 		EC52B3CB20BB7476006299A1 /* OrderBookHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC52B3CA20BB7476006299A1 /* OrderBookHeaderView.xib */; };
 		EC52B3CE20BBB1CB006299A1 /* OrderBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC52B3CC20BBB1CB006299A1 /* OrderBookCell.swift */; };
@@ -105,7 +108,6 @@
 		EC6EE89620B6043C0033C299 /* TradingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6EE89520B6043C0033C299 /* TradingCoordinator.swift */; };
 		EC72C0B22059742900141D6F /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC72C0B12059742900141D6F /* KeychainHelper.swift */; };
 		EC72C0B420597CA600141D6F /* StellarAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC72C0B320597CA600141D6F /* StellarAccount.swift */; };
-		EC72C0B72059EF7C00141D6F /* PaymentTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC72C0B62059EF7C00141D6F /* PaymentTransaction.swift */; };
 		ECB1D958207E966D0088826D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB1D956207E966D0088826D /* MBProgressHUD.m */; };
 		ECB2F081207BF45E00F53798 /* StellarAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB2F080207BF45E00F53798 /* StellarAsset.swift */; };
 		ECC47A6920589F92002BA573 /* UIView+Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC47A6820589F92002BA573 /* UIView+Shake.swift */; };
@@ -216,8 +218,11 @@
 		EC42584A2054E346000941B5 /* SendViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendViewController.xib; sourceTree = "<group>"; };
 		EC42584D2054EE76000941B5 /* SendAmountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendAmountViewController.swift; sourceTree = "<group>"; };
 		EC42584E2054EE76000941B5 /* SendAmountViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendAmountViewController.xib; sourceTree = "<group>"; };
+		EC48C1D420C82CF0009FDEBC /* StellarEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarEffect.swift; sourceTree = "<group>"; };
 		EC4BB64620BE2C28008252AD /* TradeOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradeOperation.swift; sourceTree = "<group>"; };
 		EC4BB64820BE4176008252AD /* String+DecimalFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+DecimalFormatter.swift"; sourceTree = "<group>"; };
+		EC4F65FD20C8CD2C0036293D /* Date+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Format.swift"; sourceTree = "<group>"; };
+		EC4F65FF20C8CF0C0036293D /* String+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Date.swift"; sourceTree = "<group>"; };
 		EC52B3C820BB746C006299A1 /* OrderBookHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookHeaderView.swift; sourceTree = "<group>"; };
 		EC52B3CA20BB7476006299A1 /* OrderBookHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderBookHeaderView.xib; sourceTree = "<group>"; };
 		EC52B3CC20BBB1CB006299A1 /* OrderBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookCell.swift; sourceTree = "<group>"; };
@@ -241,7 +246,6 @@
 		EC6EE89520B6043C0033C299 /* TradingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingCoordinator.swift; sourceTree = "<group>"; };
 		EC72C0B12059742900141D6F /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		EC72C0B320597CA600141D6F /* StellarAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarAccount.swift; sourceTree = "<group>"; };
-		EC72C0B62059EF7C00141D6F /* PaymentTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTransaction.swift; sourceTree = "<group>"; };
 		ECB1D951207E94770088826D /* BlockEQ-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BlockEQ-Bridging-Header.h"; sourceTree = "<group>"; };
 		ECB1D956207E966D0088826D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		ECB1D957207E966D0088826D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -459,6 +463,8 @@
 				C5AB413A2090433000096A29 /* UIView+ReusableView.swift */,
 				C5AB413C2090436700096A29 /* UIView+NibLoadableView.swift */,
 				EC4BB64820BE4176008252AD /* String+DecimalFormatter.swift */,
+				EC4F65FD20C8CD2C0036293D /* Date+Format.swift */,
+				EC4F65FF20C8CF0C0036293D /* String+Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -542,7 +548,7 @@
 			children = (
 				ECB2F080207BF45E00F53798 /* StellarAsset.swift */,
 				EC72C0B320597CA600141D6F /* StellarAccount.swift */,
-				EC72C0B62059EF7C00141D6F /* PaymentTransaction.swift */,
+				EC48C1D420C82CF0009FDEBC /* StellarEffect.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -815,9 +821,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC4F660020C8CF0C0036293D /* String+Date.swift in Sources */,
 				EC4BB64720BE2C28008252AD /* TradeOperation.swift in Sources */,
 				ECD3A352207D2CE5000609A0 /* WalletItemActivateCell.swift in Sources */,
-				EC72C0B72059EF7C00141D6F /* PaymentTransaction.swift in Sources */,
 				EC2015F720532F4B009A73C8 /* AppButton.swift in Sources */,
 				C5AB413D2090436700096A29 /* UIView+NibLoadableView.swift in Sources */,
 				EC20160120536C68009A73C8 /* PillView.swift in Sources */,
@@ -829,6 +835,7 @@
 				EC581C7220766BA8003A397E /* WalletSwitchingViewController.swift in Sources */,
 				EC2015E92052EAC7009A73C8 /* WalletTitleViewController.swift in Sources */,
 				EC6EE88F20B6004B0033C299 /* OrderBookViewController.swift in Sources */,
+				EC48C1D520C82CF0009FDEBC /* StellarEffect.swift in Sources */,
 				C5AB413B2090433000096A29 /* UIView+ReusableView.swift in Sources */,
 				C5E8595020AFF09800B77289 /* OnboardingCoordinator.swift in Sources */,
 				C5E8594920AFB45E00B77289 /* ContainerViewController.swift in Sources */,
@@ -848,6 +855,7 @@
 				EC52B3D220BC951F006299A1 /* OffersCell.swift in Sources */,
 				EC64CF4F20BF05F5007FE199 /* OrderBookEmptyCell.swift in Sources */,
 				EC2015E52052E8AA009A73C8 /* Constants.swift in Sources */,
+				EC4F65FE20C8CD2C0036293D /* Date+Format.swift in Sources */,
 				C5E8594620AFAFD100B77289 /* AppTabController.swift in Sources */,
 				EC2015ED2052FD1A009A73C8 /* PinViewController.swift in Sources */,
 				EC0B192220549B240052802C /* ReceiveViewController.swift in Sources */,

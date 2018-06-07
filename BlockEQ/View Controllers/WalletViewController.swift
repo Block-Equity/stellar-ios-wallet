@@ -33,7 +33,7 @@ class WalletViewController: UIViewController {
     var navigationContainer: AppNavigationController?
     
     var accounts: [StellarAccount] = []
-    var paymentTransactions: [PaymentTransaction] = []
+    var effects: [StellarEffect] = []
     var isLoadingTransactionsOnViewLoad = true
     var isShowingSeed = true
     var timer: DispatchSourceTimer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main)
@@ -152,7 +152,7 @@ extension WalletViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return paymentTransactions.count
+            return effects.count
         default:
             return 0
         }
@@ -184,11 +184,13 @@ extension WalletViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TransactionHistoryCell.cellIdentifier, for: indexPath) as! TransactionHistoryCell
+        let effect = effects[indexPath.row]
         
-        let paymentTransaction = paymentTransactions[indexPath.row]
-        cell.amountLabel.text = paymentTransaction.formattedAmount
-        cell.dateLabel.text = paymentTransaction.formattedDate
-        cell.setTitle(isAccountCreated: paymentTransaction.isAccountCreated, isPaymentReceived: paymentTransaction.isReceived)
+        let stellarAsset = self.accounts[pageControl.currentPage].assets[currentAssetIndex]
+        cell.amountLabel.text = effect.formattedTransactionAmount(asset: stellarAsset)
+        cell.dateLabel.text = effect.formattedDate
+        cell.activityLabel.text = effect.formattedDescription(asset: stellarAsset)
+        cell.transactionDisplayView.backgroundColor = effect.color(asset: stellarAsset)
         
         return cell
     }
@@ -198,7 +200,7 @@ extension WalletViewController: UITableViewDataSource {
         
         isLoadingTransactionsOnViewLoad = true
         activityIndicator.startAnimating()
-        paymentTransactions.removeAll()
+        effects.removeAll()
         collectionView.reloadData()
         tableView.reloadData()
         
@@ -262,21 +264,19 @@ extension WalletViewController {
                 let stellarAccount = StellarAccount()
                 stellarAccount.accountId = accountId
                 
-                let stellarAsset = StellarAsset()
-                stellarAsset.balance = "0.00"
-                stellarAsset.assetType = AssetTypeAsString.NATIVE
-                
+                let stellarAsset = StellarAsset(assetType: AssetTypeAsString.NATIVE, assetCode: nil, assetIssuer: nil, balance: "0.00")
+
                 stellarAccount.assets.removeAll()
                 stellarAccount.assets.append(stellarAsset)
                 
                 self.accounts.append(stellarAccount)
             }
 
-            self.getPaymentTransactions()
+            self.getEffects()
         }
     }
     
-    func getPaymentTransactions() {
+    func getEffects() {
         guard let accountId = KeychainHelper.getAccountId() else {
             return
         }
@@ -294,9 +294,9 @@ extension WalletViewController {
         let stellarAsset = self.accounts[pageControl.currentPage].assets[currentAssetIndex]
         
         PaymentTransactionOperation.getTransactions(accountId: accountId, stellarAsset: stellarAsset) { transactions in
-            self.paymentTransactions = transactions
+            self.effects = transactions
             
-            if self.paymentTransactions.count > 0 {
+            if self.effects.count > 0 {
                 self.isLoadingTransactionsOnViewLoad = false
                 self.stopTimer()
             }

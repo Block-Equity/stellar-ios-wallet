@@ -40,16 +40,9 @@ class MyOffersViewController: UIViewController {
         
         let offer = offers[indexPath.row]
         
-        let sellingAsset = StellarAsset()
-        sellingAsset.assetCode = offer.selling.assetCode
-        sellingAsset.assetType = offer.selling.assetType
-        sellingAsset.assetIssuer = offer.selling.assetIssuer
+        let sellingAsset = StellarAsset(assetType: offer.selling.assetType, assetCode: offer.selling.assetCode, assetIssuer: offer.selling.assetIssuer, balance: "")
         
-        let buyingAsset = StellarAsset()
-        buyingAsset.assetCode = offer.buying.assetCode
-        buyingAsset.assetType = offer.buying.assetType
-        buyingAsset.assetIssuer = offer.buying.assetIssuer
-        
+        let buyingAsset = StellarAsset(assetType: offer.buying.assetType, assetCode: offer.buying.assetCode, assetIssuer: offer.buying.assetIssuer, balance: "")
         
         TradeOperation.postTrade(amount: 0.0000000, numerator: offer.priceR.numerator, denominator: offer.priceR.denominator, sellingAsset: sellingAsset, buyingAsset: buyingAsset, offerId: offer.id) { completed in
             
