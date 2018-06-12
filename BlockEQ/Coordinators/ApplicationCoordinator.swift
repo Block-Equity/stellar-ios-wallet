@@ -92,11 +92,6 @@ extension ApplicationCoordinator: AppTabControllerDelegate {
         switch appTab {
             case .assets: vc = walletViewController
             case .trading: vc = tradingCoordinator.segmentController
-            case .receive:
-                // TODO: Accounts shouldn't live just on the wallet VC, need to refactor this eventually
-                let address = walletViewController.accounts[0].accountId
-                receiveViewController.address = address
-                vc = receiveViewController
             case .settings: vc = settingsViewController
         }
 
@@ -226,6 +221,7 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
 
         sendViewController = sendVC
         wrappingNavController = container
+        wrappingNavController?.navigationBar.prefersLargeTitles = true
 
         tabController.present(container, animated: true, completion: nil)
     }
@@ -240,6 +236,18 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
 
         walletSwitchVC.updateMenu(stellarAccount: account)
 
+        tabController.present(container, animated: true, completion: nil)
+    }
+    
+    func selectedReceive() {
+        let address = walletViewController.accounts[0].accountId
+        let receiveVC = ReceiveViewController(address: address)
+        let container = AppNavigationController(rootViewController: receiveVC)
+        
+        receiveViewController = receiveVC
+        wrappingNavController = container
+        wrappingNavController?.navigationBar.prefersLargeTitles = true
+        
         tabController.present(container, animated: true, completion: nil)
     }
 }

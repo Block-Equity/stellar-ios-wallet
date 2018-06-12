@@ -12,6 +12,7 @@ import UIKit
 protocol WalletViewControllerDelegate: AnyObject {
     func selectedWalletSwitch(_ vc: WalletViewController, account: StellarAccount)
     func selectedSend(_ vc: WalletViewController, account: StellarAccount, index: Int)
+    func selectedReceive()
 }
 
 class WalletViewController: UIViewController {
@@ -41,14 +42,6 @@ class WalletViewController: UIViewController {
     var currentAssetIndex = 0
     var paymentStream: Any!
     
-    @IBAction func receiveFunds() {
-        let currentStellarAccount = accounts[0]
-        let receiveViewController = ReceiveViewController(address: currentStellarAccount.accountId)
-        let navigationController = AppNavigationController(rootViewController: receiveViewController)
-
-        present(navigationController, animated: true, completion: nil)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -74,12 +67,13 @@ class WalletViewController: UIViewController {
         let tableViewNib = UINib(nibName: TransactionHistoryCell.cellIdentifier, bundle: nil)
         tableView.register(tableViewNib, forCellReuseIdentifier: TransactionHistoryCell.cellIdentifier)
         
+        /*
         logoImageView.tintColor = Colors.primaryDark
-        navigationItem.titleView = logoImageView
+        navigationItem.titleView = logoImageView*/
         
-        navigationItem.title = "Balance"
+        navigationItem.title = "Wallet"
 
-        let leftBarButtonItem = UIBarButtonItem(title: "Assets", style: .plain, target: self, action: #selector(self.displayWalletSwitcher))
+        let leftBarButtonItem = UIBarButtonItem(title: "Receive", style: .plain, target: self, action: #selector(self.receiveFunds))
         navigationItem.leftBarButtonItem = leftBarButtonItem
 
         let rightBarButtonItem = UIBarButtonItem(title: "Send", style: .plain, target: self, action: #selector(self.sendFunds))
@@ -115,6 +109,10 @@ class WalletViewController: UIViewController {
     @objc func displayWalletSwitcher() {
         let currentStellarAccount = accounts[0]
         delegate?.selectedWalletSwitch(self, account: currentStellarAccount)
+    }
+    
+    @objc func receiveFunds() {
+        delegate?.selectedReceive()
     }
 }
 
