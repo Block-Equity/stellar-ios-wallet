@@ -30,7 +30,7 @@ class AppNavigationController: UINavigationController {
         navigationBar.tintColor = Colors.primaryDark
         //navigationBar.barTintColor = Colors.white
         navigationBar.titleTextAttributes = [
-            NSAttributedStringKey.foregroundColor : Colors.primaryDark
+            NSAttributedStringKey.foregroundColor : Colors.black
         ]
         
         //navigationBar.setBackgroundImage(gradientLayer.image(), for: .default)

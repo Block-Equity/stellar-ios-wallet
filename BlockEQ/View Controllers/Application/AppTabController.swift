@@ -62,7 +62,8 @@ enum ApplicationTab: Int {
     }
 
     static var all: [ApplicationTab] {
-        return [.assets, .trading, .receive, .settings]
+        // TODO: Trading removed from first release to be added for subsequent release.
+        return [.assets, .receive, .settings]
     }
 
     var tabNumber: Int {

@@ -16,7 +16,7 @@ struct EQSettings {
     /// This initalizer populates options based on the scheme selected. Debug options are only included in debug builds.
     init() {
         #if DEBUG
-        options = [walletSection, securitySection, aboutSection, debugSettings]
+        options = [walletSection, securitySection, aboutSection]
         #else
         options = [walletSection, securitySection, aboutSection]
         #endif
@@ -35,7 +35,7 @@ struct EQSettings {
         ])
 
     let securitySection = SettingNode.section(name: "SETTINGS_SECTION_SECURITY".localized(), identifier: "section-security", items: [
-        SettingNode.node(name: "SETTINGS_OPTION_PASSCODE".localized(), identifier: "security-pin-enabled", enabled: true, type: .toggle), pinSection
+            pinSection
         ])
 
     let aboutSection = SettingNode.section(

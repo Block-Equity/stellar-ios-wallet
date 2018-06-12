@@ -63,7 +63,6 @@ class MnemonicViewController: UIViewController {
 
         holderView.backgroundColor = Colors.lightBackground
         titleLabel.textColor = Colors.darkGray
-        view.backgroundColor = Colors.primaryDark
     }
     
     @objc func dismissView() {

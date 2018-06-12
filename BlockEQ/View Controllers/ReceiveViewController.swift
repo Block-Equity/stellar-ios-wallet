@@ -58,7 +58,7 @@ class ReceiveViewController: UIViewController {
     }
 
     func setupView() {
-        navigationItem.title = "Receive Funds"
+        navigationItem.title = "Receive"
         
         imageViewHolder.layer.shadowColor = Colors.shadowGray.cgColor
         imageViewHolder.layer.shadowOpacity = Float(Alphas.transparent)

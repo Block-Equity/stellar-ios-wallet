@@ -17,10 +17,11 @@ protocol WalletViewControllerDelegate: AnyObject {
 class WalletViewController: UIViewController {
     
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet var balanceLabel: UILabel!
+    @IBOutlet var coinLabel: UILabel!
     @IBOutlet var emptyViewTitleLabel: UILabel!
+    @IBOutlet var headerBackgroundView: UIView!
     @IBOutlet var emptyView: UIView!
-    @IBOutlet var pageControl: UIPageControl!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var tableViewHeader: UIView!
     @IBOutlet var tableViewHeaderLeftLabel: UILabel!
@@ -41,7 +42,7 @@ class WalletViewController: UIViewController {
     var paymentStream: Any!
     
     @IBAction func receiveFunds() {
-        let currentStellarAccount = accounts[pageControl.currentPage]
+        let currentStellarAccount = accounts[0]
         let receiveViewController = ReceiveViewController(address: currentStellarAccount.accountId)
         let navigationController = AppNavigationController(rootViewController: receiveViewController)
 
@@ -70,14 +71,13 @@ class WalletViewController: UIViewController {
     }
     
     func setupView() {
-        let collectionViewNib = UINib(nibName: WalletCell.cellIdentifier, bundle: nil)
-        collectionView.register(collectionViewNib, forCellWithReuseIdentifier: WalletCell.cellIdentifier)
-        
         let tableViewNib = UINib(nibName: TransactionHistoryCell.cellIdentifier, bundle: nil)
         tableView.register(tableViewNib, forCellReuseIdentifier: TransactionHistoryCell.cellIdentifier)
         
         logoImageView.tintColor = Colors.primaryDark
         navigationItem.titleView = logoImageView
+        
+        navigationItem.title = "Balance"
 
         let leftBarButtonItem = UIBarButtonItem(title: "Assets", style: .plain, target: self, action: #selector(self.displayWalletSwitcher))
         navigationItem.leftBarButtonItem = leftBarButtonItem
@@ -85,11 +85,12 @@ class WalletViewController: UIViewController {
         let rightBarButtonItem = UIBarButtonItem(title: "Send", style: .plain, target: self, action: #selector(self.sendFunds))
         navigationItem.rightBarButtonItem = rightBarButtonItem
         
+        headerBackgroundView.backgroundColor = Colors.primaryDark
+        coinLabel.textColor = Colors.white
+        balanceLabel.textColor = Colors.white
         emptyViewTitleLabel.textColor = Colors.darkGray
         tableViewHeaderLeftLabel.textColor = Colors.darkGrayTransparent
         tableViewHeaderRightLabel.textColor = Colors.darkGrayTransparent
-        pageControl.currentPageIndicatorTintColor = Colors.primaryDark
-        pageControl.pageIndicatorTintColor = Colors.primaryDarkTransparent
         tableView.backgroundColor = Colors.lightBackground
     }
     
@@ -107,12 +108,12 @@ class WalletViewController: UIViewController {
     }
 
     @IBAction func sendFunds() {
-        let currentStellarAccount = accounts[pageControl.currentPage]
+        let currentStellarAccount = accounts[0]
         delegate?.selectedSend(self, account: currentStellarAccount, index: currentAssetIndex)
     }
 
     @objc func displayWalletSwitcher() {
-        let currentStellarAccount = accounts[pageControl.currentPage]
+        let currentStellarAccount = accounts[0]
         delegate?.selectedWalletSwitch(self, account: currentStellarAccount)
     }
 }
@@ -135,12 +136,6 @@ extension WalletViewController: UICollectionViewDataSource {
         cell.currencyLabel.text = stellarAccount.assets[currentAssetIndex].shortCode
         
         return cell
-    }
-}
-
-extension WalletViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.size.width, height: collectionView.frame.size.height)
     }
 }
 
@@ -186,7 +181,7 @@ extension WalletViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: TransactionHistoryCell.cellIdentifier, for: indexPath) as! TransactionHistoryCell
         let effect = effects[indexPath.row]
         
-        let stellarAsset = self.accounts[pageControl.currentPage].assets[currentAssetIndex]
+        let stellarAsset = self.accounts[0].assets[currentAssetIndex]
         cell.amountLabel.text = effect.formattedTransactionAmount(asset: stellarAsset)
         cell.dateLabel.text = effect.formattedDate
         cell.activityLabel.text = effect.formattedDescription(asset: stellarAsset)
@@ -198,10 +193,11 @@ extension WalletViewController: UITableViewDataSource {
     func selectAsset(at index: Int) {
         currentAssetIndex = index
         
+        balanceLabel.text = ""
+        coinLabel.text = ""
         isLoadingTransactionsOnViewLoad = true
         activityIndicator.startAnimating()
         effects.removeAll()
-        collectionView.reloadData()
         tableView.reloadData()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -216,13 +212,6 @@ extension WalletViewController: UITableViewDelegate {
     }
 }
 
-extension WalletViewController: UIScrollViewDelegate {
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if scrollView == collectionView {
-            pageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
-        }
-    }
-}
 
 extension WalletViewController: PinViewControllerDelegate {
     func pinEntryCancelled(_ vc: PinViewController) {
@@ -264,14 +253,16 @@ extension WalletViewController {
                 let stellarAccount = StellarAccount()
                 stellarAccount.accountId = accountId
                 
-                let stellarAsset = StellarAsset(assetType: AssetTypeAsString.NATIVE, assetCode: nil, assetIssuer: nil, balance: "0.00")
+                let stellarAsset = StellarAsset(assetType: AssetTypeAsString.NATIVE, assetCode: nil, assetIssuer: nil, balance: "0.0000")
 
                 stellarAccount.assets.removeAll()
                 stellarAccount.assets.append(stellarAsset)
                 
                 self.accounts.append(stellarAccount)
             }
-
+            let asset = self.accounts[0].assets[self.currentAssetIndex]
+            self.coinLabel.text = "\(Assets.displayTitle(shortCode: asset.shortCode)) (\(asset.shortCode))"
+            self.balanceLabel.text = asset.balance.decimalFormatted()
             self.getEffects()
         }
     }
@@ -285,13 +276,13 @@ extension WalletViewController {
             return
         }
 
-        let account = self.accounts[pageControl.currentPage]
+        let account = self.accounts[0]
 
         guard account.assets.count > 0 else {
             return
         }
 
-        let stellarAsset = self.accounts[pageControl.currentPage].assets[currentAssetIndex]
+        let stellarAsset = self.accounts[0].assets[currentAssetIndex]
         
         PaymentTransactionOperation.getTransactions(accountId: accountId, stellarAsset: stellarAsset) { transactions in
             self.effects = transactions
@@ -301,7 +292,6 @@ extension WalletViewController {
                 self.stopTimer()
             }
             self.activityIndicator.stopAnimating()
-            self.collectionView.reloadData()
             self.tableView.reloadData()
         }
     }

@@ -94,12 +94,7 @@ extension ApplicationCoordinator: AppTabControllerDelegate {
             case .trading: vc = tradingCoordinator.segmentController
             case .receive:
                 // TODO: Accounts shouldn't live just on the wallet VC, need to refactor this eventually
-                var address = "default address"
-                if walletViewController.pageControl != nil {
-                    let index = walletViewController.pageControl.currentPage
-                    address = walletViewController.accounts[index].accountId
-                }
-
+                let address = walletViewController.accounts[0].accountId
                 receiveViewController.address = address
                 vc = receiveViewController
             case .settings: vc = settingsViewController
@@ -107,6 +102,7 @@ extension ApplicationCoordinator: AppTabControllerDelegate {
 
         let navWrapper = AppNavigationController(rootViewController: vc)
         wrappingNavController = navWrapper
+        navWrapper.navigationBar.prefersLargeTitles = true
         
         setNavControllerHeader(type: appTab)
 
