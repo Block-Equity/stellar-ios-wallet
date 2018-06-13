@@ -77,20 +77,20 @@
                                 <constraint firstAttribute="height" constant="1" id="cc8-De-77C"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Memo Id:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZfT-0X-iyJ">
-                            <rect key="frame" x="16" y="0.0" width="65" height="54"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Memo:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZfT-0X-iyJ">
+                            <rect key="frame" x="16" y="0.0" width="60" height="54"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="65" id="9El-q9-gU9"/>
+                                <constraint firstAttribute="width" constant="60" id="9El-q9-gU9"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="(Optional)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lp2-X7-WxY">
-                            <rect key="frame" x="81" y="1" width="278" height="53"/>
+                            <rect key="frame" x="76" y="1" width="283" height="53"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" returnKeyType="done"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="ZMQ-lH-aRE"/>
                             </connections>

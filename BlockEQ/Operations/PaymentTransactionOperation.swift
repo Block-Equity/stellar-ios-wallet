@@ -44,6 +44,7 @@ class PaymentTransactionOperation: NSObject {
     }
     
     static func postPayment(accountId: String, amount: Decimal, memoId: String, stellarAsset: StellarAsset, completion: @escaping (Bool) -> Void) {
+        print("Test")
         guard let privateKeyData = KeychainHelper.getPrivateKey(), let publicKeyData = KeychainHelper.getPublicKey() else {
             DispatchQueue.main.async {
                 completion(false)
@@ -74,6 +75,8 @@ class PaymentTransactionOperation: NSObject {
             if !memoId.isEmpty {
                 if let memoNumber = UInt64(memoId) {
                     memo = Memo.id(memoNumber)
+                } else {
+                    memo = Memo.text(memoId)
                 }
             }
             

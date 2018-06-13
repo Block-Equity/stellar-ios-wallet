@@ -1086,7 +1086,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "BlockEQ/BlockEQ-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1109,7 +1109,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "BlockEQ Appstore";
 				SWIFT_OBJC_BRIDGING_HEADER = "BlockEQ/BlockEQ-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
