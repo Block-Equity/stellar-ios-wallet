@@ -154,19 +154,15 @@ class SendAmountViewController: UIViewController {
     }
     
     func displayPin() {
-        /*
-        let pinViewController = PinViewController(mode: .dark, pin: KeychainHelper.getPin(), confirming: false, isCloseDisplayed: true, shouldSavePin: false)
-        let navigationController = AppNavigationController(rootViewController: pinViewController)
+        let pinViewController = PinViewController(mode: .dark,
+                                                  pin: nil,
+                                                  confirming: true,
+                                                  isCloseDisplayed: true,
+                                                  shouldSavePin: false)
+        
         pinViewController.delegate = self
         
-        present(navigationController, animated: true, completion: nil)*/
-        
-        // TODO remove after testing
-        guard let amount = amountLabel.text, !amount.isEmpty, amount != "0" else {
-            return
-        }
-        
-        checkForValidAccount(account: receiver, amount: Decimal(string: amount)!)
+        present(pinViewController, animated: true, completion: nil)
     }
     
     func displayTransactionError() {
@@ -210,6 +206,8 @@ extension SendAmountViewController: PinViewControllerDelegate {
     }
 
     func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool) {
+        vc.dismiss(animated: true, completion: nil)
+        
         guard let amount = amountLabel.text, !amount.isEmpty, amount != "0" else {
             return
         }

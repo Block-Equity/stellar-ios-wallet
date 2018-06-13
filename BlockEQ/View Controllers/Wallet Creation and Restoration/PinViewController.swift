@@ -66,6 +66,11 @@ class PinViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if isCloseDisplayed {
+            UIApplication.shared.statusBarStyle = .lightContent
+        }
+        
         impactGenerator.prepare()
 
         var pinDotColor: UIColor
@@ -105,6 +110,13 @@ class PinViewController: UIViewController {
             pinView.reset()
         }
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        UIApplication.shared.statusBarStyle = .default
+    }
+    
 
     func setupView() {
         if self.mode == .dark {
@@ -121,16 +133,16 @@ class PinViewController: UIViewController {
             titleLabel.text = "PIN_ENTER_TITLE".localized()
             title = "Confirm Pin"
             navigationItem.title = "Confirm Pin"
-            navigationItem.setHidesBackButton(false, animated: false)
+            //navigationItem.setHidesBackButton(false, animated: false)
         } else {
             titleLabel.text = "PIN_CREATE_TITLE".localized()
             title = "Create Pin"
             navigationItem.title = "Create Pin"
-            navigationItem.setHidesBackButton(true, animated: false)
+            //navigationItem.setHidesBackButton(true, animated: false)
         }
 
         logoImageView.image = UIImage(named: "logoWhite")
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
         
         if isCloseDisplayed {
             let image = UIImage(named:"close")

@@ -14,11 +14,12 @@ struct EQSettings {
     let options: [SettingNode]
 
     /// This initalizer populates options based on the scheme selected. Debug options are only included in debug builds.
+    //TODO: add the community section back in here
     init() {
         #if DEBUG
-        options = [walletSection, securitySection, aboutSection]
+        options = [walletSection, securitySection]
         #else
-        options = [walletSection, securitySection, aboutSection]
+        options = [walletSection, securitySection]
         #endif
     }
 

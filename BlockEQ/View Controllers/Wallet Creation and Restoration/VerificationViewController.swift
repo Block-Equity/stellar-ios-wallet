@@ -106,7 +106,7 @@ class VerificationViewController: UIViewController {
             
             setQuestion(animated: false)
         default:
-            navigationItem.title = "Enter Recovery Phrase"
+            navigationItem.title = "Enter Phrase"
             
             questionViewHeightConstraint.constant = 0.0
             textViewHeightConstraint.constant = defaultTextViewHeight

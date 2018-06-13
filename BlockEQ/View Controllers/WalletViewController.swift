@@ -55,6 +55,7 @@ class WalletViewController: UIViewController {
         
         navigationItem.setHidesBackButton(true, animated: false)
         navigationController?.setNavigationBarHidden(false, animated: true)
+        UIApplication.shared.statusBarStyle = .default
         
         getAccountDetails()
     }

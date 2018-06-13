@@ -58,8 +58,6 @@ class MnemonicViewController: UIViewController {
     func setupView() {
         navigationItem.title = "Secret Phrase"
         title = "Secret Phrase"
-        
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         holderView.backgroundColor = Colors.lightBackground
         titleLabel.textColor = Colors.darkGray

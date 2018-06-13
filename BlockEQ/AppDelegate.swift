@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         onboardingCoordinator.delegate = self
         appCoordinator.delegate = self
 
-        if KeychainHelper.getMnemonic() == nil {
+        if !KeychainHelper.isExistingInstance() {
             container.moveToViewController(onboardingCoordinator.navController,
                                            fromViewController: nil,
                                            animated: false,

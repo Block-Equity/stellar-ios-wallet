@@ -50,8 +50,8 @@ class ScanViewController: UIViewController {
         navigationItem.title = "Scanning..."
         
         let image = UIImage(named:"close")
-        let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
-        navigationItem.leftBarButtonItem = leftBarButtonItem
+        let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
+        navigationItem.rightBarButtonItem = rightBarButtonItem
     }
     
     @objc func dismissView() {
