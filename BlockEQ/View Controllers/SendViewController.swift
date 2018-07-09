@@ -11,9 +11,8 @@ import UIKit
 class SendViewController: UIViewController {
     
     @IBOutlet var addressHolderView: UIView!
-    @IBOutlet var balanceLabel: UILabel!
-    @IBOutlet var bottomLayoutConstraint: NSLayoutConstraint!
     @IBOutlet var holdingView: UIView!
+    @IBOutlet var tableView: UITableView!
     @IBOutlet var sendTitleLabel: UILabel!
     @IBOutlet var sendAddressTextField: UITextField!
     
@@ -68,20 +67,20 @@ class SendViewController: UIViewController {
     }
 
     func setupView() {
-        navigationItem.title = "My Wallet"
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
         
         let image = UIImage(named:"close")
         let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
         
-        balanceLabel.textColor = Colors.black
         sendTitleLabel.textColor = Colors.darkGrayTransparent
         sendAddressTextField.textColor = Colors.darkGray
         addressHolderView.backgroundColor = Colors.lightBackground
         holdingView.backgroundColor = Colors.lightBackground
+        view.backgroundColor = Colors.lightBackground
+        tableView.backgroundColor = Colors.lightBackground
         
-        balanceLabel.text = "\(stellarAccount.assets[currentAssetIndex].formattedBalance) \(stellarAccount.assets[currentAssetIndex].shortCode)"
+        navigationItem.title = "\(stellarAccount.assets[currentAssetIndex].formattedBalance) \(stellarAccount.assets[currentAssetIndex].shortCode)"
     }
     
     func setViewStateToNotEditing() {

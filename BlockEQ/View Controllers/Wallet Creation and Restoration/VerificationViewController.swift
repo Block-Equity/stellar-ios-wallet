@@ -106,15 +106,11 @@ class VerificationViewController: UIViewController {
             
             setQuestion(animated: false)
         default:
-            navigationItem.title = "Enter Recovery Phrase"
+            navigationItem.title = "Enter Phrase"
             
             questionViewHeightConstraint.constant = 0.0
             textViewHeightConstraint.constant = defaultTextViewHeight
         }
-        
-        let image = UIImage(named:"close")
-        let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
-        navigationItem.leftBarButtonItem = leftBarButtonItem
 
         textView.textContainerInset = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0);
         textView.inputAccessoryView = quicktypeView

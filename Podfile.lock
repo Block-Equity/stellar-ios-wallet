@@ -17,7 +17,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   stellar-ios-mac-sdk:
-    :commit: e8efe6350c7778767c67d7d0fb097264fbd50fee
+    :commit: 439a6fe2c76c498053e8ade1b1c9cbdc1cbee538
     :git: https://github.com/Soneso/stellar-ios-mac-sdk
 
 SPEC CHECKSUMS:

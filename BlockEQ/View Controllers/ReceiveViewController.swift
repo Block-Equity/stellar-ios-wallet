@@ -13,9 +13,11 @@ class ReceiveViewController: UIViewController {
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var addressLabel: UILabel!
     @IBOutlet var addressTitleLabel: UILabel!
+    @IBOutlet var tableView: UITableView!
     @IBOutlet var addressHolderView: UIView!
     @IBOutlet var imageViewHolder: UIView!
     @IBOutlet var imageView: UIImageView!
+    @IBOutlet var qrHolderView: UIView!
 
     override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
     
@@ -58,7 +60,11 @@ class ReceiveViewController: UIViewController {
     }
 
     func setupView() {
-        navigationItem.title = "Receive Funds"
+        navigationItem.title = "Receive"
+        
+        let image = UIImage(named:"close")
+        let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
+        navigationItem.rightBarButtonItem = rightBarButtonItem
         
         imageViewHolder.layer.shadowColor = Colors.shadowGray.cgColor
         imageViewHolder.layer.shadowOpacity = Float(Alphas.transparent)
@@ -69,6 +75,8 @@ class ReceiveViewController: UIViewController {
         addressTitleLabel.textColor = Colors.darkGrayTransparent
         addressHolderView.backgroundColor = Colors.lightBackground
         view.backgroundColor = Colors.lightBackground
+        tableView.backgroundColor = Colors.lightBackground
+        qrHolderView.backgroundColor = Colors.primaryDark
         
         addressLabel.text = address
     }

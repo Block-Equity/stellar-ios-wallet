@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -54,15 +54,20 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PsE-ef-7Q4" customClass="AppButton" customModule="BlockEQ" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="513" width="320" height="55"/>
+                            <rect key="frame" x="16" y="500" width="288" height="48"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="55" id="Ca0-sc-TJA"/>
+                                <constraint firstAttribute="height" constant="48" id="Ca0-sc-TJA"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                             <state key="normal" title="I have written it down">
                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <integer key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="confirmedWrittenDown:" destination="-1" eventType="touchUpInside" id="hc3-e0-KsO"/>
                             </connections>
@@ -70,16 +75,16 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="PsE-ef-7Q4" secondAttribute="trailing" id="0Vl-oW-S2s"/>
+                        <constraint firstAttribute="trailing" secondItem="PsE-ef-7Q4" secondAttribute="trailing" constant="16" id="0Vl-oW-S2s"/>
                         <constraint firstAttribute="bottom" secondItem="C6e-qd-eOl" secondAttribute="bottom" constant="15" id="3Jo-Oy-xU5"/>
                         <constraint firstItem="C6e-qd-eOl" firstAttribute="top" secondItem="osg-Wz-f6c" secondAttribute="bottom" constant="15" id="44L-ps-jkF"/>
                         <constraint firstAttribute="trailing" secondItem="C6e-qd-eOl" secondAttribute="trailing" constant="16" id="FGz-43-ceE"/>
                         <constraint firstItem="C6e-qd-eOl" firstAttribute="leading" secondItem="3Jg-1T-pTn" secondAttribute="leading" constant="16" id="Ofa-fU-Eby"/>
                         <constraint firstItem="osg-Wz-f6c" firstAttribute="top" secondItem="3Jg-1T-pTn" secondAttribute="top" constant="30" id="StX-UF-ueb"/>
-                        <constraint firstAttribute="bottom" secondItem="PsE-ef-7Q4" secondAttribute="bottom" id="WMA-Oj-2kc"/>
+                        <constraint firstAttribute="bottom" secondItem="PsE-ef-7Q4" secondAttribute="bottom" constant="20" id="WMA-Oj-2kc"/>
                         <constraint firstItem="osg-Wz-f6c" firstAttribute="leading" secondItem="3Jg-1T-pTn" secondAttribute="leading" constant="16" id="hp3-zb-58Z"/>
                         <constraint firstAttribute="trailing" secondItem="osg-Wz-f6c" secondAttribute="trailing" constant="16" id="imB-Jr-5Se"/>
-                        <constraint firstItem="PsE-ef-7Q4" firstAttribute="leading" secondItem="3Jg-1T-pTn" secondAttribute="leading" id="uPE-hX-M5H"/>
+                        <constraint firstItem="PsE-ef-7Q4" firstAttribute="leading" secondItem="3Jg-1T-pTn" secondAttribute="leading" constant="16" id="uPE-hX-M5H"/>
                     </constraints>
                 </view>
             </subviews>
