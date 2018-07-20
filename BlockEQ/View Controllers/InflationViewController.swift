@@ -9,9 +9,10 @@
 import UIKit
 
 class InflationViewController: UIViewController {
+    
     @IBOutlet var addressHolderView: UIView!
-    @IBOutlet var bottomLayoutConstraint: NSLayoutConstraint!
     @IBOutlet var holdingView: UIView!
+    @IBOutlet var tableView: UITableView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subtitleLabel: UILabel!
     @IBOutlet var destinationAddressTextField: UITextField!
@@ -55,77 +56,19 @@ class InflationViewController: UIViewController {
         setupView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        addKeyboardNotifications()
-        
-        setViewStateToNotEditing()
-    }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        removeKeyboardNotifications()
-    }
-    
     func setupView() {
-        navigationItem.title = "Set Inflation"
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.title = "Inflation".localized()
 
+        tableView.backgroundColor = Colors.lightBackground
         titleLabel.textColor = Colors.darkGrayTransparent
         subtitleLabel.textColor = Colors.darkGray
         destinationAddressTextField.textColor = Colors.darkGray
         addressHolderView.backgroundColor = Colors.lightBackground
         holdingView.backgroundColor = Colors.lightBackground
-        view.backgroundColor = Colors.primaryDark
         
         destinationAddressTextField.text = lumenautInflationDestination
     }
-    
-    func setViewStateToNotEditing() {
-        view.endEditing(true)
-        
-        bottomLayoutConstraint.constant = 0.0
-    }
-    
-    func addKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillChange), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
-    }
-    
-    @objc private func keyboardWillChange(_ notification: Notification) {
-        guard let userInfo = (notification as Notification).userInfo, let value = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
-        let newHeight: CGFloat
-        if #available(iOS 11.0, *) {
-            newHeight = value.cgRectValue.height - view.safeAreaInsets.bottom
-        } else {
-            newHeight = value.cgRectValue.height
-        }
-        
-        bottomLayoutConstraint.constant = newHeight
-        
-        if let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double {
-            UIView.animate(withDuration: duration, animations: {
-                self.view.layoutIfNeeded()
-            })
-        }
-    }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-        bottomLayoutConstraint.constant = 0.0
-        
-        if let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double {
-            UIView.animate(withDuration: duration, animations: {
-                self.view.layoutIfNeeded()
-            })
-        }
-    }
-    
-    func removeKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-    }
-    
+
     func showHud() {
         let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
         hud.label.text = "Setting Inflation Destination..."
@@ -136,10 +79,10 @@ class InflationViewController: UIViewController {
         MBProgressHUD.hide(for: UIApplication.shared.keyWindow!, animated: true)
     }
     
-    @objc func dismissView() {
+    func dismissView() {
         view.endEditing(true)
         
-        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
 }
 

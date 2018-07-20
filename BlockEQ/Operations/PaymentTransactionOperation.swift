@@ -135,7 +135,7 @@ class PaymentTransactionOperation: NSObject {
         }
     }
     
-    static func changeTrust(issuerAccountId: String, assetCode: String, completion: @escaping (Bool) -> Void) {
+    static func changeTrust(issuerAccountId: String, assetCode: String, limit: Decimal, completion: @escaping (Bool) -> Void) {
         guard let privateKeyData = KeychainHelper.getPrivateKey(), let publicKeyData = KeychainHelper.getPublicKey() else {
             DispatchQueue.main.async {
                 completion(false)
@@ -172,7 +172,7 @@ class PaymentTransactionOperation: NSObject {
             switch response {
             case .success(let accountResponse):
                 do {
-                    let changeTrustOperation = ChangeTrustOperation(sourceAccount: sourceKeyPair, asset: asset, limit: 10000000000)
+                    let changeTrustOperation = ChangeTrustOperation(sourceAccount: sourceKeyPair, asset: asset, limit: limit)
                     
                     let transaction = try Transaction(sourceAccount: accountResponse,
                                                       operations: [changeTrustOperation],

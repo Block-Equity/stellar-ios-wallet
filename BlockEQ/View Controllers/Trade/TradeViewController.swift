@@ -50,7 +50,7 @@ class TradeViewController: UIViewController {
     @IBOutlet var arrowImageView: UIImageView!
     @IBOutlet var balanceLabel: UILabel!
     @IBOutlet var buttonHolderView: UIView!
-    @IBOutlet var segmentControl: UIView!
+    @IBOutlet var segmentControl: UISegmentedControl!
     @IBOutlet var tableview: UITableView!
     @IBOutlet var tradeFromView: UIView!
     @IBOutlet var tradeToView: UIView!
@@ -175,13 +175,17 @@ class TradeViewController: UIViewController {
         balanceLabel.textColor = Colors.darkGray
         arrowImageView.tintColor = Colors.lightGray
         addAssetButton.backgroundColor = Colors.primaryDark
-        segmentControl.tintColor = Colors.blueGray
+        segmentControl.tintColor = Colors.lightGray
         tableview.backgroundColor = Colors.lightBackground
         tradeFromButton.backgroundColor = Colors.red
         tradeToButton.backgroundColor = Colors.green
         tradeFromTextField.textColor = Colors.darkGray
         tradeToTextField.textColor = Colors.darkGray
         view.backgroundColor = Colors.lightBackground
+        
+        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
+        segmentControl.setTitleTextAttributes(titleTextAttributes, for: .normal)
+        segmentControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
         
         for subview in buttonHolderView.subviews {
             if let button = subview as? UIButton {

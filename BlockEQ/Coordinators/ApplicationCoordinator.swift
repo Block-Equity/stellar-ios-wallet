@@ -18,6 +18,9 @@ final class ApplicationCoordinator {
     /// The controller class that directs which view controller is currently displayed
     let tabController = AppTabController(tab: .assets)
     
+    /// The current visible view controller
+    var currentViewController = UIViewController()
+    
     // The coordinator responsible for the trading flow
     let tradingCoordinator = TradingCoordinator()
     
@@ -55,6 +58,12 @@ final class ApplicationCoordinator {
 
     /// The view controller used to set the user's inflation pool, deallocated once finished using
     var inflationViewController: InflationViewController?
+    
+    /// The view controller used to set to add an asset, deallocated once finished using
+    var addAssetViewController: AddAssetViewController?
+    
+    /// The view controller used to display the minimum balance, deallocated once finished using
+    var balanceViewController: BalanceViewController?
 
     /// Most tabbed view controllers need the top navbar - so we wrap every tab in an inner AppNavigationController
     var wrappingNavController: AppNavigationController?
@@ -94,14 +103,21 @@ extension ApplicationCoordinator: AppTabControllerDelegate {
             case .trading: vc = tradingCoordinator.segmentController
             case .settings: vc = settingsViewController
         }
-
-        let navWrapper = AppNavigationController(rootViewController: vc)
-        wrappingNavController = navWrapper
-        navWrapper.navigationBar.prefersLargeTitles = true
         
-        setNavControllerHeader(type: appTab)
-
-        tabController.setViewController(navWrapper, animated: false, completion: nil)
+        if currentViewController != vc {
+            currentViewController = vc
+            
+            let navWrapper = AppNavigationController(rootViewController: vc)
+            wrappingNavController = navWrapper
+            
+            if appTab != .trading {
+                navWrapper.navigationBar.prefersLargeTitles = true
+            }
+            
+            setNavControllerHeader(type: appTab)
+            
+            tabController.setViewController(navWrapper, animated: false, completion: nil)
+        } 
     }
     
     func setNavControllerHeader(type: ApplicationTab) {
@@ -232,6 +248,7 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
 
         walletSwitchingViewController = walletSwitchVC
         wrappingNavController = container
+        wrappingNavController?.navigationBar.prefersLargeTitles = true
         walletSwitchVC.delegate = self
 
         walletSwitchVC.updateMenu(stellarAccount: account)
@@ -250,6 +267,17 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
         
         tabController.present(container, animated: true, completion: nil)
     }
+    
+    func selectBalance() {
+        let balanceVC = BalanceViewController()
+        let container = AppNavigationController(rootViewController: balanceVC)
+        
+        balanceViewController = balanceVC
+        wrappingNavController = container
+        wrappingNavController?.navigationBar.prefersLargeTitles = true
+        
+        tabController.present(container, animated: true, completion: nil)
+    }
 }
 
 extension ApplicationCoordinator: WalletSwitchingViewControllerDelegate {
@@ -259,6 +287,14 @@ extension ApplicationCoordinator: WalletSwitchingViewControllerDelegate {
 
         wrappingNavController?.pushViewController(inflationViewController, animated: true)
     }
+    
+    func didSelectAddAsset() {
+        let addAssetViewController = AddAssetViewController()
+        addAssetViewController.delegate = self
+        self.addAssetViewController = addAssetViewController
+        
+        wrappingNavController?.pushViewController(addAssetViewController, animated: true)
+    }
 
     func didSelectAsset(index: Int) {
         walletViewController.selectAsset(at: index)
@@ -266,5 +302,13 @@ extension ApplicationCoordinator: WalletSwitchingViewControllerDelegate {
 
     func reloadAssets() {
         walletViewController.getAccountDetails()
+    }
+}
+
+extension ApplicationCoordinator: AddAssetViewControllerDelegate {
+    func didAddAsset(stellarAccount: StellarAccount) {
+        reloadAssets()
+        
+        walletSwitchingViewController?.updateMenu(stellarAccount: stellarAccount)
     }
 }

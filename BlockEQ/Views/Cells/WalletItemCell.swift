@@ -9,19 +9,44 @@
 import UIKit
 
 protocol WalletItemCellDelegate: class {
-    func cellDidDraw()
+    func didRemoveAsset(indexPath: IndexPath)
+    func didChangeInflation()
 }
 
 class WalletItemCell: UITableViewCell {
     
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var amountLabel: UILabel!
+    @IBOutlet var tokenInitialLabel: UILabel!
     @IBOutlet var iconImageView: UIImageView!
+    @IBOutlet var setInflationButton: UIButton!
+    @IBOutlet var updateInflationButton: UIButton!
+    @IBOutlet var removeAssetButton: UIButton!
     
+    var delegate: WalletItemCellDelegate?
+    var indexPath: IndexPath?
     static let cellIdentifier = "WalletItemCell"
+    
+    @IBAction func removeAsset() {
+        if let currentIndexPath = indexPath {
+            delegate?.didRemoveAsset(indexPath: currentIndexPath)
+        }
+    }
+    
+    @IBAction func changeInflation() {
+        delegate?.didChangeInflation()
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        setupView()
+    }
+    
+    func setupView() {
+        removeAssetButton.backgroundColor = Colors.red
+        setInflationButton.backgroundColor = Colors.red
+        updateInflationButton.backgroundColor = Colors.green
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

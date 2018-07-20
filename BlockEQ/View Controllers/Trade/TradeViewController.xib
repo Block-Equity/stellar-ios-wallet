@@ -15,7 +15,7 @@
                 <outlet property="arrowImageView" destination="nhs-c8-I59" id="J63-EX-qi5"/>
                 <outlet property="balanceLabel" destination="aUb-m6-PGb" id="wxf-rE-IT6"/>
                 <outlet property="buttonHolderView" destination="HDD-pI-3Vz" id="kO5-CO-3O9"/>
-                <outlet property="segmentControl" destination="r8u-ja-pQs" id="Idk-3d-apP"/>
+                <outlet property="segmentControl" destination="r8u-ja-pQs" id="SdF-YX-fh9"/>
                 <outlet property="tableview" destination="XET-5A-Yb6" id="epX-Ih-Inw"/>
                 <outlet property="tradeFromButton" destination="Q6Q-Sv-VEU" id="87b-AC-IBq"/>
                 <outlet property="tradeFromInputAccessoryView" destination="vgp-ge-fgE" id="ej9-zj-YOh"/>
@@ -114,7 +114,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W0t-4d-Qbe">
                                         <rect key="frame" x="0.0" y="0.0" width="62" height="28"/>
-                                        <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal" title="10%">
                                             <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -318,7 +318,7 @@
                                     <segment title="Market"/>
                                     <segment title="Limit"/>
                                 </segments>
-                                <color key="tintColor" red="0.56862745098039214" green="0.56862745098039214" blue="0.56862745098039214" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="tradeTypeSwitchedWithSender:" destination="-1" eventType="valueChanged" id="xoT-gL-sIZ"/>
                                 </connections>
