@@ -20,6 +20,9 @@ public class AccountOperation {
                 let stellarAccount = StellarAccount()
                 stellarAccount.accountId = accountDetails.accountId
                 stellarAccount.assets.removeAll()
+                stellarAccount.totalTrustlines = accountDetails.balances.count - 1
+                stellarAccount.totalSigners = accountDetails.signers.count
+                stellarAccount.totalOffers = Int(accountDetails.subentryCount) - stellarAccount.totalTrustlines
                 
                 for accountDetail in accountDetails.balances {
                     let stellarAsset = StellarAsset(assetType: accountDetail.assetType, assetCode: accountDetail.assetCode, assetIssuer: accountDetail.assetIssuer, balance: accountDetail.balance)

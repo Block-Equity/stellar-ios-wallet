@@ -13,12 +13,13 @@ protocol WalletViewControllerDelegate: AnyObject {
     func selectedWalletSwitch(_ vc: WalletViewController, account: StellarAccount)
     func selectedSend(_ vc: WalletViewController, account: StellarAccount, index: Int)
     func selectedReceive()
-    func selectBalance()
+    func selectBalance(account: StellarAccount, index: Int)
 }
 
 class WalletViewController: UIViewController {
     
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet var availableBalanceLabel: UILabel!
     @IBOutlet var balanceLabel: UILabel!
     @IBOutlet var coinLabel: UILabel!
     @IBOutlet var emptyViewTitleLabel: UILabel!
@@ -51,7 +52,8 @@ class WalletViewController: UIViewController {
     }
     
     @IBAction func selectBalance() {
-        delegate?.selectBalance()
+        let currentStellarAccount = accounts[0]
+        delegate?.selectBalance(account: currentStellarAccount, index: currentAssetIndex)
     }
     
     @IBAction func displayWalletSwitcher() {
@@ -291,6 +293,7 @@ extension WalletViewController {
                 self.coinLabel.text = "\(Assets.displayTitle(shortCode: asset.shortCode)) (\(asset.shortCode))"
             }
             
+            self.availableBalanceLabel.text = "Available:  \(self.accounts[0].formattedAvailableBalance) XLM"
             self.balanceLabel.text = asset.balance.decimalFormatted()
             self.getEffects()
         }

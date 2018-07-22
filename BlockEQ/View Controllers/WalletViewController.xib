@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WalletViewController" customModule="BlockEQ" customModuleProvider="target">
             <connections>
                 <outlet property="activityIndicator" destination="XTw-X2-zen" id="AGu-jf-2CW"/>
+                <outlet property="availableBalanceLabel" destination="Khb-1d-lP0" id="3E7-4P-15I"/>
                 <outlet property="availableBalanceView" destination="nbj-eA-uEM" id="zy4-oQ-x1I"/>
                 <outlet property="balanceLabel" destination="kKU-zV-Fep" id="9gB-hr-Gi5"/>
                 <outlet property="coinLabel" destination="nwt-08-vjb" id="ub8-h3-csE"/>
@@ -217,7 +218,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Available:  5.93 XLM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Khb-1d-lP0">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Khb-1d-lP0">
                     <rect key="frame" x="16" y="0.0" width="243" height="50"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

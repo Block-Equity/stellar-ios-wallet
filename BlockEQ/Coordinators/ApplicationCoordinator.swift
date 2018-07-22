@@ -268,8 +268,8 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
         tabController.present(container, animated: true, completion: nil)
     }
     
-    func selectBalance() {
-        let balanceVC = BalanceViewController()
+    func selectBalance(account: StellarAccount, index: Int) {
+        let balanceVC = BalanceViewController(stellarAccount: account, stellarAsset: account.assets[index])
         let container = AppNavigationController(rootViewController: balanceVC)
         
         balanceViewController = balanceVC
