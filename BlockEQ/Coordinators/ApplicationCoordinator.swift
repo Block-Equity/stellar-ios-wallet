@@ -281,8 +281,8 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
 }
 
 extension ApplicationCoordinator: WalletSwitchingViewControllerDelegate {
-    func didSelectSetInflation() {
-        let inflationViewController = InflationViewController()
+    func didSelectSetInflation(inflationDestination: String?) {
+        let inflationViewController = InflationViewController(inflationDestination: inflationDestination)
         self.inflationViewController = inflationViewController
 
         wrappingNavController?.pushViewController(inflationViewController, animated: true)

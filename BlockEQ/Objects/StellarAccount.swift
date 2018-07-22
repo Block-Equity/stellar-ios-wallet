@@ -12,6 +12,7 @@ import UIKit
 class StellarAccount: NSObject {
     var accountId = ""
     var assets: [StellarAsset] = []
+    var inflationDestination: String?
     var totalTrustlines: Int = 0
     var totalOffers: Int = 0
     var totalSigners: Int = 0
@@ -54,7 +55,7 @@ class StellarAccount: NSObject {
     }
     
     var formattedMinBalance: String {
-        return String(format: "%.2f", minBalance)
+        return String(format: "%.4f", minBalance)
     }
     
     var availableBalance: Double {
@@ -66,10 +67,16 @@ class StellarAccount: NSObject {
                 }
             }
         }
-        return totalBalance - minBalance
+        
+        let calculatedBalance = totalBalance - minBalance
+        
+        if calculatedBalance > 0.0 {
+            return calculatedBalance
+        }
+        return totalBalance
     }
     
     var formattedAvailableBalance: String {
-        return String(format: "%.2f", availableBalance)
+        return String(format: "%.4f", availableBalance)
     }
 }

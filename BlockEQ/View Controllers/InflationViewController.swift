@@ -15,8 +15,10 @@ class InflationViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subtitleLabel: UILabel!
+    @IBOutlet var subtitleLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet var destinationAddressTextField: UITextField!
     
+    var inflationDestination: String?
     let lumenautInflationDestination = "GCCD6AJOYZCUAQLX32ZJF2MKFFAUJ53PVCFQI3RHWKL3V47QYE2BNAUT"
     
     @IBAction func addInflationDestination() {
@@ -50,6 +52,16 @@ class InflationViewController: UIViewController {
         present(navigationController, animated: true, completion: nil)
     }
     
+    init(inflationDestination: String?) {
+        super.init(nibName: String(describing: InflationViewController.self), bundle: nil)
+        
+        self.inflationDestination = inflationDestination
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,7 +78,14 @@ class InflationViewController: UIViewController {
         addressHolderView.backgroundColor = Colors.lightBackground
         holdingView.backgroundColor = Colors.lightBackground
         
-        destinationAddressTextField.text = lumenautInflationDestination
+        if let currentInflationDestination = inflationDestination {
+            destinationAddressTextField.text = currentInflationDestination
+            subtitleLabel.text = ""
+            subtitleLabelTopConstraint.constant = 0.0
+        } else {
+            destinationAddressTextField.text = lumenautInflationDestination
+        }
+        
     }
 
     func showHud() {

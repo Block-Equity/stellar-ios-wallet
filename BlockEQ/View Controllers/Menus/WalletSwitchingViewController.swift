@@ -10,7 +10,7 @@ import UIKit
 
 protocol WalletSwitchingViewControllerDelegate: class {
     func didSelectAsset(index: Int)
-    func didSelectSetInflation()
+    func didSelectSetInflation(inflationDestination: String?)
     func didSelectAddAsset()
     func reloadAssets()
 }
@@ -187,8 +187,13 @@ extension WalletSwitchingViewController: UITableViewDataSource {
             
             if stellarAccount.assets[indexPath.row].shortCode == "XLM" {
                 cell.removeAssetButton.isHidden = true
-                cell.setInflationButton.isHidden = true
-                cell.updateInflationButton.isHidden = false
+                if let _ = stellarAccount.inflationDestination {
+                    cell.setInflationButton.isHidden = true
+                    cell.updateInflationButton.isHidden = false
+                } else {
+                    cell.setInflationButton.isHidden = false
+                    cell.updateInflationButton.isHidden = true
+                }
             } else {
                 cell.removeAssetButton.isHidden = false
                 cell.setInflationButton.isHidden = true
@@ -240,7 +245,7 @@ extension WalletSwitchingViewController: UITableViewDelegate {
 
 extension WalletSwitchingViewController: WalletItemCellDelegate {
     func didChangeInflation() {
-        delegate?.didSelectSetInflation()
+        delegate?.didSelectSetInflation(inflationDestination: stellarAccount.inflationDestination)
     }
     
     func didRemoveAsset(indexPath: IndexPath) {

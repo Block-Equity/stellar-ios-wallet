@@ -6,6 +6,7 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
+import stellarsdk
 import UIKit
 
 class SendAmountViewController: UIViewController {
@@ -111,7 +112,14 @@ class SendAmountViewController: UIViewController {
         self.stellarAccount = stellarAccount
         self.currentAssetIndex = currentAssetIndex
         
-        navigationItem.title = "\(stellarAccount.assets[currentAssetIndex].formattedBalance) \(stellarAccount.assets[currentAssetIndex].shortCode)"
+        var availableBalance = ""
+        if stellarAccount.assets[currentAssetIndex].assetType == AssetTypeAsString.NATIVE {
+            availableBalance = stellarAccount.formattedAvailableBalance
+        } else {
+            availableBalance = stellarAccount.assets[currentAssetIndex].formattedBalance
+        }
+        
+        navigationItem.title = "\(availableBalance) \(stellarAccount.assets[currentAssetIndex].shortCode)"
     }
 
     override func viewDidLoad() {
@@ -174,8 +182,15 @@ class SendAmountViewController: UIViewController {
     }
     
     func isValidSendAmount(amount: String) -> Bool {
-        if let totalAmountAvailable = Double(stellarAccount.assets[currentAssetIndex].balance), let totalSendable = Double(amount) {
-            return totalSendable <= totalAmountAvailable
+        var totalAvailableBalance: Double = 0.00
+        if stellarAccount.assets[currentAssetIndex].assetType == AssetTypeAsString.NATIVE {
+            totalAvailableBalance = stellarAccount.availableBalance
+        } else {
+            totalAvailableBalance = Double(stellarAccount.assets[currentAssetIndex].balance)!
+        }
+        
+        if let totalSendable = Double(amount) {
+            return totalSendable <= totalAvailableBalance
         }
         
         return true

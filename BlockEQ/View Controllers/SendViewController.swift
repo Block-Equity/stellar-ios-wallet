@@ -6,6 +6,7 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
+import stellarsdk
 import UIKit
 
 class SendViewController: UIViewController {
@@ -40,17 +41,17 @@ class SendViewController: UIViewController {
         present(navigationController, animated: true, completion: nil)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
     init(stellarAccount: StellarAccount, currentAssetIndex: Int) {
         super.init(nibName: String(describing: SendViewController.self), bundle: nil)
         
         self.stellarAccount = stellarAccount
         self.currentAssetIndex = currentAssetIndex
     }
-
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -80,7 +81,14 @@ class SendViewController: UIViewController {
         view.backgroundColor = Colors.lightBackground
         tableView.backgroundColor = Colors.lightBackground
         
-        navigationItem.title = "\(stellarAccount.assets[currentAssetIndex].formattedBalance) \(stellarAccount.assets[currentAssetIndex].shortCode)"
+        var availableBalance = ""
+        if stellarAccount.assets[currentAssetIndex].assetType == AssetTypeAsString.NATIVE {
+            availableBalance = stellarAccount.formattedAvailableBalance
+        } else {
+            availableBalance = stellarAccount.assets[currentAssetIndex].formattedBalance
+        }
+        
+        navigationItem.title = "\(availableBalance) \(stellarAccount.assets[currentAssetIndex].shortCode)"
     }
     
     func setViewStateToNotEditing() {
