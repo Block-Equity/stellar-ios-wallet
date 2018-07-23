@@ -7,6 +7,9 @@ target 'BlockEQ' do
 
   pod 'stellar-ios-mac-sdk', :git => 'https://github.com/Soneso/stellar-ios-mac-sdk', :branch => 'master'
   pod 'KeychainSwift', '~> 10.0'
+  pod 'Alamofire', '~> 4.7'
+  pod 'SCLAlertView'
+  pod 'Whisper'
 
   target 'BlockEQTests' do
     inherit! :search_paths

@@ -21,16 +21,20 @@ class SendViewController: UIViewController {
     var currentAssetIndex = 0
     
     @IBAction func addAmount() {
-        
         guard let receiver = sendAddressTextField.text, !receiver.isEmpty, receiver.count > 20, receiver != KeychainHelper.getAccountId() else {
             sendAddressTextField.shake()
             return
         }
         
-        view.endEditing(true)
+        showHud()
         
-        let sendAmountViewController = SendAmountViewController(stellarAccount: stellarAccount, currentAssetIndex: currentAssetIndex, reciever: receiver)
-        navigationController?.pushViewController(sendAmountViewController, animated: true)
+        PaymentTransactionOperation.checkForExchange(address: receiver) { address in
+            self.view.endEditing(true)
+            self.hideHud()
+            
+            let sendAmountViewController = SendAmountViewController(stellarAccount: self.stellarAccount, currentAssetIndex: self.currentAssetIndex, reciever: receiver, exchangeName: address)
+            self.navigationController?.pushViewController(sendAmountViewController, animated: true)
+        }
     }
     
     @IBAction func scanQRCode() {
@@ -99,6 +103,15 @@ class SendViewController: UIViewController {
         view.endEditing(true)
         
         dismiss(animated: true, completion: nil)
+    }
+    
+    func showHud() {
+        let hud = MBProgressHUD.showAdded(to: (navigationController?.view)!, animated: true)
+        hud.mode = .indeterminate
+    }
+    
+    func hideHud() {
+        MBProgressHUD.hide(for: (navigationController?.view)!, animated: true)
     }
 }
 

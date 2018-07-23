@@ -17,6 +17,10 @@ final class TradingCoordinator {
     
     var delegate: TradingCoordinatorDelegate?
     
+    var stellarAccount: StellarAccount?
+    
+    var addAssetViewController: AddAssetViewController?
+    
     var tradeViewController: TradeViewController = {
         let vc = TradeViewController()
         return vc
@@ -32,6 +36,9 @@ final class TradingCoordinator {
         return vc
     }()
     
+    var walletSwitchingViewController: WalletSwitchingViewController?
+    var wrappingNavController: AppNavigationController?
+    
     init() {
         segmentController = TradeSegmentViewController(leftViewController: tradeViewController, middleViewController: orderBookViewController, rightViewController: myOffersViewController, totalPages: CGFloat(TradeSegment.all.count))
         segmentController.tradeSegmentDelegate = self
@@ -41,17 +48,81 @@ final class TradingCoordinator {
     func switchedSegment(_ type: TradeSegment) {
         segmentController.switchSegment(type)
     }
+    
+    func displayAssetViewController() {
+        if let account = self.stellarAccount {
+            let walletSwitchVC = WalletSwitchingViewController()
+            walletSwitchVC.delegate = self
+            walletSwitchingViewController = walletSwitchVC
+            
+            let container = AppNavigationController(rootViewController: walletSwitchVC)
+            wrappingNavController = container
+            wrappingNavController?.navigationBar.prefersLargeTitles = true
+
+            walletSwitchVC.updateMenu(stellarAccount: account)
+            
+            segmentController.present(container, animated: true, completion: nil)
+        }
+    }
 }
 
 extension TradingCoordinator: TradeSegmentControllerDelegate {
     func setScroll(offset: CGFloat, page: Int) {
         delegate?.setScroll(offset: offset, page: page)
     }
+    
+    func displayAddAsset() {
+        displayAssetViewController()
+    }
 }
 
 extension TradingCoordinator: TradeViewControllerDelegate {
     func getOrderBook(sellingAsset: StellarAsset, buyingAsset: StellarAsset) {
         requestOrderBook(sellingAsset: sellingAsset, buyingAsset: buyingAsset)
+    }
+    
+    func displayNoAssetOverlay() {
+        segmentController.displayNoAssetOverlayView()
+    }
+    
+    func hideNoAssetOverlay() {
+        segmentController.hideNoAssetOverlayView()
+    }
+    
+    func displayAddAssetForTrade() {
+        displayAssetViewController()
+    }
+    
+    func update(stellarAccount: StellarAccount) {
+        self.stellarAccount = stellarAccount
+    }
+}
+
+extension TradingCoordinator: WalletSwitchingViewControllerDelegate {
+    func didSelectSetInflation(inflationDestination: String?) {
+        let inflationViewController = InflationViewController(inflationDestination: inflationDestination)
+        
+        wrappingNavController?.pushViewController(inflationViewController, animated: true)
+    }
+    
+    func didSelectAddAsset() {
+        let addAssetViewController = AddAssetViewController()
+        addAssetViewController.delegate = self
+        self.addAssetViewController = addAssetViewController
+        
+        wrappingNavController?.pushViewController(addAssetViewController, animated: true)
+    }
+    
+    func didSelectAsset(index: Int) {}
+    
+    func reloadAssets() {}
+}
+
+extension TradingCoordinator: AddAssetViewControllerDelegate {
+    func didAddAsset(stellarAccount: StellarAccount) {
+        reloadAssets()
+        
+        walletSwitchingViewController?.updateMenu(stellarAccount: stellarAccount)
     }
 }
 

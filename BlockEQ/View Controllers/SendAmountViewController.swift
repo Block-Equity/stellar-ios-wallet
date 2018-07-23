@@ -6,12 +6,16 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
+import Whisper
 import stellarsdk
 import UIKit
 
 class SendAmountViewController: UIViewController {
 
     @IBOutlet var amountLabel: UILabel!
+    @IBOutlet var exchangeLabel: UILabel!
+    @IBOutlet var exchangeLabelHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var exchangeHolderView: UIView!
     @IBOutlet var currencyLabel: UILabel!
     @IBOutlet var keyboardHolderView: UIView!
     @IBOutlet var keyboardPad1: UIButton!
@@ -39,10 +43,18 @@ class SendAmountViewController: UIViewController {
     var sendingAmount: String = ""
     var stellarAccount: StellarAccount = StellarAccount()
     var currentAssetIndex = 0
+    var isExchangeAddress: Bool = false
+    var exchangeName:String = ""
     
     @IBAction func sendPayment() {
         guard let amount = amountLabel.text, !amount.isEmpty, amount != "0", isValidSendAmount(amount: amount) else {
             return
+        }
+        
+        if isExchangeAddress {
+            guard let memo = memoIdLabel.text, !memo.isEmpty else {
+                return
+            }
         }
         
         if PinOptionHelper.check(.pinOnPayment) {
@@ -105,12 +117,17 @@ class SendAmountViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    init(stellarAccount: StellarAccount, currentAssetIndex: Int, reciever: String) {
+    init(stellarAccount: StellarAccount, currentAssetIndex: Int, reciever: String, exchangeName: String?) {
         super.init(nibName: String(describing: SendAmountViewController.self), bundle: nil)
         
         self.receiver = reciever
         self.stellarAccount = stellarAccount
         self.currentAssetIndex = currentAssetIndex
+        
+        if let exchange = exchangeName {
+            isExchangeAddress = true
+            self.exchangeName = exchange
+        }
         
         var availableBalance = ""
         if stellarAccount.assets[currentAssetIndex].assetType == AssetTypeAsString.NATIVE {
@@ -133,10 +150,11 @@ class SendAmountViewController: UIViewController {
         let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
 
-        sendAddressLabel.textColor = Colors.darkGray
         amountLabel.textColor = Colors.primaryDark
+        exchangeHolderView.backgroundColor = Colors.red
         currencyLabel.textColor = Colors.darkGrayTransparent
         keyboardHolderView.backgroundColor = Colors.lightBackground
+        sendAddressLabel.textColor = Colors.darkGray
         memoIdLabel.textColor = Colors.darkGray
         memoIdTextField.textColor = Colors.darkGray
         
@@ -153,6 +171,18 @@ class SendAmountViewController: UIViewController {
             keyboardPad.backgroundColor = Colors.lightBackground
             keyboardPad.tag = index
         }
+        
+        if isExchangeAddress {
+            displayExchangeRequiredMessage()
+        }
+    }
+    
+    func displayExchangeRequiredMessage() {
+        memoIdTextField.placeholder = "(Required)"
+        exchangeLabelHeightConstraint.constant = 40.0
+        
+        let message = "This exchange address belongs to \(exchangeName). Please enter a memo in order to send this transaction."
+        exchangeLabel.text = message
     }
     
     @objc func dismissView() {

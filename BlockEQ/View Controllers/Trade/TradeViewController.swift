@@ -42,6 +42,10 @@ enum TradeType: Int {
 
 protocol TradeViewControllerDelegate: AnyObject {
     func getOrderBook(sellingAsset: StellarAsset, buyingAsset: StellarAsset)
+    func displayNoAssetOverlay()
+    func hideNoAssetOverlay()
+    func update(stellarAccount: StellarAccount)
+    func displayAddAssetForTrade()
 }
 
 class TradeViewController: UIViewController {
@@ -84,7 +88,7 @@ class TradeViewController: UIViewController {
     }
     
     @IBAction func addAsset() {
-        
+        delegate?.displayAddAssetForTrade()
     }
     
     @IBAction func tradeTypeSwitched(sender: UISegmentedControl) {
@@ -162,6 +166,7 @@ class TradeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        print("Trade view appeared")
         getAccountDetails()
     }
 
@@ -380,9 +385,22 @@ extension TradeViewController {
         }
         
         AccountOperation.getAccountDetails(accountId: accountId) { responseAccounts in
-            if !responseAccounts.isEmpty && responseAccounts[0].assets.count > 1{
+            if !responseAccounts.isEmpty && responseAccounts[0].assets.count > 1 {
                 self.stellarAccount = responseAccounts[0]
                 self.setTradeSelectors(fromAsset: self.stellarAccount.assets[0], toAsset: nil)
+                self.delegate?.update(stellarAccount: self.stellarAccount)
+                self.delegate?.hideNoAssetOverlay()
+            } else {
+                let account = StellarAccount()
+                account.accountId = accountId
+                
+                let stellarAsset = StellarAsset(assetType: AssetTypeAsString.NATIVE, assetCode: nil, assetIssuer: nil, balance: "0.0000")
+                account.assets.removeAll()
+                account.assets.append(stellarAsset)
+                
+                self.setTradeSelectors(fromAsset: account.assets[0], toAsset: nil)
+                self.delegate?.update(stellarAccount: account)
+                self.delegate?.displayNoAssetOverlay()
             }
         }
     }

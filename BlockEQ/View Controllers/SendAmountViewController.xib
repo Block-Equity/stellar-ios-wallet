@@ -13,6 +13,9 @@
             <connections>
                 <outlet property="amountLabel" destination="idT-6f-LxP" id="Vvu-pm-Z7i"/>
                 <outlet property="currencyLabel" destination="RQc-ir-UP8" id="x0X-t5-hYd"/>
+                <outlet property="exchangeHolderView" destination="mCI-fm-OVa" id="wmE-Pm-EzC"/>
+                <outlet property="exchangeLabel" destination="K2L-9s-q3f" id="jaB-3B-2qA"/>
+                <outlet property="exchangeLabelHeightConstraint" destination="ENE-jC-FHi" id="Fcb-az-W6B"/>
                 <outlet property="keyboardHolderView" destination="BJS-CT-fsj" id="PMD-sb-6M0"/>
                 <outlet property="keyboardPad0" destination="b5t-XX-9C1" id="A7n-Rr-qZK"/>
                 <outlet property="keyboardPad1" destination="SjD-E6-kbK" id="szs-Xa-64f"/>
@@ -348,15 +351,36 @@
                         <action selector="sendPayment" destination="-1" eventType="touchUpInside" id="Pay-du-S4L"/>
                     </connections>
                 </button>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mCI-fm-OVa">
+                    <rect key="frame" x="0.0" y="64" width="375" height="0.0"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2L-9s-q3f">
+                            <rect key="frame" x="16" y="0.0" width="343" height="0.0"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" id="ENE-jC-FHi"/>
+                        <constraint firstAttribute="bottom" secondItem="K2L-9s-q3f" secondAttribute="bottom" id="EsX-Wg-61c"/>
+                        <constraint firstItem="K2L-9s-q3f" firstAttribute="top" secondItem="mCI-fm-OVa" secondAttribute="top" id="bfL-YW-qMF"/>
+                        <constraint firstAttribute="trailing" secondItem="K2L-9s-q3f" secondAttribute="trailing" constant="16" id="jcZ-Eb-lOl"/>
+                        <constraint firstItem="K2L-9s-q3f" firstAttribute="leading" secondItem="mCI-fm-OVa" secondAttribute="leading" constant="16" id="kot-86-m5O"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="BJS-CT-fsj" firstAttribute="trailing" secondItem="Ov4-Rg-t9P" secondAttribute="trailing" id="2T0-XJ-kse"/>
+                <constraint firstItem="mCI-fm-OVa" firstAttribute="top" secondItem="Ov4-Rg-t9P" secondAttribute="top" id="8zA-il-hvy"/>
                 <constraint firstAttribute="trailing" secondItem="oO2-oC-t30" secondAttribute="trailing" id="FUg-Bg-AAP"/>
-                <constraint firstItem="oO2-oC-t30" firstAttribute="top" secondItem="Ov4-Rg-t9P" secondAttribute="top" id="GCo-qr-UNF"/>
                 <constraint firstItem="eVG-Ff-eiy" firstAttribute="leading" secondItem="Ov4-Rg-t9P" secondAttribute="leading" constant="16" id="Gby-bQ-i0p"/>
                 <constraint firstItem="Ov4-Rg-t9P" firstAttribute="trailing" secondItem="eVG-Ff-eiy" secondAttribute="trailing" constant="16" id="Mok-Qm-Gyp"/>
+                <constraint firstItem="oO2-oC-t30" firstAttribute="top" secondItem="mCI-fm-OVa" secondAttribute="bottom" id="Q6F-zw-PPX"/>
                 <constraint firstItem="FpL-RO-V8d" firstAttribute="trailing" secondItem="Ov4-Rg-t9P" secondAttribute="trailing" id="QWO-o0-mcr"/>
+                <constraint firstItem="mCI-fm-OVa" firstAttribute="leading" secondItem="Ov4-Rg-t9P" secondAttribute="leading" id="X1f-zO-4cr"/>
                 <constraint firstItem="BJS-CT-fsj" firstAttribute="top" secondItem="ltM-8T-Caw" secondAttribute="bottom" id="Yy5-5n-8HY"/>
                 <constraint firstItem="eVG-Ff-eiy" firstAttribute="top" secondItem="BJS-CT-fsj" secondAttribute="bottom" id="bNd-2E-kBq"/>
                 <constraint firstItem="oO2-oC-t30" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bPx-sf-98c"/>
@@ -364,6 +388,7 @@
                 <constraint firstItem="ltM-8T-Caw" firstAttribute="top" secondItem="FpL-RO-V8d" secondAttribute="bottom" id="fdh-8D-XKz"/>
                 <constraint firstItem="FpL-RO-V8d" firstAttribute="top" secondItem="oO2-oC-t30" secondAttribute="bottom" id="ii5-16-AZ7"/>
                 <constraint firstItem="ltM-8T-Caw" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="jw9-Tp-3wK"/>
+                <constraint firstItem="mCI-fm-OVa" firstAttribute="trailing" secondItem="Ov4-Rg-t9P" secondAttribute="trailing" id="jzb-Er-cAl"/>
                 <constraint firstItem="ltM-8T-Caw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="k2H-zr-M5T"/>
                 <constraint firstItem="BJS-CT-fsj" firstAttribute="leading" secondItem="Ov4-Rg-t9P" secondAttribute="leading" id="m71-yG-UsP"/>
                 <constraint firstItem="Ov4-Rg-t9P" firstAttribute="bottom" secondItem="eVG-Ff-eiy" secondAttribute="bottom" constant="10" id="v70-PD-VBx"/>

@@ -10,16 +10,22 @@ import UIKit
 
 protocol TradeSegmentControllerDelegate: AnyObject {
     func setScroll(offset: CGFloat, page: Int)
+    func displayAddAsset()
 }
 
 final class TradeSegmentViewController: UIViewController {
     @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var noAssetView: UIView!
     
     var leftViewController: UIViewController!
     var rightViewController: UIViewController!
     var middleViewController: UIViewController!
     var totalPages: CGFloat!
     var tradeSegmentDelegate: TradeSegmentControllerDelegate?
+    
+    @IBAction func addAsset() {
+        tradeSegmentDelegate?.displayAddAsset()
+    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -43,6 +49,7 @@ final class TradeSegmentViewController: UIViewController {
     
     func setupView() {
         scrollView.backgroundColor = Colors.lightBackground
+        noAssetView.isHidden = true
     }
     
     override func viewWillLayoutSubviews() {
@@ -70,6 +77,20 @@ final class TradeSegmentViewController: UIViewController {
 
     func switchSegment(_ type: TradeSegment) {
         scrollView.setContentOffset(CGPoint(x: scrollView.frame.size.width * CGFloat(type.rawValue), y: 0.0), animated: true)
+    }
+    
+    func displayNoAssetOverlayView() {
+        if noAssetView.isHidden {
+            noAssetView.alpha = 0.0
+            noAssetView.isHidden = false
+            UIView.animate(withDuration: 0.3, animations: {
+                self.noAssetView.alpha = 1.0
+            })
+        }
+    }
+    
+    func hideNoAssetOverlayView() {
+        noAssetView.isHidden = true
     }
 }
 
