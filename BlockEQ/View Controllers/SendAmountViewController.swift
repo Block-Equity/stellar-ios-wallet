@@ -211,6 +211,21 @@ class SendAmountViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    func displayTransactionSuccess() {
+        hideHud()
+        
+        let message = Message(title: "Transaction successful.", backgroundColor: Colors.green)
+        Whisper.show(whisper: message, to: navigationController!, action: .show)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            Whisper.hide(whisperFrom: self.navigationController!)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.dismissView()
+            }
+        }
+    }
+    
     func isValidSendAmount(amount: String) -> Bool {
         var totalAvailableBalance: Double = 0.00
         if stellarAccount.assets[currentAssetIndex].assetType == AssetTypeAsString.NATIVE {
@@ -280,7 +295,7 @@ extension SendAmountViewController {
     func fundNewAccount(account accountId: String, amount: Decimal) {
         AccountOperation.createNewAccount(accountId: accountId, amount: amount) { completed in
             if completed {
-                self.dismissView()
+                self.displayTransactionSuccess()
             } else {
                 self.displayTransactionError()
             }
@@ -298,7 +313,7 @@ extension SendAmountViewController {
         
         PaymentTransactionOperation.postPayment(accountId: accountId, amount: amount, memoId: memoId, stellarAsset: stellarAsset) { completed in
             if completed {
-                self.dismissView()
+                self.displayTransactionSuccess()
             } else {
                 self.displayTransactionError()
             }

@@ -43,7 +43,11 @@ final class WalletSwitchingViewController: UIViewController {
     }*/
     
     @IBAction func addAsset() {
-        delegate?.didSelectAddAsset()
+        if isZeroBalance() {
+            displayNoBalanceError()
+        } else {
+            delegate?.didSelectAddAsset()
+        }
     }
 
     override func viewDidLoad() {
@@ -111,6 +115,13 @@ final class WalletSwitchingViewController: UIViewController {
         MBProgressHUD.hide(for: UIApplication.shared.keyWindow!, animated: true)
     }
     
+    func isZeroBalance() -> Bool {
+        if stellarAccount.assets.count == 1 && Double(stellarAccount.assets[0].balance)! == 0.00 {
+            return true
+        }
+        return false
+    }
+    
     func displayAssetActivationError() {
         let alert = UIAlertController(title: "Activation Error", message: "Sorry your asset could not be added at this time. Please try again later.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
@@ -119,6 +130,12 @@ final class WalletSwitchingViewController: UIViewController {
     
     func displayAssetDeactivationError() {
         let alert = UIAlertController(title: "Activation Error", message: "Sorry your asset could not be removed at this time. Please try again later.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func displayNoBalanceError() {
+        let alert = UIAlertController(title: "No Balance Error", message: "You must have atleast 1 Lumen (XLM) in order to perform this action.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
@@ -245,7 +262,11 @@ extension WalletSwitchingViewController: UITableViewDelegate {
 
 extension WalletSwitchingViewController: WalletItemCellDelegate {
     func didChangeInflation() {
-        delegate?.didSelectSetInflation(inflationDestination: stellarAccount.inflationDestination)
+        if isZeroBalance() {
+            displayNoBalanceError()
+        } else {
+            delegate?.didSelectSetInflation(inflationDestination: stellarAccount.inflationDestination)
+        }
     }
     
     func didRemoveAsset(indexPath: IndexPath) {
@@ -255,8 +276,11 @@ extension WalletSwitchingViewController: WalletItemCellDelegate {
 
 extension WalletSwitchingViewController: WalletItemActivateCellDelegate {
     func didAddAsset(indexPath: IndexPath) {
-        
-        createTrustLine(issuerAccountId: updatedSupportedAssets[indexPath.row].issuerAccount, assetCode: updatedSupportedAssets[indexPath.row].shortForm, limit: 10000000000, isAdding: true)
+        if isZeroBalance() {
+            displayNoBalanceError()
+        } else {
+            createTrustLine(issuerAccountId: updatedSupportedAssets[indexPath.row].issuerAccount, assetCode: updatedSupportedAssets[indexPath.row].shortForm, limit: 10000000000, isAdding: true)
+        }
     }
 }
 
