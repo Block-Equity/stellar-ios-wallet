@@ -114,7 +114,7 @@ class InflationViewController: UIViewController {
     func dismissView() {
         view.endEditing(true)
         
-        navigationController?.popViewController(animated: true)
+        navigationController?.dismiss(animated: true, completion: nil)
     }
 }
 

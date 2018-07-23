@@ -56,6 +56,12 @@ final class WalletSwitchingViewController: UIViewController {
         setupView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        getAccountDetails()
+    }
+    
     func setupView() {
         addNavigationHeader()
 
@@ -116,14 +122,14 @@ final class WalletSwitchingViewController: UIViewController {
     }
     
     func isZeroBalance() -> Bool {
-        if stellarAccount.assets.count == 1 && Double(stellarAccount.assets[0].balance)! == 0.00 {
+        if stellarAccount.assets.count == 1 && Double(stellarAccount.assets[0].balance)! < 1 {
             return true
         }
         return false
     }
     
     func displayAssetActivationError() {
-        let alert = UIAlertController(title: "Activation Error", message: "Sorry your asset could not be added at this time. Please try again later.", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Activation Error", message: "Sorry your asset could not be added at this time. You may need to add more Lumens(XLM) to your wallet and try again as each action costs 0.5 XLM.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
@@ -322,9 +328,6 @@ extension WalletSwitchingViewController {
             if responseAccounts.count > 0 {
                 self.updateMenu(stellarAccount: responseAccounts[0])
                 self.delegate?.reloadAssets()
-            }
-            else {
-                self.navigationController?.dismiss(animated: true, completion: nil)
             }
         }
     }

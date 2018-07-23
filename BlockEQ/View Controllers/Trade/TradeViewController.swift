@@ -339,6 +339,10 @@ class TradeViewController: UIViewController {
             
             currentMarketPrice = bestPrice
         }
+        
+        if let tradeFromText = tradeFromTextField.text {
+            setCalculatedMarketPrice(tradeFromText: tradeFromText)
+        }
     }
     
     func setCalculatedMarketPrice(tradeFromText: String) {
