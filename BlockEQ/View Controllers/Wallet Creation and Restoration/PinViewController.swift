@@ -12,6 +12,7 @@ import Foundation
 protocol PinViewControllerDelegate: class {
     func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool)
     func pinEntryCancelled(_ vc: PinViewController)
+    func pinEntryFailed(_ vc: PinViewController)
 }
 
 class PinViewController: UIViewController {
@@ -38,6 +39,7 @@ class PinViewController: UIViewController {
     var isCloseDisplayed: Bool = false
     var shouldSavePin: Bool = false
     var mode: DisplayMode = .light
+    var failedNumberOfPins = 2
 
     let notificationGenerator = UINotificationFeedbackGenerator()
     let impactGenerator = UIImpactFeedbackGenerator(style: .light)
@@ -67,7 +69,7 @@ class PinViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if isCloseDisplayed {
+        if mode == .dark {
             UIApplication.shared.statusBarStyle = .lightContent
         }
         
@@ -168,6 +170,13 @@ class PinViewController: UIViewController {
             pinView.shake() {
                 pinView.animateToLine()
             }
+        }
+
+        if failedNumberOfPins == 0 {
+            delegate?.pinEntryFailed(self)
+            failedNumberOfPins = 2
+        } else {
+            failedNumberOfPins -= 1
         }
     }
 }

@@ -63,6 +63,7 @@ class VerificationViewController: UIViewController {
                 mnemonicString = String(mnemonicString.dropLast())
             }
 
+            textView.text = ""
             delegate?.validatedAccount(self, mnemonic: mnemonicString)
         }
     }

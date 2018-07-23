@@ -7,6 +7,8 @@
 //
 
 import stellarsdk
+import Whisper
+
 import UIKit
 
 enum BalanceType: Int {
@@ -54,6 +56,8 @@ class TradeViewController: UIViewController {
     @IBOutlet var arrowImageView: UIImageView!
     @IBOutlet var balanceLabel: UILabel!
     @IBOutlet var buttonHolderView: UIView!
+    @IBOutlet var marketLabelHolderView: UIView!
+    @IBOutlet var marketLabel: UILabel!
     @IBOutlet var segmentControl: UISegmentedControl!
     @IBOutlet var tableview: UITableView!
     @IBOutlet var tradeFromView: UIView!
@@ -141,7 +145,17 @@ class TradeViewController: UIViewController {
             } else {
                 self.tradeFromTextField.text = ""
                 self.tradeToTextField.text = ""
+                self.displayTradeSuccess()
             }
+        }
+    }
+    
+    func displayTradeSuccess() {
+        let message = Message(title: "Trade successfully submitted.", backgroundColor: Colors.green)
+        Whisper.show(whisper: message, to: navigationController!, action: .show)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            Whisper.hide(whisperFrom: self.navigationController!)
         }
     }
     
@@ -166,7 +180,6 @@ class TradeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        print("Trade view appeared")
         getAccountDetails()
     }
 
@@ -180,6 +193,7 @@ class TradeViewController: UIViewController {
         balanceLabel.textColor = Colors.darkGray
         arrowImageView.tintColor = Colors.lightGray
         addAssetButton.backgroundColor = Colors.primaryDark
+        marketLabelHolderView.backgroundColor = Colors.lightBackground
         segmentControl.tintColor = Colors.lightGray
         tableview.backgroundColor = Colors.lightBackground
         tradeFromButton.backgroundColor = Colors.red
@@ -224,11 +238,12 @@ class TradeViewController: UIViewController {
             if let tradeFromText = tradeFromTextField.text {
                 setCalculatedMarketPrice(tradeFromText: tradeFromText)
             }
-            
+            marketLabel.text = "Your market order may not be completely filled depending on amount offered. View the order book to see the amount available at the market rate. Any amount larger than this will be posted as an offer."
             break
         case .limit:
             tradeToTextField.isEnabled = true
             tradeToView.backgroundColor = Colors.white
+            marketLabel.text = ""
             break
         }
     }
@@ -256,16 +271,10 @@ class TradeViewController: UIViewController {
     }
     
     func setTradeFromSelector() {
-        if let toButtonText = tradeToButton.titleLabel?.text, !toButtonText.elementsEqual(fromAsset.shortCode) {
-            tradeFromButton.setTitle(fromAsset.shortCode, for: .normal)
-            balanceLabel.text = "\(fromAsset.balance.decimalFormatted()) \(fromAsset.shortCode)"
-            return
-        }
-        
         guard let removableIndex = self.stellarAccount.assets.index(of: fromAsset) else {
             return
         }
-        
+
         tradeFromButton.setTitle(fromAsset.shortCode, for: .normal)
         balanceLabel.text = "\(fromAsset.balance.decimalFormatted()) \(fromAsset.shortCode)"
         
@@ -277,8 +286,6 @@ class TradeViewController: UIViewController {
         tradeFromPickerView.reloadAllComponents()
         tradeToPickerView.reloadAllComponents()
         tradeToPickerView.selectRow(0, inComponent: 0, animated: false)
-        
-        return
     }
     
     func setTradeToSelector() {
@@ -398,7 +405,7 @@ extension TradeViewController {
                 account.assets.removeAll()
                 account.assets.append(stellarAsset)
                 
-                self.setTradeSelectors(fromAsset: account.assets[0], toAsset: nil)
+                self.stellarAccount = account
                 self.delegate?.update(stellarAccount: account)
                 self.delegate?.displayNoAssetOverlay()
             }

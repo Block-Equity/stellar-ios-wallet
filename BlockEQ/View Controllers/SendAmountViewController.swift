@@ -266,13 +266,21 @@ extension SendAmountViewController: PinViewControllerDelegate {
     }
 
     func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool) {
-        vc.dismiss(animated: true, completion: nil)
-        
-        guard let amount = amountLabel.text, !amount.isEmpty, amount != "0" else {
-            return
+        if KeychainHelper.checkPin(inPin: pin) {
+            vc.dismiss(animated: true, completion: nil)
+            
+            guard let amount = amountLabel.text, !amount.isEmpty, amount != "0" else {
+                return
+            }
+            
+            checkForValidAccount(account: receiver, amount: Decimal(string: amount)!)
+        } else {
+            vc.pinMismatchError()
         }
-
-        checkForValidAccount(account: receiver, amount: Decimal(string: amount)!)
+    }
+    
+    func pinEntryFailed(_ vc: PinViewController) {
+        vc.dismiss(animated: true, completion: nil)
     }
 }
 

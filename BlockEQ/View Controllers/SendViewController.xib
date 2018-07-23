@@ -35,7 +35,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="542"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wvK-P4-LFG">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="205"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SEND TO" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXc-aa-UA7">
                                                 <rect key="frame" x="16" y="20" width="343" height="16"/>
@@ -86,7 +86,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e0v-Na-RtI">
-                                                <rect key="frame" x="0.0" y="399" width="375" height="1"/>
+                                                <rect key="frame" x="0.0" y="204" width="375" height="1"/>
                                                 <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="Ska-Rd-bi0"/>
@@ -121,10 +121,11 @@
                                             <constraint firstItem="e0v-Na-RtI" firstAttribute="leading" secondItem="wvK-P4-LFG" secondAttribute="leading" id="c74-qQ-m5L"/>
                                             <constraint firstItem="eCD-uq-zHs" firstAttribute="top" secondItem="UXc-aa-UA7" secondAttribute="bottom" constant="25" id="f6y-ka-At4"/>
                                             <constraint firstItem="UXc-aa-UA7" firstAttribute="top" secondItem="wvK-P4-LFG" secondAttribute="top" constant="20" id="fNR-zx-oXe"/>
-                                            <constraint firstAttribute="height" constant="400" id="gc3-6E-4i2"/>
+                                            <constraint firstAttribute="height" constant="205" id="gc3-6E-4i2"/>
                                             <constraint firstAttribute="trailing" secondItem="eCD-uq-zHs" secondAttribute="trailing" constant="16" id="mxF-td-Dcb"/>
                                             <constraint firstItem="9ig-HT-MND" firstAttribute="leading" secondItem="wvK-P4-LFG" secondAttribute="leading" constant="16" id="qX9-5j-UmX"/>
                                             <constraint firstAttribute="trailing" secondItem="e0v-Na-RtI" secondAttribute="trailing" id="rvh-Hi-XHN"/>
+                                            <constraint firstItem="e0v-Na-RtI" firstAttribute="top" secondItem="9ig-HT-MND" secondAttribute="bottom" constant="20" id="tDZ-JW-gBl"/>
                                             <constraint firstAttribute="trailing" secondItem="9ig-HT-MND" secondAttribute="trailing" constant="16" id="vxr-oz-6ub"/>
                                             <constraint firstAttribute="trailing" secondItem="UXc-aa-UA7" secondAttribute="trailing" constant="16" id="wPv-yR-R1o"/>
                                         </constraints>

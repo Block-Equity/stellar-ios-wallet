@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var pinViewController: PinViewController?
     let container = WrapperVC()
-    let appCoordinator = ApplicationCoordinator()
+    var appCoordinator = ApplicationCoordinator()
     let onboardingCoordinator = OnboardingCoordinator()
     
     func application(_ application: UIApplication,
@@ -58,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func displayPin() {
-        guard PinOptionHelper.check(.pinOnLaunch) else {
+        guard PinOptionHelper.check(.pinOnLaunch), let _ = KeychainHelper.getPin() else {
             return
         }
 
@@ -79,7 +79,10 @@ extension AppDelegate: ApplicationCoordinatorDelegate {
         container.moveToViewController(onboardingCoordinator.navController,
                                        fromViewController: appCoordinator.tabController,
                                        animated: true,
-                                       completion: nil)
+                                       completion: {
+                                        self.appCoordinator = ApplicationCoordinator()
+                                        self.appCoordinator.delegate = self
+        })
     }
 }
 
@@ -105,5 +108,10 @@ extension AppDelegate: PinViewControllerDelegate {
         } else {
             vc.pinMismatchError()
         }
+    }
+    
+    func pinEntryFailed(_ vc: PinViewController) {
+        vc.dismiss(animated: true, completion: nil)
+        switchToOnboarding()
     }
 }

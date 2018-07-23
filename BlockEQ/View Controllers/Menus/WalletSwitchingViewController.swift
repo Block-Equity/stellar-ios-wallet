@@ -135,7 +135,7 @@ final class WalletSwitchingViewController: UIViewController {
     }
     
     func displayNoBalanceError() {
-        let alert = UIAlertController(title: "No Balance Error", message: "You must have atleast 1 Lumen (XLM) in order to perform this action.", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "No Balance Error", message: "You must have more than 1 Lumen (XLM) in order to perform this action.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }

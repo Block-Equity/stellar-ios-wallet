@@ -252,6 +252,8 @@ extension WalletViewController: PinViewControllerDelegate {
             }
         }
     }
+    
+    func pinEntryFailed(_ vc: PinViewController) {}
 }
 
 /*

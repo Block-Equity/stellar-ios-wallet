@@ -94,6 +94,8 @@ extension OnboardingCoordinator: PinViewControllerDelegate {
             vc.pinMismatchError()
         }
     }
+    
+    func pinEntryFailed(_ vc: PinViewController) {}
 }
 
 extension OnboardingCoordinator {
@@ -104,6 +106,7 @@ extension OnboardingCoordinator {
         let privateBytes = keyPair.privateKey?.bytes ?? [UInt8]()
         let privateKeyData = NSData(bytes: privateBytes, length: privateBytes.count) as Data
 
+        KeychainHelper.setExistingInstance()
         KeychainHelper.save(mnemonic: mnemonic)
         KeychainHelper.save(accountId: keyPair.accountId)
         KeychainHelper.save(publicKey: publicKeyData)

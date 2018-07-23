@@ -6,6 +6,7 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
+import Whisper
 import UIKit
 
 class InflationViewController: UIViewController {
@@ -33,9 +34,7 @@ class InflationViewController: UIViewController {
             self.hideHud()
             
             if completed {
-                self.view.endEditing(true)
-                
-                self.dismissView()
+                self.displayInflationSuccess()
             } else {
                 let alert = UIAlertController(title: "Inflation Destination Error", message: "Sorry we were unable to set your inflation destination. Please check that your destination address is correct and try again.", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
@@ -85,7 +84,21 @@ class InflationViewController: UIViewController {
         } else {
             destinationAddressTextField.text = lumenautInflationDestination
         }
+    }
+    
+    func displayInflationSuccess() {
+        self.view.endEditing(true)
         
+        let message = Message(title: "Inflation successfully updated.", backgroundColor: Colors.green)
+        Whisper.show(whisper: message, to: navigationController!, action: .show)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            Whisper.hide(whisperFrom: self.navigationController!)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.dismissView()
+            }
+        }
     }
 
     func showHud() {

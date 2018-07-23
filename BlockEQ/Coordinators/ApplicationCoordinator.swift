@@ -228,6 +228,13 @@ extension ApplicationCoordinator: PinViewControllerDelegate {
             vc.pinMismatchError()
         }
     }
+    
+    func pinEntryFailed(_ vc: PinViewController) {
+        vc.dismiss(animated: true, completion: nil)
+        KeychainHelper.clearAll()
+        PinOptionHelper.clear()
+        self.delegate?.switchToOnboarding()
+    }
 }
 
 extension ApplicationCoordinator: WalletViewControllerDelegate {
