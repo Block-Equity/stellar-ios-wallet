@@ -67,10 +67,10 @@ class StellarAccount: NSObject {
                 }
             }
         }
-        
+
         let calculatedBalance = totalBalance - minBalance
         
-        if calculatedBalance > 0.0 {
+        if calculatedBalance >= 0.0 {
             return calculatedBalance
         }
         return totalBalance
