@@ -48,11 +48,13 @@ class SendAmountViewController: UIViewController {
     
     @IBAction func sendPayment() {
         guard let amount = amountLabel.text, !amount.isEmpty, amount != "0", isValidSendAmount(amount: amount) else {
+            amountLabel.shake()
             return
         }
         
         if isExchangeAddress {
-            guard let memo = memoIdLabel.text, !memo.isEmpty else {
+            guard let memo = memoIdTextField.text, !memo.isEmpty else {
+                memoIdLabel.shake()
                 return
             }
         }

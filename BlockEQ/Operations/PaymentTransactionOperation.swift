@@ -45,7 +45,7 @@ class PaymentTransactionOperation: NSObject {
     }
     
     static func checkForExchange(address: String, completion: @escaping (String?) -> Void) {
-        Alamofire.request("https://api-staging.blockeq.com/directory/exchanges").responseJSON { response in
+        Alamofire.request("https://blockeq-wallet.firebaseio.com/exchangeAddresses.json").responseJSON { response in
             guard response.result.isSuccess, let value = response.result.value as? [String: Any] else {
                     print("Error while fetching tags: \(String(describing: response.result.error))")
                     completion(nil)
