@@ -8,18 +8,35 @@
 
 import UIKit
 
+protocol WalletItemActivateCellDelegate: class {
+    func didAddAsset(indexPath: IndexPath)
+}
+
 class WalletItemActivateCell: UITableViewCell {
     
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var iconImageView: UIImageView!
+    @IBOutlet var addAssetButton: UIButton!
     
+    var delegate: WalletItemActivateCellDelegate?
+    var indexPath: IndexPath?
     static let cellIdentifier = "WalletItemActivateCell"
+    
+    @IBAction func addAsset() {
+        if let currentIndexPath = indexPath {
+            delegate?.didAddAsset(indexPath: currentIndexPath)
+        }
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        setupView()
+    }
+    
+    func setupView() {
+        addAssetButton.backgroundColor = Colors.green
         titleLabel.textColor = Colors.white
-        contentView.backgroundColor = Colors.green
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -37,5 +54,6 @@ class WalletItemActivateCell: UITableViewCell {
     func setRowColor(selected: Bool) {
         contentView.backgroundColor =  selected ? Colors.lightBlue : Colors.white
         titleLabel.textColor = selected ? Colors.primaryDark : Colors.darkGray
+        addAssetButton.backgroundColor = Colors.green
     }
 }

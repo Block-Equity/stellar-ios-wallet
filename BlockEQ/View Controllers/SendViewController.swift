@@ -6,6 +6,7 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
+import stellarsdk
 import UIKit
 
 class SendViewController: UIViewController {
@@ -20,16 +21,20 @@ class SendViewController: UIViewController {
     var currentAssetIndex = 0
     
     @IBAction func addAmount() {
-        
         guard let receiver = sendAddressTextField.text, !receiver.isEmpty, receiver.count > 20, receiver != KeychainHelper.getAccountId() else {
             sendAddressTextField.shake()
             return
         }
         
-        view.endEditing(true)
+        showHud()
         
-        let sendAmountViewController = SendAmountViewController(stellarAccount: stellarAccount, currentAssetIndex: currentAssetIndex, reciever: receiver)
-        navigationController?.pushViewController(sendAmountViewController, animated: true)
+        PaymentTransactionOperation.checkForExchange(address: receiver) { address in
+            self.view.endEditing(true)
+            self.hideHud()
+            
+            let sendAmountViewController = SendAmountViewController(stellarAccount: self.stellarAccount, currentAssetIndex: self.currentAssetIndex, reciever: receiver, exchangeName: address)
+            self.navigationController?.pushViewController(sendAmountViewController, animated: true)
+        }
     }
     
     @IBAction func scanQRCode() {
@@ -40,17 +45,17 @@ class SendViewController: UIViewController {
         present(navigationController, animated: true, completion: nil)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
     init(stellarAccount: StellarAccount, currentAssetIndex: Int) {
         super.init(nibName: String(describing: SendViewController.self), bundle: nil)
         
         self.stellarAccount = stellarAccount
         self.currentAssetIndex = currentAssetIndex
     }
-
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -80,7 +85,14 @@ class SendViewController: UIViewController {
         view.backgroundColor = Colors.lightBackground
         tableView.backgroundColor = Colors.lightBackground
         
-        navigationItem.title = "\(stellarAccount.assets[currentAssetIndex].formattedBalance) \(stellarAccount.assets[currentAssetIndex].shortCode)"
+        var availableBalance = ""
+        if stellarAccount.assets[currentAssetIndex].assetType == AssetTypeAsString.NATIVE {
+            availableBalance = stellarAccount.formattedAvailableBalance
+        } else {
+            availableBalance = stellarAccount.assets[currentAssetIndex].formattedBalance
+        }
+        
+        navigationItem.title = "\(availableBalance) \(stellarAccount.assets[currentAssetIndex].shortCode)"
     }
     
     func setViewStateToNotEditing() {
@@ -91,6 +103,15 @@ class SendViewController: UIViewController {
         view.endEditing(true)
         
         dismiss(animated: true, completion: nil)
+    }
+    
+    func showHud() {
+        let hud = MBProgressHUD.showAdded(to: (navigationController?.view)!, animated: true)
+        hud.mode = .indeterminate
+    }
+    
+    func hideHud() {
+        MBProgressHUD.hide(for: (navigationController?.view)!, animated: true)
     }
 }
 

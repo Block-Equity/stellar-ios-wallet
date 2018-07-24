@@ -13,15 +13,18 @@ protocol WalletViewControllerDelegate: AnyObject {
     func selectedWalletSwitch(_ vc: WalletViewController, account: StellarAccount)
     func selectedSend(_ vc: WalletViewController, account: StellarAccount, index: Int)
     func selectedReceive()
+    func selectBalance(account: StellarAccount, index: Int)
 }
 
 class WalletViewController: UIViewController {
     
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet var availableBalanceLabel: UILabel!
     @IBOutlet var balanceLabel: UILabel!
     @IBOutlet var coinLabel: UILabel!
     @IBOutlet var emptyViewTitleLabel: UILabel!
     @IBOutlet var headerBackgroundView: UIView!
+    @IBOutlet var availableBalanceView: UIView!
     @IBOutlet var emptyView: UIView!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var tableViewHeader: UIView!
@@ -41,6 +44,22 @@ class WalletViewController: UIViewController {
     var timer: DispatchSourceTimer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main)
     var currentAssetIndex = 0
     var paymentStream: Any!
+    var isNativeAsset: Bool = false
+    
+    @IBAction func sendFunds() {
+        let currentStellarAccount = accounts[0]
+        delegate?.selectedSend(self, account: currentStellarAccount, index: currentAssetIndex)
+    }
+    
+    @IBAction func selectBalance() {
+        let currentStellarAccount = accounts[0]
+        delegate?.selectBalance(account: currentStellarAccount, index: currentAssetIndex)
+    }
+    
+    @IBAction func displayWalletSwitcher() {
+        let currentStellarAccount = accounts[0]
+        delegate?.selectedWalletSwitch(self, account: currentStellarAccount)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +99,7 @@ class WalletViewController: UIViewController {
         let rightBarButtonItem = UIBarButtonItem(title: "Send", style: .plain, target: self, action: #selector(self.sendFunds))
         navigationItem.rightBarButtonItem = rightBarButtonItem
         
+        availableBalanceView.backgroundColor = Colors.darkGray
         headerBackgroundView.backgroundColor = Colors.primaryDark
         coinLabel.textColor = Colors.white
         balanceLabel.textColor = Colors.white
@@ -100,16 +120,6 @@ class WalletViewController: UIViewController {
     
     func stopTimer() {
         timer.cancel()
-    }
-
-    @IBAction func sendFunds() {
-        let currentStellarAccount = accounts[0]
-        delegate?.selectedSend(self, account: currentStellarAccount, index: currentAssetIndex)
-    }
-
-    @objc func displayWalletSwitcher() {
-        let currentStellarAccount = accounts[0]
-        delegate?.selectedWalletSwitch(self, account: currentStellarAccount)
     }
     
     @objc func receiveFunds() {
@@ -140,12 +150,12 @@ extension WalletViewController: UICollectionViewDataSource {
 
 extension WalletViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0:
+        case 1:
             return effects.count
         default:
             return 0
@@ -155,6 +165,11 @@ extension WalletViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch section {
         case 0:
+            if isNativeAsset {
+                return availableBalanceView
+            }
+            return nil
+        case 1:
             return tableViewHeader
         default:
             if isLoadingTransactionsOnViewLoad && !activityIndicator.isAnimating {
@@ -167,6 +182,11 @@ extension WalletViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case 0:
+            if isNativeAsset {
+                return availableBalanceView.frame.size.height
+            }
+            return 0
+        case 1:
             return tableViewHeader.frame.size.height
         default:
             if isLoadingTransactionsOnViewLoad && !activityIndicator.isAnimating {
@@ -191,7 +211,7 @@ extension WalletViewController: UITableViewDataSource {
 
     func selectAsset(at index: Int) {
         currentAssetIndex = index
-        
+        isNativeAsset = false
         balanceLabel.text = ""
         coinLabel.text = ""
         isLoadingTransactionsOnViewLoad = true
@@ -232,6 +252,8 @@ extension WalletViewController: PinViewControllerDelegate {
             }
         }
     }
+    
+    func pinEntryFailed(_ vc: PinViewController) {}
 }
 
 /*
@@ -260,7 +282,20 @@ extension WalletViewController {
                 self.accounts.append(stellarAccount)
             }
             let asset = self.accounts[0].assets[self.currentAssetIndex]
-            self.coinLabel.text = "\(Assets.displayTitle(shortCode: asset.shortCode)) (\(asset.shortCode))"
+            
+            if asset.shortCode == "XLM" {
+                self.isNativeAsset = true
+            } else {
+                self.isNativeAsset = false
+            }
+            
+            if Assets.displayTitle(shortCode: asset.shortCode) == asset.shortCode {
+                self.coinLabel.text = "\(Assets.displayTitle(shortCode: asset.shortCode))"
+            } else {
+                self.coinLabel.text = "\(Assets.displayTitle(shortCode: asset.shortCode)) (\(asset.shortCode))"
+            }
+            
+            self.availableBalanceLabel.text = "Available:  \(self.accounts[0].formattedAvailableBalance) XLM"
             self.balanceLabel.text = asset.balance.decimalFormatted()
             self.getEffects()
         }

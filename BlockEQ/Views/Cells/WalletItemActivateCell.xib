@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,9 +18,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="77.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Points" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="71L-tj-YwQ">
-                        <rect key="frame" x="62" y="0.0" width="242" height="76.5"/>
-                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Canadian Dollar (CAD)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="71L-tj-YwQ">
+                        <rect key="frame" x="62" y="0.0" width="172" height="76.5"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -44,12 +43,34 @@
                             <constraint firstAttribute="height" constant="1" id="nJn-hS-0yd"/>
                         </constraints>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TBX-1Z-gDU">
+                        <rect key="frame" x="244" y="23.5" width="60" height="30"/>
+                        <color key="backgroundColor" red="0.75406885150000003" green="0.75408679249999999" blue="0.75407713649999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="JNH-ig-lj0"/>
+                            <constraint firstAttribute="height" constant="30" id="UoK-aJ-Q0M"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                        <state key="normal" title="Add Asset">
+                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <integer key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="addAsset" destination="KGk-i7-Jjw" eventType="touchUpInside" id="8Ae-QF-Azc"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="h9c-Ow-y3n" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ATR-2C-wcP"/>
-                    <constraint firstAttribute="trailing" secondItem="71L-tj-YwQ" secondAttribute="trailing" constant="16" id="Hod-Cx-EIt"/>
                     <constraint firstItem="71L-tj-YwQ" firstAttribute="leading" secondItem="078-qo-qnz" secondAttribute="trailing" constant="10" id="MZR-7V-6uD"/>
+                    <constraint firstAttribute="trailing" secondItem="TBX-1Z-gDU" secondAttribute="trailing" constant="16" id="RSy-TA-Dqy"/>
                     <constraint firstAttribute="bottom" secondItem="h9c-Ow-y3n" secondAttribute="bottom" id="aAl-AD-iqi"/>
+                    <constraint firstItem="TBX-1Z-gDU" firstAttribute="leading" secondItem="71L-tj-YwQ" secondAttribute="trailing" constant="10" id="dy5-Qv-RIT"/>
+                    <constraint firstItem="TBX-1Z-gDU" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="fFD-sb-nd8"/>
                     <constraint firstItem="078-qo-qnz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gpD-o5-TVd"/>
                     <constraint firstItem="h9c-Ow-y3n" firstAttribute="top" secondItem="71L-tj-YwQ" secondAttribute="bottom" id="h96-LQ-OwF"/>
                     <constraint firstAttribute="trailing" secondItem="h9c-Ow-y3n" secondAttribute="trailing" id="iAN-az-3BB"/>
@@ -59,6 +80,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="addAssetButton" destination="TBX-1Z-gDU" id="b62-xX-PkI"/>
                 <outlet property="iconImageView" destination="078-qo-qnz" id="Lir-V7-iva"/>
                 <outlet property="titleLabel" destination="71L-tj-YwQ" id="QoG-U1-zbZ"/>
             </connections>

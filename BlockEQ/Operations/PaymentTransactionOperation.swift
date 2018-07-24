@@ -6,6 +6,7 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
+import Alamofire
 import stellarsdk
 import UIKit
 
@@ -43,8 +44,30 @@ class PaymentTransactionOperation: NSObject {
         }
     }
     
+    static func checkForExchange(address: String, completion: @escaping (String?) -> Void) {
+        Alamofire.request("https://blockeq-wallet.firebaseio.com/exchangeAddresses.json").responseJSON { response in
+            guard response.result.isSuccess, let value = response.result.value as? [String: Any] else {
+                    print("Error while fetching tags: \(String(describing: response.result.error))")
+                    completion(nil)
+                    return
+            }
+            
+            guard let exchange = value[address] as? [String: Any] else {
+                completion(nil)
+                return
+            }
+            
+            guard let exchangeName = exchange["exchangeName"] as? String else {
+                completion(nil)
+                return
+            }
+            
+            print("exchangeName", exchangeName)
+            completion(exchangeName)
+        }
+    }
+    
     static func postPayment(accountId: String, amount: Decimal, memoId: String, stellarAsset: StellarAsset, completion: @escaping (Bool) -> Void) {
-        print("Test")
         guard let privateKeyData = KeychainHelper.getPrivateKey(), let publicKeyData = KeychainHelper.getPublicKey() else {
             DispatchQueue.main.async {
                 completion(false)
@@ -135,7 +158,7 @@ class PaymentTransactionOperation: NSObject {
         }
     }
     
-    static func changeTrust(issuerAccountId: String, assetCode: String, completion: @escaping (Bool) -> Void) {
+    static func changeTrust(issuerAccountId: String, assetCode: String, limit: Decimal, completion: @escaping (Bool) -> Void) {
         guard let privateKeyData = KeychainHelper.getPrivateKey(), let publicKeyData = KeychainHelper.getPublicKey() else {
             DispatchQueue.main.async {
                 completion(false)
@@ -172,7 +195,7 @@ class PaymentTransactionOperation: NSObject {
             switch response {
             case .success(let accountResponse):
                 do {
-                    let changeTrustOperation = ChangeTrustOperation(sourceAccount: sourceKeyPair, asset: asset, limit: 10000000000)
+                    let changeTrustOperation = ChangeTrustOperation(sourceAccount: sourceKeyPair, asset: asset, limit: limit)
                     
                     let transaction = try Transaction(sourceAccount: accountResponse,
                                                       operations: [changeTrustOperation],

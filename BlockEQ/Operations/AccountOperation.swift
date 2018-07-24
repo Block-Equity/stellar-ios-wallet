@@ -19,6 +19,11 @@ public class AccountOperation {
             case .success(let accountDetails):
                 let stellarAccount = StellarAccount()
                 stellarAccount.accountId = accountDetails.accountId
+                stellarAccount.inflationDestination = accountDetails.inflationDestination
+                stellarAccount.totalTrustlines = accountDetails.balances.count - 1
+                stellarAccount.totalSigners = accountDetails.signers.count
+                stellarAccount.totalOffers = Int(accountDetails.subentryCount) - stellarAccount.totalTrustlines
+                
                 stellarAccount.assets.removeAll()
                 
                 for accountDetail in accountDetails.balances {

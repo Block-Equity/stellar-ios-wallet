@@ -60,15 +60,15 @@ final class KeychainHelper {
     }
     
     public static func isExistingInstance() -> Bool {
-        if !UserDefaults.standard.bool(forKey: isFreshInstallKey) {
-            UserDefaults.standard.set(true, forKey: isFreshInstallKey)
-            return false
-        }
-        return true
+        return UserDefaults.standard.bool(forKey: isFreshInstallKey)
+    }
+    
+    public static func setExistingInstance() {
+        UserDefaults.standard.set(true, forKey: isFreshInstallKey)
     }
 
     public static func clearAll() {
-        UserDefaults.standard.set(true, forKey: isFreshInstallKey)
+        UserDefaults.standard.set(false, forKey: isFreshInstallKey)
         KeychainSwift().clear()
     }
 

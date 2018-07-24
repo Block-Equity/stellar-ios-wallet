@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -11,7 +11,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WalletSwitchingViewController" customModule="BlockEQ" customModuleProvider="target">
             <connections>
-                <outlet property="inflationButton" destination="imy-G6-AT0" id="bM2-dj-9et"/>
                 <outlet property="tableView" destination="Mz8-Jj-mUP" id="ooS-XE-AgF"/>
                 <outlet property="tableViewHeader" destination="qf0-pR-vkv" id="2gj-iX-s6x"/>
                 <outlet property="tableViewHeaderTitleLabel" destination="7pK-7m-cCt" id="92L-Je-wRN"/>
@@ -34,26 +33,31 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OR9-bb-Wwy">
                     <rect key="frame" x="0.0" y="607" width="375" height="60"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="imy-G6-AT0">
-                            <rect key="frame" x="16" y="10" width="343" height="40"/>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
-                            <state key="normal" title="Set Inflation "/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gu3-59-u6Q" customClass="AppButton" customModule="BlockEQ" customModuleProvider="target">
+                            <rect key="frame" x="16" y="6" width="343" height="48"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="UL7-LW-dlc"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                            <state key="normal" title="Add Asset">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                    <integer key="value" value="2"/>
+                                    <integer key="value" value="5"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                             <connections>
-                                <action selector="setInflation" destination="-1" eventType="touchUpInside" id="ePc-Be-GhF"/>
+                                <action selector="addAsset" destination="-1" eventType="touchUpInside" id="SlO-hN-fOt"/>
                             </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="imy-G6-AT0" secondAttribute="trailing" constant="16" id="2tJ-XX-SA0"/>
-                        <constraint firstItem="imy-G6-AT0" firstAttribute="leading" secondItem="OR9-bb-Wwy" secondAttribute="leading" constant="16" id="3u9-Du-ua2"/>
-                        <constraint firstAttribute="bottom" secondItem="imy-G6-AT0" secondAttribute="bottom" constant="10" id="AIw-Dm-6ye"/>
-                        <constraint firstItem="imy-G6-AT0" firstAttribute="top" secondItem="OR9-bb-Wwy" secondAttribute="top" constant="10" id="fSM-TO-vhE"/>
+                        <constraint firstItem="Gu3-59-u6Q" firstAttribute="leading" secondItem="OR9-bb-Wwy" secondAttribute="leading" constant="16" id="55W-mm-Ns3"/>
+                        <constraint firstAttribute="trailing" secondItem="Gu3-59-u6Q" secondAttribute="trailing" constant="16" id="Hdu-U3-5ll"/>
+                        <constraint firstItem="Gu3-59-u6Q" firstAttribute="centerY" secondItem="OR9-bb-Wwy" secondAttribute="centerY" id="wDl-eT-YLU"/>
                         <constraint firstAttribute="height" constant="60" id="x2T-aA-4O6"/>
                     </constraints>
                 </view>
@@ -75,7 +79,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SUPPORTED ASSETS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7pK-7m-cCt">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BLOCKEQ ASSETS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7pK-7m-cCt">
                     <rect key="frame" x="16" y="0.0" width="343" height="39"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <nil key="textColor"/>
@@ -101,7 +105,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="PG5-EE-bAG"/>
-            <point key="canvasLocation" x="34" y="491"/>
+            <point key="canvasLocation" x="103" y="197"/>
         </view>
     </objects>
 </document>

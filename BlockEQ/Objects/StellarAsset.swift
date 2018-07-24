@@ -27,7 +27,7 @@ class StellarAsset: NSObject {
             return ""
         }
         
-        return String(format: "%.2f", floatValue)
+        return String(format: "%.4f", floatValue)
     }
     
     var shortCode: String {

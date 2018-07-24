@@ -10,6 +10,10 @@
 		26BB0291965990A98D4BF0BB /* Pods_BlockEQTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B1C324671F6269D8DB10A7 /* Pods_BlockEQTests.framework */; };
 		A6066F61786CC7405A06A52A /* Pods_BlockEQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2BFC2D9DF7C32F6D40C804F /* Pods_BlockEQ.framework */; };
 		BCB2B19D8A0C42DDC9D826C1 /* Pods_BlockEQUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6912708A90B522F68A7AFA11 /* Pods_BlockEQUITests.framework */; };
+		C46CF29920F5284B003CBDA3 /* AddAssetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46CF29820F5284B003CBDA3 /* AddAssetViewController.swift */; };
+		C4E9A77420F79F150028651F /* BalanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9A77220F79F150028651F /* BalanceViewController.swift */; };
+		C4E9A77520F79F150028651F /* BalanceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4E9A77320F79F150028651F /* BalanceViewController.xib */; };
+		C4EC5FF120F3E64300769E31 /* AddAssetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4EC5FEF20F3E64300769E31 /* AddAssetViewController.xib */; };
 		C50F390220C0AE8100DABB14 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F390120C0AE8100DABB14 /* KeyboardHelper.swift */; };
 		C52186B920C06B8100FF2A76 /* PinOptionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52186B820C06B8100FF2A76 /* PinOptionHelper.swift */; };
 		C525C97920B79695006C138F /* KeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C525C97820B79695006C138F /* KeyboardView.xib */; };
@@ -143,6 +147,10 @@
 		6978359A021C7947F1C6AC48 /* Pods-BlockEQTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQTests/Pods-BlockEQTests.release.xcconfig"; sourceTree = "<group>"; };
 		89B1C324671F6269D8DB10A7 /* Pods_BlockEQTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockEQTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2BFC2D9DF7C32F6D40C804F /* Pods_BlockEQ.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockEQ.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C46CF29820F5284B003CBDA3 /* AddAssetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAssetViewController.swift; sourceTree = "<group>"; };
+		C4E9A77220F79F150028651F /* BalanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewController.swift; sourceTree = "<group>"; };
+		C4E9A77320F79F150028651F /* BalanceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BalanceViewController.xib; sourceTree = "<group>"; };
+		C4EC5FEF20F3E64300769E31 /* AddAssetViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddAssetViewController.xib; sourceTree = "<group>"; };
 		C50F390120C0AE8100DABB14 /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
 		C52186B820C06B8100FF2A76 /* PinOptionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinOptionHelper.swift; sourceTree = "<group>"; };
 		C525C97820B79695006C138F /* KeyboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyboardView.xib; sourceTree = "<group>"; };
@@ -439,6 +447,8 @@
 				EC2015E62052EA92009A73C8 /* Wallet Creation and Restoration */,
 				EC2015D72052DB6D009A73C8 /* LaunchViewController.swift */,
 				EC2015D82052DB6D009A73C8 /* LaunchViewController.xib */,
+				C4E9A77220F79F150028651F /* BalanceViewController.swift */,
+				C4E9A77320F79F150028651F /* BalanceViewController.xib */,
 				EC2015DB2052E071009A73C8 /* WalletViewController.swift */,
 				EC2015DC2052E071009A73C8 /* WalletViewController.xib */,
 				EC0B192020549B240052802C /* ReceiveViewController.swift */,
@@ -453,6 +463,8 @@
 				ECF9F44A208937E400160843 /* InflationViewController.xib */,
 				EC478E6720D0B70600C3396C /* WebViewController.swift */,
 				EC478E6820D0B70600C3396C /* WebViewController.xib */,
+				C46CF29820F5284B003CBDA3 /* AddAssetViewController.swift */,
+				C4EC5FEF20F3E64300769E31 /* AddAssetViewController.xib */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -696,6 +708,7 @@
 				EC0B192320549B240052802C /* ReceiveViewController.xib in Resources */,
 				EC2015FB20533A89009A73C8 /* MnemonicViewController.xib in Resources */,
 				EC6EE88720B5C1320033C299 /* TradeSegmentViewController.xib in Resources */,
+				C4E9A77520F79F150028651F /* BalanceViewController.xib in Resources */,
 				C553ACBC2091572800B2379B /* Localizable.strings in Resources */,
 				EC52B3D320BC951F006299A1 /* OffersCell.xib in Resources */,
 				ECD3A353207D2CE5000609A0 /* WalletItemActivateCell.xib in Resources */,
@@ -706,6 +719,7 @@
 				EC6EE88C20B600070033C299 /* TradeViewController.xib in Resources */,
 				EC2015DA2052DB6D009A73C8 /* LaunchViewController.xib in Resources */,
 				EC2015DE2052E071009A73C8 /* WalletViewController.xib in Resources */,
+				C4EC5FF120F3E64300769E31 /* AddAssetViewController.xib in Resources */,
 				ECF9F44C208937E400160843 /* InflationViewController.xib in Resources */,
 				EC3DE2A120B8F9C300A6EC3C /* TradeHeaderView.xib in Resources */,
 				EC52B3CB20BB7476006299A1 /* OrderBookHeaderView.xib in Resources */,
@@ -754,12 +768,18 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-BlockEQ/Pods-BlockEQ-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainSwift/KeychainSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
+				"${BUILT_PRODUCTS_DIR}/Whisper/Whisper.framework",
 				"${BUILT_PRODUCTS_DIR}/stellar-ios-mac-sdk/stellarsdk.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Whisper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/stellarsdk.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -842,6 +862,7 @@
 				EC581C7220766BA8003A397E /* WalletSwitchingViewController.swift in Sources */,
 				EC2015E92052EAC7009A73C8 /* WalletTitleViewController.swift in Sources */,
 				EC6EE88F20B6004B0033C299 /* OrderBookViewController.swift in Sources */,
+				C4E9A77420F79F150028651F /* BalanceViewController.swift in Sources */,
 				EC48C1D520C82CF0009FDEBC /* StellarEffect.swift in Sources */,
 				C5AB413B2090433000096A29 /* UIView+ReusableView.swift in Sources */,
 				C5E8595020AFF09800B77289 /* OnboardingCoordinator.swift in Sources */,
@@ -875,6 +896,7 @@
 				C5CB9C1420914F64000F4181 /* SettingsContainerViewController.swift in Sources */,
 				EC52B3CE20BBB1CB006299A1 /* OrderBookCell.swift in Sources */,
 				C5AB41332090369000096A29 /* EQSettings.swift in Sources */,
+				C46CF29920F5284B003CBDA3 /* AddAssetViewController.swift in Sources */,
 				EC2015A92052D968009A73C8 /* AppDelegate.swift in Sources */,
 				EC2015D92052DB6D009A73C8 /* LaunchViewController.swift in Sources */,
 				C53978CD20BF4EF000587D99 /* SettingsNormalCell.swift in Sources */,

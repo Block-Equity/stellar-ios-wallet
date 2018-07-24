@@ -6,11 +6,16 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
+import Whisper
+import stellarsdk
 import UIKit
 
 class SendAmountViewController: UIViewController {
 
     @IBOutlet var amountLabel: UILabel!
+    @IBOutlet var exchangeLabel: UILabel!
+    @IBOutlet var exchangeLabelHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var exchangeHolderView: UIView!
     @IBOutlet var currencyLabel: UILabel!
     @IBOutlet var keyboardHolderView: UIView!
     @IBOutlet var keyboardPad1: UIButton!
@@ -38,10 +43,20 @@ class SendAmountViewController: UIViewController {
     var sendingAmount: String = ""
     var stellarAccount: StellarAccount = StellarAccount()
     var currentAssetIndex = 0
+    var isExchangeAddress: Bool = false
+    var exchangeName:String = ""
     
     @IBAction func sendPayment() {
         guard let amount = amountLabel.text, !amount.isEmpty, amount != "0", isValidSendAmount(amount: amount) else {
+            amountLabel.shake()
             return
+        }
+        
+        if isExchangeAddress {
+            guard let memo = memoIdTextField.text, !memo.isEmpty else {
+                memoIdLabel.shake()
+                return
+            }
         }
         
         if PinOptionHelper.check(.pinOnPayment) {
@@ -104,14 +119,26 @@ class SendAmountViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    init(stellarAccount: StellarAccount, currentAssetIndex: Int, reciever: String) {
+    init(stellarAccount: StellarAccount, currentAssetIndex: Int, reciever: String, exchangeName: String?) {
         super.init(nibName: String(describing: SendAmountViewController.self), bundle: nil)
         
         self.receiver = reciever
         self.stellarAccount = stellarAccount
         self.currentAssetIndex = currentAssetIndex
         
-        navigationItem.title = "\(stellarAccount.assets[currentAssetIndex].formattedBalance) \(stellarAccount.assets[currentAssetIndex].shortCode)"
+        if let exchange = exchangeName {
+            isExchangeAddress = true
+            self.exchangeName = exchange
+        }
+        
+        var availableBalance = ""
+        if stellarAccount.assets[currentAssetIndex].assetType == AssetTypeAsString.NATIVE {
+            availableBalance = stellarAccount.formattedAvailableBalance
+        } else {
+            availableBalance = stellarAccount.assets[currentAssetIndex].formattedBalance
+        }
+        
+        navigationItem.title = "\(availableBalance) \(stellarAccount.assets[currentAssetIndex].shortCode)"
     }
 
     override func viewDidLoad() {
@@ -125,10 +152,11 @@ class SendAmountViewController: UIViewController {
         let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
 
-        sendAddressLabel.textColor = Colors.darkGray
         amountLabel.textColor = Colors.primaryDark
+        exchangeHolderView.backgroundColor = Colors.red
         currencyLabel.textColor = Colors.darkGrayTransparent
         keyboardHolderView.backgroundColor = Colors.lightBackground
+        sendAddressLabel.textColor = Colors.darkGray
         memoIdLabel.textColor = Colors.darkGray
         memoIdTextField.textColor = Colors.darkGray
         
@@ -145,6 +173,18 @@ class SendAmountViewController: UIViewController {
             keyboardPad.backgroundColor = Colors.lightBackground
             keyboardPad.tag = index
         }
+        
+        if isExchangeAddress {
+            displayExchangeRequiredMessage()
+        }
+    }
+    
+    func displayExchangeRequiredMessage() {
+        memoIdTextField.placeholder = "(Required)"
+        exchangeLabelHeightConstraint.constant = 40.0
+        
+        let message = "This exchange address belongs to \(exchangeName). Please enter a memo in order to send this transaction."
+        exchangeLabel.text = message
     }
     
     @objc func dismissView() {
@@ -173,9 +213,31 @@ class SendAmountViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    func displayTransactionSuccess() {
+        hideHud()
+        
+        let message = Message(title: "Transaction successful.", backgroundColor: Colors.green)
+        Whisper.show(whisper: message, to: navigationController!, action: .show)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            Whisper.hide(whisperFrom: self.navigationController!)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.dismissView()
+            }
+        }
+    }
+    
     func isValidSendAmount(amount: String) -> Bool {
-        if let totalAmountAvailable = Double(stellarAccount.assets[currentAssetIndex].balance), let totalSendable = Double(amount) {
-            return totalSendable <= totalAmountAvailable
+        var totalAvailableBalance: Double = 0.00
+        if stellarAccount.assets[currentAssetIndex].assetType == AssetTypeAsString.NATIVE {
+            totalAvailableBalance = stellarAccount.availableBalance
+        } else {
+            totalAvailableBalance = Double(stellarAccount.assets[currentAssetIndex].balance)!
+        }
+        
+        if let totalSendable = Double(amount) {
+            return totalSendable <= totalAvailableBalance
         }
         
         return true
@@ -206,13 +268,21 @@ extension SendAmountViewController: PinViewControllerDelegate {
     }
 
     func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool) {
-        vc.dismiss(animated: true, completion: nil)
-        
-        guard let amount = amountLabel.text, !amount.isEmpty, amount != "0" else {
-            return
+        if KeychainHelper.checkPin(inPin: pin) {
+            vc.dismiss(animated: true, completion: nil)
+            
+            guard let amount = amountLabel.text, !amount.isEmpty, amount != "0" else {
+                return
+            }
+            
+            checkForValidAccount(account: receiver, amount: Decimal(string: amount)!)
+        } else {
+            vc.pinMismatchError()
         }
-
-        checkForValidAccount(account: receiver, amount: Decimal(string: amount)!)
+    }
+    
+    func pinEntryFailed(_ vc: PinViewController) {
+        vc.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -235,7 +305,7 @@ extension SendAmountViewController {
     func fundNewAccount(account accountId: String, amount: Decimal) {
         AccountOperation.createNewAccount(accountId: accountId, amount: amount) { completed in
             if completed {
-                self.dismissView()
+                self.displayTransactionSuccess()
             } else {
                 self.displayTransactionError()
             }
@@ -253,7 +323,7 @@ extension SendAmountViewController {
         
         PaymentTransactionOperation.postPayment(accountId: accountId, amount: amount, memoId: memoId, stellarAsset: stellarAsset) { completed in
             if completed {
-                self.dismissView()
+                self.displayTransactionSuccess()
             } else {
                 self.displayTransactionError()
             }

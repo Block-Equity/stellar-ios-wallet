@@ -31,7 +31,6 @@ struct EQSettings {
     static let pinSection = SettingNode.section(name: "SETTINS_OPTION_ADV_PASSCODE".localized(), identifier: "section-security", items: [
         SettingNode.node(name: "SETTINGS_OPTION_PIN_LAUNCH".localized(), identifier: "security-pin-launch", enabled: true, type: .toggle),
         SettingNode.node(name: "SETTINGS_OPTION_PIN_PAYMENTS".localized(), identifier: "security-pin-payments", enabled: true, type: .toggle),
-        SettingNode.node(name: "SETTINGS_OPTION_PIN_TRADING".localized(), identifier: "security-pin-trading", enabled: true, type: .toggle),
         SettingNode.node(name: "SETTINGS_OPTION_PIN_MNEMONIC".localized(), identifier: "security-pin-mnemonic", enabled: false, type: .toggle)
         ])
 

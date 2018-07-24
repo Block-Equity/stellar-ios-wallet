@@ -33,7 +33,7 @@
                         <constraint firstAttribute="height" constant="65" id="ARM-Gs-U4J"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
-                    <state key="normal" title="Import wallet">
+                    <state key="normal" title="Recover wallet">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                     <userDefinedRuntimeAttributes>
@@ -52,7 +52,7 @@
                         <constraint firstAttribute="height" constant="65" id="Dif-YE-ESq"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
-                    <state key="normal" title="Create a new wallet">
+                    <state key="normal" title="Create new wallet">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                     <userDefinedRuntimeAttributes>

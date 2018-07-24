@@ -51,6 +51,7 @@ class LaunchViewController: UIViewController {
     }
     
     func setupView() {
+        UIApplication.shared.statusBarStyle = .lightContent
         navigationController?.isNavigationBarHidden = true
         
         logoImageView.image = UIImage(named: "logo")

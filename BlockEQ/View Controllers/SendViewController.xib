@@ -28,11 +28,11 @@
                     <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <view key="tableHeaderView" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="208"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="542"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m6a-BS-Nig">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="208"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="542"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wvK-P4-LFG">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="205"/>
@@ -125,6 +125,7 @@
                                             <constraint firstAttribute="trailing" secondItem="eCD-uq-zHs" secondAttribute="trailing" constant="16" id="mxF-td-Dcb"/>
                                             <constraint firstItem="9ig-HT-MND" firstAttribute="leading" secondItem="wvK-P4-LFG" secondAttribute="leading" constant="16" id="qX9-5j-UmX"/>
                                             <constraint firstAttribute="trailing" secondItem="e0v-Na-RtI" secondAttribute="trailing" id="rvh-Hi-XHN"/>
+                                            <constraint firstItem="e0v-Na-RtI" firstAttribute="top" secondItem="9ig-HT-MND" secondAttribute="bottom" constant="20" id="tDZ-JW-gBl"/>
                                             <constraint firstAttribute="trailing" secondItem="9ig-HT-MND" secondAttribute="trailing" constant="16" id="vxr-oz-6ub"/>
                                             <constraint firstAttribute="trailing" secondItem="UXc-aa-UA7" secondAttribute="trailing" constant="16" id="wPv-yR-R1o"/>
                                         </constraints>
