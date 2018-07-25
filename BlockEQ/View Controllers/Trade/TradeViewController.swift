@@ -88,7 +88,12 @@ class TradeViewController: UIViewController {
         guard let floatBalance = Float(fromAsset.balance) else {
             return
         }
-        tradeFromTextField.text = String(floatBalance * BalanceType.all[sender.tag].value).decimalFormatted()
+        let value = String(floatBalance * BalanceType.all[sender.tag].value).decimalFormatted()
+        tradeFromTextField.text = value
+        
+        if currentTradeType == .market {
+            setCalculatedMarketPrice(tradeFromText: value)
+        }
     }
     
     @IBAction func addAsset() {
@@ -134,9 +139,18 @@ class TradeViewController: UIViewController {
         dismissKeyboard()
         showHud()
         
-        TradeOperation.postTrade(amount: Decimal(string: tradeFromAmount)!, numerator: Int(Float(tradeToAmount)! * 1000000), denominator: Int(Float(tradeFromAmount)! * 1000000), sellingAsset: fromAsset, buyingAsset: toAsset, offerId: 0) { completed in
+        var numerator:Int = 0
+        if currentTradeType == .market {
+            numerator = Int(Float(tradeToAmount)! * 1000000 * 0.999)
+        } else {
+            numerator = Int(Float(tradeToAmount)! * 1000000)
+        }
+        
+        
+        TradeOperation.postTrade(amount: Decimal(string: tradeFromAmount)!, numerator: numerator, denominator: Int(Float(tradeFromAmount)! * 1000000), sellingAsset: fromAsset, buyingAsset: toAsset, offerId: 0) { completed in
             self.hideHud()
             self.getOrderBook()
+            self.updateBalance()
             
             if !completed {
                 let alert = UIAlertController(title: "Trade Error", message: "Sorry your order could not be processed at this time. Please try again later.", preferredStyle: UIAlertControllerStyle.alert)
@@ -398,7 +412,10 @@ extension TradeViewController {
         AccountOperation.getAccountDetails(accountId: accountId) { responseAccounts in
             if !responseAccounts.isEmpty && responseAccounts[0].assets.count > 1 {
                 self.stellarAccount = responseAccounts[0]
-                self.setTradeSelectors(fromAsset: self.stellarAccount.assets[0], toAsset: nil)
+                if self.fromAsset == nil {
+                    self.setTradeSelectors(fromAsset: self.stellarAccount.assets[0], toAsset: nil)
+                }
+                
                 self.delegate?.update(stellarAccount: self.stellarAccount)
                 self.delegate?.hideNoAssetOverlay()
             } else {
@@ -412,6 +429,25 @@ extension TradeViewController {
                 self.stellarAccount = account
                 self.delegate?.update(stellarAccount: account)
                 self.delegate?.displayNoAssetOverlay()
+            }
+        }
+    }
+    
+    func updateBalance() {
+        guard let accountId = KeychainHelper.getAccountId() else {
+            return
+        }
+        
+        AccountOperation.getAccountDetails(accountId: accountId) { responseAccounts in
+            if !responseAccounts.isEmpty && responseAccounts[0].assets.count > 1 {
+                self.stellarAccount = responseAccounts[0]
+                for asset in self.stellarAccount.assets {
+                    if asset.shortCode == self.fromAsset.shortCode && asset.assetIssuer == self.fromAsset.assetIssuer {
+                        self.fromAsset = asset
+                        self.balanceLabel.text = "\(asset.balance.decimalFormatted()) \(asset.shortCode)"
+                        break;
+                    }
+                }
             }
         }
     }
