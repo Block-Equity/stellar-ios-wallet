@@ -8,6 +8,8 @@ The open source BlockEQ Stellar wallet for iOS supports:
  * Custom payment keyboard.
  * Quick type support from wordlist used to generate mnemonics.
  * Public account address display in QR code format with the ability to copy to clipboard.
+ * Adding and removing Stellar Assets.
+ * Trading on the SDEX.
  * Support for both testNet and production.
  
 Our iOS app is built using the amazing [Soneso open source stellar SDK](https://github.com/Soneso/stellar-ios-mac-sdk). We're proud to have a contributed a small but meaningful amount of code to the SDK.
