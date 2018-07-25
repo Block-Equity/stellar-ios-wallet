@@ -45,7 +45,7 @@ class AddAssetViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        issuerTextField.becomeFirstResponder()
+        assetCodeTextField.becomeFirstResponder()
     }
     
     func setupView() {
