@@ -7,16 +7,18 @@
 //
 
 import UIKit
+import os.log
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    var pinViewController: PinViewController?
     let container = WrapperVC()
-    var appCoordinator = ApplicationCoordinator()
     let onboardingCoordinator = OnboardingCoordinator()
+    var appCoordinator = ApplicationCoordinator()
+    var authenticationCoordinator: AuthenticationCoordinator?
+    var onboardingContainer: Bool = false
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -29,52 +31,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appCoordinator.delegate = self
 
         if !KeychainHelper.isExistingInstance() {
+            onboardingContainer = true
             container.moveToViewController(onboardingCoordinator.navController,
                                            fromViewController: nil,
                                            animated: false,
                                            completion: nil)
         } else {
+            onboardingContainer = false
             container.moveToViewController(appCoordinator.tabController,
                                            fromViewController: nil,
                                            animated: false,
                                            completion: {
                                             self.appCoordinator.tabController.moveTo(tab: .assets)
             })
+            
+            authenticate()
         }
-
-        displayPin()
 
         return true
     }
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        if let pinController = pinViewController {
-            pinController.dismiss(animated: false, completion: nil)
-        }
-    }
-
     func applicationWillEnterForeground(_ application: UIApplication) {
-        displayPin()
+        authenticate()
     }
-
-    func displayPin() {
-        guard PinOptionHelper.check(.pinOnLaunch), let _ = KeychainHelper.getPin() else {
+    
+    func authenticate(_ style: AuthenticationCoordinator.AuthenticationStyle? = nil) {
+        guard SecurityOptionHelper.check(.pinOnLaunch) else {
             return
         }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            let pinVC = PinViewController(mode: .dark, pin: nil, confirming: true, isCloseDisplayed: false, shouldSavePin: false)
-            pinVC.delegate = self
-
-            self.pinViewController = pinVC
-
-            self.container.present(pinVC, animated: true, completion: nil)
-        }
+        
+        let container = onboardingContainer ? onboardingCoordinator.navController : self.container
+        let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: false, presentVC: false, forcedStyle: style)
+        let authCoordinator = AuthenticationCoordinator(container: container, options: opts)
+        authCoordinator.delegate = self
+        authenticationCoordinator = authCoordinator
+        
+        authCoordinator.authenticate()
     }
 }
 
 extension AppDelegate: ApplicationCoordinatorDelegate {
     func switchToOnboarding() {
+        onboardingContainer = true
         onboardingCoordinator.navController.popToRootViewController(animated: false)
         container.moveToViewController(onboardingCoordinator.navController,
                                        fromViewController: appCoordinator.tabController,
@@ -88,6 +86,7 @@ extension AppDelegate: ApplicationCoordinatorDelegate {
 
 extension AppDelegate: OnboardingCoordinatorDelegate {
     func onboardingCompleted() {
+        onboardingContainer = false
         container.moveToViewController(appCoordinator.tabController,
                                        fromViewController: onboardingCoordinator.navController,
                                        animated: true,
@@ -97,21 +96,20 @@ extension AppDelegate: OnboardingCoordinatorDelegate {
     }
 }
 
-extension AppDelegate: PinViewControllerDelegate {
-    func pinEntryCancelled(_ vc: PinViewController) {
-        vc.dismiss(animated: true, completion: nil)
-    }
-
-    func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool) {
-        if KeychainHelper.checkPin(inPin: pin) {
-            vc.dismiss(animated: true, completion: nil)
-        } else {
-            vc.pinMismatchError()
-        }
+extension AppDelegate: AuthenticationCoordinatorDelegate {
+    func authenticationCancelled(_ coordinator: AuthenticationCoordinator,
+                                 options: AuthenticationCoordinator.AuthenticationContext) {
+        authenticationCoordinator = nil
     }
     
-    func pinEntryFailed(_ vc: PinViewController) {
-        vc.dismiss(animated: true, completion: nil)
-        switchToOnboarding()
+    func authenticationFailed(_ coordinator: AuthenticationCoordinator,
+                              error: AuthenticationCoordinator.AuthenticationError?,
+                              options: AuthenticationCoordinator.AuthenticationContext) {
+        authenticationCoordinator = nil
+    }
+    
+    func authenticationCompleted(_ coordinator: AuthenticationCoordinator,
+                                 options: AuthenticationCoordinator.AuthenticationContext?) {
+        authenticationCoordinator = nil
     }
 }

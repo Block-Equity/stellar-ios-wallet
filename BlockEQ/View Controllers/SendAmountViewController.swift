@@ -45,6 +45,7 @@ class SendAmountViewController: UIViewController {
     var currentAssetIndex = 0
     var isExchangeAddress: Bool = false
     var exchangeName:String = ""
+    var authenticationCoordinator: AuthenticationCoordinator?
     
     @IBAction func sendPayment() {
         guard let amount = amountLabel.text, !amount.isEmpty, amount != "0", isValidSendAmount(amount: amount) else {
@@ -59,10 +60,10 @@ class SendAmountViewController: UIViewController {
             }
         }
         
-        if PinOptionHelper.check(.pinOnPayment) {
-            displayPin()
+        if SecurityOptionHelper.check(.pinOnPayment) {
+            authenticate()
         } else {
-            checkForValidAccount(account: receiver, amount: Decimal(string: amount)!)
+            sendPaymentAmount()
         }
     }
     
@@ -189,20 +190,17 @@ class SendAmountViewController: UIViewController {
     
     @objc func dismissView() {
         view.endEditing(true)
-        
         dismiss(animated: true, completion: nil)
     }
     
-    func displayPin() {
-        let pinViewController = PinViewController(mode: .dark,
-                                                  pin: nil,
-                                                  confirming: true,
-                                                  isCloseDisplayed: true,
-                                                  shouldSavePin: false)
+    func authenticate() {
+        let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true, presentVC: true, forcedStyle: nil)
+        let authCoordinator = AuthenticationCoordinator(container: self, options: opts)
+        authCoordinator.delegate = self
         
-        pinViewController.delegate = self
+        self.authenticationCoordinator = authCoordinator
         
-        present(pinViewController, animated: true, completion: nil)
+        authCoordinator.authenticate()
     }
     
     func displayTransactionError() {
@@ -252,6 +250,14 @@ class SendAmountViewController: UIViewController {
     func hideHud() {
         MBProgressHUD.hide(for: (navigationController?.view)!, animated: true)
     }
+    
+    func sendPaymentAmount() {
+        guard let amount = amountLabel.text, !amount.isEmpty, amount != "0" else {
+            return
+        }
+        
+        checkForValidAccount(account: receiver, amount: Decimal(string: amount)!)
+    }
 }
 
 extension SendAmountViewController: UITextFieldDelegate {
@@ -262,27 +268,22 @@ extension SendAmountViewController: UITextFieldDelegate {
     }
 }
 
-extension SendAmountViewController: PinViewControllerDelegate {
-    func pinEntryCancelled(_ vc: PinViewController) {
-        vc.dismiss(animated: true, completion: nil)
-    }
-
-    func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool) {
-        if KeychainHelper.checkPin(inPin: pin) {
-            vc.dismiss(animated: true, completion: nil)
-            
-            guard let amount = amountLabel.text, !amount.isEmpty, amount != "0" else {
-                return
-            }
-            
-            checkForValidAccount(account: receiver, amount: Decimal(string: amount)!)
-        } else {
-            vc.pinMismatchError()
-        }
+extension SendAmountViewController: AuthenticationCoordinatorDelegate {
+    func authenticationCompleted(_ coordinator: AuthenticationCoordinator,
+                                 options: AuthenticationCoordinator.AuthenticationContext?) {
+        sendPaymentAmount()
+        authenticationCoordinator = nil
     }
     
-    func pinEntryFailed(_ vc: PinViewController) {
-        vc.dismiss(animated: true, completion: nil)
+    func authenticationCancelled(_ coordinator: AuthenticationCoordinator,
+                                 options: AuthenticationCoordinator.AuthenticationContext) {
+        authenticationCoordinator = nil
+    }
+    
+    func authenticationFailed(_ coordinator: AuthenticationCoordinator,
+                              error: AuthenticationCoordinator.AuthenticationError?,
+                              options: AuthenticationCoordinator.AuthenticationContext) {
+        authenticationCoordinator = nil
     }
 }
 
