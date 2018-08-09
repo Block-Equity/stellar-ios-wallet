@@ -76,6 +76,7 @@ class InflationViewController: UIViewController {
         destinationAddressTextField.textColor = Colors.darkGray
         addressHolderView.backgroundColor = Colors.lightBackground
         holdingView.backgroundColor = Colors.lightBackground
+        view.backgroundColor = Colors.lightBackground
         
         if let currentInflationDestination = inflationDestination {
             destinationAddressTextField.text = currentInflationDestination

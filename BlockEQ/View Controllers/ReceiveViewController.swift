@@ -22,12 +22,13 @@ class ReceiveViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
     
     var address: String = ""
+    var isPersonalToken: Bool = false
     
     @IBAction func copyAddress() {
         if let addressText = addressLabel.text, !addressText.isEmpty {
             UIPasteboard.general.string = addressLabel.text
             
-            let alert = UIAlertController(title: "Your wallet address has been successfully copied.",
+            let alert = UIAlertController(title: "Your address has been successfully copied.",
                                           message: nil,
                                           preferredStyle: UIAlertControllerStyle.alert)
 
@@ -37,9 +38,10 @@ class ReceiveViewController: UIViewController {
         
     }
     
-    init(address: String) {
+    init(address: String, isPersonalToken: Bool) {
         super.init(nibName: String(describing: ReceiveViewController.self), bundle: nil)
         self.address = address
+        self.isPersonalToken = isPersonalToken
     }
 
 
@@ -60,7 +62,15 @@ class ReceiveViewController: UIViewController {
     }
 
     func setupView() {
-        navigationItem.title = "Receive"
+        
+        if isPersonalToken {
+            navigationItem.title = "Token Address"
+            addressTitleLabel.text = "YOUR TOKEN ADDRESS"
+        } else {
+            navigationItem.title = "Receive"
+            addressTitleLabel.text = "YOUR WALLET ADDRESS"
+        }
+        
         
         let image = UIImage(named:"close")
         let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))

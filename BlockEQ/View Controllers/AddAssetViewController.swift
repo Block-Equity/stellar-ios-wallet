@@ -16,6 +16,7 @@ class AddAssetViewController: UIViewController {
     
     @IBOutlet var assetCodeTextField: UITextField!
     @IBOutlet var issuerTextField: UITextField!
+    @IBOutlet var holdingView: UIView!
     @IBOutlet var tableView: UITableView!
     
     weak var delegate: AddAssetViewControllerDelegate?
@@ -51,7 +52,9 @@ class AddAssetViewController: UIViewController {
     func setupView() {
         navigationItem.title = "Add Asset".localized()
         
+        holdingView.backgroundColor = Colors.lightBackground
         tableView.backgroundColor = Colors.lightBackground
+        view.backgroundColor = Colors.lightBackground
     }
     
     func showHud() {

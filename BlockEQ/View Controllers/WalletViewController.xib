@@ -212,7 +212,7 @@
         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoWhite" id="PSG-hA-d0V">
             <rect key="frame" x="0.0" y="0.0" width="60" height="22"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <point key="canvasLocation" x="-235" y="-267"/>
+            <point key="canvasLocation" x="-246" y="-359"/>
         </imageView>
         <view contentMode="scaleToFill" id="nbj-eA-uEM">
             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>

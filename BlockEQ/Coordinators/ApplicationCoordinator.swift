@@ -24,6 +24,9 @@ final class ApplicationCoordinator {
     // The coordinator responsible for the trading flow
     let tradingCoordinator = TradingCoordinator()
     
+    // The coordinator responsible for the peer to peer flow
+    let p2pCoordinator = P2PCoordinator()
+    
     /// The view that handles all switching in the header
     lazy var tradeHeaderView: TradeHeaderView = {
         let view = TradeHeaderView(frame: CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.size.width, height: 44.0)))
@@ -47,7 +50,7 @@ final class ApplicationCoordinator {
     
     /// The view controller used for receiving funds
     lazy var receiveViewController: ReceiveViewController = {
-        return ReceiveViewController(address: "permanent receive address")
+        return ReceiveViewController(address: "permanent receive address", isPersonalToken: false)
     }()
 
     /// The view controller used to switch which wallet is currently displayed, deallocated once finished using
@@ -102,6 +105,7 @@ extension ApplicationCoordinator: AppTabControllerDelegate {
             case .assets: vc = walletViewController
             case .trading: vc = tradingCoordinator.segmentController
             case .settings: vc = settingsViewController
+            case .p2p: vc = p2pCoordinator.p2pViewController
         }
         
         if currentViewController != vc {
@@ -265,7 +269,7 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
     
     func selectedReceive() {
         let address = walletViewController.accounts[0].accountId
-        let receiveVC = ReceiveViewController(address: address)
+        let receiveVC = ReceiveViewController(address: address, isPersonalToken: false)
         let container = AppNavigationController(rootViewController: receiveVC)
         
         receiveViewController = receiveVC

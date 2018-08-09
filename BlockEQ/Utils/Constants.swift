@@ -123,12 +123,14 @@ public struct Assets {
 enum MenuItem {
     case wallet
     case trading
+    case p2p
     case settings
 
     var identifier: String {
         switch self {
         case .wallet: return "menu-wallet"
         case .trading: return "menu-trading"
+        case .p2p: return "menu-p2p"
         case .settings: return "menu-settings"
         }
     }
@@ -137,6 +139,7 @@ enum MenuItem {
         switch self {
         case .wallet: return "MENU_OPTION_WALLETS".localized()
         case .trading: return "MENU_OPTION_TRADING".localized()
+        case .p2p: return "MENU_OPTION_P2P".localized()
         case .settings: return "MENU_OPTION_SETTINGS".localized()
         }
     }
@@ -145,6 +148,7 @@ enum MenuItem {
         switch self {
         case .wallet: return UIImage(named: "wallet")
         case .trading: return UIImage(named: "trading")
+        case .p2p: return UIImage(named: "settings")
         case .settings: return UIImage(named: "settings")
         }
     }
