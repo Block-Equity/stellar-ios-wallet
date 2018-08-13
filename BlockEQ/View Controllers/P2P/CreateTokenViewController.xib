@@ -56,7 +56,7 @@
                                                             <outlet property="delegate" destination="-1" id="Tjs-9v-S4i"/>
                                                         </connections>
                                                     </textField>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-BEQ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hco-Qe-sit">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- XLM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hco-Qe-sit">
                                                         <rect key="frame" x="272" y="0.0" width="55" height="50"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="55" id="hZO-XO-zn4"/>

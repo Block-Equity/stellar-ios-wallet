@@ -11,6 +11,7 @@ import UIKit
 final class P2PCoordinator {
     let p2pViewController = P2PViewController()
     
+    var addPeerViewController: AddPeerViewController?
     var createTokenViewController: CreateTokenViewController?
     var receiveViewController: ReceiveViewController?
     var trustedPartiesViewController: TrustedPartiesViewController?
@@ -23,8 +24,8 @@ final class P2PCoordinator {
     }
 }
 
-extension P2PCoordinator: P2PViewControllerDelegate {
-    func selectedAddPeer() {
+extension P2PCoordinator: AddPeerViewControllerDelegate {
+    func selectedScanAddress() {
         let scanVC = ScanViewController()
         scanVC.delegate = self
         let container = AppNavigationController(rootViewController: scanVC)
@@ -32,6 +33,20 @@ extension P2PCoordinator: P2PViewControllerDelegate {
         scanViewController = scanVC
         wrappingNavController = container
         wrappingNavController?.navigationBar.prefersLargeTitles = false
+        
+        addPeerViewController?.present(container, animated: true, completion: nil)
+    }
+}
+
+extension P2PCoordinator: P2PViewControllerDelegate {
+    func selectedAddPeer() {
+        let addPeerVC = AddPeerViewController()
+        addPeerVC.delegate = self
+        let container = AppNavigationController(rootViewController: addPeerVC)
+        
+        addPeerViewController = addPeerVC
+        wrappingNavController = container
+        wrappingNavController?.navigationBar.prefersLargeTitles = true
         
         p2pViewController.present(container, animated: true, completion: nil)
     }
@@ -83,6 +98,6 @@ extension P2PCoordinator: P2PViewControllerDelegate {
 
 extension P2PCoordinator: ScanViewControllerDelegate {
     func setQR(value: String) {
-        p2pViewController.createTrustLine(assetCode: value)
+        addPeerViewController?.setIssuerAddress(address: value)
     }
 }

@@ -202,7 +202,6 @@ public class AccountOperation {
             return
         }
         
-        
         Stellar.sdk.accounts.getAccountDetails(accountId: sourceKeyPair.accountId) { (response) -> (Void) in
             switch response {
             case .success(let accountResponse):
@@ -255,8 +254,14 @@ public class AccountOperation {
                 completion(nil)
                 return
             }
-            print("Personal Account", personalAccount)
-            //completion(String(decoding: personalAccount, as: UTF8.self))
+            
+            guard let decodedValue = personalAccount.base64Decoded() else {
+                
+                completion(nil)
+                return
+            }
+            
+            completion(decodedValue)
         }
     }
 }

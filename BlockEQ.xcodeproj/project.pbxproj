@@ -10,6 +10,8 @@
 		26BB0291965990A98D4BF0BB /* Pods_BlockEQTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B1C324671F6269D8DB10A7 /* Pods_BlockEQTests.framework */; };
 		A6066F61786CC7405A06A52A /* Pods_BlockEQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2BFC2D9DF7C32F6D40C804F /* Pods_BlockEQ.framework */; };
 		BCB2B19D8A0C42DDC9D826C1 /* Pods_BlockEQUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6912708A90B522F68A7AFA11 /* Pods_BlockEQUITests.framework */; };
+		C41713E521211A8800C29FE2 /* AddPeerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41713E321211A8800C29FE2 /* AddPeerViewController.swift */; };
+		C41713E621211A8800C29FE2 /* AddPeerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C41713E421211A8800C29FE2 /* AddPeerViewController.xib */; };
 		C439A22B211B6F9C0025C047 /* CreateTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C439A229211B6F9C0025C047 /* CreateTokenViewController.swift */; };
 		C439A22C211B6F9C0025C047 /* CreateTokenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C439A22A211B6F9C0025C047 /* CreateTokenViewController.xib */; };
 		C439A22F211B6FDC0025C047 /* P2PTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C439A22D211B6FDC0025C047 /* P2PTransactionViewController.swift */; };
@@ -23,6 +25,7 @@
 		C4E9A77420F79F150028651F /* BalanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9A77220F79F150028651F /* BalanceViewController.swift */; };
 		C4E9A77520F79F150028651F /* BalanceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4E9A77320F79F150028651F /* BalanceViewController.xib */; };
 		C4EC5FF120F3E64300769E31 /* AddAssetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4EC5FEF20F3E64300769E31 /* AddAssetViewController.xib */; };
+		C4F4938A211E19EA000B0800 /* String+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F49389211E19EA000B0800 /* String+Base64.swift */; };
 		C50F390220C0AE8100DABB14 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F390120C0AE8100DABB14 /* KeyboardHelper.swift */; };
 		C52186B920C06B8100FF2A76 /* PinOptionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52186B820C06B8100FF2A76 /* PinOptionHelper.swift */; };
 		C525C97920B79695006C138F /* KeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C525C97820B79695006C138F /* KeyboardView.xib */; };
@@ -156,6 +159,8 @@
 		6978359A021C7947F1C6AC48 /* Pods-BlockEQTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQTests/Pods-BlockEQTests.release.xcconfig"; sourceTree = "<group>"; };
 		89B1C324671F6269D8DB10A7 /* Pods_BlockEQTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockEQTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2BFC2D9DF7C32F6D40C804F /* Pods_BlockEQ.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockEQ.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C41713E321211A8800C29FE2 /* AddPeerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPeerViewController.swift; sourceTree = "<group>"; };
+		C41713E421211A8800C29FE2 /* AddPeerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddPeerViewController.xib; sourceTree = "<group>"; };
 		C439A229211B6F9C0025C047 /* CreateTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTokenViewController.swift; sourceTree = "<group>"; };
 		C439A22A211B6F9C0025C047 /* CreateTokenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateTokenViewController.xib; sourceTree = "<group>"; };
 		C439A22D211B6FDC0025C047 /* P2PTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2PTransactionViewController.swift; sourceTree = "<group>"; };
@@ -169,6 +174,7 @@
 		C4E9A77220F79F150028651F /* BalanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewController.swift; sourceTree = "<group>"; };
 		C4E9A77320F79F150028651F /* BalanceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BalanceViewController.xib; sourceTree = "<group>"; };
 		C4EC5FEF20F3E64300769E31 /* AddAssetViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddAssetViewController.xib; sourceTree = "<group>"; };
+		C4F49389211E19EA000B0800 /* String+Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Base64.swift"; sourceTree = "<group>"; };
 		C50F390120C0AE8100DABB14 /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
 		C52186B820C06B8100FF2A76 /* PinOptionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinOptionHelper.swift; sourceTree = "<group>"; };
 		C525C97820B79695006C138F /* KeyboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyboardView.xib; sourceTree = "<group>"; };
@@ -330,6 +336,8 @@
 		C439A228211B6F7D0025C047 /* P2P */ = {
 			isa = PBXGroup;
 			children = (
+				C41713E321211A8800C29FE2 /* AddPeerViewController.swift */,
+				C41713E421211A8800C29FE2 /* AddPeerViewController.xib */,
 				C499755A2112255C00E2299C /* P2PViewController.swift */,
 				C499755B2112255C00E2299C /* P2PViewController.xib */,
 				C499756421129D2D00E2299C /* TrustedPartiesViewController.swift */,
@@ -518,6 +526,7 @@
 				EC4BB64820BE4176008252AD /* String+DecimalFormatter.swift */,
 				EC4F65FD20C8CD2C0036293D /* Date+Format.swift */,
 				EC4F65FF20C8CF0C0036293D /* String+Date.swift */,
+				C4F49389211E19EA000B0800 /* String+Base64.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -741,6 +750,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C439A230211B6FDC0025C047 /* P2PTransactionViewController.xib in Resources */,
+				C41713E621211A8800C29FE2 /* AddPeerViewController.xib in Resources */,
 				EC0B192320549B240052802C /* ReceiveViewController.xib in Resources */,
 				EC2015FB20533A89009A73C8 /* MnemonicViewController.xib in Resources */,
 				EC6EE88720B5C1320033C299 /* TradeSegmentViewController.xib in Resources */,
@@ -940,6 +950,7 @@
 				C5CB9C1420914F64000F4181 /* SettingsContainerViewController.swift in Sources */,
 				EC52B3CE20BBB1CB006299A1 /* OrderBookCell.swift in Sources */,
 				C5AB41332090369000096A29 /* EQSettings.swift in Sources */,
+				C4F4938A211E19EA000B0800 /* String+Base64.swift in Sources */,
 				C46CF29920F5284B003CBDA3 /* AddAssetViewController.swift in Sources */,
 				EC2015A92052D968009A73C8 /* AppDelegate.swift in Sources */,
 				EC2015D92052DB6D009A73C8 /* LaunchViewController.swift in Sources */,
@@ -960,6 +971,7 @@
 				EC72C0B22059742900141D6F /* KeychainHelper.swift in Sources */,
 				C50F390220C0AE8100DABB14 /* KeyboardHelper.swift in Sources */,
 				EC6EE88620B5C1320033C299 /* TradeSegmentViewController.swift in Sources */,
+				C41713E521211A8800C29FE2 /* AddPeerViewController.swift in Sources */,
 				EC2015E22052E6B6009A73C8 /* UIColor+Gradient.swift in Sources */,
 				C525C97B20B79890006C138F /* KeyboardView.swift in Sources */,
 				C5AB413120902F7500096A29 /* String+Localization.swift in Sources */,

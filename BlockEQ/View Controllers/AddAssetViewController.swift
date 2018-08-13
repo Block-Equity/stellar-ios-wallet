@@ -22,13 +22,13 @@ class AddAssetViewController: UIViewController {
     weak var delegate: AddAssetViewControllerDelegate?
     
     @IBAction func addAsset() {
-        guard let issuer = issuerTextField.text, !issuer.isEmpty, issuer.count > 20 else {
-            issuerTextField.shake()
+        guard let assetCode = assetCodeTextField.text, !assetCode.isEmpty else {
+            assetCodeTextField.shake()
             return
         }
         
-        guard let assetCode = assetCodeTextField.text, !assetCode.isEmpty else {
-            assetCodeTextField.shake()
+        guard let issuer = issuerTextField.text, !issuer.isEmpty, issuer.count > 20 else {
+            issuerTextField.shake()
             return
         }
         

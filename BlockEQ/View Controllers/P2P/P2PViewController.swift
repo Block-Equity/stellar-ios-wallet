@@ -64,10 +64,6 @@ class P2PViewController: UIViewController {
     func setupView() {
         navigationItem.title = "Peer to Peer"
         
-        // TODO: Remove
-        tokenLabel.text = "SATRAJBEQ"
-        balanceLabel.text = "0.0000"
-        
         let leftBarButtonItem = UIBarButtonItem(title: "Token Address", style: .plain, target: self, action: #selector(self.displayAddress))
         navigationItem.leftBarButtonItem = leftBarButtonItem
         
@@ -78,10 +74,6 @@ class P2PViewController: UIViewController {
         headerOverlayView.backgroundColor = Colors.primaryDark
         balanceLabel.textColor = Colors.white
         tokenLabel.textColor = Colors.white
-    }
-    
-    func createTrustLine(assetCode: String) {
-        
     }
 }
 
@@ -95,7 +87,12 @@ extension P2PViewController {
         }
         
         AccountOperation.getPersonalToken(address: accountId) { personalToken in
-            print("Personal Token")
+            if let token = personalToken, !token.isEmpty {
+                self.headerOverlayView.isHidden = true
+                self.tokenLabel.text = token
+            } else {
+                self.headerOverlayView.isHidden = false
+            }
         }
     }
     /*

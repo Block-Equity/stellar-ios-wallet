@@ -6,6 +6,7 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
+import stellarsdk
 import UIKit
 
 protocol WalletSwitchingViewControllerDelegate: class {
@@ -17,7 +18,7 @@ protocol WalletSwitchingViewControllerDelegate: class {
 
 final class WalletSwitchingViewController: UIViewController {
     
-    @IBOutlet var tableView: UITableView?
+    @IBOutlet var tableView: UITableView!
     @IBOutlet var tableViewHeader: UIView!
     @IBOutlet var tableViewHeaderTitleLabel: UILabel!
 
@@ -35,6 +36,7 @@ final class WalletSwitchingViewController: UIViewController {
     var selectedIndexPath: IndexPath = IndexPath(row: 0, section: 0)
     var stellarAccount = StellarAccount()
     var updatedSupportedAssets: [Assets.AssetType] = []
+    var allAssets: [StellarAsset] = []
     
     //TODO: Remove
     /*
@@ -69,10 +71,10 @@ final class WalletSwitchingViewController: UIViewController {
         tableViewHeaderTitleLabel.textColor = Colors.darkGray
         
         let tableViewNibUserAssets = UINib(nibName: WalletItemCell.cellIdentifier, bundle: nil)
-        tableView?.register(tableViewNibUserAssets, forCellReuseIdentifier: WalletItemCell.cellIdentifier)
+        tableView.register(tableViewNibUserAssets, forCellReuseIdentifier: WalletItemCell.cellIdentifier)
         
         let tableViewNibSupportedAssets = UINib(nibName: WalletItemActivateCell.cellIdentifier, bundle: nil)
-        tableView?.register(tableViewNibSupportedAssets, forCellReuseIdentifier: WalletItemActivateCell.cellIdentifier)
+        tableView.register(tableViewNibSupportedAssets, forCellReuseIdentifier: WalletItemActivateCell.cellIdentifier)
     }
     
     func addNavigationHeader() {
@@ -89,7 +91,6 @@ final class WalletSwitchingViewController: UIViewController {
     }
     
     func updateMenu(stellarAccount: StellarAccount) {
-        
         self.stellarAccount = stellarAccount
         
         updatedSupportedAssets.removeAll()
@@ -105,6 +106,14 @@ final class WalletSwitchingViewController: UIViewController {
             
             if !isMatch {
                 updatedSupportedAssets.append(supportedAsset)
+            }
+        }
+
+        allAssets.removeAll()
+        
+        for asset in stellarAccount.assets {
+            if asset.shortCode.contains("XLM") && asset.assetType == AssetTypeAsString.CREDIT_ALPHANUM12 {
+                allAssets.append(asset)
             }
         }
         
@@ -311,7 +320,7 @@ extension WalletSwitchingViewController {
                 if isAdding {
                     self.displayAssetActivationError()
                 } else {
-                    self.displayAssetActivationError()
+                    self.displayAssetDeactivationError()
                 }
             }
         }

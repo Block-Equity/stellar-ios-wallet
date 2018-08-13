@@ -23,7 +23,7 @@ class CreateTokenViewController: UIViewController {
         
         view.endEditing(true)
         
-        createToken(assetCode: "\(tokenName)BEQ")
+        createToken(assetCode: "\(tokenName)XLM")
     }
     
     @IBAction func dismissView() {
