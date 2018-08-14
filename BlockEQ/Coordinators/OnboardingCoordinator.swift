@@ -20,14 +20,21 @@ final class OnboardingCoordinator {
     var mnemonicViewController: MnemonicViewController?
 
     weak var delegate: OnboardingCoordinatorDelegate?
-    var firstPin: String?
-    var secondPin: String?
+    var authenticationCoordinator: AuthenticationCoordinator?
 
     init() {
         navController = AppNavigationController(rootViewController: launchViewController)
         navController.navigationBar.prefersLargeTitles = true
         verificationViewController.delegate = self
         launchViewController.delegate = self
+    }
+
+    func authenticate() {
+        let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: false, presentVC: false, forcedStyle: nil)
+        let authCoordinator = AuthenticationCoordinator(container: self.navController, options: opts)
+        authCoordinator.delegate = self
+        authenticationCoordinator = authCoordinator
+        authCoordinator.createPinAuthentication()
     }
 }
 
@@ -49,59 +56,41 @@ extension OnboardingCoordinator: LaunchViewControllerDelegate {
 extension OnboardingCoordinator: MnemonicViewControllerDelegate {
     func confirmedWrittenMnemonic(_ vc: MnemonicViewController, mnemonic: String) {
         saveMnemonic(mnemonic: mnemonic)
-
-        let pinEntry = PinViewController(mode: .light, pin: nil, confirming: false, isCloseDisplayed: false, shouldSavePin: false)
-        pinEntry.delegate = self
-
-        navController.pushViewController(pinEntry, animated: true)
+        authenticate()
     }
 }
 
 extension OnboardingCoordinator: VerificationViewControllerDelegate {
     func validatedAccount(_ vc: VerificationViewController, mnemonic: String) {
         saveMnemonic(mnemonic: mnemonic)
-
-        let pinEntry = PinViewController(mode: .light, pin: nil, confirming: false, isCloseDisplayed: false, shouldSavePin: false)
-        pinEntry.delegate = self
-
-        navController.pushViewController(pinEntry, animated: true)
+        authenticate()
     }
 }
 
-extension OnboardingCoordinator: PinViewControllerDelegate {
-    func pinEntryCancelled(_ vc: PinViewController) {
+extension OnboardingCoordinator: AuthenticationCoordinatorDelegate {
+    func authenticationCancelled(_ coordinator: AuthenticationCoordinator,
+                                 options: AuthenticationCoordinator.AuthenticationContext) {
+        authenticationCoordinator = nil
         assert(false, "You shouldn't be able to dismiss the PIN entry during onboarding. Fix this!")
     }
 
-    func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool) {
-        if firstPin == nil {
-            firstPin = pin
-
-            let pinConfirmation = PinViewController(mode: .light, pin: nil, confirming: true, isCloseDisplayed: false, shouldSavePin: true)
-            pinConfirmation.delegate = self
-
-            navController.pushViewController(pinConfirmation, animated: true)
-        } else if KeychainHelper.checkPin(inPin: pin, comparePin: firstPin) {
-            if save {
-                KeychainHelper.save(pin: pin)
-                PinOptionHelper.set(option: .pinEnabled, value: true)
-                firstPin = nil
-                secondPin = nil
-            }
-
-            delegate?.onboardingCompleted()
-        } else {
-            vc.pinMismatchError()
-        }
+    func authenticationFailed(_ coordinator: AuthenticationCoordinator,
+                              error: AuthenticationCoordinator.AuthenticationError?,
+                              options: AuthenticationCoordinator.AuthenticationContext) {
+        authenticationCoordinator = nil
     }
-    
-    func pinEntryFailed(_ vc: PinViewController) {}
+
+    func authenticationCompleted(_ coordinator: AuthenticationCoordinator,
+                                 options: AuthenticationCoordinator.AuthenticationContext?) {
+        authenticationCoordinator = nil
+        delegate?.onboardingCompleted()
+    }
 }
 
 extension OnboardingCoordinator {
     func saveMnemonic(mnemonic: String) {
         let keyPair = try! Wallet.createKeyPair(mnemonic: mnemonic, passphrase: nil, index: 0)
-        
+
         let publicKeyData = NSData(bytes: keyPair.publicKey.bytes, length: keyPair.publicKey.bytes.count) as Data
         let privateBytes = keyPair.privateKey?.bytes ?? [UInt8]()
         let privateKeyData = NSData(bytes: privateBytes, length: privateBytes.count) as Data

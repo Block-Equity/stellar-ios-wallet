@@ -10,9 +10,8 @@ import UIKit
 import Foundation
 
 protocol PinViewControllerDelegate: class {
-    func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool)
+    func pinEntryCompleted(_ vc: PinViewController, pin: String)
     func pinEntryCancelled(_ vc: PinViewController)
-    func pinEntryFailed(_ vc: PinViewController)
 }
 
 class PinViewController: UIViewController {
@@ -33,13 +32,11 @@ class PinViewController: UIViewController {
     static let pinCheckDelay = 0.5
     static let pinLength = 4
 
-    var pinViews: [PinDotView]!
+    var pinViews: [PinDotView] = []
     var pin: String = ""
-    var isConfirming: Bool = false
+    var isCreating: Bool = false
     var isCloseDisplayed: Bool = false
-    var shouldSavePin: Bool = false
     var mode: DisplayMode = .light
-    var failedNumberOfPins = 2
 
     let notificationGenerator = UINotificationFeedbackGenerator()
     let impactGenerator = UIImpactFeedbackGenerator(style: .light)
@@ -52,12 +49,11 @@ class PinViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    init(mode: DisplayMode, pin: String?, confirming: Bool, isCloseDisplayed: Bool, shouldSavePin: Bool) {
+    init(mode: DisplayMode, creating: Bool, isCloseDisplayed: Bool) {
         super.init(nibName: String(describing: PinViewController.self), bundle: nil)
-        self.pin = pin ?? ""
-        self.isConfirming = confirming
+        self.pin = ""
+        self.isCreating = creating
         self.isCloseDisplayed = isCloseDisplayed
-        self.shouldSavePin = shouldSavePin
         self.mode = mode
     }
 
@@ -115,10 +111,8 @@ class PinViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         UIApplication.shared.statusBarStyle = .default
     }
-    
 
     func setupView() {
         if self.mode == .dark {
@@ -131,17 +125,19 @@ class PinViewController: UIViewController {
             titleLabel.textColor = Colors.primaryDark
         }
 
-        if isConfirming {
-            titleLabel.text = "PIN_ENTER_TITLE".localized()
-            title = "Confirm Pin"
-            navigationItem.title = "Confirm Pin"
-            //navigationItem.setHidesBackButton(false, animated: false)
+        var longTitle: String
+        var shortTitle: String
+        if isCreating {
+            longTitle = "PIN_CREATE_TITLE".localized()
+            shortTitle = "PIN_CREATE_SHORT".localized()
         } else {
-            titleLabel.text = "PIN_CREATE_TITLE".localized()
-            title = "Create Pin"
-            navigationItem.title = "Create Pin"
-            //navigationItem.setHidesBackButton(true, animated: false)
+            longTitle = "PIN_ENTER_TITLE".localized()
+            shortTitle = "PIN_CONFIRM_SHORT".localized()
         }
+        
+        titleLabel.text = longTitle
+        title = shortTitle
+        navigationItem.title = shortTitle
 
         logoImageView.image = UIImage(named: "logoWhite")
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
@@ -171,13 +167,6 @@ class PinViewController: UIViewController {
                 pinView.animateToLine()
             }
         }
-
-        if failedNumberOfPins == 0 {
-            delegate?.pinEntryFailed(self)
-            failedNumberOfPins = 2
-        } else {
-            failedNumberOfPins -= 1
-        }
     }
 }
 
@@ -206,11 +195,10 @@ extension PinViewController: KeyboardViewDelegate {
         }
 
         if pin.count == PinViewController.pinLength {
-            // Prime the haptic engine
             notificationGenerator.prepare()
 
             DispatchQueue.main.asyncAfter(deadline: .now() + PinViewController.pinCheckDelay) {
-                self.delegate?.pinEntryCompleted(self, pin: self.pin, save: self.shouldSavePin)
+                self.delegate?.pinEntryCompleted(self, pin: self.pin)
             }
         }
     }

@@ -231,31 +231,6 @@ extension WalletViewController: UITableViewDelegate {
     }
 }
 
-
-extension WalletViewController: PinViewControllerDelegate {
-    func pinEntryCancelled(_ vc: PinViewController) {
-        vc.dismiss(animated: true, completion: nil)
-    }
-
-    func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            if self.isShowingSeed {
-                let mnemonicViewController = MnemonicViewController(mnemonic: KeychainHelper.getMnemonic(), shouldSetPin: false)
-                let navigationController = AppNavigationController(rootViewController: mnemonicViewController)
-                
-                self.present(navigationController, animated: true, completion: nil)
-            } else {
-                self.paymentStream = nil
-                KeychainHelper.clearAll()
-                
-                self.navigationController?.popViewController(animated: true)
-            }
-        }
-    }
-    
-    func pinEntryFailed(_ vc: PinViewController) {}
-}
-
 /*
  * Operations
  */
