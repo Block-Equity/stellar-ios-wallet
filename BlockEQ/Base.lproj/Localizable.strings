@@ -29,12 +29,19 @@
 "SETTINGS_OPTION_PIN_LAUNCH" = "On Launch";
 "SETTINGS_OPTION_PIN_TRADING" = "When Trading";
 "SETTINGS_OPTION_PIN_MNEMONIC" = "When Viewing Mnemonic";
+"SETTINGS_OPTION_USE_FACEID" = "Use FaceID";
+"SETTINGS_OPTION_USE_TOUCHID" = "Use TouchID";
+
+"BIOMETRIC_AUTH_TITLE" = "Unlock your wallet";
 
 "TITLE_TAB_ASSETS" = "Wallet";
 "TITLE_TAB_TRADING" = "Trading";
 "TITLE_TAB_RECEIVE" = "Receive";
+"TITLE_TAB_CONTACTS" = "Contacts";
 "TITLE_TAB_SETTINGS" = "Settings";
 "TITLE_TAB_P2P" = "P2P";
 
 "PIN_ENTER_TITLE" = "Please enter your PIN code";
 "PIN_CREATE_TITLE" = "Please create a PIN code";
+"PIN_CONFIRM_SHORT" = "Confirm Pin";
+"PIN_CREATE_SHORT" = "Create Pin";

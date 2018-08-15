@@ -59,6 +59,10 @@ final class KeychainHelper {
         return KeychainSwift().get(pinKey)
     }
     
+    public static func hasPin() -> Bool {
+        return !(KeychainSwift().get(pinKey)?.isEmpty ?? true)
+    }
+    
     public static func isExistingInstance() -> Bool {
         return UserDefaults.standard.bool(forKey: isFreshInstallKey)
     }
@@ -72,8 +76,15 @@ final class KeychainHelper {
         KeychainSwift().clear()
     }
 
-    public static func checkPin(inPin: String, comparePin: String? = getPin()) -> Bool {
-        if inPin == comparePin && !inPin.isEmpty {
+    /// Validates the pin stored in the keychain with the input pin provided.
+    ///
+    /// - Parameters:
+    ///   - pin: The input pin to be verified.
+    ///   - comparePin: Optionally, you may provide your own pin to compare.
+    /// - Returns: A boolean value indicating if the two pins match, or false otherwise.
+    /// - Important: The pin check will always fail on an empty string.
+    public static func check(pin: String, comparePin: String? = getPin()) -> Bool {
+        if pin == comparePin && !pin.isEmpty {
             return true
         }
 

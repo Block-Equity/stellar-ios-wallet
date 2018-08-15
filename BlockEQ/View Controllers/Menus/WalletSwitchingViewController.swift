@@ -112,8 +112,12 @@ final class WalletSwitchingViewController: UIViewController {
         allAssets.removeAll()
         
         for asset in stellarAccount.assets {
-            if asset.shortCode.contains("XLM") && asset.assetType == AssetTypeAsString.CREDIT_ALPHANUM12 {
+            if asset.assetType == AssetTypeAsString.CREDIT_ALPHANUM4 || asset.assetType == AssetTypeAsString.NATIVE {
                 allAssets.append(asset)
+            } else {
+                if !asset.shortCode.contains("XLM") {
+                    allAssets.append(asset)
+                }
             }
         }
         
@@ -131,9 +135,14 @@ final class WalletSwitchingViewController: UIViewController {
     }
     
     func isZeroBalance() -> Bool {
-        if stellarAccount.assets.count == 1 && Double(stellarAccount.assets[0].balance)! < 1 {
+        guard let balance = Double(allAssets[0].balance) else {
+            return false
+        }
+        
+        if stellarAccount.assets.count == 1 && balance < 1.0 {
             return true
         }
+        
         return false
     }
     
@@ -188,7 +197,7 @@ extension WalletSwitchingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case SectionType.userAssets.rawValue:
-            return stellarAccount.assets.count
+            return allAssets.count
         default:
             return updatedSupportedAssets.count
         }
@@ -205,19 +214,19 @@ extension WalletSwitchingViewController: UITableViewDataSource {
             
             cell.indexPath = indexPath
             cell.delegate = self
-            cell.titleLabel.text = Assets.displayTitle(shortCode:stellarAccount.assets[indexPath.row].shortCode)
-            cell.amountLabel.text = "\(stellarAccount.assets[indexPath.row].formattedBalance) \(stellarAccount.assets[indexPath.row].shortCode)"
-            cell.iconImageView.backgroundColor = Assets.displayImageBackgroundColor(shortCode: stellarAccount.assets[indexPath.row].shortCode)
-            if let image = Assets.displayImage(shortCode: stellarAccount.assets[indexPath.row].shortCode) {
+            cell.titleLabel.text = Assets.displayTitle(shortCode:allAssets[indexPath.row].shortCode)
+            cell.amountLabel.text = "\(allAssets[indexPath.row].formattedBalance) \(allAssets[indexPath.row].shortCode)"
+            cell.iconImageView.backgroundColor = Assets.displayImageBackgroundColor(shortCode: allAssets[indexPath.row].shortCode)
+            if let image = Assets.displayImage(shortCode: allAssets[indexPath.row].shortCode) {
                 cell.iconImageView.image = image
                 cell.tokenInitialLabel.text = ""
             } else {
                 cell.iconImageView.image = nil
-                let shortcode = Assets.displayTitle(shortCode:stellarAccount.assets[indexPath.row].shortCode)
+                let shortcode = Assets.displayTitle(shortCode:allAssets[indexPath.row].shortCode)
                 cell.tokenInitialLabel.text = String(Array(shortcode)[0])
             }
             
-            if stellarAccount.assets[indexPath.row].shortCode == "XLM" {
+            if allAssets[indexPath.row].shortCode == "XLM" {
                 cell.removeAssetButton.isHidden = true
                 if let _ = stellarAccount.inflationDestination {
                     cell.setInflationButton.isHidden = true
@@ -285,7 +294,7 @@ extension WalletSwitchingViewController: WalletItemCellDelegate {
     }
     
     func didRemoveAsset(indexPath: IndexPath) {
-        createTrustLine(issuerAccountId:stellarAccount.assets[indexPath.row].assetIssuer!, assetCode:stellarAccount.assets[indexPath.row].shortCode, limit: 0.0000000, isAdding: false)
+        createTrustLine(issuerAccountId:allAssets[indexPath.row].assetIssuer!, assetCode:allAssets[indexPath.row].shortCode, limit: 0.0000000, isAdding: false)
     }
 }
 

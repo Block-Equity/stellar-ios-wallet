@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ContactStellarCell" rowHeight="55" id="KGk-i7-Jjw" customClass="ContactStellarCell" customModule="BlockEQ" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="54.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KuY-it-opr">
+                        <rect key="frame" x="16" y="0.0" width="192" height="54.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1JY-Yf-D06">
+                        <rect key="frame" x="224" y="13" width="80" height="30"/>
+                        <color key="backgroundColor" red="0.75406885150000003" green="0.75408679249999999" blue="0.75407713649999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="GsW-w4-ph7"/>
+                            <constraint firstAttribute="height" constant="30" id="IMN-52-FFK"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                        <state key="normal" title="Send Payment">
+                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <integer key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="sendPayment" destination="KGk-i7-Jjw" eventType="touchUpInside" id="gxW-PX-yfe"/>
+                        </connections>
+                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Fv-MS-YFL">
+                        <rect key="frame" x="0.0" y="53.5" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="Fax-Zn-wus"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="1Fv-MS-YFL" secondAttribute="bottom" id="6dI-pz-8Mx"/>
+                    <constraint firstItem="1Fv-MS-YFL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="CwA-d2-OPb"/>
+                    <constraint firstItem="KuY-it-opr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="LFM-ez-fFp"/>
+                    <constraint firstItem="KuY-it-opr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="UC7-8Z-zFd"/>
+                    <constraint firstAttribute="trailing" secondItem="1Fv-MS-YFL" secondAttribute="trailing" id="UjI-ax-cxB"/>
+                    <constraint firstItem="1JY-Yf-D06" firstAttribute="leading" secondItem="KuY-it-opr" secondAttribute="trailing" constant="16" id="VlT-DE-mDT"/>
+                    <constraint firstAttribute="bottom" secondItem="KuY-it-opr" secondAttribute="bottom" id="aS2-VC-Juy"/>
+                    <constraint firstAttribute="trailing" secondItem="1JY-Yf-D06" secondAttribute="trailing" constant="16" id="cXS-vg-aTI"/>
+                    <constraint firstItem="1JY-Yf-D06" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="v6V-sB-cMw"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="nameLabel" destination="KuY-it-opr" id="07n-nc-S71"/>
+                <outlet property="sendPaymentButton" destination="1JY-Yf-D06" id="9o4-GC-NlQ"/>
+            </connections>
+            <point key="canvasLocation" x="385" y="-338"/>
+        </tableViewCell>
+    </objects>
+</document>

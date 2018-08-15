@@ -29,6 +29,8 @@ struct EQSettings {
         ])
 
     static let pinSection = SettingNode.section(name: "SETTINS_OPTION_ADV_PASSCODE".localized(), identifier: "section-security", items: [
+        SettingNode.node(name: UIDevice.current.iPhoneX ? "SETTINGS_OPTION_USE_FACEID".localized() : "SETTINGS_OPTION_USE_TOUCHID".localized(),
+                         identifier: "security-use-biometrics", enabled: AuthenticationCoordinator.biometricsAvailable(), type: .toggle),
         SettingNode.node(name: "SETTINGS_OPTION_PIN_LAUNCH".localized(), identifier: "security-pin-launch", enabled: true, type: .toggle),
         SettingNode.node(name: "SETTINGS_OPTION_PIN_PAYMENTS".localized(), identifier: "security-pin-payments", enabled: true, type: .toggle),
         SettingNode.node(name: "SETTINGS_OPTION_PIN_MNEMONIC".localized(), identifier: "security-pin-mnemonic", enabled: false, type: .toggle)

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os.log
 
 protocol ApplicationCoordinatorDelegate: AnyObject {
     func switchToOnboarding()
@@ -17,16 +18,19 @@ final class ApplicationCoordinator {
 
     /// The controller class that directs which view controller is currently displayed
     let tabController = AppTabController(tab: .assets)
-    
+
     /// The current visible view controller
     var currentViewController = UIViewController()
-    
+
     // The coordinator responsible for the trading flow
     let tradingCoordinator = TradingCoordinator()
-    
+
     // The coordinator responsible for the peer to peer flow
     let p2pCoordinator = P2PCoordinator()
     
+    //The view controller responsible for desplaying contacts
+    let contactsViewController = ContactsViewController()
+
     /// The view that handles all switching in the header
     lazy var tradeHeaderView: TradeHeaderView = {
         let view = TradeHeaderView(frame: CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.size.width, height: 44.0)))
@@ -47,7 +51,7 @@ final class ApplicationCoordinator {
         vc.delegate = self
         return vc
     }()
-    
+
     /// The view controller used for receiving funds
     lazy var receiveViewController: ReceiveViewController = {
         return ReceiveViewController(address: "permanent receive address", isPersonalToken: false)
@@ -61,10 +65,10 @@ final class ApplicationCoordinator {
 
     /// The view controller used to set the user's inflation pool, deallocated once finished using
     var inflationViewController: InflationViewController?
-    
+
     /// The view controller used to set to add an asset, deallocated once finished using
     var addAssetViewController: AddAssetViewController?
-    
+
     /// The view controller used to display the minimum balance, deallocated once finished using
     var balanceViewController: BalanceViewController?
 
@@ -72,9 +76,12 @@ final class ApplicationCoordinator {
     var wrappingNavController: AppNavigationController?
 
     /// The completion handler to call when the pin view controller completes successfully
-    var pinCompletion: PinEntryCompletion?
+    var authCompletion: PinEntryCompletion?
+
+    var authenticationCoordinator: AuthenticationCoordinator?
 
     var temporaryPinSetting: Bool!
+    var temporaryBiometricSetting: Bool!
 
     weak var delegate: ApplicationCoordinatorDelegate?
 
@@ -104,26 +111,27 @@ extension ApplicationCoordinator: AppTabControllerDelegate {
         switch appTab {
             case .assets: vc = walletViewController
             case .trading: vc = tradingCoordinator.segmentController
+            case .contacts: vc = contactsViewController
             case .settings: vc = settingsViewController
             case .p2p: vc = p2pCoordinator.p2pViewController
         }
-        
+
         if currentViewController != vc {
             currentViewController = vc
-            
+
             let navWrapper = AppNavigationController(rootViewController: vc)
             wrappingNavController = navWrapper
-            
+
             if appTab != .trading {
                 navWrapper.navigationBar.prefersLargeTitles = true
             }
-            
+
             setNavControllerHeader(type: appTab)
-            
+
             tabController.setViewController(navWrapper, animated: false, completion: nil)
-        } 
+        }
     }
-    
+
     func setNavControllerHeader(type: ApplicationTab) {
         if type == .trading {
             wrappingNavController?.navigationBar.addSubview(tradeHeaderView)
@@ -134,34 +142,47 @@ extension ApplicationCoordinator: AppTabControllerDelegate {
 extension ApplicationCoordinator: SettingsDelegate {
     func selected(setting: SettingNode, value: String?) {
         switch setting {
-        case .node(_, let identifier, _, _) where identifier == "wallet-view-seed": displayPin() { self.displayMnemonic() }
-        case .node(_, let identifier, _, _) where identifier == "wallet-clear": clearWallet()
-        case .node(_, let identifier, _, _) where identifier.contains("security-pin"): managePin(identifier: identifier, newValue: value)
-        case .section(_, let identifier, _) where identifier == "section-security": pushAdvancedPinControl(with: setting)
+        case .node(_, let identifier, _, _) where identifier == "wallet-view-seed":
+            displayAuth { self.displayMnemonic() }
+        case .node(_, let identifier, _, _) where identifier == "wallet-clear":
+            clearWallet()
+        case .node(_, let identifier, _, _) where identifier.contains("security-"):
+            manageSecurity(identifier: identifier, newValue: value)
+        case .section(_, let identifier, _) where identifier == "section-security":
+            pushAdvancedPinControl(with: setting)
         default: print("Selected: \(String(describing: setting.name)) \(setting.identifier)")
         }
     }
 
     func value(for setting: SettingNode) -> String {
         switch setting {
-        case .node(_, let identifier, _, _) where identifier == "security-pin-enabled": return String(PinOptionHelper.pinSetting(for: .pinEnabled))
-        case .node(_, let identifier, _, _) where identifier == "security-pin-launch": return String(PinOptionHelper.pinSetting(for: .pinOnLaunch))
-        case .node(_, let identifier, _, _) where identifier == "security-pin-payments": return String(PinOptionHelper.pinSetting(for: .pinOnPayment))
-        case .node(_, let identifier, _, _) where identifier == "security-pin-trading": return String(PinOptionHelper.pinSetting(for: .pinOnTrade))
-        case .node(_, let identifier, _, _) where identifier == "security-pin-mnemonic": return String(PinOptionHelper.pinSetting(for: .pinOnMnemonic))
+        case .node(_, let identifier, _, _) where identifier == "security-use-biometrics":
+            let available = SecurityOptionHelper.optionSetting(for: .useBiometrics) &&
+                AuthenticationCoordinator.biometricsAvailable()
+            return String(available)
+        case .node(_, let identifier, _, _) where identifier == "security-pin-enabled":
+            return String(SecurityOptionHelper.optionSetting(for: .pinEnabled))
+        case .node(_, let identifier, _, _) where identifier == "security-pin-launch":
+            return String(SecurityOptionHelper.optionSetting(for: .pinOnLaunch))
+        case .node(_, let identifier, _, _) where identifier == "security-pin-payments":
+            return String(SecurityOptionHelper.optionSetting(for: .pinOnPayment))
+        case .node(_, let identifier, _, _) where identifier == "security-pin-trading":
+            return String(SecurityOptionHelper.optionSetting(for: .pinOnTrade))
+        case .node(_, let identifier, _, _) where identifier == "security-pin-mnemonic":
+            return String(SecurityOptionHelper.optionSetting(for: .pinOnMnemonic))
         default: return ""
         }
     }
 
-    func managePin(identifier: String, newValue: String?) {
+    func manageSecurity(identifier: String, newValue: String?) {
         guard let value = newValue else { return }
 
-        if let value = Bool(value), let option = PinOptionHelper.PinOption(rawValue: identifier) {
-            if option == .pinEnabled && !value {
-                displayPin() { PinOptionHelper.set(option: option, value: value) }
+        if let value = Bool(value), let option = SecurityOptionHelper.SecurityOption(rawValue: identifier) {
+            if !value {
+                displayAuth { SecurityOptionHelper.set(option: option, value: value) }
             }
 
-            PinOptionHelper.set(option: option, value: value)
+            SecurityOptionHelper.set(option: option, value: value)
         }
     }
 
@@ -174,10 +195,10 @@ extension ApplicationCoordinator: SettingsDelegate {
     func clearWallet() {
         let alertController = UIAlertController(title: "Are you sure you want to clear this wallet?", message: nil, preferredStyle: .alert)
 
-        let yesButton = UIAlertAction(title: "Clear", style: .destructive, handler: { (action) -> Void in
-            self.displayPin() {
+        let yesButton = UIAlertAction(title: "Clear", style: .destructive, handler: { (_) -> Void in
+            self.displayAuth {
                 KeychainHelper.clearAll()
-                PinOptionHelper.clear()
+                SecurityOptionHelper.clear()
                 self.delegate?.switchToOnboarding()
             }
         })
@@ -190,54 +211,60 @@ extension ApplicationCoordinator: SettingsDelegate {
         wrappingNavController?.present(alertController, animated: true, completion: nil)
     }
 
-    func displayPin(_ completion: PinEntryCompletion? = nil) {
-        let pinViewController = PinViewController(mode: .dark,
-                                                  pin: nil,
-                                                  confirming: true,
-                                                  isCloseDisplayed: true,
-                                                  shouldSavePin: false)
+    func displayAuth(_ completion: PinEntryCompletion? = nil) {
+        // Temporarily store the toggled settings and trigger authentication to verify
+        temporaryPinSetting = SecurityOptionHelper.optionSetting(for: .pinEnabled)
+        temporaryBiometricSetting = SecurityOptionHelper.optionSetting(for: .useBiometrics)
+        authCompletion = completion
 
-        pinViewController.delegate = self
-        pinCompletion = completion
-
-        // Temporarily store the setting for if PIN entry is enabled
-        temporaryPinSetting = PinOptionHelper.pinSetting(for: .pinEnabled)
-
-        wrappingNavController?.present(pinViewController, animated: true)
+        authenticate()
     }
 
     func displayMnemonic() {
         let mnemonicViewController = MnemonicViewController(mnemonic: KeychainHelper.getMnemonic(), shouldSetPin: false, hideConfirmation: true)
         wrappingNavController?.pushViewController(mnemonicViewController, animated: true)
     }
+
+    func authenticate(_ style: AuthenticationCoordinator.AuthenticationStyle? = nil) {
+        let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true, presentVC: true, forcedStyle: style)
+        let authCoordinator = AuthenticationCoordinator(container: self.tabController, options: opts)
+        authCoordinator.delegate = self
+        authenticationCoordinator = authCoordinator
+
+        authCoordinator.authenticate()
+    }
 }
 
-extension ApplicationCoordinator: PinViewControllerDelegate {
-    func pinEntryCancelled(_ vc: PinViewController) {
-        vc.dismiss(animated: true, completion: nil)
+extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
+    func authenticationCancelled(_ coordinator: AuthenticationCoordinator,
+                                 options: AuthenticationCoordinator.AuthenticationContext) {
+        authenticationCoordinator = nil
 
-        // We need to re-set the PIN enabled setting, in the case the user cancels input
-        PinOptionHelper.set(option: .pinEnabled, value: temporaryPinSetting)
+        // We need to re-set the previously switched setting, in the case the user cancels the authentication challenge
+        SecurityOptionHelper.set(option: .pinEnabled, value: temporaryPinSetting)
+        SecurityOptionHelper.set(option: .useBiometrics, value: temporaryBiometricSetting)
 
         settingsViewController.tableView.reloadData()
     }
 
-    func pinEntryCompleted(_ vc: PinViewController, pin: String, save: Bool) {
-        if KeychainHelper.checkPin(inPin: pin) {
-            vc.dismiss(animated: true) {
-                self.pinCompletion?()
-                self.pinCompletion = nil
-            }
-        } else {
-            vc.pinMismatchError()
-        }
+    func authenticationFailed(_ coordinator: AuthenticationCoordinator,
+                              error: AuthenticationCoordinator.AuthenticationError?,
+                              options: AuthenticationCoordinator.AuthenticationContext) {
+        authenticationCoordinator = nil
+
+        // We need to re-set the previously switched setting, in the case the user cancels the authentication challenge
+        SecurityOptionHelper.set(option: .pinEnabled, value: temporaryPinSetting)
+        SecurityOptionHelper.set(option: .useBiometrics, value: temporaryBiometricSetting)
+
+        settingsViewController.tableView.reloadData()
     }
-    
-    func pinEntryFailed(_ vc: PinViewController) {
-        vc.dismiss(animated: true, completion: nil)
-        KeychainHelper.clearAll()
-        PinOptionHelper.clear()
-        self.delegate?.switchToOnboarding()
+
+    func authenticationCompleted(_ coordinator: AuthenticationCoordinator,
+                                 options: AuthenticationCoordinator.AuthenticationContext?) {
+        authenticationCoordinator = nil
+
+        authCompletion?()
+        authCompletion = nil
     }
 }
 
@@ -266,27 +293,27 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
 
         tabController.present(container, animated: true, completion: nil)
     }
-    
+
     func selectedReceive() {
         let address = walletViewController.accounts[0].accountId
         let receiveVC = ReceiveViewController(address: address, isPersonalToken: false)
         let container = AppNavigationController(rootViewController: receiveVC)
-        
+
         receiveViewController = receiveVC
         wrappingNavController = container
         wrappingNavController?.navigationBar.prefersLargeTitles = true
-        
+
         tabController.present(container, animated: true, completion: nil)
     }
-    
+
     func selectBalance(account: StellarAccount, index: Int) {
         let balanceVC = BalanceViewController(stellarAccount: account, stellarAsset: account.assets[index])
         let container = AppNavigationController(rootViewController: balanceVC)
-        
+
         balanceViewController = balanceVC
         wrappingNavController = container
         wrappingNavController?.navigationBar.prefersLargeTitles = true
-        
+
         tabController.present(container, animated: true, completion: nil)
     }
 }
@@ -298,12 +325,12 @@ extension ApplicationCoordinator: WalletSwitchingViewControllerDelegate {
 
         wrappingNavController?.pushViewController(inflationViewController, animated: true)
     }
-    
+
     func didSelectAddAsset() {
         let addAssetViewController = AddAssetViewController()
         addAssetViewController.delegate = self
         self.addAssetViewController = addAssetViewController
-        
+
         wrappingNavController?.pushViewController(addAssetViewController, animated: true)
     }
 
@@ -319,7 +346,7 @@ extension ApplicationCoordinator: WalletSwitchingViewControllerDelegate {
 extension ApplicationCoordinator: AddAssetViewControllerDelegate {
     func didAddAsset(stellarAccount: StellarAccount) {
         reloadAssets()
-        
+
         walletSwitchingViewController?.updateMenu(stellarAccount: stellarAccount)
     }
 }
