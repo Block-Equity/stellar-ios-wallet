@@ -9,6 +9,10 @@
 import Contacts
 import UIKit
 
+protocol ContactsViewControllerDelegate: AnyObject {
+    func selectedAddToAddressBook(identifier: String, name: String)
+}
+
 class ContactsViewController: UIViewController {
     
     @IBOutlet var tableView: UITableView!
@@ -19,6 +23,8 @@ class ContactsViewController: UIViewController {
     
     var stellarContacts: [LocalContact] = []
     var addressBookContacts: [LocalContact] = []
+    
+    weak var delegate: ContactsViewControllerDelegate?
     
     enum SectionType: Int {
         case stellarContacts
@@ -109,7 +115,6 @@ class ContactsViewController: UIViewController {
                     print("Error enumerating", error.localizedDescription)
                 }
                 
-                
             } else {
                 print("Access Denied")
             }
@@ -188,51 +193,9 @@ extension ContactsViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension ContactsViewController: ContactCellDelegate {
     func didSelectAddToAddressBook(indexPath: IndexPath) {
-        print("Address Book", indexPath)
-        
         let identifier = addressBookContacts[indexPath.row].identifier
         
-        let contactsStore = CNContactStore()
-        contactsStore.requestAccess(for: .contacts) { (granted, error) in
-            if let fetchError = error {
-                print("Unable to get contacts", fetchError)
-                return
-            }
-            
-            if granted {
-                let predicate = CNContact.predicateForContacts(withIdentifiers: [identifier])
-                let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactEmailAddressesKey]
-                
-                var contacts = [CNContact]()
-                
-                do {
-                    contacts = try contactsStore.unifiedContacts(matching: predicate, keysToFetch: keys as [CNKeyDescriptor])
-                    
-                    if contacts.count == 0 {
-                        print("No contacts were found matching the given name.")
-                    } else {
-                        print(contacts[0].givenName)
-                    }
-                    
-                    let stellarEmail = CNLabeledValue(label:CNLabelWork, value:"GAP7CSR4QQWSUAAZCJ5BMEBTJGI357XPUALL5WYNPQUXLBBQGHBJ3D3I.publicaddress@blockeq.com" as NSString)
-                    let mutableContact = contacts[0].mutableCopy() as! CNMutableContact
-                    mutableContact.emailAddresses.append(stellarEmail)
-                    let req = CNSaveRequest()
-                    req.update(mutableContact)
-                    let store = CNContactStore()
-                    do {
-                        try store.execute(req)
-                        print("updateContact success")
-                    } catch {
-                        let _error = error as NSError
-                        print(_error)
-                    }
-                }
-                catch {
-                    print("Unable to fetch contacts.")
-                }
-            }
-        }
+        self.delegate?.selectedAddToAddressBook(identifier: identifier, name: addressBookContacts[indexPath.row].name)
     }
 }
 

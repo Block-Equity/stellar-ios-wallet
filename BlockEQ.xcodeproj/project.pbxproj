@@ -17,6 +17,8 @@
 		C414812E21246A1B0057ED74 /* ContactStellarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C414812C21246A1B0057ED74 /* ContactStellarCell.swift */; };
 		C414812F21246A1B0057ED74 /* ContactStellarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C414812D21246A1B0057ED74 /* ContactStellarCell.xib */; };
 		C41481312124709B0057ED74 /* LocalContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41481302124709B0057ED74 /* LocalContact.swift */; };
+		C414813421248F5B0057ED74 /* StellarContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C414813221248F5B0057ED74 /* StellarContactViewController.swift */; };
+		C414813521248F5B0057ED74 /* StellarContactViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C414813321248F5B0057ED74 /* StellarContactViewController.xib */; };
 		C4167B9221234E6C00F44136 /* SecurityOptionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52186B820C06B8100FF2A76 /* SecurityOptionHelper.swift */; };
 		C41713E521211A8800C29FE2 /* AddPeerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41713E321211A8800C29FE2 /* AddPeerViewController.swift */; };
 		C41713E621211A8800C29FE2 /* AddPeerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C41713E421211A8800C29FE2 /* AddPeerViewController.xib */; };
@@ -177,6 +179,8 @@
 		C414812C21246A1B0057ED74 /* ContactStellarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactStellarCell.swift; sourceTree = "<group>"; };
 		C414812D21246A1B0057ED74 /* ContactStellarCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactStellarCell.xib; sourceTree = "<group>"; };
 		C41481302124709B0057ED74 /* LocalContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalContact.swift; sourceTree = "<group>"; };
+		C414813221248F5B0057ED74 /* StellarContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarContactViewController.swift; sourceTree = "<group>"; };
+		C414813321248F5B0057ED74 /* StellarContactViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StellarContactViewController.xib; sourceTree = "<group>"; };
 		C41713E321211A8800C29FE2 /* AddPeerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPeerViewController.swift; sourceTree = "<group>"; };
 		C41713E421211A8800C29FE2 /* AddPeerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddPeerViewController.xib; sourceTree = "<group>"; };
 		C439A229211B6F9C0025C047 /* CreateTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTokenViewController.swift; sourceTree = "<group>"; };
@@ -360,6 +364,8 @@
 			children = (
 				C41165132123B7CB00C4CB6E /* ContactsViewController.swift */,
 				C41165142123B7CB00C4CB6E /* ContactsViewController.xib */,
+				C414813221248F5B0057ED74 /* StellarContactViewController.swift */,
+				C414813321248F5B0057ED74 /* StellarContactViewController.xib */,
 			);
 			path = "Address Book";
 			sourceTree = "<group>";
@@ -798,6 +804,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C414813521248F5B0057ED74 /* StellarContactViewController.xib in Resources */,
 				C439A230211B6FDC0025C047 /* P2PTransactionViewController.xib in Resources */,
 				C41713E621211A8800C29FE2 /* AddPeerViewController.xib in Resources */,
 				EC0B192320549B240052802C /* ReceiveViewController.xib in Resources */,
@@ -1033,6 +1040,7 @@
 				EC6EE88620B5C1320033C299 /* TradeSegmentViewController.swift in Sources */,
 				C41713E521211A8800C29FE2 /* AddPeerViewController.swift in Sources */,
 				EC2015E22052E6B6009A73C8 /* UIColor+Gradient.swift in Sources */,
+				C414813421248F5B0057ED74 /* StellarContactViewController.swift in Sources */,
 				C525C97B20B79890006C138F /* KeyboardView.swift in Sources */,
 				C5AB413120902F7500096A29 /* String+Localization.swift in Sources */,
 				EC11062520C7217F00FD3684 /* TradeScrollView.swift in Sources */,

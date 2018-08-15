@@ -28,9 +28,6 @@ final class ApplicationCoordinator {
     // The coordinator responsible for the peer to peer flow
     let p2pCoordinator = P2PCoordinator()
     
-    //The view controller responsible for desplaying contacts
-    let contactsViewController = ContactsViewController()
-
     /// The view that handles all switching in the header
     lazy var tradeHeaderView: TradeHeaderView = {
         let view = TradeHeaderView(frame: CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.size.width, height: 44.0)))
@@ -41,6 +38,13 @@ final class ApplicationCoordinator {
     /// The view controller used to list out the user's assets
     lazy var walletViewController: WalletViewController = {
         let vc = WalletViewController()
+        vc.delegate = self
+        return vc
+    }()
+    
+    //The view controller responsible for displaying contacts
+    lazy var contactsViewController: ContactsViewController = {
+        let vc = ContactsViewController()
         vc.delegate = self
         return vc
     }()
@@ -74,6 +78,9 @@ final class ApplicationCoordinator {
 
     /// Most tabbed view controllers need the top navbar - so we wrap every tab in an inner AppNavigationController
     var wrappingNavController: AppNavigationController?
+    
+    //The view controller responsible for adding and editing Stellar Contacts
+    var stellarContactViewController: StellarContactViewController?
 
     /// The completion handler to call when the pin view controller completes successfully
     var authCompletion: PinEntryCompletion?
@@ -348,5 +355,18 @@ extension ApplicationCoordinator: AddAssetViewControllerDelegate {
         reloadAssets()
 
         walletSwitchingViewController?.updateMenu(stellarAccount: stellarAccount)
+    }
+}
+
+extension ApplicationCoordinator: ContactsViewControllerDelegate {
+    func selectedAddToAddressBook(identifier: String, name: String) {
+        let stellarContactVC = StellarContactViewController(identifier: identifier, name: name)
+        let container = AppNavigationController(rootViewController: stellarContactVC)
+        
+        stellarContactViewController = stellarContactVC
+        wrappingNavController = container
+        wrappingNavController?.navigationBar.prefersLargeTitles = true
+        
+        tabController.present(container, animated: true, completion: nil)
     }
 }
