@@ -194,13 +194,17 @@ class SendAmountViewController: UIViewController {
     }
     
     func authenticate() {
-        let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true, presentVC: true, forcedStyle: nil)
-        let authCoordinator = AuthenticationCoordinator(container: self, options: opts)
-        authCoordinator.delegate = self
-        
-        self.authenticationCoordinator = authCoordinator
-        
-        authCoordinator.authenticate()
+        if let authCoordinator = self.authenticationCoordinator {
+            authCoordinator.authenticate()
+        } else {
+            let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true, presentVC: true, forcedStyle: nil)
+            let authCoordinator = AuthenticationCoordinator(container: self, options: opts)
+            authCoordinator.delegate = self
+            
+            self.authenticationCoordinator = authCoordinator
+            
+            authCoordinator.authenticate()
+        }
     }
     
     func displayTransactionError() {
@@ -277,13 +281,11 @@ extension SendAmountViewController: AuthenticationCoordinatorDelegate {
     
     func authenticationCancelled(_ coordinator: AuthenticationCoordinator,
                                  options: AuthenticationCoordinator.AuthenticationContext) {
-        authenticationCoordinator = nil
     }
     
     func authenticationFailed(_ coordinator: AuthenticationCoordinator,
                               error: AuthenticationCoordinator.AuthenticationError?,
                               options: AuthenticationCoordinator.AuthenticationContext) {
-        authenticationCoordinator = nil
     }
 }
 

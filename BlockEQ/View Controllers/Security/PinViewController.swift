@@ -203,3 +203,5 @@ extension PinViewController: KeyboardViewDelegate {
         }
     }
 }
+
+extension PinViewController: AuthenticatingViewController { }

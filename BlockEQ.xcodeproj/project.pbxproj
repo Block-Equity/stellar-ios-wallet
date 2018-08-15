@@ -42,6 +42,7 @@
 		C53978CB20BF417100587D99 /* SettingsSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53978CA20BF417100587D99 /* SettingsSwitchCell.swift */; };
 		C53978CD20BF4EF000587D99 /* SettingsNormalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53978CC20BF4EF000587D99 /* SettingsNormalCell.swift */; };
 		C553ACBC2091572800B2379B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C553ACBA2091572800B2379B /* Localizable.strings */; };
+		C55458FC2124BB1B00032699 /* AuthenticatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55458FB2124BB1B00032699 /* AuthenticatingViewController.swift */; };
 		C589FF2A20902CCC00F5F308 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C589FF2920902CCC00F5F308 /* SettingsViewController.swift */; };
 		C589FF2C20902CE300F5F308 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C589FF2B20902CE300F5F308 /* SettingsViewController.xib */; };
 		C593C46E2092E51A00D6047F /* NavigationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593C46D2092E51A00D6047F /* NavigationCell.swift */; };
@@ -63,8 +64,8 @@
 		C5E8594E20AFCC0E00B77289 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E8594D20AFCC0E00B77289 /* ApplicationCoordinator.swift */; };
 		C5E8595020AFF09800B77289 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E8594F20AFF09800B77289 /* OnboardingCoordinator.swift */; };
 		C5FAA1EE211F42010020CB26 /* AuthenticationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAA1ED211F42010020CB26 /* AuthenticationCoordinator.swift */; };
-		C5FDBC6A211D384C0051AB9F /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FDBC69211D384C0051AB9F /* AuthenticationViewController.swift */; };
-		C5FDBC6C211D385B0051AB9F /* AuthenticationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5FDBC6B211D385B0051AB9F /* AuthenticationViewController.xib */; };
+		C5FDBC6A211D384C0051AB9F /* BlankAuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FDBC69211D384C0051AB9F /* BlankAuthenticationViewController.swift */; };
+		C5FDBC6C211D385B0051AB9F /* BlankAuthenticationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5FDBC6B211D385B0051AB9F /* BlankAuthenticationViewController.xib */; };
 		EC0B191A205465BF0052802C /* WalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0B1918205465BF0052802C /* WalletCell.swift */; };
 		EC0B191B205465BF0052802C /* WalletCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC0B1919205465BF0052802C /* WalletCell.xib */; };
 		EC0B191E205486AB0052802C /* TransactionHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0B191C205486AB0052802C /* TransactionHistoryCell.swift */; };
@@ -204,6 +205,7 @@
 		C53978CA20BF417100587D99 /* SettingsSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSwitchCell.swift; sourceTree = "<group>"; };
 		C53978CC20BF4EF000587D99 /* SettingsNormalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNormalCell.swift; sourceTree = "<group>"; };
 		C553ACBB2091572800B2379B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C55458FB2124BB1B00032699 /* AuthenticatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatingViewController.swift; sourceTree = "<group>"; };
 		C589FF2920902CCC00F5F308 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C589FF2B20902CE300F5F308 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		C593C46D2092E51A00D6047F /* NavigationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCell.swift; sourceTree = "<group>"; };
@@ -225,8 +227,8 @@
 		C5E8594D20AFCC0E00B77289 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		C5E8594F20AFF09800B77289 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
 		C5FAA1ED211F42010020CB26 /* AuthenticationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinator.swift; sourceTree = "<group>"; };
-		C5FDBC69211D384C0051AB9F /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
-		C5FDBC6B211D385B0051AB9F /* AuthenticationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthenticationViewController.xib; sourceTree = "<group>"; };
+		C5FDBC69211D384C0051AB9F /* BlankAuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankAuthenticationViewController.swift; sourceTree = "<group>"; };
+		C5FDBC6B211D385B0051AB9F /* BlankAuthenticationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlankAuthenticationViewController.xib; sourceTree = "<group>"; };
 		EA487049D94C0F37E5791674 /* Pods-BlockEQ.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQ.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQ/Pods-BlockEQ.release.xcconfig"; sourceTree = "<group>"; };
 		EC0B1918205465BF0052802C /* WalletCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCell.swift; sourceTree = "<group>"; };
 		EC0B1919205465BF0052802C /* WalletCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletCell.xib; sourceTree = "<group>"; };
@@ -396,6 +398,14 @@
 			path = Menus;
 			sourceTree = "<group>";
 		};
+		C55458FA2124BB0C00032699 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				C55458FB2124BB1B00032699 /* AuthenticatingViewController.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		C589FF2820902CAC00F5F308 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -436,8 +446,8 @@
 			children = (
 				EC2015EB2052FD1A009A73C8 /* PinViewController.swift */,
 				EC2015EC2052FD1A009A73C8 /* PinViewController.xib */,
-				C5FDBC69211D384C0051AB9F /* AuthenticationViewController.swift */,
-				C5FDBC6B211D385B0051AB9F /* AuthenticationViewController.xib */,
+				C5FDBC69211D384C0051AB9F /* BlankAuthenticationViewController.swift */,
+				C5FDBC6B211D385B0051AB9F /* BlankAuthenticationViewController.xib */,
 			);
 			path = Security;
 			sourceTree = "<group>";
@@ -497,6 +507,7 @@
 		EC2015A72052D968009A73C8 /* BlockEQ */ = {
 			isa = PBXGroup;
 			children = (
+				C55458FA2124BB0C00032699 /* Protocols */,
 				C5E8594C20AFCC0000B77289 /* Coordinators */,
 				EC2015DF2052E63D009A73C8 /* Extensions */,
 				EC72C0B520597CAD00141D6F /* Objects */,
@@ -827,7 +838,7 @@
 				C4EC5FF120F3E64300769E31 /* AddAssetViewController.xib in Resources */,
 				ECF9F44C208937E400160843 /* InflationViewController.xib in Resources */,
 				C41165162123B7CB00C4CB6E /* ContactsViewController.xib in Resources */,
-				C5FDBC6C211D385B0051AB9F /* AuthenticationViewController.xib in Resources */,
+				C5FDBC6C211D385B0051AB9F /* BlankAuthenticationViewController.xib in Resources */,
 				EC3DE2A120B8F9C300A6EC3C /* TradeHeaderView.xib in Resources */,
 				EC52B3CB20BB7476006299A1 /* OrderBookHeaderView.xib in Resources */,
 				C439A22C211B6F9C0025C047 /* CreateTokenViewController.xib in Resources */,
@@ -1019,7 +1030,7 @@
 				EC2015A92052D968009A73C8 /* AppDelegate.swift in Sources */,
 				EC2015D92052DB6D009A73C8 /* LaunchViewController.swift in Sources */,
 				C53978CD20BF4EF000587D99 /* SettingsNormalCell.swift in Sources */,
-				C5FDBC6A211D384C0051AB9F /* AuthenticationViewController.swift in Sources */,
+				C5FDBC6A211D384C0051AB9F /* BlankAuthenticationViewController.swift in Sources */,
 				C5AB4137209042E800096A29 /* UITableView+ReusableCells.swift in Sources */,
 				EC4BB64920BE4176008252AD /* String+DecimalFormatter.swift in Sources */,
 				EC2015FA20533A89009A73C8 /* MnemonicViewController.swift in Sources */,
@@ -1038,6 +1049,7 @@
 				C50F390220C0AE8100DABB14 /* KeyboardHelper.swift in Sources */,
 				C5C1D3D6211BF39B0014B39F /* UIDevice.swift in Sources */,
 				EC6EE88620B5C1320033C299 /* TradeSegmentViewController.swift in Sources */,
+				C55458FC2124BB1B00032699 /* AuthenticatingViewController.swift in Sources */,
 				C41713E521211A8800C29FE2 /* AddPeerViewController.swift in Sources */,
 				EC2015E22052E6B6009A73C8 /* UIColor+Gradient.swift in Sources */,
 				C414813421248F5B0057ED74 /* StellarContactViewController.swift in Sources */,

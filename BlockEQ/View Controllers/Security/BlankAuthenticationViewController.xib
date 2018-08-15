@@ -10,8 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AuthenticationViewController" customModule="BlockEQ" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BlankAuthenticationViewController" customModule="BlockEQ" customModuleProvider="target">
             <connections>
+                <outlet property="authButton" destination="5KP-I8-jSD" id="Kjs-3S-mAw"/>
                 <outlet property="authLogo" destination="m5f-ea-x4e" id="7Lt-qm-fFh"/>
                 <outlet property="view" destination="iN0-l3-epB" id="biF-aT-cpE"/>
             </connections>
@@ -21,9 +22,23 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="m5f-ea-x4e">
-                    <rect key="frame" x="0.0" y="170" width="375" height="497"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="m5f-ea-x4e">
+                    <rect key="frame" x="0.0" y="170" width="375" height="135"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="250" id="P4T-IH-bkp"/>
+                    </constraints>
                 </imageView>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5KP-I8-jSD">
+                    <rect key="frame" x="133" y="514" width="111" height="36"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" title="Authenticate">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="authenticatePressed:" destination="-1" eventType="touchUpInside" id="8f7-s3-NMG"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.0039215686274509803" green="0.32549019607843138" blue="0.71372549019607845" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -36,6 +51,6 @@
         </view>
     </objects>
     <resources>
-        <image name="logo" width="117" height="64"/>
+        <image name="logo" width="100" height="135"/>
     </resources>
 </document>
