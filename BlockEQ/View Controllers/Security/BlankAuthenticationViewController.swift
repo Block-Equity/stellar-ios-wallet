@@ -16,18 +16,20 @@ protocol BlankAuthenticationViewControllerDelegate: AnyObject {
 final class BlankAuthenticationViewController: UIViewController {
     @IBOutlet weak var authLogo: UIImageView!
     
-    @IBOutlet weak var authButton: UIButton!
+    @IBOutlet weak var authButton: AppButton!
     
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     
     weak var delegate: BlankAuthenticationViewControllerDelegate?
     
     func setupView() {
-        self.view.backgroundColor = Colors.primaryDark
+        self.view.backgroundColor = UIColor(red:0.136, green:0.168, blue:0.218, alpha:1.000)
         self.authLogo.image = UIImage(named: "logo")
         self.authLogo.contentMode = .top
         self.authButton.isHidden = true
         self.authButton.alpha = 0
+        self.authButton.setTitle("AUTHENTICATE_TITLE".localized(), for: .normal)
+        self.authButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .title3)
     }
     
     override func viewWillAppear(_ animated: Bool) {
