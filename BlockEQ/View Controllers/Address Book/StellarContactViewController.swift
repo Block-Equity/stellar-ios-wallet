@@ -50,13 +50,27 @@ class StellarContactViewController: UIViewController {
                     
                     let stellarEmail = CNLabeledValue(label:"Stellar", value:"\(address).publicaddress@blockeq.com" as NSString)
                     let mutableContact = contacts[0].mutableCopy() as! CNMutableContact
-                    mutableContact.emailAddresses.append(stellarEmail)
+                    
+                    var previousEmailFound: Bool = false
+                    var previousEmailIndex: Int = 0
+                    for (index, emailAddress) in mutableContact.emailAddresses.enumerated() {
+                        if emailAddress.value.contains(".publicaddress@blockeq.com") {
+                            previousEmailFound = true
+                            previousEmailIndex = index
+                            break;
+                        }
+                    }
+                    
+                    if previousEmailFound {
+                        mutableContact.emailAddresses[previousEmailIndex] = stellarEmail
+                        mutableContact.emailAddresses.append(stellarEmail)
+                    }
+                    
                     let req = CNSaveRequest()
                     req.update(mutableContact)
                     let store = CNContactStore()
                     do {
                         try store.execute(req)
-                        print("updateContact success")
                         DispatchQueue.main.async {
                             self.dismissView()
                         }
@@ -70,7 +84,6 @@ class StellarContactViewController: UIViewController {
                 }
             }
         }
-        
     }
     
     @IBAction func scanQRCode() {

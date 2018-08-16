@@ -202,5 +202,8 @@ extension ContactsViewController: ContactCellDelegate {
 extension ContactsViewController: ContactCellStellarDelegate {
     func didSendPayment(indexPath: IndexPath) {
         print("Send Payment", indexPath)
+        let identifier = stellarContacts[indexPath.row].identifier
+        
+        self.delegate?.selectedAddToAddressBook(identifier: identifier, name: stellarContacts[indexPath.row].name)
     }
 }
