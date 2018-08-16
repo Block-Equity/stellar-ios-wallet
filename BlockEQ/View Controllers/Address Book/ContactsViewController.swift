@@ -6,15 +6,17 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
+import stellarsdk
 import Contacts
 import UIKit
 
 protocol ContactsViewControllerDelegate: AnyObject {
-    func selectedAddToAddressBook(identifier: String, name: String)
+    func selectedAddToAddressBook(identifier: String, name: String, address: String)
 }
 
 class ContactsViewController: UIViewController {
     
+    @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var tableViewHeaderStellar: UIView!
     @IBOutlet var tableViewHeaderStellarTitleLabel: UILabel!
@@ -23,6 +25,7 @@ class ContactsViewController: UIViewController {
     
     var stellarContacts: [LocalContact] = []
     var addressBookContacts: [LocalContact] = []
+    var accounts: [StellarAccount] = []
     
     weak var delegate: ContactsViewControllerDelegate?
     
@@ -33,6 +36,10 @@ class ContactsViewController: UIViewController {
         static var all: [SectionType] {
             return [.stellarContacts, .addressBookContacts]
         }
+    }
+    
+    @IBAction func addContact() {
+         self.delegate?.selectedAddToAddressBook(identifier: "", name: "", address: "")
     }
 
     override func viewDidLoad() {
@@ -51,9 +58,12 @@ class ContactsViewController: UIViewController {
     func setupView() {
         navigationItem.title = "Contacts"
         
+        let rightBarButtonItem = UIBarButtonItem(title: "Add Contact", style: .plain, target: self, action: #selector(self.addContact))
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+        
+        searchBar.barTintColor = Colors.lightBackground
         tableViewHeaderStellar.backgroundColor = Colors.lightBackground
         tableViewHeaderStellarTitleLabel.textColor = Colors.darkGray
-        
         tableViewHeaderAddressBook.backgroundColor = Colors.lightBackground
         tableViewHeaderAddressBookTitleLabel.textColor = Colors.darkGray
         
@@ -119,6 +129,14 @@ class ContactsViewController: UIViewController {
                 print("Access Denied")
             }
         }
+    }
+    func showHud() {
+        let hud = MBProgressHUD.showAdded(to: (navigationController?.view)!, animated: true)
+        hud.mode = .indeterminate
+    }
+    
+    func hideHud() {
+        MBProgressHUD.hide(for: (navigationController?.view)!, animated: true)
     }
 }
 
@@ -191,19 +209,74 @@ extension ContactsViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+extension ContactsViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+
+    }
+}
+
 extension ContactsViewController: ContactCellDelegate {
     func didSelectAddToAddressBook(indexPath: IndexPath) {
         let identifier = addressBookContacts[indexPath.row].identifier
         
-        self.delegate?.selectedAddToAddressBook(identifier: identifier, name: addressBookContacts[indexPath.row].name)
+        self.delegate?.selectedAddToAddressBook(identifier: identifier, name: addressBookContacts[indexPath.row].name, address: addressBookContacts[indexPath.row].address)
     }
 }
 
 extension ContactsViewController: ContactCellStellarDelegate {
     func didSendPayment(indexPath: IndexPath) {
         print("Send Payment", indexPath)
+        /*
         let identifier = stellarContacts[indexPath.row].identifier
         
-        self.delegate?.selectedAddToAddressBook(identifier: identifier, name: stellarContacts[indexPath.row].name)
+        self.delegate?.selectedAddToAddressBook(identifier: identifier, name: stellarContacts[indexPath.row].name, address: stellarContacts[indexPath.row].address)*/
+        
+        getAccountDetails(address: stellarContacts[indexPath.row].address)
+    }
+}
+
+/*
+ * Operations
+ */
+extension ContactsViewController {
+    func getAccountDetails(address: String) {
+        guard let accountId = KeychainHelper.getAccountId() else {
+            return
+        }
+        
+        showHud()
+        view.endEditing(true)
+        
+        AccountOperation.getAccountDetails(accountId: accountId) { responseAccounts in
+            self.accounts = responseAccounts
+            
+            if responseAccounts.isEmpty {
+                self.accounts.removeAll()
+                
+                let stellarAccount = StellarAccount()
+                stellarAccount.accountId = accountId
+                
+                let stellarAsset = StellarAsset(assetType: AssetTypeAsString.NATIVE, assetCode: nil, assetIssuer: nil, balance: "0.0000")
+                
+                stellarAccount.assets.removeAll()
+                stellarAccount.assets.append(stellarAsset)
+                
+                self.accounts.append(stellarAccount)
+            }
+            
+            self.checkForExchange(receiver: address, stellarAccount: self.accounts[0])
+        }
+    }
+    
+    func checkForExchange(receiver: String, stellarAccount: StellarAccount) {
+        PaymentTransactionOperation.checkForExchange(address: receiver) { address in
+            self.hideHud()
+            
+            let sendAmountViewController = SendAmountViewController(stellarAccount: stellarAccount, currentAssetIndex: 0, reciever: receiver, exchangeName: address)
+            let navigationController = AppNavigationController(rootViewController: sendAmountViewController)
+            navigationController.navigationBar.prefersLargeTitles = true
+            
+            self.present(navigationController, animated: true, completion: nil)
+        }
     }
 }

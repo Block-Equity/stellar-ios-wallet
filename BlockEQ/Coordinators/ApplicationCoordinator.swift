@@ -359,8 +359,8 @@ extension ApplicationCoordinator: AddAssetViewControllerDelegate {
 }
 
 extension ApplicationCoordinator: ContactsViewControllerDelegate {
-    func selectedAddToAddressBook(identifier: String, name: String) {
-        let stellarContactVC = StellarContactViewController(identifier: identifier, name: name)
+    func selectedAddToAddressBook(identifier: String, name: String, address: String) {
+        let stellarContactVC = StellarContactViewController(identifier: identifier, name: name, address: address)
         let container = AppNavigationController(rootViewController: stellarContactVC)
         
         stellarContactViewController = stellarContactVC
