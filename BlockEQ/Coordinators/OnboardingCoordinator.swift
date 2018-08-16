@@ -30,11 +30,15 @@ final class OnboardingCoordinator {
     }
 
     func authenticate() {
-        let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: false, presentVC: false, forcedStyle: nil)
-        let authCoordinator = AuthenticationCoordinator(container: self.navController, options: opts)
-        authCoordinator.delegate = self
-        authenticationCoordinator = authCoordinator
-        authCoordinator.createPinAuthentication()
+        if let authCoordinator = self.authenticationCoordinator {
+            authCoordinator.createPinAuthentication()
+        } else {
+            let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: false, presentVC: false, forcedStyle: nil)
+            let authCoordinator = AuthenticationCoordinator(container: self.navController, options: opts)
+            authCoordinator.delegate = self
+            authenticationCoordinator = authCoordinator
+            authCoordinator.createPinAuthentication()
+        }
     }
 }
 
@@ -70,7 +74,6 @@ extension OnboardingCoordinator: VerificationViewControllerDelegate {
 extension OnboardingCoordinator: AuthenticationCoordinatorDelegate {
     func authenticationCancelled(_ coordinator: AuthenticationCoordinator,
                                  options: AuthenticationCoordinator.AuthenticationContext) {
-        authenticationCoordinator = nil
         assert(false, "You shouldn't be able to dismiss the PIN entry during onboarding. Fix this!")
     }
 

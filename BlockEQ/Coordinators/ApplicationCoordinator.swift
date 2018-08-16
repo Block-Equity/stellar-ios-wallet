@@ -245,8 +245,6 @@ extension ApplicationCoordinator: SettingsDelegate {
 extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
     func authenticationCancelled(_ coordinator: AuthenticationCoordinator,
                                  options: AuthenticationCoordinator.AuthenticationContext) {
-        authenticationCoordinator = nil
-
         // We need to re-set the previously switched setting, in the case the user cancels the authentication challenge
         SecurityOptionHelper.set(option: .pinEnabled, value: temporaryPinSetting)
         SecurityOptionHelper.set(option: .useBiometrics, value: temporaryBiometricSetting)
@@ -257,8 +255,6 @@ extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
     func authenticationFailed(_ coordinator: AuthenticationCoordinator,
                               error: AuthenticationCoordinator.AuthenticationError?,
                               options: AuthenticationCoordinator.AuthenticationContext) {
-        authenticationCoordinator = nil
-
         // We need to re-set the previously switched setting, in the case the user cancels the authentication challenge
         SecurityOptionHelper.set(option: .pinEnabled, value: temporaryPinSetting)
         SecurityOptionHelper.set(option: .useBiometrics, value: temporaryBiometricSetting)
