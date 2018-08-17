@@ -25,6 +25,9 @@ final class ApplicationCoordinator {
     // The coordinator responsible for the trading flow
     let tradingCoordinator = TradingCoordinator()
 
+    // The coordinator responsible for the peer to peer flow
+    let p2pCoordinator = P2PCoordinator()
+    
     /// The view that handles all switching in the header
     lazy var tradeHeaderView: TradeHeaderView = {
         let view = TradeHeaderView(frame: CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.size.width, height: 44.0)))
@@ -38,6 +41,13 @@ final class ApplicationCoordinator {
         vc.delegate = self
         return vc
     }()
+    
+    //The view controller responsible for displaying contacts
+    lazy var contactsViewController: ContactsViewController = {
+        let vc = ContactsViewController()
+        vc.delegate = self
+        return vc
+    }()
 
     /// The view controller used to display settings options
     lazy var settingsViewController: SettingsViewController = {
@@ -48,7 +58,7 @@ final class ApplicationCoordinator {
 
     /// The view controller used for receiving funds
     lazy var receiveViewController: ReceiveViewController = {
-        return ReceiveViewController(address: "permanent receive address")
+        return ReceiveViewController(address: "permanent receive address", isPersonalToken: false)
     }()
 
     /// The view controller used to switch which wallet is currently displayed, deallocated once finished using
@@ -68,6 +78,9 @@ final class ApplicationCoordinator {
 
     /// Most tabbed view controllers need the top navbar - so we wrap every tab in an inner AppNavigationController
     var wrappingNavController: AppNavigationController?
+    
+    //The view controller responsible for adding and editing Stellar Contacts
+    var stellarContactViewController: StellarContactViewController?
 
     /// The completion handler to call when the pin view controller completes successfully
     var authCompletion: PinEntryCompletion?
@@ -105,7 +118,9 @@ extension ApplicationCoordinator: AppTabControllerDelegate {
         switch appTab {
             case .assets: vc = walletViewController
             case .trading: vc = tradingCoordinator.segmentController
+            case .contacts: vc = contactsViewController
             case .settings: vc = settingsViewController
+            case .p2p: vc = p2pCoordinator.p2pViewController
         }
 
         if currentViewController != vc {
@@ -218,20 +233,22 @@ extension ApplicationCoordinator: SettingsDelegate {
     }
 
     func authenticate(_ style: AuthenticationCoordinator.AuthenticationStyle? = nil) {
-        let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true, presentVC: true, forcedStyle: style)
-        let authCoordinator = AuthenticationCoordinator(container: self.tabController, options: opts)
-        authCoordinator.delegate = self
-        authenticationCoordinator = authCoordinator
+        if let authCoordinator = self.authenticationCoordinator {
+            authCoordinator.authenticate()
+        } else {
+            let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true, presentVC: true, forcedStyle: style)
+            let authCoordinator = AuthenticationCoordinator(container: self.tabController, options: opts)
+            authCoordinator.delegate = self
+            authenticationCoordinator = authCoordinator
 
-        authCoordinator.authenticate()
+            authCoordinator.authenticate()
+        }
     }
 }
 
 extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
     func authenticationCancelled(_ coordinator: AuthenticationCoordinator,
                                  options: AuthenticationCoordinator.AuthenticationContext) {
-        authenticationCoordinator = nil
-
         // We need to re-set the previously switched setting, in the case the user cancels the authentication challenge
         SecurityOptionHelper.set(option: .pinEnabled, value: temporaryPinSetting)
         SecurityOptionHelper.set(option: .useBiometrics, value: temporaryBiometricSetting)
@@ -242,8 +259,6 @@ extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
     func authenticationFailed(_ coordinator: AuthenticationCoordinator,
                               error: AuthenticationCoordinator.AuthenticationError?,
                               options: AuthenticationCoordinator.AuthenticationContext) {
-        authenticationCoordinator = nil
-
         // We need to re-set the previously switched setting, in the case the user cancels the authentication challenge
         SecurityOptionHelper.set(option: .pinEnabled, value: temporaryPinSetting)
         SecurityOptionHelper.set(option: .useBiometrics, value: temporaryBiometricSetting)
@@ -288,7 +303,7 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
 
     func selectedReceive() {
         let address = walletViewController.accounts[0].accountId
-        let receiveVC = ReceiveViewController(address: address)
+        let receiveVC = ReceiveViewController(address: address, isPersonalToken: false)
         let container = AppNavigationController(rootViewController: receiveVC)
 
         receiveViewController = receiveVC
@@ -340,5 +355,18 @@ extension ApplicationCoordinator: AddAssetViewControllerDelegate {
         reloadAssets()
 
         walletSwitchingViewController?.updateMenu(stellarAccount: stellarAccount)
+    }
+}
+
+extension ApplicationCoordinator: ContactsViewControllerDelegate {
+    func selectedAddToAddressBook(identifier: String, name: String, address: String) {
+        let stellarContactVC = StellarContactViewController(identifier: identifier, name: name, address: address)
+        let container = AppNavigationController(rootViewController: stellarContactVC)
+        
+        stellarContactViewController = stellarContactVC
+        wrappingNavController = container
+        wrappingNavController?.navigationBar.prefersLargeTitles = true
+        
+        tabController.present(container, animated: true, completion: nil)
     }
 }

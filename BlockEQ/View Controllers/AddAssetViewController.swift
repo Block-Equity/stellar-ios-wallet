@@ -16,18 +16,19 @@ class AddAssetViewController: UIViewController {
     
     @IBOutlet var assetCodeTextField: UITextField!
     @IBOutlet var issuerTextField: UITextField!
+    @IBOutlet var holdingView: UIView!
     @IBOutlet var tableView: UITableView!
     
     weak var delegate: AddAssetViewControllerDelegate?
     
     @IBAction func addAsset() {
-        guard let issuer = issuerTextField.text, !issuer.isEmpty, issuer.count > 20 else {
-            issuerTextField.shake()
+        guard let assetCode = assetCodeTextField.text, !assetCode.isEmpty else {
+            assetCodeTextField.shake()
             return
         }
         
-        guard let assetCode = assetCodeTextField.text, !assetCode.isEmpty else {
-            assetCodeTextField.shake()
+        guard let issuer = issuerTextField.text, !issuer.isEmpty, issuer.count > 20 else {
+            issuerTextField.shake()
             return
         }
         
@@ -51,7 +52,9 @@ class AddAssetViewController: UIViewController {
     func setupView() {
         navigationItem.title = "Add Asset".localized()
         
+        holdingView.backgroundColor = Colors.lightBackground
         tableView.backgroundColor = Colors.lightBackground
+        view.backgroundColor = Colors.lightBackground
     }
     
     func showHud() {

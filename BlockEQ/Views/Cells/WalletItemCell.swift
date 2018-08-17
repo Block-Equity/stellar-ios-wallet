@@ -45,8 +45,8 @@ class WalletItemCell: UITableViewCell {
     
     func setupView() {
         removeAssetButton.backgroundColor = Colors.red
-        setInflationButton.backgroundColor = Colors.red
-        updateInflationButton.backgroundColor = Colors.green
+        setInflationButton.backgroundColor = Colors.green
+        updateInflationButton.backgroundColor = Colors.secondaryDark
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

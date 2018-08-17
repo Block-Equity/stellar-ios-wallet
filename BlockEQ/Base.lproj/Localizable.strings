@@ -9,6 +9,7 @@
 "MENU_OPTION_WALLETS" = "Wallets";
 "MENU_OPTION_TRADING" = "Trading";
 "MENU_OPTION_SETTINGS" = "Settings";
+"MENU_OPTION_P2P" = "Peer to Peer";
 
 "SETTINGS_SECTION_WALLET" = "Wallet";
 "SETTINGS_SECTION_SECURITY" = "Security";
@@ -32,11 +33,14 @@
 "SETTINGS_OPTION_USE_TOUCHID" = "Use TouchID";
 
 "BIOMETRIC_AUTH_TITLE" = "Unlock your wallet";
+"AUTHENTICATE_TITLE" = "Authenticate";
 
 "TITLE_TAB_ASSETS" = "Wallet";
 "TITLE_TAB_TRADING" = "Trading";
 "TITLE_TAB_RECEIVE" = "Receive";
+"TITLE_TAB_CONTACTS" = "Contacts";
 "TITLE_TAB_SETTINGS" = "Settings";
+"TITLE_TAB_P2P" = "P2P";
 
 "PIN_ENTER_TITLE" = "Please enter your PIN code";
 "PIN_CREATE_TITLE" = "Please create a PIN code";

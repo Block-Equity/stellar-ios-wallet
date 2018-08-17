@@ -12,6 +12,8 @@ enum ApplicationTab: Int {
     case assets
     case trading
     case settings
+    case contacts
+    case p2p
 
     var tabBarItem: UITabBarItem {
         return UITabBarItem(title: title,
@@ -23,7 +25,9 @@ enum ApplicationTab: Int {
         switch self {
         case .assets: return "TITLE_TAB_ASSETS".localized()
         case .trading: return "TITLE_TAB_TRADING".localized()
+        case .contacts: return "TITLE_TAB_CONTACTS".localized()
         case .settings: return "TITLE_TAB_SETTINGS".localized()
+        case .p2p: return "TITLE_TAB_P2P".localized()
         }
     }
 
@@ -32,7 +36,9 @@ enum ApplicationTab: Int {
         switch self {
         case .assets: image = UIImage(named: "wallet")
         case .trading: image = UIImage(named: "trading")
+        case .contacts: image = UIImage(named: "contact")
         case .settings: image = UIImage(named: "settings")
+        case .p2p: image = UIImage(named: "settings")
         }
 
         return image!
@@ -43,7 +49,9 @@ enum ApplicationTab: Int {
         switch self {
         case .assets: image = UIImage(named: "wallet")
         case .trading: image = UIImage(named: "trading")
+        case .contacts: image = UIImage(named: "contact")
         case .settings: image = UIImage(named: "settings")
+        case .p2p: image = UIImage(named: "settings")
         }
 
         return image!
@@ -59,7 +67,7 @@ enum ApplicationTab: Int {
 
     static var all: [ApplicationTab] {
         // TODO: Trading removed from first release to be added for subsequent release.
-        return [.assets, .trading, .settings]
+        return [.assets, .trading, .contacts, .settings]
     }
 
     var tabNumber: Int {

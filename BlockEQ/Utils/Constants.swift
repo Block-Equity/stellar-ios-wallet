@@ -10,10 +10,11 @@ import stellarsdk
 import UIKit
 
 struct Colors {
-    static let primaryDark =  UIColor(red: 1.0/255.0, green: 83.0/255.0, blue: 182.0/255.0, alpha: Alphas.opaque)
+    static let backgroundDark =  UIColor(red: 21.0/255.0, green: 27.0/255.0, blue: 38.0/255.0, alpha: Alphas.opaque)
+    static let primaryDark =  UIColor(red: 0.0/255.0, green: 106.0/255.0, blue: 255.0/255.0, alpha: Alphas.opaque)
     static let primaryDarkTransparent = UIColor(red: 1.0/255.0, green: 83.0/255.0, blue: 182.0/255.0, alpha: Alphas.transparent)
-    static let secondaryDark =  UIColor(red: 7.0/255.0, green: 35.0/255.0, blue: 122.0/255.0, alpha: Alphas.opaque)
-    static let secondaryDarkTransparent =  UIColor(red: 7.0/255.0, green: 35.0/255.0, blue: 122.0/255.0, alpha: Alphas.transparent)
+    static let secondaryDark =  UIColor(red: 0.0/255.0, green: 143.0/255.0, blue: 255.0/255.0, alpha: Alphas.opaque)
+    static let secondaryDarkTransparent =  UIColor(red: 0.0/255.0, green: 143.0/255.0, blue: 255.0/255.0, alpha: Alphas.transparent)
     static let tertiaryDark =  UIColor(red: 0.0/255.0, green: 132.0/255.0, blue: 255.0/255.0, alpha: Alphas.opaque)
     static let tertiaryDarkTransparent =  UIColor(red: 0.0/255.0, green: 132.0/255.0, blue: 255.0/255.0, alpha: Alphas.transparent)
     static let lightBackground = UIColor(red: 247.0/255.0, green: 247.0/255.0, blue: 247.0/255.0, alpha: Alphas.opaque)
@@ -123,12 +124,14 @@ public struct Assets {
 enum MenuItem {
     case wallet
     case trading
+    case p2p
     case settings
 
     var identifier: String {
         switch self {
         case .wallet: return "menu-wallet"
         case .trading: return "menu-trading"
+        case .p2p: return "menu-p2p"
         case .settings: return "menu-settings"
         }
     }
@@ -137,6 +140,7 @@ enum MenuItem {
         switch self {
         case .wallet: return "MENU_OPTION_WALLETS".localized()
         case .trading: return "MENU_OPTION_TRADING".localized()
+        case .p2p: return "MENU_OPTION_P2P".localized()
         case .settings: return "MENU_OPTION_SETTINGS".localized()
         }
     }
@@ -145,6 +149,7 @@ enum MenuItem {
         switch self {
         case .wallet: return UIImage(named: "wallet")
         case .trading: return UIImage(named: "trading")
+        case .p2p: return UIImage(named: "settings")
         case .settings: return UIImage(named: "settings")
         }
     }

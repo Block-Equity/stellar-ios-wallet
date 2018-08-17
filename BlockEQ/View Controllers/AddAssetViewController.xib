@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddAssetViewController" customModule="BlockEQ" customModuleProvider="target">
             <connections>
                 <outlet property="assetCodeTextField" destination="gw9-72-gCH" id="9h3-jU-0qc"/>
+                <outlet property="holdingView" destination="vaH-2m-Wsl" id="T57-EA-LyC"/>
                 <outlet property="issuerTextField" destination="RqI-uf-9ky" id="NRx-95-BXb"/>
                 <outlet property="tableView" destination="m4r-P6-Ls2" id="mSn-js-GJJ"/>
                 <outlet property="view" destination="vTr-Cv-7S6" id="UJZ-5F-CM1"/>

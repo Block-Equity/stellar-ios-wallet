@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ContactCell" rowHeight="55" id="KGk-i7-Jjw" customClass="ContactCell" customModule="BlockEQ" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="54.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qrO-Mn-hjB">
+                        <rect key="frame" x="16" y="0.0" width="192" height="53.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OSs-S1-ZlZ">
+                        <rect key="frame" x="224" y="12.5" width="80" height="30"/>
+                        <color key="backgroundColor" red="0.75406885150000003" green="0.75408679249999999" blue="0.75407713649999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="0Nu-Bg-EXN"/>
+                            <constraint firstAttribute="width" constant="80" id="oP6-kT-L4V"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                        <state key="normal" title="Add Address">
+                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <integer key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="addToAddressBook" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Nuu-3B-kDH"/>
+                        </connections>
+                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nw2-j9-OiS">
+                        <rect key="frame" x="0.0" y="53.5" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="UcS-iV-JMp"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="OSs-S1-ZlZ" secondAttribute="trailing" constant="16" id="2Vn-Pd-GA9"/>
+                    <constraint firstItem="qrO-Mn-hjB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="7vi-Mu-slQ"/>
+                    <constraint firstItem="OSs-S1-ZlZ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="B0D-cW-Fst"/>
+                    <constraint firstItem="qrO-Mn-hjB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Opd-g0-1Iy"/>
+                    <constraint firstItem="nw2-j9-OiS" firstAttribute="top" secondItem="qrO-Mn-hjB" secondAttribute="bottom" id="ZYd-Ff-moc"/>
+                    <constraint firstAttribute="bottom" secondItem="nw2-j9-OiS" secondAttribute="bottom" id="fui-YC-5zz"/>
+                    <constraint firstItem="OSs-S1-ZlZ" firstAttribute="leading" secondItem="qrO-Mn-hjB" secondAttribute="trailing" constant="16" id="iNG-y8-Llv"/>
+                    <constraint firstItem="nw2-j9-OiS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="oHl-on-KpE"/>
+                    <constraint firstAttribute="trailing" secondItem="nw2-j9-OiS" secondAttribute="trailing" id="xpI-hF-rR9"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="addressButton" destination="OSs-S1-ZlZ" id="Ygh-zV-XLD"/>
+                <outlet property="nameLabel" destination="qrO-Mn-hjB" id="GSl-Qo-SDS"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="62"/>
+        </tableViewCell>
+    </objects>
+</document>

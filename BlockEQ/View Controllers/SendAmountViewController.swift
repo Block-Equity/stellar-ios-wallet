@@ -120,10 +120,10 @@ class SendAmountViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    init(stellarAccount: StellarAccount, currentAssetIndex: Int, reciever: String, exchangeName: String?) {
+    init(stellarAccount: StellarAccount, currentAssetIndex: Int, receiver: String, exchangeName: String?) {
         super.init(nibName: String(describing: SendAmountViewController.self), bundle: nil)
         
-        self.receiver = reciever
+        self.receiver = receiver
         self.stellarAccount = stellarAccount
         self.currentAssetIndex = currentAssetIndex
         
@@ -194,13 +194,17 @@ class SendAmountViewController: UIViewController {
     }
     
     func authenticate() {
-        let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true, presentVC: true, forcedStyle: nil)
-        let authCoordinator = AuthenticationCoordinator(container: self, options: opts)
-        authCoordinator.delegate = self
-        
-        self.authenticationCoordinator = authCoordinator
-        
-        authCoordinator.authenticate()
+        if let authCoordinator = self.authenticationCoordinator {
+            authCoordinator.authenticate()
+        } else {
+            let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true, presentVC: true, forcedStyle: nil)
+            let authCoordinator = AuthenticationCoordinator(container: self, options: opts)
+            authCoordinator.delegate = self
+            
+            self.authenticationCoordinator = authCoordinator
+            
+            authCoordinator.authenticate()
+        }
     }
     
     func displayTransactionError() {
@@ -277,13 +281,11 @@ extension SendAmountViewController: AuthenticationCoordinatorDelegate {
     
     func authenticationCancelled(_ coordinator: AuthenticationCoordinator,
                                  options: AuthenticationCoordinator.AuthenticationContext) {
-        authenticationCoordinator = nil
     }
     
     func authenticationFailed(_ coordinator: AuthenticationCoordinator,
                               error: AuthenticationCoordinator.AuthenticationError?,
                               options: AuthenticationCoordinator.AuthenticationContext) {
-        authenticationCoordinator = nil
     }
 }
 

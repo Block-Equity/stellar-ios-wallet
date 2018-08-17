@@ -18,6 +18,8 @@ class ScanViewController: UIViewController {
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var qrCodeFrameView: UIView?
     
+    var hasIdentifiedQR: Bool = false
+    
     weak var delegate: ScanViewControllerDelegate?
     
     private let supportedCodeTypes = [AVMetadataObject.ObjectType.upce,
@@ -114,10 +116,13 @@ extension ScanViewController: AVCaptureMetadataOutputObjectsDelegate {
             qrCodeFrameView?.frame = barCodeObject!.bounds
             
             if let qrValue =  metadataObj.stringValue {
-                delegate?.setQR(value: qrValue)
-                
-                navigationItem.title = "Valid QR Code Found"
-                perform(#selector(self.dismissView), with: nil, afterDelay: 0.8)
+                if !hasIdentifiedQR {
+                    hasIdentifiedQR = true
+                    delegate?.setQR(value: qrValue)
+                    
+                    navigationItem.title = "Valid QR Code Found"
+                    perform(#selector(self.dismissView), with: nil, afterDelay: 0.6)
+                }
             }
         }
     }

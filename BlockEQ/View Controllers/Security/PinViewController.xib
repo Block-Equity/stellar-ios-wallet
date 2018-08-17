@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -28,17 +28,17 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3u2-SN-08M">
-                    <rect key="frame" x="0.0" y="70" width="375" height="94.5"/>
+                    <rect key="frame" x="0.0" y="70" width="375" height="98"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c7L-ix-xio" userLabel="logoImageView">
-                            <rect key="frame" x="159.5" y="10" width="55" height="50"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="c7L-ix-xio" userLabel="logoImageView">
+                            <rect key="frame" x="159.5" y="10" width="55" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="55" id="UeN-FJ-kzC"/>
-                                <constraint firstAttribute="height" constant="50" id="dcC-BU-YhU"/>
+                                <constraint firstAttribute="height" constant="40" id="dcC-BU-YhU"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7V1-8v-laZ" userLabel="titleLabel">
-                            <rect key="frame" x="0.0" y="75" width="375" height="19.5"/>
+                            <rect key="frame" x="0.0" y="80" width="375" height="18"/>
                             <fontDescription key="fontDescription" type="system" weight="thin" pointSize="16"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -51,11 +51,12 @@
                         <constraint firstItem="c7L-ix-xio" firstAttribute="centerX" secondItem="3u2-SN-08M" secondAttribute="centerX" id="FGj-s6-WPL"/>
                         <constraint firstItem="c7L-ix-xio" firstAttribute="top" secondItem="3u2-SN-08M" secondAttribute="top" constant="10" id="LiQ-sv-QcF"/>
                         <constraint firstItem="7V1-8v-laZ" firstAttribute="leading" secondItem="3u2-SN-08M" secondAttribute="leading" id="eYZ-gd-o26"/>
-                        <constraint firstItem="7V1-8v-laZ" firstAttribute="top" secondItem="c7L-ix-xio" secondAttribute="bottom" constant="15" id="vPp-yP-APz"/>
+                        <constraint firstAttribute="height" constant="98" id="fKZ-jl-Crh"/>
+                        <constraint firstItem="7V1-8v-laZ" firstAttribute="top" secondItem="c7L-ix-xio" secondAttribute="bottom" constant="30" id="vPp-yP-APz"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wqb-C1-HGh" userLabel="Pin Container">
-                    <rect key="frame" x="16" y="199.5" width="343" height="35"/>
+                    <rect key="frame" x="16" y="198" width="343" height="35"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="tpk-hM-lQD" userLabel="Pin Holder View">
                             <rect key="frame" x="96.5" y="0.0" width="150" height="35"/>
@@ -87,7 +88,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ltc-UM-qNc" customClass="KeyboardView" customModule="BlockEQ" customModuleProvider="target">
-                    <rect key="frame" x="25" y="284.5" width="325" height="332.5"/>
+                    <rect key="frame" x="25" y="283" width="325" height="334"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
             </subviews>
@@ -102,10 +103,13 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="3u2-SN-08M" secondAttribute="trailing" id="WoC-Qp-2Jz"/>
                 <constraint firstItem="Ltc-UM-qNc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="j2b-iw-YbM"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Ltc-UM-qNc" secondAttribute="bottom" constant="50" id="nFX-dv-tTd"/>
-                <constraint firstItem="wqb-C1-HGh" firstAttribute="top" secondItem="3u2-SN-08M" secondAttribute="bottom" constant="35" id="rOs-ZQ-wTD"/>
+                <constraint firstItem="wqb-C1-HGh" firstAttribute="top" secondItem="3u2-SN-08M" secondAttribute="bottom" constant="30" id="rOs-ZQ-wTD"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="logo" width="100" height="135"/>
+    </resources>
 </document>

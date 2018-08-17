@@ -6,6 +6,7 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
+import Alamofire
 import stellarsdk
 import UIKit
 
@@ -180,6 +181,87 @@ public class AccountOperation {
                     completion(false)
                 }
             }
+        }
+    }
+    
+    static func createPersonalToken(assetCode: String, completion: @escaping (Bool) -> Void) {
+        guard let privateKeyData = KeychainHelper.getPrivateKey(), let publicKeyData = KeychainHelper.getPublicKey() else {
+            DispatchQueue.main.async {
+                completion(false)
+            }
+            return
+        }
+        
+        let publicBytes: [UInt8] = [UInt8](publicKeyData)
+        let privateBytes: [UInt8] = [UInt8](privateKeyData)
+        
+        guard let sourceKeyPair = try? KeyPair(publicKey: PublicKey(publicBytes), privateKey: PrivateKey(privateBytes)) else {
+            DispatchQueue.main.async {
+                completion(false)
+            }
+            return
+        }
+        
+        Stellar.sdk.accounts.getAccountDetails(accountId: sourceKeyPair.accountId) { (response) -> (Void) in
+            switch response {
+            case .success(let accountResponse):
+                do {
+                    let manageDataOperation = ManageDataOperation(sourceAccount: sourceKeyPair, name: "PersonalAccount", data: assetCode.data(using: .utf8))
+                    
+                    let transaction = try Transaction(sourceAccount: accountResponse,
+                                                      operations: [manageDataOperation],
+                                                      memo: Memo.none,
+                                                      timeBounds:nil)
+                    try transaction.sign(keyPair: sourceKeyPair, network: Stellar.network)
+                    
+                    try Stellar.sdk.transactions.submitTransaction(transaction: transaction) { (response) -> (Void) in
+                        switch response {
+                        case .success(_):
+                            DispatchQueue.main.async {
+                                completion(true)
+                            }
+                        case .failure(let error):
+                            StellarSDKLog.printHorizonRequestErrorMessage(tag:"Post Create Token Error", horizonRequestError:error)
+                            DispatchQueue.main.async {
+                                completion(false)
+                            }
+                        }
+                    }
+                }
+                catch {
+                    DispatchQueue.main.async {
+                        completion(false)
+                    }
+                }
+            case .failure(let error):
+                StellarSDKLog.printHorizonRequestErrorMessage(tag:"Post Create Token Error", horizonRequestError:error)
+                DispatchQueue.main.async {
+                    completion(false)
+                }
+            }
+        }
+    }
+    
+    static func getPersonalToken(address: String, completion: @escaping (String?) -> Void) {
+        Alamofire.request("https://horizon.stellar.org/accounts/\(address)/data/PersonalAccount").responseJSON { response in
+            guard response.result.isSuccess, let value = response.result.value as? [String: Any] else {
+                print("Error while fetching account: \(String(describing: response.result.error))")
+                completion(nil)
+                return
+            }
+            
+            guard let personalAccount = value["value"] as? String else {
+                completion(nil)
+                return
+            }
+            
+            guard let decodedValue = personalAccount.base64Decoded() else {
+                
+                completion(nil)
+                return
+            }
+            
+            completion(decodedValue)
         }
     }
 }

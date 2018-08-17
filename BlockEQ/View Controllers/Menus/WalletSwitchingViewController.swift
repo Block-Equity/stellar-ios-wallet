@@ -6,6 +6,7 @@
 //  Copyright © 2018 Satraj Bambra. All rights reserved.
 //
 
+import stellarsdk
 import UIKit
 
 protocol WalletSwitchingViewControllerDelegate: class {
@@ -17,7 +18,7 @@ protocol WalletSwitchingViewControllerDelegate: class {
 
 final class WalletSwitchingViewController: UIViewController {
     
-    @IBOutlet var tableView: UITableView?
+    @IBOutlet var tableView: UITableView!
     @IBOutlet var tableViewHeader: UIView!
     @IBOutlet var tableViewHeaderTitleLabel: UILabel!
 
@@ -35,6 +36,7 @@ final class WalletSwitchingViewController: UIViewController {
     var selectedIndexPath: IndexPath = IndexPath(row: 0, section: 0)
     var stellarAccount = StellarAccount()
     var updatedSupportedAssets: [Assets.AssetType] = []
+    var allAssets: [StellarAsset] = []
     
     //TODO: Remove
     /*
@@ -48,6 +50,10 @@ final class WalletSwitchingViewController: UIViewController {
         } else {
             delegate?.didSelectAddAsset()
         }
+    }
+    
+    @IBAction func dismissView() {
+        self.dismiss(animated: true, completion: nil)
     }
 
     override func viewDidLoad() {
@@ -69,27 +75,21 @@ final class WalletSwitchingViewController: UIViewController {
         tableViewHeaderTitleLabel.textColor = Colors.darkGray
         
         let tableViewNibUserAssets = UINib(nibName: WalletItemCell.cellIdentifier, bundle: nil)
-        tableView?.register(tableViewNibUserAssets, forCellReuseIdentifier: WalletItemCell.cellIdentifier)
+        tableView.register(tableViewNibUserAssets, forCellReuseIdentifier: WalletItemCell.cellIdentifier)
         
         let tableViewNibSupportedAssets = UINib(nibName: WalletItemActivateCell.cellIdentifier, bundle: nil)
-        tableView?.register(tableViewNibSupportedAssets, forCellReuseIdentifier: WalletItemActivateCell.cellIdentifier)
+        tableView.register(tableViewNibSupportedAssets, forCellReuseIdentifier: WalletItemActivateCell.cellIdentifier)
     }
     
     func addNavigationHeader() {
         self.title = "Assets".localized()
 
         let closeButton = UIImage(named: "close")
-        let rightBarButtonItem = UIBarButtonItem(image: closeButton, style: .plain, target: self, action: #selector(self.close))
-
+        let rightBarButtonItem = UIBarButtonItem(image: closeButton, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
-    }
-
-    @objc func close() {
-        self.dismiss(animated: true, completion: nil)
     }
     
     func updateMenu(stellarAccount: StellarAccount) {
-        
         self.stellarAccount = stellarAccount
         
         updatedSupportedAssets.removeAll()
@@ -107,6 +107,12 @@ final class WalletSwitchingViewController: UIViewController {
                 updatedSupportedAssets.append(supportedAsset)
             }
         }
+
+        allAssets.removeAll()
+        
+        for asset in stellarAccount.assets {
+            allAssets.append(asset)
+        }
         
         tableView?.reloadData()
     }
@@ -122,9 +128,14 @@ final class WalletSwitchingViewController: UIViewController {
     }
     
     func isZeroBalance() -> Bool {
-        if stellarAccount.assets.count == 1 && Double(stellarAccount.assets[0].balance)! < 1 {
+        guard let balance = Double(allAssets[0].balance) else {
+            return false
+        }
+        
+        if stellarAccount.assets.count == 1 && balance < 1.0 {
             return true
         }
+        
         return false
     }
     
@@ -179,7 +190,7 @@ extension WalletSwitchingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case SectionType.userAssets.rawValue:
-            return stellarAccount.assets.count
+            return allAssets.count
         default:
             return updatedSupportedAssets.count
         }
@@ -196,19 +207,19 @@ extension WalletSwitchingViewController: UITableViewDataSource {
             
             cell.indexPath = indexPath
             cell.delegate = self
-            cell.titleLabel.text = Assets.displayTitle(shortCode:stellarAccount.assets[indexPath.row].shortCode)
-            cell.amountLabel.text = "\(stellarAccount.assets[indexPath.row].formattedBalance) \(stellarAccount.assets[indexPath.row].shortCode)"
-            cell.iconImageView.backgroundColor = Assets.displayImageBackgroundColor(shortCode: stellarAccount.assets[indexPath.row].shortCode)
-            if let image = Assets.displayImage(shortCode: stellarAccount.assets[indexPath.row].shortCode) {
+            cell.titleLabel.text = Assets.displayTitle(shortCode:allAssets[indexPath.row].shortCode)
+            cell.amountLabel.text = "\(allAssets[indexPath.row].formattedBalance) \(allAssets[indexPath.row].shortCode)"
+            cell.iconImageView.backgroundColor = Assets.displayImageBackgroundColor(shortCode: allAssets[indexPath.row].shortCode)
+            if let image = Assets.displayImage(shortCode: allAssets[indexPath.row].shortCode) {
                 cell.iconImageView.image = image
                 cell.tokenInitialLabel.text = ""
             } else {
                 cell.iconImageView.image = nil
-                let shortcode = Assets.displayTitle(shortCode:stellarAccount.assets[indexPath.row].shortCode)
+                let shortcode = Assets.displayTitle(shortCode:allAssets[indexPath.row].shortCode)
                 cell.tokenInitialLabel.text = String(Array(shortcode)[0])
             }
             
-            if stellarAccount.assets[indexPath.row].shortCode == "XLM" {
+            if allAssets[indexPath.row].shortCode == "XLM" {
                 cell.removeAssetButton.isHidden = true
                 if let _ = stellarAccount.inflationDestination {
                     cell.setInflationButton.isHidden = true
@@ -276,7 +287,7 @@ extension WalletSwitchingViewController: WalletItemCellDelegate {
     }
     
     func didRemoveAsset(indexPath: IndexPath) {
-        createTrustLine(issuerAccountId:stellarAccount.assets[indexPath.row].assetIssuer!, assetCode:stellarAccount.assets[indexPath.row].shortCode, limit: 0.0000000, isAdding: false)
+        createTrustLine(issuerAccountId:allAssets[indexPath.row].assetIssuer!, assetCode:allAssets[indexPath.row].shortCode, limit: 0.0000000, isAdding: false)
     }
 }
 
@@ -311,7 +322,7 @@ extension WalletSwitchingViewController {
                 if isAdding {
                     self.displayAssetActivationError()
                 } else {
-                    self.displayAssetActivationError()
+                    self.displayAssetDeactivationError()
                 }
             }
         }

@@ -78,7 +78,7 @@ class PinViewController: UIViewController {
         if self.mode == .dark {
             keyboardTextColor = .white
             pinLineColor = Colors.white
-            pinDotColor = Colors.tertiaryDark
+            pinDotColor = Colors.white
         } else {
             keyboardTextColor = Colors.primaryDark
             pinLineColor = Colors.darkGray
@@ -116,8 +116,8 @@ class PinViewController: UIViewController {
 
     func setupView() {
         if self.mode == .dark {
-            pinViewHolder.backgroundColor = Colors.primaryDark
-            view.backgroundColor = Colors.primaryDark
+            pinViewHolder.backgroundColor = Colors.backgroundDark
+            view.backgroundColor = Colors.backgroundDark
             titleLabel.textColor = Colors.white
         } else {
             pinViewHolder.backgroundColor = .white
@@ -139,7 +139,7 @@ class PinViewController: UIViewController {
         title = shortTitle
         navigationItem.title = shortTitle
 
-        logoImageView.image = UIImage(named: "logoWhite")
+        logoImageView.image = UIImage(named: "logo")
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
         
         if isCloseDisplayed {
@@ -203,3 +203,5 @@ extension PinViewController: KeyboardViewDelegate {
         }
     }
 }
+
+extension PinViewController: AuthenticatingViewController { }

@@ -35,7 +35,7 @@ class WalletItemActivateCell: UITableViewCell {
     }
     
     func setupView() {
-        addAssetButton.backgroundColor = Colors.green
+        addAssetButton.backgroundColor = Colors.secondaryDark
         titleLabel.textColor = Colors.white
     }
 
@@ -54,6 +54,6 @@ class WalletItemActivateCell: UITableViewCell {
     func setRowColor(selected: Bool) {
         contentView.backgroundColor =  selected ? Colors.lightBlue : Colors.white
         titleLabel.textColor = selected ? Colors.primaryDark : Colors.darkGray
-        addAssetButton.backgroundColor = Colors.green
+        addAssetButton.backgroundColor = Colors.secondaryDark
     }
 }

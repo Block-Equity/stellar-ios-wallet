@@ -32,7 +32,7 @@ class SendViewController: UIViewController {
             self.view.endEditing(true)
             self.hideHud()
             
-            let sendAmountViewController = SendAmountViewController(stellarAccount: self.stellarAccount, currentAssetIndex: self.currentAssetIndex, reciever: receiver, exchangeName: address)
+            let sendAmountViewController = SendAmountViewController(stellarAccount: self.stellarAccount, currentAssetIndex: self.currentAssetIndex, receiver: receiver, exchangeName: address)
             self.navigationController?.pushViewController(sendAmountViewController, animated: true)
         }
     }

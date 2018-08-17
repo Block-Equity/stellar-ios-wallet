@@ -52,6 +52,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        if let presentedController = appCoordinator.tabController.presentedViewController {
+            presentedController.dismiss(animated: false, completion: nil)
+        }
+        
         authenticate()
     }
     
@@ -60,13 +64,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         
-        let container = onboardingContainer ? onboardingCoordinator.navController : self.container
-        let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: false, presentVC: false, forcedStyle: style)
-        let authCoordinator = AuthenticationCoordinator(container: container, options: opts)
-        authCoordinator.delegate = self
-        authenticationCoordinator = authCoordinator
-        
-        authCoordinator.authenticate()
+        if let authCoordinator = self.authenticationCoordinator {
+            authCoordinator.authenticate()
+        } else {
+            let container = onboardingContainer ? onboardingCoordinator.navController : self.container
+            let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: false, presentVC: false, forcedStyle: style)
+            let authCoordinator = AuthenticationCoordinator(container: container, options: opts)
+            authCoordinator.delegate = self
+            authenticationCoordinator = authCoordinator
+            
+            authCoordinator.authenticate()
+        }
     }
 }
 
@@ -99,13 +107,11 @@ extension AppDelegate: OnboardingCoordinatorDelegate {
 extension AppDelegate: AuthenticationCoordinatorDelegate {
     func authenticationCancelled(_ coordinator: AuthenticationCoordinator,
                                  options: AuthenticationCoordinator.AuthenticationContext) {
-        authenticationCoordinator = nil
     }
     
     func authenticationFailed(_ coordinator: AuthenticationCoordinator,
                               error: AuthenticationCoordinator.AuthenticationError?,
                               options: AuthenticationCoordinator.AuthenticationContext) {
-        authenticationCoordinator = nil
     }
     
     func authenticationCompleted(_ coordinator: AuthenticationCoordinator,
