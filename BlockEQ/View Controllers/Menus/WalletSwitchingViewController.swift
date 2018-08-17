@@ -51,6 +51,10 @@ final class WalletSwitchingViewController: UIViewController {
             delegate?.didSelectAddAsset()
         }
     }
+    
+    @IBAction func dismissView() {
+        self.dismiss(animated: true, completion: nil)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,13 +85,8 @@ final class WalletSwitchingViewController: UIViewController {
         self.title = "Assets".localized()
 
         let closeButton = UIImage(named: "close")
-        let rightBarButtonItem = UIBarButtonItem(image: closeButton, style: .plain, target: self, action: #selector(self.close))
-
+        let rightBarButtonItem = UIBarButtonItem(image: closeButton, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
-    }
-
-    @objc func close() {
-        self.dismiss(animated: true, completion: nil)
     }
     
     func updateMenu(stellarAccount: StellarAccount) {
@@ -112,13 +111,7 @@ final class WalletSwitchingViewController: UIViewController {
         allAssets.removeAll()
         
         for asset in stellarAccount.assets {
-            if asset.assetType == AssetTypeAsString.CREDIT_ALPHANUM4 || asset.assetType == AssetTypeAsString.NATIVE {
-                allAssets.append(asset)
-            } else {
-                if !asset.shortCode.contains("XLM") {
-                    allAssets.append(asset)
-                }
-            }
+            allAssets.append(asset)
         }
         
         tableView?.reloadData()

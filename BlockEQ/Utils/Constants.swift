@@ -10,6 +10,7 @@ import stellarsdk
 import UIKit
 
 struct Colors {
+    static let backgroundDark =  UIColor(red: 21.0/255.0, green: 27.0/255.0, blue: 38.0/255.0, alpha: Alphas.opaque)
     static let primaryDark =  UIColor(red: 0.0/255.0, green: 106.0/255.0, blue: 255.0/255.0, alpha: Alphas.opaque)
     static let primaryDarkTransparent = UIColor(red: 1.0/255.0, green: 83.0/255.0, blue: 182.0/255.0, alpha: Alphas.transparent)
     static let secondaryDark =  UIColor(red: 7.0/255.0, green: 35.0/255.0, blue: 122.0/255.0, alpha: Alphas.opaque)

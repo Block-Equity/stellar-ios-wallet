@@ -120,10 +120,10 @@ class SendAmountViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    init(stellarAccount: StellarAccount, currentAssetIndex: Int, reciever: String, exchangeName: String?) {
+    init(stellarAccount: StellarAccount, currentAssetIndex: Int, receiver: String, exchangeName: String?) {
         super.init(nibName: String(describing: SendAmountViewController.self), bundle: nil)
         
-        self.receiver = reciever
+        self.receiver = receiver
         self.stellarAccount = stellarAccount
         self.currentAssetIndex = currentAssetIndex
         

@@ -116,8 +116,8 @@ class PinViewController: UIViewController {
 
     func setupView() {
         if self.mode == .dark {
-            pinViewHolder.backgroundColor = Colors.primaryDark
-            view.backgroundColor = Colors.primaryDark
+            pinViewHolder.backgroundColor = Colors.backgroundDark
+            view.backgroundColor = Colors.backgroundDark
             titleLabel.textColor = Colors.white
         } else {
             pinViewHolder.backgroundColor = .white

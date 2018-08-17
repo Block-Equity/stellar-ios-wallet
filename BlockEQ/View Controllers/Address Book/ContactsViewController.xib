@@ -11,6 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ContactsViewController" customModule="BlockEQ" customModuleProvider="target">
             <connections>
+                <outlet property="accessDeniedView" destination="Lg9-6f-Lbr" id="7VA-HG-7Hc"/>
+                <outlet property="searchBar" destination="7x5-Vn-T2R" id="Dn6-2A-jSQ"/>
                 <outlet property="tableView" destination="LHv-Vy-hWa" id="c0H-W9-gUp"/>
                 <outlet property="tableViewHeaderAddressBook" destination="Aeh-5H-MO9" id="oFN-u8-9is"/>
                 <outlet property="tableViewHeaderAddressBookTitleLabel" destination="cqD-tC-Y9x" id="tIG-5s-GtP"/>
@@ -24,23 +26,85 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LHv-Vy-hWa">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" style="plain" separatorStyle="none" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LHv-Vy-hWa">
                     <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <view key="tableHeaderView" contentMode="scaleToFill" id="t73-rN-yem">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" fixedFrame="YES" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="7x5-Vn-T2R">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="-1" id="Wtn-9Q-RdE"/>
+                                </connections>
+                            </searchBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="dlN-yI-clD"/>
                         <outlet property="delegate" destination="-1" id="v2g-CZ-sH2"/>
                     </connections>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lg9-6f-Lbr">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6rN-yj-Vyz">
+                            <rect key="frame" x="67" y="233.5" width="240" height="200"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please go to Settings &gt; Privacy &gt; Contacts to allow BlockEQ access to your Contacts." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8gp-4F-uDG">
+                                    <rect key="frame" x="10" y="95" width="220" height="65"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="65" id="fYS-pl-kbX"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="address-book" translatesAutoresizingMaskIntoConstraints="NO" id="Hcy-c1-lZo">
+                                    <rect key="frame" x="100" y="45" width="40" height="40"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="3Kx-gy-goJ"/>
+                                        <constraint firstAttribute="width" constant="40" id="94V-Iv-GAs"/>
+                                    </constraints>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="Hcy-c1-lZo" firstAttribute="centerX" secondItem="6rN-yj-Vyz" secondAttribute="centerX" id="1fI-pA-dpF"/>
+                                <constraint firstItem="8gp-4F-uDG" firstAttribute="leading" secondItem="6rN-yj-Vyz" secondAttribute="leading" constant="10" id="2ew-RF-SMV"/>
+                                <constraint firstItem="Hcy-c1-lZo" firstAttribute="top" secondItem="6rN-yj-Vyz" secondAttribute="top" constant="45" id="Dyw-wV-8Do"/>
+                                <constraint firstAttribute="width" constant="240" id="Eaw-od-YsI"/>
+                                <constraint firstAttribute="height" constant="200" id="cQp-vf-UfL"/>
+                                <constraint firstAttribute="trailing" secondItem="8gp-4F-uDG" secondAttribute="trailing" constant="10" id="jvT-IH-fFd"/>
+                                <constraint firstAttribute="bottom" secondItem="8gp-4F-uDG" secondAttribute="bottom" constant="40" id="quS-ez-GPk"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="6rN-yj-Vyz" firstAttribute="centerX" secondItem="Lg9-6f-Lbr" secondAttribute="centerX" id="0OR-ck-WSs"/>
+                        <constraint firstItem="6rN-yj-Vyz" firstAttribute="centerY" secondItem="Lg9-6f-Lbr" secondAttribute="centerY" id="v1s-aC-C6u"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="XfW-wg-gLS"/>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="Lg9-6f-Lbr" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="NyF-64-fww"/>
+                <constraint firstItem="Lg9-6f-Lbr" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="TSU-lu-9f7"/>
                 <constraint firstItem="LHv-Vy-hWa" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="fSY-RK-rTA"/>
+                <constraint firstItem="Lg9-6f-Lbr" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ff8-KF-wXO"/>
+                <constraint firstItem="Lg9-6f-Lbr" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="glF-yo-ldN"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="LHv-Vy-hWa" secondAttribute="trailing" id="hCT-ea-IdI"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="LHv-Vy-hWa" secondAttribute="bottom" id="hVg-t7-Dy5"/>
                 <constraint firstItem="LHv-Vy-hWa" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="hYY-Av-g7c"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>
         <view contentMode="scaleToFill" id="AhY-a1-f8j">
             <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
@@ -72,7 +136,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="mDN-Ix-QQu"/>
-            <point key="canvasLocation" x="34" y="724"/>
+            <point key="canvasLocation" x="34" y="572"/>
         </view>
         <view contentMode="scaleToFill" id="Aeh-5H-MO9">
             <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
@@ -104,7 +168,10 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="CnZ-D6-AD1"/>
-            <point key="canvasLocation" x="34" y="629"/>
+            <point key="canvasLocation" x="34" y="476"/>
         </view>
     </objects>
+    <resources>
+        <image name="address-book" width="128" height="128"/>
+    </resources>
 </document>
