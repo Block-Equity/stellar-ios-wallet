@@ -288,8 +288,9 @@ extension ContactsViewController: ContactCellDelegate {
 
 extension ContactsViewController: ContactCellStellarDelegate {
     func didSendPayment(indexPath: IndexPath) {
+        let address = filteredStellarContacts[indexPath.row].address.replacingOccurrences(of: ".publicaddress@blockeq.com", with: "")
 
-        getAccountDetails(address: filteredStellarContacts[indexPath.row].address)
+        getAccountDetails(address: address)
     }
 }
 
