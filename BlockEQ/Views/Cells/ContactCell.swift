@@ -35,6 +35,24 @@ class ContactCell: UITableViewCell {
     }
     
     func setupView() {
-        addressButton.backgroundColor = Colors.shadowGray
+        addressButton.backgroundColor = Colors.secondaryDark
+        nameLabel.textColor = Colors.darkGray
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        setRowColor(selected: selected)
+    }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        
+        setRowColor(selected: highlighted)
+    }
+    
+    func setRowColor(selected: Bool) {
+        contentView.backgroundColor =  selected ? Colors.lightBlue : Colors.white
+        nameLabel.textColor = selected ? Colors.primaryDark : Colors.darkGray
     }
 }

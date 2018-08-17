@@ -23,14 +23,11 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="mTT-Y9-DjD">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ed6-UL-GyE">
-                    <rect key="frame" x="16" y="582" width="343" height="65"/>
+                    <rect key="frame" x="16" y="587" width="343" height="60"/>
                     <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="65" id="ARM-Gs-U4J"/>
+                        <constraint firstAttribute="height" constant="60" id="ARM-Gs-U4J"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                     <state key="normal" title="Recover wallet">
@@ -46,10 +43,10 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iu9-BF-NQZ">
-                    <rect key="frame" x="16" y="507" width="343" height="65"/>
+                    <rect key="frame" x="16" y="512" width="343" height="60"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="65" id="Dif-YE-ESq"/>
+                        <constraint firstAttribute="height" constant="60" id="Dif-YE-ESq"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                     <state key="normal" title="Create new wallet">
@@ -65,9 +62,9 @@
                     </connections>
                 </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rLc-FU-2VD">
-                    <rect key="frame" x="129" y="58" width="117" height="64"/>
+                    <rect key="frame" x="129" y="70" width="117" height="70"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="64" id="kEV-gm-MB6"/>
+                        <constraint firstAttribute="height" constant="70" id="kEV-gm-MB6"/>
                         <constraint firstAttribute="width" constant="117" id="kGx-fl-c1X"/>
                     </constraints>
                 </imageView>
@@ -81,26 +78,19 @@
             </subviews>
             <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="Ed6-UL-GyE" firstAttribute="top" secondItem="Iu9-BF-NQZ" secondAttribute="bottom" constant="10" id="2KP-LW-9H6"/>
+                <constraint firstItem="Ed6-UL-GyE" firstAttribute="top" secondItem="Iu9-BF-NQZ" secondAttribute="bottom" constant="15" id="2KP-LW-9H6"/>
                 <constraint firstItem="Ed6-UL-GyE" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="4nA-vs-a0F"/>
                 <constraint firstItem="Iu9-BF-NQZ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="6tN-Pb-Rr4"/>
-                <constraint firstItem="mTT-Y9-DjD" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="74F-AK-qvO"/>
-                <constraint firstItem="mTT-Y9-DjD" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="8bU-f7-9j1"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Ed6-UL-GyE" secondAttribute="trailing" constant="16" id="8jw-s9-wQp"/>
-                <constraint firstItem="rLc-FU-2VD" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="38" id="90T-7y-Z7k"/>
+                <constraint firstItem="rLc-FU-2VD" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="50" id="90T-7y-Z7k"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Iu9-BF-NQZ" secondAttribute="trailing" constant="16" id="Aml-YW-3e0"/>
                 <constraint firstItem="KRB-PD-VuD" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="DYc-y5-cYX"/>
-                <constraint firstItem="mTT-Y9-DjD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="b2n-0i-YP9"/>
                 <constraint firstItem="KRB-PD-VuD" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="htJ-et-xG6"/>
                 <constraint firstItem="rLc-FU-2VD" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="nov-Vi-r85"/>
-                <constraint firstItem="mTT-Y9-DjD" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="ucD-iU-OVc"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Ed6-UL-GyE" secondAttribute="bottom" constant="20" id="vkP-dl-CBV"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="173" y="-80"/>
         </view>
     </objects>
-    <resources>
-        <image name="bg" width="375" height="667"/>
-    </resources>
 </document>

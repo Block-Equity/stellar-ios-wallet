@@ -52,6 +52,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        if let presentedController = appCoordinator.tabController.presentedViewController {
+            presentedController.dismiss(animated: false, completion: nil)
+        }
+        
         authenticate()
     }
     

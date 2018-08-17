@@ -17,13 +17,13 @@ final class BlankAuthenticationViewController: UIViewController {
     @IBOutlet weak var authLogo: UIImageView!
     
     @IBOutlet weak var authButton: AppButton!
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
-    
+
     weak var delegate: BlankAuthenticationViewControllerDelegate?
     
     func setupView() {
-        self.view.backgroundColor = UIColor(red:0.136, green:0.168, blue:0.218, alpha:1.000)
+        UIApplication.shared.statusBarStyle = .lightContent
+        
+        self.view.backgroundColor = Colors.backgroundDark
         self.authLogo.image = UIImage(named: "logo")
         self.authLogo.contentMode = .top
         self.authButton.isHidden = true

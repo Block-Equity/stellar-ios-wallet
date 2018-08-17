@@ -56,12 +56,11 @@ class LaunchViewController: UIViewController {
         
         logoImageView.image = UIImage(named: "logo")
         
-        createWalletButton.backgroundColor = Colors.tertiaryDark
+        createWalletButton.backgroundColor = Colors.primaryDark
         createWalletButton.setTitleColor(Colors.white, for: .normal)
-        importWalletButton.backgroundColor = Colors.whiteTransparent
+        importWalletButton.backgroundColor = Colors.secondaryDark
         importWalletButton.setTitleColor(Colors.white, for: .normal)
-        view.gradientLayer.colors = [Colors.secondaryDark.cgColor, Colors.primaryDark.cgColor]
-        view.gradientLayer.gradient = GradientPoint.topBottom.draw()
+        view.backgroundColor = Colors.backgroundDark
     }
     
     func checkForExistingAccount() {

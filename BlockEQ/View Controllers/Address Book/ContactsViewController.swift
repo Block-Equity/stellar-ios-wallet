@@ -171,7 +171,7 @@ class ContactsViewController: UIViewController {
     }
 }
 
-extension ContactsViewController: UITableViewDataSource, UITableViewDelegate {
+extension ContactsViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return SectionType.all.count
     }
@@ -252,6 +252,21 @@ extension ContactsViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+extension ContactsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        
+        switch indexPath.section {
+        case SectionType.stellarContacts.rawValue:
+            let identifier = stellarContacts[indexPath.row].identifier
+            
+            self.delegate?.selectedAddToAddressBook(identifier: identifier, name: filteredStellarContacts[indexPath.row].name, address: filteredStellarContacts[indexPath.row].address)
+        default:
+            break
+        }
+    }
+}
+
 extension ContactsViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filterSearch(text: searchText)
@@ -272,11 +287,7 @@ extension ContactsViewController: ContactCellDelegate {
 
 extension ContactsViewController: ContactCellStellarDelegate {
     func didSendPayment(indexPath: IndexPath) {
-        /*
-        let identifier = stellarContacts[indexPath.row].identifier
-        
-        self.delegate?.selectedAddToAddressBook(identifier: identifier, name: filteredStellarContacts[indexPath.row].name, address: filteredStellarContacts[indexPath.row].address)*/
-        
+
         getAccountDetails(address: stellarContacts[indexPath.row].address)
     }
 }

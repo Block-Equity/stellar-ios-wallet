@@ -36,5 +36,23 @@ class ContactStellarCell: UITableViewCell {
     
     func setupView() {
         sendPaymentButton.backgroundColor = Colors.green
+        nameLabel.textColor = Colors.darkGray
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        setRowColor(selected: selected)
+    }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        
+        setRowColor(selected: highlighted)
+    }
+    
+    func setRowColor(selected: Bool) {
+        contentView.backgroundColor =  selected ? Colors.lightBlue : Colors.white
+        nameLabel.textColor = selected ? Colors.primaryDark : Colors.darkGray
     }
 }

@@ -99,7 +99,7 @@ class WalletViewController: UIViewController {
         let rightBarButtonItem = UIBarButtonItem(title: "Send", style: .plain, target: self, action: #selector(self.sendFunds))
         navigationItem.rightBarButtonItem = rightBarButtonItem
         
-        availableBalanceView.backgroundColor = Colors.darkGray
+        availableBalanceView.backgroundColor = Colors.backgroundDark
         headerBackgroundView.backgroundColor = Colors.primaryDark
         coinLabel.textColor = Colors.white
         balanceLabel.textColor = Colors.white

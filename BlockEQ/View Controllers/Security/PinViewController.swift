@@ -78,7 +78,7 @@ class PinViewController: UIViewController {
         if self.mode == .dark {
             keyboardTextColor = .white
             pinLineColor = Colors.white
-            pinDotColor = Colors.tertiaryDark
+            pinDotColor = Colors.white
         } else {
             keyboardTextColor = Colors.primaryDark
             pinLineColor = Colors.darkGray
@@ -139,7 +139,7 @@ class PinViewController: UIViewController {
         title = shortTitle
         navigationItem.title = shortTitle
 
-        logoImageView.image = UIImage(named: "logoWhite")
+        logoImageView.image = UIImage(named: "logo")
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
         
         if isCloseDisplayed {
