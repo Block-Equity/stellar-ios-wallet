@@ -112,6 +112,10 @@ extension AppDelegate: AuthenticationCoordinatorDelegate {
     func authenticationFailed(_ coordinator: AuthenticationCoordinator,
                               error: AuthenticationCoordinator.AuthenticationError?,
                               options: AuthenticationCoordinator.AuthenticationContext) {
+        switchToOnboarding()
+
+        // Setting the authentication coordinator to nil forces it to remove authentication views from the hierarchy
+        authenticationCoordinator = nil
     }
     
     func authenticationCompleted(_ coordinator: AuthenticationCoordinator,

@@ -71,6 +71,7 @@ final class AuthenticationCoordinator {
     enum AuthenticationError: LocalizedError {
         case pinMismatchError
         case pinUnsetError
+        case pinMaxAttemptsError
         case biometricLockout
         case biometricAuthenticationError
         case biometryUnavailable
@@ -99,11 +100,14 @@ final class AuthenticationCoordinator {
         case setPin
     }
 
-    /// The authentication context used for biometric authorization
-    private let authContext: LAContext
+    // The maximum number of allowed pin entries before failing
+    private static let maximumFailedPinAttempts: Int = 3
 
     /// The authentication policy to use in LocalAuthentication
     private static let authPolicy = LAPolicy.deviceOwnerAuthenticationWithBiometrics
+
+    /// The authentication context used for biometric authorization
+    private let authContext: LAContext
 
     /// The view controller to display when using pin entry
     private var pinViewController: PinViewController?
@@ -125,6 +129,9 @@ final class AuthenticationCoordinator {
 
     /// Internal state to track the pin the user entered, when first creating a pin code
     private var firstPin: String?
+
+    /// Internal state to track the number of failed pin attempts
+    private var failedPinAttempts: Int = 0
 
     /// The class to notify of authentication events
     weak var delegate: AuthenticationCoordinatorDelegate?
@@ -172,6 +179,18 @@ final class AuthenticationCoordinator {
     }
 
     deinit {
+        self.failedPinAttempts = 0
+
+        if let blankAuthVC = self.blankAuthController {
+            removeAuthentication(viewController: blankAuthVC,
+                                 with: AuthenticationContext(savedPin: false, mode: .pin, cancelled: false))
+        }
+
+        if let pinVC = self.pinViewController {
+            removeAuthentication(viewController: pinVC,
+                                 with: AuthenticationContext(savedPin: false, mode: .biometric, cancelled: false))
+        }
+
         self.blankAuthController = nil
         self.pinViewController = nil
     }
@@ -345,8 +364,7 @@ extension AuthenticationCoordinator: PinViewControllerDelegate {
                     self.delegate?.authenticationCompleted(self, options: ctxt)
                 }
             } else {
-                os_log("ERROR: %@", AuthenticationError.pinMismatchError.localizedDescription)
-                vc.pinMismatchError()
+                failedPinAttempt(vc: vc)
             }
         } else {
             if KeychainHelper.check(pin: pin) {
@@ -355,8 +373,7 @@ extension AuthenticationCoordinator: PinViewControllerDelegate {
                     self.delegate?.authenticationCompleted(self, options: ctxt)
                 }
             } else {
-                os_log("ERROR: %@", AuthenticationError.pinMismatchError.localizedDescription)
-                vc.pinMismatchError()
+                failedPinAttempt(vc: vc)
             }
         }
     }
@@ -365,6 +382,19 @@ extension AuthenticationCoordinator: PinViewControllerDelegate {
         let context = AuthenticationContext(savedPin: false, mode: .pin, cancelled: true)
         self.removeAuthentication(viewController: vc, with: context) { [unowned self] ctxt in
             self.delegate?.authenticationCancelled(self, options: ctxt)
+        }
+    }
+
+    private func failedPinAttempt(vc: PinViewController) {
+        failedPinAttempts += 1
+        vc.pinMismatchError()
+        os_log("ERROR: %@, attempts: %d",
+               AuthenticationError.pinMismatchError.localizedDescription,
+               failedPinAttempts)
+
+        if failedPinAttempts >= AuthenticationCoordinator.maximumFailedPinAttempts {
+            let context = AuthenticationContext(savedPin: false, mode: .pin, cancelled: false)
+            self.delegate?.authenticationFailed(self, error: AuthenticationError.pinMaxAttemptsError, options: context)
         }
     }
 }
@@ -380,6 +410,7 @@ extension AuthenticationCoordinator.AuthenticationError {
         switch self {
         case .pinMismatchError: return "Pin mismatched keychain value."
         case .pinUnsetError: return "User does not have pin code set."
+        case .pinMaxAttemptsError: return "User has reached the maximum number of PIN attempts."
         case .biometricLockout: return "User is locked out from local authentication."
         case .biometricAuthenticationError: return "Authentication failed after numerous attempts."
         case .biometryUnavailable: return "Biometric authentication is unavailable."
