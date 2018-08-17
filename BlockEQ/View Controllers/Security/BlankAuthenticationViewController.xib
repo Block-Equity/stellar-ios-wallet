@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.13.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.9"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,30 +22,51 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="m5f-ea-x4e">
-                    <rect key="frame" x="0.0" y="170" width="375" height="497"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9s5-kp-whn">
+                    <rect key="frame" x="-20" y="120" width="415" height="497"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="m5f-ea-x4e">
+                            <rect key="frame" x="157.5" y="0.0" width="100" height="100"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="3Ua-RD-U8F"/>
+                                <constraint firstAttribute="height" constant="100" id="WD7-uu-6IO"/>
+                            </constraints>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5KP-I8-jSD" customClass="AppButton" customModule="BlockEQ" customModuleProvider="target">
+                            <rect key="frame" x="107.5" y="447" width="200" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="8eS-5Y-B72"/>
+                                <constraint firstAttribute="width" constant="200" id="a4O-9w-gQs"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <state key="normal" title="Authenticate">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <integer key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="authenticatePressed:" destination="-1" eventType="touchUpInside" id="8f7-s3-NMG"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="250" id="P4T-IH-bkp"/>
+                        <constraint firstItem="m5f-ea-x4e" firstAttribute="centerX" secondItem="9s5-kp-whn" secondAttribute="centerX" id="2MX-gF-OKN"/>
+                        <constraint firstItem="5KP-I8-jSD" firstAttribute="centerX" secondItem="9s5-kp-whn" secondAttribute="centerX" id="RaV-C7-eyX"/>
+                        <constraint firstItem="m5f-ea-x4e" firstAttribute="top" secondItem="9s5-kp-whn" secondAttribute="top" id="V1C-lS-Zab"/>
+                        <constraint firstAttribute="bottom" secondItem="5KP-I8-jSD" secondAttribute="bottom" id="aJx-4a-O8d"/>
                     </constraints>
-                </imageView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5KP-I8-jSD">
-                    <rect key="frame" x="133" y="514" width="111" height="36"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <state key="normal" title="Authenticate">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
-                    <connections>
-                        <action selector="authenticatePressed:" destination="-1" eventType="touchUpInside" id="8f7-s3-NMG"/>
-                    </connections>
-                </button>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="m5f-ea-x4e" secondAttribute="bottom" id="2QO-a1-fIA"/>
-                <constraint firstItem="m5f-ea-x4e" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="150" id="2Tm-Xk-KLw"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="m5f-ea-x4e" secondAttribute="trailing" id="p8i-Nt-u9u"/>
-                <constraint firstItem="m5f-ea-x4e" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="uuo-KQ-g0X"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="leading" secondItem="9s5-kp-whn" secondAttribute="leading" constant="20" id="9aE-fx-VZu"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="9s5-kp-whn" secondAttribute="bottom" constant="50" id="SBP-Pt-fcI"/>
+                <constraint firstItem="9s5-kp-whn" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="100" id="Y0D-mT-2QL"/>
+                <constraint firstItem="9s5-kp-whn" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="20" id="cXV-4a-SYp"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
         </view>

@@ -33,6 +33,7 @@
 "SETTINGS_OPTION_USE_TOUCHID" = "Use TouchID";
 
 "BIOMETRIC_AUTH_TITLE" = "Unlock your wallet";
+"AUTHENTICATE_TITLE" = "Authenticate";
 
 "TITLE_TAB_ASSETS" = "Wallet";
 "TITLE_TAB_TRADING" = "Trading";
