@@ -36,7 +36,7 @@ final class OnboardingCoordinator {
             let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: false,
                                                                        presentVC: false,
                                                                        forcedStyle: nil,
-                                                                       limitPinEntries: false)
+                                                                       limitPinEntries: true)
             let authCoordinator = AuthenticationCoordinator(container: self.navController, options: opts)
             authCoordinator.delegate = self
             authenticationCoordinator = authCoordinator
@@ -83,7 +83,10 @@ extension OnboardingCoordinator: AuthenticationCoordinatorDelegate {
     func authenticationFailed(_ coordinator: AuthenticationCoordinator,
                               error: AuthenticationCoordinator.AuthenticationError?,
                               options: AuthenticationCoordinator.AuthenticationContext) {
-        authenticationCoordinator = nil
+        print("Failed pin during on boarding")
+        KeychainHelper.clearAll()
+        SecurityOptionHelper.clear()
+        verificationViewController.navigationController?.popToRootViewController(animated: true)
     }
 
     func authenticationCompleted(_ coordinator: AuthenticationCoordinator,
