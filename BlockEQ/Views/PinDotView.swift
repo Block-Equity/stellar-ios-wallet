@@ -85,7 +85,7 @@ class PinDotView : UIView {
         }
 
         // Dot to circle
-        let animator2 = UIViewPropertyAnimator(duration: speed * 0.4, dampingRatio: 0.55) {
+        let animator2 = UIViewPropertyAnimator(duration: speed * 0.2, dampingRatio: 0.55) {
             self.pinView.bounds.size.width = self.viewModel.circleDiameter
             self.pinView.bounds.size.height = self.viewModel.circleDiameter
             self.pinView.frame.origin.y = self.pinView.frame.origin.y - self.viewModel.circleDiameter
@@ -114,7 +114,7 @@ class PinDotView : UIView {
         guard state == .dot else { return }
 
         // Background color
-        let animator1 = UIViewPropertyAnimator(duration: speed * 0.5, dampingRatio: 0.7) {
+        let animator1 = UIViewPropertyAnimator(duration: speed * 0.2, dampingRatio: 0.7) {
             self.pinView.backgroundColor = self.lineState!.color
         }
 

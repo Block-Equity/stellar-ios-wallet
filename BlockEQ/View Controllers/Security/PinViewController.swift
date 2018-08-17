@@ -81,7 +81,7 @@ class PinViewController: UIViewController {
             pinDotColor = Colors.white
         } else {
             keyboardTextColor = Colors.primaryDark
-            pinLineColor = Colors.darkGray
+            pinLineColor = Colors.primaryDark
             pinDotColor = Colors.primaryDark
         }
 

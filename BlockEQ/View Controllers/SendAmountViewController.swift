@@ -197,7 +197,10 @@ class SendAmountViewController: UIViewController {
         if let authCoordinator = self.authenticationCoordinator {
             authCoordinator.authenticate()
         } else {
-            let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true, presentVC: true, forcedStyle: nil)
+            let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true,
+                                                                       presentVC: true,
+                                                                       forcedStyle: nil,
+                                                                       limitPinEntries: true)
             let authCoordinator = AuthenticationCoordinator(container: self, options: opts)
             authCoordinator.delegate = self
             

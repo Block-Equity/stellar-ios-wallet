@@ -236,7 +236,10 @@ extension ApplicationCoordinator: SettingsDelegate {
         if let authCoordinator = self.authenticationCoordinator {
             authCoordinator.authenticate()
         } else {
-            let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true, presentVC: true, forcedStyle: style)
+            let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true,
+                                                                       presentVC: true,
+                                                                       forcedStyle: style,
+                                                                       limitPinEntries: true)
             let authCoordinator = AuthenticationCoordinator(container: self.tabController, options: opts)
             authCoordinator.delegate = self
             authenticationCoordinator = authCoordinator
@@ -262,8 +265,15 @@ extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
         // We need to re-set the previously switched setting, in the case the user cancels the authentication challenge
         SecurityOptionHelper.set(option: .pinEnabled, value: temporaryPinSetting)
         SecurityOptionHelper.set(option: .useBiometrics, value: temporaryBiometricSetting)
-
+        
         settingsViewController.tableView.reloadData()
+        
+        KeychainHelper.clearAll()
+        SecurityOptionHelper.clear()
+        
+        self.delegate?.switchToOnboarding()
+        
+        authenticationCoordinator = nil
     }
 
     func authenticationCompleted(_ coordinator: AuthenticationCoordinator,

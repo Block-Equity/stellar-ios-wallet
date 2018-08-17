@@ -68,7 +68,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             authCoordinator.authenticate()
         } else {
             let container = onboardingContainer ? onboardingCoordinator.navController : self.container
-            let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: false, presentVC: false, forcedStyle: style)
+            let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: false,
+                                                                       presentVC: false,
+                                                                       forcedStyle: style,
+                                                                       limitPinEntries: true)
             let authCoordinator = AuthenticationCoordinator(container: container, options: opts)
             authCoordinator.delegate = self
             authenticationCoordinator = authCoordinator
