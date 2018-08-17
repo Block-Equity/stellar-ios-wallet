@@ -55,6 +55,7 @@ class ContactsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        searchBar.text = ""
         fetchContacts()
     }
     
@@ -143,7 +144,7 @@ class ContactsViewController: UIViewController {
                         self.accessDeniedView.isHidden = true
                         self.setRightNavigationButtonVisible()
 
-                        self.filterSearch(text: self.searchBar.text)
+                        self.filterSearch(text: nil)
                     }
                 } catch let error {
                     print("Error enumerating", error.localizedDescription)
@@ -279,7 +280,7 @@ extension ContactsViewController: UISearchBarDelegate {
 
 extension ContactsViewController: ContactCellDelegate {
     func didSelectAddToAddressBook(indexPath: IndexPath) {
-        let identifier = addressBookContacts[indexPath.row].identifier
+        let identifier = filteredAddressBookContacts[indexPath.row].identifier
         
         self.delegate?.selectedAddToAddressBook(identifier: identifier, name: filteredAddressBookContacts[indexPath.row].name, address: filteredAddressBookContacts[indexPath.row].address)
     }
@@ -288,7 +289,7 @@ extension ContactsViewController: ContactCellDelegate {
 extension ContactsViewController: ContactCellStellarDelegate {
     func didSendPayment(indexPath: IndexPath) {
 
-        getAccountDetails(address: stellarContacts[indexPath.row].address)
+        getAccountDetails(address: filteredStellarContacts[indexPath.row].address)
     }
 }
 
