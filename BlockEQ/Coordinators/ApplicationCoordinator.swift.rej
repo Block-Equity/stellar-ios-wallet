@@ -1,0 +1,11 @@
+diff a/BlockEQ/Coordinators/ApplicationCoordinator.swift b/BlockEQ/Coordinators/ApplicationCoordinator.swift	(rejected hunks)
+@@ -264,6 +267,9 @@ extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
+         SecurityOptionHelper.set(option: .useBiometrics, value: temporaryBiometricSetting)
+ 
+         settingsViewController.tableView.reloadData()
++        
++        self.delegate?.switchToOnboarding()
++        authenticationCoordinator = nil
+     }
+ 
+     func authenticationCompleted(_ coordinator: AuthenticationCoordinator,

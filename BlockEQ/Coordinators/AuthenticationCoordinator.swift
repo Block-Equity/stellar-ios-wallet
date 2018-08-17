@@ -54,7 +54,7 @@ final class AuthenticationCoordinator {
     typealias AuthenticationCompletion = (AuthenticationContext) -> Void
 
     /// A typealias for options that may be passed into the authentication coordinator.
-    typealias AuthenticationOptions = (cancellable: Bool, presentVC: Bool, forcedStyle: AuthenticationStyle?)
+    typealias AuthenticationOptions = (cancellable: Bool, presentVC: Bool, forcedStyle: AuthenticationStyle?, limitPinEntries: Bool)
 
     /// Errors relating to authenticating the user.
     ///
@@ -125,7 +125,7 @@ final class AuthenticationCoordinator {
     private var confirmPin: Bool = false
 
     /// Options that this authentication coordinator is configured with.
-    private var options: AuthenticationOptions = (cancellable: false, presentVC: false, forcedStyle: nil)
+    private var options: AuthenticationOptions = (cancellable: false, presentVC: false, forcedStyle: nil, limitPinEntries: true)
 
     /// Internal state to track the pin the user entered, when first creating a pin code
     private var firstPin: String?
@@ -391,6 +391,8 @@ extension AuthenticationCoordinator: PinViewControllerDelegate {
         os_log("ERROR: %@, attempts: %d",
                AuthenticationError.pinMismatchError.localizedDescription,
                failedPinAttempts)
+
+        guard options.limitPinEntries else { return }
 
         if failedPinAttempts >= AuthenticationCoordinator.maximumFailedPinAttempts {
             let context = AuthenticationContext(savedPin: false, mode: .pin, cancelled: false)

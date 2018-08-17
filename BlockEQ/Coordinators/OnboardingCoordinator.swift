@@ -33,7 +33,10 @@ final class OnboardingCoordinator {
         if let authCoordinator = self.authenticationCoordinator {
             authCoordinator.createPinAuthentication()
         } else {
-            let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: false, presentVC: false, forcedStyle: nil)
+            let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: false,
+                                                                       presentVC: false,
+                                                                       forcedStyle: nil,
+                                                                       limitPinEntries: false)
             let authCoordinator = AuthenticationCoordinator(container: self.navController, options: opts)
             authCoordinator.delegate = self
             authenticationCoordinator = authCoordinator
