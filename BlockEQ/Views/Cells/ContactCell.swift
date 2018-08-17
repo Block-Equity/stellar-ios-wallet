@@ -35,6 +35,6 @@ class ContactCell: UITableViewCell {
     }
     
     func setupView() {
-        addressButton.backgroundColor = Colors.red
+        addressButton.backgroundColor = Colors.shadowGray
     }
 }
