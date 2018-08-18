@@ -14,11 +14,11 @@ protocol ContainerProtocol: AnyObject {
     func setViewController(_ viewController: UIViewController, animated: Bool, completion: (() -> Void)?)
 }
 
-// This is an extendable class that passes through the preferred status bar colour of the first child. Since we're
+// This is an extendable class that passes through the preferred status bar colour of the last child. Since we're
 // using this class as a container for other view controllers, this will allow the proper status bar colour setting.
 class WrapperVC: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return childViewControllers.first?.preferredStatusBarStyle ?? .default
+        return childViewControllers.last?.preferredStatusBarStyle ?? .default
     }
 }
 
@@ -63,12 +63,12 @@ extension UIViewController {
         addContentView(viewController.view, to: view)
         viewController.didMove(toParentViewController: self)
     }
-    
+
     func addContentView(_ view: UIView, to holderView: UIView) {
         adjustFrameForView(view)
         holderView.addSubview(view)
     }
-    
+
     func addContentViewController(_ viewController: UIViewController) {
         addChildViewController(viewController)
         addContentView(viewController.view)

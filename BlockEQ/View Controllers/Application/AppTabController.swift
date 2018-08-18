@@ -89,6 +89,10 @@ final class AppTabController: ContainerViewController {
     private var currentTab: ApplicationTab = AppTabController.defaultTab
     weak var tabDelegate: AppTabControllerDelegate?
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return currentViewController?.preferredStatusBarStyle ?? .default
+    }
+
     convenience init(tab: ApplicationTab) {
         self.init(nibName: nil, bundle: nil)
         currentTab = tab
@@ -140,10 +144,10 @@ final class AppTabController: ContainerViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
     }
-    
+
     func setupView() {
         tabBar.delegate = self
         tabBar.tintColor = Colors.primaryDark
@@ -163,6 +167,8 @@ final class AppTabController: ContainerViewController {
         viewController.didMove(toParentViewController: self)
         viewController.view.frame = container.bounds
         currentViewController = viewController
+
+        self.setNeedsStatusBarAppearanceUpdate()
 
         completion?()
     }

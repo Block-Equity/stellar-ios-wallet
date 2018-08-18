@@ -10,25 +10,25 @@ import Whisper
 import UIKit
 
 class CreateTokenViewController: UIViewController {
-    
+
     @IBOutlet var tokenNameTextField: UITextField!
     @IBOutlet var holdingView: UIView!
     @IBOutlet var tableView: UITableView!
-    
+
     @IBAction func createPersonalToken() {
         guard let tokenName = tokenNameTextField.text, !tokenName.isEmpty else {
             tokenNameTextField.shake()
             return
         }
-        
+
         view.endEditing(true)
-        
+
         createToken(assetCode: "\(tokenName)XLM")
     }
-    
+
     @IBAction func dismissView() {
         view.endEditing(true)
-        
+
         dismiss(animated: true, completion: nil)
     }
 
@@ -37,44 +37,44 @@ class CreateTokenViewController: UIViewController {
 
         setupView()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         tokenNameTextField.becomeFirstResponder()
     }
 
     func setupView() {
         navigationItem.title = "Create Token"
-        
-        let image = UIImage(named:"close")
+
+        let image = UIImage(named: "close")
         let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
-        
+
         holdingView.backgroundColor = Colors.lightBackground
         tableView.backgroundColor = Colors.lightBackground
         view.backgroundColor = Colors.lightBackground
     }
-    
+
     func showHud() {
         let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
         hud.label.text = "Creating Token..."
         hud.mode = .indeterminate
     }
-    
+
     func hideHud() {
         MBProgressHUD.hide(for: UIApplication.shared.keyWindow!, animated: true)
     }
-    
+
     func displayCreateTokenSuccess() {
         self.view.endEditing(true)
-        
+
         let message = Message(title: "Person token successfully created.", backgroundColor: Colors.green)
         Whisper.show(whisper: message, to: navigationController!, action: .show)
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             Whisper.hide(whisperFrom: self.navigationController!)
-            
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.dismissView()
             }
@@ -96,11 +96,11 @@ extension CreateTokenViewController: UITextFieldDelegate {
 extension CreateTokenViewController {
     func createToken(assetCode: String) {
         showHud()
-        
+
         AccountOperation.createPersonalToken(assetCode: assetCode) { completed
             in
             self.hideHud()
-            
+
             if completed {
                 self.displayCreateTokenSuccess()
             } else {

@@ -25,7 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         window = window ?? UIWindow(frame: CGRect(origin: CGPoint.zero, size: UIScreen.main.bounds.size))
         window?.rootViewController = container
-        window?.makeKeyAndVisible()
 
         onboardingCoordinator.delegate = self
         appCoordinator.delegate = self
@@ -47,6 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             authenticate()
         }
+
+        window?.makeKeyAndVisible()
 
         return true
     }

@@ -339,6 +339,8 @@ extension AuthenticationCoordinator {
             os_log("ERROR: %@", "Unknown view controller specified for removal!")
             completion?(context)
         }
+
+        container.setNeedsStatusBarAppearanceUpdate()
     }
 }
 
