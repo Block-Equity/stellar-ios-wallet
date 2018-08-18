@@ -90,6 +90,12 @@ class VerificationViewController: UIViewController {
         
         textView.becomeFirstResponder()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        textView.text = ""
+    }
 
     func setupView() {
         let collectionViewNib = UINib(nibName: WordSuggestionCell.cellIdentifier, bundle: nil)

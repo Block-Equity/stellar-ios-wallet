@@ -87,6 +87,8 @@ extension OnboardingCoordinator: AuthenticationCoordinatorDelegate {
         KeychainHelper.clearAll()
         SecurityOptionHelper.clear()
         verificationViewController.navigationController?.popToRootViewController(animated: true)
+        authenticationCoordinator = nil
+        
     }
 
     func authenticationCompleted(_ coordinator: AuthenticationCoordinator,

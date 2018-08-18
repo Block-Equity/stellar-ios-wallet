@@ -64,20 +64,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         
-        if let authCoordinator = self.authenticationCoordinator {
-            authCoordinator.authenticate()
-        } else {
-            let container = onboardingContainer ? onboardingCoordinator.navController : self.container
-            let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: false,
-                                                                       presentVC: false,
-                                                                       forcedStyle: style,
-                                                                       limitPinEntries: true)
-            let authCoordinator = AuthenticationCoordinator(container: container, options: opts)
-            authCoordinator.delegate = self
-            authenticationCoordinator = authCoordinator
-            
-            authCoordinator.authenticate()
-        }
+        let container = onboardingContainer ? onboardingCoordinator.navController : self.container
+        let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: false,
+                                                                   presentVC: false,
+                                                                   forcedStyle: style,
+                                                                   limitPinEntries: true)
+        let authCoordinator = AuthenticationCoordinator(container: container, options: opts)
+        authCoordinator.delegate = self
+        authenticationCoordinator = authCoordinator
+        
+        authCoordinator.authenticate()
     }
 }
 
