@@ -233,19 +233,15 @@ extension ApplicationCoordinator: SettingsDelegate {
     }
 
     func authenticate(_ style: AuthenticationCoordinator.AuthenticationStyle? = nil) {
-        if let authCoordinator = self.authenticationCoordinator {
-            authCoordinator.authenticate()
-        } else {
-            let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true,
-                                                                       presentVC: true,
-                                                                       forcedStyle: style,
-                                                                       limitPinEntries: true)
-            let authCoordinator = AuthenticationCoordinator(container: self.tabController, options: opts)
-            authCoordinator.delegate = self
-            authenticationCoordinator = authCoordinator
-
-            authCoordinator.authenticate()
-        }
+        let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true,
+                                                                   presentVC: true,
+                                                                   forcedStyle: style,
+                                                                   limitPinEntries: true)
+        let authCoordinator = AuthenticationCoordinator(container: self.tabController, options: opts)
+        authCoordinator.delegate = self
+        authenticationCoordinator = authCoordinator
+        
+        authCoordinator.authenticate()
     }
 }
 
