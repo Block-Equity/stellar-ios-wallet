@@ -40,15 +40,18 @@ class PinViewController: UIViewController {
 
     let notificationGenerator = UINotificationFeedbackGenerator()
     let impactGenerator = UIImpactFeedbackGenerator(style: .light)
-    
+
     weak var delegate: PinViewControllerDelegate?
 
-    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        if mode == .dark { return .lightContent }
+        return .default
+    }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     init(mode: DisplayMode, creating: Bool, isCloseDisplayed: Bool) {
         super.init(nibName: String(describing: PinViewController.self), bundle: nil)
         self.pin = ""
@@ -64,11 +67,7 @@ class PinViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if mode == .dark {
-            UIApplication.shared.statusBarStyle = .lightContent
-        }
-        
+
         impactGenerator.prepare()
 
         var pinDotColor: UIColor
@@ -108,11 +107,6 @@ class PinViewController: UIViewController {
             pinView.reset()
         }
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        UIApplication.shared.statusBarStyle = .default
-    }
 
     func setupView() {
         if self.mode == .dark {
@@ -134,28 +128,28 @@ class PinViewController: UIViewController {
             longTitle = "PIN_ENTER_TITLE".localized()
             shortTitle = "PIN_CONFIRM_SHORT".localized()
         }
-        
+
         titleLabel.text = longTitle
         title = shortTitle
         navigationItem.title = shortTitle
 
         logoImageView.image = UIImage(named: "logo")
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
-        
+
         if isCloseDisplayed {
-            let image = UIImage(named:"close")
+            let image = UIImage(named: "close")
             let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
             navigationItem.leftBarButtonItem = leftBarButtonItem
         }
 
         keyboardView.delegate = self
     }
-    
+
     @objc func dismissView() {
         view.endEditing(true)
         dismiss(animated: true, completion: nil)
     }
-    
+
     func pinMismatchError() {
         pin = ""
 
@@ -163,7 +157,7 @@ class PinViewController: UIViewController {
         notificationGenerator.notificationOccurred(.error)
 
         for pinView in pinViews {
-            pinView.shake() {
+            pinView.shake {
                 pinView.animateToLine()
             }
         }

@@ -17,34 +17,34 @@ protocol P2PViewControllerDelegate: AnyObject {
 }
 
 class P2PViewController: UIViewController {
-    
+
     @IBOutlet var headerBackgroundView: UIView!
     @IBOutlet var headerOverlayView: UIView!
     @IBOutlet var balanceLabel: UILabel!
     @IBOutlet var tokenLabel: UILabel!
-    
+
     weak var delegate: P2PViewControllerDelegate?
-    
+
     @IBAction func addPeer() {
         delegate?.selectedAddPeer()
     }
-    
+
     @IBAction func addTransaction() {
         delegate?.selectedAddTransaction()
     }
-    
+
     @IBAction func createToken() {
         delegate?.selectedCreateToken()
     }
-    
+
     @IBAction func displayAddress() {
         guard let accountId = KeychainHelper.getAccountId() else {
             return
         }
-        
+
         delegate?.selectedDisplayAddress(accountId: accountId)
     }
-    
+
     @IBAction func viewTrustedParties() {
         delegate?.selectedTrustedParties()
     }
@@ -54,22 +54,22 @@ class P2PViewController: UIViewController {
 
         setupView()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         getPersonToken()
     }
-    
+
     func setupView() {
         navigationItem.title = "Peer to Peer"
-        
+
         let leftBarButtonItem = UIBarButtonItem(title: "Token Address", style: .plain, target: self, action: #selector(self.displayAddress))
         navigationItem.leftBarButtonItem = leftBarButtonItem
-        
+
         let rightBarButtonItem = UIBarButtonItem(title: "Trusted Peers", style: .plain, target: self, action: #selector(self.viewTrustedParties))
         navigationItem.rightBarButtonItem = rightBarButtonItem
-        
+
         headerBackgroundView.backgroundColor = Colors.primaryDark
         headerOverlayView.backgroundColor = Colors.primaryDark
         balanceLabel.textColor = Colors.white
@@ -85,7 +85,7 @@ extension P2PViewController {
         guard let accountId = KeychainHelper.getAccountId() else {
             return
         }
-        
+
         AccountOperation.getPersonalToken(address: accountId) { personalToken in
             if let token = personalToken, !token.isEmpty {
                 self.headerOverlayView.isHidden = true
@@ -132,4 +132,3 @@ extension P2PViewController {
         }
     }*/
 }
-

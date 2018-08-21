@@ -17,11 +17,11 @@ class ScanViewController: UIViewController {
     var captureSession = AVCaptureSession()
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var qrCodeFrameView: UIView?
-    
+
     var hasIdentifiedQR: Bool = false
-    
+
     weak var delegate: ScanViewControllerDelegate?
-    
+
     private let supportedCodeTypes = [AVMetadataObject.ObjectType.upce,
                                       AVMetadataObject.ObjectType.code39,
                                       AVMetadataObject.ObjectType.code39Mod43,
@@ -38,43 +38,43 @@ class ScanViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         setupCamera()
     }
-    
+
     func setupView() {
         navigationItem.title = "Scanning..."
-        
-        let image = UIImage(named:"close")
+
+        let image = UIImage(named: "close")
         let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
     }
-    
+
     @objc func dismissView() {
         captureSession.stopRunning()
         videoPreviewLayer?.removeFromSuperlayer()
-        
+
         dismiss(animated: true, completion: nil)
     }
-    
+
     func setupCamera() {
         let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInDualCamera, .builtInWideAngleCamera], mediaType: AVMediaType.video, position: .back)
-        
+
         guard let captureDevice = deviceDiscoverySession.devices.first else {
             print("No Camera Found.")
             return
         }
-        
+
         do {
             let input = try AVCaptureDeviceInput(device: captureDevice)
             captureSession.addInput(input)
-            
+
             let captureMetadataOutput = AVCaptureMetadataOutput()
             captureSession.addOutput(captureMetadataOutput)
             captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
@@ -83,16 +83,16 @@ class ScanViewController: UIViewController {
             print(error)
             return
         }
-        
+
         videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
         videoPreviewLayer?.frame = CGRect(x: 0.0, y: 0.0, width: view.frame.size.width, height: view.frame.size.height)
         view.layer.addSublayer(videoPreviewLayer!)
-        
+
         captureSession.startRunning()
-        
+
         qrCodeFrameView = UIView()
-        
+
         if let qrCodeFrameView = qrCodeFrameView {
             qrCodeFrameView.layer.borderColor = Colors.primaryDark.cgColor
             qrCodeFrameView.layer.borderWidth = 3.0
@@ -108,18 +108,18 @@ extension ScanViewController: AVCaptureMetadataOutputObjectsDelegate {
             qrCodeFrameView?.frame = CGRect.zero
             return
         }
-        
+
         let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
-        
+
         if supportedCodeTypes.contains(metadataObj.type) {
             let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
             qrCodeFrameView?.frame = barCodeObject!.bounds
-            
+
             if let qrValue =  metadataObj.stringValue {
                 if !hasIdentifiedQR {
                     hasIdentifiedQR = true
                     delegate?.setQR(value: qrValue)
-                    
+
                     navigationItem.title = "Valid QR Code Found"
                     perform(#selector(self.dismissView), with: nil, afterDelay: 0.6)
                 }

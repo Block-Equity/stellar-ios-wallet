@@ -12,15 +12,15 @@ import UIKit
 class WebViewController: UIViewController {
 
     @IBOutlet var webView: UIWebView!
-    var url:URL?
-    
+    var url: URL?
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     init(url: URL) {
         super.init(nibName: String(describing: WebViewController.self), bundle: nil)
-        
+
         self.url = url
     }
 
@@ -30,7 +30,7 @@ class WebViewController: UIViewController {
         guard let loadableUrl = url  else {
             return
         }
-        
+
         webView.loadRequest(URLRequest(url: loadableUrl))
     }
 }

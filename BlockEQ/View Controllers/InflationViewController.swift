@@ -10,7 +10,7 @@ import Whisper
 import UIKit
 
 class InflationViewController: UIViewController {
-    
+
     @IBOutlet var addressHolderView: UIView!
     @IBOutlet var holdingView: UIView!
     @IBOutlet var tableView: UITableView!
@@ -18,21 +18,21 @@ class InflationViewController: UIViewController {
     @IBOutlet var subtitleLabel: UILabel!
     @IBOutlet var subtitleLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet var destinationAddressTextField: UITextField!
-    
+
     var inflationDestination: String?
     let lumenautInflationDestination = "GCCD6AJOYZCUAQLX32ZJF2MKFFAUJ53PVCFQI3RHWKL3V47QYE2BNAUT"
-    
+
     @IBAction func addInflationDestination() {
         guard let inflationDestination = destinationAddressTextField.text, !inflationDestination.isEmpty, inflationDestination.count > 20, inflationDestination != KeychainHelper.getAccountId() else {
             destinationAddressTextField.shake()
             return
         }
-        
+
         showHud()
-        
+
         AccountOperation.setInflationDestination(accountId: inflationDestination) { (completed) in
             self.hideHud()
-            
+
             if completed {
                 self.displayInflationSuccess()
             } else {
@@ -42,31 +42,31 @@ class InflationViewController: UIViewController {
             }
         }
     }
-    
+
     @IBAction func scanQRCode() {
         let scanViewController = ScanViewController()
         scanViewController.delegate = self
-        
+
         let navigationController = AppNavigationController(rootViewController: scanViewController)
         present(navigationController, animated: true, completion: nil)
     }
-    
+
     init(inflationDestination: String?) {
         super.init(nibName: String(describing: InflationViewController.self), bundle: nil)
-        
+
         self.inflationDestination = inflationDestination
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
     }
-    
+
     func setupView() {
         navigationItem.title = "Inflation".localized()
 
@@ -77,7 +77,7 @@ class InflationViewController: UIViewController {
         addressHolderView.backgroundColor = Colors.lightBackground
         holdingView.backgroundColor = Colors.lightBackground
         view.backgroundColor = Colors.lightBackground
-        
+
         if let currentInflationDestination = inflationDestination {
             destinationAddressTextField.text = currentInflationDestination
             subtitleLabel.text = ""
@@ -86,16 +86,16 @@ class InflationViewController: UIViewController {
             destinationAddressTextField.text = lumenautInflationDestination
         }
     }
-    
+
     func displayInflationSuccess() {
         self.view.endEditing(true)
-        
+
         let message = Message(title: "Inflation successfully updated.", backgroundColor: Colors.green)
         Whisper.show(whisper: message, to: navigationController!, action: .show)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             Whisper.hide(whisperFrom: self.navigationController!)
-            
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.dismissView()
             }
@@ -107,14 +107,14 @@ class InflationViewController: UIViewController {
         hud.label.text = "Setting Inflation Destination..."
         hud.mode = .indeterminate
     }
-    
+
     func hideHud() {
         MBProgressHUD.hide(for: UIApplication.shared.keyWindow!, animated: true)
     }
-    
+
     func dismissView() {
         view.endEditing(true)
-        
+
         navigationController?.dismiss(animated: true, completion: nil)
     }
 }
