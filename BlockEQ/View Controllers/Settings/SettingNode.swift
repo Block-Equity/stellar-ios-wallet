@@ -51,7 +51,7 @@ enum SettingNode {
 
     var leaf: Bool {
         switch self {
-        case .node(_, _, _, _): return true
+        case .node: return true
         default: return false
         }
     }

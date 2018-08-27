@@ -9,7 +9,7 @@
 import UIKit
 
 class BalanceViewController: UIViewController {
-    
+
     @IBOutlet var availableBalanceView: UIView!
     @IBOutlet var totalBalanceView: UIView!
     @IBOutlet var availableBalanceLabel: UILabel!
@@ -23,16 +23,16 @@ class BalanceViewController: UIViewController {
     @IBOutlet var totalBalanceLabel: UILabel!
     @IBOutlet var trustlinesAmountLabel: UILabel!
     @IBOutlet var trustlinesValueLabel: UILabel!
-    
+
     var stellarAccount: StellarAccount!
     var stellarAsset: StellarAsset!
-    
+
     init(stellarAccount: StellarAccount, stellarAsset: StellarAsset) {
         super.init(nibName: String(describing: BalanceViewController.self), bundle: nil)
         self.stellarAccount = stellarAccount
         self.stellarAsset = stellarAsset
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -46,15 +46,15 @@ class BalanceViewController: UIViewController {
 
     func setupView() {
         navigationItem.title = "XLM Balance"
-        
-        let image = UIImage(named:"close")
+
+        let image = UIImage(named: "close")
         let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
-        
+
         availableBalanceView.backgroundColor = Colors.primaryDark
         totalBalanceView.backgroundColor = Colors.primaryDark
     }
-    
+
     func setLabelValues() {
         availableBalanceLabel.text = stellarAccount.formattedAvailableBalance
         baseReserveAmountLabel.text = String(describing: stellarAccount.totalBaseReserve)
@@ -68,7 +68,7 @@ class BalanceViewController: UIViewController {
         minimumBalanceLabel.text = stellarAccount.formattedMinBalance
         totalBalanceLabel.text = stellarAsset.formattedBalance
     }
-    
+
     @objc func dismissView() {
         dismiss(animated: true, completion: nil)
     }

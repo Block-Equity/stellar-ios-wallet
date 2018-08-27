@@ -14,7 +14,7 @@ protocol MnemonicViewControllerDelegate: AnyObject {
 }
 
 class MnemonicViewController: UIViewController {
-    
+
     @IBOutlet var holderView: UIView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var mnemonicHolderView: UIView!
@@ -25,11 +25,11 @@ class MnemonicViewController: UIViewController {
 
     var mnemonic: String!
     var hideConfirmation: Bool = false
-    
+
     @IBAction func confirmedWrittenDown(_ sender: Any) {
         delegate?.confirmedWrittenMnemonic(self, mnemonic: mnemonic)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.mnemonic = Wallet.generate24WordMnemonic()
@@ -43,7 +43,7 @@ class MnemonicViewController: UIViewController {
         } else {
             self.mnemonic = mnemonic ?? Wallet.generate24WordMnemonic()
         }
-        
+
         self.hideConfirmation = hideConfirmation
     }
 
@@ -56,10 +56,10 @@ class MnemonicViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         self.confirmationButton.isHidden = self.hideConfirmation
     }
-    
+
     func setupView() {
         navigationItem.title = "Secret Phrase"
         title = "Secret Phrase"
@@ -67,27 +67,27 @@ class MnemonicViewController: UIViewController {
         holderView.backgroundColor = Colors.lightBackground
         titleLabel.textColor = Colors.darkGray
     }
-    
+
     @objc func dismissView() {
         view.endEditing(true)
-        
+
         dismiss(animated: true, completion: nil)
     }
-    
+
     func generateMnemonicViews() {
         activityIndicator.stopAnimating()
-        
+
         let words = mnemonic.components(separatedBy: " ")
-        
+
         var originX: CGFloat = 0.0
         var originY: CGFloat = 0.0
-        
+
         for (index, word) in words.enumerated() {
             let pillView = PillView(index: String(index + 1), title: word, origin: .zero)
-            
+
             if index == 0 {
                 mnemonicHolderView.addSubview(pillView)
-                
+
                 originX += pillView.frame.size.width
             } else {
                 if originX + pillView.frame.size.width > mnemonicHolderView.frame.size.width - pillView.horizontalSpacing {
@@ -96,11 +96,11 @@ class MnemonicViewController: UIViewController {
                 } else {
                     originX += pillView.horizontalSpacing
                 }
-                
+
                 pillView.frame.origin = CGPoint(x: originX, y: originY)
-                
+
                 mnemonicHolderView.addSubview(pillView)
-                
+
                 originX += pillView.frame.size.width
             }
         }

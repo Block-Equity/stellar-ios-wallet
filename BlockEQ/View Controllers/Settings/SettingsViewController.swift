@@ -51,7 +51,7 @@ final class SettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
         setupStyle()
     }
@@ -64,7 +64,7 @@ final class SettingsViewController: UIViewController {
         tableView.dataSource = self
     }
 
-    func setupStyle() {        
+    func setupStyle() {
         let closeButton = navigationItem.rightBarButtonItem
         closeButton?.tintColor = .black
     }
@@ -98,7 +98,7 @@ extension SettingsViewController: UITableViewDelegate {
 
         if let setting = settingNode, let settingCell = cell as? UpdatableCell {
             settingCell.update(for: setting)
-            
+
             if let cellValue = delegate?.value(for: setting) {
                 settingCell.setValue(cellValue)
             }

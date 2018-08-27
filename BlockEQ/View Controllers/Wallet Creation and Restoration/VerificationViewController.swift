@@ -14,7 +14,7 @@ protocol VerificationViewControllerDelegate: AnyObject {
 }
 
 class VerificationViewController: UIViewController {
-    
+
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var textView: UITextView!
     @IBOutlet var textViewHeightConstraint: NSLayoutConstraint!
@@ -33,7 +33,7 @@ class VerificationViewController: UIViewController {
         case confirmation
         case questions
     }
-    
+
     let defaultQuestionViewHeight: CGFloat = 88.0
     let questionTextViewHeight: CGFloat = 48.0
     let totalQuestionCount = 4
@@ -55,7 +55,7 @@ class VerificationViewController: UIViewController {
     var questionWords: [String] = []
     var currentWord: String = ""
     var mnemonic: String = ""
- 
+
     @IBAction func nextButtonSelected() {
         switch type {
         case .questions:
@@ -64,7 +64,7 @@ class VerificationViewController: UIViewController {
             guard var mnemonicString = textView.text, !mnemonicString.isEmpty else {
                 return
             }
-            
+
             let lastCharater = mnemonicString.last
             if lastCharater == " " {
                 mnemonicString = String(mnemonicString.dropLast())
@@ -74,14 +74,14 @@ class VerificationViewController: UIViewController {
             delegate?.validatedAccount(self, mnemonic: mnemonicString)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     init(type: VerificationType, mnemonic: String) {
         super.init(nibName: String(describing: VerificationViewController.self), bundle: nil)
-        
+
         self.type = type
         self.mnemonic = mnemonic
     }
@@ -91,44 +91,44 @@ class VerificationViewController: UIViewController {
 
         setupView()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         textView.becomeFirstResponder()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+
         textView.text = ""
     }
 
     func setupView() {
         let collectionViewNib = UINib(nibName: WordSuggestionCell.cellIdentifier, bundle: nil)
         collectionView.register(collectionViewNib, forCellWithReuseIdentifier: WordSuggestionCell.cellIdentifier)
-        
+
         switch type {
         case .confirmation:
             navigationItem.title = "Re-enter Your Phrase"
-            
+
             questionViewHeightConstraint.constant = 0.0
             textViewHeightConstraint.constant = defaultTextViewHeight
         case .questions:
             questionViewHeightConstraint.constant = defaultQuestionViewHeight
             textViewHeightConstraint.constant = questionTextViewHeight
-            
+
             setQuestion(animated: false)
         default:
             navigationItem.title = "Enter Phrase"
-            
+
             questionViewHeightConstraint.constant = 0.0
             textViewHeightConstraint.constant = defaultTextViewHeight
         }
 
-        textView.textContainerInset = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0);
+        textView.textContainerInset = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0)
         textView.inputAccessoryView = quicktypeView
-        
+
         progressView.backgroundColor = Colors.tertiaryDark
         textView.textColor = Colors.darkGray
         questionHolderView.backgroundColor = Colors.lightBackground
@@ -136,42 +136,42 @@ class VerificationViewController: UIViewController {
         questionSubtitleLabel.textColor = Colors.darkGray
         view.backgroundColor = Colors.lightBackground
     }
-    
+
     @objc func dismissView() {
         view.endEditing(true)
-        
+
         dismiss(animated: true, completion: nil)
     }
-    
+
     func getWords(string: String) -> [String] {
         let components = string.components(separatedBy: .whitespacesAndNewlines)
-        
+
         return components.filter { !$0.isEmpty }
     }
-    
+
     func clearSuggestions(reload: Bool) {
         suggestions.removeAll()
-        
+
         if reload {
             collectionView.reloadData()
         }
     }
-    
-    func getAutocompleteSuggestions(userText: String) -> [String]{
+
+    func getAutocompleteSuggestions(userText: String) -> [String] {
         var possibleMatches: [String] = []
         let language: WordList = .english
-        
+
         for item in language.englishWords {
-            let myString:NSString! = item as NSString
-            let substringRange :NSRange! = myString.range(of: userText)
-            
+            let myString: NSString! = item as NSString
+            let substringRange: NSRange! = myString.range(of: userText)
+
             if (substringRange.location == 0) {
                 possibleMatches.append(item)
             }
         }
-        return possibleMatches.enumerated().compactMap{ $0.offset < 3 ? $0.element : nil }
+        return possibleMatches.enumerated().compactMap { $0.offset < 3 ? $0.element : nil }
     }
-    
+
     func validateAnswer() {
         if textView.text == currentWord {
             if questionsAnswered == 4 {
@@ -183,36 +183,36 @@ class VerificationViewController: UIViewController {
         } else {
             textView.textColor = UIColor.red
             textView.shake()
-            
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                 self.textView.text = ""
                 self.textView.textColor = Colors.darkGray
             }
         }
     }
-    
+
     func setQuestion(animated: Bool) {
         if questionWords.count == 0 {
             questionWords = mnemonic.components(separatedBy: " ")
         }
-        
+
         let randomIndex = Int(arc4random_uniform(UInt32(questionWords.count)))
         currentWord = questionWords[randomIndex]
-        
+
         if let indexOfWord = mnemonic.components(separatedBy: " ").index(of: currentWord) {
             questionTitleLabel.text = "What was the word \(String(describing: indexOfWord + 1))?"
             questionWords.remove(at: randomIndex)
             questionsAnswered += 1
-            
+
             setProgress(animated: animated)
         }
     }
-    
+
     func setProgress(animated: Bool) {
         progressViewWidthConstraint.constant += progressWidth
-        
+
         navigationItem.title = "Question \(questionsAnswered) of \(totalQuestionCount)"
-        
+
         if animated {
             UIView.animate(withDuration: 0.3) {
                 self.view.layoutIfNeeded()
@@ -224,18 +224,18 @@ class VerificationViewController: UIViewController {
 extension VerificationViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         clearSuggestions(reload: false)
-        
+
         let subString = (textView.text! as NSString).replacingCharacters(in: range, with: text)
 
         if let lastWord = getWords(string: String(subString)).last {
             suggestions.append(contentsOf: getAutocompleteSuggestions(userText: lastWord))
         }
-        
+
         collectionView.reloadData()
 
         return true
     }
-    
+
     func textViewDidChange(_ textView: UITextView) {
         highlightWrongWords(targetString: textView.text)
     }
@@ -245,7 +245,7 @@ extension VerificationViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return suggestions.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WordSuggestionCell.cellIdentifier, for: indexPath) as! WordSuggestionCell
         cell.titleLabel.text = suggestions[indexPath.row]
@@ -261,15 +261,15 @@ extension VerificationViewController: UICollectionViewDelegate {
             words.removeLast()
         }
         words.append(suggestion)
-        
+
         textView.text = words.joined(separator: " ")
-        
+
         if type != .questions {
             textView.text.append(" ")
         }
-        
+
         clearSuggestions(reload: true)
-        
+
         highlightWrongWords(targetString: textView.text)
     }
 }
@@ -286,9 +286,9 @@ extension VerificationViewController {
         let range = NSRange(location: 0, length: targetString.utf16.count)
         attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: Colors.black, range: range)
         attributedString.addAttribute(NSAttributedStringKey.font, value: UIFont.systemFont(ofSize: 16.0), range: range)
-        
+
         let words = getWords(string: targetString)
-        
+
         for word in words {
             if !isReal(word: word) {
                 textView.attributedText = getHighlightedAttributedString(attributedString: attributedString, word: word, in: targetString, highlightColor: Colors.red)
@@ -297,7 +297,7 @@ extension VerificationViewController {
             }
         }
     }
-    
+
     func getHighlightedAttributedString(attributedString: NSMutableAttributedString, word: String, in targetString: String, highlightColor: UIColor) -> NSMutableAttributedString {
         do {
             let regex = try NSRegularExpression(pattern: word, options: .caseInsensitive)
@@ -305,19 +305,18 @@ extension VerificationViewController {
             for match in regex.matches(in: targetString, options: .withTransparentBounds, range: range) {
                 attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: highlightColor, range: match.range)
             }
-            
+
             return attributedString
         } catch _ {
             return attributedString
         }
     }
-    
+
     func isReal(word: String) -> Bool {
         let checker = UITextChecker()
         let range = NSRange(location: 0, length: word.utf16.count)
         let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
-        
+
         return misspelledRange.location == NSNotFound
     }
 }
-

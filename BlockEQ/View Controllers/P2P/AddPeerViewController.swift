@@ -14,15 +14,15 @@ protocol AddPeerViewControllerDelegate: AnyObject {
 }
 
 class AddPeerViewController: UIViewController {
-    
+
     @IBOutlet var assetCodeTextField: UITextField!
     @IBOutlet var issuerTextField: UITextField!
     @IBOutlet var limitTextField: UITextField!
     @IBOutlet var holdingView: UIView!
     @IBOutlet var tableView: UITableView!
-    
+
     weak var delegate: AddPeerViewControllerDelegate?
-    
+
     @IBAction func scanAddress() {
         delegate?.selectedScanAddress()
     }
@@ -32,74 +32,74 @@ class AddPeerViewController: UIViewController {
 
         setupView()
     }
-    
+
     @IBAction func dismissView() {
         view.endEditing(true)
-        
+
         dismiss(animated: true, completion: nil)
     }
-    
+
     @IBAction func addTrustLineToPeer() {
         guard let assetCode = assetCodeTextField.text, !assetCode.isEmpty else {
             assetCodeTextField.shake()
             return
         }
-        
+
         guard let issuer = issuerTextField.text, !issuer.isEmpty, issuer.count > 20 else {
             issuerTextField.shake()
             return
         }
-        
+
         guard let limit = limitTextField.text, !limit.isEmpty else {
             limitTextField.shake()
             return
         }
-        
+
         guard let decimalLimit = Decimal(string: limit) else {
             limitTextField.shake()
             return
         }
-        
+
         view.endEditing(true)
-        
+
         createTrustLine(issuerAccountId: issuer, assetCode: assetCode, limit: decimalLimit)
     }
-    
+
     func setupView() {
         navigationItem.title = "Add Peer".localized()
-        
-        let image = UIImage(named:"close")
+
+        let image = UIImage(named: "close")
         let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
-        
+
         holdingView.backgroundColor = Colors.lightBackground
         tableView.backgroundColor = Colors.lightBackground
         view.backgroundColor = Colors.lightBackground
     }
-    
+
     func setIssuerAddress(address: String) {
         issuerTextField.text = address
     }
-    
+
     func showHud() {
         let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
         hud.label.text = "Adding Peer..."
         hud.mode = .indeterminate
     }
-    
+
     func hideHud() {
         MBProgressHUD.hide(for: UIApplication.shared.keyWindow!, animated: true)
     }
-    
+
     func displayAddPeerSuccess() {
         self.view.endEditing(true)
-        
+
         let message = Message(title: "Peer successfully added.", backgroundColor: Colors.green)
         Whisper.show(whisper: message, to: navigationController!, action: .show)
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             Whisper.hide(whisperFrom: self.navigationController!)
-            
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.dismissView()
             }
@@ -113,7 +113,7 @@ class AddPeerViewController: UIViewController {
 extension AddPeerViewController {
     func createTrustLine(issuerAccountId: String, assetCode: String, limit: Decimal) {
         showHud()
-        
+
         PaymentTransactionOperation.changeP2PTrust(issuerAccountId: issuerAccountId, assetCode: assetCode, limit: limit) { completed
             in
             self.hideHud()
