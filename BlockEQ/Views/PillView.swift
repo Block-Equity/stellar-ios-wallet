@@ -9,12 +9,24 @@
 import UIKit
 
 class PillView: UIView {
-    let viewHeight: CGFloat = 30.0
     let indexWidth: CGFloat = 13.0
     let indexPadding: CGFloat = 4.0
     let viewPadding: CGFloat = 10.0
-    let verticalSpacing: CGFloat = 42.0
     let horizontalSpacing: CGFloat = 8.0
+    
+    var viewHeight: CGFloat = {
+        if UIScreen.main.bounds.size.width == 320.0 {
+            return 25.0
+        }
+        return 30.0
+    }()
+    
+    var verticalSpacing: CGFloat = {
+        if UIScreen.main.bounds.size.width == 320.0 {
+            return 36.0
+        }
+        return 42.0
+    }()
 
     init(index: String, title: String, origin: CGPoint) {
         super.init(frame: CGRect(origin: origin, size: CGSize(width: 0.0, height: viewHeight)))
@@ -49,6 +61,6 @@ class PillView: UIView {
         backgroundColor = Colors.white
         layer.borderColor = Colors.lightGray.cgColor
         layer.borderWidth = 1.0
-        layer.cornerRadius = 16.0
+        layer.cornerRadius = 5.0
     }
 }

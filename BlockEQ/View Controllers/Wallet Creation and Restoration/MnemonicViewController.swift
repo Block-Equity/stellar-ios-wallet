@@ -34,11 +34,16 @@ class MnemonicViewController: UIViewController {
         super.init(coder: aDecoder)
         self.mnemonic = Wallet.generate24WordMnemonic()
     }
-
-    init(mnemonic: String?, shouldSetPin: Bool, hideConfirmation: Bool = false) {
+    
+    init(mnemonic: String?, shouldSetPin: Bool, hideConfirmation: Bool = false, mnemonicType: MnemonicType) {
         super.init(nibName: String(describing: MnemonicViewController.self), bundle: nil)
+        
+        if mnemonicType == .twelve {
+            self.mnemonic = mnemonic ?? Wallet.generate12WordMnemonic()
+        } else {
+            self.mnemonic = mnemonic ?? Wallet.generate24WordMnemonic()
+        }
 
-        self.mnemonic = mnemonic ?? Wallet.generate24WordMnemonic()
         self.hideConfirmation = hideConfirmation
     }
 

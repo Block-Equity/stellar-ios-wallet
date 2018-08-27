@@ -9,7 +9,7 @@
 import UIKit
 
 protocol LaunchViewControllerDelegate: AnyObject {
-    func requestedCreateNewWallet(_ vc: LaunchViewController)
+    func requestedCreateNewWallet(_ vc: LaunchViewController, type: MnemonicType)
     func requestedImportWallet(_ vc: LaunchViewController)
 }
 
@@ -91,7 +91,23 @@ class LaunchViewController: UIViewController {
     }
 
     @IBAction func createNewWallet() {
-        delegate?.requestedCreateNewWallet(self)
+        let alert = UIAlertController(title: "Create Wallet", message: "Please select from the following 2 options:", preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Use a 12 word recovery phrase", style: .default , handler:{ (UIAlertAction)in
+            self.delegate?.requestedCreateNewWallet(self, type: .twelve)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Use a 24 word recovery phrase", style: .default , handler:{ (UIAlertAction)in
+            self.delegate?.requestedCreateNewWallet(self, type: .twentyFour)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cance", style: .cancel, handler:{ (UIAlertAction)in
+        }))
+        
+        self.present(alert, animated: true, completion: {
+            print("completion block")
+        })
+        
     }
 
     @IBAction func importWallet() {

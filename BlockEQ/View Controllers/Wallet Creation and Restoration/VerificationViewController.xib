@@ -107,7 +107,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QNY-cd-5bI" customClass="AppButton" customModule="BlockEQ" customModuleProvider="target">
-                    <rect key="frame" x="16" y="323" width="343" height="48"/>
+                    <rect key="frame" x="16" y="318" width="343" height="48"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="sNe-X3-8CN"/>
                     </constraints>
@@ -133,7 +133,7 @@
                 <constraint firstItem="Smi-Lv-1zE" firstAttribute="top" secondItem="1RZ-No-B37" secondAttribute="bottom" id="Fz5-sH-MW8"/>
                 <constraint firstItem="QNY-cd-5bI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="HD7-Ny-ghs"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="1RZ-No-B37" secondAttribute="trailing" id="SeI-5X-qW8"/>
-                <constraint firstItem="QNY-cd-5bI" firstAttribute="top" secondItem="Smi-Lv-1zE" secondAttribute="bottom" constant="20" id="ZYF-Cs-lAd"/>
+                <constraint firstItem="QNY-cd-5bI" firstAttribute="top" secondItem="Smi-Lv-1zE" secondAttribute="bottom" constant="15" id="ZYF-Cs-lAd"/>
                 <constraint firstItem="hA1-Ss-YK5" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="aKN-eX-VST"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="QNY-cd-5bI" secondAttribute="trailing" constant="16" id="g1r-eS-r8n"/>
                 <constraint firstItem="1RZ-No-B37" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="zWX-7s-we5"/>
