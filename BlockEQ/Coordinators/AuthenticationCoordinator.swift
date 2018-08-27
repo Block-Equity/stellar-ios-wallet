@@ -173,7 +173,6 @@ final class AuthenticationCoordinator {
         let policy = AuthenticationCoordinator.authPolicy
         let context = LAContext()
         let available = AuthenticationCoordinator.evaluateLAPolicy(policy, context: context) == nil
-        context.invalidate()
 
         return available
     }

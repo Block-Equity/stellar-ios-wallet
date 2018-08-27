@@ -141,12 +141,14 @@ class PinViewController: UIViewController {
         navigationItem.title = shortTitle
 
         logoImageView.image = UIImage(named: "logo")
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+        
 
         if isCloseDisplayed {
             let image = UIImage(named: "close")
             let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
             navigationItem.leftBarButtonItem = leftBarButtonItem
+        } else {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(self.popView))
         }
 
         keyboardView.delegate = self
@@ -155,6 +157,11 @@ class PinViewController: UIViewController {
     @objc func dismissView() {
         view.endEditing(true)
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func popView() {
+        view.endEditing(true)
+        navigationController?.popToRootViewController(animated: true)
     }
 
     func pinMismatchError() {
