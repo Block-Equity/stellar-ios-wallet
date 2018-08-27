@@ -17,14 +17,17 @@ struct EQSettings {
     //TODO: add the community section back in here
     init() {
         #if DEBUG
-        options = [walletSection, securitySection]
+        options = [recoverySection, walletSection, securitySection]
         #else
-        options = [walletSection, securitySection]
+        options = [recoverySection, walletSection, securitySection]
         #endif
     }
+    
+    let recoverySection = SettingNode.section(name: "SETTINGS_SECTION_RECOVERY".localized(), identifier: "section-recovery", items: [
+        SettingNode.node(name: "SETTINGS_OPTION_SEED_PHRASE".localized(), identifier: "wallet-view-seed", enabled: true, type: .normal)
+        ])
 
     let walletSection = SettingNode.section(name: "SETTINGS_SECTION_WALLET".localized(), identifier: "section-wallet", items: [
-        SettingNode.node(name: "SETTINGS_OPTION_SEED_PHRASE".localized(), identifier: "wallet-view-seed", enabled: true, type: .normal),
         SettingNode.node(name: "SETTINGS_OPTION_CLEAR_WALLET".localized(), identifier: "wallet-clear", enabled: true, type: .normal)
         ])
 
