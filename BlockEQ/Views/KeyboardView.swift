@@ -140,7 +140,7 @@ class KeyboardView: UIView {
 
         for label in keyLabels.enumerated() {
             keyLabels[label.offset].text = viewModel.buttons[label.offset].label
-            keyLabels[label.offset].isHidden = !viewModel.options.contains(.keyLabels)
+            keyLabels[label.offset].isHidden = viewModel.options.contains(.keyLabels)
             keyLabels[label.offset].textColor = viewModel.labelColor
         }
 

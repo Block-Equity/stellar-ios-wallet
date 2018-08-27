@@ -68,6 +68,7 @@ class PinViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        UIApplication.shared.statusBarStyle = .lightContent
         impactGenerator.prepare()
 
         var pinDotColor: UIColor
@@ -106,6 +107,12 @@ class PinViewController: UIViewController {
             pinView.update(with: viewModel)
             pinView.reset()
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        UIApplication.shared.statusBarStyle = .default
     }
 
     func setupView() {
