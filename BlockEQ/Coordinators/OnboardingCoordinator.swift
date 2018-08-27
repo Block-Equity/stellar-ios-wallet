@@ -21,6 +21,7 @@ final class OnboardingCoordinator {
 
     weak var delegate: OnboardingCoordinatorDelegate?
     var authenticationCoordinator: AuthenticationCoordinator?
+    var mnemonic: String = ""
 
     init() {
         navController = AppNavigationController(rootViewController: launchViewController)
@@ -30,18 +31,14 @@ final class OnboardingCoordinator {
     }
 
     func authenticate() {
-        if let authCoordinator = self.authenticationCoordinator {
-            authCoordinator.createPinAuthentication()
-        } else {
-            let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: false,
-                                                                       presentVC: false,
-                                                                       forcedStyle: nil,
-                                                                       limitPinEntries: true)
-            let authCoordinator = AuthenticationCoordinator(container: self.navController, options: opts)
-            authCoordinator.delegate = self
-            authenticationCoordinator = authCoordinator
-            authCoordinator.createPinAuthentication()
-        }
+        let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: false,
+                                                                   presentVC: false,
+                                                                   forcedStyle: nil,
+                                                                   limitPinEntries: true)
+        let authCoordinator = AuthenticationCoordinator(container: self.navController, options: opts)
+        authCoordinator.delegate = self
+        authenticationCoordinator = authCoordinator
+        authCoordinator.createPinAuthentication()
     }
 }
 
@@ -62,14 +59,14 @@ extension OnboardingCoordinator: LaunchViewControllerDelegate {
 
 extension OnboardingCoordinator: MnemonicViewControllerDelegate {
     func confirmedWrittenMnemonic(_ vc: MnemonicViewController, mnemonic: String) {
-        saveMnemonic(mnemonic: mnemonic)
+        self.mnemonic = mnemonic
         authenticate()
     }
 }
 
 extension OnboardingCoordinator: VerificationViewControllerDelegate {
     func validatedAccount(_ vc: VerificationViewController, mnemonic: String) {
-        saveMnemonic(mnemonic: mnemonic)
+        self.mnemonic = mnemonic
         authenticate()
     }
 }
@@ -93,6 +90,7 @@ extension OnboardingCoordinator: AuthenticationCoordinatorDelegate {
 
     func authenticationCompleted(_ coordinator: AuthenticationCoordinator,
                                  options: AuthenticationCoordinator.AuthenticationContext?) {
+        saveMnemonic(mnemonic: mnemonic)
         authenticationCoordinator = nil
         delegate?.onboardingCompleted()
     }
