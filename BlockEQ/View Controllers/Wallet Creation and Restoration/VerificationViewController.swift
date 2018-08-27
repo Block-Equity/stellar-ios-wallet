@@ -35,13 +35,20 @@ class VerificationViewController: UIViewController {
     }
     
     let defaultQuestionViewHeight: CGFloat = 88.0
-    let defaultTextViewHeight: CGFloat = 150.0
     let questionTextViewHeight: CGFloat = 48.0
     let totalQuestionCount = 4
     var questionsAnswered = 0
     var progressWidth: CGFloat {
         return UIScreen.main.bounds.size.width / CGFloat(totalQuestionCount)
     }
+    
+    var defaultTextViewHeight: CGFloat = {
+        if UIScreen.main.bounds.size.width == 320 {
+            return 125.0
+        } else {
+            return 150.0
+        }
+    }()
     
     var type: VerificationType = .recovery
     var suggestions: [String] = []

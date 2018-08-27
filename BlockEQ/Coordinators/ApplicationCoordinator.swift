@@ -228,7 +228,7 @@ extension ApplicationCoordinator: SettingsDelegate {
     }
 
     func displayMnemonic() {
-        let mnemonicViewController = MnemonicViewController(mnemonic: KeychainHelper.getMnemonic(), shouldSetPin: false, hideConfirmation: true)
+        let mnemonicViewController = MnemonicViewController(mnemonic: KeychainHelper.getMnemonic(), shouldSetPin: false, hideConfirmation: true, mnemonicType: .twentyFour)
         wrappingNavController?.pushViewController(mnemonicViewController, animated: true)
     }
 

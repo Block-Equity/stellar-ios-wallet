@@ -46,12 +46,12 @@ final class OnboardingCoordinator {
 }
 
 extension OnboardingCoordinator: LaunchViewControllerDelegate {
-    func requestedCreateNewWallet(_ vc: LaunchViewController) {
-        let mnemonicVC = MnemonicViewController(mnemonic: nil, shouldSetPin: false, hideConfirmation: false)
+    func requestedCreateNewWallet(_ vc: LaunchViewController, type: MnemonicType) {
+        let mnemonicVC = MnemonicViewController(mnemonic: nil, shouldSetPin: false, hideConfirmation: false, mnemonicType: type)
         mnemonicVC.delegate = self
-
+        
         self.mnemonicViewController = mnemonicVC
-
+        
         navController.pushViewController(mnemonicVC, animated: true)
     }
 
