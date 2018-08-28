@@ -176,7 +176,7 @@ final class AuthenticationCoordinator {
     /// Used to determine if biometric authentication is available (FaceID / TouchID).
     ///
     /// - Returns: True if FaceID / TouchID are currently available, or false otherwise.
-    static func biometricsAvailable() -> Bool {
+    static var biometricsAvailable: Bool {
         let policy = AuthenticationCoordinator.authPolicy
         let context = LAContext()
         let available = AuthenticationCoordinator.evaluateLAPolicy(policy, context: context) == nil

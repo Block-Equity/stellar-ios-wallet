@@ -426,7 +426,6 @@
 				C5AB412E20902E4800096A29 /* SettingNode.swift */,
 				C5AB41322090369000096A29 /* EQSettings.swift */,
 				C5AB41342090420D00096A29 /* SettingsDelegate.swift */,
-				C5CB9C1320914F64000F4181 /* SettingsContainerViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1057,7 +1056,6 @@
 				C53978CB20BF417100587D99 /* SettingsSwitchCell.swift in Sources */,
 				EC0B191E205486AB0052802C /* TransactionHistoryCell.swift in Sources */,
 				C589FF2A20902CCC00F5F308 /* SettingsViewController.swift in Sources */,
-				C5CB9C1420914F64000F4181 /* SettingsContainerViewController.swift in Sources */,
 				EC52B3CE20BBB1CB006299A1 /* OrderBookCell.swift in Sources */,
 				C5AB41332090369000096A29 /* EQSettings.swift in Sources */,
 				C4F4938A211E19EA000B0800 /* String+Base64.swift in Sources */,
