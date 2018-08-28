@@ -51,12 +51,12 @@ final class ApplicationCoordinator {
     }()
 
     /// The view controller used to display settings options
-    lazy var settingsViewController: SettingsViewController = {
-        let viewController = SettingsViewController(options: EQSettings().options,
+    var settingsViewController: SettingsViewController {
+        let viewController = SettingsViewController(options: EQSettings.options,
                                                     customTitle: "MENU_OPTION_SETTINGS".localized())
         viewController.delegate = self
         return viewController
-    }()
+    }
 
     /// The view controller used for receiving funds
     lazy var receiveViewController: ReceiveViewController = {
@@ -167,7 +167,7 @@ extension ApplicationCoordinator: SettingsDelegate {
         switch setting {
         case .node(_, let identifier, _, _) where identifier == "security-use-biometrics":
             let available = SecurityOptionHelper.optionSetting(for: .useBiometrics) &&
-                AuthenticationCoordinator.biometricsAvailable()
+                AuthenticationCoordinator.biometricsAvailable
             return String(available)
         case .node(_, let identifier, _, _) where identifier == "security-pin-enabled":
             return String(SecurityOptionHelper.optionSetting(for: .pinEnabled))

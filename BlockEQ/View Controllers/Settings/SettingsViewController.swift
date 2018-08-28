@@ -45,7 +45,7 @@ final class SettingsViewController: UIViewController {
     }
 
     required init?(coder aDecoder: NSCoder) {
-        optionList = EQSettings().options
+        optionList = EQSettings.options
         super.init(coder: aDecoder)
     }
 
