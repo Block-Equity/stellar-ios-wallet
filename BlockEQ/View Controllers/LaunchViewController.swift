@@ -104,10 +104,11 @@ class LaunchViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Cance", style: .cancel, handler:{ (UIAlertAction)in
         }))
         
+        alert.popoverPresentationController?.sourceView = createWalletButton
+        
         self.present(alert, animated: true, completion: {
             print("completion block")
         })
-        
     }
 
     @IBAction func importWallet() {
