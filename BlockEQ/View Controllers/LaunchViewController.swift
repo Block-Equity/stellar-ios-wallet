@@ -101,7 +101,7 @@ class LaunchViewController: UIViewController {
             self.delegate?.requestedCreateNewWallet(self, type: .twentyFour)
         }))
         
-        alert.addAction(UIAlertAction(title: "Cance", style: .cancel, handler:{ (UIAlertAction)in
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:{ (UIAlertAction)in
         }))
         
         alert.popoverPresentationController?.sourceView = createWalletButton

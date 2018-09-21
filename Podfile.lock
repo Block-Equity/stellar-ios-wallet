@@ -2,7 +2,7 @@ PODS:
   - Alamofire (4.7.3)
   - KeychainSwift (10.0.0)
   - SCLAlertView (0.8)
-  - stellar-ios-mac-sdk (1.1.4)
+  - stellar-ios-mac-sdk (1.4.2)
   - Whisper (6.0.2)
 
 DEPENDENCIES:
@@ -26,14 +26,14 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   stellar-ios-mac-sdk:
-    :commit: 439a6fe2c76c498053e8ade1b1c9cbdc1cbee538
+    :commit: cab4d71bace9bf7635a1ddc126a41942751ecbc5
     :git: https://github.com/Soneso/stellar-ios-mac-sdk
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
-  stellar-ios-mac-sdk: ff07db9ad419ce932634cc42d46f869b4ad55661
+  stellar-ios-mac-sdk: feaec18dbe8e316514847ad9fcf32a10d526a8a2
   Whisper: 169760fc4bab0abf24d5529f9276f95c25cf1025
 
 PODFILE CHECKSUM: 83b4ebf47cadb86273a8252bef4d0b1f24fc45c5
