@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Nick DiZazzo on 2018-05-24.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import Foundation
@@ -100,6 +100,7 @@ class KeyboardView: UIView {
         self.backgroundColor = .clear
     }
 
+    //swiftlint:disable cyclomatic_complexity
     /// The action when any button is pressed in the KeyboardView
     ///
     /// - Parameters:
@@ -130,6 +131,7 @@ class KeyboardView: UIView {
 
         delegate?.selected(key: key, action: event)
     }
+    //swiftlint:enable cyclomatic_complexity
 
     /// Configures the KeyboardView with the provided options
     ///

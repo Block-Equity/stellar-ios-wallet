@@ -3,7 +3,7 @@
 //  BlockEQUITests
 //
 //  Created by Satraj Bambra on 2018-03-09.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import XCTest

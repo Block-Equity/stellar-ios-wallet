@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-08-16.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import stellarsdk
@@ -41,11 +41,13 @@ class SelectAssetViewController: UIViewController {
     }
 
     func setupView() {
-        navigationItem.title = "Select Asset"
+        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(self.dismissView))
 
-        let closeButton = UIImage(named: "close")
-        let rightBarButtonItem = UIBarButtonItem(image: closeButton, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
+        navigationItem.title = "SELECT_ASSET".localized()
 
         let tableViewNibAssets = UINib(nibName: SelectAssetCell.cellIdentifier, bundle: nil)
         tableView.register(tableViewNibAssets, forCellReuseIdentifier: SelectAssetCell.cellIdentifier)
@@ -71,23 +73,24 @@ extension SelectAssetViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SelectAssetCell.cellIdentifier, for: indexPath) as! SelectAssetCell
+        let item = allAssets[indexPath.row]
+        let cell: SelectAssetCell = tableView.dequeueReusableCell(for: indexPath)
 
-        cell.titleLabel.text = Assets.displayTitle(shortCode: allAssets[indexPath.row].shortCode)
-        cell.iconImageView.backgroundColor = Assets.displayImageBackgroundColor(shortCode: allAssets[indexPath.row].shortCode)
-        if let image = Assets.displayImage(shortCode: allAssets[indexPath.row].shortCode) {
+        cell.titleLabel.text = Assets.displayTitle(shortCode: item.shortCode)
+        cell.iconImageView.backgroundColor = Assets.displayImageBackgroundColor(shortCode: item.shortCode)
+        if let image = Assets.displayImage(shortCode: item.shortCode) {
             cell.iconImageView.image = image
             cell.tokenInitialLabel.text = ""
         } else {
             cell.iconImageView.image = nil
-            let shortcode = Assets.displayTitle(shortCode: allAssets[indexPath.row].shortCode)
+            let shortcode = Assets.displayTitle(shortCode: item.shortCode)
             cell.tokenInitialLabel.text = String(Array(shortcode)[0])
         }
 
-        if allAssets[indexPath.row].assetType == AssetTypeAsString.NATIVE {
-            cell.amountLabel.text = "\(stellarAccount.formattedAvailableBalance) \(allAssets[indexPath.row].shortCode)"
+        if item.assetType == AssetTypeAsString.NATIVE {
+            cell.amountLabel.text = "\(stellarAccount.formattedAvailableBalance) \(item.shortCode)"
         } else {
-            cell.amountLabel.text = "\(allAssets[indexPath.row].formattedBalance) \(allAssets[indexPath.row].shortCode)"
+            cell.amountLabel.text = "\(allAssets[indexPath.row].formattedBalance) \(item.shortCode)"
         }
 
         return cell
@@ -98,8 +101,11 @@ extension SelectAssetViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
 
-        let sendAmountViewController = SendAmountViewController(stellarAccount: stellarAccount, currentAssetIndex: indexPath.row, receiver: receiver, exchangeName: exchangeName)
-        self.navigationController?.pushViewController(sendAmountViewController, animated: true)
+        let sendAmountViewController = SendAmountViewController(stellarAccount: stellarAccount,
+                                                                currentAssetIndex: indexPath.row,
+                                                                receiver: receiver,
+                                                                exchangeName: exchangeName)
 
+        self.navigationController?.pushViewController(sendAmountViewController, animated: true)
     }
 }

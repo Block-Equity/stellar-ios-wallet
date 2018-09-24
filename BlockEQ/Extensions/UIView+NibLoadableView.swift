@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Nick DiZazzo on 2018-04-25.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import Foundation
@@ -18,7 +18,9 @@ extension NibLoadableView {
         return String(describing: Self.self)
     }
 
+// swiftlint:disable force_cast
     static var bundle: Bundle {
         return Bundle(for: (Self.self as! AnyClass))
     }
+// swiftlint:enable force_cast
 }

@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-08-12.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import Whisper
@@ -66,11 +66,13 @@ class AddPeerViewController: UIViewController {
     }
 
     func setupView() {
-        navigationItem.title = "Add Peer".localized()
+        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(self.dismissView))
 
-        let image = UIImage(named: "close")
-        let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
+        navigationItem.title = "ADD_PEER".localized()
 
         holdingView.backgroundColor = Colors.lightBackground
         tableView.backgroundColor = Colors.lightBackground
@@ -83,7 +85,7 @@ class AddPeerViewController: UIViewController {
 
     func showHud() {
         let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
-        hud.label.text = "Adding Peer..."
+        hud.label.text = "ADDING_PEER".localized()
         hud.mode = .indeterminate
     }
 
@@ -94,7 +96,7 @@ class AddPeerViewController: UIViewController {
     func displayAddPeerSuccess() {
         self.view.endEditing(true)
 
-        let message = Message(title: "Peer successfully added.", backgroundColor: Colors.green)
+        let message = Message(title: "PEER_ADDED".localized(), backgroundColor: Colors.green)
         Whisper.show(whisper: message, to: navigationController!, action: .show)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -114,14 +116,22 @@ extension AddPeerViewController {
     func createTrustLine(issuerAccountId: String, assetCode: String, limit: Decimal) {
         showHud()
 
-        PaymentTransactionOperation.changeP2PTrust(issuerAccountId: issuerAccountId, assetCode: assetCode, limit: limit) { completed
-            in
+        PaymentTransactionOperation.changeP2PTrust(issuerAccountId: issuerAccountId,
+                                                   assetCode: assetCode,
+                                                   limit: limit) { completed in
             self.hideHud()
+
             if completed {
                 self.displayAddPeerSuccess()
             } else {
-                let alert = UIAlertController(title: "Activation Error", message: "Sorry this peer could not be added at this time. Please try again later.", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+                let alert = UIAlertController(title: "ACTIVATION_ERROR_TITLE".localized(),
+                                              message: "PEER_ERROR_MESSAGE".localized(),
+                                              preferredStyle: UIAlertControllerStyle.alert)
+
+                alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
+                                              style: UIAlertActionStyle.default,
+                                              handler: nil))
+
                 self.present(alert, animated: true, completion: nil)
             }
         }

@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-08-08.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import stellarsdk
@@ -63,11 +63,13 @@ class P2PTransactionViewController: UIViewController {
     }
 
     func setupView() {
-        navigationItem.title = "Add Transaction"
+        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(self.dismissView))
 
-        let image = UIImage(named: "close")
-        let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
+        navigationItem.title = "ADD_TRANSACTION".localized()
 
         tradeFromView.layer.borderWidth = 0.5
         tradeToView.layer.borderWidth = 0.5
@@ -161,9 +163,10 @@ extension P2PTransactionViewController {
                 self.tradeFromPickerView.reloadAllComponents()
 
                 if self.currentPeer == nil {
+                    let code = self.peers[0].shortCode
                     self.currentPeer = self.peers[0]
                     self.tradeFromPickerView.selectRow(0, inComponent: 0, animated: false)
-                    self.tradeFromButton.setTitle("\(Assets.displayTitle(shortCode: self.peers[0].shortCode))", for: .normal)
+                    self.tradeFromButton.setTitle("\(Assets.displayTitle(shortCode: code))", for: .normal)
                 }
             }
         }

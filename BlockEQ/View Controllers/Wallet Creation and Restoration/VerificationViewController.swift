@@ -3,18 +3,17 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-03-11.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import UIKit
 import stellarsdk
 
 protocol VerificationViewControllerDelegate: AnyObject {
-    func validatedAccount(_ vc: VerificationViewController, mnemonic: String)
+    func validatedAccount(_ viewController: VerificationViewController, mnemonic: String)
 }
 
 class VerificationViewController: UIViewController {
-
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var textView: UITextView!
     @IBOutlet var textViewHeightConstraint: NSLayoutConstraint!
@@ -41,7 +40,7 @@ class VerificationViewController: UIViewController {
     var progressWidth: CGFloat {
         return UIScreen.main.bounds.size.width / CGFloat(totalQuestionCount)
     }
-    
+
     var defaultTextViewHeight: CGFloat = {
         if UIScreen.main.bounds.size.width == 320 {
             return 125.0
@@ -49,7 +48,7 @@ class VerificationViewController: UIViewController {
             return 150.0
         }
     }()
-    
+
     var type: VerificationType = .recovery
     var suggestions: [String] = []
     var questionWords: [String] = []
@@ -165,7 +164,7 @@ class VerificationViewController: UIViewController {
             let myString: NSString! = item as NSString
             let substringRange: NSRange! = myString.range(of: userText)
 
-            if (substringRange.location == 0) {
+            if substringRange.location == 0 {
                 possibleMatches.append(item)
             }
         }
@@ -246,9 +245,14 @@ extension VerificationViewController: UICollectionViewDataSource {
         return suggestions.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WordSuggestionCell.cellIdentifier, for: indexPath) as! WordSuggestionCell
-        cell.titleLabel.text = suggestions[indexPath.row]
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WordSuggestionCell.cellIdentifier,
+                                                      for: indexPath)
+        if let wordCell = cell as? WordSuggestionCell {
+            wordCell.titleLabel.text = suggestions[indexPath.row]
+        }
+
         return cell
     }
 }
@@ -275,7 +279,9 @@ extension VerificationViewController: UICollectionViewDelegate {
 }
 
 extension VerificationViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: UIScreen.main.bounds.size.width / 3, height: collectionView.frame.size.height)
     }
 }
@@ -290,20 +296,25 @@ extension VerificationViewController {
         let words = getWords(string: targetString)
 
         for word in words {
-            if !isReal(word: word) {
-                textView.attributedText = getHighlightedAttributedString(attributedString: attributedString, word: word, in: targetString, highlightColor: Colors.red)
-            } else {
-                 textView.attributedText = getHighlightedAttributedString(attributedString: attributedString, word: word, in: targetString, highlightColor: Colors.black)
-            }
+            let color = isReal(word: word) ? Colors.black : Colors.red
+            textView.attributedText = getHighlightedAttributedString(attributedString: attributedString,
+                                                                     word: word,
+                                                                     in: targetString,
+                                                                     highlightColor: color)
         }
     }
 
-    func getHighlightedAttributedString(attributedString: NSMutableAttributedString, word: String, in targetString: String, highlightColor: UIColor) -> NSMutableAttributedString {
+    func getHighlightedAttributedString(attributedString: NSMutableAttributedString,
+                                        word: String,
+                                        in targetString: String,
+                                        highlightColor: UIColor) -> NSMutableAttributedString {
         do {
             let regex = try NSRegularExpression(pattern: word, options: .caseInsensitive)
             let range = NSRange(location: 0, length: targetString.utf16.count)
             for match in regex.matches(in: targetString, options: .withTransparentBounds, range: range) {
-                attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: highlightColor, range: match.range)
+                attributedString.addAttribute(NSAttributedStringKey.foregroundColor,
+                                              value: highlightColor,
+                                              range: match.range)
             }
 
             return attributedString
@@ -314,10 +325,6 @@ extension VerificationViewController {
 
     func isReal(word: String) -> Bool {
         let language: WordList = .english
-        
-        if language.englishWords.contains(word) {
-            return true
-        }
-        return false
+        return language.englishWords.contains(word)
     }
 }

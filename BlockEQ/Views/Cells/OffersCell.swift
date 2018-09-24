@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-05-28.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import UIKit
@@ -12,16 +12,16 @@ protocol OffersCellDelegate: AnyObject {
     func deleteOffer(indexPath: IndexPath)
 }
 
-class OffersCell: UITableViewCell {
+class OffersCell: UITableViewCell, ReusableView {
     @IBOutlet weak var offerLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
-    
+
     static let cellIdentifier = "OffersCell"
     static let rowHeight: CGFloat = 80.0
-    
-    var delegate: OffersCellDelegate?
+
+    weak var delegate: OffersCellDelegate?
     var indexPath: IndexPath!
-    
+
     @IBAction func deleteOffer() {
         guard let cellIndexPath = indexPath else {
             return
@@ -31,7 +31,7 @@ class OffersCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         offerLabel.textColor = Colors.darkGray
         deleteButton.tintColor = Colors.red
     }

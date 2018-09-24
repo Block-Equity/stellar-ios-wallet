@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-05-23.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import UIKit
@@ -21,7 +21,7 @@ final class TradeSegmentViewController: UIViewController {
     var rightViewController: UIViewController!
     var middleViewController: UIViewController!
     var totalPages: CGFloat!
-    var tradeSegmentDelegate: TradeSegmentControllerDelegate?
+    weak var tradeSegmentDelegate: TradeSegmentControllerDelegate?
 
     override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
 
@@ -33,9 +33,11 @@ final class TradeSegmentViewController: UIViewController {
         super.init(coder: aDecoder)
     }
 
-    init(leftViewController: UIViewController, middleViewController: UIViewController, rightViewController: UIViewController, totalPages: CGFloat) {
+    init(leftViewController: UIViewController,
+         middleViewController: UIViewController,
+         rightViewController: UIViewController,
+         totalPages: CGFloat) {
         super.init(nibName: String(describing: TradeSegmentViewController.self), bundle: nil)
-
         self.leftViewController = leftViewController
         self.middleViewController = middleViewController
         self.rightViewController = rightViewController
@@ -58,10 +60,12 @@ final class TradeSegmentViewController: UIViewController {
         let leftView = UIView(frame: CGRect(origin: .zero, size: scrollView.frame.size))
         scrollView.addSubview(leftView)
 
-        let middleView = UIView(frame: CGRect(origin: CGPoint(x: scrollView.frame.size.width, y: 0.0), size: scrollView.frame.size))
+        let middleRect = CGRect(origin: CGPoint(x: scrollView.frame.size.width, y: 0.0), size: scrollView.frame.size)
+        let middleView = UIView(frame: middleRect)
         scrollView.addSubview(middleView)
 
-        let rightView = UIView(frame: CGRect(origin: CGPoint(x: scrollView.frame.size.width * 2, y: 0.0), size: scrollView.frame.size))
+        let rightRect = CGRect(origin: CGPoint(x: scrollView.frame.size.width * 2, y: 0.0), size: scrollView.frame.size)
+        let rightView = UIView(frame: rightRect)
         scrollView.addSubview(rightView)
 
         self.addContentViewController(leftViewController, to: leftView)
@@ -75,7 +79,8 @@ final class TradeSegmentViewController: UIViewController {
     }
 
     func switchSegment(_ type: TradeSegment) {
-        scrollView.setContentOffset(CGPoint(x: scrollView.frame.size.width * CGFloat(type.rawValue), y: 0.0), animated: true)
+        let offset = CGPoint(x: scrollView.frame.size.width * CGFloat(type.rawValue), y: 0.0)
+        scrollView.setContentOffset(offset, animated: true)
     }
 
     func displayNoAssetOverlayView() {

@@ -3,21 +3,20 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-03-09.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import stellarsdk
 import UIKit
 
 protocol WalletViewControllerDelegate: AnyObject {
-    func selectedWalletSwitch(_ vc: WalletViewController, account: StellarAccount)
-    func selectedSend(_ vc: WalletViewController, account: StellarAccount, index: Int)
+    func selectedWalletSwitch(_ viewController: WalletViewController, account: StellarAccount)
+    func selectedSend(_ viewController: WalletViewController, account: StellarAccount, index: Int)
     func selectedReceive()
     func selectBalance(account: StellarAccount, index: Int)
 }
 
 class WalletViewController: UIViewController {
-
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var availableBalanceLabel: UILabel!
     @IBOutlet var balanceLabel: UILabel!
@@ -86,17 +85,19 @@ class WalletViewController: UIViewController {
         let tableViewNib = UINib(nibName: TransactionHistoryCell.cellIdentifier, bundle: nil)
         tableView.register(tableViewNib, forCellReuseIdentifier: TransactionHistoryCell.cellIdentifier)
 
-        /*
-        logoImageView.tintColor = Colors.primaryDark
-        navigationItem.titleView = logoImageView*/
+        let leftBarButtonItem = UIBarButtonItem(title: "ITEM_RECEIVE".localized(),
+                                                style: .plain,
+                                                target: self,
+                                                action: #selector(self.receiveFunds))
 
-        navigationItem.title = "Wallet"
+        let rightBarButtonItem = UIBarButtonItem(title: "ITEM_SEND".localized(),
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(self.sendFunds))
 
-        let leftBarButtonItem = UIBarButtonItem(title: "Receive", style: .plain, target: self, action: #selector(self.receiveFunds))
-        navigationItem.leftBarButtonItem = leftBarButtonItem
-
-        let rightBarButtonItem = UIBarButtonItem(title: "Send", style: .plain, target: self, action: #selector(self.sendFunds))
         navigationItem.rightBarButtonItem = rightBarButtonItem
+        navigationItem.leftBarButtonItem = leftBarButtonItem
+        navigationItem.title = "TITLE_TAB_WALLET".localized()
 
         availableBalanceView.backgroundColor = Colors.backgroundDark
         headerBackgroundView.backgroundColor = Colors.primaryDark
@@ -131,16 +132,13 @@ extension WalletViewController: UICollectionViewDataSource {
         return accounts.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WalletCell.cellIdentifier, for: indexPath) as! WalletCell
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: WalletCell = collectionView.dequeueReusableCell(for: indexPath)
         let stellarAccount = accounts[indexPath.row]
 
-        if isLoadingTransactionsOnViewLoad {
-            cell.amountLabel.text = ""
-        } else {
-            cell.amountLabel.text = stellarAccount.assets[currentAssetIndex].formattedBalance
-        }
-
+        let formattedBalance = stellarAccount.assets[currentAssetIndex].formattedBalance
+        cell.amountLabel.text = isLoadingTransactionsOnViewLoad ? "" : formattedBalance
         cell.currencyLabel.text = stellarAccount.assets[currentAssetIndex].shortCode
 
         return cell
@@ -154,10 +152,8 @@ extension WalletViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 1:
-            return effects.count
-        default:
-            return 0
+        case 1: return effects.count
+        default: return 0
         }
     }
 
@@ -196,7 +192,7 @@ extension WalletViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TransactionHistoryCell.cellIdentifier, for: indexPath) as! TransactionHistoryCell
+        let cell: TransactionHistoryCell = tableView.dequeueReusableCell(for: indexPath)
         let effect = effects[indexPath.row]
 
         let stellarAsset = self.accounts[0].assets[currentAssetIndex]
@@ -248,20 +244,19 @@ extension WalletViewController {
                 let stellarAccount = StellarAccount()
                 stellarAccount.accountId = accountId
 
-                let stellarAsset = StellarAsset(assetType: AssetTypeAsString.NATIVE, assetCode: nil, assetIssuer: nil, balance: "0.0000")
+                let stellarAsset = StellarAsset(assetType: AssetTypeAsString.NATIVE,
+                                                assetCode: nil,
+                                                assetIssuer: nil,
+                                                balance: "0.0000")
 
                 stellarAccount.assets.removeAll()
                 stellarAccount.assets.append(stellarAsset)
 
                 self.accounts.append(stellarAccount)
             }
-            let asset = self.accounts[0].assets[self.currentAssetIndex]
 
-            if asset.shortCode == "XLM" {
-                self.isNativeAsset = true
-            } else {
-                self.isNativeAsset = false
-            }
+            let asset = self.accounts[0].assets[self.currentAssetIndex]
+            self.isNativeAsset = asset.shortCode == "XLM"
 
             if Assets.displayTitle(shortCode: asset.shortCode) == asset.shortCode {
                 self.coinLabel.text = "\(Assets.displayTitle(shortCode: asset.shortCode))"
@@ -309,7 +304,8 @@ extension WalletViewController {
             return
         }
 
-        paymentStream = Stellar.sdk.payments.stream(for: .paymentsForAccount(account: accountId, cursor: "now")).onReceive { (response) -> Void in
+        let account = PaymentsChange.paymentsForAccount(account: accountId, cursor: "now")
+        paymentStream = Stellar.sdk.payments.stream(for: account).onReceive { (response) -> Void in
             switch response {
             case .open:
                 break
@@ -321,7 +317,8 @@ extension WalletViewController {
                 }
             case .error(let error):
                 if let horizonRequestError = error as? HorizonRequestError {
-                    StellarSDKLog.printHorizonRequestErrorMessage(tag: "Receive payment", horizonRequestError: horizonRequestError)
+                    StellarSDKLog.printHorizonRequestErrorMessage(tag: "Receive payment",
+                                                                  horizonRequestError: horizonRequestError)
                 }
             }
         }

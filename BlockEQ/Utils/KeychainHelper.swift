@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-03-14.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import KeychainSwift
@@ -22,51 +22,51 @@ final class KeychainHelper {
     public static func save(mnemonic: String) {
         KeychainSwift().set(mnemonic, forKey: mnemonicKey)
     }
-    
+
     public static func save(accountId: String) {
         KeychainSwift().set(accountId, forKey: accountIdKey)
     }
-    
+
     public static func save(publicKey: Data) {
         KeychainSwift().set(publicKey, forKey: publicSeedKey)
     }
-    
+
     public static func save(privateKey: Data) {
         KeychainSwift().set(privateKey, forKey: privateSeedKey)
     }
-    
+
     public static func save(pin: String) {
         KeychainSwift().set(pin, forKey: pinKey)
     }
-    
+
     public static func getMnemonic() -> String? {
         return KeychainSwift().get(mnemonicKey)
     }
-    
+
     public static func getAccountId() -> String? {
         return KeychainSwift().get(accountIdKey)
     }
-    
+
     public static func getPublicKey() -> Data? {
         return KeychainSwift().getData(publicSeedKey)
     }
-    
+
     public static func getPrivateKey() -> Data? {
         return KeychainSwift().getData(privateSeedKey)
     }
-    
+
     public static func getPin() -> String? {
         return KeychainSwift().get(pinKey)
     }
-    
+
     public static func hasPin() -> Bool {
         return !(KeychainSwift().get(pinKey)?.isEmpty ?? true)
     }
-    
+
     public static func isExistingInstance() -> Bool {
         return UserDefaults.standard.bool(forKey: isFreshInstallKey)
     }
-    
+
     public static func setExistingInstance() {
         UserDefaults.standard.set(true, forKey: isFreshInstallKey)
     }
@@ -89,5 +89,27 @@ final class KeychainHelper {
         }
 
         return false
+    }
+}
+
+extension KeychainHelper {
+    public static var walletKeyPair: KeyPair? {
+        guard let privateKeyData = KeychainHelper.getPrivateKey(),
+            let publicKeyData = KeychainHelper.getPublicKey() else {
+                return nil
+        }
+
+        let publicBytes: [UInt8] = [UInt8](publicKeyData)
+        let privateBytes: [UInt8] = [UInt8](privateKeyData)
+
+        return try? KeyPair(publicKey: PublicKey(publicBytes), privateKey: PrivateKey(privateBytes))
+    }
+
+    public static func issuerKeyPair(accountId: String) -> KeyPair? {
+        if let pubKey = try? PublicKey(accountId: accountId) {
+            return KeyPair(publicKey: pubKey, privateKey: nil)
+        }
+
+        return nil
     }
 }

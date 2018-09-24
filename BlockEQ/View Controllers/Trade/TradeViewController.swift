@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-05-23.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import stellarsdk
@@ -50,8 +50,8 @@ protocol TradeViewControllerDelegate: AnyObject {
     func displayAddAssetForTrade()
 }
 
+//swiftlint:disable file_length type_body_length
 class TradeViewController: UIViewController {
-
     @IBOutlet var addAssetButton: UIButton!
     @IBOutlet var arrowImageView: UIImageView!
     @IBOutlet var balanceLabel: UILabel!
@@ -117,15 +117,6 @@ class TradeViewController: UIViewController {
     }
 
     @IBAction func submitTrade() {
-        // TODO: Delegate back to the coordinator indicating we need to present a modal pin challenge
-        /*
-        if PinOptionHelper.check(.pinOnTrade) {
-            let alert = UIAlertController(title: "Implement PIN", message: "Implement PIN challenge here", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            return
-        }*/
-
         guard let tradeFromAmount = tradeFromTextField.text, !tradeFromAmount.isEmpty else {
             tradeFromTextField.shake()
             return
@@ -146,14 +137,23 @@ class TradeViewController: UIViewController {
             numerator = Int(Float(tradeToAmount)! * 1000000)
         }
 
-        TradeOperation.postTrade(amount: Decimal(string: tradeFromAmount)!, numerator: numerator, denominator: Int(Float(tradeFromAmount)! * 1000000), sellingAsset: fromAsset, buyingAsset: toAsset, offerId: 0) { completed in
+        TradeOperation.postTrade(amount: Decimal(string: tradeFromAmount)!,
+                                 price: (numerator: numerator, denominator: Int(Float(tradeFromAmount)! * 1000000)),
+                                 asset: (selling: fromAsset, buying: toAsset),
+                                 offerId: 0) { completed in
             self.hideHud()
             self.getOrderBook()
             self.updateBalance()
 
             if !completed {
-                let alert = UIAlertController(title: "Trade Error", message: "Sorry your order could not be processed at this time. Please try again later.", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+                let alert = UIAlertController(title: "TRADE_ERROR_TITLE".localized(),
+                                              message: "TRADE_ERROR_MESSAGE".localized(),
+                                              preferredStyle: UIAlertControllerStyle.alert)
+
+                alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
+                                              style: UIAlertActionStyle.default,
+                                              handler: nil))
+
                 self.present(alert, animated: true, completion: nil)
             } else {
                 self.tradeFromTextField.text = ""
@@ -164,7 +164,7 @@ class TradeViewController: UIViewController {
     }
 
     func displayTradeSuccess() {
-        let message = Message(title: "Trade successfully submitted.", backgroundColor: Colors.green)
+        let message = Message(title: "TRADE_SUBMITTED".localized(), backgroundColor: Colors.green)
         Whisper.show(whisper: message, to: navigationController!, action: .show)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -186,13 +186,11 @@ class TradeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         getAccountDetails()
     }
 
@@ -251,13 +249,11 @@ class TradeViewController: UIViewController {
             if let tradeFromText = tradeFromTextField.text {
                 setCalculatedMarketPrice(tradeFromText: tradeFromText)
             }
-            marketLabel.text = "Your market order may not be completely filled depending on amount offered. View the order book to see the amount available at the market rate. Any amount larger than this will be posted as an offer."
-            break
+            marketLabel.text = "TRADE_MARKET_INFO".localized()
         case .limit:
             tradeToTextField.isEnabled = true
             tradeToView.backgroundColor = Colors.white
             marketLabel.text = ""
-            break
         }
     }
 
@@ -309,17 +305,15 @@ class TradeViewController: UIViewController {
 
         var toAssetToRemove: StellarAsset!
 
-        for asset in self.stellarAccount.assets {
-            if tradeFromButton.titleLabel?.text != asset.shortCode {
-                fromAsset = asset
-                tradeFromButton.setTitle(fromAsset.shortCode, for: .normal)
-                balanceLabel.text = "\(fromAsset.balance.decimalFormatted()) \(fromAsset.shortCode)"
-                toAssetToRemove = fromAsset
-                break
-            }
+        for asset in self.stellarAccount.assets where tradeFromButton.titleLabel?.text != asset.shortCode {
+            fromAsset = asset
+            tradeFromButton.setTitle(fromAsset.shortCode, for: .normal)
+            balanceLabel.text = "\(fromAsset.balance.decimalFormatted()) \(fromAsset.shortCode)"
+            toAssetToRemove = fromAsset
         }
 
-        guard let removableToAsset = toAssetToRemove, let removableIndex = self.stellarAccount.assets.index(of: removableToAsset) else {
+        guard let removableToAsset = toAssetToRemove,
+            let removableIndex = self.stellarAccount.assets.index(of: removableToAsset) else {
             return
         }
 
@@ -391,10 +385,16 @@ extension TradeViewController: UIPickerViewDataSource {
 
 extension TradeViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        let formatString = "%@ (%@)"
         if pickerView == tradeFromPickerView {
-            return "\(Assets.displayTitle(shortCode: stellarAccount.assets[row].shortCode)) (\(stellarAccount.assets[row].shortCode))"
+            return String(format: formatString,
+                          Assets.displayTitle(shortCode: stellarAccount.assets[row].shortCode),
+                          stellarAccount.assets[row].shortCode)
         }
-        return "\(Assets.displayTitle(shortCode: toAssets[row].shortCode)) (\(toAssets[row].shortCode))"
+
+        return String(format: formatString,
+               Assets.displayTitle(shortCode: toAssets[row].shortCode),
+               toAssets[row].shortCode)
     }
 }
 
@@ -420,7 +420,11 @@ extension TradeViewController {
                 let account = StellarAccount()
                 account.accountId = accountId
 
-                let stellarAsset = StellarAsset(assetType: AssetTypeAsString.NATIVE, assetCode: nil, assetIssuer: nil, balance: "0.0000")
+                let stellarAsset = StellarAsset(assetType: AssetTypeAsString.NATIVE,
+                                                assetCode: nil,
+                                                assetIssuer: nil,
+                                                balance: "0.0000")
+
                 account.assets.removeAll()
                 account.assets.append(stellarAsset)
 
@@ -450,3 +454,4 @@ extension TradeViewController {
         }
     }
 }
+//swiftlint:enable file_length type_body_length

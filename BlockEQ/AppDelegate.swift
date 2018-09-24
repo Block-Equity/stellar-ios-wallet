@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-03-09.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import UIKit
@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var appCoordinator = ApplicationCoordinator()
     var authenticationCoordinator: AuthenticationCoordinator?
     var onboardingContainer: Bool = false
-    
+
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                            completion: {
                                             self.appCoordinator.tabController.moveTo(tab: .assets)
             })
-            
+
             authenticate()
         }
 
@@ -56,15 +56,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let presentedController = appCoordinator.tabController.presentedViewController {
             presentedController.dismiss(animated: false, completion: nil)
         }
-        
+
         authenticate()
     }
-    
+
     func authenticate(_ style: AuthenticationCoordinator.AuthenticationStyle? = nil) {
         guard SecurityOptionHelper.check(.pinOnLaunch) else {
             return
         }
-        
+
         let container = onboardingContainer ? onboardingCoordinator.navController : self.container
         let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: false,
                                                                    presentVC: false,
@@ -73,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let authCoordinator = AuthenticationCoordinator(container: container, options: opts)
         authCoordinator.delegate = self
         authenticationCoordinator = authCoordinator
-        
+
         authCoordinator.authenticate()
     }
 }
@@ -108,7 +108,7 @@ extension AppDelegate: AuthenticationCoordinatorDelegate {
     func authenticationCancelled(_ coordinator: AuthenticationCoordinator,
                                  options: AuthenticationCoordinator.AuthenticationContext) {
     }
-    
+
     func authenticationFailed(_ coordinator: AuthenticationCoordinator,
                               error: AuthenticationCoordinator.AuthenticationError?,
                               options: AuthenticationCoordinator.AuthenticationContext) {
@@ -117,7 +117,7 @@ extension AppDelegate: AuthenticationCoordinatorDelegate {
         // Setting the authentication coordinator to nil forces it to remove authentication views from the hierarchy
         authenticationCoordinator = nil
     }
-    
+
     func authenticationCompleted(_ coordinator: AuthenticationCoordinator,
                                  options: AuthenticationCoordinator.AuthenticationContext?) {
         authenticationCoordinator = nil

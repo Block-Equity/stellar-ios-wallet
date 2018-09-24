@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Nick DiZazzo on 2018-05-18.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import Foundation
@@ -27,33 +27,35 @@ final class ApplicationCoordinator {
 
     // The coordinator responsible for the peer to peer flow
     let p2pCoordinator = P2PCoordinator()
-    
+
     /// The view that handles all switching in the header
     lazy var tradeHeaderView: TradeHeaderView = {
-        let view = TradeHeaderView(frame: CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.size.width, height: 44.0)))
+        let rect = CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.size.width, height: 44.0))
+        let view = TradeHeaderView(frame: rect)
         view.tradeHeaderViewDelegate = self
         return view
     }()
 
     /// The view controller used to list out the user's assets
     lazy var walletViewController: WalletViewController = {
-        let vc = WalletViewController()
-        vc.delegate = self
-        return vc
+        let viewController = WalletViewController()
+        viewController.delegate = self
+        return viewController
     }()
-    
+
     //The view controller responsible for displaying contacts
     lazy var contactsViewController: ContactsViewController = {
-        let vc = ContactsViewController()
-        vc.delegate = self
-        return vc
+        let viewController = ContactsViewController()
+        viewController.delegate = self
+        return viewController
     }()
 
     /// The view controller used to display settings options
     lazy var settingsViewController: SettingsViewController = {
-        let vc = SettingsViewController(options: EQSettings().options, customTitle: "MENU_OPTION_SETTINGS".localized())
-        vc.delegate = self
-        return vc
+        let viewController = SettingsViewController(options: EQSettings().options,
+                                                    customTitle: "MENU_OPTION_SETTINGS".localized())
+        viewController.delegate = self
+        return viewController
     }()
 
     /// The view controller used for receiving funds
@@ -78,7 +80,7 @@ final class ApplicationCoordinator {
 
     /// Most tabbed view controllers need the top navbar - so we wrap every tab in an inner AppNavigationController
     var wrappingNavController: AppNavigationController?
-    
+
     //The view controller responsible for adding and editing Stellar Contacts
     var stellarContactViewController: StellarContactViewController?
 
@@ -113,20 +115,20 @@ extension ApplicationCoordinator: TradingCoordinatorDelegate {
 
 extension ApplicationCoordinator: AppTabControllerDelegate {
     func switchedTabs(_ appTab: ApplicationTab) {
-        var vc: UIViewController
+        var viewController: UIViewController
 
         switch appTab {
-            case .assets: vc = walletViewController
-            case .trading: vc = tradingCoordinator.segmentController
-            case .contacts: vc = contactsViewController
-            case .settings: vc = settingsViewController
-            case .p2p: vc = p2pCoordinator.p2pViewController
+        case .assets: viewController = walletViewController
+        case .trading: viewController = tradingCoordinator.segmentController
+        case .contacts: viewController = contactsViewController
+        case .settings: viewController = settingsViewController
+        case .p2p: viewController = p2pCoordinator.p2pViewController
         }
 
-        if currentViewController != vc {
-            currentViewController = vc
+        if currentViewController != viewController {
+            currentViewController = viewController
 
-            let navWrapper = AppNavigationController(rootViewController: vc)
+            let navWrapper = AppNavigationController(rootViewController: viewController)
             wrappingNavController = navWrapper
 
             if appTab != .trading {
@@ -200,9 +202,13 @@ extension ApplicationCoordinator: SettingsDelegate {
     }
 
     func clearWallet() {
-        let alertController = UIAlertController(title: "Are you sure you want to clear this wallet?", message: nil, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "CLEAR_WALLET_TITLE".localized(),
+                                                message: nil,
+                                                preferredStyle: .alert)
 
-        let yesButton = UIAlertAction(title: "Clear", style: .destructive, handler: { (_) -> Void in
+        let yesButton = UIAlertAction(title: "CLEAR_WALLET_ACTION".localized(),
+                                      style: .destructive,
+                                      handler: { (_) -> Void in
             self.displayAuth {
                 KeychainHelper.clearAll()
                 SecurityOptionHelper.clear()
@@ -210,7 +216,9 @@ extension ApplicationCoordinator: SettingsDelegate {
             }
         })
 
-        let cancelButton = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        let cancelButton = UIAlertAction(title: "CANCEL_ACTION".localized(),
+                                         style: .default,
+                                         handler: nil)
 
         alertController.addAction(cancelButton)
         alertController.addAction(yesButton)
@@ -228,7 +236,11 @@ extension ApplicationCoordinator: SettingsDelegate {
     }
 
     func displayMnemonic() {
-        let mnemonicViewController = MnemonicViewController(mnemonic: KeychainHelper.getMnemonic(), shouldSetPin: false, hideConfirmation: true, mnemonicType: .twentyFour)
+        let mnemonicViewController = MnemonicViewController(mnemonic: KeychainHelper.getMnemonic(),
+                                                            shouldSetPin: false,
+                                                            hideConfirmation: true,
+                                                            mnemonicType: .twentyFour)
+
         wrappingNavController?.pushViewController(mnemonicViewController, animated: true)
     }
 
@@ -240,7 +252,7 @@ extension ApplicationCoordinator: SettingsDelegate {
         let authCoordinator = AuthenticationCoordinator(container: self.tabController, options: opts)
         authCoordinator.delegate = self
         authenticationCoordinator = authCoordinator
-        
+
         authCoordinator.authenticate()
     }
 }
@@ -261,14 +273,14 @@ extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
         // We need to re-set the previously switched setting, in the case the user cancels the authentication challenge
         SecurityOptionHelper.set(option: .pinEnabled, value: temporaryPinSetting)
         SecurityOptionHelper.set(option: .useBiometrics, value: temporaryBiometricSetting)
-        
+
         settingsViewController.tableView.reloadData()
-        
+
         KeychainHelper.clearAll()
         SecurityOptionHelper.clear()
-        
+
         self.delegate?.switchToOnboarding()
-        
+
         authenticationCoordinator = nil
     }
 
@@ -282,7 +294,7 @@ extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
 }
 
 extension ApplicationCoordinator: WalletViewControllerDelegate {
-    func selectedSend(_ vc: WalletViewController, account: StellarAccount, index: Int) {
+    func selectedSend(_ viewController: WalletViewController, account: StellarAccount, index: Int) {
         let sendVC = SendViewController(stellarAccount: account, currentAssetIndex: index)
         let container = AppNavigationController(rootViewController: sendVC)
 
@@ -293,7 +305,7 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
         tabController.present(container, animated: true, completion: nil)
     }
 
-    func selectedWalletSwitch(_ vc: WalletViewController, account: StellarAccount) {
+    func selectedWalletSwitch(_ viewController: WalletViewController, account: StellarAccount) {
         let walletSwitchVC = WalletSwitchingViewController()
         let container = AppNavigationController(rootViewController: walletSwitchVC)
 
@@ -368,11 +380,11 @@ extension ApplicationCoordinator: ContactsViewControllerDelegate {
     func selectedAddToAddressBook(identifier: String, name: String, address: String) {
         let stellarContactVC = StellarContactViewController(identifier: identifier, name: name, address: address)
         let container = AppNavigationController(rootViewController: stellarContactVC)
-        
+
         stellarContactViewController = stellarContactVC
         wrappingNavController = container
         wrappingNavController?.navigationBar.prefersLargeTitles = true
-        
+
         tabController.present(container, animated: true, completion: nil)
     }
 }

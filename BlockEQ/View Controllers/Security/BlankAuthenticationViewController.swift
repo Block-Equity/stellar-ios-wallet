@@ -35,13 +35,13 @@ final class BlankAuthenticationViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         setupView()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+
         UIApplication.shared.statusBarStyle = .default
     }
 

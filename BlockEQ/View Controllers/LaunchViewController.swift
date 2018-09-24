@@ -3,14 +3,14 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-03-09.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import UIKit
 
 protocol LaunchViewControllerDelegate: AnyObject {
-    func requestedCreateNewWallet(_ vc: LaunchViewController, type: MnemonicType)
-    func requestedImportWallet(_ vc: LaunchViewController)
+    func requestedCreateNewWallet(_ viewController: LaunchViewController, type: MnemonicType)
+    func requestedImportWallet(_ viewController: LaunchViewController)
 }
 
 class LaunchViewController: UIViewController {
@@ -62,7 +62,7 @@ class LaunchViewController: UIViewController {
     }
 
     func checkForExistingAccount() {
-        if let _ = KeychainHelper.getAccountId(), KeychainHelper.isExistingInstance() {
+        if KeychainHelper.getAccountId() != nil, KeychainHelper.isExistingInstance() {
             hideButtons()
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -91,24 +91,26 @@ class LaunchViewController: UIViewController {
     }
 
     @IBAction func createNewWallet() {
-        let alert = UIAlertController(title: "Create Wallet", message: "Please select from the following 2 options:", preferredStyle: .actionSheet)
-        
-        alert.addAction(UIAlertAction(title: "Use a 12 word recovery phrase", style: .default , handler:{ (UIAlertAction)in
+        let alert = UIAlertController(title: "CREATE_WALLET_TITLE".localized(),
+                                      message: "CREATE_WALLET_MESSAGE".localized(),
+                                      preferredStyle: .actionSheet)
+
+        alert.addAction(UIAlertAction(title: "CREATE_MNEMONIC_TWELVE".localized(),
+                                      style: .default,
+                                      handler: { _ in
             self.delegate?.requestedCreateNewWallet(self, type: .twelve)
         }))
-        
-        alert.addAction(UIAlertAction(title: "Use a 24 word recovery phrase", style: .default , handler:{ (UIAlertAction)in
+
+        alert.addAction(UIAlertAction(title: "CREATE_MNEMONIC_TWENTYFOUR".localized(),
+                                      style: .default,
+                                      handler: { _ in
             self.delegate?.requestedCreateNewWallet(self, type: .twentyFour)
         }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:{ (UIAlertAction)in
-        }))
-        
+
+        alert.addAction(UIAlertAction(title: "CANCEL_ACTION".localized(), style: .cancel, handler: nil))
         alert.popoverPresentationController?.sourceView = createWalletButton
-        
-        self.present(alert, animated: true, completion: {
-            print("completion block")
-        })
+
+        self.present(alert, animated: true, completion: nil)
     }
 
     @IBAction func importWallet() {

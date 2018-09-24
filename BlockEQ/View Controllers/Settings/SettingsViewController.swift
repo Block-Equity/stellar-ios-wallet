@@ -133,7 +133,9 @@ extension SettingsViewController: SettingsSwitchCellDelegate {
 }
 
 extension SettingNode {
-    func cell(for indexPath: IndexPath, tableView: UITableView, viewController: SettingsViewController) -> UITableViewCell {
+    func cell(for indexPath: IndexPath,
+              tableView: UITableView,
+              viewController: SettingsViewController) -> UITableViewCell {
         var cell: UITableViewCell!
 
         if let setting = self.subnode(row: indexPath.row) {

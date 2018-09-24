@@ -10,6 +10,7 @@ import Foundation
 import LocalAuthentication
 import os.log
 
+//swiftlint:disable file_length
 protocol AuthenticationCoordinatorDelegate: AnyObject {
     /// Called when the coordinator is successful in validating the user's identity.
     ///
@@ -54,7 +55,10 @@ final class AuthenticationCoordinator {
     typealias AuthenticationCompletion = (AuthenticationContext) -> Void
 
     /// A typealias for options that may be passed into the authentication coordinator.
-    typealias AuthenticationOptions = (cancellable: Bool, presentVC: Bool, forcedStyle: AuthenticationStyle?, limitPinEntries: Bool)
+    typealias AuthenticationOptions = (cancellable: Bool,
+        presentVC: Bool,
+        forcedStyle: AuthenticationStyle?,
+        limitPinEntries: Bool)
 
     /// Errors relating to authenticating the user.
     ///
@@ -125,7 +129,10 @@ final class AuthenticationCoordinator {
     private var confirmPin: Bool = false
 
     /// Options that this authentication coordinator is configured with.
-    private var options: AuthenticationOptions = (cancellable: false, presentVC: false, forcedStyle: nil, limitPinEntries: true)
+    private var options: AuthenticationOptions = (cancellable: false,
+                                                  presentVC: false,
+                                                  forcedStyle: nil,
+                                                  limitPinEntries: true)
 
     /// Internal state to track the pin the user entered, when first creating a pin code
     private var firstPin: String?
@@ -212,7 +219,7 @@ extension AuthenticationCoordinator {
             presentPinAuth()
         }
     }
-    
+
     private func hasAuthenticationVCs() -> Bool {
         return blankAuthController != nil || pinViewController != nil
     }
@@ -222,10 +229,10 @@ extension AuthenticationCoordinator {
             biometricChallenge()
             return
         }
-        
+
         let authVC = BlankAuthenticationViewController()
         authVC.delegate = self
-        
+
         blankAuthController = authVC
 
         pushPresentOrMove(authVC, on: container, animated: false)
@@ -234,7 +241,7 @@ extension AuthenticationCoordinator {
 
     private func presentPinAuth() {
         guard pinViewController == nil else { return }
-        
+
         let pinVC = PinViewController(mode: .dark, creating: false, isCloseDisplayed: options.cancellable)
         pinVC.delegate = self
         pinViewController = pinVC
@@ -264,7 +271,7 @@ extension AuthenticationCoordinator {
 
     private static func convertLocalAuthenticationError(_ error: LAError?) -> AuthenticationError? {
         guard let error = error else { return nil }
-        switch (error) {
+        switch error {
         case LAError.appCancel: return .biometryCancelled
         case LAError.userCancel: return .biometryUserCancelled
         case LAError.systemCancel: return .biometryCancelled
@@ -290,24 +297,26 @@ extension AuthenticationCoordinator {
                     }
                 } else {
                     let authError = AuthenticationCoordinator.convertLocalAuthenticationError(error as? LAError)
-                    let context = AuthenticationContext(savedPin: false, mode: .biometric,
-                                                        cancelled: authError == .biometryCancelled || authError == .biometryUserCancelled)
+                    let cancelled = authError == .biometryCancelled || authError == .biometryUserCancelled
+                    let context = AuthenticationContext(savedPin: false, mode: .biometric, cancelled: cancelled)
 
                     os_log("ERROR: %@", authError?.localizedDescription ?? "")
 
                     // If cancelled or fallback, we need to present the pin entry flow before removing auth views
                     if authError == .biometryFallback {
                         self.options.forcedStyle = .pin
-                        self.removeAuthentication(viewController: self.blankAuthController, with: context, animated: false) { _ in
+                        self.removeAuthentication(viewController: self.blankAuthController,
+                                                  with: context,
+                                                  animated: false) { _ in
                             self.blankAuthController = nil
                         }
                         self.authenticate()
-                    }
-                    else if authError == .biometryUserCancelled || authError == .biometryCancelled {
+                    } else if authError == .biometryUserCancelled || authError == .biometryCancelled {
                         self.blankAuthController?.displayAuthButton()
                         self.delegate?.authenticationCancelled(self, options: context)
                     } else {
-                        self.removeAuthentication(viewController: self.blankAuthController, with: context) { [unowned self] ctxt in
+                        self.removeAuthentication(viewController: self.blankAuthController,
+                                                  with: context) { [unowned self] ctxt in
                             self.delegate?.authenticationFailed(self, error: authError, options: ctxt)
                         }
                     }
@@ -316,13 +325,15 @@ extension AuthenticationCoordinator {
         }
     }
 
-    private func pushPresentOrMove(_ vc: UIViewController, on container: UIViewController, animated: Bool = false) {
+    private func pushPresentOrMove(_ viewController: UIViewController,
+                                   on container: UIViewController,
+                                   animated: Bool = false) {
         if let navController = container as? UINavigationController {
-            navController.pushViewController(vc, animated: animated)
+            navController.pushViewController(viewController, animated: animated)
         } else if options.presentVC {
-            container.present(vc, animated: true, completion: nil)
+            container.present(viewController, animated: true, completion: nil)
         } else {
-            container.moveToViewController(vc, fromViewController: nil, animated: animated, completion: nil)
+            container.moveToViewController(viewController, fromViewController: nil, animated: animated, completion: nil)
         }
     }
 
@@ -330,8 +341,8 @@ extension AuthenticationCoordinator {
                                       with context: AuthenticationContext,
                                       animated: Bool = true,
                                       completion: AuthenticationCompletion? = nil) {
-        if let vc = viewController as? AuthenticatingViewController {
-            vc.dismissAuthentication(animated: animated) {
+        if let viewController = viewController as? AuthenticatingViewController {
+            viewController.dismissAuthentication(animated: animated) {
                 completion?(context)
             }
         } else {
@@ -344,7 +355,7 @@ extension AuthenticationCoordinator {
 }
 
 extension AuthenticationCoordinator: PinViewControllerDelegate {
-    func pinEntryCompleted(_ vc: PinViewController, pin: String) {
+    func pinEntryCompleted(_ viewController: PinViewController, pin: String) {
         if mode == .setPin && confirmPin {
             let pinVC = PinViewController(mode: .light, creating: false, isCloseDisplayed: false)
             pinVC.delegate = self
@@ -361,34 +372,34 @@ extension AuthenticationCoordinator: PinViewControllerDelegate {
                 SecurityOptionHelper.clear()
 
                 let context = AuthenticationContext(savedPin: false, mode: .pin, cancelled: false)
-                self.removeAuthentication(viewController: vc, with: context) { [unowned self] ctxt in
+                self.removeAuthentication(viewController: viewController, with: context) { [unowned self] ctxt in
                     self.delegate?.authenticationCompleted(self, options: ctxt)
                 }
             } else {
-                failedPinAttempt(vc: vc)
+                failedPinAttempt(viewController: viewController)
             }
         } else {
             if KeychainHelper.check(pin: pin) {
                 let context = AuthenticationContext(savedPin: false, mode: .pin, cancelled: false)
-                self.removeAuthentication(viewController: vc, with: context) { [unowned self] ctxt in
+                self.removeAuthentication(viewController: viewController, with: context) { [unowned self] ctxt in
                     self.delegate?.authenticationCompleted(self, options: ctxt)
                 }
             } else {
-                failedPinAttempt(vc: vc)
+                failedPinAttempt(viewController: viewController)
             }
         }
     }
 
-    func pinEntryCancelled(_ vc: PinViewController) {
+    func pinEntryCancelled(_ viewController: PinViewController) {
         let context = AuthenticationContext(savedPin: false, mode: .pin, cancelled: true)
-        self.removeAuthentication(viewController: vc, with: context) { [unowned self] ctxt in
+        self.removeAuthentication(viewController: viewController, with: context) { [unowned self] ctxt in
             self.delegate?.authenticationCancelled(self, options: ctxt)
         }
     }
 
-    private func failedPinAttempt(vc: PinViewController) {
+    private func failedPinAttempt(viewController: PinViewController) {
         failedPinAttempts += 1
-        vc.pinMismatchError()
+        viewController.pinMismatchError()
         os_log("ERROR: %@, attempts: %d",
                AuthenticationError.pinMismatchError.localizedDescription,
                failedPinAttempts)
@@ -425,3 +436,4 @@ extension AuthenticationCoordinator.AuthenticationError {
         }
     }
 }
+//swiftlint:enable file_length

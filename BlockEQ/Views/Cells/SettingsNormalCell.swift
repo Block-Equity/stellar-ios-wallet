@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Nick DiZazzo on 2018-05-30.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import Foundation

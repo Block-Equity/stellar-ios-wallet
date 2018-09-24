@@ -17,7 +17,7 @@ struct PinDotViewModel {
     var shakeOffset: CGFloat = CGFloat(30)
 }
 
-class PinDotView : UIView {
+class PinDotView: UIView {
     let speed = 0.75
 
     private enum PinState {
@@ -64,7 +64,7 @@ class PinDotView : UIView {
             pinView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
             pinView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
             pinView.widthAnchor.constraint(equalToConstant: viewModel.circleDiameter),
-            pinView.heightAnchor.constraint(equalToConstant: viewModel.lineHeight),
+            pinView.heightAnchor.constraint(equalToConstant: viewModel.lineHeight)
             ])
     }
 
@@ -81,14 +81,14 @@ class PinDotView : UIView {
         let animator1 = UIViewPropertyAnimator(duration: speed * 0.1, curve: .easeIn) {
             self.pinView.bounds.size.height = self.viewModel.lineHeight
             self.pinView.bounds.size.width = self.viewModel.lineHeight
-            self.pinView.frame.origin.y = self.pinView.frame.origin.y - 5
+            self.pinView.frame.origin.y -= 5
         }
 
         // Dot to circle
         let animator2 = UIViewPropertyAnimator(duration: speed * 0.2, dampingRatio: 0.55) {
             self.pinView.bounds.size.width = self.viewModel.circleDiameter
             self.pinView.bounds.size.height = self.viewModel.circleDiameter
-            self.pinView.frame.origin.y = self.pinView.frame.origin.y - self.viewModel.circleDiameter
+            self.pinView.frame.origin.y -= self.viewModel.circleDiameter
             self.pinView.layer.cornerRadius = self.pinView.frame.width / 2
         }
 

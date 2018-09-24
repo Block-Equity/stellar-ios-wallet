@@ -17,14 +17,14 @@ extension AuthenticatingViewController where Self: UIViewController {
         let alphaAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 0.5) {
             self.view.alpha = 0
         }
-        
+
         alphaAnimator.addCompletion { _ in
             completion?()
         }
-        
+
         alphaAnimator.startAnimation()
     }
-    
+
     func dismissAuthentication(animated: Bool, completion: (() -> Void)?) {
         if let parent = self.parent {
             if let parentNavController = parent as? UINavigationController {

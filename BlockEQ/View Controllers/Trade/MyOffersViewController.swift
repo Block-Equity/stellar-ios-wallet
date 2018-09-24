@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-05-23.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import stellarsdk
@@ -40,12 +40,20 @@ class MyOffersViewController: UIViewController {
 
         let offer = offers[indexPath.row]
 
-        let sellingAsset = StellarAsset(assetType: offer.selling.assetType, assetCode: offer.selling.assetCode, assetIssuer: offer.selling.assetIssuer, balance: "")
+        let sellingAsset = StellarAsset(assetType: offer.selling.assetType,
+                                        assetCode: offer.selling.assetCode,
+                                        assetIssuer: offer.selling.assetIssuer,
+                                        balance: "")
 
-        let buyingAsset = StellarAsset(assetType: offer.buying.assetType, assetCode: offer.buying.assetCode, assetIssuer: offer.buying.assetIssuer, balance: "")
+        let buyingAsset = StellarAsset(assetType: offer.buying.assetType,
+                                       assetCode: offer.buying.assetCode,
+                                       assetIssuer: offer.buying.assetIssuer,
+                                       balance: "")
 
-        TradeOperation.postTrade(amount: 0.0000000, numerator: offer.priceR.numerator, denominator: offer.priceR.denominator, sellingAsset: sellingAsset, buyingAsset: buyingAsset, offerId: offer.id) { completed in
-
+        TradeOperation.postTrade(amount: 0.0000000,
+                                 price: (numerator: offer.priceR.numerator, denominator: offer.priceR.denominator),
+                                 asset: (selling: sellingAsset, buying: buyingAsset),
+                                 offerId: offer.id) { completed in
             if completed {
                 self.offers.remove(at: indexPath.row)
                 self.tableView.reloadData()
@@ -68,34 +76,35 @@ class MyOffersViewController: UIViewController {
 
 extension MyOffersViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if offers.count > 0 {
-            return offers.count
-        }
-        return 1
+        return offers.count > 0 ? offers.count : 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if offers.count > 0 {
-            return offerCell(indexPath: indexPath)
-        }
-        return emptyOrderBookCell(indexPath: indexPath)
+        return offers.count > 0 ?
+            offerCell(tableView, indexPath: indexPath) : emptyOrderBookCell(tableView, indexPath: indexPath)
     }
 
-    func offerCell(indexPath: IndexPath) -> OffersCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: OffersCell.cellIdentifier, for: indexPath) as! OffersCell
+    func offerCell(_ tableView: UITableView, indexPath: IndexPath) -> OffersCell {
+        let cell: OffersCell = tableView.dequeueReusableCell(for: indexPath)
         cell.indexPath = indexPath
         cell.delegate = self
 
         let offer = offers[indexPath.row]
 
-        let text = "Sell \(offer.amount.decimalFormatted()) \(Assets.cellDisplay(shortCode: offer.selling.assetCode)) for \(String(Float(offer.amount)! * Float(offer.price)!).decimalFormatted()) \(Assets.cellDisplay(shortCode: offer.buying.assetCode)) at a price of \(offer.price.decimalFormatted())"
+        let text = String(format: "SELL_SUMMARY_FORMAT".localized(),
+                          offer.amount.decimalFormatted(),
+                          Assets.cellDisplay(shortCode: offer.selling.assetCode),
+                          String(Float(offer.amount)! * Float(offer.price)!).decimalFormatted(),
+                          Assets.cellDisplay(shortCode: offer.buying.assetCode),
+                          offer.price.decimalFormatted())
+
         cell.offerLabel.text = text
 
         return cell
     }
 
-    func emptyOrderBookCell(indexPath: IndexPath) -> OrderBookEmptyCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: OrderBookEmptyCell.cellIdentifier, for: indexPath) as! OrderBookEmptyCell
+    func emptyOrderBookCell(_ tableView: UITableView, indexPath: IndexPath) -> OrderBookEmptyCell {
+        let cell: OrderBookEmptyCell = tableView.dequeueReusableCell(for: indexPath)
         return cell
     }
 }

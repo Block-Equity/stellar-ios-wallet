@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Nick DiZazzo on 2018-05-19.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import Foundation
@@ -43,29 +43,32 @@ final class OnboardingCoordinator {
 }
 
 extension OnboardingCoordinator: LaunchViewControllerDelegate {
-    func requestedCreateNewWallet(_ vc: LaunchViewController, type: MnemonicType) {
-        let mnemonicVC = MnemonicViewController(mnemonic: nil, shouldSetPin: false, hideConfirmation: false, mnemonicType: type)
+    func requestedCreateNewWallet(_ viewController: LaunchViewController, type: MnemonicType) {
+        let mnemonicVC = MnemonicViewController(mnemonic: nil,
+                                                shouldSetPin: false,
+                                                hideConfirmation: false,
+                                                mnemonicType: type)
         mnemonicVC.delegate = self
-        
+
         self.mnemonicViewController = mnemonicVC
-        
+
         navController.pushViewController(mnemonicVC, animated: true)
     }
 
-    func requestedImportWallet(_ vc: LaunchViewController) {
+    func requestedImportWallet(_ viewController: LaunchViewController) {
         navController.pushViewController(verificationViewController, animated: true)
     }
 }
 
 extension OnboardingCoordinator: MnemonicViewControllerDelegate {
-    func confirmedWrittenMnemonic(_ vc: MnemonicViewController, mnemonic: String) {
+    func confirmedWrittenMnemonic(_ viewController: MnemonicViewController, mnemonic: String) {
         self.mnemonic = mnemonic
         authenticate()
     }
 }
 
 extension OnboardingCoordinator: VerificationViewControllerDelegate {
-    func validatedAccount(_ vc: VerificationViewController, mnemonic: String) {
+    func validatedAccount(_ viewController: VerificationViewController, mnemonic: String) {
         self.mnemonic = mnemonic
         authenticate()
     }
@@ -85,7 +88,7 @@ extension OnboardingCoordinator: AuthenticationCoordinatorDelegate {
         SecurityOptionHelper.clear()
         verificationViewController.navigationController?.popToRootViewController(animated: true)
         authenticationCoordinator = nil
-        
+
     }
 
     func authenticationCompleted(_ coordinator: AuthenticationCoordinator,
@@ -98,16 +101,16 @@ extension OnboardingCoordinator: AuthenticationCoordinatorDelegate {
 
 extension OnboardingCoordinator {
     func saveMnemonic(mnemonic: String) {
-        let keyPair = try! Wallet.createKeyPair(mnemonic: mnemonic, passphrase: nil, index: 0)
+        if let keyPair = try? Wallet.createKeyPair(mnemonic: mnemonic, passphrase: nil, index: 0) {
+            let privateBytes = keyPair.privateKey?.bytes ?? [UInt8]()
+            let privateKeyData = NSData(bytes: privateBytes, length: privateBytes.count) as Data
+            let publicKeyData = NSData(bytes: keyPair.publicKey.bytes, length: keyPair.publicKey.bytes.count) as Data
 
-        let publicKeyData = NSData(bytes: keyPair.publicKey.bytes, length: keyPair.publicKey.bytes.count) as Data
-        let privateBytes = keyPair.privateKey?.bytes ?? [UInt8]()
-        let privateKeyData = NSData(bytes: privateBytes, length: privateBytes.count) as Data
-
-        KeychainHelper.setExistingInstance()
-        KeychainHelper.save(mnemonic: mnemonic)
-        KeychainHelper.save(accountId: keyPair.accountId)
-        KeychainHelper.save(publicKey: publicKeyData)
-        KeychainHelper.save(privateKey: privateKeyData)
+            KeychainHelper.setExistingInstance()
+            KeychainHelper.save(mnemonic: mnemonic)
+            KeychainHelper.save(accountId: keyPair.accountId)
+            KeychainHelper.save(publicKey: publicKeyData)
+            KeychainHelper.save(privateKey: privateKeyData)
+        }
     }
 }

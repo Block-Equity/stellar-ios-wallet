@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-03-10.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import Whisper
@@ -91,8 +91,11 @@ class SendAmountViewController: UIViewController {
     }
 
     func setupView() {
-        let image = UIImage(named: "close")
-        let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
+        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(self.dismissView))
+
         navigationItem.rightBarButtonItem = rightBarButtonItem
 
         self.keyboardHolderView.delegate = self
@@ -124,11 +127,9 @@ class SendAmountViewController: UIViewController {
     }
 
     func displayExchangeRequiredMessage() {
-        memoIdTextField.placeholder = "(Required)"
+        memoIdTextField.placeholder = "REQUIRED_PLACEHOLDER".localized()
         exchangeLabelHeightConstraint.constant = 40.0
-
-        let message = "This exchange address belongs to \(exchangeName). Please enter a memo in order to send this transaction."
-        exchangeLabel.text = message
+        exchangeLabel.text = String(format: "EXCHANGE_ADDRESS_PROMPT_FORMAT".localized(), exchangeName)
     }
 
     @objc func dismissView() {
@@ -156,15 +157,21 @@ class SendAmountViewController: UIViewController {
     func displayTransactionError() {
         hideHud()
 
-        let alert = UIAlertController(title: "Transaction error", message: "There was an error processing this transaction. Please try again later.", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        let alert = UIAlertController(title: "TRANSACTION_ERROR_TITLE".localized(),
+                                      message: "TRANSACTION_ERROR_MESSAGE".localized(),
+                                      preferredStyle: UIAlertControllerStyle.alert)
+
+        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
+                                      style: UIAlertActionStyle.default,
+                                      handler: nil))
+
         present(alert, animated: true, completion: nil)
     }
 
     func displayTransactionSuccess() {
         hideHud()
 
-        let message = Message(title: "Transaction successful.", backgroundColor: Colors.green)
+        let message = Message(title: "TRANSACTION_SUCCESS".localized(), backgroundColor: Colors.green)
         Whisper.show(whisper: message, to: navigationController!, action: .show)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -270,7 +277,10 @@ extension SendAmountViewController {
 
         let stellarAsset = stellarAccount.assets[currentAssetIndex]
 
-        PaymentTransactionOperation.postPayment(accountId: accountId, amount: amount, memoId: memoId, stellarAsset: stellarAsset) { completed in
+        PaymentTransactionOperation.postPayment(accountId: accountId,
+                                                amount: amount,
+                                                memoId: memoId,
+                                                stellarAsset: stellarAsset) { completed in
             if completed {
                 self.displayTransactionSuccess()
             } else {
@@ -295,16 +305,7 @@ extension SendAmountViewController: KeyboardViewDelegate {
         default: break
         }
 
-        if containsDecimal {
-            let array = sendingAmount.components(separatedBy: ".")
-            if array.count > 1 {
-                let decimals = array[1].count
-                if decimals > decimalCountRestriction {
-                    let substring = sendingAmount.prefix(array[0].count + decimalCountRestriction + decimalDotSize)
-                    sendingAmount = String(substring)
-                }
-            }
-        }
+        sendingAmount = restrictDecimalPlaces(amount: sendingAmount)
 
         if isValidSendAmount(amount: sendingAmount) || sendingAmount == "0" {
             amountLabel.textColor = Colors.primaryDark
@@ -313,5 +314,19 @@ extension SendAmountViewController: KeyboardViewDelegate {
         }
 
         amountLabel.text = sendingAmount.count > 0 ? sendingAmount : "0"
+    }
+
+    func restrictDecimalPlaces(amount: String) -> String {
+        guard sendingAmount.contains(".") else { return amount }
+
+        let array = sendingAmount.components(separatedBy: ".")
+        if array.count > 1 {
+            let decimals = array[1].count
+            if decimals > decimalCountRestriction {
+                return String(sendingAmount.prefix(array[0].count + decimalCountRestriction + decimalDotSize))
+            }
+        }
+
+        return amount
     }
 }

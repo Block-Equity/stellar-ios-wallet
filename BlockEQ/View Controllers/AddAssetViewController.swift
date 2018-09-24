@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-07-10.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import UIKit
@@ -75,16 +75,22 @@ extension AddAssetViewController {
     func createTrustLine(issuerAccountId: String, assetCode: String) {
         showHud()
 
-        PaymentTransactionOperation.changeTrust(issuerAccountId: issuerAccountId, assetCode: assetCode, limit: 10000000000) { completed
-            in
-
+        PaymentTransactionOperation.changeTrust(issuerAccountId: issuerAccountId,
+                                                assetCode: assetCode,
+                                                limit: 10000000000) { completed in
             if completed {
                 self.getAccountDetails()
             } else {
                 self.hideHud()
 
-                let alert = UIAlertController(title: "Activation Error", message: "Sorry your asset could not be added at this time. Please try again later.", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+                let alert = UIAlertController(title: "ACTIVATION_ERROR_TITLE".localized(),
+                                              message: "ASSET_ERROR_MESSAGE".localized(),
+                                              preferredStyle: UIAlertControllerStyle.alert)
+
+                alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
+                                              style: UIAlertActionStyle.default,
+                                              handler: nil))
+
                 self.present(alert, animated: true, completion: nil)
             }
         }
