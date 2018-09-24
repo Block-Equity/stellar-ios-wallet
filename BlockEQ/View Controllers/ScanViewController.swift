@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-03-11.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import AVFoundation
@@ -38,22 +38,22 @@ class ScanViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupView()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
         setupCamera()
     }
 
     func setupView() {
-        navigationItem.title = "Scanning..."
+        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(self.dismissView))
 
-        let image = UIImage(named: "close")
-        let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
+        navigationItem.title = "SCANNING".localized()
     }
 
     @objc func dismissView() {
@@ -64,7 +64,10 @@ class ScanViewController: UIViewController {
     }
 
     func setupCamera() {
-        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInDualCamera, .builtInWideAngleCamera], mediaType: AVMediaType.video, position: .back)
+        let captureDevices: [AVCaptureDevice.DeviceType] = [.builtInDualCamera, .builtInWideAngleCamera]
+        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: captureDevices,
+                                                                      mediaType: AVMediaType.video,
+                                                                      position: .back)
 
         guard let captureDevice = deviceDiscoverySession.devices.first else {
             print("No Camera Found.")
@@ -103,13 +106,17 @@ class ScanViewController: UIViewController {
 }
 
 extension ScanViewController: AVCaptureMetadataOutputObjectsDelegate {
-    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+    func metadataOutput(_ output: AVCaptureMetadataOutput,
+                        didOutput metadataObjects: [AVMetadataObject],
+                        from connection: AVCaptureConnection) {
         if metadataObjects.count == 0 {
             qrCodeFrameView?.frame = CGRect.zero
             return
         }
 
-        let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
+        guard let metadataObj = metadataObjects[0] as? AVMetadataMachineReadableCodeObject else {
+            return
+        }
 
         if supportedCodeTypes.contains(metadataObj.type) {
             let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
@@ -120,7 +127,7 @@ extension ScanViewController: AVCaptureMetadataOutputObjectsDelegate {
                     hasIdentifiedQR = true
                     delegate?.setQR(value: qrValue)
 
-                    navigationItem.title = "Valid QR Code Found"
+                    navigationItem.title = "QR_DETECTED".localized()
                     perform(#selector(self.dismissView), with: nil, afterDelay: 0.6)
                 }
             }

@@ -3,15 +3,15 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-03-09.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import UIKit
 import Foundation
 
 protocol PinViewControllerDelegate: class {
-    func pinEntryCompleted(_ vc: PinViewController, pin: String)
-    func pinEntryCancelled(_ vc: PinViewController)
+    func pinEntryCompleted(_ viewController: PinViewController, pin: String)
+    func pinEntryCancelled(_ viewController: PinViewController)
 }
 
 class PinViewController: UIViewController {
@@ -108,10 +108,10 @@ class PinViewController: UIViewController {
             pinView.reset()
         }
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+
         UIApplication.shared.statusBarStyle = .default
     }
 
@@ -141,14 +141,18 @@ class PinViewController: UIViewController {
         navigationItem.title = shortTitle
 
         logoImageView.image = UIImage(named: "logo")
-        
 
         if isCloseDisplayed {
-            let image = UIImage(named: "close")
-            let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
+            let leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
+                                                    style: .plain,
+                                                    target: self,
+                                                    action: #selector(self.dismissView))
             navigationItem.leftBarButtonItem = leftBarButtonItem
         } else {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(self.popView))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "CANCEL_ACTION".localized(),
+                                                               style: .plain,
+                                                               target: self,
+                                                               action: #selector(self.popView))
         }
 
         keyboardView.delegate = self
@@ -158,7 +162,7 @@ class PinViewController: UIViewController {
         view.endEditing(true)
         dismiss(animated: true, completion: nil)
     }
-    
+
     @objc func popView() {
         view.endEditing(true)
         navigationController?.popToRootViewController(animated: true)

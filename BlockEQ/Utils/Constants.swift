@@ -3,12 +3,13 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-03-09.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import stellarsdk
 import UIKit
 
+//swiftlint:disable line_length
 struct Colors {
     static let backgroundDark =  UIColor(red: 21.0/255.0, green: 27.0/255.0, blue: 38.0/255.0, alpha: Alphas.opaque)
     static let primaryDark =  UIColor(red: 0.0/255.0, green: 106.0/255.0, blue: 255.0/255.0, alpha: Alphas.opaque)
@@ -35,6 +36,7 @@ struct Colors {
     static let stellarBlue = UIColor(red: 205.0/255.0, green: 224.0/255.0, blue: 232.0/255.0, alpha: Alphas.opaque)
     static let transparent = UIColor.clear
 }
+//swiftlint:enable line_length
 
 public struct Alphas {
     static let opaque = CGFloat(1)
@@ -55,38 +57,31 @@ public struct Stellar {
 }
 
 public struct Assets {
-    enum AssetType: Int {
-        case points
-        case cad
-        
+    enum AssetType: String {
+        case points = "PTS"
+        case cad = "CAD"
+
         var shortForm: String {
-            switch self {
-            case .points:
-                return "PTS"
-            case .cad:
-                return "CAD"
-            }
+            return self.rawValue
         }
-        
+
         var issuerAccount: String {
             switch self {
-            case .points:
-                return "GBPG7KRYC3PTKHBXQGRD3GMZ5DB4C3D553ZN2ZLH57LBAQIULVY46Z5F"
-            case .cad:
-                return "GABK2IHWW7BCRPP3BL6WMOMDBPHCBJR2SLP5HAUBYKNZG5J5RJSROS5S"
+            case .points: return "GBPG7KRYC3PTKHBXQGRD3GMZ5DB4C3D553ZN2ZLH57LBAQIULVY46Z5F"
+            case .cad: return "GABK2IHWW7BCRPP3BL6WMOMDBPHCBJR2SLP5HAUBYKNZG5J5RJSROS5S"
             }
         }
     }
-    
+
     static let all: [AssetType] = [.points, .cad]
-    
+
     static func cellDisplay(shortCode: String?) -> String {
         if let assetCode = shortCode {
           return assetCode
         }
         return "XLM"
     }
-    
+
     static func displayTitle(shortCode: String) -> String {
         if shortCode == "XLM" {
             return "Stellar Lumens"
@@ -97,7 +92,7 @@ public struct Assets {
         }
         return shortCode
     }
-    
+
     static func displayImage(shortCode: String) -> UIImage? {
         if shortCode == "XLM" {
             return UIImage(named: "stellar")
@@ -108,7 +103,7 @@ public struct Assets {
         }
         return nil
     }
-    
+
     static func displayImageBackgroundColor(shortCode: String) -> UIColor {
         if shortCode == "XLM" {
             return Colors.stellarBlue
@@ -159,4 +154,3 @@ enum MnemonicType {
     case twelve
     case twentyFour
 }
-

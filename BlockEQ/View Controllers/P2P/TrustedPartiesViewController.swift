@@ -3,14 +3,13 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-08-01.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import stellarsdk
 import UIKit
 
 class TrustedPartiesViewController: UIViewController {
-
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var tableView: UITableView!
 
@@ -28,25 +27,28 @@ class TrustedPartiesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         getAccountDetails()
     }
 
     func setupView() {
-        navigationItem.title = "Trusted Peers"
+        let leftBarButtonItem = UIBarButtonItem(title: "ADD_PEER".localized(),
+                                                style: .plain,
+                                                target: self,
+                                                action: #selector(self.addPeer))
 
-        let leftBarButtonItem = UIBarButtonItem(title: "Add Peer", style: .plain, target: self, action: #selector(self.addPeer))
-        navigationItem.leftBarButtonItem = leftBarButtonItem
+        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(self.dismissView))
 
-        let image = UIImage(named: "close")
-        let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
+        navigationItem.leftBarButtonItem = leftBarButtonItem
+        navigationItem.title = "TRUSTED_PEERS".localized()
 
         let tableViewNibUserAssets = UINib(nibName: WalletItemCell.cellIdentifier, bundle: nil)
         tableView.register(tableViewNibUserAssets, forCellReuseIdentifier: WalletItemCell.cellIdentifier)
@@ -77,8 +79,14 @@ class TrustedPartiesViewController: UIViewController {
     }
 
     func displayAssetDeactivationError() {
-        let alert = UIAlertController(title: "Activation Error", message: "Sorry your asset could not be removed at this time. Please try again later.", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        let alert = UIAlertController(title: "ACTIVATION_ERROR_TITLE".localized(),
+                                      message: "ASSET_REMOVE_ERROR_MESSAGE".localized(),
+                                      preferredStyle: UIAlertControllerStyle.alert)
+
+        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
+                                      style: UIAlertActionStyle.default,
+                                      handler: nil))
+
         self.present(alert, animated: true, completion: nil)
     }
 }
@@ -93,25 +101,27 @@ extension TrustedPartiesViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: WalletItemCell.cellIdentifier, for: indexPath) as! WalletItemCell
+        let item = peers[indexPath.row]
+        let cell: WalletItemCell = tableView.dequeueReusableCell(for: indexPath)
 
         cell.indexPath = indexPath
         cell.delegate = self
-        cell.titleLabel.text = Assets.displayTitle(shortCode: peers[indexPath.row].shortCode)
-        cell.amountLabel.text = "\(peers[indexPath.row].formattedBalance) \(peers[indexPath.row].shortCode)"
-        cell.iconImageView.backgroundColor = Assets.displayImageBackgroundColor(shortCode: peers[indexPath.row].shortCode)
-        if let image = Assets.displayImage(shortCode: peers[indexPath.row].shortCode) {
+        cell.titleLabel.text = Assets.displayTitle(shortCode: item.shortCode)
+        cell.amountLabel.text = "\(item.formattedBalance) \(item.shortCode)"
+        cell.iconImageView.backgroundColor = Assets.displayImageBackgroundColor(shortCode: item.shortCode)
+
+        if let image = Assets.displayImage(shortCode: item.shortCode) {
             cell.iconImageView.image = image
             cell.tokenInitialLabel.text = ""
         } else {
             cell.iconImageView.image = nil
-            let shortcode = Assets.displayTitle(shortCode: peers[indexPath.row].shortCode)
+            let shortcode = Assets.displayTitle(shortCode: item.shortCode)
             cell.tokenInitialLabel.text = String(Array(shortcode)[0])
         }
 
         if peers[indexPath.row].shortCode == "XLM" {
             cell.removeAssetButton.isHidden = true
-            if let _ = stellarAccount.inflationDestination {
+            if stellarAccount.inflationDestination != nil {
                 cell.setInflationButton.isHidden = true
                 cell.updateInflationButton.isHidden = false
             } else {
@@ -132,7 +142,9 @@ extension TrustedPartiesViewController: WalletItemCellDelegate {
     func didChangeInflation() {}
 
     func didRemoveAsset(indexPath: IndexPath) {
-        removeTrustLine(issuerAccountId: peers[indexPath.row].assetIssuer!, assetCode: peers[indexPath.row].shortCode, limit: 0.0000000)
+        removeTrustLine(issuerAccountId: peers[indexPath.row].assetIssuer!,
+                        assetCode: peers[indexPath.row].shortCode,
+                        limit: 0.0000000)
     }
 }
 
@@ -143,13 +155,13 @@ extension TrustedPartiesViewController {
     func removeTrustLine(issuerAccountId: String, assetCode: String, limit: Decimal) {
         showHud(message: "Removing Asset...")
 
-        PaymentTransactionOperation.changeP2PTrust(issuerAccountId: issuerAccountId, assetCode: assetCode, limit: limit) { completed
-            in
+        PaymentTransactionOperation.changeP2PTrust(issuerAccountId: issuerAccountId,
+                                                   assetCode: assetCode,
+                                                   limit: limit) { completed in
             if completed {
                 self.getAccountDetails()
             } else {
                 self.hideHud()
-
                 self.displayAssetDeactivationError()
             }
         }

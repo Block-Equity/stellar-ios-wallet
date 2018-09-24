@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-06-06.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import UIKit
@@ -14,10 +14,6 @@ extension String {
             return ISO8601DateFormatter()
         }()
     }
-    
-    var isoDate: Date {
-        get {
-            return Formatters.dateFormatter.date(from: self)!
-        }
-    }
+
+    var isoDate: Date { return Formatters.dateFormatter.date(from: self)! }
 }

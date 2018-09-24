@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-04-05.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import stellarsdk
@@ -37,12 +37,6 @@ final class WalletSwitchingViewController: UIViewController {
     var stellarAccount = StellarAccount()
     var updatedSupportedAssets: [Assets.AssetType] = []
     var allAssets: [StellarAsset] = []
-
-    //TODO: Remove
-    /*
-    @IBAction func setInflation() {
-        delegate?.didSelectSetInflation()
-    }*/
 
     @IBAction func addAsset() {
         if isZeroBalance() {
@@ -82,37 +76,31 @@ final class WalletSwitchingViewController: UIViewController {
     }
 
     func addNavigationHeader() {
-        self.title = "Assets".localized()
+        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(self.dismissView))
 
-        let closeButton = UIImage(named: "close")
-        let rightBarButtonItem = UIBarButtonItem(image: closeButton, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
+        navigationItem.title = "ASSETS".localized()
     }
 
     func updateMenu(stellarAccount: StellarAccount) {
         self.stellarAccount = stellarAccount
 
         updatedSupportedAssets.removeAll()
-
-        for supportedAsset in Assets.all {
-            var isMatch = false
-            for asset in stellarAccount.assets {
-                if supportedAsset.shortForm == asset.shortCode {
-                    isMatch = true
-                    break
-                }
-            }
-
-            if !isMatch {
-                updatedSupportedAssets.append(supportedAsset)
-            }
-        }
-
         allAssets.removeAll()
 
-        for asset in stellarAccount.assets {
-            allAssets.append(asset)
+        allAssets.append(contentsOf: stellarAccount.assets)
+
+        let allTypes = Set(Assets.all)
+        let assetTypesOnAccount: [Assets.AssetType] = stellarAccount.assets.compactMap {
+            guard let code = $0.assetCode else { return nil }
+            return Assets.AssetType(rawValue: code)
         }
+
+        let missingTypes = allTypes.symmetricDifference(Set(assetTypesOnAccount))
+        updatedSupportedAssets.append(contentsOf: missingTypes)
 
         tableView?.reloadData()
     }
@@ -140,20 +128,38 @@ final class WalletSwitchingViewController: UIViewController {
     }
 
     func displayAssetActivationError() {
-        let alert = UIAlertController(title: "Activation Error", message: "Sorry your asset could not be added at this time. You may need to add more Lumens(XLM) to your wallet and try again as each action costs 0.5 XLM.", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        let alert = UIAlertController(title: "ACTIVATION_ERROR_TITLE".localized(),
+                                      message: "ASSET_BALANCE_ERROR_MESSAGE".localized(),
+                                      preferredStyle: UIAlertControllerStyle.alert)
+
+        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
+                                      style: UIAlertActionStyle.default,
+                                      handler: nil))
+
         self.present(alert, animated: true, completion: nil)
     }
 
     func displayAssetDeactivationError() {
-        let alert = UIAlertController(title: "Activation Error", message: "Sorry your asset could not be removed at this time. Please try again later.", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        let alert = UIAlertController(title: "ACTIVATION_ERROR_TITLE".localized(),
+                                      message: "ASSET_REMOVE_ERROR_MESSAGE".localized(),
+                                      preferredStyle: UIAlertControllerStyle.alert)
+
+        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
+                                      style: UIAlertActionStyle.default,
+                                      handler: nil))
+
         self.present(alert, animated: true, completion: nil)
     }
 
     func displayNoBalanceError() {
-        let alert = UIAlertController(title: "No Balance Error", message: "You must have more than 1 Lumen (XLM) in order to perform this action.", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        let alert = UIAlertController(title: "NO_BALANCE_ERROR_TITLE".localized(),
+                                      message: "LOW_BALANCE_ERROR_MESSAGE".localized(),
+                                      preferredStyle: UIAlertControllerStyle.alert)
+
+        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
+                                      style: UIAlertActionStyle.default,
+                                      handler: nil))
+
         self.present(alert, animated: true, completion: nil)
     }
 }
@@ -203,61 +209,54 @@ extension WalletSwitchingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case SectionType.userAssets.rawValue:
-            let cell = tableView.dequeueReusableCell(withIdentifier: WalletItemCell.cellIdentifier, for: indexPath) as! WalletItemCell
+            let item = allAssets[indexPath.row]
+            let walletCell: WalletItemCell = tableView.dequeueReusableCell(for: indexPath)
 
-            cell.indexPath = indexPath
-            cell.delegate = self
-            cell.titleLabel.text = Assets.displayTitle(shortCode: allAssets[indexPath.row].shortCode)
-            cell.amountLabel.text = "\(allAssets[indexPath.row].formattedBalance) \(allAssets[indexPath.row].shortCode)"
-            cell.iconImageView.backgroundColor = Assets.displayImageBackgroundColor(shortCode: allAssets[indexPath.row].shortCode)
-            if let image = Assets.displayImage(shortCode: allAssets[indexPath.row].shortCode) {
-                cell.iconImageView.image = image
-                cell.tokenInitialLabel.text = ""
+            walletCell.indexPath = indexPath
+            walletCell.delegate = self
+            walletCell.titleLabel.text = Assets.displayTitle(shortCode: item.shortCode)
+            walletCell.amountLabel.text = "\(item.formattedBalance) \(item.shortCode)"
+            walletCell.iconImageView.backgroundColor = Assets.displayImageBackgroundColor(shortCode: item.shortCode)
+            if let image = Assets.displayImage(shortCode: item.shortCode) {
+                walletCell.iconImageView.image = image
+                walletCell.tokenInitialLabel.text = ""
             } else {
-                cell.iconImageView.image = nil
-                let shortcode = Assets.displayTitle(shortCode: allAssets[indexPath.row].shortCode)
-                cell.tokenInitialLabel.text = String(Array(shortcode)[0])
+                walletCell.iconImageView.image = nil
+                let shortcode = Assets.displayTitle(shortCode: item.shortCode)
+                walletCell.tokenInitialLabel.text = String(Array(shortcode)[0])
             }
 
-            if allAssets[indexPath.row].shortCode == "XLM" {
-                cell.removeAssetButton.isHidden = true
-                if let _ = stellarAccount.inflationDestination {
-                    cell.setInflationButton.isHidden = true
-                    cell.updateInflationButton.isHidden = false
+            if item.shortCode == "XLM" {
+                walletCell.removeAssetButton.isHidden = true
+                if stellarAccount.inflationDestination != nil {
+                    walletCell.setInflationButton.isHidden = true
+                    walletCell.updateInflationButton.isHidden = false
                 } else {
-                    cell.setInflationButton.isHidden = false
-                    cell.updateInflationButton.isHidden = true
+                    walletCell.setInflationButton.isHidden = false
+                    walletCell.updateInflationButton.isHidden = true
                 }
             } else {
-                cell.removeAssetButton.isHidden = false
-                cell.setInflationButton.isHidden = true
-                cell.updateInflationButton.isHidden = true
+                walletCell.removeAssetButton.isHidden = false
+                walletCell.setInflationButton.isHidden = true
+                walletCell.updateInflationButton.isHidden = true
             }
 
-            return cell
+            return walletCell
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: WalletItemActivateCell.cellIdentifier, for: indexPath) as! WalletItemActivateCell
+            let shortCode = updatedSupportedAssets[indexPath.row].shortForm
+            let displayString = String(format: "%@ %@", Assets.displayTitle(shortCode: shortCode), shortCode)
 
-            cell.indexPath = indexPath
-            cell.delegate = self
-            cell.titleLabel.text = "\(Assets.displayTitle(shortCode: updatedSupportedAssets[indexPath.row].shortForm)) (\(updatedSupportedAssets[indexPath.row].shortForm))"
-            cell.iconImageView.backgroundColor = Assets.displayImageBackgroundColor(shortCode: updatedSupportedAssets[indexPath.row].shortForm)
-            cell.iconImageView.image = Assets.displayImage(shortCode: updatedSupportedAssets[indexPath.row].shortForm)
+            let walletCell: WalletItemActivateCell = tableView.dequeueReusableCell(for: indexPath)
 
-            return cell
+            walletCell.indexPath = indexPath
+            walletCell.delegate = self
+            walletCell.titleLabel.text = displayString
+            walletCell.iconImageView.backgroundColor = Assets.displayImageBackgroundColor(shortCode: shortCode)
+            walletCell.iconImageView.image = Assets.displayImage(shortCode: shortCode)
+
+            return walletCell
         }
     }
-
-    //TODO: Need to move to coordinator in order to show correct selection
-    /*
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case SectionType.userAssets.rawValue:
-            tableView.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .none)
-        default:
-            break
-        }
-    }*/
 }
 
 extension WalletSwitchingViewController: UITableViewDelegate {
@@ -287,7 +286,11 @@ extension WalletSwitchingViewController: WalletItemCellDelegate {
     }
 
     func didRemoveAsset(indexPath: IndexPath) {
-        createTrustLine(issuerAccountId: allAssets[indexPath.row].assetIssuer!, assetCode: allAssets[indexPath.row].shortCode, limit: 0.0000000, isAdding: false)
+        let item = allAssets[indexPath.row]
+        createTrustLine(issuerAccountId: item.assetIssuer!,
+                        assetCode: item.shortCode,
+                        limit: 0.0000000,
+                        isAdding: false)
     }
 }
 
@@ -296,7 +299,11 @@ extension WalletSwitchingViewController: WalletItemActivateCellDelegate {
         if isZeroBalance() {
             displayNoBalanceError()
         } else {
-            createTrustLine(issuerAccountId: updatedSupportedAssets[indexPath.row].issuerAccount, assetCode: updatedSupportedAssets[indexPath.row].shortForm, limit: 10000000000, isAdding: true)
+            let item = updatedSupportedAssets[indexPath.row]
+            createTrustLine(issuerAccountId: item.issuerAccount,
+                            assetCode: item.shortForm,
+                            limit: 10000000000,
+                            isAdding: true)
         }
     }
 }
@@ -306,14 +313,12 @@ extension WalletSwitchingViewController: WalletItemActivateCellDelegate {
  */
 extension WalletSwitchingViewController {
     func createTrustLine(issuerAccountId: String, assetCode: String, limit: Decimal, isAdding: Bool) {
-        if isAdding {
-            showHud(message: "Activating Asset...")
-        } else {
-            showHud(message: "Removing Asset...")
-        }
+        let message = isAdding ? "ACTIVATE_ASSET".localized() : "REMOVE_ASSET".localized()
+        showHud(message: message)
 
-        PaymentTransactionOperation.changeTrust(issuerAccountId: issuerAccountId, assetCode: assetCode, limit: limit) { completed
-            in
+        PaymentTransactionOperation.changeTrust(issuerAccountId: issuerAccountId,
+                                                assetCode: assetCode,
+                                                limit: limit) { completed in
             if completed {
                self.getAccountDetails()
             } else {

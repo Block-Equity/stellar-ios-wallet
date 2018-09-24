@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-05-23.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import Foundation
@@ -15,32 +15,32 @@ protocol TradingCoordinatorDelegate: AnyObject {
 final class TradingCoordinator {
     let segmentController: TradeSegmentViewController!
 
-    var delegate: TradingCoordinatorDelegate?
+    weak var delegate: TradingCoordinatorDelegate?
 
     var stellarAccount: StellarAccount?
 
     var addAssetViewController: AddAssetViewController?
 
     var tradeViewController: TradeViewController = {
-        let vc = TradeViewController()
-        return vc
+        return TradeViewController()
     }()
 
     var orderBookViewController: OrderBookViewController = {
-        let vc = OrderBookViewController()
-        return vc
+        return OrderBookViewController()
     }()
 
     var myOffersViewController: MyOffersViewController = {
-        let vc = MyOffersViewController()
-        return vc
+        return MyOffersViewController()
     }()
 
     var walletSwitchingViewController: WalletSwitchingViewController?
     var wrappingNavController: AppNavigationController?
 
     init() {
-        segmentController = TradeSegmentViewController(leftViewController: tradeViewController, middleViewController: orderBookViewController, rightViewController: myOffersViewController, totalPages: CGFloat(TradeSegment.all.count))
+        segmentController = TradeSegmentViewController(leftViewController: tradeViewController,
+                                                       middleViewController: orderBookViewController,
+                                                       rightViewController: myOffersViewController,
+                                                       totalPages: CGFloat(TradeSegment.all.count))
         segmentController.tradeSegmentDelegate = self
         tradeViewController.delegate = self
     }
@@ -129,11 +129,13 @@ extension TradingCoordinator: AddAssetViewControllerDelegate {
 extension TradingCoordinator {
     func requestOrderBook(sellingAsset: StellarAsset, buyingAsset: StellarAsset) {
         TradeOperation.getOrderBook(sellingAsset: sellingAsset, buyingAsset: buyingAsset, completion: { response in
-            self.orderBookViewController.setOrderBook(orderBook: response, buyAsset: buyingAsset, sellAsset: sellingAsset)
+            self.orderBookViewController.setOrderBook(orderBook: response,
+                                                      buyAsset: buyingAsset,
+                                                      sellAsset: sellingAsset)
             self.tradeViewController.setMarketPrice(orderBook: response)
-        }) { error in
+        }, failure: { error in
             print(error)
-        }
+        })
 
         getPendingOffers()
     }
@@ -141,8 +143,8 @@ extension TradingCoordinator {
     func getPendingOffers() {
         TradeOperation.getOffers(completion: { response in
             self.myOffersViewController.setOffers(offers: response)
-        }) { error in
+        }, failure: { error in
             print("Error", error)
-        }
+        })
     }
 }

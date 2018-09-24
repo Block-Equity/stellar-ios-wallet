@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-06-06.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import UIKit
@@ -16,10 +16,6 @@ extension Date {
            return dateFormatter
         }()
     }
-    
-    var dateString: String {
-        get {
-            return Formatters.dateFormatter.string(from: self)
-        }
-    }
+
+    var dateString: String { return Formatters.dateFormatter.string(from: self) }
 }

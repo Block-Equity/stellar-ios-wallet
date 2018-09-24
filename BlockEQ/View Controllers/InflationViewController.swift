@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-04-19.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import Whisper
@@ -23,8 +23,11 @@ class InflationViewController: UIViewController {
     let lumenautInflationDestination = "GCCD6AJOYZCUAQLX32ZJF2MKFFAUJ53PVCFQI3RHWKL3V47QYE2BNAUT"
 
     @IBAction func addInflationDestination() {
-        guard let inflationDestination = destinationAddressTextField.text, !inflationDestination.isEmpty, inflationDestination.count > 20, inflationDestination != KeychainHelper.getAccountId() else {
-            destinationAddressTextField.shake()
+        guard let inflationDestination = destinationAddressTextField.text,
+            !inflationDestination.isEmpty,
+            inflationDestination.count > 20,
+            inflationDestination != KeychainHelper.getAccountId() else {
+                destinationAddressTextField.shake()
             return
         }
 
@@ -36,8 +39,14 @@ class InflationViewController: UIViewController {
             if completed {
                 self.displayInflationSuccess()
             } else {
-                let alert = UIAlertController(title: "Inflation Destination Error", message: "Sorry we were unable to set your inflation destination. Please check that your destination address is correct and try again.", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+                let alert = UIAlertController(title: "INFLATION_ERROR_TITLE".localized(),
+                                              message: "INFLATION_ERROR_MESSAGE".localized(),
+                                              preferredStyle: UIAlertControllerStyle.alert)
+
+                alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
+                                              style: UIAlertActionStyle.default,
+                                              handler: nil))
+
                 self.present(alert, animated: true, completion: nil)
             }
         }

@@ -1,5 +1,6 @@
 import UIKit
 
+//swiftlint:disable line_length
 extension UITableView {
     /// Cell
     func registerCell<T: UITableViewCell>(type: T.Type) where T: ReusableView, T: NibLoadableView {
@@ -45,3 +46,4 @@ extension UITableView {
         return view
     }
 }
+//swiftlint:enable line_length

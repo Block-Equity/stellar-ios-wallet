@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-07-12.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import UIKit
@@ -45,10 +45,12 @@ class BalanceViewController: UIViewController {
     }
 
     func setupView() {
-        navigationItem.title = "XLM Balance"
+        navigationItem.title = "LUMEN_BALANCE".localized()
 
-        let image = UIImage(named: "close")
-        let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
+        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
 
         availableBalanceView.backgroundColor = Colors.primaryDark

@@ -3,14 +3,13 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-03-10.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import stellarsdk
 import UIKit
 
 class SendViewController: UIViewController {
-
     @IBOutlet var addressHolderView: UIView!
     @IBOutlet var holdingView: UIView!
     @IBOutlet var tableView: UITableView!
@@ -21,9 +20,12 @@ class SendViewController: UIViewController {
     var currentAssetIndex = 0
 
     @IBAction func addAmount() {
-        guard let receiver = sendAddressTextField.text, !receiver.isEmpty, receiver.count > 20, receiver != KeychainHelper.getAccountId() else {
-            sendAddressTextField.shake()
-            return
+        guard let receiver = sendAddressTextField.text,
+            !receiver.isEmpty,
+            receiver.count > 20,
+            receiver != KeychainHelper.getAccountId() else {
+                sendAddressTextField.shake()
+                return
         }
 
         showHud()
@@ -32,7 +34,11 @@ class SendViewController: UIViewController {
             self.view.endEditing(true)
             self.hideHud()
 
-            let sendAmountViewController = SendAmountViewController(stellarAccount: self.stellarAccount, currentAssetIndex: self.currentAssetIndex, receiver: receiver, exchangeName: address)
+            let sendAmountViewController = SendAmountViewController(stellarAccount: self.stellarAccount,
+                                                                    currentAssetIndex: self.currentAssetIndex,
+                                                                    receiver: receiver,
+                                                                    exchangeName: address)
+
             self.navigationController?.pushViewController(sendAmountViewController, animated: true)
         }
     }
@@ -72,11 +78,16 @@ class SendViewController: UIViewController {
     }
 
     func setupView() {
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(self.dismissView))
 
-        let image = UIImage(named: "close")
-        let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
         navigationItem.rightBarButtonItem = rightBarButtonItem
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "NAVIGATE_BACK".localized(),
+                                                           style: .plain,
+                                                           target: nil,
+                                                           action: nil)
 
         sendTitleLabel.textColor = Colors.darkGrayTransparent
         sendAddressTextField.textColor = Colors.darkGray

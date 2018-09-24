@@ -36,9 +36,10 @@
 "BIOMETRIC_AUTH_TITLE" = "Unlock your wallet";
 "AUTHENTICATE_TITLE" = "Authenticate";
 
-"TITLE_TAB_ASSETS" = "Wallet";
+"TITLE_TAB_WALLET" = "Wallet";
 "TITLE_TAB_TRADING" = "Trading";
-"TITLE_TAB_RECEIVE" = "Receive";
+"ITEM_RECEIVE" = "Receive";
+"ITEM_SEND" = "Send";
 "TITLE_TAB_CONTACTS" = "Contacts";
 "TITLE_TAB_SETTINGS" = "Settings";
 "TITLE_TAB_P2P" = "P2P";
@@ -47,3 +48,67 @@
 "PIN_CREATE_TITLE" = "Please create a PIN code";
 "PIN_CONFIRM_SHORT" = "Confirm Pin";
 "PIN_CREATE_SHORT" = "Create Pin";
+"CREATE_WALLET_TITLE" = "Create Wallet";
+"CREATE_WALLET_MESSAGE" = "Please select from the following 2 options:";
+"CREATE_MNEMONIC_TWELVE" = "Use a 12-word recovery phrase";
+"CREATE_MNEMONIC_TWENTYFOUR" = "Use a 24-word recovery phrase";
+
+"CLEAR_WALLET_TITLE" = "Are you sure you want to clear this wallet?";
+"CLEAR_WALLET_ACTION" = "Clear";
+"CANCEL_ACTION" = "Cancel";
+
+"TRADE_MARKET_INFO" = "Your market order may not be completely filled depending on amount offered. View the order book to see the amount available at the market rate. Any amount larger than this will be posted as an offer.";
+"TRADE_ERROR_TITLE" = "Trade Error";
+"TRADE_ERROR_MESSAGE" = "Sorry your order could not be processed at this time. Please try again later.";
+"GENERIC_OK_TEXT" = "Ok";
+
+"ACTIVATION_ERROR_TITLE" = "Activation Error";
+"NO_BALANCE_ERROR_TITLE" = "No Balance Error";
+"PEER_ERROR_MESSAGE" = "Sorry this peer could not be added at this time. Please try again later.";
+"ASSET_ERROR_MESSAGE" = "Sorry your asset could not be added at this time. Please try again later.";
+"ASSET_BALANCE_ERROR_MESSAGE" = "Sorry your asset could not be added at this time. You may need to add more Lumens(XLM) to your wallet and try again as each action costs 0.5 XLM.";
+"LOW_BALANCE_ERROR_MESSAGE" = "You must have more than 1 Lumen (XLM) in order to perform this action.";
+
+"ASSET_REMOVE_ERROR_MESSAGE" = "Sorry your asset could not be removed at this time. Please try again later.";
+"TOKEN_ERROR_MESSAGE" = "Sorry your personal token could not be added at this time. Please try again later.";
+"INFLATION_ERROR_TITLE" = "Inflation Destination Error";
+"INFLATION_ERROR_MESSAGE" = "Sorry we were unable to set your inflation destination. Please check that your destination address is correct and try again.";
+
+"TRANSACTION_ERROR_TITLE" = "Transaction Error";
+"TRANSACTION_ERROR_MESSAGE" = "There was an error processing this transaction. Please try again later.";
+"TRANSACTION_SUCCESS" = "Transaction successful.";
+
+"PEER_TO_PEER" = "Peer to Peer";
+"TOKEN_ADDRESS" = "Token Address";
+"TRUSTED_PEERS" = "Trusted Peers";
+"TRADE_SUBMITTED" = "Trade successfully submitted.";
+"TRADE_CURRENCY_PAIR_FORMAT" = "Trade %@ for %@";
+
+"NEW_WALLET" = "New Wallet";
+"MY_WALLET" = "My Wallet";
+"LUMEN_BALANCE" = "XLM Balance";
+"SECRET_PHRASE" = "Secret Phrase";
+"TOKEN_ADDRESS" = "Token Address";
+"YOUR_TOKEN_ADDRESS" = "Your Token Address";
+"YOUR_WALLET_ADDRESS" = "Your Wallet Address";
+"ADD_CONTACT" = "Add Contact";
+"UPDATE_CONTACT" = "Update Contact";
+"STELLAR" = "Stellar";
+"SELECT_ASSET" = "Select Asset";
+"NAVIGATE_BACK" = "Back";
+"SCANNING" = "Scanning...";
+"QR_DETECTED" = "Valid QR Code Found";
+"ADD_PEER" = "Add Peer";
+"ADDING_PEER" = "Adding Peer...";
+"PEER_ADDED" = "Peer successfully added.";
+"EXCHANGE_ADDRESS_PROMPT_FORMAT" = "This exchange address belongs to %@. Please enter a memo in order to send this transaction.";
+"REQUIRED_PLACEHOLDER" = "(Required)";
+"ADD_TRANSACTION" = "Add Transaction";
+"CREATE_TOKEN" = "Create Token";
+"CREATING_TOKEN" = "Creating Token...";
+"CREATED_TOKEN" = "Person token successfully created.";
+"ASSETS" = "Assets";
+"ACTIVATE_ASSET" = "Activating Asset...";
+"REMOVE_ASSET" = "Removing Asset...";
+
+"SELL_SUMMARY_FORMAT" = "Sell %@ %@ for %@ %@ at a price of %@";

@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-04-10.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import UIKit
@@ -12,16 +12,16 @@ protocol WalletItemActivateCellDelegate: class {
     func didAddAsset(indexPath: IndexPath)
 }
 
-class WalletItemActivateCell: UITableViewCell {
-    
+class WalletItemActivateCell: UITableViewCell, ReusableView {
+
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var iconImageView: UIImageView!
     @IBOutlet var addAssetButton: UIButton!
-    
-    var delegate: WalletItemActivateCellDelegate?
+
+    weak var delegate: WalletItemActivateCellDelegate?
     var indexPath: IndexPath?
     static let cellIdentifier = "WalletItemActivateCell"
-    
+
     @IBAction func addAsset() {
         if let currentIndexPath = indexPath {
             delegate?.didAddAsset(indexPath: currentIndexPath)
@@ -30,10 +30,10 @@ class WalletItemActivateCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         setupView()
     }
-    
+
     func setupView() {
         addAssetButton.backgroundColor = Colors.secondaryDark
         titleLabel.textColor = Colors.white
@@ -41,16 +41,16 @@ class WalletItemActivateCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+
         setRowColor(selected: selected)
     }
-    
+
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
-        
+
         setRowColor(selected: highlighted)
     }
-    
+
     func setRowColor(selected: Bool) {
         contentView.backgroundColor =  selected ? Colors.lightBlue : Colors.white
         titleLabel.textColor = selected ? Colors.primaryDark : Colors.darkGray

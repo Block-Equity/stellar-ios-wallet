@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-08-15.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import Contacts
@@ -75,15 +75,14 @@ class StellarContactViewController: UIViewController {
     }
 
     func setupView() {
-        if identifier.isEmpty {
-            navigationItem.title = "Add Contact"
-        } else {
-            navigationItem.title = "Update Contact"
-        }
 
-        let image = UIImage(named: "close")
-        let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
+        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(self.dismissView))
+
         navigationItem.rightBarButtonItem = rightBarButtonItem
+        navigationItem.title = identifier.isEmpty ? "ADD_CONTACT".localized() : "UPDATE_CONTACT".localized()
 
         addressTitleLabel.textColor = Colors.darkGrayTransparent
         addressTextField.textColor = Colors.darkGray
@@ -107,9 +106,11 @@ class StellarContactViewController: UIViewController {
             }
 
             if granted {
+                let federatedAddress = CNLabeledValue(label: "Stellar",
+                                                      value: "\(address).publicaddress@blockeq.com" as NSString)
                 let mutableContact = CNMutableContact()
                 mutableContact.givenName = name
-                mutableContact.emailAddresses.append(CNLabeledValue(label: "Stellar", value: "\(address).publicaddress@blockeq.com" as NSString))
+                mutableContact.emailAddresses.append(federatedAddress)
 
                 self.createContact(contact: mutableContact)
             }
@@ -120,27 +121,32 @@ class StellarContactViewController: UIViewController {
         let contactsStore = CNContactStore()
         contactsStore.requestAccess(for: .contacts) { (granted, error) in
             if let fetchError = error {
-                print("Unable to get contacts", fetchError)
+                print("ERROR: Unable to get contacts", fetchError)
                 return
             }
 
             if granted {
-                let predicate = CNContact.predicateForContacts(withIdentifiers: [self.identifier])
+                let pred = CNContact.predicateForContacts(withIdentifiers: [self.identifier])
                 let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactEmailAddressesKey]
 
                 var contacts = [CNContact]()
 
                 do {
-                    contacts = try contactsStore.unifiedContacts(matching: predicate, keysToFetch: keys as [CNKeyDescriptor])
+                    contacts = try contactsStore.unifiedContacts(matching: pred, keysToFetch: keys as [CNKeyDescriptor])
 
                     if contacts.count == 0 {
-                        print("No contacts were found matching the given name.")
+                        print("ERROR: No contacts were found matching the given name.")
                     } else {
                         print(contacts[0].givenName)
                     }
 
-                    let stellarEmail = CNLabeledValue(label: "Stellar", value: "\(address).publicaddress@blockeq.com" as NSString)
-                    let mutableContact = contacts[0].mutableCopy() as! CNMutableContact
+                    let stellarEmail = CNLabeledValue(label: "STELLAR".localized(),
+                                                      value: "\(address).publicaddress@blockeq.com" as NSString)
+
+                    guard let mutableContact = contacts[0].mutableCopy() as? CNMutableContact else {
+                        print("ERROR: Couldn't convert contact")
+                        return
+                    }
 
                     var previousEmailFound: Bool = false
                     var previousEmailIndex: Int = 0
@@ -177,8 +183,8 @@ class StellarContactViewController: UIViewController {
                 self.dismissView()
             }
         } catch {
-            let _error = error as NSError
-            print(_error)
+            let err = error as NSError
+            print(err)
         }
     }
 
@@ -192,8 +198,8 @@ class StellarContactViewController: UIViewController {
                 self.dismissView()
             }
         } catch {
-            let _error = error as NSError
-            print(_error)
+            let err = error as NSError
+            print(err)
         }
     }
 }

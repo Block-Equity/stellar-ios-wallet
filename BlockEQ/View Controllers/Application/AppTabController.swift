@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Nick DiZazzo on 2018-05-18.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import Foundation
@@ -23,7 +23,7 @@ enum ApplicationTab: Int {
 
     var title: String {
         switch self {
-        case .assets: return "TITLE_TAB_ASSETS".localized()
+        case .assets: return "TITLE_TAB_WALLET".localized()
         case .trading: return "TITLE_TAB_TRADING".localized()
         case .contacts: return "TITLE_TAB_CONTACTS".localized()
         case .settings: return "TITLE_TAB_SETTINGS".localized()
@@ -66,7 +66,6 @@ enum ApplicationTab: Int {
     }
 
     static var all: [ApplicationTab] {
-        // TODO: Trading removed from first release to be added for subsequent release.
         return [.assets, .trading, .contacts, .settings]
     }
 

@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-03-10.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import UIKit
@@ -61,17 +61,19 @@ class ReceiveViewController: UIViewController {
     }
 
     func setupView() {
-
         if isPersonalToken {
-            navigationItem.title = "Token Address"
-            addressTitleLabel.text = "YOUR TOKEN ADDRESS"
+            navigationItem.title = "TOKEN_ADDRESS".localized()
+            addressTitleLabel.text = "YOUR_TOKEN_ADDRESS".localized().uppercased()
         } else {
-            navigationItem.title = "Receive"
-            addressTitleLabel.text = "YOUR WALLET ADDRESS"
+            navigationItem.title = "ITEM_RECEIVE".localized()
+            addressTitleLabel.text = "YOUR_WALLET_ADDRESS".localized().uppercased()
         }
 
-        let image = UIImage(named: "close")
-        let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.dismissView))
+        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(self.dismissView))
+
         navigationItem.rightBarButtonItem = rightBarButtonItem
 
         imageViewHolder.layer.shadowColor = Colors.shadowGray.cgColor

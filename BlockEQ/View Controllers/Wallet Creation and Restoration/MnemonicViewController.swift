@@ -3,18 +3,17 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-03-09.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import stellarsdk
 import UIKit
 
 protocol MnemonicViewControllerDelegate: AnyObject {
-    func confirmedWrittenMnemonic(_ vc: MnemonicViewController, mnemonic: String)
+    func confirmedWrittenMnemonic(_ viewController: MnemonicViewController, mnemonic: String)
 }
 
 class MnemonicViewController: UIViewController {
-
     @IBOutlet var holderView: UIView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var mnemonicHolderView: UIView!
@@ -26,18 +25,14 @@ class MnemonicViewController: UIViewController {
     var mnemonic: String!
     var hideConfirmation: Bool = false
 
-    @IBAction func confirmedWrittenDown(_ sender: Any) {
-        delegate?.confirmedWrittenMnemonic(self, mnemonic: mnemonic)
-    }
-
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.mnemonic = Wallet.generate24WordMnemonic()
     }
-    
+
     init(mnemonic: String?, shouldSetPin: Bool, hideConfirmation: Bool = false, mnemonicType: MnemonicType) {
         super.init(nibName: String(describing: MnemonicViewController.self), bundle: nil)
-        
+
         if mnemonicType == .twelve {
             self.mnemonic = mnemonic ?? Wallet.generate12WordMnemonic()
         } else {
@@ -49,28 +44,29 @@ class MnemonicViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupView()
         generateMnemonicViews()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         self.confirmationButton.isHidden = self.hideConfirmation
     }
 
     func setupView() {
-        navigationItem.title = "Secret Phrase"
-        title = "Secret Phrase"
+        navigationItem.title = "SECRET_PHRASE".localized()
+        title = "SECRET_PHRASE".localized()
 
         holderView.backgroundColor = Colors.lightBackground
         titleLabel.textColor = Colors.darkGray
     }
 
+    @IBAction func confirmedWrittenDown(_ sender: Any) {
+        delegate?.confirmedWrittenMnemonic(self, mnemonic: mnemonic)
+    }
+
     @objc func dismissView() {
         view.endEditing(true)
-
         dismiss(animated: true, completion: nil)
     }
 
@@ -78,7 +74,6 @@ class MnemonicViewController: UIViewController {
         activityIndicator.stopAnimating()
 
         let words = mnemonic.components(separatedBy: " ")
-
         var originX: CGFloat = 0.0
         var originY: CGFloat = 0.0
 
@@ -87,10 +82,10 @@ class MnemonicViewController: UIViewController {
 
             if index == 0 {
                 mnemonicHolderView.addSubview(pillView)
-
                 originX += pillView.frame.size.width
             } else {
-                if originX + pillView.frame.size.width > mnemonicHolderView.frame.size.width - pillView.horizontalSpacing {
+                let delta = mnemonicHolderView.frame.size.width - pillView.horizontalSpacing
+                if originX + pillView.frame.size.width > delta {
                     originY += pillView.verticalSpacing
                     originX = 0.0
                 } else {

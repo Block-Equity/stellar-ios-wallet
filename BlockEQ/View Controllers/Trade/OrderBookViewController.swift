@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-05-23.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import stellarsdk
@@ -25,8 +25,8 @@ class OrderBookViewController: UIViewController {
 
     var bids: [OrderbookOfferResponse] = []
     var asks: [OrderbookOfferResponse] = []
-    var buyAsset: StellarAsset = StellarAsset(assetType: AssetTypeAsString.NATIVE, assetCode: nil, assetIssuer: nil, balance: "")
-    var sellAsset: StellarAsset = StellarAsset(assetType: AssetTypeAsString.NATIVE, assetCode: nil, assetIssuer: nil, balance: "")
+    var buyAsset = StellarAsset(assetType: AssetTypeAsString.NATIVE, assetCode: nil, assetIssuer: nil, balance: "")
+    var sellAsset = StellarAsset(assetType: AssetTypeAsString.NATIVE, assetCode: nil, assetIssuer: nil, balance: "")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,14 +81,14 @@ extension OrderBookViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let frame = CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.size.width, height: OrderBookHeaderView.height))
+        let size = CGSize(width: UIScreen.main.bounds.size.width, height: OrderBookHeaderView.height)
+        let frame = CGRect(origin: .zero, size: size)
+        let type = section == OrderBookType.bid.rawValue ? OrderType.buy : OrderType.sell
 
-        switch section {
-        case OrderBookType.bid.rawValue:
-            return OrderBookHeaderView(frame: frame, type: .buy, buyAsset: buyAsset.shortCode, sellAsset: sellAsset.shortCode)
-        default:
-            return OrderBookHeaderView(frame: frame, type: .sell, buyAsset: buyAsset.shortCode, sellAsset: sellAsset.shortCode)
-        }
+        return OrderBookHeaderView(frame: frame,
+                                   type: type,
+                                   buyAsset: buyAsset.shortCode,
+                                   sellAsset: sellAsset.shortCode)
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -113,29 +113,32 @@ extension OrderBookViewController: UITableViewDataSource {
     }
 
     func bidOrderBookCell(indexPath: IndexPath) -> OrderBookCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: OrderBookCell.cellIdentifier, for: indexPath) as! OrderBookCell
+        let cell: OrderBookCell = tableView.dequeueReusableCell(for: indexPath)
 
         let numerator = Float(bids[indexPath.row].priceR.numerator)
         let denominator = Float(bids[indexPath.row].priceR.denominator)
+        let result = denominator/numerator * bids[indexPath.row].amount.floatValue()
+
         cell.option1Label.text = bids[indexPath.row].price.decimalFormatted()
-        cell.option2Label.text = String(denominator/numerator * bids[indexPath.row].amount.floatValue()).decimalFormatted()
+        cell.option2Label.text = String(result).decimalFormatted()
         cell.option3Label.text = bids[indexPath.row].amount.decimalFormatted()
 
         return cell
     }
 
     func askOrderBookCell(indexPath: IndexPath) -> OrderBookCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: OrderBookCell.cellIdentifier, for: indexPath) as! OrderBookCell
+        let cell: OrderBookCell = tableView.dequeueReusableCell(for: indexPath)
 
+        let result = Float(asks[indexPath.row].price)! * Float(asks[indexPath.row].amount)!
         cell.option1Label.text = asks[indexPath.row].price.decimalFormatted()
         cell.option2Label.text = asks[indexPath.row].amount.decimalFormatted()
-        cell.option3Label.text = String(Float(asks[indexPath.row].price)! * Float(asks[indexPath.row].amount)!).decimalFormatted()
+        cell.option3Label.text = String(result).decimalFormatted()
 
         return cell
     }
 
     func emptyOrderBookCell(indexPath: IndexPath) -> OrderBookEmptyCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: OrderBookEmptyCell.cellIdentifier, for: indexPath) as! OrderBookEmptyCell
+        let cell: OrderBookEmptyCell = tableView.dequeueReusableCell(for: indexPath)
         return cell
     }
 }
@@ -143,16 +146,9 @@ extension OrderBookViewController: UITableViewDataSource {
 extension OrderBookViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
-        case OrderBookType.bid.rawValue:
-            if bids.count > 0 {
-                return OrderBookCell.rowHeight
-            }
-
-        default:
-            if asks.count > 0 {
-                return OrderBookCell.rowHeight
-            }
+        case OrderBookType.bid.rawValue where bids.count > 0: return OrderBookCell.rowHeight
+        case OrderBookType.ask.rawValue where asks.count > 0 : return OrderBookCell.rowHeight
+        default: return OrderBookEmptyCell.rowHeight
         }
-        return OrderBookEmptyCell.rowHeight
     }
 }

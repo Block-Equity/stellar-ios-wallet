@@ -3,7 +3,7 @@
 //  BlockEQ
 //
 //  Created by Satraj Bambra on 2018-03-09.
-//  Copyright © 2018 Satraj Bambra. All rights reserved.
+//  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import UIKit
@@ -13,7 +13,7 @@ class AppButton: UIButton {
         super.init(frame: frame)
         setupView()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupView()
@@ -23,12 +23,12 @@ class AppButton: UIButton {
         backgroundColor = Colors.primaryDark
         setTitleColor(Colors.white, for: .normal)
     }
-    
+
     public func setEnabled() {
         isEnabled = true
         alpha = Alphas.opaque
     }
-    
+
     public func setDisabled() {
         isEnabled = false
         alpha = Alphas.transparent
