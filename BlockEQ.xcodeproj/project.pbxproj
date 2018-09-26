@@ -725,8 +725,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EC2015CD2052D968009A73C8 /* Build configuration list for PBXNativeTarget "BlockEQ" */;
 			buildPhases = (
-				C59C7240215979D20092C17B /* Run Swiftlint */,
 				97EC70A6CDC5398E04E945ED /* [CP] Check Pods Manifest.lock */,
+				C59C7240215979D20092C17B /* Run Swiftlint */,
 				EC2015A12052D968009A73C8 /* Sources */,
 				EC2015A22052D968009A73C8 /* Frameworks */,
 				EC2015A32052D968009A73C8 /* Resources */,
@@ -796,11 +796,13 @@
 					};
 					EC2015B82052D968009A73C8 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						TestTargetID = EC2015A42052D968009A73C8;
 					};
 					EC2015C32052D968009A73C8 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						TestTargetID = EC2015A42052D968009A73C8;
 					};
@@ -984,13 +986,9 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 			);
 			name = "Run Swiftlint";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1207,6 +1205,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1259,6 +1258,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1274,7 +1274,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NR37PD6J6Z;
 				INFOPLIST_FILE = BlockEQ/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blockEQ.iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1282,8 +1281,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BlockEQ/BlockEQ-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1298,15 +1296,13 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = NR37PD6J6Z;
 				INFOPLIST_FILE = BlockEQ/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blockEQ.iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "3b5854bc-68fb-44f1-a557-2a92aed8c19b";
 				PROVISIONING_PROFILE_SPECIFIER = "BlockEQ Appstore";
 				SWIFT_OBJC_BRIDGING_HEADER = "BlockEQ/BlockEQ-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1322,8 +1318,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blockeq.BlockEQTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BlockEQ.app/BlockEQ";
 			};
 			name = Debug;
@@ -1340,8 +1335,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blockeq.BlockEQTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BlockEQ.app/BlockEQ";
 			};
 			name = Release;
@@ -1357,8 +1351,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blockeq.BlockEQUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = BlockEQ;
 			};
 			name = Debug;
@@ -1374,8 +1367,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blockeq.BlockEQUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = BlockEQ;
 			};
 			name = Release;

@@ -83,7 +83,7 @@ class P2PTransactionViewController: UIViewController {
         tradeToTextField.textColor = Colors.darkGray
         view.backgroundColor = Colors.lightBackground
 
-        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         segmentControl.setTitleTextAttributes(titleTextAttributes, for: .normal)
         segmentControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
 

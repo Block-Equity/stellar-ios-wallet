@@ -40,7 +40,7 @@ class OrderBookHeaderView: UIView {
     private func setupView(type: OrderType, buyAsset: String, sellAsset: String) {
         view = NibLoader<UIView>(nibName: OrderBookHeaderView.nibName).loadView(owner: self)
         view.frame = CGRect(origin: .zero, size: frame.size)
-        view.autoresizingMask = UIViewAutoresizing.flexibleWidth
+        view.autoresizingMask = .flexibleWidth
 
         addSubview(view)
 

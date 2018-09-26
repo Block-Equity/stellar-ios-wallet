@@ -85,10 +85,10 @@ extension AddAssetViewController {
 
                 let alert = UIAlertController(title: "ACTIVATION_ERROR_TITLE".localized(),
                                               message: "ASSET_ERROR_MESSAGE".localized(),
-                                              preferredStyle: UIAlertControllerStyle.alert)
+                                              preferredStyle: .alert)
 
                 alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
-                                              style: UIAlertActionStyle.default,
+                                              style: .default,
                                               handler: nil))
 
                 self.present(alert, animated: true, completion: nil)

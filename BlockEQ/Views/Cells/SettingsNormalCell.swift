@@ -16,7 +16,7 @@ protocol UpdatableCell {
 final class SettingsNormalCell: UITableViewCell, ReusableView {
     override var reuseIdentifier: String? { return "SettingsNormalCell" }
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         setupCell()
     }

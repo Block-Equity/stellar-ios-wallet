@@ -130,11 +130,9 @@ final class WalletSwitchingViewController: UIViewController {
     func displayAssetActivationError() {
         let alert = UIAlertController(title: "ACTIVATION_ERROR_TITLE".localized(),
                                       message: "ASSET_BALANCE_ERROR_MESSAGE".localized(),
-                                      preferredStyle: UIAlertControllerStyle.alert)
+                                      preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
-                                      style: UIAlertActionStyle.default,
-                                      handler: nil))
+        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(), style: .default, handler: nil))
 
         self.present(alert, animated: true, completion: nil)
     }
@@ -142,11 +140,9 @@ final class WalletSwitchingViewController: UIViewController {
     func displayAssetDeactivationError() {
         let alert = UIAlertController(title: "ACTIVATION_ERROR_TITLE".localized(),
                                       message: "ASSET_REMOVE_ERROR_MESSAGE".localized(),
-                                      preferredStyle: UIAlertControllerStyle.alert)
+                                      preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
-                                      style: UIAlertActionStyle.default,
-                                      handler: nil))
+        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(), style: .default, handler: nil))
 
         self.present(alert, animated: true, completion: nil)
     }
@@ -154,11 +150,9 @@ final class WalletSwitchingViewController: UIViewController {
     func displayNoBalanceError() {
         let alert = UIAlertController(title: "NO_BALANCE_ERROR_TITLE".localized(),
                                       message: "LOW_BALANCE_ERROR_MESSAGE".localized(),
-                                      preferredStyle: UIAlertControllerStyle.alert)
+                                      preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
-                                      style: UIAlertActionStyle.default,
-                                      handler: nil))
+        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(), style: .default, handler: nil))
 
         self.present(alert, animated: true, completion: nil)
     }

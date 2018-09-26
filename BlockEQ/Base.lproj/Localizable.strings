@@ -112,3 +112,4 @@
 "REMOVE_ASSET" = "Removing Asset...";
 
 "SELL_SUMMARY_FORMAT" = "Sell %@ %@ for %@ %@ at a price of %@";
+"ADDRESS_COPIED" = "Your address has been successfully copied.";

@@ -159,10 +159,10 @@ class SendAmountViewController: UIViewController {
 
         let alert = UIAlertController(title: "TRANSACTION_ERROR_TITLE".localized(),
                                       message: "TRANSACTION_ERROR_MESSAGE".localized(),
-                                      preferredStyle: UIAlertControllerStyle.alert)
+                                      preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
-                                      style: UIAlertActionStyle.default,
+                                      style: .default,
                                       handler: nil))
 
         present(alert, animated: true, completion: nil)

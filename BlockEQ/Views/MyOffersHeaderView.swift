@@ -33,7 +33,7 @@ class MyOffersHeaderView: UIView {
     private func setupView() {
         view = NibLoader<UIView>(nibName: MyOffersHeaderView.nibName).loadView(owner: self)
         view.frame = CGRect(origin: .zero, size: frame.size)
-        view.autoresizingMask = UIViewAutoresizing.flexibleWidth
+        view.autoresizingMask = .flexibleWidth
 
         addSubview(view)
 

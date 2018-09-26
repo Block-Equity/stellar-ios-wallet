@@ -23,7 +23,7 @@ class AppNavigationController: UINavigationController {
         navigationBar.isTranslucent = true
         navigationBar.tintColor = Colors.primaryDark
         navigationBar.titleTextAttributes = [
-            NSAttributedStringKey.foregroundColor: Colors.black
+            NSAttributedString.Key.foregroundColor: Colors.black
         ]
     }
 }

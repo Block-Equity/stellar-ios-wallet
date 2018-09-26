@@ -20,7 +20,7 @@ final class SettingsSwitchCell: UITableViewCell, ReusableView {
     override var reuseIdentifier: String? { return "SettingsSwitchCell" }
     var settingNode: SettingNode?
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         setupCell()
     }

@@ -156,14 +156,14 @@ final class AppTabController: ContainerViewController {
 
     override func setViewController(_ viewController: UIViewController, animated: Bool, completion: (() -> Void)?) {
         if let current = currentViewController {
-            current.willMove(toParentViewController: nil)
+            current.willMove(toParent: nil)
             current.view.removeFromSuperview()
-            current.removeFromParentViewController()
+            current.removeFromParent()
         }
 
-        addChildViewController(viewController)
+        addChild(viewController)
         container.addSubview(viewController.view)
-        viewController.didMove(toParentViewController: self)
+        viewController.didMove(toParent: self)
         viewController.view.frame = container.bounds
         currentViewController = viewController
 

@@ -18,7 +18,7 @@ protocol ContainerProtocol: AnyObject {
 // using this class as a container for other view controllers, this will allow the proper status bar colour setting.
 class WrapperVC: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return childViewControllers.last?.preferredStatusBarStyle ?? .default
+        return children.last?.preferredStatusBarStyle ?? .default
     }
 }
 
@@ -59,9 +59,9 @@ class ContainerViewController: UIViewController, ContainerProtocol {
 
 extension UIViewController {
     func addContentViewController(_ viewController: UIViewController, to view: UIView) {
-        addChildViewController(viewController)
+        addChild(viewController)
         addContentView(viewController.view, to: view)
-        viewController.didMove(toParentViewController: self)
+        viewController.didMove(toParent: self)
     }
 
     func addContentView(_ view: UIView, to holderView: UIView) {
@@ -70,9 +70,9 @@ extension UIViewController {
     }
 
     func addContentViewController(_ viewController: UIViewController) {
-        addChildViewController(viewController)
+        addChild(viewController)
         addContentView(viewController.view)
-        viewController.didMove(toParentViewController: self)
+        viewController.didMove(toParent: self)
     }
 
     func addContentView(_ view: UIView) {
@@ -100,18 +100,18 @@ extension UIViewController {
             addContentViewController(toViewController)
             completion?()
         } else {
-            addChildViewController(toViewController)
+            addChild(toViewController)
             adjustFrameForView(toViewController.view)
-            fromViewController!.willMove(toParentViewController: nil)
+            fromViewController!.willMove(toParent: nil)
             transition(
                 from: fromViewController!,
                 to: toViewController,
                 duration: animated ? 0.2 : 0.0,
-                options: UIViewAnimationOptions.transitionCrossDissolve,
+                options: UIView.AnimationOptions.transitionCrossDissolve,
                 animations: nil,
                 completion: { _ in
-                    fromViewController!.removeFromParentViewController()
-                    toViewController.didMove(toParentViewController: self)
+                    fromViewController!.removeFromParent()
+                    toViewController.didMove(toParent: self)
                     completion?()
             }
             )
