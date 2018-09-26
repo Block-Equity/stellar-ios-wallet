@@ -148,10 +148,10 @@ class TradeViewController: UIViewController {
             if !completed {
                 let alert = UIAlertController(title: "TRADE_ERROR_TITLE".localized(),
                                               message: "TRADE_ERROR_MESSAGE".localized(),
-                                              preferredStyle: UIAlertControllerStyle.alert)
+                                              preferredStyle: .alert)
 
                 alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
-                                              style: UIAlertActionStyle.default,
+                                              style: .default,
                                               handler: nil))
 
                 self.present(alert, animated: true, completion: nil)
@@ -213,7 +213,7 @@ class TradeViewController: UIViewController {
         tradeToTextField.textColor = Colors.darkGray
         view.backgroundColor = Colors.lightBackground
 
-        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         segmentControl.setTitleTextAttributes(titleTextAttributes, for: .normal)
         segmentControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
 

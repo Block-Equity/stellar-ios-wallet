@@ -100,7 +100,7 @@ class ScanViewController: UIViewController {
             qrCodeFrameView.layer.borderColor = Colors.primaryDark.cgColor
             qrCodeFrameView.layer.borderWidth = 3.0
             view.addSubview(qrCodeFrameView)
-            view.bringSubview(toFront: qrCodeFrameView)
+            view.bringSubviewToFront(qrCodeFrameView)
         }
     }
 }

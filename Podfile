@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '10.0'
+platform :ios, '11.2'
 
 target 'BlockEQ' do
   # Pods for BlockEQ

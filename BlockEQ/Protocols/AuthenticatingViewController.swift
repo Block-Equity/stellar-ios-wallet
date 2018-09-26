@@ -32,7 +32,7 @@ extension AuthenticatingViewController where Self: UIViewController {
                 completion?()
             } else {
                 self.fadeAnimator(duration: animated ? 0.75 : 0) {
-                    self.removeFromParentViewController()
+                    self.removeFromParent()
                     self.view.removeFromSuperview()
                     completion?()
                 }

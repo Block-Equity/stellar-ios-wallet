@@ -290,8 +290,8 @@ extension VerificationViewController {
     func highlightWrongWords(targetString: String) {
         let attributedString = NSMutableAttributedString(string: targetString)
         let range = NSRange(location: 0, length: targetString.utf16.count)
-        attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: Colors.black, range: range)
-        attributedString.addAttribute(NSAttributedStringKey.font, value: UIFont.systemFont(ofSize: 16.0), range: range)
+        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: Colors.black, range: range)
+        attributedString.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 16.0), range: range)
 
         let words = getWords(string: targetString)
 
@@ -312,7 +312,7 @@ extension VerificationViewController {
             let regex = try NSRegularExpression(pattern: word, options: .caseInsensitive)
             let range = NSRange(location: 0, length: targetString.utf16.count)
             for match in regex.matches(in: targetString, options: .withTransparentBounds, range: range) {
-                attributedString.addAttribute(NSAttributedStringKey.foregroundColor,
+                attributedString.addAttribute(NSAttributedString.Key.foregroundColor,
                                               value: highlightColor,
                                               range: match.range)
             }

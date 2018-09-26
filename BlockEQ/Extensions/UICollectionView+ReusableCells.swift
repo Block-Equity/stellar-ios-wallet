@@ -13,7 +13,7 @@ extension UICollectionView {
     func registerHeader<T: UICollectionReusableView>(type: T.Type) where T: ReusableView, T: NibLoadableView {
         self.register(
             UINib(nibName: T.nibName, bundle: T.bundle),
-            forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: T.reuseIdentifier
         )
     }
@@ -21,7 +21,7 @@ extension UICollectionView {
     func registerHeader<T: UICollectionReusableView>(type: T.Type) where T: ReusableView {
         self.register(
             T.self,
-            forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: T.reuseIdentifier
         )
     }
@@ -29,7 +29,7 @@ extension UICollectionView {
     func registerFooter<T: UICollectionReusableView>(type: T.Type) where T: ReusableView, T: NibLoadableView {
         self.register(
             UINib(nibName: T.nibName, bundle: T.bundle),
-            forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
             withReuseIdentifier: T.reuseIdentifier
         )
     }
@@ -37,7 +37,7 @@ extension UICollectionView {
     func registerFooter<T: UICollectionReusableView>(type: T.Type) where T: ReusableView {
         self.register(
             T.self,
-            forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
             withReuseIdentifier: T.reuseIdentifier
         )
     }
@@ -50,7 +50,7 @@ extension UICollectionView {
     }
 
     func dequeueReusableHeader<T: UICollectionReusableView>(for indexPath: IndexPath) -> T where T: ReusableView {
-        guard let view = self.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
+        guard let view = self.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
                                                                withReuseIdentifier: T.reuseIdentifier,
                                                                for: indexPath) as? T else {
                                                                 return T()
@@ -59,7 +59,7 @@ extension UICollectionView {
     }
 
     func dequeueReusableFooter<T: UICollectionReusableView>(for indexPath: IndexPath) -> T where T: ReusableView {
-        guard let view = self.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter,
+        guard let view = self.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter,
                                                                withReuseIdentifier: T.reuseIdentifier,
                                                                for: indexPath) as? T else {
                                                                 return T()
