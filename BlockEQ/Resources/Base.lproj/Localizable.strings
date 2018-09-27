@@ -14,18 +14,19 @@
 "SETTINGS_SECTION_RECOVERY" = "Recovery";
 "SETTINGS_SECTION_WALLET" = "Wallet";
 "SETTINGS_SECTION_SECURITY" = "Security";
-"SETTINGS_SECTION_COMMUNITY" = "Community";
+"SETTINGS_SECTION_ABOUT" = "About";
 "SETTINGS_SECTION_DEBUG" = "Debug";
 
 "SETTINGS_OPTION_SEED_PHRASE" = "View Seed Phrase";
 "SETTINGS_OPTION_CLEAR_WALLET" = "Clear Wallet";
 "SETTINGS_OPTION_REVIEW" = "Review App";
 "SETTINGS_OPTION_SHARE" = "Share";
+"SETTINGS_OPTION_APPLICATION" = "App Information";
 "SETTINGS_OPTION_PRIVACY" = "Privacy Policy";
 "SETTINGS_OPTION_TERMS" = "Terms of Service";
 "SETTINGS_OPTION_SUPPORT" = "Support";
 "SETTINGS_OPTION_PASSCODE" = "Require PIN";
-"SETTINS_OPTION_ADV_PASSCODE" = "PIN Options";
+"SETTINGS_OPTION_ADV_PASSCODE" = "PIN Options";
 "SETTINGS_OPTION_PIN_PAYMENTS" = "When Sending Payments";
 "SETTINGS_OPTION_PIN_LAUNCH" = "On Launch";
 "SETTINGS_OPTION_PIN_TRADING" = "When Trading";
@@ -53,6 +54,7 @@
 "CREATE_MNEMONIC_TWELVE" = "Use a 12-word recovery phrase";
 "CREATE_MNEMONIC_TWENTYFOUR" = "Use a 24-word recovery phrase";
 
+"ERROR_TITLE" = "Error";
 "CLEAR_WALLET_TITLE" = "Are you sure you want to clear this wallet?";
 "CLEAR_WALLET_ACTION" = "Clear";
 "CANCEL_ACTION" = "Cancel";
@@ -113,3 +115,6 @@
 
 "SELL_SUMMARY_FORMAT" = "Sell %@ %@ for %@ %@ at a price of %@";
 "ADDRESS_COPIED" = "Your address has been successfully copied.";
+"APPINFO_FORMAT" = "@\nVersion: %@ (%@)";
+"BLOCKEQ_WEBSITE" = "BlockEQ Website";
+"COPY" = "Copy";

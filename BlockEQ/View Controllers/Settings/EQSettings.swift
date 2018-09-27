@@ -13,9 +13,9 @@ struct EQSettings {
     /// This initalizer populates options based on the scheme selected. Debug options are only included in debug builds.
     static var options: [SettingNode] {
         #if DEBUG
-        return [recoverySection, walletSection, securitySection]
+        return [recoverySection, walletSection, securitySection, aboutSection]
         #else
-        return [recoverySection, walletSection, securitySection]
+        return [recoverySection, walletSection, securitySection, aboutSection]
         #endif
     }
 
@@ -60,26 +60,30 @@ struct EQSettings {
 
     static var aboutItems: [SettingNode] {
         return [
-            SettingNode.node(name: "SETTINGS_OPTION_REVIEW".localized(),
-                             identifier: "community-review",
-                             enabled: false,
-                             type: .normal),
-            SettingNode.node(name: "SETTINGS_OPTION_SHARE".localized(),
-                             identifier: "community-share",
-                             enabled: false,
-                             type: .normal),
+//            SettingNode.node(name: "SETTINGS_OPTION_REVIEW".localized(),
+//                             identifier: "about-review",
+//                             enabled: false,
+//                             type: .normal),
+//            SettingNode.node(name: "SETTINGS_OPTION_SHARE".localized(),
+//                             identifier: "about-share",
+//                             enabled: false,
+//                             type: .normal),
             SettingNode.node(name: "SETTINGS_OPTION_PRIVACY".localized(),
-                             identifier: "community-privacy",
-                             enabled: false,
+                             identifier: "about-privacy",
+                             enabled: true,
                              type: .normal),
             SettingNode.node(name: "SETTINGS_OPTION_TERMS".localized(),
-                             identifier: "community-terms",
-                             enabled: false,
+                             identifier: "about-terms",
+                             enabled: true,
                              type: .normal),
-            SettingNode.node(name: "SETTINGS_OPTION_SUPPORT".localized(),
-                             identifier: "community-support",
-                             enabled: false,
+            SettingNode.node(name: "SETTINGS_OPTION_APPLICATION".localized(),
+                             identifier: "about-application",
+                             enabled: true,
                              type: .normal)
+//            SettingNode.node(name: "SETTINGS_OPTION_SUPPORT".localized(),
+//                             identifier: "about-support",
+//                             enabled: false,
+//                             type: .normal)
         ]
     }
 
@@ -96,7 +100,7 @@ struct EQSettings {
     }
 
     static var pinSection: SettingNode {
-        return SettingNode.section(name: "SETTINS_OPTION_ADV_PASSCODE".localized(),
+        return SettingNode.section(name: "SETTINGS_OPTION_ADV_PASSCODE".localized(),
                                    identifier: "section-security",
                                    items: pinItems)
     }
@@ -108,7 +112,7 @@ struct EQSettings {
     }
 
     static var aboutSection: SettingNode {
-        return SettingNode.section(name: "SETTINGS_SECTION_COMMUNITY".localized(),
+        return SettingNode.section(name: "SETTINGS_SECTION_ABOUT".localized(),
                                    identifier: "section-about",
                                    items: aboutItems)
     }

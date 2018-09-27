@@ -21,11 +21,24 @@ enum HorizonURL {
 }
 
 enum BlockEQURL {
+    case site
     case exchangeDirectory
+    case termsAndConditions
+    case privacyPolicy
 
     var url: URL { return URL(string: self.string)! }
 
     var string: String {
-        return "https://blockeq-wallet.firebaseio.com/exchangeAddresses.json"
+        switch self {
+        case .site:
+            return "https://blockeq.com"
+        case .exchangeDirectory:
+            return "https://blockeq-wallet.firebaseio.com/exchangeAddresses.json"
+        case .privacyPolicy:
+            return "https://blockeq.com/privacy.html"
+        case .termsAndConditions:
+            return "https://blockeq.com/terms.html"
+        }
+
     }
 }
