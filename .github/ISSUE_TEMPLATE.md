@@ -2,9 +2,9 @@
 This repository's issues are reserved for feature requests and bug reports.
 
 # I'm submitting a...
-[ ] Bug report  
-[ ] Feature request  
-[ ] ~~Support request / code question~~
+- [ ] Bug report  
+- [ ] Feature request  
+- [ ] ~~Support request / code question~~
 
 # Bug
 ### What is the expected behavior?
