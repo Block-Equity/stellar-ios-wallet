@@ -10,6 +10,7 @@ target 'BlockEQ' do
   pod 'Alamofire', '~> 4.7'
   pod 'SCLAlertView'
   pod 'Whisper'
+  pod 'Kingfisher', '~> 4.10'
 
   target 'BlockEQTests' do
     inherit! :search_paths
