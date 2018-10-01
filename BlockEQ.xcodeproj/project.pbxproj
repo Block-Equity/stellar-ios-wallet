@@ -62,6 +62,8 @@
 		C5AB413B2090433000096A29 /* UIView+ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB413A2090433000096A29 /* UIView+ReusableView.swift */; };
 		C5AB413D2090436700096A29 /* UIView+NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB413C2090436700096A29 /* UIView+NibLoadableView.swift */; };
 		C5AF7C8A2094B60A00F99835 /* UIImage+CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AF7C892094B60A00F99835 /* UIImage+CALayer.swift */; };
+		C5BED3762162A81C00BEE464 /* Exchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5BED3752162A81C00BEE464 /* Exchange.swift */; };
+		C5BED3782162B9E700BEE464 /* exchanges.json in Resources */ = {isa = PBXBuildFile; fileRef = C5BED3772162B9E700BEE464 /* exchanges.json */; };
 		C5C1D3D6211BF39B0014B39F /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C1D3D5211BF39B0014B39F /* UIDevice.swift */; };
 		C5CDE372215A7DB200DB5C90 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CDE371215A7DB200DB5C90 /* URLs.swift */; };
 		C5CDE376215A9F3200DB5C90 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CDE375215A9F3200DB5C90 /* Strings.swift */; };
@@ -233,6 +235,8 @@
 		C5AB413A2090433000096A29 /* UIView+ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ReusableView.swift"; sourceTree = "<group>"; };
 		C5AB413C2090436700096A29 /* UIView+NibLoadableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NibLoadableView.swift"; sourceTree = "<group>"; };
 		C5AF7C892094B60A00F99835 /* UIImage+CALayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+CALayer.swift"; sourceTree = "<group>"; };
+		C5BED3752162A81C00BEE464 /* Exchange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exchange.swift; sourceTree = "<group>"; };
+		C5BED3772162B9E700BEE464 /* exchanges.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = exchanges.json; sourceTree = "<group>"; };
 		C5C1D3D5211BF39B0014B39F /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		C5CDE371215A7DB200DB5C90 /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
 		C5CDE375215A9F3200DB5C90 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -442,9 +446,18 @@
 			path = Misc;
 			sourceTree = "<group>";
 		};
+		C5BED3792162BA0600BEE464 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				C5BED3772162B9E700BEE464 /* exchanges.json */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		C5D10754215E741400CC17A0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C5BED3792162BA0600BEE464 /* Data */,
 				EC2015AF2052D968009A73C8 /* Assets.xcassets */,
 				EC2015B12052D968009A73C8 /* LaunchScreen.storyboard */,
 				ECB1D951207E94770088826D /* BlockEQ-Bridging-Header.h */,
@@ -714,6 +727,7 @@
 				EC72C0B320597CA600141D6F /* StellarAccount.swift */,
 				EC48C1D420C82CF0009FDEBC /* StellarEffect.swift */,
 				C41481302124709B0057ED74 /* LocalContact.swift */,
+				C5BED3752162A81C00BEE464 /* Exchange.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -810,7 +824,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0930;
-				ORGANIZATIONNAME = "Satraj Bambra";
+				ORGANIZATIONNAME = BlockEQ;
 				TargetAttributes = {
 					EC2015A42052D968009A73C8 = {
 						CreatedOnToolsVersion = 9.2;
@@ -884,6 +898,7 @@
 				C41165162123B7CB00C4CB6E /* ContactsViewController.xib in Resources */,
 				C5FDBC6C211D385B0051AB9F /* BlankAuthenticationViewController.xib in Resources */,
 				EC3DE2A120B8F9C300A6EC3C /* TradeHeaderView.xib in Resources */,
+				C5BED3782162B9E700BEE464 /* exchanges.json in Resources */,
 				EC52B3CB20BB7476006299A1 /* OrderBookHeaderView.xib in Resources */,
 				C439A22C211B6F9C0025C047 /* CreateTokenViewController.xib in Resources */,
 				EC0B191F205486AB0052802C /* TransactionHistoryCell.xib in Resources */,
@@ -1048,6 +1063,7 @@
 				C4167B9221234E6C00F44136 /* SecurityOptionHelper.swift in Sources */,
 				EC4F660020C8CF0C0036293D /* String+Date.swift in Sources */,
 				EC4BB64720BE2C28008252AD /* TradeOperation.swift in Sources */,
+				C5BED3762162A81C00BEE464 /* Exchange.swift in Sources */,
 				ECD3A352207D2CE5000609A0 /* WalletItemActivateCell.swift in Sources */,
 				C499755F211297BF00E2299C /* P2PCoordinator.swift in Sources */,
 				EC2015F720532F4B009A73C8 /* AppButton.swift in Sources */,
