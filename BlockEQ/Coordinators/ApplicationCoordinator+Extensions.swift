@@ -13,7 +13,7 @@ extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
         SecurityOptionHelper.set(option: .pinEnabled, value: temporaryPinSetting)
         SecurityOptionHelper.set(option: .useBiometrics, value: temporaryBiometricSetting)
 
-        settingsViewController.tableView.reloadData()
+        settingsViewController.tableView?.reloadData()
     }
 
     func authenticationFailed(_ coordinator: AuthenticationCoordinator,
@@ -23,7 +23,7 @@ extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
         SecurityOptionHelper.set(option: .pinEnabled, value: temporaryPinSetting)
         SecurityOptionHelper.set(option: .useBiometrics, value: temporaryBiometricSetting)
 
-        settingsViewController.tableView.reloadData()
+        settingsViewController.tableView?.reloadData()
 
         KeychainHelper.clearAll()
         SecurityOptionHelper.clear()

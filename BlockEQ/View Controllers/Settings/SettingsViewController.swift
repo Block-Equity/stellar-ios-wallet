@@ -24,7 +24,7 @@ final class SettingsViewController: UIViewController {
     }
 
     /// The table view containing settings options.
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView?
 
     /// The settings to represent and display in this view controller.
     var optionList: [SettingNode]
@@ -57,11 +57,11 @@ final class SettingsViewController: UIViewController {
     }
 
     func setupView() {
-        tableView.registerHeader(type: UppercasedTableViewHeader.self)
-        tableView.registerCell(type: SettingsNormalCell.self)
-        tableView.registerCell(type: SettingsSwitchCell.self)
-        tableView.delegate = self
-        tableView.dataSource = self
+        tableView?.registerHeader(type: UppercasedTableViewHeader.self)
+        tableView?.registerCell(type: SettingsNormalCell.self)
+        tableView?.registerCell(type: SettingsSwitchCell.self)
+        tableView?.delegate = self
+        tableView?.dataSource = self
     }
 
     func setupStyle() {
