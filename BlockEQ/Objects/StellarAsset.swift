@@ -33,12 +33,29 @@ class StellarAsset: NSObject {
     var shortCode: String {
         if assetType == AssetTypeAsString.NATIVE {
             return "XLM"
-        } else {
-            if let code = assetCode {
-                return code
-            }
-            return ""
         }
+
+        if let code = assetCode {
+            return code
+        }
+
+        return ""
+    }
+
+    var isNative: Bool {
+        if assetType == AssetTypeAsString.NATIVE {
+            return true
+        }
+
+        return false
+    }
+
+    var hasZeroBalance: Bool {
+        if let balance = Double(balance) {
+            return balance.isZero
+        }
+
+        return true
     }
 
     static func == (lhs: StellarAsset, rhs: StellarAsset) -> Bool {
