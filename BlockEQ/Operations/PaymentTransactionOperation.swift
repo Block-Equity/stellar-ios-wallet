@@ -50,25 +50,27 @@ class PaymentTransactionOperation: NSObject {
     }
 
     static func checkForExchange(address: String, completion: @escaping (String?) -> Void) {
+        let decoder = JSONDecoder()
         Alamofire.request(BlockEQURL.exchangeDirectory.string).responseJSON { response in
-            guard response.result.isSuccess, let value = response.result.value as? [String: Any] else {
-                    print("Error while fetching tags: \(String(describing: response.result.error))")
-                    completion(nil)
+            guard response.result.isSuccess, let data = response.data else {
+                print("Error while fetching exchanges: \(String(describing: response.result.error))")
+                completion(nil)
+                return
+            }
+
+            do {
+                let exchangeList = try decoder.decode([Exchange].self, from: data)
+                if let exchange = exchangeList.first(where: { $0.address == address }) {
+                    completion(exchange.name)
                     return
-            }
-
-            guard let exchange = value[address] as? [String: Any] else {
+                }
+            } catch let error {
+                print("Error decoding exchange list: \(error.localizedDescription)")
                 completion(nil)
                 return
             }
 
-            guard let exchangeName = exchange["exchangeName"] as? String else {
-                completion(nil)
-                return
-            }
-
-            print("exchangeName", exchangeName)
-            completion(exchangeName)
+            completion(nil)
         }
     }
 
