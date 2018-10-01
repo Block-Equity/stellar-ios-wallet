@@ -13,6 +13,15 @@ protocol WalletItemActivateCellDelegate: class {
 }
 
 class WalletItemActivateCell: UITableViewCell, ReusableView {
+    struct ViewModel {
+        var title: String
+        var icon: UIImage?
+        var iconBackground: UIColor?
+
+        init(title: String) {
+            self.title = title
+        }
+    }
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var iconImageView: UIImageView!
@@ -30,7 +39,6 @@ class WalletItemActivateCell: UITableViewCell, ReusableView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
         setupView()
     }
 
@@ -39,15 +47,19 @@ class WalletItemActivateCell: UITableViewCell, ReusableView {
         titleLabel.textColor = Colors.white
     }
 
+    func update(with viewModel: ViewModel) {
+        self.titleLabel.text = viewModel.title
+        self.iconImageView.image = viewModel.icon
+        self.iconImageView.backgroundColor = viewModel.iconBackground
+    }
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         setRowColor(selected: selected)
     }
 
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
-
         setRowColor(selected: highlighted)
     }
 

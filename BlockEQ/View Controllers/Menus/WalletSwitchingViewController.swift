@@ -205,35 +205,27 @@ extension WalletSwitchingViewController: UITableViewDataSource {
         case SectionType.userAssets.rawValue:
             let item = allAssets[indexPath.row]
             let walletCell: WalletItemCell = tableView.dequeueReusableCell(for: indexPath)
+            var viewModel = WalletItemCell.ViewModel(title: Assets.displayTitle(shortCode: item.shortCode),
+                                                     amount: "\(item.formattedBalance) \(item.shortCode)")
 
             walletCell.indexPath = indexPath
             walletCell.delegate = self
-            walletCell.titleLabel.text = Assets.displayTitle(shortCode: item.shortCode)
-            walletCell.amountLabel.text = "\(item.formattedBalance) \(item.shortCode)"
-            walletCell.iconImageView.backgroundColor = Assets.displayImageBackgroundColor(shortCode: item.shortCode)
+
             if let image = Assets.displayImage(shortCode: item.shortCode) {
-                walletCell.iconImageView.image = image
-                walletCell.tokenInitialLabel.text = ""
+                viewModel.icon = image
             } else {
-                walletCell.iconImageView.image = nil
                 let shortcode = Assets.displayTitle(shortCode: item.shortCode)
-                walletCell.tokenInitialLabel.text = String(Array(shortcode)[0])
+                viewModel.tokenText = String(Array(shortcode)[0])
+                viewModel.iconBackground = Assets.displayImageBackgroundColor(shortCode: item.shortCode)
             }
 
-            if item.shortCode == "XLM" {
-                walletCell.removeAssetButton.isHidden = true
-                if stellarAccount.inflationDestination != nil {
-                    walletCell.setInflationButton.isHidden = true
-                    walletCell.updateInflationButton.isHidden = false
-                } else {
-                    walletCell.setInflationButton.isHidden = false
-                    walletCell.updateInflationButton.isHidden = true
-                }
+            if item.isNative {
+                viewModel.mode = stellarAccount.inflationDestination != nil ? .updateInflation : .setInflation
             } else {
-                walletCell.removeAssetButton.isHidden = false
-                walletCell.setInflationButton.isHidden = true
-                walletCell.updateInflationButton.isHidden = true
+                viewModel.mode = item.hasZeroBalance ? .removeAsset : .none
             }
+
+            walletCell.update(with: viewModel)
 
             return walletCell
         default:
@@ -241,12 +233,14 @@ extension WalletSwitchingViewController: UITableViewDataSource {
             let displayString = String(format: "%@ %@", Assets.displayTitle(shortCode: shortCode), shortCode)
 
             let walletCell: WalletItemActivateCell = tableView.dequeueReusableCell(for: indexPath)
-
+            var viewModel = WalletItemActivateCell.ViewModel(title: displayString)
             walletCell.indexPath = indexPath
             walletCell.delegate = self
-            walletCell.titleLabel.text = displayString
-            walletCell.iconImageView.backgroundColor = Assets.displayImageBackgroundColor(shortCode: shortCode)
-            walletCell.iconImageView.image = Assets.displayImage(shortCode: shortCode)
+
+            viewModel.iconBackground = Assets.displayImageBackgroundColor(shortCode: shortCode)
+            viewModel.icon = Assets.displayImage(shortCode: shortCode)
+
+            walletCell.update(with: viewModel)
 
             return walletCell
         }

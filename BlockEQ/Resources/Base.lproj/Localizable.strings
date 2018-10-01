@@ -118,3 +118,7 @@
 "APPINFO_FORMAT" = "@\nVersion: %@ (%@)";
 "BLOCKEQ_WEBSITE" = "BlockEQ Website";
 "COPY" = "Copy";
+
+"REMOVE_ASSET" = "Remove Asset";
+"SET_INFLATION" = "Set Inflation";
+"UPDATE_INFLATION" = "Update Inflation";
