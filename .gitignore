@@ -136,3 +136,5 @@ iOSInjectionProject/
 
 ### Objective-C Patch ###
 *.xcscmblueprint
+
+*.orig

@@ -130,6 +130,7 @@ class VerificationViewController: UIViewController {
 
         progressView.backgroundColor = Colors.tertiaryDark
         textView.textColor = Colors.darkGray
+        textView.textContentType = .password
         questionHolderView.backgroundColor = Colors.lightBackground
         questionTitleLabel.textColor = Colors.darkGray
         questionSubtitleLabel.textColor = Colors.darkGray

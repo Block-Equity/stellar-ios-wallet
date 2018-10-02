@@ -236,6 +236,7 @@
 		C5AB413C2090436700096A29 /* UIView+NibLoadableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NibLoadableView.swift"; sourceTree = "<group>"; };
 		C5AF7C892094B60A00F99835 /* UIImage+CALayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+CALayer.swift"; sourceTree = "<group>"; };
 		C5BED3752162A81C00BEE464 /* Exchange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exchange.swift; sourceTree = "<group>"; };
+		C5BED37A2162DBC600BEE464 /* BlockEQ.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlockEQ.entitlements; sourceTree = "<group>"; };
 		C5BED3772162B9E700BEE464 /* exchanges.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = exchanges.json; sourceTree = "<group>"; };
 		C5C1D3D5211BF39B0014B39F /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		C5CDE371215A7DB200DB5C90 /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
@@ -458,6 +459,7 @@
 			isa = PBXGroup;
 			children = (
 				C5BED3792162BA0600BEE464 /* Data */,
+				C5BED37A2162DBC600BEE464 /* BlockEQ.entitlements */,
 				EC2015AF2052D968009A73C8 /* Assets.xcassets */,
 				EC2015B12052D968009A73C8 /* LaunchScreen.storyboard */,
 				ECB1D951207E94770088826D /* BlockEQ-Bridging-Header.h */,
@@ -830,6 +832,11 @@
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+						};
 					};
 					EC2015B82052D968009A73C8 = {
 						CreatedOnToolsVersion = 9.2;
@@ -1330,6 +1337,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = BlockEQ/Resources/BlockEQ.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -1352,6 +1360,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = BlockEQ/Resources/BlockEQ.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: BlockEquity Inc. (NR37PD6J6Z)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: BlockEquity Inc. (NR37PD6J6Z)";
 				CODE_SIGN_STYLE = Manual;
@@ -1361,7 +1370,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.blockEQ.iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "3b5854bc-68fb-44f1-a557-2a92aed8c19b";
-				PROVISIONING_PROFILE_SPECIFIER = "BlockEQ Appstore";
+				PROVISIONING_PROFILE_SPECIFIER = "BlockEQ AppStore";
 				SWIFT_OBJC_BRIDGING_HEADER = "BlockEQ/Resources/BlockEQ-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};
