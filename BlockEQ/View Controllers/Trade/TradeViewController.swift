@@ -127,40 +127,51 @@ class TradeViewController: UIViewController {
             return
         }
 
+        guard let denominator = Decimal(string: tradeFromAmount) else {
+            tradeFromTextField.shake()
+            return
+        }
+
+        guard var numerator = Decimal(string: tradeToAmount) else {
+            tradeToTextField.shake()
+            return
+        }
+
         dismissKeyboard()
         showHud()
 
-        var numerator: Int = 0
         if currentTradeType == .market {
-            numerator = Int(Float(tradeToAmount)! * 1000000 * 0.999)
-        } else {
-            numerator = Int(Float(tradeToAmount)! * 1000000)
+            numerator *= Decimal(0.999)
         }
 
-        TradeOperation.postTrade(amount: Decimal(string: tradeFromAmount)!,
-                                 price: (numerator: numerator, denominator: Int(Float(tradeFromAmount)! * 1000000)),
-                                 asset: (selling: fromAsset, buying: toAsset),
+        TradeOperation.postTrade(amount: denominator,
+                                 price: Price(numerator: numerator, denominator: denominator),
+                                 assets: (selling: fromAsset, buying: toAsset),
                                  offerId: 0) { completed in
             self.hideHud()
             self.getOrderBook()
             self.updateBalance()
 
             if !completed {
-                let alert = UIAlertController(title: "TRADE_ERROR_TITLE".localized(),
-                                              message: "TRADE_ERROR_MESSAGE".localized(),
-                                              preferredStyle: .alert)
-
-                alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
-                                              style: .default,
-                                              handler: nil))
-
-                self.present(alert, animated: true, completion: nil)
+                self.displayTradeError(message: "TRADE_ERROR_MESSAGE".localized())
             } else {
                 self.tradeFromTextField.text = ""
                 self.tradeToTextField.text = ""
                 self.displayTradeSuccess()
             }
         }
+    }
+
+    func displayTradeError(message: String) {
+        let alert = UIAlertController(title: "TRADE_ERROR_TITLE".localized(),
+                                      message: message,
+                                      preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
+                                      style: .default,
+                                      handler: nil))
+
+        self.present(alert, animated: true, completion: nil)
     }
 
     func displayTradeSuccess() {

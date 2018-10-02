@@ -51,8 +51,8 @@ class MyOffersViewController: UIViewController {
                                        balance: "")
 
         TradeOperation.postTrade(amount: 0.0000000,
-                                 price: (numerator: offer.priceR.numerator, denominator: offer.priceR.denominator),
-                                 asset: (selling: sellingAsset, buying: buyingAsset),
+                                 price: Price(with: offer.priceR),
+                                 assets: (selling: sellingAsset, buying: buyingAsset),
                                  offerId: offer.id) { completed in
             if completed {
                 self.offers.remove(at: indexPath.row)

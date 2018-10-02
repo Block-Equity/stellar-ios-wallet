@@ -61,7 +61,8 @@
 
 "TRADE_MARKET_INFO" = "Your market order may not be completely filled depending on amount offered. View the order book to see the amount available at the market rate. Any amount larger than this will be posted as an offer.";
 "TRADE_ERROR_TITLE" = "Trade Error";
-"TRADE_ERROR_MESSAGE" = "Sorry your order could not be processed at this time. Please try again later.";
+"TRADE_ERROR_MESSAGE" = "Your order could not be processed at this time. Please try again later.";
+"TRADE_INVALID_MESSAGE" = "The amounts entered for trade cannot be submitted. Please correct them and try again.";
 "GENERIC_OK_TEXT" = "Ok";
 
 "ACTIVATION_ERROR_TITLE" = "Activation Error";
