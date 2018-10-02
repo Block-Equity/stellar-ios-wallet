@@ -61,8 +61,8 @@ class TradeOperation: NSObject {
     }
 
     static func postTrade(amount: Decimal,
-                          price: (numerator: Int, denominator: Int),
-                          asset: (selling: StellarAsset, buying: StellarAsset),
+                          price: Price,
+                          assets: (selling: StellarAsset, buying: StellarAsset),
                           offerId: Int,
                           completion: @escaping (Bool) -> Void) {
         guard let sourceKeyPair = KeychainHelper.walletKeyPair else {
@@ -74,15 +74,14 @@ class TradeOperation: NSObject {
             switch response {
             case .success(let accountResponse):
                 do {
-                    let buyAsset = self.getAsset(stellarAsset: asset.buying)
-                    let sellAsset = self.getAsset(stellarAsset: asset.selling)
-                    let priceObject = Price(numerator: price.numerator, denominator: price.denominator)
+                    let buyAsset = self.getAsset(stellarAsset: assets.buying)
+                    let sellAsset = self.getAsset(stellarAsset: assets.selling)
 
                     let manageOfferOperation = ManageOfferOperation(sourceAccount: sourceKeyPair,
                                                                     selling: sellAsset,
                                                                     buying: buyAsset,
                                                                     amount: amount,
-                                                                    price: priceObject,
+                                                                    price: price,
                                                                     offerId: UInt64(offerId))
 
                     let transaction = try Transaction(sourceAccount: accountResponse,

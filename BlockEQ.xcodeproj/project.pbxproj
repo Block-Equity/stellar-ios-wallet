@@ -62,6 +62,7 @@
 		C5AB413B2090433000096A29 /* UIView+ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB413A2090433000096A29 /* UIView+ReusableView.swift */; };
 		C5AB413D2090436700096A29 /* UIView+NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB413C2090436700096A29 /* UIView+NibLoadableView.swift */; };
 		C5AF7C8A2094B60A00F99835 /* UIImage+CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AF7C892094B60A00F99835 /* UIImage+CALayer.swift */; };
+		C5BED37C2163F1E100BEE464 /* Price+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5BED37B2163F1E100BEE464 /* Price+Extensions.swift */; };
 		C5BED3762162A81C00BEE464 /* Exchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5BED3752162A81C00BEE464 /* Exchange.swift */; };
 		C5BED3782162B9E700BEE464 /* exchanges.json in Resources */ = {isa = PBXBuildFile; fileRef = C5BED3772162B9E700BEE464 /* exchanges.json */; };
 		C5C1D3D6211BF39B0014B39F /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C1D3D5211BF39B0014B39F /* UIDevice.swift */; };
@@ -235,6 +236,7 @@
 		C5AB413A2090433000096A29 /* UIView+ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ReusableView.swift"; sourceTree = "<group>"; };
 		C5AB413C2090436700096A29 /* UIView+NibLoadableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NibLoadableView.swift"; sourceTree = "<group>"; };
 		C5AF7C892094B60A00F99835 /* UIImage+CALayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+CALayer.swift"; sourceTree = "<group>"; };
+		C5BED37B2163F1E100BEE464 /* Price+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Price+Extensions.swift"; sourceTree = "<group>"; };
 		C5BED3752162A81C00BEE464 /* Exchange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exchange.swift; sourceTree = "<group>"; };
 		C5BED37A2162DBC600BEE464 /* BlockEQ.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlockEQ.entitlements; sourceTree = "<group>"; };
 		C5BED3772162B9E700BEE464 /* exchanges.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = exchanges.json; sourceTree = "<group>"; };
@@ -644,6 +646,7 @@
 				C5C1D3D5211BF39B0014B39F /* UIDevice.swift */,
 				C5A5A879215E91F500007787 /* UIView+Autolayout.swift */,
 				C5A5A87B215E935C00007787 /* UIAlertController+Prompts.swift */,
+				C5BED37B2163F1E100BEE464 /* Price+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1068,6 +1071,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4167B9221234E6C00F44136 /* SecurityOptionHelper.swift in Sources */,
+				C5BED37C2163F1E100BEE464 /* Price+Extensions.swift in Sources */,
 				EC4F660020C8CF0C0036293D /* String+Date.swift in Sources */,
 				EC4BB64720BE2C28008252AD /* TradeOperation.swift in Sources */,
 				C5BED3762162A81C00BEE464 /* Exchange.swift in Sources */,
