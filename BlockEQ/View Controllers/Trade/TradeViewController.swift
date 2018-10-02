@@ -11,21 +11,15 @@ import Whisper
 
 import UIKit
 
-enum BalanceType: Int {
-    case ten
-    case twentyFive
-    case fifty
-    case seventyFive
-    case hundred
+enum BalanceType: Double, RawRepresentable {
+    case ten = 0.1
+    case twentyFive = 0.25
+    case fifty = 0.50
+    case seventyFive = 0.75
+    case hundred = 1.0
 
-    var value: Float {
-        switch self {
-        case .ten: return 0.10
-        case .twentyFive: return 0.25
-        case .fifty: return 0.50
-        case .seventyFive: return 0.75
-        case .hundred: return 1
-        }
+    var decimal: Decimal {
+        return Decimal(self.rawValue)
     }
 
     static var all: [BalanceType] {
@@ -80,15 +74,23 @@ class TradeViewController: UIViewController {
     var fromAsset: StellarAsset!
     var toAsset: StellarAsset!
     var currentTradeType: TradeType = .market
-    var currentMarketPrice: Float = 0.0
+    var currentMarketPrice: Double = 0.0
 
     weak var delegate: TradeViewControllerDelegate?
 
     @IBAction func setBalanceAmount(sender: UIButton) {
-        guard let floatBalance = Float(fromAsset.balance) else {
+        guard var balance = Decimal(string: fromAsset.balance) else {
             return
         }
-        let value = String(floatBalance * BalanceType.all[sender.tag].value).decimalFormatted()
+
+        if fromAsset.isNative {
+            balance = Decimal(stellarAccount.availableBalance)
+        }
+
+        let multiplier = BalanceType.all[sender.tag].decimal
+        let scaledBalance = balance * multiplier
+
+        let value = scaledBalance.formattedString
         tradeFromTextField.text = value
 
         if currentTradeType == .market {
@@ -295,8 +297,16 @@ class TradeViewController: UIViewController {
             return
         }
 
+        var formatString = "TRADE_BALANCE_FORMAT"
+        var balanceAmount = fromAsset.balance.decimalFormatted
+
+        if fromAsset.isNative {
+            formatString = "TRADE_BALANCE_AVAILABLE_FORMAT"
+            balanceAmount = stellarAccount.availableBalance.formattedString
+        }
+
         tradeFromButton.setTitle(fromAsset.shortCode, for: .normal)
-        balanceLabel.text = "\(fromAsset.balance.decimalFormatted()) \(fromAsset.shortCode)"
+        balanceLabel.text = String(format: formatString.localized(), balanceAmount, fromAsset.shortCode)
 
         toAssets = self.stellarAccount.assets
         toAssets.remove(at: removableIndex)
@@ -319,7 +329,7 @@ class TradeViewController: UIViewController {
         for asset in self.stellarAccount.assets where tradeFromButton.titleLabel?.text != asset.shortCode {
             fromAsset = asset
             tradeFromButton.setTitle(fromAsset.shortCode, for: .normal)
-            balanceLabel.text = "\(fromAsset.balance.decimalFormatted()) \(fromAsset.shortCode)"
+            balanceLabel.text = "\(fromAsset.balance.decimalFormatted) \(fromAsset.shortCode)"
             toAssetToRemove = fromAsset
         }
 
@@ -351,7 +361,7 @@ class TradeViewController: UIViewController {
 
     func setMarketPrice(orderBook: OrderbookResponse) {
         if orderBook.bids.count > 0 {
-            guard let bestPrice = Float(orderBook.bids[0].price) else {
+            guard let bestPrice = Double(orderBook.bids[0].price) else {
                 return
             }
 
@@ -364,12 +374,12 @@ class TradeViewController: UIViewController {
     }
 
     func setCalculatedMarketPrice(tradeFromText: String) {
-        guard let tradeFromValue = Float(tradeFromText) else {
+        guard let tradeFromValue = Double(tradeFromText) else {
             return
         }
 
         let toValue = tradeFromValue * currentMarketPrice
-        tradeToTextField.text = String(toValue).decimalFormatted()
+        tradeToTextField.text = toValue.formattedString
     }
 }
 
@@ -454,12 +464,18 @@ extension TradeViewController {
         AccountOperation.getAccountDetails(accountId: accountId) { responseAccounts in
             if !responseAccounts.isEmpty && responseAccounts[0].assets.count > 1 {
                 self.stellarAccount = responseAccounts[0]
-                for asset in self.stellarAccount.assets {
-                    if asset.shortCode == self.fromAsset.shortCode && asset.assetIssuer == self.fromAsset.assetIssuer {
-                        self.fromAsset = asset
-                        self.balanceLabel.text = "\(asset.balance.decimalFormatted()) \(asset.shortCode)"
-                        break
+                for asset in self.stellarAccount.assets where asset == self.fromAsset {
+                    self.fromAsset = asset
+                    var balance = asset.balance
+                    var labelFormat = "TRADE_BALANCE_FORMAT".localized()
+
+                    if asset.isNative {
+                        labelFormat = "TRADE_BALANCE_AVAILABLE_FORMAT".localized()
+                        balance = self.stellarAccount.availableBalance.formattedString
                     }
+
+                    self.balanceLabel.text = String(format: labelFormat, balance, asset.shortCode)
+                    break
                 }
             }
         }

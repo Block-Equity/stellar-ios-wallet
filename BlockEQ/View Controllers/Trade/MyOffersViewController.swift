@@ -92,11 +92,11 @@ extension MyOffersViewController: UITableViewDataSource {
         let offer = offers[indexPath.row]
 
         let text = String(format: "SELL_SUMMARY_FORMAT".localized(),
-                          offer.amount.decimalFormatted(),
+                          offer.amount.decimalFormatted,
                           Assets.cellDisplay(shortCode: offer.selling.assetCode),
-                          String(Float(offer.amount)! * Float(offer.price)!).decimalFormatted(),
+                          String(Double(offer.amount)! * Double(offer.price)!).decimalFormatted,
                           Assets.cellDisplay(shortCode: offer.buying.assetCode),
-                          offer.price.decimalFormatted())
+                          offer.price.decimalFormatted)
 
         cell.offerLabel.text = text
 

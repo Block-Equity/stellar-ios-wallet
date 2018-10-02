@@ -8,15 +8,40 @@
 
 import UIKit
 
+extension Formatter {
+    static let stringFormatters: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.generatesDecimalNumbers = true
+        formatter.maximumFractionDigits = 4
+        formatter.minimumFractionDigits = 2
+        formatter.groupingSeparator = ""
+        return formatter
+    }()
+}
+
 extension String {
-    func decimalFormatted() -> String {
-        return String(format: "%.4f", self.floatValue())
+    var decimalFormatted: String {
+        return Formatter.stringFormatters.string(for: self.doubleValue) ?? ""
     }
 
-    func floatValue() -> Float {
-        guard let floatValue = Float(self) else {
+    var doubleValue: Double {
+        guard let double = Double(self) else {
             return 0.00
         }
-        return floatValue
+
+        return double
+    }
+}
+
+extension Decimal {
+    var formattedString: String {
+        return Formatter.stringFormatters.string(for: self) ?? ""
+    }
+}
+
+extension Double {
+    var formattedString: String {
+        return Formatter.stringFormatters.string(for: self) ?? ""
     }
 }

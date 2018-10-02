@@ -123,3 +123,6 @@
 "REMOVE_ASSET" = "Remove Asset";
 "SET_INFLATION" = "Set Inflation";
 "UPDATE_INFLATION" = "Update Inflation";
+
+"TRADE_BALANCE_FORMAT" = "%@ %@";
+"TRADE_BALANCE_AVAILABLE_FORMAT" = "%@ %@ available";
