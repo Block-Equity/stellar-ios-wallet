@@ -115,13 +115,13 @@ extension OrderBookViewController: UITableViewDataSource {
     func bidOrderBookCell(indexPath: IndexPath) -> OrderBookCell {
         let cell: OrderBookCell = tableView.dequeueReusableCell(for: indexPath)
 
-        let numerator = Float(bids[indexPath.row].priceR.numerator)
-        let denominator = Float(bids[indexPath.row].priceR.denominator)
-        let result = denominator/numerator * bids[indexPath.row].amount.floatValue()
+        let numerator = Double(bids[indexPath.row].priceR.numerator)
+        let denominator = Double(bids[indexPath.row].priceR.denominator)
+        let result = denominator / numerator * bids[indexPath.row].amount.doubleValue
 
-        cell.option1Label.text = bids[indexPath.row].price.decimalFormatted()
-        cell.option2Label.text = String(result).decimalFormatted()
-        cell.option3Label.text = bids[indexPath.row].amount.decimalFormatted()
+        cell.option1Label.text = bids[indexPath.row].price.decimalFormatted
+        cell.option2Label.text = String(result).decimalFormatted
+        cell.option3Label.text = bids[indexPath.row].amount.decimalFormatted
 
         return cell
     }
@@ -129,10 +129,10 @@ extension OrderBookViewController: UITableViewDataSource {
     func askOrderBookCell(indexPath: IndexPath) -> OrderBookCell {
         let cell: OrderBookCell = tableView.dequeueReusableCell(for: indexPath)
 
-        let result = Float(asks[indexPath.row].price)! * Float(asks[indexPath.row].amount)!
-        cell.option1Label.text = asks[indexPath.row].price.decimalFormatted()
-        cell.option2Label.text = asks[indexPath.row].amount.decimalFormatted()
-        cell.option3Label.text = String(result).decimalFormatted()
+        let result = Double(asks[indexPath.row].price)! * Double(asks[indexPath.row].amount)!
+        cell.option1Label.text = asks[indexPath.row].price.decimalFormatted
+        cell.option2Label.text = asks[indexPath.row].amount.decimalFormatted
+        cell.option3Label.text = String(result).decimalFormatted
 
         return cell
     }

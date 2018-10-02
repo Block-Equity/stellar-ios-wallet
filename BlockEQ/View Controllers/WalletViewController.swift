@@ -265,7 +265,7 @@ extension WalletViewController {
             }
 
             self.availableBalanceLabel.text = "Available:  \(self.accounts[0].formattedAvailableBalance) XLM"
-            self.balanceLabel.text = asset.balance.decimalFormatted()
+            self.balanceLabel.text = asset.balance.decimalFormatted
             self.getEffects()
         }
     }

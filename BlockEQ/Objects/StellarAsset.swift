@@ -23,11 +23,7 @@ class StellarAsset: NSObject {
     }
 
     var formattedBalance: String {
-        guard let floatValue = Float(balance) else {
-            return ""
-        }
-
-        return String(format: "%.4f", floatValue)
+        return balance.decimalFormatted
     }
 
     var shortCode: String {

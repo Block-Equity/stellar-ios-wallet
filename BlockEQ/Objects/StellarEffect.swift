@@ -142,11 +142,11 @@ class StellarEffect: NSObject {
     }
 
     func getFormatted(amountValue: String) -> String {
-        guard let floatValue = Float(amountValue) else {
+        guard let doubleValue = Double(amountValue) else {
             return "--"
         }
 
-        return String(format: "%.4f", floatValue)
+        return doubleValue.formattedString
     }
 
     func formattedTransactionAmount(asset: StellarAsset) -> String {
