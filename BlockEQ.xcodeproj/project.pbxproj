@@ -43,6 +43,10 @@
 		C50F390220C0AE8100DABB14 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F390120C0AE8100DABB14 /* KeyboardHelper.swift */; };
 		C524DFC3216663DB0068D111 /* RecoveryMnemonic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524DFC2216663DB0068D111 /* RecoveryMnemonic.swift */; };
 		C524DFC5216667550068D111 /* SecretSeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524DFC4216667550068D111 /* SecretSeed.swift */; };
+		C524DFC92167B6240068D111 /* KeychainHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524DFC82167B6240068D111 /* KeychainHelperTests.swift */; };
+		C524DFCB2167CFE40068D111 /* AutoFillHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524DFCA2167CFE40068D111 /* AutoFillHelper.swift */; };
+		C524DFCD2167DF020068D111 /* AutoFillHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524DFCC2167DF020068D111 /* AutoFillHelperTests.swift */; };
+		C524DFCF2167F1AB0068D111 /* AppleAutoFillProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524DFCE2167F1AB0068D111 /* AppleAutoFillProvider.swift */; };
 		C525C97920B79695006C138F /* KeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C525C97820B79695006C138F /* KeyboardView.xib */; };
 		C525C97B20B79890006C138F /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C525C97A20B79890006C138F /* KeyboardView.swift */; };
 		C53978CB20BF417100587D99 /* SettingsSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53978CA20BF417100587D99 /* SettingsSwitchCell.swift */; };
@@ -221,6 +225,10 @@
 		C52186B820C06B8100FF2A76 /* SecurityOptionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityOptionHelper.swift; sourceTree = "<group>"; };
 		C524DFC2216663DB0068D111 /* RecoveryMnemonic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryMnemonic.swift; sourceTree = "<group>"; };
 		C524DFC4216667550068D111 /* SecretSeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretSeed.swift; sourceTree = "<group>"; };
+		C524DFC82167B6240068D111 /* KeychainHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainHelperTests.swift; sourceTree = "<group>"; };
+		C524DFCA2167CFE40068D111 /* AutoFillHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoFillHelper.swift; sourceTree = "<group>"; };
+		C524DFCC2167DF020068D111 /* AutoFillHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoFillHelperTests.swift; sourceTree = "<group>"; };
+		C524DFCE2167F1AB0068D111 /* AppleAutoFillProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAutoFillProvider.swift; sourceTree = "<group>"; };
 		C525C97820B79695006C138F /* KeyboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyboardView.xib; sourceTree = "<group>"; };
 		C525C97A20B79890006C138F /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
 		C53978CA20BF417100587D99 /* SettingsSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSwitchCell.swift; sourceTree = "<group>"; };
@@ -592,8 +600,10 @@
 		EC2015BC2052D968009A73C8 /* BlockEQTests */ = {
 			isa = PBXGroup;
 			children = (
+				C524DFC82167B6240068D111 /* KeychainHelperTests.swift */,
 				EC2015BD2052D968009A73C8 /* BlockEQTests.swift */,
 				EC2015BF2052D968009A73C8 /* Info.plist */,
+				C524DFCC2167DF020068D111 /* AutoFillHelperTests.swift */,
 			);
 			path = BlockEQTests;
 			sourceTree = "<group>";
@@ -658,6 +668,8 @@
 				C5CDE371215A7DB200DB5C90 /* URLs.swift */,
 				C5CDE375215A9F3200DB5C90 /* Strings.swift */,
 				C55660482165D30C00DDAAA5 /* QRMap.swift */,
+				C524DFCA2167CFE40068D111 /* AutoFillHelper.swift */,
+				C524DFCE2167F1AB0068D111 /* AppleAutoFillProvider.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -859,13 +871,13 @@
 					EC2015B82052D968009A73C8 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 1000;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						TestTargetID = EC2015A42052D968009A73C8;
 					};
 					EC2015C32052D968009A73C8 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 1000;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						TestTargetID = EC2015A42052D968009A73C8;
 					};
 				};
@@ -1128,8 +1140,10 @@
 				ECB2F081207BF45E00F53798 /* StellarAsset.swift in Sources */,
 				C593C46E2092E51A00D6047F /* NavigationCell.swift in Sources */,
 				C5FAA1EE211F42010020CB26 /* AuthenticationCoordinator.swift in Sources */,
+				C524DFCB2167CFE40068D111 /* AutoFillHelper.swift in Sources */,
 				C41165192123C2D300C4CB6E /* ContactCell.swift in Sources */,
 				EC42584F2054EE76000941B5 /* SendAmountViewController.swift in Sources */,
+				C524DFCF2167F1AB0068D111 /* AppleAutoFillProvider.swift in Sources */,
 				C5AB41352090420D00096A29 /* SettingsDelegate.swift in Sources */,
 				C5CDE372215A7DB200DB5C90 /* URLs.swift in Sources */,
 				EC3609FD20560FDB00FC31F9 /* ScanViewController.swift in Sources */,
@@ -1193,7 +1207,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C524DFCD2167DF020068D111 /* AutoFillHelperTests.swift in Sources */,
 				EC2015BE2052D968009A73C8 /* BlockEQTests.swift in Sources */,
+				C524DFC92167B6240068D111 /* KeychainHelperTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1406,12 +1422,13 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2C24FP5V5L;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = BlockEQTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blockeq.BlockEQTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BlockEQ.app/BlockEQ";
 			};
@@ -1423,12 +1440,13 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2C24FP5V5L;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = BlockEQTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blockeq.BlockEQTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BlockEQ.app/BlockEQ";
 			};
@@ -1439,12 +1457,13 @@
 			baseConfigurationReference = F96BA337147C641F27202448 /* Pods-BlockEQUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2C24FP5V5L;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = BlockEQUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blockeq.BlockEQUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = BlockEQ;
 			};
@@ -1455,12 +1474,13 @@
 			baseConfigurationReference = 5A5A5DF6356AF8BEA53E0A7F /* Pods-BlockEQUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2C24FP5V5L;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = BlockEQUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blockeq.BlockEQUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = BlockEQ;
 			};

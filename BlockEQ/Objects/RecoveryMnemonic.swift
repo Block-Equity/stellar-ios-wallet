@@ -5,6 +5,7 @@
 //  Created by Nick DiZazzo on 2018-10-04.
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
+import stellarsdk
 
 final class RecoveryMnemonic {
     enum MnemonicType {
@@ -31,5 +32,16 @@ final class RecoveryMnemonic {
         } else {
             return nil
         }
+    }
+
+    static func generate(type: MnemonicType) -> RecoveryMnemonic? {
+        let mnemonicString: String
+
+        switch type {
+        case .twelve: mnemonicString = Wallet.generate12WordMnemonic()
+        case .twentyFour: mnemonicString = Wallet.generate24WordMnemonic()
+        }
+
+        return RecoveryMnemonic(mnemonicString)
     }
 }

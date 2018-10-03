@@ -141,3 +141,10 @@
 "DISPLAY_SECRET_SEED_DESCRIPTION" = "This QR code represents your 56-character Stellar secret key. Please ensure you keep it safe!";
 "REVEAL_SECRET_SEED_INFORMATION" = "Reveal Secret Key";
 "CONCEAL_SECRET_SEED_INFORMATION" = "Conceal Secret Key";
+"SECRET_SEED_PREFIX" = "Seed:";
+"MNEMONIC_PREFIX" = "Mnemonic:";
+"BLOCKEQ_WALLET" = "BlockEQ Wallet";
+"MNEMONIC_STORED" = "Your mnemonic was stored securely in the AutoFill keychain.";
+"SEED_STORED" = "Your secret seed was stored securely in the AutoFill keychain.";
+"SAVED" = "Saved";
+"MNEMONIC_GENERATION_ERROR" = "We ran into a problem when trying to generate your mnemonic.";

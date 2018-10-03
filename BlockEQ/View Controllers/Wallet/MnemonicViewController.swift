@@ -54,11 +54,30 @@ class MnemonicViewController: UIViewController {
 
         holderView.backgroundColor = Colors.lightBackground
         titleLabel.textColor = Colors.darkGray
+
+        let navButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveToKeychain(_:)))
+        navigationItem.rightBarButtonItem = navButton
     }
 
     @IBAction func confirmedWrittenDown(_ sender: Any) {
         guard let mnemonic = self.mnemonic else { return }
         delegate?.confirmedWrittenMnemonic(self, mnemonic: mnemonic)
+    }
+
+    @objc func saveToKeychain(_ sender: UIBarButtonItem) {
+        guard let mnemonic = self.mnemonic?.string else { return }
+        AutoFillHelper.provider = AppleAutoFillProvider()
+        AutoFillHelper.save(mnemonic: mnemonic) { error in
+            if let error = error {
+                UIAlertController.simpleAlert(title: "ERROR_TITLE",
+                                              message: error.localizedDescription,
+                                              presentingViewController: self)
+            } else {
+                UIAlertController.simpleAlert(title: "SAVED".localized(),
+                                              message: "MNEMONIC_STORED".localized(),
+                                              presentingViewController: self)
+            }
+        }
     }
 
     @objc func dismissView() {

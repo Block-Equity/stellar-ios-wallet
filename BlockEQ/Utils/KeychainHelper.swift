@@ -8,8 +8,6 @@
 
 import KeychainSwift
 import stellarsdk
-import UIKit
-import Foundation
 
 final class KeychainHelper {
     static let mnemonicKey = "mnemonic"
@@ -101,6 +99,8 @@ final class KeychainHelper {
     }
 }
 
+// MARK: -
+// MARK: StellarSDK.Wallet
 extension KeychainHelper {
     public static var walletKeyPair: KeyPair? {
         guard let privateKeyData = KeychainHelper.privateKey,
@@ -115,10 +115,10 @@ extension KeychainHelper {
     }
 
     public static func issuerKeyPair(accountId: String) -> KeyPair? {
-        if let pubKey = try? PublicKey(accountId: accountId) {
-            return KeyPair(publicKey: pubKey, privateKey: nil)
+        guard let pubKey = try? PublicKey(accountId: accountId) else {
+            return nil
         }
 
-        return nil
+        return KeyPair(publicKey: pubKey, privateKey: nil)
     }
 }
