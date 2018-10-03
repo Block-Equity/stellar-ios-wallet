@@ -152,20 +152,22 @@ extension ApplicationCoordinator: AppTabControllerDelegate {
 extension ApplicationCoordinator: SettingsDelegate {
     func selected(setting: SettingNode, value: String?) {
         switch setting {
-        case .node(_, let identifier, _, _) where identifier == "wallet-view-seed":
-            displayAuth { self.displayMnemonic() }
         case .node(_, let identifier, _, _) where identifier == "wallet-clear":
             clearWallet()
         case .node(_, let identifier, _, _) where identifier.contains("security-"):
             manageSecurity(identifier: identifier, newValue: value)
-        case .section(_, let identifier, _) where identifier == "section-security":
-            pushAdvancedPinControl(with: setting)
+        case .node(name: _, let identifier, _, _) where identifier.contains("keys-"):
+            manageWallet(with: setting)
         case .node(_, let identifier, _, _) where identifier == "about-application":
             displayApplicationInfo()
         case .node(_, let identifier, _, _) where identifier == "about-terms":
             pushWebViewController(with: BlockEQURL.termsAndConditions.url, title: "SETTINGS_OPTION_TERMS".localized())
         case .node(_, let identifier, _, _) where identifier == "about-privacy":
             pushWebViewController(with: BlockEQURL.privacyPolicy.url, title: "SETTINGS_OPTION_PRIVACY".localized())
+        case .section(_, let identifier, _) where identifier == "section-security":
+            pushAdvancedPinControl(with: setting)
+        case .section(_, let identifier, _) where identifier == "section-keys":
+            pushKeyManagement(with: setting)
         default: print("Selected: \(String(describing: setting.name)) \(setting.identifier)")
         }
     }
@@ -190,6 +192,16 @@ extension ApplicationCoordinator: SettingsDelegate {
         }
     }
 
+    func manageWallet(with node: SettingNode) {
+        if node.identifier == "keys-display-secret-seed" {
+            displayAuth { self.displaySecretSeet() }
+        } else if node.identifier == "keys-export-private-key" {
+
+        } else if node.identifier == "keys-view-mnemonic" {
+            displayAuth { self.displayMnemonic() }
+        }
+    }
+
     func manageSecurity(identifier: String, newValue: String?) {
         guard let value = newValue else { return }
 
@@ -200,6 +212,12 @@ extension ApplicationCoordinator: SettingsDelegate {
 
             SecurityOptionHelper.set(option: option, value: value)
         }
+    }
+
+    func pushKeyManagement(with node: SettingNode) {
+        let viewController = SettingsViewController(options: [node], customTitle: node.name)
+        viewController.delegate = self
+        wrappingNavController?.pushViewController(viewController, animated: true)
     }
 
     func pushAdvancedPinControl(with node: SettingNode) {
@@ -271,6 +289,15 @@ extension ApplicationCoordinator: SettingsDelegate {
                                                             mnemonicType: .twentyFour)
 
         wrappingNavController?.pushViewController(mnemonicViewController, animated: true)
+    }
+
+    func displaySecretSeet() {
+        guard let mnemonic = KeychainHelper.getMnemonic() else {
+            return
+        }
+
+        let viewController = SecretSeedViewController(mnemonic: mnemonic)
+        wrappingNavController?.pushViewController(viewController, animated: true)
     }
 
     func authenticate(_ style: AuthenticationCoordinator.AuthenticationStyle? = nil) {
