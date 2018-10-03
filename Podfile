@@ -8,8 +8,8 @@ target 'BlockEQ' do
   pod 'stellar-ios-mac-sdk', :git => 'https://github.com/Soneso/stellar-ios-mac-sdk', :branch => 'master'
   pod 'KeychainSwift', '~> 10.0'
   pod 'Alamofire', '~> 4.7'
-  pod 'SCLAlertView'
-  pod 'Whisper'
+  pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift', :branch => 'master'
+  pod 'Whisper', :git => 'git@github.com:freeubi/Whisper.git', :branch => 'swift-4.2-support'
   pod 'Kingfisher', '~> 4.10'
 
   target 'BlockEQTests' do
@@ -30,14 +30,6 @@ post_install do |installer|
       config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Owholemodule'
     else
       config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Onone'
-    end
-  end
-
-  installer.pods_project.targets.each do |target|
-    if target.name == "Whisper"
-      target.build_configurations.each do |config|
-        config.build_settings['SWIFT_VERSION'] = '4.0'
-      end
     end
   end
 end
