@@ -2,7 +2,7 @@ PODS:
   - Alamofire (4.7.3)
   - KeychainSwift (10.0.0)
   - Kingfisher (4.10.0)
-  - SCLAlertView (0.8)
+  - SCLAlertView (0.8.1)
   - stellar-ios-mac-sdk (1.4.6)
   - Whisper (6.0.2)
 
@@ -10,36 +10,46 @@ DEPENDENCIES:
   - Alamofire (~> 4.7)
   - KeychainSwift (~> 10.0)
   - Kingfisher (~> 4.10)
-  - SCLAlertView
+  - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift`, branch `master`)
   - stellar-ios-mac-sdk (from `https://github.com/Soneso/stellar-ios-mac-sdk`, branch `master`)
-  - Whisper
+  - "Whisper (from `git@github.com:freeubi/Whisper.git`, branch `swift-4.2-support`)"
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - KeychainSwift
     - Kingfisher
-    - SCLAlertView
-    - Whisper
 
 EXTERNAL SOURCES:
+  SCLAlertView:
+    :branch: master
+    :git: https://github.com/vikmeup/SCLAlertView-Swift
   stellar-ios-mac-sdk:
     :branch: master
     :git: https://github.com/Soneso/stellar-ios-mac-sdk
+  Whisper:
+    :branch: swift-4.2-support
+    :git: "git@github.com:freeubi/Whisper.git"
 
 CHECKOUT OPTIONS:
+  SCLAlertView:
+    :commit: d371170ca2e276462ff229e675a2d2020ad2bb72
+    :git: https://github.com/vikmeup/SCLAlertView-Swift
   stellar-ios-mac-sdk:
     :commit: a47c45f7207a6eac8ddbd5f960b6ec535125a3d3
     :git: https://github.com/Soneso/stellar-ios-mac-sdk
+  Whisper:
+    :commit: 86880dea149a871ec5cb909cc3b93e7fb5804788
+    :git: "git@github.com:freeubi/Whisper.git"
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
   Kingfisher: 43c4b802d8b5256cf1f4379e9cd10b329be6d3e2
-  SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
+  SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
   stellar-ios-mac-sdk: fe160a0e38f318dc023548a278bc02915f80815d
-  Whisper: 169760fc4bab0abf24d5529f9276f95c25cf1025
+  Whisper: 8c499b08f3b56d5c80162d775e3462318ad7f4fe
 
-PODFILE CHECKSUM: 8a878600b6e4d7fad99c05f9c055dcf3816d17ac
+PODFILE CHECKSUM: 10fc0ed97c459d5dc980f726ff53a793a0b98f5b
 
 COCOAPODS: 1.5.3
