@@ -103,8 +103,8 @@ extension OnboardingCoordinator {
     func saveMnemonic(mnemonic: String) {
         if let keyPair = try? Wallet.createKeyPair(mnemonic: mnemonic, passphrase: nil, index: 0) {
             let privateBytes = keyPair.privateKey?.bytes ?? [UInt8]()
-            let privateKeyData = NSData(bytes: privateBytes, length: privateBytes.count) as Data
-            let publicKeyData = NSData(bytes: keyPair.publicKey.bytes, length: keyPair.publicKey.bytes.count) as Data
+            let privateKeyData = Data(bytes: privateBytes)
+            let publicKeyData = Data(bytes: keyPair.publicKey.bytes)
 
             KeychainHelper.setExistingInstance()
             KeychainHelper.save(mnemonic: mnemonic)

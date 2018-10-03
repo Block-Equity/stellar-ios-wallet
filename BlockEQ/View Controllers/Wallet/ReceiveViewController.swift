@@ -96,24 +96,8 @@ class ReceiveViewController: UIViewController {
     }
 
     func displayGeneratedAddress(value: String) {
-        let data = value.data(using: String.Encoding.isoLatin1, allowLossyConversion: false)
-
-        let filter = CIFilter(name: "CIQRCodeGenerator")
-        filter?.setValue(data, forKey: "inputMessage")
-        filter?.setValue("H", forKey: "inputCorrectionLevel")
-
-        let colorFilter = CIFilter(name: "CIFalseColor")
-        colorFilter?.setValue(filter?.outputImage, forKey: "inputImage")
-        colorFilter?.setValue(CIColor.init(cgColor: Colors.white.cgColor), forKey: "inputColor1")
-        colorFilter?.setValue(CIColor.init(cgColor: Colors.primaryDark.cgColor), forKey: "inputColor0")
-
-        let qrcodeImage = colorFilter?.outputImage
-        let scaleX = imageView.frame.size.width / (qrcodeImage?.extent.size.width)!
-        let scaleY = imageView.frame.size.height / (qrcodeImage?.extent.size.height)!
-        let transformedImage = qrcodeImage?.transformed(by: CGAffineTransform(scaleX: scaleX, y: scaleY))
-
+        let map = QRMap(with: value, correctionLevel: .full)
+        imageView.image = map.scaledTemplateImage(scale: 10)
         activityIndicator.stopAnimating()
-
-        imageView.image = UIImage(ciImage: transformedImage!)
     }
 }

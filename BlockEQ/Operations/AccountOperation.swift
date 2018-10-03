@@ -169,20 +169,7 @@ public class AccountOperation {
     }
 
     static func createPersonalToken(assetCode: String, completion: @escaping (Bool) -> Void) {
-        guard let privateKeyData = KeychainHelper.getPrivateKey(),
-            let publicKeyData = KeychainHelper.getPublicKey() else {
-            DispatchQueue.main.async {
-                completion(false)
-            }
-
-            return
-        }
-
-        let publicBytes: [UInt8] = [UInt8](publicKeyData)
-        let privateBytes: [UInt8] = [UInt8](privateKeyData)
-
-        guard let sourceKeyPair = try? KeyPair(publicKey: PublicKey(publicBytes),
-                                               privateKey: PrivateKey(privateBytes)) else {
+        guard let sourceKeyPair = KeychainHelper.walletKeyPair else {
             DispatchQueue.main.async { completion(false) }
             return
         }

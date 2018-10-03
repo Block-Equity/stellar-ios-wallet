@@ -13,19 +13,10 @@ struct EQSettings {
     /// This initalizer populates options based on the scheme selected. Debug options are only included in debug builds.
     static var options: [SettingNode] {
         #if DEBUG
-        return [recoverySection, walletSection, securitySection, aboutSection]
+        return [walletSection, securitySection, aboutSection]
         #else
-        return [recoverySection, walletSection, securitySection, aboutSection]
+        return [walletSection, securitySection, aboutSection]
         #endif
-    }
-
-    static var recoveryItems: [SettingNode] {
-        return [
-            SettingNode.node(name: "SETTINGS_OPTION_SEED_PHRASE".localized(),
-                             identifier: "wallet-view-seed",
-                             enabled: true,
-                             type: .normal)
-        ]
     }
 
     static var walletItems: [SettingNode] {
@@ -33,7 +24,8 @@ struct EQSettings {
             SettingNode.node(name: "SETTINGS_OPTION_CLEAR_WALLET".localized(),
                              identifier: "wallet-clear",
                              enabled: true,
-                             type: .normal)
+                             type: .normal),
+            keySection
         ]
     }
 
@@ -87,16 +79,33 @@ struct EQSettings {
         ]
     }
 
-    static var recoverySection: SettingNode {
-        return SettingNode.section(name: "SETTINGS_SECTION_RECOVERY".localized(),
-                                   identifier: "section-recovery",
-                                   items: recoveryItems)
+    static var keyItems: [SettingNode] {
+        return [
+            SettingNode.node(name: "SETTINGS_OPTION_SEED_PHRASE".localized(),
+                             identifier: "keys-view-mnemonic",
+                             enabled: true,
+                             type: .normal),
+            SettingNode.node(name: "SETTINGS_OPTION_DISPLAY_SECRET_SEED".localized(),
+                             identifier: "keys-display-secret-seed",
+                             enabled: true,
+                             type: .normal),
+            SettingNode.node(name: "SETTINGS_OPTION_EXPORT_KEYPAIR".localized(),
+                             identifier: "keys-export-private-key",
+                             enabled: false,
+                             type: .normal)
+        ]
     }
 
     static var walletSection: SettingNode {
         return SettingNode.section(name: "SETTINGS_SECTION_WALLET".localized(),
                                    identifier: "section-wallet",
                                    items: walletItems)
+    }
+
+    static var keySection: SettingNode {
+        return SettingNode.section(name: "SETTINGS_OPTION_ADV_KEY_MANAGEMENT".localized(),
+                                   identifier: "section-keys",
+                                   items: keyItems)
     }
 
     static var pinSection: SettingNode {
