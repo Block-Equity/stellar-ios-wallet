@@ -58,6 +58,32 @@ final class SecretSeedViewController: UIViewController {
 
         qrImageView.contentMode = .scaleAspectFit
         qrImageView.tintColor = Colors.primaryDark
+
+        let navButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveToKeychain(_:)))
+        navigationItem.rightBarButtonItem = navButton
+    }
+
+    enum KeychainError: Error {
+        case noPassword
+        case unexpectedPasswordData
+        case unhandledError(status: OSStatus)
+    }
+
+    @objc func saveToKeychain(_ sender: UIBarButtonItem) {
+        guard let seed = self.seed else { return }
+
+        AutoFillHelper.provider = AppleAutoFillProvider()
+        AutoFillHelper.save(secret: seed) { error in
+            if let error = error {
+                UIAlertController.simpleAlert(title: "ERROR_TITLE".localized(),
+                                              message: error.localizedDescription,
+                                              presentingViewController: self)
+            } else {
+                UIAlertController.simpleAlert(title: "SAVED".localized(),
+                                              message: "MNEMONIC_STORED".localized(),
+                                              presentingViewController: self)
+            }
+        }
     }
 
     func setupStyle() {

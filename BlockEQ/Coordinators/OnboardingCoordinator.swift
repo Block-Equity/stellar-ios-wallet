@@ -21,8 +21,6 @@ final class OnboardingCoordinator {
 
     weak var delegate: OnboardingCoordinatorDelegate?
     var authenticationCoordinator: AuthenticationCoordinator?
-    var mnemonic: RecoveryMnemonic?
-    var secretSeed: SecretSeed?
 
     init() {
         navController = AppNavigationController(rootViewController: launchViewController)
@@ -45,16 +43,16 @@ final class OnboardingCoordinator {
 
 extension OnboardingCoordinator: LaunchViewControllerDelegate {
     func requestedCreateNewWallet(_ viewController: LaunchViewController, type: RecoveryMnemonic.MnemonicType) {
-        var mnemonic: String
-
-        switch type {
-        case .twelve:
-            mnemonic = Wallet.generate12WordMnemonic()
-        case .twentyFour:
-            mnemonic = Wallet.generate24WordMnemonic()
+        guard let mnemonic = RecoveryMnemonic.generate(type: type) else {
+            UIAlertController.simpleAlert(title: "ERROR_TITLE".localized(),
+                                          message: "MNEMONIC_GENERATION_ERROR".localized(),
+                                          presentingViewController: viewController)
+            return
         }
 
-        let mnemonicVC = MnemonicViewController(mnemonic: mnemonic, shouldSetPin: false, hideConfirmation: false)
+        save(mnemonic: mnemonic)
+
+        let mnemonicVC = MnemonicViewController(mnemonic: mnemonic.string, shouldSetPin: false, hideConfirmation: false)
         mnemonicVC.delegate = self
 
         self.mnemonicViewController = mnemonicVC
@@ -69,19 +67,18 @@ extension OnboardingCoordinator: LaunchViewControllerDelegate {
 
 extension OnboardingCoordinator: MnemonicViewControllerDelegate {
     func confirmedWrittenMnemonic(_ viewController: MnemonicViewController, mnemonic: RecoveryMnemonic) {
-        self.mnemonic = mnemonic
         authenticate()
     }
 }
 
 extension OnboardingCoordinator: VerificationViewControllerDelegate {
     func validatedAccount(_ viewController: VerificationViewController, mnemonic: RecoveryMnemonic) {
-        self.mnemonic = mnemonic
+        save(mnemonic: mnemonic)
         authenticate()
     }
 
     func validatedAccount(_ viewController: VerificationViewController, secret: SecretSeed) {
-        self.secretSeed = secret
+        save(secret: secret)
         authenticate()
     }
 }
@@ -105,12 +102,6 @@ extension OnboardingCoordinator: AuthenticationCoordinatorDelegate {
 
     func authenticationCompleted(_ coordinator: AuthenticationCoordinator,
                                  options: AuthenticationCoordinator.AuthenticationContext?) {
-        if let mnemonic = self.mnemonic {
-            save(mnemonic: mnemonic)
-        } else if let secret = self.secretSeed {
-            save(secret: secret)
-        }
-
         authenticationCoordinator = nil
         delegate?.onboardingCompleted()
     }
@@ -143,8 +134,10 @@ extension OnboardingCoordinator {
             KeychainHelper.save(mnemonic: mnemonic)
         }
 
-        if let seed = seed {
-            KeychainHelper.save(seed: seed)
+        if let newSeed = keyPair.seed?.secret {
+            KeychainHelper.save(seed: newSeed)
+        } else if let existingSeed = seed {
+            KeychainHelper.save(seed: existingSeed)
         }
     }
 }

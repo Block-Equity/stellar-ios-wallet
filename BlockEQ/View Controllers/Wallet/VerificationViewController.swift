@@ -31,7 +31,6 @@ class VerificationViewController: UIViewController {
     public enum VerificationType {
         case recovery
         case confirmation
-        case questions
     }
 
     let defaultQuestionViewHeight: CGFloat = 88.0
@@ -59,8 +58,6 @@ class VerificationViewController: UIViewController {
 
     @IBAction func nextButtonSelected() {
         switch type {
-        case .questions:
-            validateAnswer()
         default:
             if let recoveryMnemonic = RecoveryMnemonic(textView.text) {
                 textView.text = ""
@@ -112,12 +109,7 @@ class VerificationViewController: UIViewController {
 
             questionViewHeightConstraint.constant = 0.0
             textViewHeightConstraint.constant = defaultTextViewHeight
-        case .questions:
-            questionViewHeightConstraint.constant = defaultQuestionViewHeight
-            textViewHeightConstraint.constant = questionTextViewHeight
-
-            setQuestion(animated: false)
-        default:
+        case .recovery:
             navigationItem.title = "RECOVER_WALLET".localized()
 
             questionViewHeightConstraint.constant = 0.0
@@ -171,46 +163,12 @@ class VerificationViewController: UIViewController {
         return possibleMatches.enumerated().compactMap { $0.offset < 3 ? $0.element : nil }
     }
 
-    func validateAnswer() {
-        guard let mnemonic = self.mnemonic else { return }
-
-        if textView.text == currentWord {
-            if questionsAnswered == 4 {
-                delegate?.validatedAccount(self, mnemonic: mnemonic)
-            } else {
-                textView.text = ""
-                setQuestion(animated: true)
-            }
-        } else {
-            displayInvalidAnswer()
-        }
-    }
-
     func displayInvalidAnswer() {
         textView.textColor = UIColor.red
         textView.shake()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.textViewDidChange(self.textView)
-        }
-    }
-
-    func setQuestion(animated: Bool) {
-        guard let mnemonic = self.mnemonic else { return }
-
-        if questionWords.count == 0 {
-            questionWords = mnemonic.words
-        }
-
-        let randomIndex = Int(arc4random_uniform(UInt32(questionWords.count)))
-        currentWord = questionWords[randomIndex]
-
-        if let indexOfWord = mnemonic.words.index(of: currentWord) {
-            questionTitleLabel.text = "What was the word \(String(describing: indexOfWord + 1))?"
-            questionWords.remove(at: randomIndex)
-            questionsAnswered += 1
-
-            setProgress(animated: animated)
         }
     }
 
@@ -280,10 +238,7 @@ extension VerificationViewController: UICollectionViewDelegate {
         words.append(suggestion)
 
         textView.text = words.joined(separator: " ")
-
-        if type != .questions {
-            textView.text.append(" ")
-        }
+        textView.text.append(" ")
 
         clearSuggestions(reload: true)
 

@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>webcredentials:*.blockeq.com</string>
+		<string>webcredentials:blockeq.com</string>
 	</array>
 </dict>
 </plist>

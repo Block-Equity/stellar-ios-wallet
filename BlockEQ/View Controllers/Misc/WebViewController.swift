@@ -54,7 +54,7 @@ class WebViewController: UIViewController {
 
 extension WebViewController: UIWebViewDelegate {
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
-        UIAlertController.simpleError(title: "ERROR_TITLE".localized(),
+        UIAlertController.simpleAlert(title: "ERROR_TITLE".localized(),
                                       message: error.localizedDescription,
                                       presentingViewController: self)
     }
