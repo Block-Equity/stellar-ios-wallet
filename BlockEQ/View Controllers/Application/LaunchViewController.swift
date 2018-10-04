@@ -9,7 +9,7 @@
 import UIKit
 
 protocol LaunchViewControllerDelegate: AnyObject {
-    func requestedCreateNewWallet(_ viewController: LaunchViewController, type: MnemonicType)
+    func requestedCreateNewWallet(_ viewController: LaunchViewController, type: RecoveryMnemonic.MnemonicType)
     func requestedImportWallet(_ viewController: LaunchViewController)
 }
 
@@ -62,7 +62,7 @@ class LaunchViewController: UIViewController {
     }
 
     func checkForExistingAccount() {
-        if KeychainHelper.getAccountId() != nil, KeychainHelper.isExistingInstance() {
+        if KeychainHelper.accountId != nil, KeychainHelper.isExistingInstance {
             hideButtons()
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -92,7 +92,7 @@ class LaunchViewController: UIViewController {
 
     @IBAction func createNewWallet() {
         let alert = UIAlertController(title: "CREATE_WALLET_TITLE".localized(),
-                                      message: "CREATE_WALLET_MESSAGE".localized(),
+                                      message: "CREATE_RECOVER_WALLET_MESSAGE".localized(),
                                       preferredStyle: .actionSheet)
 
         alert.addAction(UIAlertAction(title: "CREATE_MNEMONIC_TWELVE".localized(),
@@ -114,7 +114,7 @@ class LaunchViewController: UIViewController {
     }
 
     @IBAction func importWallet() {
-        delegate?.requestedImportWallet(self)
+        self.delegate?.requestedImportWallet(self)
     }
 
     func displayWallet() {

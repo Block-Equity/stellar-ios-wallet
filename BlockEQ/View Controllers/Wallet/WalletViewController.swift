@@ -231,7 +231,7 @@ extension WalletViewController: UITableViewDelegate {
  */
 extension WalletViewController {
     func getAccountDetails() {
-        guard let accountId = KeychainHelper.getAccountId() else {
+        guard let accountId = KeychainHelper.accountId else {
             return
         }
 
@@ -271,7 +271,7 @@ extension WalletViewController {
     }
 
     func getEffects() {
-        guard let accountId = KeychainHelper.getAccountId() else {
+        guard let accountId = KeychainHelper.accountId else {
             return
         }
 
@@ -300,7 +300,7 @@ extension WalletViewController {
     }
 
     func checkForPaymentReceived() {
-        guard let accountId = KeychainHelper.getAccountId() else {
+        guard let accountId = KeychainHelper.accountId else {
             return
         }
 

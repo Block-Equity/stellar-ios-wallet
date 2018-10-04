@@ -38,7 +38,7 @@ class P2PViewController: UIViewController {
     }
 
     @IBAction func displayAddress() {
-        guard let accountId = KeychainHelper.getAccountId() else {
+        guard let accountId = KeychainHelper.accountId else {
             return
         }
 
@@ -90,7 +90,7 @@ class P2PViewController: UIViewController {
  */
 extension P2PViewController {
     func getPersonToken() {
-        guard let accountId = KeychainHelper.getAccountId() else {
+        guard let accountId = KeychainHelper.accountId else {
             return
         }
 

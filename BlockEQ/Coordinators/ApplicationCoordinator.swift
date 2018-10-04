@@ -283,20 +283,24 @@ extension ApplicationCoordinator: SettingsDelegate {
     }
 
     func displayMnemonic() {
-        let mnemonicViewController = MnemonicViewController(mnemonic: KeychainHelper.getMnemonic(),
+        let mnemonicViewController = MnemonicViewController(mnemonic: KeychainHelper.mnemonic,
                                                             shouldSetPin: false,
-                                                            hideConfirmation: true,
-                                                            mnemonicType: .twentyFour)
+                                                            hideConfirmation: true)
 
         wrappingNavController?.pushViewController(mnemonicViewController, animated: true)
     }
 
     func displaySecretSeet() {
-        guard let mnemonic = KeychainHelper.getMnemonic() else {
+        var viewController: SecretSeedViewController
+
+        if let seed = KeychainHelper.secretSeed {
+            viewController = SecretSeedViewController(seed)
+        } else if let mnemonic = KeychainHelper.mnemonic {
+            viewController = SecretSeedViewController(mnemonic: mnemonic)
+        } else {
             return
         }
 
-        let viewController = SecretSeedViewController(mnemonic: mnemonic)
         wrappingNavController?.pushViewController(viewController, animated: true)
     }
 

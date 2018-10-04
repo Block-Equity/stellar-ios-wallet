@@ -53,9 +53,16 @@
 "PIN_CONFIRM_SHORT" = "Confirm Pin";
 "PIN_CREATE_SHORT" = "Create Pin";
 "CREATE_WALLET_TITLE" = "Create Wallet";
-"CREATE_WALLET_MESSAGE" = "Please select from the following 2 options:";
+"CREATE_RECOVER_WALLET_MESSAGE" = "Select the number of words to use:";
 "CREATE_MNEMONIC_TWELVE" = "Use a 12-word recovery phrase";
 "CREATE_MNEMONIC_TWENTYFOUR" = "Use a 24-word recovery phrase";
+"RECOVER_WALLET" = "Recover Wallet";
+"REENTER_PHRASE" = "Re-enter Your Phrase";
+
+"RECOVER_SECRET_SEED" = "Recover with Stellar secret key";
+"RECOVER_MNEMONIC" = "Recover with mnemonic";
+"MNEMONIC_REMINDER_MESSAGE" = "Please write down and safely store this phrase. It's the ONLY WAY to retrieve your wallet.";
+"NO_MNEMONIC_SET" = "Your wallet was recovered using a secret key and does not use a mnemonic.";
 
 "ERROR_TITLE" = "Error";
 "CLEAR_WALLET_TITLE" = "Are you sure you want to clear this wallet?";

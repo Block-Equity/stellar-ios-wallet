@@ -303,7 +303,7 @@ extension ContactsViewController: ContactCellStellarDelegate {
  */
 extension ContactsViewController {
     func getAccountDetails(address: String) {
-        guard let accountId = KeychainHelper.getAccountId() else {
+        guard let accountId = KeychainHelper.accountId else {
             return
         }
 

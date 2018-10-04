@@ -41,6 +41,8 @@
 		C4EC5FF120F3E64300769E31 /* AddAssetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4EC5FEF20F3E64300769E31 /* AddAssetViewController.xib */; };
 		C4F4938A211E19EA000B0800 /* String+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F49389211E19EA000B0800 /* String+Base64.swift */; };
 		C50F390220C0AE8100DABB14 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F390120C0AE8100DABB14 /* KeyboardHelper.swift */; };
+		C524DFC3216663DB0068D111 /* RecoveryMnemonic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524DFC2216663DB0068D111 /* RecoveryMnemonic.swift */; };
+		C524DFC5216667550068D111 /* SecretSeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524DFC4216667550068D111 /* SecretSeed.swift */; };
 		C525C97920B79695006C138F /* KeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C525C97820B79695006C138F /* KeyboardView.xib */; };
 		C525C97B20B79890006C138F /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C525C97A20B79890006C138F /* KeyboardView.swift */; };
 		C53978CB20BF417100587D99 /* SettingsSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53978CA20BF417100587D99 /* SettingsSwitchCell.swift */; };
@@ -217,6 +219,8 @@
 		C4F49389211E19EA000B0800 /* String+Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Base64.swift"; sourceTree = "<group>"; };
 		C50F390120C0AE8100DABB14 /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
 		C52186B820C06B8100FF2A76 /* SecurityOptionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityOptionHelper.swift; sourceTree = "<group>"; };
+		C524DFC2216663DB0068D111 /* RecoveryMnemonic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryMnemonic.swift; sourceTree = "<group>"; };
+		C524DFC4216667550068D111 /* SecretSeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretSeed.swift; sourceTree = "<group>"; };
 		C525C97820B79695006C138F /* KeyboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyboardView.xib; sourceTree = "<group>"; };
 		C525C97A20B79890006C138F /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
 		C53978CA20BF417100587D99 /* SettingsSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSwitchCell.swift; sourceTree = "<group>"; };
@@ -742,6 +746,8 @@
 				EC48C1D420C82CF0009FDEBC /* StellarEffect.swift */,
 				C41481302124709B0057ED74 /* LocalContact.swift */,
 				C5BED3752162A81C00BEE464 /* Exchange.swift */,
+				C524DFC2216663DB0068D111 /* RecoveryMnemonic.swift */,
+				C524DFC4216667550068D111 /* SecretSeed.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -1106,6 +1112,7 @@
 				C499756621129D2D00E2299C /* TrustedPartiesViewController.swift in Sources */,
 				C5E8594920AFB45E00B77289 /* ContainerViewController.swift in Sources */,
 				C439A22F211B6FDC0025C047 /* P2PTransactionViewController.swift in Sources */,
+				C524DFC5216667550068D111 /* SecretSeed.swift in Sources */,
 				EC2683912062C7CA0085CAAF /* PaymentTransactionOperation.swift in Sources */,
 				EC0B19262054BC3B0052802C /* AppNavigationController.swift in Sources */,
 				C5AF7C8A2094B60A00F99835 /* UIImage+CALayer.swift in Sources */,
@@ -1114,6 +1121,7 @@
 				C5A5A878215E90BD00007787 /* WebViewController.swift in Sources */,
 				C439A22B211B6F9C0025C047 /* CreateTokenViewController.swift in Sources */,
 				EC1CEE5320577E880005F74E /* WordSuggestionCell.swift in Sources */,
+				C524DFC3216663DB0068D111 /* RecoveryMnemonic.swift in Sources */,
 				C41165152123B7CB00C4CB6E /* ContactsViewController.swift in Sources */,
 				EC42584B2054E346000941B5 /* SendViewController.swift in Sources */,
 				EC52B3C920BB746C006299A1 /* OrderBookHeaderView.swift in Sources */,

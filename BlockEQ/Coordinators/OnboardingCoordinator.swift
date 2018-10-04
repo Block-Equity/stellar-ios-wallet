@@ -16,12 +16,13 @@ protocol OnboardingCoordinatorDelegate: AnyObject {
 final class OnboardingCoordinator {
     let navController: AppNavigationController
     let launchViewController = LaunchViewController()
-    let verificationViewController = VerificationViewController(type: .recovery, mnemonic: "")
+    let verificationViewController = VerificationViewController(type: .recovery, mnemonic: nil)
     var mnemonicViewController: MnemonicViewController?
 
     weak var delegate: OnboardingCoordinatorDelegate?
     var authenticationCoordinator: AuthenticationCoordinator?
-    var mnemonic: String = ""
+    var mnemonic: RecoveryMnemonic?
+    var secretSeed: SecretSeed?
 
     init() {
         navController = AppNavigationController(rootViewController: launchViewController)
@@ -43,11 +44,17 @@ final class OnboardingCoordinator {
 }
 
 extension OnboardingCoordinator: LaunchViewControllerDelegate {
-    func requestedCreateNewWallet(_ viewController: LaunchViewController, type: MnemonicType) {
-        let mnemonicVC = MnemonicViewController(mnemonic: nil,
-                                                shouldSetPin: false,
-                                                hideConfirmation: false,
-                                                mnemonicType: type)
+    func requestedCreateNewWallet(_ viewController: LaunchViewController, type: RecoveryMnemonic.MnemonicType) {
+        var mnemonic: String
+
+        switch type {
+        case .twelve:
+            mnemonic = Wallet.generate12WordMnemonic()
+        case .twentyFour:
+            mnemonic = Wallet.generate24WordMnemonic()
+        }
+
+        let mnemonicVC = MnemonicViewController(mnemonic: mnemonic, shouldSetPin: false, hideConfirmation: false)
         mnemonicVC.delegate = self
 
         self.mnemonicViewController = mnemonicVC
@@ -61,15 +68,20 @@ extension OnboardingCoordinator: LaunchViewControllerDelegate {
 }
 
 extension OnboardingCoordinator: MnemonicViewControllerDelegate {
-    func confirmedWrittenMnemonic(_ viewController: MnemonicViewController, mnemonic: String) {
+    func confirmedWrittenMnemonic(_ viewController: MnemonicViewController, mnemonic: RecoveryMnemonic) {
         self.mnemonic = mnemonic
         authenticate()
     }
 }
 
 extension OnboardingCoordinator: VerificationViewControllerDelegate {
-    func validatedAccount(_ viewController: VerificationViewController, mnemonic: String) {
+    func validatedAccount(_ viewController: VerificationViewController, mnemonic: RecoveryMnemonic) {
         self.mnemonic = mnemonic
+        authenticate()
+    }
+
+    func validatedAccount(_ viewController: VerificationViewController, secret: SecretSeed) {
+        self.secretSeed = secret
         authenticate()
     }
 }
@@ -93,24 +105,46 @@ extension OnboardingCoordinator: AuthenticationCoordinatorDelegate {
 
     func authenticationCompleted(_ coordinator: AuthenticationCoordinator,
                                  options: AuthenticationCoordinator.AuthenticationContext?) {
-        saveMnemonic(mnemonic: mnemonic)
+        if let mnemonic = self.mnemonic {
+            save(mnemonic: mnemonic)
+        } else if let secret = self.secretSeed {
+            save(secret: secret)
+        }
+
         authenticationCoordinator = nil
         delegate?.onboardingCompleted()
     }
 }
 
 extension OnboardingCoordinator {
-    func saveMnemonic(mnemonic: String) {
-        if let keyPair = try? Wallet.createKeyPair(mnemonic: mnemonic, passphrase: nil, index: 0) {
-            let privateBytes = keyPair.privateKey?.bytes ?? [UInt8]()
-            let privateKeyData = Data(bytes: privateBytes)
-            let publicKeyData = Data(bytes: keyPair.publicKey.bytes)
+    func save(mnemonic: RecoveryMnemonic) {
+        if let keyPair = try? Wallet.createKeyPair(mnemonic: mnemonic.string, passphrase: nil, index: 0) {
+            setPrivateData(keyPair: keyPair, mnemonic: mnemonic.string)
+        }
+    }
 
-            KeychainHelper.setExistingInstance()
+    func save(secret: SecretSeed) {
+        if let keyPair = try? KeyPair(secretSeed: secret.string) {
+            setPrivateData(keyPair: keyPair, seed: secret.string)
+        }
+    }
+
+    private func setPrivateData(keyPair: KeyPair, mnemonic: String? = nil, seed: String? = nil) {
+        let privateBytes = keyPair.privateKey?.bytes ?? [UInt8]()
+        let privateKeyData = Data(bytes: privateBytes)
+        let publicKeyData = Data(bytes: keyPair.publicKey.bytes)
+
+        KeychainHelper.setExistingInstance()
+        KeychainHelper.save(accountId: keyPair.accountId)
+        KeychainHelper.save(publicKey: publicKeyData)
+        KeychainHelper.save(privateKey: privateKeyData)
+
+        if let mnemonic = mnemonic {
             KeychainHelper.save(mnemonic: mnemonic)
-            KeychainHelper.save(accountId: keyPair.accountId)
-            KeychainHelper.save(publicKey: publicKeyData)
-            KeychainHelper.save(privateKey: privateKeyData)
+        }
+
+        if let seed = seed {
+            KeychainHelper.save(seed: seed)
         }
     }
 }

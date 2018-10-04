@@ -13,6 +13,7 @@ import Foundation
 
 final class KeychainHelper {
     static let mnemonicKey = "mnemonic"
+    static let secretSeedKey = "secretSeed"
     static let accountIdKey = "accountId"
     static let publicSeedKey = "publicKey"
     static let privateSeedKey = "privateKey"
@@ -21,6 +22,10 @@ final class KeychainHelper {
 
     public static func save(mnemonic: String) {
         KeychainSwift().set(mnemonic, forKey: mnemonicKey)
+    }
+
+    public static func save(seed: String) {
+        KeychainSwift().set(seed, forKey: secretSeedKey)
     }
 
     public static func save(accountId: String) {
@@ -39,31 +44,35 @@ final class KeychainHelper {
         KeychainSwift().set(pin, forKey: pinKey)
     }
 
-    public static func getMnemonic() -> String? {
+    public static var mnemonic: String? {
         return KeychainSwift().get(mnemonicKey)
     }
 
-    public static func getAccountId() -> String? {
+    public static var secretSeed: String? {
+        return KeychainSwift().get(secretSeedKey)
+    }
+
+    public static var accountId: String? {
         return KeychainSwift().get(accountIdKey)
     }
 
-    public static func getPublicKey() -> Data? {
+    public static var publicKey: Data? {
         return KeychainSwift().getData(publicSeedKey)
     }
 
-    public static func getPrivateKey() -> Data? {
+    public static var privateKey: Data? {
         return KeychainSwift().getData(privateSeedKey)
     }
 
-    public static func getPin() -> String? {
+    public static var pin: String? {
         return KeychainSwift().get(pinKey)
     }
 
-    public static func hasPin() -> Bool {
+    public static var hasPin: Bool {
         return !(KeychainSwift().get(pinKey)?.isEmpty ?? true)
     }
 
-    public static func isExistingInstance() -> Bool {
+    public static var isExistingInstance: Bool {
         return UserDefaults.standard.bool(forKey: isFreshInstallKey)
     }
 
@@ -83,7 +92,7 @@ final class KeychainHelper {
     ///   - comparePin: Optionally, you may provide your own pin to compare.
     /// - Returns: A boolean value indicating if the two pins match, or false otherwise.
     /// - Important: The pin check will always fail on an empty string.
-    public static func check(pin: String, comparePin: String? = getPin()) -> Bool {
+    public static func check(pin: String, comparePin: String? = KeychainHelper.pin) -> Bool {
         if pin == comparePin && !pin.isEmpty {
             return true
         }
@@ -94,8 +103,8 @@ final class KeychainHelper {
 
 extension KeychainHelper {
     public static var walletKeyPair: KeyPair? {
-        guard let privateKeyData = KeychainHelper.getPrivateKey(),
-            let publicKeyData = KeychainHelper.getPublicKey() else {
+        guard let privateKeyData = KeychainHelper.privateKey,
+            let publicKeyData = KeychainHelper.publicKey else {
                 return nil
         }
 
