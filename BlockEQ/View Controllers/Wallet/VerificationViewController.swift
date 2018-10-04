@@ -10,7 +10,8 @@ import UIKit
 import stellarsdk
 
 protocol VerificationViewControllerDelegate: AnyObject {
-    func validatedAccount(_ viewController: VerificationViewController, mnemonic: String)
+    func validatedAccount(_ viewController: VerificationViewController, mnemonic: RecoveryMnemonic)
+    func validatedAccount(_ viewController: VerificationViewController, secret: SecretSeed)
 }
 
 class VerificationViewController: UIViewController {
@@ -53,24 +54,23 @@ class VerificationViewController: UIViewController {
     var suggestions: [String] = []
     var questionWords: [String] = []
     var currentWord: String = ""
-    var mnemonic: String = ""
+    var mnemonic: RecoveryMnemonic?
+    var secret: SecretSeed?
 
     @IBAction func nextButtonSelected() {
         switch type {
         case .questions:
             validateAnswer()
         default:
-            guard var mnemonicString = textView.text, !mnemonicString.isEmpty else {
-                return
+            if let recoveryMnemonic = RecoveryMnemonic(textView.text) {
+                textView.text = ""
+                delegate?.validatedAccount(self, mnemonic: recoveryMnemonic)
+            } else if let recoverySeed = SecretSeed(textView.text) {
+                textView.text = ""
+                delegate?.validatedAccount(self, secret: recoverySeed)
+            } else {
+                displayInvalidAnswer()
             }
-
-            let lastCharater = mnemonicString.last
-            if lastCharater == " " {
-                mnemonicString = String(mnemonicString.dropLast())
-            }
-
-            textView.text = ""
-            delegate?.validatedAccount(self, mnemonic: mnemonicString)
         }
     }
 
@@ -78,7 +78,7 @@ class VerificationViewController: UIViewController {
         super.init(coder: aDecoder)
     }
 
-    init(type: VerificationType, mnemonic: String) {
+    init(type: VerificationType, mnemonic: RecoveryMnemonic?) {
         super.init(nibName: String(describing: VerificationViewController.self), bundle: nil)
 
         self.type = type
@@ -87,20 +87,19 @@ class VerificationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         textView.becomeFirstResponder()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
         textView.text = ""
+        mnemonic = nil
+        secret = nil
     }
 
     func setupView() {
@@ -109,7 +108,7 @@ class VerificationViewController: UIViewController {
 
         switch type {
         case .confirmation:
-            navigationItem.title = "Re-enter Your Phrase"
+            navigationItem.title = "REENTER_PHRASE".localized()
 
             questionViewHeightConstraint.constant = 0.0
             textViewHeightConstraint.constant = defaultTextViewHeight
@@ -119,7 +118,7 @@ class VerificationViewController: UIViewController {
 
             setQuestion(animated: false)
         default:
-            navigationItem.title = "Enter Phrase"
+            navigationItem.title = "RECOVER_WALLET".localized()
 
             questionViewHeightConstraint.constant = 0.0
             textViewHeightConstraint.constant = defaultTextViewHeight
@@ -173,6 +172,8 @@ class VerificationViewController: UIViewController {
     }
 
     func validateAnswer() {
+        guard let mnemonic = self.mnemonic else { return }
+
         if textView.text == currentWord {
             if questionsAnswered == 4 {
                 delegate?.validatedAccount(self, mnemonic: mnemonic)
@@ -181,25 +182,30 @@ class VerificationViewController: UIViewController {
                 setQuestion(animated: true)
             }
         } else {
-            textView.textColor = UIColor.red
-            textView.shake()
+            displayInvalidAnswer()
+        }
+    }
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                self.textView.text = ""
-                self.textView.textColor = Colors.darkGray
-            }
+    func displayInvalidAnswer() {
+        textView.textColor = UIColor.red
+        textView.shake()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.textViewDidChange(self.textView)
         }
     }
 
     func setQuestion(animated: Bool) {
+        guard let mnemonic = self.mnemonic else { return }
+
         if questionWords.count == 0 {
-            questionWords = mnemonic.components(separatedBy: " ")
+            questionWords = mnemonic.words
         }
 
         let randomIndex = Int(arc4random_uniform(UInt32(questionWords.count)))
         currentWord = questionWords[randomIndex]
 
-        if let indexOfWord = mnemonic.components(separatedBy: " ").index(of: currentWord) {
+        if let indexOfWord = mnemonic.words.index(of: currentWord) {
             questionTitleLabel.text = "What was the word \(String(describing: indexOfWord + 1))?"
             questionWords.remove(at: randomIndex)
             questionsAnswered += 1
@@ -237,7 +243,13 @@ extension VerificationViewController: UITextViewDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        highlightWrongWords(targetString: textView.text)
+        guard textView.text.count > 0 else { return }
+
+        if textView.text.contains(" ") {
+            highlightWrongWords(in: textView.text)
+        } else {
+            highlightIncorrectSeed(in: textView.text)
+        }
     }
 }
 
@@ -275,7 +287,7 @@ extension VerificationViewController: UICollectionViewDelegate {
 
         clearSuggestions(reload: true)
 
-        highlightWrongWords(targetString: textView.text)
+        highlightWrongWords(in: textView.text)
     }
 }
 
@@ -288,21 +300,48 @@ extension VerificationViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension VerificationViewController {
-    func highlightWrongWords(targetString: String) {
-        let attributedString = NSMutableAttributedString(string: targetString)
-        let range = NSRange(location: 0, length: targetString.utf16.count)
-        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: Colors.black, range: range)
+    func highlightWrongWords(in string: String) {
+        let attributedString = NSMutableAttributedString(string: string)
+        let range = NSRange(location: 0, length: string.utf16.count)
+        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: Colors.darkGray, range: range)
         attributedString.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 16.0), range: range)
 
-        let words = getWords(string: targetString)
+        let words = getWords(string: string)
 
         for word in words {
-            let color = isReal(word: word) ? Colors.black : Colors.red
+            let color = isReal(word: word) ? Colors.darkGray : Colors.red
             textView.attributedText = getHighlightedAttributedString(attributedString: attributedString,
                                                                      word: word,
-                                                                     in: targetString,
+                                                                     in: string,
                                                                      highlightColor: color)
         }
+    }
+
+    func highlightIncorrectSeed(in string: String) {
+        let attributedString = NSMutableAttributedString(string: string)
+        let range = NSRange(location: 0, length: string.utf16.count)
+        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: Colors.darkGray, range: range)
+        attributedString.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 16.0), range: range)
+
+        if !(string.hasPrefix("S") || string.hasPrefix("s")) {
+            attributedString.addAttribute(NSAttributedString.Key.foregroundColor,
+                                          value: Colors.red,
+                                          range: NSRange(location: 0, length: 1))
+        }
+
+        for character in string.enumerated() {
+            let chRange = NSRange(location: character.offset, length: 1)
+            let object = Unicode.Scalar(String(character.element))!
+            if CharacterSet.base32Alphabet.inverted.contains(object) {
+                attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: Colors.red, range: chRange)
+            }
+
+            if character.offset > 55 {
+                attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: Colors.red, range: chRange)
+            }
+        }
+
+        textView.attributedText = attributedString
     }
 
     func getHighlightedAttributedString(attributedString: NSMutableAttributedString,

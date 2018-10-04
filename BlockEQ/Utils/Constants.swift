@@ -149,8 +149,3 @@ enum MenuItem {
         }
     }
 }
-
-enum MnemonicType {
-    case twelve
-    case twentyFour
-}

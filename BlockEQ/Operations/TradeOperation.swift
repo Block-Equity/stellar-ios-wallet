@@ -36,7 +36,7 @@ class TradeOperation: NSObject {
 
     static func getOffers(completion: @escaping (PageResponse<OfferResponse>) -> Void,
                           failure: @escaping (String) -> Void) {
-        guard let accountId = KeychainHelper.getAccountId() else {
+        guard let accountId = KeychainHelper.accountId else {
             DispatchQueue.main.async {
                 failure("No account found")
             }

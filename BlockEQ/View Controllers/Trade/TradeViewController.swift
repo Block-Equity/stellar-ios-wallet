@@ -424,7 +424,7 @@ extension TradeViewController: UIPickerViewDelegate {
  */
 extension TradeViewController {
     func getAccountDetails() {
-        guard let accountId = KeychainHelper.getAccountId() else {
+        guard let accountId = KeychainHelper.accountId else {
             return
         }
 
@@ -457,7 +457,7 @@ extension TradeViewController {
     }
 
     func updateBalance() {
-        guard let accountId = KeychainHelper.getAccountId() else {
+        guard let accountId = KeychainHelper.accountId else {
             return
         }
 

@@ -26,7 +26,7 @@ class InflationViewController: UIViewController {
         guard let inflationDestination = destinationAddressTextField.text,
             !inflationDestination.isEmpty,
             inflationDestination.count > 20,
-            inflationDestination != KeychainHelper.getAccountId() else {
+            inflationDestination != KeychainHelper.accountId else {
                 destinationAddressTextField.shake()
             return
         }

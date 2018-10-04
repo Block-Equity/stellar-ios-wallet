@@ -159,7 +159,7 @@ final class AuthenticationCoordinator {
     func authenticate() {
         mode = .challenge
 
-        guard SecurityOptionHelper.check(.pinEnabled) && KeychainHelper.hasPin() else {
+        guard SecurityOptionHelper.check(.pinEnabled) && KeychainHelper.hasPin else {
             os_log("WARNING: %@", AuthenticationError.pinUnsetError.localizedDescription)
             return
         }

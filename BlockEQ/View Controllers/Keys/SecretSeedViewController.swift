@@ -19,11 +19,17 @@ final class SecretSeedViewController: UIViewController {
     let blurEffect = UIBlurEffect(style: .light)
     let concealingView = UIVisualEffectView(effect: nil)
     var mnemonic: String?
+    var seed: String?
     var revealed: Bool = false
 
     init(mnemonic: String?) {
         self.mnemonic = mnemonic
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: String(describing: SecretSeedViewController.self), bundle: nil)
+    }
+
+    init(_ seed: String?) {
+        self.seed = seed
+        super.init(nibName: String(describing: SecretSeedViewController.self), bundle: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -97,17 +103,24 @@ final class SecretSeedViewController: UIViewController {
         revealed.toggle()
     }
 
+    private func setQRCode(_ map: QRMap, text: String) {
+        self.secretSeedLabel.text = text
+        self.qrImageView.image = map.scaledTemplateImage(scale: 10)
+        UIView.animate(withDuration: 0.5) { self.qrImageView.alpha = 1 }
+    }
+
     private func displayQRCode() {
+        if let seed = self.seed {
+            self.setQRCode(QRMap(with: seed, correctionLevel: .full), text: seed)
+            return
+        }
+
         DispatchQueue.global(qos: .userInitiated).async {
             if let mnemonic = self.mnemonic,
                 let keyPair = try? Wallet.createKeyPair(mnemonic: mnemonic, passphrase: nil, index: 0),
                 let secretSeed = keyPair.secretSeed {
-                let map = QRMap(with: secretSeed, correctionLevel: .full)
-
                 DispatchQueue.main.async {
-                    self.secretSeedLabel.text = secretSeed
-                    self.qrImageView.image = map.scaledTemplateImage(scale: 10)
-                    UIView.animate(withDuration: 0.5) { self.qrImageView.alpha = 1 }
+                    self.setQRCode(QRMap(with: secretSeed, correctionLevel: .full), text: secretSeed)
                 }
             }
         }

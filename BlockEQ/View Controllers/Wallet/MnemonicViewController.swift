@@ -10,7 +10,7 @@ import stellarsdk
 import UIKit
 
 protocol MnemonicViewControllerDelegate: AnyObject {
-    func confirmedWrittenMnemonic(_ viewController: MnemonicViewController, mnemonic: String)
+    func confirmedWrittenMnemonic(_ viewController: MnemonicViewController, mnemonic: RecoveryMnemonic)
 }
 
 class MnemonicViewController: UIViewController {
@@ -22,24 +22,18 @@ class MnemonicViewController: UIViewController {
 
     weak var delegate: MnemonicViewControllerDelegate?
 
-    var mnemonic: String!
+    var mnemonic: RecoveryMnemonic?
     var hideConfirmation: Bool = false
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.mnemonic = Wallet.generate24WordMnemonic()
+        self.mnemonic = RecoveryMnemonic(Wallet.generate24WordMnemonic())
     }
 
-    init(mnemonic: String?, shouldSetPin: Bool, hideConfirmation: Bool = false, mnemonicType: MnemonicType) {
+    init(mnemonic: String?, shouldSetPin: Bool, hideConfirmation: Bool = false) {
         super.init(nibName: String(describing: MnemonicViewController.self), bundle: nil)
-
-        if mnemonicType == .twelve {
-            self.mnemonic = mnemonic ?? Wallet.generate12WordMnemonic()
-        } else {
-            self.mnemonic = mnemonic ?? Wallet.generate24WordMnemonic()
-        }
-
         self.hideConfirmation = hideConfirmation
+        self.mnemonic = RecoveryMnemonic(mnemonic)
     }
 
     override func viewDidLoad() {
@@ -50,6 +44,7 @@ class MnemonicViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.titleLabel.text = mnemonic != nil ? "MNEMONIC_REMINDER_MESSAGE".localized() : "NO_MNEMONIC_SET".localized()
         self.confirmationButton.isHidden = self.hideConfirmation
     }
 
@@ -62,6 +57,7 @@ class MnemonicViewController: UIViewController {
     }
 
     @IBAction func confirmedWrittenDown(_ sender: Any) {
+        guard let mnemonic = self.mnemonic else { return }
         delegate?.confirmedWrittenMnemonic(self, mnemonic: mnemonic)
     }
 
@@ -72,6 +68,8 @@ class MnemonicViewController: UIViewController {
 
     func generateMnemonicViews() {
         activityIndicator.stopAnimating()
+
+        guard let mnemonic = self.mnemonic?.string else { return }
 
         let words = mnemonic.components(separatedBy: " ")
         var originX: CGFloat = 0.0

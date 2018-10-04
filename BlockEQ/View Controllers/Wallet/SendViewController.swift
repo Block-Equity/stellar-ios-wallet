@@ -23,7 +23,7 @@ class SendViewController: UIViewController {
         guard let receiver = sendAddressTextField.text,
             !receiver.isEmpty,
             receiver.count > 20,
-            receiver != KeychainHelper.getAccountId() else {
+            receiver != KeychainHelper.accountId else {
                 sendAddressTextField.shake()
                 return
         }
