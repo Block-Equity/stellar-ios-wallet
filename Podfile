@@ -9,7 +9,7 @@ target 'BlockEQ' do
   pod 'KeychainSwift', '~> 10.0'
   pod 'Alamofire', '~> 4.7'
   pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift', :branch => 'master'
-  pod 'Whisper', :git => 'git@github.com:freeubi/Whisper.git', :branch => 'swift-4.2-support'
+  pod 'Whisper', :git => 'https://github.com/freeubi/Whisper.git', :branch => 'swift-4.2-support'
   pod 'Kingfisher', '~> 4.10'
 
   target 'BlockEQTests' do
