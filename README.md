@@ -14,6 +14,7 @@
 # BlockEQ iOS Wallet
 
 ## Project Status
+![Bitrise](https://img.shields.io/bitrise/7be4eaf61e417b10/develop.svg?token=fqz2aV5-9h2PA5DHNG9CGg)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://makeapullrequest.com)
 [![Slack chat](https://img.shields.io/badge/chat-on_slack-004FB9.svg?style=flat-square&logo=slack)](https://blockeq.slack.com)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/block-equity/stellar-ios-wallet.svg?style=social)](https://twitter.com/block_eq)
