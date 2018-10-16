@@ -5,7 +5,7 @@ target 'BlockEQ' do
   # Pods for BlockEQ
   use_frameworks!
 
-  pod 'stellar-ios-mac-sdk', :git => 'https://github.com/Soneso/stellar-ios-mac-sdk', :branch => 'master'
+  pod 'stellar-ios-mac-sdk', '~> 1.4.7'
   pod 'KeychainSwift', '~> 10.0'
   pod 'Alamofire', '~> 4.7'
   pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift', :branch => 'master'

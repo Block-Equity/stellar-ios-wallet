@@ -50,10 +50,9 @@ class MyOffersViewController: UIViewController {
                                        assetIssuer: offer.buying.assetIssuer,
                                        balance: "")
 
-        TradeOperation.postTrade(amount: 0.0000000,
-                                 price: Price(with: offer.priceR),
-                                 assets: (selling: sellingAsset, buying: buyingAsset),
-                                 offerId: offer.id) { completed in
+        TradeOperation.cancel(assets: (selling: sellingAsset, buying: buyingAsset),
+                              offerId: offer.id,
+                              price: Price(with: offer.priceR)) { completed in
             if completed {
                 self.offers.remove(at: indexPath.row)
                 self.tableView.reloadData()

@@ -148,3 +148,7 @@
 "SEED_STORED" = "Your secret seed was stored securely in the AutoFill keychain.";
 "SAVED" = "Saved";
 "MNEMONIC_GENERATION_ERROR" = "We ran into a problem when trying to generate your mnemonic.";
+"SUBMIT_TRADE_TITLE" = "Confirm Trade";
+"SUBMIT_TRADE_FORMAT" = "You are about to submit a trade of %@ %@ for %@ %@.";
+"TRADE_TITLE" = "Submit";
+"TRADE_SUBMITTING_MESSAGE" = "Placing Trade Offer...";

@@ -9,7 +9,7 @@
 import UIKit
 
 extension Formatter {
-    static let stringFormatters: NumberFormatter = {
+    static let displayFormatters: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.generatesDecimalNumbers = true
@@ -22,7 +22,7 @@ extension Formatter {
 
 extension String {
     var decimalFormatted: String {
-        return Formatter.stringFormatters.string(for: self.doubleValue) ?? ""
+        return Formatter.displayFormatters.string(for: self.doubleValue) ?? ""
     }
 
     var doubleValue: Double {
@@ -35,13 +35,13 @@ extension String {
 }
 
 extension Decimal {
-    var formattedString: String {
-        return Formatter.stringFormatters.string(for: self) ?? ""
+    var displayFormattedString: String {
+        return Formatter.displayFormatters.string(for: self) ?? ""
     }
 }
 
 extension Double {
-    var formattedString: String {
-        return Formatter.stringFormatters.string(for: self) ?? ""
+    var displayFormattedString: String {
+        return Formatter.displayFormatters.string(for: self) ?? ""
     }
 }

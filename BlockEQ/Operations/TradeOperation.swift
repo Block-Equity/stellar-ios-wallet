@@ -60,11 +60,10 @@ class TradeOperation: NSObject {
         }
     }
 
-    static func postTrade(amount: Decimal,
-                          price: Price,
-                          assets: (selling: StellarAsset, buying: StellarAsset),
-                          offerId: Int,
-                          completion: @escaping (Bool) -> Void) {
+    static func cancel(assets: (selling: StellarAsset, buying: StellarAsset),
+                       offerId: Int,
+                       price: Price,
+                       completion: @escaping (Bool) -> Void) {
         guard let sourceKeyPair = KeychainHelper.walletKeyPair else {
             DispatchQueue.main.async { completion(false) }
             return
@@ -80,9 +79,94 @@ class TradeOperation: NSObject {
                     let manageOfferOperation = ManageOfferOperation(sourceAccount: sourceKeyPair,
                                                                     selling: sellAsset,
                                                                     buying: buyAsset,
-                                                                    amount: amount,
+                                                                    amount: 0,
                                                                     price: price,
                                                                     offerId: UInt64(offerId))
+
+                    let transaction = try Transaction(sourceAccount: accountResponse,
+                                                      operations: [manageOfferOperation],
+                                                      memo: Memo.none,
+                                                      timeBounds: nil)
+
+                    try transaction.sign(keyPair: sourceKeyPair, network: Stellar.network)
+
+                    try Stellar.sdk.transactions.submitTransaction(transaction: transaction) { (response) -> Void in
+                        switch response {
+                        case .success:
+                            DispatchQueue.main.async {
+                                completion(true)
+                            }
+                        case .failure(let error):
+                            StellarSDKLog.printHorizonRequestErrorMessage(tag: "Cancel Trade Offer Error",
+                                                                          horizonRequestError: error)
+                            DispatchQueue.main.async {
+                                completion(false)
+                            }
+                        }
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        completion(false)
+                    }
+                }
+            case .failure(let error):
+                StellarSDKLog.printHorizonRequestErrorMessage(tag: "Cancel Trade Error", horizonRequestError: error)
+                DispatchQueue.main.async {
+                    completion(false)
+                }
+            }
+        }
+    }
+
+    private static func scaledPrice(price: (numerator: Decimal, denominator: Decimal)) -> Price {
+        var num: Decimal = price.numerator
+        var den: Decimal = price.denominator
+
+        let decimalInt32Max = Decimal(Int32.max)
+
+        let maxPlaces = Int(max(price.numerator.exponent.magnitude, price.denominator.exponent.magnitude))
+        for currentPlaces in 0...maxPlaces {
+            let scale: Decimal = pow(10.0, maxPlaces - currentPlaces)
+
+            let scaledNumerator = price.numerator * scale
+            let scaledDenominator = price.denominator * scale
+
+            if scaledNumerator <= decimalInt32Max && scaledDenominator <= decimalInt32Max {
+                num = scaledNumerator
+                den = scaledDenominator
+                break
+            }
+        }
+
+        return Price(numerator: NSDecimalNumber(decimal: num).int32Value,
+                     denominator: NSDecimalNumber(decimal: den).int32Value)
+    }
+
+    static func postTrade(tradePrice: (numerator: Decimal, denominator: Decimal),
+                          assets: (selling: StellarAsset, buying: StellarAsset),
+                          type: TradeType,
+                          completion: @escaping (Bool) -> Void) {
+        guard let sourceKeyPair = KeychainHelper.walletKeyPair else {
+            DispatchQueue.main.async { completion(false) }
+            return
+        }
+
+        let finalNumerator = type == .market ? tradePrice.numerator * Decimal(0.999) : tradePrice.numerator
+        let price = scaledPrice(price: (finalNumerator, tradePrice.denominator))
+
+        Stellar.sdk.accounts.getAccountDetails(accountId: sourceKeyPair.accountId) { (response) -> Void in
+            switch response {
+            case .success(let accountResponse):
+                do {
+                    let buyAsset = self.getAsset(stellarAsset: assets.buying)
+                    let sellAsset = self.getAsset(stellarAsset: assets.selling)
+
+                    let manageOfferOperation = ManageOfferOperation(sourceAccount: sourceKeyPair,
+                                                                    selling: sellAsset,
+                                                                    buying: buyAsset,
+                                                                    amount: tradePrice.denominator,
+                                                                    price: price,
+                                                                    offerId: 0)
 
                     let transaction = try Transaction(sourceAccount: accountResponse,
                                                       operations: [manageOfferOperation],

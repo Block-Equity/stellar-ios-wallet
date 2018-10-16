@@ -90,7 +90,7 @@ class TradeViewController: UIViewController {
         let multiplier = BalanceType.all[sender.tag].decimal
         let scaledBalance = balance * multiplier
 
-        let value = scaledBalance.formattedString
+        let value = scaledBalance.displayFormattedString
         tradeFromTextField.text = value
 
         if currentTradeType == .market {
@@ -134,34 +134,45 @@ class TradeViewController: UIViewController {
             return
         }
 
-        guard var numerator = Decimal(string: tradeToAmount) else {
+        guard let numerator = Decimal(string: tradeToAmount) else {
             tradeToTextField.shake()
             return
         }
 
         dismissKeyboard()
-        showHud()
 
-        if currentTradeType == .market {
-            numerator *= Decimal(0.999)
-        }
+        let alertMessage = String(format: "SUBMIT_TRADE_FORMAT".localized(),
+                                  tradeFromAmount, fromAsset.shortCode, tradeToAmount, toAsset.shortCode)
 
-        TradeOperation.postTrade(amount: denominator,
-                                 price: Price(numerator: numerator, denominator: denominator),
-                                 assets: (selling: fromAsset, buying: toAsset),
-                                 offerId: 0) { completed in
-            self.hideHud()
-            self.getOrderBook()
-            self.updateBalance()
+        let cancelAction = UIAlertAction(title: "CANCEL_ACTION".localized(), style: .cancel, handler: nil)
+        let submitAction = UIAlertAction(title: "TRADE_TITLE".localized(), style: .default, handler: { _ in
+            self.showHud()
 
-            if !completed {
-                self.displayTradeError(message: "TRADE_ERROR_MESSAGE".localized())
-            } else {
-                self.tradeFromTextField.text = ""
-                self.tradeToTextField.text = ""
-                self.displayTradeSuccess()
+            TradeOperation.postTrade(tradePrice: (numerator: numerator, denominator: denominator),
+                                     assets: (selling: self.fromAsset, buying: self.toAsset),
+                                     type: self.currentTradeType) { completed in
+                self.hideHud()
+                self.getOrderBook()
+                self.updateBalance()
+
+                if !completed {
+                    self.displayTradeError(message: "TRADE_ERROR_MESSAGE".localized())
+                } else {
+                    self.tradeFromTextField.text = ""
+                    self.tradeToTextField.text = ""
+                    self.displayTradeSuccess()
+                }
             }
-        }
+        })
+
+        let alert = UIAlertController(title: "SUBMIT_TRADE_TITLE".localized(),
+                                      message: alertMessage,
+                                      preferredStyle: .alert)
+
+        alert.addAction(cancelAction)
+        alert.addAction(submitAction)
+
+        self.present(alert, animated: true, completion: nil)
     }
 
     func displayTradeError(message: String) {
@@ -302,7 +313,7 @@ class TradeViewController: UIViewController {
 
         if fromAsset.isNative {
             formatString = "TRADE_BALANCE_AVAILABLE_FORMAT"
-            balanceAmount = stellarAccount.availableBalance.formattedString
+            balanceAmount = stellarAccount.availableBalance.displayFormattedString
         }
 
         tradeFromButton.setTitle(fromAsset.shortCode, for: .normal)
@@ -351,7 +362,7 @@ class TradeViewController: UIViewController {
 
     func showHud() {
         let hud = MBProgressHUD.showAdded(to: (navigationController?.view)!, animated: true)
-        hud.label.text = "Placing Trade Offer..."
+        hud.label.text = "TRADE_SUBMITTING_MESSAGE".localized()
         hud.mode = .indeterminate
     }
 
@@ -379,7 +390,7 @@ class TradeViewController: UIViewController {
         }
 
         let toValue = tradeFromValue * currentMarketPrice
-        tradeToTextField.text = toValue.formattedString
+        tradeToTextField.text = toValue.displayFormattedString
     }
 }
 
@@ -471,7 +482,7 @@ extension TradeViewController {
 
                     if asset.isNative {
                         labelFormat = "TRADE_BALANCE_AVAILABLE_FORMAT".localized()
-                        balance = self.stellarAccount.availableBalance.formattedString
+                        balance = self.stellarAccount.availableBalance.displayFormattedString
                     }
 
                     self.balanceLabel.text = String(format: labelFormat, balance, asset.shortCode)
