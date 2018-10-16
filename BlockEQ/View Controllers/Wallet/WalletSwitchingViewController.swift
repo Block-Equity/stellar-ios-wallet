@@ -277,7 +277,7 @@ extension WalletSwitchingViewController: WalletItemCellDelegate {
         let item = allAssets[indexPath.row]
         createTrustLine(issuerAccountId: item.assetIssuer!,
                         assetCode: item.shortCode,
-                        limit: 0.0000000,
+                        limit: 0.0,
                         isAdding: false)
     }
 }
@@ -290,7 +290,7 @@ extension WalletSwitchingViewController: WalletItemActivateCellDelegate {
             let item = updatedSupportedAssets[indexPath.row]
             createTrustLine(issuerAccountId: item.issuerAccount,
                             assetCode: item.shortForm,
-                            limit: 10000000000,
+                            limit: nil,
                             isAdding: true)
         }
     }
@@ -300,7 +300,7 @@ extension WalletSwitchingViewController: WalletItemActivateCellDelegate {
  * Operations
  */
 extension WalletSwitchingViewController {
-    func createTrustLine(issuerAccountId: String, assetCode: String, limit: Decimal, isAdding: Bool) {
+    func createTrustLine(issuerAccountId: String, assetCode: String, limit: Decimal?, isAdding: Bool) {
         let message = isAdding ? "ACTIVATE_ASSET".localized() : "REMOVE_ASSET".localized()
         showHud(message: message)
 

@@ -136,7 +136,7 @@ class PaymentTransactionOperation: NSObject {
 
     static func changeTrust(issuerAccountId: String,
                             assetCode: String,
-                            limit: Decimal,
+                            limit: Decimal?,
                             completion: @escaping (Bool) -> Void) {
 
         guard let sourceKeyPair = KeychainHelper.walletKeyPair else {
@@ -195,7 +195,7 @@ class PaymentTransactionOperation: NSObject {
 
     static func changeP2PTrust(issuerAccountId: String,
                                assetCode: String,
-                               limit: Decimal,
+                               limit: Decimal?,
                                completion: @escaping (Bool) -> Void) {
         guard let sourceKeyPair = KeychainHelper.walletKeyPair else {
             DispatchQueue.main.async { completion(false) }

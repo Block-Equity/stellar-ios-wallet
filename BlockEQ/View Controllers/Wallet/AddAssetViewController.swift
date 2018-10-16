@@ -77,7 +77,7 @@ extension AddAssetViewController {
 
         PaymentTransactionOperation.changeTrust(issuerAccountId: issuerAccountId,
                                                 assetCode: assetCode,
-                                                limit: 10000000000) { completed in
+                                                limit: nil) { completed in
             if completed {
                 self.getAccountDetails()
             } else {
