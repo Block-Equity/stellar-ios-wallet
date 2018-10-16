@@ -113,7 +113,7 @@ class AddPeerViewController: UIViewController {
  * Operations
  */
 extension AddPeerViewController {
-    func createTrustLine(issuerAccountId: String, assetCode: String, limit: Decimal) {
+    func createTrustLine(issuerAccountId: String, assetCode: String, limit: Decimal?) {
         showHud()
 
         PaymentTransactionOperation.changeP2PTrust(issuerAccountId: issuerAccountId,
