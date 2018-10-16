@@ -146,7 +146,7 @@ class StellarEffect: NSObject {
             return "--"
         }
 
-        return doubleValue.formattedString
+        return doubleValue.displayFormattedString
     }
 
     func formattedTransactionAmount(asset: StellarAsset) -> String {

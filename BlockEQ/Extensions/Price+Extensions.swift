@@ -19,15 +19,21 @@ extension Price {
             throw Price.Error.amountOverflow
         }
 
-        let intNumerator = NSDecimalNumber(value: numerator).intValue
-        let intDenominator = NSDecimalNumber(value: denominator).intValue
-        self.init(numerator: intNumerator, denominator: intDenominator)
+        let int32Numerator = NSDecimalNumber(value: numerator).int32Value
+        let int32Denominator = NSDecimalNumber(value: denominator).int32Value
+        self.init(numerator: int32Numerator, denominator: int32Denominator)
     }
 
     convenience init(numerator: Decimal, denominator: Decimal) {
-        let intNumerator = NSDecimalNumber(decimal: numerator).intValue
-        let intDenominator = NSDecimalNumber(decimal: denominator).intValue
-        self.init(numerator: intNumerator, denominator: intDenominator)
+        let int32Numerator = NSDecimalNumber(decimal: numerator).int32Value
+        let int32Denominator = NSDecimalNumber(decimal: denominator).int32Value
+        self.init(numerator: int32Numerator, denominator: int32Denominator)
+    }
+
+    convenience init(numerator: Int, denominator: Int) {
+        let int32Numerator = NSDecimalNumber(value: numerator).int32Value
+        let int32Denominator = NSDecimalNumber(value: denominator).int32Value
+        self.init(numerator: int32Numerator, denominator: int32Denominator)
     }
 
     convenience init(with response: OfferPriceResponse) {
