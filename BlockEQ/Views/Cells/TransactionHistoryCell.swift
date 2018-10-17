@@ -15,7 +15,7 @@ class TransactionHistoryCell: UITableViewCell, ReusableView {
     @IBOutlet var transactionDisplayView: UIView!
 
     static let cellIdentifier = "TransactionHistoryCell"
-    static let rowHeight: CGFloat = 80.0
+    static let rowHeight: CGFloat = 65.0
 
     override func awakeFromNib() {
         super.awakeFromNib()
