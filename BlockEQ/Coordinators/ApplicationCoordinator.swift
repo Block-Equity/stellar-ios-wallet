@@ -79,6 +79,9 @@ final class ApplicationCoordinator {
     /// The view controller used to display the minimum balance, deallocated once finished using
     var balanceViewController: BalanceViewController?
 
+    /// The view controller used to display transaction details, deallocated once finished using
+    var transactionViewController: TransactionDetailsViewController?
+
     /// Most tabbed view controllers need the top navbar - so we wrap every tab in an inner AppNavigationController
     var wrappingNavController: AppNavigationController?
 

@@ -35,6 +35,10 @@ struct Colors {
     static let red = UIColor(red: 255.0/255.0, green: 105.0/255.0, blue: 97.0/255.0, alpha: Alphas.opaque)
     static let stellarBlue = UIColor(red: 205.0/255.0, green: 224.0/255.0, blue: 232.0/255.0, alpha: Alphas.opaque)
     static let transparent = UIColor.clear
+
+    static let transactionCellDarkGray = UIColor(red: 0.188, green: 0.188, blue: 0.188, alpha: Alphas.opaque)
+    static let transactionCellMediumGray = UIColor(red: 0.565, green: 0.565, blue: 0.565, alpha: Alphas.opaque)
+    static let transactionCellBorderGray = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: Alphas.opaque)
 }
 //swiftlint:enable line_length
 

@@ -9,7 +9,7 @@
 import stellarsdk
 import UIKit
 
-class TradeOperation: NSObject {
+final class TradeOperation {
     static func getOrderBook(sellingAsset: StellarAsset,
                              buyingAsset: StellarAsset,
                              completion: @escaping (OrderbookResponse) -> Void,

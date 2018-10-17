@@ -46,10 +46,9 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
     func selectedSend(_ viewController: WalletViewController, account: StellarAccount, index: Int) {
         let sendVC = SendViewController(stellarAccount: account, currentAssetIndex: index)
         let container = AppNavigationController(rootViewController: sendVC)
+        container.navigationBar.prefersLargeTitles = true
 
         sendViewController = sendVC
-        wrappingNavController = container
-        wrappingNavController?.navigationBar.prefersLargeTitles = true
 
         tabController.present(container, animated: true, completion: nil)
     }
@@ -57,25 +56,22 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
     func selectedWalletSwitch(_ viewController: WalletViewController, account: StellarAccount) {
         let walletSwitchVC = WalletSwitchingViewController()
         let container = AppNavigationController(rootViewController: walletSwitchVC)
+        container.navigationBar.prefersLargeTitles = true
 
         walletSwitchingViewController = walletSwitchVC
-        wrappingNavController = container
-        wrappingNavController?.navigationBar.prefersLargeTitles = true
         walletSwitchVC.delegate = self
-
         walletSwitchVC.updateMenu(stellarAccount: account)
 
         tabController.present(container, animated: true, completion: nil)
     }
 
-    func selectedReceive() {
-        let address = walletViewController.accounts[0].accountId
+    func selectedReceive(_ viewController: WalletViewController, account: StellarAccount) {
+        let address = account.accountId
         let receiveVC = ReceiveViewController(address: address, isPersonalToken: false)
         let container = AppNavigationController(rootViewController: receiveVC)
+        container.navigationBar.prefersLargeTitles = true
 
         receiveViewController = receiveVC
-        wrappingNavController = container
-        wrappingNavController?.navigationBar.prefersLargeTitles = true
 
         tabController.present(container, animated: true, completion: nil)
     }
@@ -83,12 +79,30 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
     func selectBalance(account: StellarAccount, index: Int) {
         let balanceVC = BalanceViewController(stellarAccount: account, stellarAsset: account.assets[index])
         let container = AppNavigationController(rootViewController: balanceVC)
+        container.navigationBar.prefersLargeTitles = true
 
         balanceViewController = balanceVC
-        wrappingNavController = container
-        wrappingNavController?.navigationBar.prefersLargeTitles = true
 
         tabController.present(container, animated: true, completion: nil)
+    }
+
+    func selectedEffect(_ viewController: WalletViewController, effect: StellarEffect) {
+        let transactionVC = TransactionDetailsViewController()
+        transactionViewController = transactionVC
+
+//        transactionVC.update(with: TransactionDetailsViewController.EffectViewModel(
+//            sourceAccount: "???",
+//            transactionId: "???",
+//            date: Date(),
+//            sequenceNumber: "293478239874329",
+//            fee: "0.01 XLM",
+//            memo: "This is the memo data",
+//            memoType: "TEXT",
+//            operations: [],
+//            signatures: []
+//        ))
+
+        wrappingNavController?.pushViewController(transactionVC, animated: true)
     }
 }
 
