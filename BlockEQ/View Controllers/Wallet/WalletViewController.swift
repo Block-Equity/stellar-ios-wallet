@@ -10,9 +10,10 @@ import stellarsdk
 import UIKit
 
 protocol WalletViewControllerDelegate: AnyObject {
+    func selectedEffect(_ viewController: WalletViewController, effect: StellarEffect)
     func selectedWalletSwitch(_ viewController: WalletViewController, account: StellarAccount)
     func selectedSend(_ viewController: WalletViewController, account: StellarAccount, index: Int)
-    func selectedReceive()
+    func selectedReceive(_ viewController: WalletViewController, account: StellarAccount)
     func selectBalance(account: StellarAccount, index: Int)
 }
 
@@ -34,7 +35,6 @@ class WalletViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
 
     weak var delegate: WalletViewControllerDelegate?
-    var navigationContainer: AppNavigationController?
 
     var accounts: [StellarAccount] = []
     var effects: [StellarEffect] = []
@@ -45,19 +45,8 @@ class WalletViewController: UIViewController {
     var paymentStream: Any!
     var isNativeAsset: Bool = false
 
-    @IBAction func sendFunds() {
-        let currentStellarAccount = accounts[0]
-        delegate?.selectedSend(self, account: currentStellarAccount, index: currentAssetIndex)
-    }
-
-    @IBAction func selectBalance() {
-        let currentStellarAccount = accounts[0]
-        delegate?.selectBalance(account: currentStellarAccount, index: currentAssetIndex)
-    }
-
-    @IBAction func displayWalletSwitcher() {
-        let currentStellarAccount = accounts[0]
-        delegate?.selectedWalletSwitch(self, account: currentStellarAccount)
+    deinit {
+        stopTimer()
     }
 
     override func viewDidLoad() {
@@ -75,10 +64,6 @@ class WalletViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
 
         getAccountDetails()
-    }
-
-    deinit {
-        stopTimer()
     }
 
     func setupView() {
@@ -122,8 +107,23 @@ class WalletViewController: UIViewController {
         timer.cancel()
     }
 
+    @IBAction func selectBalance() {
+        let currentStellarAccount = accounts[0]
+        delegate?.selectBalance(account: currentStellarAccount, index: currentAssetIndex)
+    }
+
+    @IBAction func displayWalletSwitcher() {
+        let currentStellarAccount = accounts[0]
+        delegate?.selectedWalletSwitch(self, account: currentStellarAccount)
+    }
+
+    @objc func sendFunds() {
+        let currentStellarAccount = accounts[0]
+        delegate?.selectedSend(self, account: currentStellarAccount, index: currentAssetIndex)
+    }
+
     @objc func receiveFunds() {
-        delegate?.selectedReceive()
+        delegate?.selectedReceive(self, account: accounts[0])
     }
 }
 
@@ -223,6 +223,11 @@ extension WalletViewController: UITableViewDataSource {
 extension WalletViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return TransactionHistoryCell.rowHeight
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        delegate?.selectedEffect(self, effect: effects[indexPath.row])
     }
 }
 
