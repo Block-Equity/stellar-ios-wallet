@@ -7,9 +7,8 @@
 //
 
 import stellarsdk
-import UIKit
 
-class StellarAccount: NSObject {
+final class StellarAccount {
     var accountId = ""
     var assets: [StellarAsset] = []
     var inflationDestination: String?
@@ -35,19 +34,19 @@ class StellarAccount: NSObject {
     }
 
     var formattedBaseReserve: String {
-        return String(format: "%.2f", baseReserve)
+        return baseReserve.displayFormattedString
     }
 
     var formattedTrustlines: String {
-        return String(format: "%.2f", trustlines)
+        return trustlines.displayFormattedString
     }
 
     var formattedOffers: String {
-        return String(format: "%.2f", offers)
+        return offers.displayFormattedString
     }
 
     var formattedSigners: String {
-        return String(format: "%.2f", signers)
+        return signers.displayFormattedString
     }
 
     var minBalance: Double {
@@ -55,14 +54,18 @@ class StellarAccount: NSObject {
     }
 
     var formattedMinBalance: String {
-        return String(format: "%.4f", minBalance)
+        return minBalance.displayFormattedString
+    }
+
+    var formattedAvailableBalance: String {
+        return availableBalance.displayFormattedString
     }
 
     var availableBalance: Double {
         var totalBalance = 0.00
         for asset in assets where asset.assetType == AssetTypeAsString.NATIVE {
             if let assetBalance = Double(asset.balance) {
-               totalBalance = assetBalance
+                totalBalance = assetBalance
             }
         }
 
@@ -72,9 +75,5 @@ class StellarAccount: NSObject {
             return calculatedBalance
         }
         return totalBalance
-    }
-
-    var formattedAvailableBalance: String {
-        return String(format: "%.4f", availableBalance)
     }
 }

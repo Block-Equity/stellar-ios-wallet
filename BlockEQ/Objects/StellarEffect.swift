@@ -32,7 +32,7 @@ enum StellarEffectType: String {
     }
 }
 
-class StellarEffect: NSObject {
+class StellarEffect {
     var amount = ""
     var soldAmount = ""
     var boughtAmount = ""
@@ -52,7 +52,6 @@ class StellarEffect: NSObject {
                                                  balance: "")
 
     init(effect: EffectResponse) {
-        super.init()
         self.setEffects(effectResponse: effect)
     }
 
