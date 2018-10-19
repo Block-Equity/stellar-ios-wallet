@@ -152,3 +152,7 @@
 "SUBMIT_TRADE_FORMAT" = "You are about to submit a trade of %@ %@ for %@ %@.";
 "TRADE_TITLE" = "Submit";
 "TRADE_SUBMITTING_MESSAGE" = "Placing Trade Offer...";
+"LEDGER_TITLE" = "Ledger";
+"TRANSACTION_TITLE" = "Transaction";
+"OPERATIONS_TITLE" = "Operations";
+"SIGNATURES_TITLE" = "Signatures";

@@ -87,8 +87,21 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
     }
 
     func selectedEffect(_ viewController: WalletViewController, effect: StellarEffect) {
-        let transactionVC = TransactionDetailsViewController(effect)
+        let transactionVC = TransactionDetailsViewController()
         transactionViewController = transactionVC
+
+//        transactionVC.update(with: TransactionDetailsViewController.EffectViewModel(
+//            sourceAccount: "???",
+//            transactionId: "???",
+//            date: Date(),
+//            sequenceNumber: "293478239874329",
+//            fee: "0.01 XLM",
+//            memo: "This is the memo data",
+//            memoType: "TEXT",
+//            operations: [],
+//            signatures: []
+//        ))
+
         wrappingNavController?.pushViewController(transactionVC, animated: true)
     }
 }
