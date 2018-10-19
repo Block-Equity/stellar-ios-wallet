@@ -8,14 +8,8 @@
 
 import UIKit
 
-class LocalContact: NSObject {
+struct LocalContact {
     var identifier = ""
     var name = ""
     var address = ""
-
-    init(identifier: String, name: String, address: String) {
-        self.identifier = identifier
-        self.name = name
-        self.address = address
-    }
 }

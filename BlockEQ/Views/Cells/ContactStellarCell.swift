@@ -12,11 +12,10 @@ protocol ContactCellStellarDelegate: class {
     func didSendPayment(indexPath: IndexPath)
 }
 
-class ContactStellarCell: UITableViewCell, ReusableView {
+class ContactStellarCell: UITableViewCell, ReusableView, NibLoadableView {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var sendPaymentButton: UIButton!
 
-    static let cellIdentifier = "ContactStellarCell"
     static let rowHeight: CGFloat = 55.0
     var indexPath: IndexPath?
 

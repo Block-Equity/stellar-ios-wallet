@@ -6,12 +6,12 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import UIKit
+import StellarAccountService
 import stellarsdk
 
 protocol VerificationViewControllerDelegate: AnyObject {
-    func validatedAccount(_ viewController: VerificationViewController, mnemonic: RecoveryMnemonic)
-    func validatedAccount(_ viewController: VerificationViewController, secret: SecretSeed)
+    func validatedAccount(_ viewController: VerificationViewController, mnemonic: StellarRecoveryMnemonic)
+    func validatedAccount(_ viewController: VerificationViewController, secret: StellarSeed)
 }
 
 class VerificationViewController: UIViewController {
@@ -53,16 +53,14 @@ class VerificationViewController: UIViewController {
     var suggestions: [String] = []
     var questionWords: [String] = []
     var currentWord: String = ""
-    var mnemonic: RecoveryMnemonic?
-    var secret: SecretSeed?
 
     @IBAction func nextButtonSelected() {
         switch type {
         default:
-            if let recoveryMnemonic = RecoveryMnemonic(textView.text) {
+            if let recoveryMnemonic = StellarRecoveryMnemonic(textView.text) {
                 textView.text = ""
                 delegate?.validatedAccount(self, mnemonic: recoveryMnemonic)
-            } else if let recoverySeed = SecretSeed(textView.text) {
+            } else if let recoverySeed = StellarSeed(textView.text) {
                 textView.text = ""
                 delegate?.validatedAccount(self, secret: recoverySeed)
             } else {
@@ -75,11 +73,11 @@ class VerificationViewController: UIViewController {
         super.init(coder: aDecoder)
     }
 
-    init(type: VerificationType, mnemonic: RecoveryMnemonic?) {
+    init(type: VerificationType, mnemonic: StellarRecoveryMnemonic?) {
         super.init(nibName: String(describing: VerificationViewController.self), bundle: nil)
 
         self.type = type
-        self.mnemonic = mnemonic
+//        self.mnemonic = mnemonic
     }
 
     override func viewDidLoad() {
@@ -95,8 +93,6 @@ class VerificationViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         textView.text = ""
-        mnemonic = nil
-        secret = nil
     }
 
     func setupView() {

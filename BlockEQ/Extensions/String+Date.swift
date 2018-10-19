@@ -15,5 +15,11 @@ extension String {
         }()
     }
 
-    var isoDate: Date { return Formatters.dateFormatter.date(from: self)! }
+    var isoDate: Date {
+        if let date = Formatters.dateFormatter.date(from: self) {
+            return date
+        }
+
+        return Date()
+    }
 }

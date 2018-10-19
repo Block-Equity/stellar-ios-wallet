@@ -12,14 +12,13 @@ protocol ContactCellDelegate: class {
     func didSelectAddToAddressBook(indexPath: IndexPath)
 }
 
-class ContactCell: UITableViewCell, ReusableView {
+class ContactCell: UITableViewCell, ReusableView, NibLoadableView {
 
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var addressButton: UIButton!
 
     weak var delegate: ContactCellDelegate?
     var indexPath: IndexPath?
-    static let cellIdentifier = "ContactCell"
     static let rowHeight: CGFloat = 55.0
 
     @IBAction func addToAddressBook() {

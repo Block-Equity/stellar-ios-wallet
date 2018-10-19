@@ -1,23 +1,24 @@
 //
-//  RecoveryMnemonic.swift
-//  BlockEQ
+//  StellarMnemonic.swift
+//  StellarAccountService
 //
-//  Created by Nick DiZazzo on 2018-10-04.
+//  Created by Nick DiZazzo on 2018-10-19.
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
+
 import stellarsdk
 
-final class RecoveryMnemonic {
-    enum MnemonicType {
+public struct StellarRecoveryMnemonic {
+    public enum MnemonicType {
         case twelve
         case twentyFour
     }
 
-    let type: MnemonicType
-    let string: String
-    let words: [String]
+    public let type: MnemonicType
+    public let string: String
+    public let words: [String]
 
-    init?(_ string: String?) {
+    public init?(_ string: String?) {
         guard let string = string else { return nil }
 
         self.string = string.last == " " ? String(string.dropLast()) : string
@@ -34,7 +35,7 @@ final class RecoveryMnemonic {
         }
     }
 
-    static func generate(type: MnemonicType) -> RecoveryMnemonic? {
+    public static func generate(type: MnemonicType) -> StellarRecoveryMnemonic? {
         let mnemonicString: String
 
         switch type {
@@ -42,6 +43,6 @@ final class RecoveryMnemonic {
         case .twentyFour: mnemonicString = Wallet.generate24WordMnemonic()
         }
 
-        return RecoveryMnemonic(mnemonicString)
+        return StellarRecoveryMnemonic(mnemonicString)
     }
 }

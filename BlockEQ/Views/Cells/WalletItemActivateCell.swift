@@ -12,7 +12,7 @@ protocol WalletItemActivateCellDelegate: class {
     func didAddAsset(indexPath: IndexPath)
 }
 
-class WalletItemActivateCell: UITableViewCell, ReusableView {
+class WalletItemActivateCell: UITableViewCell, ReusableView, NibLoadableView {
     struct ViewModel {
         var title: String
         var icon: UIImage?

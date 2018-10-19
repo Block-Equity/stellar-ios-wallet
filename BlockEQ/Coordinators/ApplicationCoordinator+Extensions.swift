@@ -6,6 +6,8 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
+import StellarAccountService
+
 extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
     func authenticationCancelled(_ coordinator: AuthenticationCoordinator,
                                  options: AuthenticationCoordinator.AuthenticationContext) {
@@ -43,8 +45,26 @@ extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
 }
 
 extension ApplicationCoordinator: WalletViewControllerDelegate {
-    func selectedSend(_ viewController: WalletViewController, account: StellarAccount, index: Int) {
-        let sendVC = SendViewController(stellarAccount: account, currentAssetIndex: index)
+    func selectedWalletSwitch(_ viewController: WalletViewController) {
+        guard let account = core?.accountService.account else { return }
+
+        let walletSwitchVC = WalletSwitchingViewController()
+        let container = AppNavigationController(rootViewController: walletSwitchVC)
+        container.navigationBar.prefersLargeTitles = true
+        walletViewController.navigationContainer = container
+
+        walletSwitchingViewController = walletSwitchVC
+
+        walletSwitchVC.delegate = self
+        walletSwitchVC.updateMenu(account: account)
+
+        tabController.present(container, animated: true, completion: nil)
+    }
+
+    func selectedSend(_ viewController: WalletViewController, for asset: StellarAsset) {
+        guard let account = core?.accountService.account else { return }
+
+        let sendVC = SendViewController(stellarAccount: account, asset: asset)
         let container = AppNavigationController(rootViewController: sendVC)
         container.navigationBar.prefersLargeTitles = true
 
@@ -53,19 +73,9 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
         tabController.present(container, animated: true, completion: nil)
     }
 
-    func selectedWalletSwitch(_ viewController: WalletViewController, account: StellarAccount) {
-        let walletSwitchVC = WalletSwitchingViewController()
-        let container = AppNavigationController(rootViewController: walletSwitchVC)
-        container.navigationBar.prefersLargeTitles = true
+    func selectedReceive(_ viewController: WalletViewController) {
+        guard let account = core?.accountService.account else { return }
 
-        walletSwitchingViewController = walletSwitchVC
-        walletSwitchVC.delegate = self
-        walletSwitchVC.updateMenu(stellarAccount: account)
-
-        tabController.present(container, animated: true, completion: nil)
-    }
-
-    func selectedReceive(_ viewController: WalletViewController, account: StellarAccount) {
         let address = account.accountId
         let receiveVC = ReceiveViewController(address: address, isPersonalToken: false)
         let container = AppNavigationController(rootViewController: receiveVC)
@@ -76,8 +86,10 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
         tabController.present(container, animated: true, completion: nil)
     }
 
-    func selectBalance(account: StellarAccount, index: Int) {
-        let balanceVC = BalanceViewController(stellarAccount: account, stellarAsset: account.assets[index])
+    func selectBalance(_ viewController: WalletViewController, for asset: StellarAsset) {
+        guard let account = core?.accountService.account else { return }
+
+        let balanceVC = BalanceViewController(stellarAccount: account, stellarAsset: asset)
         let container = AppNavigationController(rootViewController: balanceVC)
         container.navigationBar.prefersLargeTitles = true
 
@@ -107,35 +119,67 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
 }
 
 extension ApplicationCoordinator: WalletSwitchingViewControllerDelegate {
-    func didSelectSetInflation(inflationDestination: String?) {
-        let inflationViewController = InflationViewController(inflationDestination: inflationDestination)
+    func selectedAddAsset() {
+        let addAssetViewController = AddAssetViewController()
+        self.addAssetViewController = addAssetViewController
+        addAssetViewController.delegate = self
+
+        if let container = walletViewController.navigationContainer {
+            container.pushViewController(addAssetViewController, animated: true)
+        } else {
+            wrappingNavController?.pushViewController(addAssetViewController, animated: true)
+        }
+    }
+
+    func updateInflation(destination: StellarAddress) {
+        guard let account = core?.accountService.account else { return }
+
+        let inflationViewController = InflationViewController(account: account, inflationDestination: destination)
         self.inflationViewController = inflationViewController
 
-        wrappingNavController?.pushViewController(inflationViewController, animated: true)
+        if let container = walletViewController.navigationContainer {
+            container.pushViewController(inflationViewController, animated: true)
+        } else {
+            wrappingNavController?.pushViewController(inflationViewController, animated: true)
+        }
     }
 
-    func didSelectAddAsset() {
-        let addAssetViewController = AddAssetViewController()
-        addAssetViewController.delegate = self
-        self.addAssetViewController = addAssetViewController
-
-        wrappingNavController?.pushViewController(addAssetViewController, animated: true)
+    func switchWallet(to asset: StellarAsset) {
+        guard let account = core?.accountService.account else { return }
+        walletViewController.update(with: account, asset: asset)
     }
 
-    func didSelectAsset(index: Int) {
-        walletViewController.selectAsset(at: index)
+    func createTrustLine(to address: StellarAddress, for asset: StellarAsset) { }
+
+    func reloadAssets() { }
+
+    func remove(asset: StellarAsset) {
+        guard let account = core?.accountService.account, let walletVC = walletSwitchingViewController else {
+            return
+        }
+
+        account.changeTrust(asset: asset, remove: true, delegate: walletVC)
     }
 
-    func reloadAssets() {
-        walletViewController.getAccountDetails()
+    func add(asset: StellarAsset) {
+        guard let account = core?.accountService.account, let walletVC = walletSwitchingViewController  else {
+            return
+        }
+
+        account.changeTrust(asset: asset, remove: false, delegate: walletVC)
     }
 }
 
 extension ApplicationCoordinator: AddAssetViewControllerDelegate {
-    func didAddAsset(stellarAccount: StellarAccount) {
-        reloadAssets()
+    func requestedAdd(_ viewController: AddAssetViewController, asset: StellarAsset) {
 
-        walletSwitchingViewController?.updateMenu(stellarAccount: stellarAccount)
+        guard let account = core?.accountService.account, let walletVC = walletSwitchingViewController  else {
+            return
+        }
+
+        walletVC.displayAddPrompt()
+
+        account.changeTrust(asset: asset, remove: false, delegate: walletVC)
     }
 }
 
@@ -149,5 +193,24 @@ extension ApplicationCoordinator: ContactsViewControllerDelegate {
         wrappingNavController?.navigationBar.prefersLargeTitles = true
 
         tabController.present(container, animated: true, completion: nil)
+    }
+}
+
+extension ApplicationCoordinator: StellarAccountServiceDelegate {
+    func accountUpdated(_ service: StellarAccountService, account: StellarAccount, opts: StellarAccount.UpdateOptions) {
+        if opts.contains(.effects) || opts.contains(.account) {
+            self.walletViewController.update(with: account)
+        }
+
+        self.tradingCoordinator.update(with: account)
+    }
+
+    func accountInactive(_ service: StellarAccountService, account: StellarAccount) {
+        self.walletViewController.update(with: account)
+        self.tradingCoordinator.update(with: account)
+    }
+
+    func paymentReceived(_ service: StellarAccountService, operation: StellarOperation) {
+        print("account operation: \(operation)")
     }
 }

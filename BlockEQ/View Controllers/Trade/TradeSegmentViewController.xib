@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,18 +32,12 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C9u-iu-TrZ">
-                            <rect key="frame" x="67" y="199" width="240" height="220"/>
+                            <rect key="frame" x="67.5" y="199" width="240" height="220"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QkK-o9-U3C" customClass="AppButton" customModule="BlockEQ" customModuleProvider="target">
                                     <rect key="frame" x="16" y="160" width="208" height="40"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="40" id="Kux-Z3-Gsb">
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <integer key="value" value="5"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                        </constraint>
+                                        <constraint firstAttribute="height" constant="40" id="Kux-Z3-Gsb"/>
                                     </constraints>
                                     <state key="normal" title="Add asset"/>
                                     <userDefinedRuntimeAttributes>
@@ -115,6 +110,6 @@
         </view>
     </objects>
     <resources>
-        <image name="icon-warning" width="50" height="50"/>
+        <image name="icon-warning" width="75" height="75"/>
     </resources>
 </document>

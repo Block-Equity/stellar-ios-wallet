@@ -7,7 +7,7 @@
 //
 
 import Whisper
-import UIKit
+import StellarAccountService
 
 protocol AddPeerViewControllerDelegate: AnyObject {
     func selectedScanAddress()
@@ -55,14 +55,17 @@ class AddPeerViewController: UIViewController {
             return
         }
 
-        guard let decimalLimit = Decimal(string: limit) else {
-            limitTextField.shake()
-            return
-        }
+//        guard let decimalLimit = Decimal(string: limit) else {
+//            limitTextField.shake()
+//            return
+//        }
 
         view.endEditing(true)
 
-        createTrustLine(issuerAccountId: issuer, assetCode: assetCode, limit: decimalLimit)
+        showHud()
+
+        // Re-integreate this eventually to change the P2P trust once this feature is ratified.
+        // createTrustLine(issuerAccountId: issuer, assetCode: assetCode, limit: decimalLimit)
     }
 
     func setupView() {
@@ -109,29 +112,23 @@ class AddPeerViewController: UIViewController {
     }
 }
 
-/*
- * Operations
- */
-extension AddPeerViewController {
-    func createTrustLine(issuerAccountId: String, assetCode: String, limit: Decimal?) {
-        showHud()
-
-        PaymentTransactionOperation.changeP2PTrust(issuerAccountId: issuerAccountId,
-                                                   assetCode: assetCode,
-                                                   limit: limit) { completed in
-            self.hideHud()
-
-            if completed {
-                self.displayAddPeerSuccess()
-            } else {
-                let alert = UIAlertController(title: "ACTIVATION_ERROR_TITLE".localized(),
-                                              message: "PEER_ERROR_MESSAGE".localized(),
-                                              preferredStyle: .alert)
-
-                alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(), style: .default, handler: nil))
-
-                self.present(alert, animated: true, completion: nil)
-            }
-        }
+extension AddPeerViewController: P2PResponseDelegate {
+    func addedPeer() {
+        self.hideHud()
+        self.displayAddPeerSuccess()
     }
+
+    func removedPeer() {
+        self.hideHud()
+
+        UIAlertController.simpleAlert(title: "ACTIVATION_ERROR_TITLE".localized(),
+                                      message: "PEER_ERROR_MESSAGE".localized(),
+                                      presentingViewController: self)
+    }
+
+    func created(personalToken: String) { }
+    func createFailed(error: Error) { }
+    func retrieved(personalToken: String?) {}
+    func addFailed(error: Error) {}
+    func removeFailed(error: Error) {}
 }

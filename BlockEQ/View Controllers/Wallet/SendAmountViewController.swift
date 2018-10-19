@@ -8,7 +8,7 @@
 
 import Whisper
 import stellarsdk
-import UIKit
+import StellarAccountService
 
 class SendAmountViewController: UIViewController {
 
@@ -26,10 +26,10 @@ class SendAmountViewController: UIViewController {
     let decimalCountRestriction = 7
     let decimalDotSize = 1
 
-    var receiver: String = ""
+    var receiver: StellarAddress
     var sendingAmount: String = "0"
-    var stellarAccount: StellarAccount = StellarAccount()
-    var currentAssetIndex = 0
+    var stellarAccount: StellarAccount
+    var currentAsset: StellarAsset?
     var isExchangeAddress: Bool = false
     var exchangeName: String = ""
     var authenticationCoordinator: AuthenticationCoordinator?
@@ -58,36 +58,42 @@ class SendAmountViewController: UIViewController {
         view.endEditing(true)
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
-    init(stellarAccount: StellarAccount, currentAssetIndex: Int, receiver: String, exchangeName: String?) {
-        super.init(nibName: String(describing: SendAmountViewController.self), bundle: nil)
-
+    init(stellarAccount: StellarAccount, currentAsset: StellarAsset, receiver: StellarAddress, exchangeName: String?) {
         self.receiver = receiver
         self.stellarAccount = stellarAccount
-        self.currentAssetIndex = currentAssetIndex
+        self.currentAsset = currentAsset
+
+        super.init(nibName: String(describing: SendAmountViewController.self), bundle: nil)
 
         if let exchange = exchangeName {
             isExchangeAddress = true
             self.exchangeName = exchange
         }
+    }
 
-        var availableBalance = ""
-        if stellarAccount.assets[currentAssetIndex].assetType == AssetTypeAsString.NATIVE {
-            availableBalance = stellarAccount.formattedAvailableBalance
-        } else {
-            availableBalance = stellarAccount.assets[currentAssetIndex].formattedBalance
-        }
-
-        navigationItem.title = "\(availableBalance) \(stellarAccount.assets[currentAssetIndex].shortCode)"
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupView()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        guard let asset = self.currentAsset else { return }
+
+        var availableBalance = ""
+        if asset.assetType == AssetTypeAsString.NATIVE {
+            availableBalance = stellarAccount.formattedAvailableBalance
+        } else {
+            availableBalance = asset.formattedBalance
+        }
+
+        navigationItem.title = "\(availableBalance) \(asset.shortCode)"
     }
 
     func setupView() {
@@ -108,8 +114,8 @@ class SendAmountViewController: UIViewController {
         memoIdLabel.textColor = Colors.darkGray
         memoIdTextField.textColor = Colors.darkGray
 
-        currencyLabel.text = stellarAccount.assets[currentAssetIndex].shortCode
-        sendAddressLabel.text = "To: \(receiver)"
+        currencyLabel.text = currentAsset?.shortCode
+        sendAddressLabel.text = String(format: "SEND_TO_FORMAT".localized(), (receiver.string))
 
         memoIdTextField.inputAccessoryView = toolBar
 
@@ -184,11 +190,14 @@ class SendAmountViewController: UIViewController {
     }
 
     func isValidSendAmount(amount: String) -> Bool {
+
+        guard let asset = self.currentAsset else { return false }
+
         var totalAvailableBalance: Double = 0.00
-        if stellarAccount.assets[currentAssetIndex].assetType == AssetTypeAsString.NATIVE {
+        if asset.assetType == AssetTypeAsString.NATIVE {
             totalAvailableBalance = stellarAccount.availableBalance
         } else {
-            totalAvailableBalance = Double(stellarAccount.assets[currentAssetIndex].balance)!
+            totalAvailableBalance = Double(asset.balance)!
         }
 
         if let totalSendable = Double(amount) {
@@ -200,7 +209,7 @@ class SendAmountViewController: UIViewController {
 
     func showHud() {
         let hud = MBProgressHUD.showAdded(to: (navigationController?.view)!, animated: true)
-        hud.label.text = "Sending Payment..."
+        hud.label.text = "SENDING_PAYMENT".localized()
         hud.mode = .indeterminate
     }
 
@@ -209,11 +218,23 @@ class SendAmountViewController: UIViewController {
     }
 
     func sendPaymentAmount() {
-        guard let amount = amountLabel.text, !amount.isEmpty, amount != "0" else {
+        guard let amountString = amountLabel.text, let amount = Decimal(string: amountString), !amount.isZero else {
+            amountLabel.shake()
             return
         }
 
-        checkForValidAccount(account: receiver, amount: Decimal(string: amount)!)
+        guard let asset = currentAsset else {
+            return
+        }
+
+        showHud()
+
+        let paymentData = StellarPaymentData(address: receiver,
+                                             amount: amount,
+                                             memo: memoIdTextField.text,
+                                             asset: asset)
+
+        self.stellarAccount.sendAmount(data: paymentData, delegate: self)
     }
 }
 
@@ -239,54 +260,6 @@ extension SendAmountViewController: AuthenticationCoordinatorDelegate {
     func authenticationFailed(_ coordinator: AuthenticationCoordinator,
                               error: AuthenticationCoordinator.AuthenticationError?,
                               options: AuthenticationCoordinator.AuthenticationContext) {
-    }
-}
-
-/**
- * Sending payment.
- */
-extension SendAmountViewController {
-    func checkForValidAccount(account accountId: String, amount: Decimal) {
-        showHud()
-
-        AccountOperation.getAccountDetails(accountId: accountId) { accounts in
-            if accounts.count > 0 {
-                self.postPaymentTransaction(accountId: accountId, amount: amount)
-            } else {
-                self.fundNewAccount(account: accountId, amount: amount)
-            }
-        }
-    }
-
-    func fundNewAccount(account accountId: String, amount: Decimal) {
-        AccountOperation.createNewAccount(accountId: accountId, amount: amount) { completed in
-            if completed {
-                self.displayTransactionSuccess()
-            } else {
-                self.displayTransactionError()
-            }
-        }
-    }
-
-    func postPaymentTransaction(accountId: String, amount: Decimal) {
-        var memoId = ""
-
-        if let memoIdString = memoIdTextField.text {
-            memoId = memoIdString
-        }
-
-        let stellarAsset = stellarAccount.assets[currentAssetIndex]
-
-        PaymentTransactionOperation.postPayment(accountId: accountId,
-                                                amount: amount,
-                                                memoId: memoId,
-                                                stellarAsset: stellarAsset) { completed in
-            if completed {
-                self.displayTransactionSuccess()
-            } else {
-                self.displayTransactionError()
-            }
-        }
     }
 }
 
@@ -328,5 +301,15 @@ extension SendAmountViewController: KeyboardViewDelegate {
         }
 
         return amount
+    }
+}
+
+extension SendAmountViewController: SendAmountResponseDelegate {
+    func sentAmount(destination: StellarAddress) {
+        self.displayTransactionSuccess()
+    }
+
+    func failed(error: Error) {
+        self.displayTransactionError()
     }
 }

@@ -9,7 +9,7 @@
 import XCTest
 
 class BlockEQUITests: XCTestCase {
-        
+
     override func setUp() {
         super.setUp()
         

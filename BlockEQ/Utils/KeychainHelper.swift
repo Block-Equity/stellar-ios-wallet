@@ -18,28 +18,12 @@ final class KeychainHelper {
     static let pinKey = "pin"
     static let isFreshInstallKey = "isFreshInstall"
 
-    public static func save(mnemonic: String) {
-        KeychainSwift().set(mnemonic, forKey: mnemonicKey)
-    }
-
-    public static func save(seed: String) {
-        KeychainSwift().set(seed, forKey: secretSeedKey)
+    public static func save(pin: String) {
+        KeychainSwift().set(pin, forKey: pinKey)
     }
 
     public static func save(accountId: String) {
         KeychainSwift().set(accountId, forKey: accountIdKey)
-    }
-
-    public static func save(publicKey: Data) {
-        KeychainSwift().set(publicKey, forKey: publicSeedKey)
-    }
-
-    public static func save(privateKey: Data) {
-        KeychainSwift().set(privateKey, forKey: privateSeedKey)
-    }
-
-    public static func save(pin: String) {
-        KeychainSwift().set(pin, forKey: pinKey)
     }
 
     public static var mnemonic: String? {
@@ -70,6 +54,13 @@ final class KeychainHelper {
         return !(KeychainSwift().get(pinKey)?.isEmpty ?? true)
     }
 
+    public static var canMigrateToNewFormat: Bool {
+        let hasAccount = self.accountId != nil
+        let hasKeys = self.publicKey != nil && self.privateKey != nil
+        let hasRecovery = self.secretSeed != nil || self.mnemonic != nil
+        return hasAccount && hasKeys && hasRecovery
+    }
+
     public static var isExistingInstance: Bool {
         return UserDefaults.standard.bool(forKey: isFreshInstallKey)
     }
@@ -80,7 +71,16 @@ final class KeychainHelper {
 
     public static func clearAll() {
         UserDefaults.standard.set(false, forKey: isFreshInstallKey)
-        KeychainSwift().clear()
+        self.clearStellarSecrets()
+        KeychainSwift().delete(accountIdKey)
+        KeychainSwift().delete(pinKey)
+    }
+
+    public static func clearStellarSecrets() {
+        KeychainSwift().delete(mnemonicKey)
+        KeychainSwift().delete(secretSeedKey)
+        KeychainSwift().delete(publicSeedKey)
+        KeychainSwift().delete(privateSeedKey)
     }
 
     /// Validates the pin stored in the keychain with the input pin provided.

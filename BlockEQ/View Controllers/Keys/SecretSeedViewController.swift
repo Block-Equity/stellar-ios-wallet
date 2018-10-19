@@ -8,6 +8,7 @@
 
 import Whisper
 import stellarsdk
+import StellarAccountService
 
 final class SecretSeedViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -22,13 +23,13 @@ final class SecretSeedViewController: UIViewController {
     var seed: String?
     var revealed: Bool = false
 
-    init(mnemonic: String?) {
-        self.mnemonic = mnemonic
+    init(mnemonic: StellarRecoveryMnemonic?) {
+        self.mnemonic = mnemonic?.string
         super.init(nibName: String(describing: SecretSeedViewController.self), bundle: nil)
     }
 
-    init(_ seed: String?) {
-        self.seed = seed
+    init(_ seed: StellarSeed?) {
+        self.seed = seed?.string
         super.init(nibName: String(describing: SecretSeedViewController.self), bundle: nil)
     }
 

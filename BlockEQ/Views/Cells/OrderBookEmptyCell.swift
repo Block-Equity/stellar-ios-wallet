@@ -8,10 +8,9 @@
 
 import UIKit
 
-class OrderBookEmptyCell: UITableViewCell, ReusableView {
+class OrderBookEmptyCell: UITableViewCell, ReusableView, NibLoadableView {
     @IBOutlet weak var label: UILabel!
 
-    static let cellIdentifier = "OrderBookEmptyCell"
     static let rowHeight: CGFloat = 100.0
 
     override func awakeFromNib() {
