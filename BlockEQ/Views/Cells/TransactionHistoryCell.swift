@@ -24,4 +24,11 @@ class TransactionHistoryCell: UITableViewCell, ReusableView {
         amountLabel.textColor = Colors.black
         dateLabel.textColor = Colors.blackTransparent
     }
+
+    func update(with asset: StellarAsset, effect: StellarEffect) {
+        amountLabel.text = effect.formattedTransactionAmount(asset: asset)
+        dateLabel.text = effect.formattedDate
+        activityLabel.text = effect.formattedDescription(asset: asset)
+        transactionDisplayView.backgroundColor = effect.color(asset: asset)
+    }
 }

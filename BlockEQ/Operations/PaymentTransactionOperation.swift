@@ -11,9 +11,9 @@ import stellarsdk
 import UIKit
 
 class PaymentTransactionOperation: NSObject {
-    static func getTransactions(accountId: String,
-                                stellarAsset: StellarAsset,
-                                completion: @escaping ([StellarEffect]) -> Void) {
+    static func getEffects(accountId: String,
+                           stellarAsset: StellarAsset,
+                           completion: @escaping ([StellarEffect]) -> Void) {
 
         Stellar.sdk.effects.getEffects(forAccount: accountId,
                                        from: nil,

@@ -38,6 +38,7 @@ class WalletViewController: UIViewController {
 
     var accounts: [StellarAccount] = []
     var effects: [StellarEffect] = []
+    var transactions: [StellarTransaction] = []
     var isLoadingTransactionsOnViewLoad = true
     var isShowingSeed = true
     var timer: DispatchSourceTimer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main)
@@ -152,7 +153,7 @@ extension WalletViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 1: return effects.count
+        case 1: return transactions.count
         default: return 0
         }
     }
@@ -196,10 +197,7 @@ extension WalletViewController: UITableViewDataSource {
         let effect = effects[indexPath.row]
 
         let stellarAsset = self.accounts[0].assets[currentAssetIndex]
-        cell.amountLabel.text = effect.formattedTransactionAmount(asset: stellarAsset)
-        cell.dateLabel.text = effect.formattedDate
-        cell.activityLabel.text = effect.formattedDescription(asset: stellarAsset)
-        cell.transactionDisplayView.backgroundColor = effect.color(asset: stellarAsset)
+        cell.update(with: stellarAsset, effect: effect)
 
         return cell
     }
@@ -226,7 +224,7 @@ extension WalletViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
+        tableView.deselectRow(at: indexPath, animated: true)
         delegate?.selectedEffect(self, effect: effects[indexPath.row])
     }
 }
@@ -271,7 +269,8 @@ extension WalletViewController {
 
             self.availableBalanceLabel.text = "Available:  \(self.accounts[0].formattedAvailableBalance) XLM"
             self.balanceLabel.text = asset.balance.decimalFormatted
-            self.getEffects()
+//            self.getEffects()
+            self.getTransactions()
         }
     }
 
@@ -292,8 +291,8 @@ extension WalletViewController {
 
         let stellarAsset = self.accounts[0].assets[currentAssetIndex]
 
-        PaymentTransactionOperation.getTransactions(accountId: accountId, stellarAsset: stellarAsset) { transactions in
-            self.effects = transactions
+        PaymentTransactionOperation.getEffects(accountId: accountId, stellarAsset: stellarAsset) { effects in
+            self.effects = effects
 
             if self.effects.count > 0 {
                 self.isLoadingTransactionsOnViewLoad = false
@@ -302,6 +301,26 @@ extension WalletViewController {
             self.activityIndicator.stopAnimating()
             self.tableView.reloadData()
         }
+    }
+
+    func getTransactions() {
+        guard let accountId = KeychainHelper.accountId else {
+            return
+        }
+
+        guard self.accounts.count > 0 else {
+            return
+        }
+
+        FetchTransactionsOperation.getTransactions(accountId: accountId, completion: { transactions in
+
+            self.accounts[0].transactions = transactions
+            self.transactions = transactions
+
+            transactions.forEach { $0.fetchOperations() }
+        }, failure: { error in
+            print(error)
+        })
     }
 
     func checkForPaymentReceived() {

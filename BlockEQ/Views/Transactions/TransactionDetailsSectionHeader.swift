@@ -71,8 +71,6 @@ final class TransactionDetailsSectionHeader: UICollectionReusableView, ReusableV
         headerImageView.tintColor = Colors.primaryDark
         headerImageView.contentMode = .center
 
-        print("collapsed is \(collapsed) transform is \(headerImageView.transform)")
-
         containerView.topBorder(with: Colors.transactionCellBorderGray, width: 1)
 
         headerTitle.text = nil
