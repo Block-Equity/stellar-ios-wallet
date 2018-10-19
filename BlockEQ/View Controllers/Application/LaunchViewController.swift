@@ -6,10 +6,10 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import UIKit
+import StellarAccountService
 
 protocol LaunchViewControllerDelegate: AnyObject {
-    func requestedCreateNewWallet(_ viewController: LaunchViewController, type: RecoveryMnemonic.MnemonicType)
+    func requestedCreateNewWallet(_ viewController: LaunchViewController, type: StellarRecoveryMnemonic.MnemonicType)
     func requestedImportWallet(_ viewController: LaunchViewController)
 }
 
@@ -71,11 +71,6 @@ class LaunchViewController: UIViewController {
         } else {
             showButtons()
         }
-    }
-
-    func createAccount(mnemonic: String) {
-        hideButtons()
-        displayWallet()
     }
 
     func hideButtons() {

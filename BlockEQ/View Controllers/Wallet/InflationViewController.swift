@@ -7,7 +7,7 @@
 //
 
 import Whisper
-import UIKit
+import StellarAccountService
 
 class InflationViewController: UIViewController {
 
@@ -19,35 +19,39 @@ class InflationViewController: UIViewController {
     @IBOutlet var subtitleLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet var destinationAddressTextField: UITextField!
 
-    var inflationDestination: String?
+    var account: StellarAccount
+    var inflationDestination: StellarAddress?
     let lumenautInflationDestination = "GCCD6AJOYZCUAQLX32ZJF2MKFFAUJ53PVCFQI3RHWKL3V47QYE2BNAUT"
 
     @IBAction func addInflationDestination() {
-        guard let inflationDestination = destinationAddressTextField.text,
-            !inflationDestination.isEmpty,
-            inflationDestination.count > 20,
-            inflationDestination != KeychainHelper.accountId else {
-                destinationAddressTextField.shake()
+        guard let inflationDestination = StellarAddress(destinationAddressTextField.text) else {
+            destinationAddressTextField.shake()
+            return
+        }
+
+        let inflationString = inflationDestination.string
+        guard inflationString != account.accountId, inflationString != account.inflationDestination else {
+            destinationAddressTextField.shake()
             return
         }
 
         showHud()
+        account.setInflationDestination(address: inflationDestination, delegate: self)
+    }
 
-        AccountOperation.setInflationDestination(accountId: inflationDestination) { (completed) in
-            self.hideHud()
+    init(account: StellarAccount) {
+        self.account = account
+        super.init(nibName: String(describing: InflationViewController.self), bundle: nil)
+    }
 
-            if completed {
-                self.displayInflationSuccess()
-            } else {
-                let alert = UIAlertController(title: "INFLATION_ERROR_TITLE".localized(),
-                                              message: "INFLATION_ERROR_MESSAGE".localized(),
-                                              preferredStyle: .alert)
+    init(account: StellarAccount, inflationDestination: StellarAddress?) {
+        self.account = account
+        self.inflationDestination = inflationDestination
+        super.init(nibName: String(describing: InflationViewController.self), bundle: nil)
+    }
 
-                alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(), style: .default, handler: nil))
-
-                self.present(alert, animated: true, completion: nil)
-            }
-        }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     @IBAction func scanQRCode() {
@@ -58,16 +62,6 @@ class InflationViewController: UIViewController {
         present(navigationController, animated: true, completion: nil)
     }
 
-    init(inflationDestination: String?) {
-        super.init(nibName: String(describing: InflationViewController.self), bundle: nil)
-
-        self.inflationDestination = inflationDestination
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -75,7 +69,7 @@ class InflationViewController: UIViewController {
     }
 
     func setupView() {
-        navigationItem.title = "Inflation".localized()
+        navigationItem.title = "SET_INFLATION".localized()
 
         tableView.backgroundColor = Colors.lightBackground
         titleLabel.textColor = Colors.darkGrayTransparent
@@ -85,7 +79,7 @@ class InflationViewController: UIViewController {
         holdingView.backgroundColor = Colors.lightBackground
         view.backgroundColor = Colors.lightBackground
 
-        if let currentInflationDestination = inflationDestination {
+        if let currentInflationDestination = inflationDestination?.string {
             destinationAddressTextField.text = currentInflationDestination
             subtitleLabel.text = ""
             subtitleLabelTopConstraint.constant = 0.0
@@ -97,7 +91,7 @@ class InflationViewController: UIViewController {
     func displayInflationSuccess() {
         self.view.endEditing(true)
 
-        let message = Message(title: "Inflation successfully updated.", backgroundColor: Colors.green)
+        let message = Message(title: "INFLATION_SUCCESSFULLY_UPDATED".localized(), backgroundColor: Colors.green)
         Whisper.show(whisper: message, to: navigationController!, action: .show)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -111,7 +105,7 @@ class InflationViewController: UIViewController {
 
     func showHud() {
         let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
-        hud.label.text = "Setting Inflation Destination..."
+        hud.label.text = "SETTING_INFLATION_DESTINATION".localized()
         hud.mode = .indeterminate
     }
 
@@ -129,5 +123,23 @@ class InflationViewController: UIViewController {
 extension InflationViewController: ScanViewControllerDelegate {
     func setQR(value: String) {
         destinationAddressTextField.text = value
+    }
+}
+
+extension InflationViewController: SetInflationResponseDelegate {
+    func setInflation(destination: StellarAddress) {
+        self.hideHud()
+        self.displayInflationSuccess()
+    }
+
+    func failed(error: Error) {
+        self.hideHud()
+        let alert = UIAlertController(title: "INFLATION_ERROR_TITLE".localized(),
+                                      message: "INFLATION_ERROR_MESSAGE".localized(),
+                                      preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(), style: .default, handler: nil))
+
+        self.present(alert, animated: true, completion: nil)
     }
 }

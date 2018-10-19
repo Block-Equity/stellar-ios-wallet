@@ -6,7 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
+import StellarAccountService
 
 enum TransactionSection: Int, RawRepresentable {
     case ledger

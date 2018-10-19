@@ -7,7 +7,7 @@
 //
 
 import stellarsdk
-import UIKit
+import StellarAccountService
 
 enum P2PTradeType: Int {
     case buy
@@ -36,7 +36,7 @@ class P2PTransactionViewController: UIViewController {
     @IBOutlet var tradeToSelectorTextField: UITextField!
 
     let tradeFromPickerView = UIPickerView()
-    var stellarAccount = StellarAccount()
+    var stellarAccount: StellarAccount?
     var peers: [StellarAsset] = []
     var currentPeer: StellarAsset!
     var currentTradeType: P2PTradeType = .buy
@@ -111,12 +111,6 @@ class P2PTransactionViewController: UIViewController {
             tradeToView.layer.borderColor = Colors.green.cgColor
         }
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        getAccountDetails()
-    }
 }
 
 extension P2PTransactionViewController: UIPickerViewDataSource {
@@ -140,35 +134,22 @@ extension P2PTransactionViewController: UIPickerViewDelegate {
     }
 }
 
-/*
- * Operations
- */
 extension P2PTransactionViewController {
-    func getAccountDetails() {
-        guard let accountId = KeychainHelper.accountId else {
-            return
-        }
-
-        AccountOperation.getAccountDetails(accountId: accountId) { responseAccounts in
-            if !responseAccounts.isEmpty && responseAccounts[0].assets.count > 1 {
-                self.stellarAccount = responseAccounts[0]
-
-                self.peers.removeAll()
-
-                for asset in self.stellarAccount.assets {
-                    if asset.shortCode.contains("XLM") && asset.assetType == AssetTypeAsString.CREDIT_ALPHANUM12 {
-                        self.peers.append(asset)
-                    }
-                }
-                self.tradeFromPickerView.reloadAllComponents()
-
-                if self.currentPeer == nil {
-                    let code = self.peers[0].shortCode
-                    self.currentPeer = self.peers[0]
-                    self.tradeFromPickerView.selectRow(0, inComponent: 0, animated: false)
-                    self.tradeFromButton.setTitle("\(Assets.displayTitle(shortCode: code))", for: .normal)
-                }
-            }
-        }
+    func createPeerList() {
+//        self.peers.removeAll()
+//
+//        for asset in account.assets {
+//            if asset.shortCode.contains("XLM") && asset.assetType == AssetTypeAsString.CREDIT_ALPHANUM12 {
+//                self.peers.append(asset)
+//            }
+//        }
+//        self.tradeFromPickerView.reloadAllComponents()
+//
+//        if self.currentPeer == nil {
+//            let code = self.peers[0].shortCode
+//            self.currentPeer = self.peers[0]
+//            self.tradeFromPickerView.selectRow(0, inComponent: 0, animated: false)
+//            self.tradeFromButton.setTitle("\(Assets.displayTitle(shortCode: code))", for: .normal)
+//        }
     }
 }

@@ -20,6 +20,20 @@
                ReferencedContainer = "container:BlockEQ.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C5F1C9CE217A7B60001C847A"
+               BuildableName = "StellarAccountService.framework"
+               BlueprintName = "StellarAccountService"
+               ReferencedContainer = "container:StellarAccountService.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

@@ -121,8 +121,12 @@
 "CREATING_TOKEN" = "Creating Token...";
 "CREATED_TOKEN" = "Person token successfully created.";
 "ASSETS" = "Assets";
-"ACTIVATE_ASSET" = "Activating Asset...";
-"REMOVE_ASSET" = "Removing Asset...";
+"ACTIVATING_ASSET" = "Activating Asset...";
+"REMOVING_ASSET" = "Removing Asset...";
+"CANCELLING_OFFER" = "Cancelling Offer...";
+"ADD_ASSET" = "Add Asset";
+"ADDING_ASSET" = "Adding Asset...";
+"CANCEL_TRADE_ERROR" = "Unable to cancel this trade. Please try again.";
 
 "SELL_SUMMARY_FORMAT" = "Sell %@ %@ for %@ %@ at a price of %@";
 "ADDRESS_COPIED" = "Your address has been successfully copied.";
@@ -156,3 +160,7 @@
 "TRANSACTION_TITLE" = "Transaction";
 "OPERATIONS_TITLE" = "Operations";
 "SIGNATURES_TITLE" = "Signatures";
+"SEND_TO_FORMAT" = "To: %@";
+"SENDING_PAYMENT" = "Sending Payment...";
+"SETTING_INFLATION_DESTINATION" = "Setting Inflation Destination...";
+"INFLATION_SUCCESSFULLY_UPDATED" = "Inflation successfully updated.";

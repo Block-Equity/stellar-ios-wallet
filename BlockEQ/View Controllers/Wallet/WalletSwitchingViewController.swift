@@ -7,48 +7,30 @@
 //
 
 import stellarsdk
-import UIKit
+import StellarAccountService
 
 protocol WalletSwitchingViewControllerDelegate: class {
-    func didSelectAsset(index: Int)
-    func didSelectSetInflation(inflationDestination: String?)
-    func didSelectAddAsset()
     func reloadAssets()
+
+    func switchWallet(to asset: StellarAsset)
+    func selectedAddAsset()
+
+    func createTrustLine(to address: StellarAddress, for asset: StellarAsset)
+    func updateInflation(destination: StellarAddress)
+    func remove(asset: StellarAsset)
+    func add(asset: StellarAsset)
 }
 
 final class WalletSwitchingViewController: UIViewController {
-
     @IBOutlet var tableView: UITableView!
     @IBOutlet var tableViewHeader: UIView!
     @IBOutlet var tableViewHeaderTitleLabel: UILabel!
 
     override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
 
-    enum SectionType: Int {
-        case userAssets
-        case supportedAssets
-    }
-
-    let sections: [SectionType] = [.userAssets, .supportedAssets]
-    let margin: CGFloat = 16.0
-
     weak var delegate: WalletSwitchingViewControllerDelegate?
-    var selectedIndexPath: IndexPath = IndexPath(row: 0, section: 0)
-    var stellarAccount = StellarAccount()
-    var updatedSupportedAssets: [Assets.AssetType] = []
-    var allAssets: [StellarAsset] = []
-
-    @IBAction func addAsset() {
-        if isZeroBalance() {
-            displayNoBalanceError()
-        } else {
-            delegate?.didSelectAddAsset()
-        }
-    }
-
-    @IBAction func dismissView() {
-        self.dismiss(animated: true, completion: nil)
-    }
+    var dataSource: WalletSwitchingDataSource?
+    var isAddingAsset: Bool = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +41,10 @@ final class WalletSwitchingViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        getAccountDetails()
+        tableView?.dataSource = dataSource
+        tableView?.reloadData()
+
+        hideHud()
     }
 
     func setupView() {
@@ -68,11 +53,9 @@ final class WalletSwitchingViewController: UIViewController {
         tableViewHeader.backgroundColor = Colors.lightBackground
         tableViewHeaderTitleLabel.textColor = Colors.darkGray
 
-        let tableViewNibUserAssets = UINib(nibName: WalletItemCell.cellIdentifier, bundle: nil)
-        tableView.register(tableViewNibUserAssets, forCellReuseIdentifier: WalletItemCell.cellIdentifier)
-
-        let tableViewNibSupportedAssets = UINib(nibName: WalletItemActivateCell.cellIdentifier, bundle: nil)
-        tableView.register(tableViewNibSupportedAssets, forCellReuseIdentifier: WalletItemActivateCell.cellIdentifier)
+        tableView?.delegate = self
+        tableView.registerCell(type: WalletItemCell.self)
+        tableView.registerCell(type: WalletItemActivateCell.self)
     }
 
     func addNavigationHeader() {
@@ -85,24 +68,20 @@ final class WalletSwitchingViewController: UIViewController {
         navigationItem.title = "ASSETS".localized()
     }
 
-    func updateMenu(stellarAccount: StellarAccount) {
-        self.stellarAccount = stellarAccount
-
-        updatedSupportedAssets.removeAll()
-        allAssets.removeAll()
-
-        allAssets.append(contentsOf: stellarAccount.assets)
-
-        let allTypes = Set(Assets.all)
-        let assetTypesOnAccount: [Assets.AssetType] = stellarAccount.assets.compactMap {
-            guard let code = $0.assetCode else { return nil }
-            return Assets.AssetType(rawValue: code)
-        }
-
-        let missingTypes = allTypes.symmetricDifference(Set(assetTypesOnAccount))
-        updatedSupportedAssets.append(contentsOf: missingTypes)
-
+    func updateMenu(account: StellarAccount) {
+        rebuildDataSource(using: account)
         tableView?.reloadData()
+
+        hideHud()
+    }
+
+    func rebuildDataSource(using account: StellarAccount) {
+        let dataSource = WalletSwitchingDataSource(account: account)
+        dataSource.delegate = self
+
+        self.dataSource = dataSource
+
+        tableView?.dataSource = dataSource
     }
 
     func showHud(message: String) {
@@ -113,18 +92,6 @@ final class WalletSwitchingViewController: UIViewController {
 
     func hideHud() {
         MBProgressHUD.hide(for: UIApplication.shared.keyWindow!, animated: true)
-    }
-
-    func isZeroBalance() -> Bool {
-        guard let balance = Double(allAssets[0].balance) else {
-            return false
-        }
-
-        if stellarAccount.assets.count == 1 && balance < 1.0 {
-            return true
-        }
-
-        return false
     }
 
     func displayAssetActivationError() {
@@ -156,107 +123,65 @@ final class WalletSwitchingViewController: UIViewController {
 
         self.present(alert, animated: true, completion: nil)
     }
-}
 
-extension WalletSwitchingViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
-    }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        switch section {
-        case SectionType.userAssets.rawValue:
-            return nil
-        default:
-            if updatedSupportedAssets.count > 0 {
-                return tableViewHeader
-            }
-            return nil
+    @IBAction func selectedAddAsset() {
+        if let dataSource = dataSource, dataSource.isZeroBalance() {
+            displayNoBalanceError()
+        } else {
+            delegate?.selectedAddAsset()
         }
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch section {
-        case SectionType.userAssets.rawValue:
-            return 0
-        default:
-            if updatedSupportedAssets.count > 0 {
-                return tableViewHeader.frame.size.height
-            }
-            return 0
-        }
+    @IBAction func dismissView() {
+        self.dismiss(animated: true, completion: nil)
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case SectionType.userAssets.rawValue:
-            return allAssets.count
-        default:
-            return updatedSupportedAssets.count
-        }
+    func displayRemovePrompt() {
+        showHud(message: "REMOVING_ASSET".localized())
+        self.isAddingAsset = false
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 78.0
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        case SectionType.userAssets.rawValue:
-            let item = allAssets[indexPath.row]
-            let walletCell: WalletItemCell = tableView.dequeueReusableCell(for: indexPath)
-            var viewModel = WalletItemCell.ViewModel(title: Assets.displayTitle(shortCode: item.shortCode),
-                                                     amount: "\(item.formattedBalance) \(item.shortCode)")
-
-            walletCell.indexPath = indexPath
-            walletCell.delegate = self
-
-            if let image = Assets.displayImage(shortCode: item.shortCode) {
-                viewModel.icon = image
-            } else {
-                let shortcode = Assets.displayTitle(shortCode: item.shortCode)
-                viewModel.tokenText = String(Array(shortcode)[0])
-                viewModel.iconBackground = Assets.displayImageBackgroundColor(shortCode: item.shortCode)
-            }
-
-            if item.isNative {
-                viewModel.mode = stellarAccount.inflationDestination != nil ? .updateInflation : .setInflation
-            } else {
-                viewModel.mode = item.hasZeroBalance ? .removeAsset : .none
-            }
-
-            walletCell.update(with: viewModel)
-
-            return walletCell
-        default:
-            let shortCode = updatedSupportedAssets[indexPath.row].shortForm
-            let displayString = String(format: "%@ %@", Assets.displayTitle(shortCode: shortCode), shortCode)
-
-            let walletCell: WalletItemActivateCell = tableView.dequeueReusableCell(for: indexPath)
-            var viewModel = WalletItemActivateCell.ViewModel(title: displayString)
-            walletCell.indexPath = indexPath
-            walletCell.delegate = self
-
-            viewModel.iconBackground = Assets.displayImageBackgroundColor(shortCode: shortCode)
-            viewModel.icon = Assets.displayImage(shortCode: shortCode)
-
-            walletCell.update(with: viewModel)
-
-            return walletCell
-        }
+    func displayAddPrompt() {
+        showHud(message: "ACTIVATING_ASSET".localized())
+        self.isAddingAsset = true
     }
 }
 
 extension WalletSwitchingViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let section = WalletSwitchingDataSource.Section(rawValue: section),
+            let dataSource = self.dataSource else { return nil }
+
+        switch section {
+        case .userAssets: return nil
+        default: return dataSource.hasSupportedAssets ? tableViewHeader : nil
+        }
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard let section = WalletSwitchingDataSource.Section(rawValue: section),
+            let dataSource = self.dataSource else { return 0 }
+
+        switch section {
+        case .userAssets: return 0
+        default: return dataSource.hasSupportedAssets ? tableViewHeader.frame.size.height : 0
+        }
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let section = WalletSwitchingDataSource.Section(rawValue: indexPath.section) else { return 0 }
+        return section.sectionRowHeight
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
 
-        switch indexPath.section {
-        case SectionType.userAssets.rawValue:
-            selectedIndexPath = indexPath
+        guard let section = WalletSwitchingDataSource.Section(rawValue: indexPath.section) else { return }
+        guard let asset = dataSource?.allAssets[indexPath.row] else { return }
 
-            delegate?.didSelectAsset(index: indexPath.row)
-
+        switch section {
+        case WalletSwitchingDataSource.Section.userAssets:
+            delegate?.switchWallet(to: asset)
             dismiss(animated: true, completion: nil)
         default:
             break
@@ -264,75 +189,49 @@ extension WalletSwitchingViewController: UITableViewDelegate {
     }
 }
 
-extension WalletSwitchingViewController: WalletItemCellDelegate {
-    func didChangeInflation() {
-        if isZeroBalance() {
-            displayNoBalanceError()
-        } else {
-            delegate?.didSelectSetInflation(inflationDestination: stellarAccount.inflationDestination)
-        }
+extension WalletSwitchingViewController: WalletDataSourceDelegate {
+    func createTrustLine(_ dataSource: WalletSwitchingDataSource, to address: StellarAddress, asset: StellarAsset) {
+        delegate?.createTrustLine(to: address, for: asset)
     }
 
-    func didRemoveAsset(indexPath: IndexPath) {
-        let item = allAssets[indexPath.row]
-        createTrustLine(issuerAccountId: item.assetIssuer!,
-                        assetCode: item.shortCode,
-                        limit: 0.0,
-                        isAdding: false)
+    func remove(_ dataSource: WalletSwitchingDataSource, asset: StellarAsset) {
+        displayRemovePrompt()
+        delegate?.remove(asset: asset)
     }
-}
 
-extension WalletSwitchingViewController: WalletItemActivateCellDelegate {
-    func didAddAsset(indexPath: IndexPath) {
-        if isZeroBalance() {
+    func add(_ dataSource: WalletSwitchingDataSource, asset: StellarAsset) {
+        displayAddPrompt()
+        delegate?.add(asset: asset)
+    }
+
+    func updateInflation(_ dataSource: WalletSwitchingDataSource, destination: StellarAddress) {
+        if dataSource.isZeroBalance() {
             displayNoBalanceError()
         } else {
-            let item = updatedSupportedAssets[indexPath.row]
-            createTrustLine(issuerAccountId: item.issuerAccount,
-                            assetCode: item.shortForm,
-                            limit: nil,
-                            isAdding: true)
+            delegate?.updateInflation(destination: destination)
         }
     }
 }
 
-/*
- * Operations
- */
-extension WalletSwitchingViewController {
-    func createTrustLine(issuerAccountId: String, assetCode: String, limit: Decimal?, isAdding: Bool) {
-        let message = isAdding ? "ACTIVATE_ASSET".localized() : "REMOVE_ASSET".localized()
-        showHud(message: message)
-
-        PaymentTransactionOperation.changeTrust(issuerAccountId: issuerAccountId,
-                                                assetCode: assetCode,
-                                                limit: limit) { completed in
-            if completed {
-               self.getAccountDetails()
-            } else {
-                self.hideHud()
-
-                if isAdding {
-                    self.displayAssetActivationError()
-                } else {
-                    self.displayAssetDeactivationError()
-                }
-            }
-        }
+extension WalletSwitchingViewController: ManageAssetResponseDelegate {
+    func added(asset: StellarAsset, account: StellarAccount) {
+        self.hideHud()
+        rebuildDataSource(using: account)
+        self.tableView?.reloadData()
     }
 
-    func getAccountDetails() {
-        guard let accountId = KeychainHelper.accountId else {
-            return
-        }
+    func removed(asset: StellarAsset, account: StellarAccount) {
+        self.hideHud()
+        rebuildDataSource(using: account)
+        self.tableView?.reloadData()
+    }
 
-        AccountOperation.getAccountDetails(accountId: accountId) { responseAccounts in
-            self.hideHud()
-
-            if responseAccounts.count > 0 {
-                self.updateMenu(stellarAccount: responseAccounts[0])
-                self.delegate?.reloadAssets()
-            }
+    func failed(error: Error) {
+        self.hideHud()
+        if isAddingAsset {
+            self.displayAssetActivationError()
+        } else {
+            self.displayAssetDeactivationError()
         }
     }
 }

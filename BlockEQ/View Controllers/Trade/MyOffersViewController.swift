@@ -7,12 +7,19 @@
 //
 
 import stellarsdk
-import UIKit
+import StellarAccountService
+
+protocol MyOffersViewControllerDelegate: AnyObject {
+    func cancelTrade(offerId: Int, assetPair: StellarAssetPair, price: Price)
+}
 
 class MyOffersViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
-    var offers: [OfferResponse] = []
+
+    weak var delegate: MyOffersViewControllerDelegate?
+
+    var offers: [StellarAccountOffer] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,58 +28,52 @@ class MyOffersViewController: UIViewController {
     }
 
     func setupView() {
-        let offerNib = UINib(nibName: OffersCell.cellIdentifier, bundle: nil)
-        tableView.register(offerNib, forCellReuseIdentifier: OffersCell.cellIdentifier)
-
-        let orderBookEmptyNib = UINib(nibName: OrderBookEmptyCell.cellIdentifier, bundle: nil)
-        tableView.register(orderBookEmptyNib, forCellReuseIdentifier: OrderBookEmptyCell.cellIdentifier)
-
+        tableView.registerCell(type: OrderBookEmptyCell.self)
+        tableView.registerCell(type: OffersCell.self)
         tableView.backgroundColor = Colors.lightBackground
     }
 
-    func setOffers(offers: PageResponse<OfferResponse>) {
-        self.offers = offers.records
-        tableView.reloadData()
-    }
-
-    func cancelOffer(indexPath: IndexPath) {
-        showHud()
-
-        let offer = offers[indexPath.row]
-
-        let sellingAsset = StellarAsset(assetType: offer.selling.assetType,
-                                        assetCode: offer.selling.assetCode,
-                                        assetIssuer: offer.selling.assetIssuer,
-                                        balance: "")
-
-        let buyingAsset = StellarAsset(assetType: offer.buying.assetType,
-                                       assetCode: offer.buying.assetCode,
-                                       assetIssuer: offer.buying.assetIssuer,
-                                       balance: "")
-
-        TradeOperation.cancel(assets: (selling: sellingAsset, buying: buyingAsset),
-                              offerId: offer.id,
-                              price: Price(with: offer.priceR)) { completed in
-            if completed {
-                self.offers.remove(at: indexPath.row)
-                self.tableView.reloadData()
-            }
-
-            self.hideHud()
-        }
+    func refreshView() {
+        guard self.isViewLoaded else { return }
+        self.tableView.reloadData()
     }
 
     func showHud() {
         let hud = MBProgressHUD.showAdded(to: (navigationController?.view)!, animated: true)
-        hud.label.text = "Cancelling Offer..."
+        hud.label.text = "CANCELLING_OFFER".localized()
         hud.mode = .indeterminate
     }
 
     func hideHud() {
         MBProgressHUD.hide(for: (navigationController?.view)!, animated: true)
     }
+
+    func displayCancelFailure() {
+        self.hideHud()
+
+        UIAlertController.simpleAlert(title: "ERROR_TITLE".localized(),
+                                      message: "CANCEL_TRADE_ERROR".localized(),
+                                      presentingViewController: self)
+    }
+
+    func setOffers(_ offers: [StellarAccountOffer]) {
+        self.offers = offers
+        self.refreshView()
+    }
+
+    func remove(offerId: Int) {
+        hideHud()
+
+        if let offerIndex = offers.firstIndex(where: { offer -> Bool in
+            return offer.identifier == offerId
+        }) {
+            self.offers.remove(at: offerIndex)
+            self.tableView.reloadData()
+        }
+    }
 }
 
+// MARK: - UITableViewDataSource
 extension MyOffersViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return offers.count > 0 ? offers.count : 1
@@ -91,10 +92,10 @@ extension MyOffersViewController: UITableViewDataSource {
         let offer = offers[indexPath.row]
 
         let text = String(format: "SELL_SUMMARY_FORMAT".localized(),
-                          offer.amount.decimalFormatted,
-                          Assets.cellDisplay(shortCode: offer.selling.assetCode),
-                          String(Double(offer.amount)! * Double(offer.price)!).decimalFormatted,
-                          Assets.cellDisplay(shortCode: offer.buying.assetCode),
+                          offer.amount.displayFormattedString,
+                          Assets.cellDisplay(shortCode: offer.sellingAsset.assetCode),
+                          offer.value.displayFormattedString,
+                          Assets.cellDisplay(shortCode: offer.buyingAsset.assetCode),
                           offer.price.decimalFormatted)
 
         cell.offerLabel.text = text
@@ -108,17 +109,22 @@ extension MyOffersViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension MyOffersViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if offers.count > 0 {
-            return OffersCell.rowHeight
-        }
-        return OrderBookEmptyCell.rowHeight
+        return offers.count > 0 ? OffersCell.rowHeight : OrderBookEmptyCell.rowHeight
     }
 }
 
+// MARK: - OffersCellDelegate
 extension MyOffersViewController: OffersCellDelegate {
     func deleteOffer(indexPath: IndexPath) {
-        cancelOffer(indexPath: indexPath)
+        showHud()
+
+        let offer = offers[indexPath.row]
+
+        let assetPair = StellarAssetPair(buying: offer.buyingAsset, selling: offer.sellingAsset)
+        let offerPrice = Price(numerator: offer.numerator, denominator: offer.denominator)
+        delegate?.cancelTrade(offerId: offer.identifier, assetPair: assetPair, price: offerPrice)
     }
 }

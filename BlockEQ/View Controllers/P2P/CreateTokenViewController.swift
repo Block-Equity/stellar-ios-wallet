@@ -7,7 +7,7 @@
 //
 
 import Whisper
-import UIKit
+import StellarAccountService
 
 class CreateTokenViewController: UIViewController {
     @IBOutlet var tokenNameTextField: UITextField!
@@ -73,7 +73,9 @@ class CreateTokenViewController: UIViewController {
 
         view.endEditing(true)
 
-        createToken(assetCode: "\(tokenName)XLM")
+        showHud()
+
+        // Eventually, re-integrate creating a personal token here once the feature is figured out
     }
 
     @IBAction func dismissView() {
@@ -93,28 +95,26 @@ extension CreateTokenViewController: UITextFieldDelegate {
     }
 }
 
-/*
- * Operations
- */
-extension CreateTokenViewController {
-    func createToken(assetCode: String) {
-        showHud()
-
-        AccountOperation.createPersonalToken(assetCode: assetCode) { completed
-            in
-            self.hideHud()
-
-            if completed {
-                self.displayCreateTokenSuccess()
-            } else {
-                let alert = UIAlertController(title: "ACTIVATION_ERROR_TITLE".localized(),
-                                              message: "TOKEN_ERROR_MESSAGE".localized(),
-                                              preferredStyle: .alert)
-
-                alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(), style: .default, handler: nil))
-
-                self.present(alert, animated: true, completion: nil)
-            }
-        }
+extension CreateTokenViewController: P2PResponseDelegate {
+    func created(personalToken: String) {
+        self.hideHud()
+        self.displayCreateTokenSuccess()
     }
+
+    func createFailed(error: Error) {
+        self.hideHud()
+        UIAlertController.simpleAlert(title: "ACTIVATION_ERROR_TITLE".localized(),
+                                      message: "TOKEN_ERROR_MESSAGE".localized(),
+                                      presentingViewController: self)
+    }
+
+    func retrieved(personalToken: String?) {}
+
+    func addedPeer() {}
+
+    func removedPeer() {}
+
+    func addFailed(error: Error) {}
+
+    func removeFailed(error: Error) {}
 }

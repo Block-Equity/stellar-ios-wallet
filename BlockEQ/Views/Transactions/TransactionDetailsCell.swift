@@ -57,8 +57,6 @@ final class TransactionDetailsCell: UICollectionViewCell, ReusableView, NibLoada
         sourceAccountLabel.layer.cornerRadius = sourceAccountLabel.frame.height / 2
     }
 
-    
-
     func setupStyle() {
         let primaryHeaderFont = UIFont.systemFont(ofSize: 12, weight: .bold)
         let secondaryTextFont = UIFont.systemFont(ofSize: 13, weight: .regular)

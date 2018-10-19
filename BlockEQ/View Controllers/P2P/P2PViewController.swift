@@ -6,7 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import UIKit
+import StellarAccountService
 
 protocol P2PViewControllerDelegate: AnyObject {
     func selectedAddPeer()
@@ -55,12 +55,6 @@ class P2PViewController: UIViewController {
         setupView()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        getPersonToken()
-    }
-
     func setupView() {
         navigationItem.title = "PEER_TO_PEER".localized()
 
@@ -85,22 +79,20 @@ class P2PViewController: UIViewController {
     }
 }
 
-/*
- * Operations
- */
-extension P2PViewController {
-    func getPersonToken() {
-        guard let accountId = KeychainHelper.accountId else {
-            return
-        }
-
-        AccountOperation.getPersonalToken(address: accountId) { personalToken in
-            if let token = personalToken, !token.isEmpty {
-                self.headerOverlayView.isHidden = true
-                self.tokenLabel.text = token
-            } else {
-                self.headerOverlayView.isHidden = false
-            }
+extension P2PViewController: P2PResponseDelegate {
+    func retrieved(personalToken: String?) {
+        if let token = personalToken, !token.isEmpty {
+            self.headerOverlayView.isHidden = true
+            self.tokenLabel.text = token
+        } else {
+            self.headerOverlayView.isHidden = false
         }
     }
+
+    func created(personalToken: String) { }
+    func createFailed(error: Error) { }
+    func addedPeer() { }
+    func removedPeer() { }
+    func addFailed(error: Error) { }
+    func removeFailed(error: Error) { }
 }

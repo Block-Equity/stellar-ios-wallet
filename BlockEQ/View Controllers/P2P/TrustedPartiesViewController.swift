@@ -7,14 +7,14 @@
 //
 
 import stellarsdk
-import UIKit
+import StellarAccountService
 
 class TrustedPartiesViewController: UIViewController {
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var tableView: UITableView!
 
     var selectedIndexPath: IndexPath = IndexPath(row: 0, section: 0)
-    var stellarAccount = StellarAccount()
+    var stellarAccount: StellarAccount!
     var peers: [StellarAsset] = []
 
     @IBAction func addPeer() {
@@ -28,11 +28,6 @@ class TrustedPartiesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        getAccountDetails()
     }
 
     func setupView() {
@@ -137,46 +132,26 @@ extension TrustedPartiesViewController: UITableViewDataSource {
 }
 
 extension TrustedPartiesViewController: WalletItemCellDelegate {
-    func didChangeInflation() {}
+    func requestedChangeInflation() {}
 
-    func didRemoveAsset(indexPath: IndexPath) {
-        removeTrustLine(issuerAccountId: peers[indexPath.row].assetIssuer!,
-                        assetCode: peers[indexPath.row].shortCode,
-                        limit: 0.0000000)
+    func requestedRemoveAsset(indexPath: IndexPath) {
+        showHud(message: "REMOVING_ASSET".localized())
+
+        // Eventually, re-implement removing a trustline to a peer
+        _ = peers[indexPath.row]
     }
 }
 
-/*
- * Operations
- */
-extension TrustedPartiesViewController {
-    func removeTrustLine(issuerAccountId: String, assetCode: String, limit: Decimal) {
-        showHud(message: "Removing Asset...")
-
-        PaymentTransactionOperation.changeP2PTrust(issuerAccountId: issuerAccountId,
-                                                   assetCode: assetCode,
-                                                   limit: limit) { completed in
-            if completed {
-                self.getAccountDetails()
-            } else {
-                self.hideHud()
-                self.displayAssetDeactivationError()
-            }
-        }
+extension TrustedPartiesViewController: P2PResponseDelegate {
+    func removedPeer() {
+        self.hideHud()
+        self.displayAssetDeactivationError()
     }
 
-    func getAccountDetails() {
-        guard let accountId = KeychainHelper.accountId else {
-            return
-        }
-
-        AccountOperation.getAccountDetails(accountId: accountId) { responseAccounts in
-            self.hideHud()
-            self.activityIndicator.stopAnimating()
-
-            if responseAccounts.count > 0 {
-                self.updateMenu(stellarAccount: responseAccounts[0])
-            }
-        }
-    }
+    func created(personalToken: String) { }
+    func createFailed(error: Error) { }
+    func retrieved(personalToken: String?) { }
+    func addedPeer() { }
+    func addFailed(error: Error) { }
+    func removeFailed(error: Error) {}
 }

@@ -9,11 +9,11 @@
 import UIKit
 
 protocol WalletItemCellDelegate: class {
-    func didRemoveAsset(indexPath: IndexPath)
-    func didChangeInflation()
+    func requestedRemoveAsset(indexPath: IndexPath)
+    func requestedChangeInflation()
 }
 
-class WalletItemCell: UITableViewCell, ReusableView {
+class WalletItemCell: UITableViewCell, ReusableView, NibLoadableView {
     enum ButtonMode {
         case none
         case removeAsset
@@ -49,12 +49,12 @@ class WalletItemCell: UITableViewCell, ReusableView {
 
     @IBAction func removeAsset() {
         if let currentIndexPath = indexPath {
-            delegate?.didRemoveAsset(indexPath: currentIndexPath)
+            delegate?.requestedRemoveAsset(indexPath: currentIndexPath)
         }
     }
 
     @IBAction func changeInflation() {
-        delegate?.didChangeInflation()
+        delegate?.requestedChangeInflation()
     }
 
     override func awakeFromNib() {

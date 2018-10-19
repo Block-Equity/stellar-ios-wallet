@@ -12,11 +12,10 @@ protocol OffersCellDelegate: AnyObject {
     func deleteOffer(indexPath: IndexPath)
 }
 
-class OffersCell: UITableViewCell, ReusableView {
+class OffersCell: UITableViewCell, ReusableView, NibLoadableView {
     @IBOutlet weak var offerLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
 
-    static let cellIdentifier = "OffersCell"
     static let rowHeight: CGFloat = 80.0
 
     weak var delegate: OffersCellDelegate?

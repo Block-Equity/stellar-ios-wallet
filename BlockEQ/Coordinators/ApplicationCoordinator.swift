@@ -6,7 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
+import StellarAccountService
 import WebKit
 import os.log
 
@@ -37,19 +37,14 @@ final class ApplicationCoordinator {
         return view
     }()
 
+    /// The view controller used for receiving funds
+    var receiveViewController: ReceiveViewController?
+
     /// The view controller used to list out the user's assets
-    lazy var walletViewController: WalletViewController = {
-        let viewController = WalletViewController()
-        viewController.delegate = self
-        return viewController
-    }()
+    var walletViewController: WalletViewController
 
     //The view controller responsible for displaying contacts
-    lazy var contactsViewController: ContactsViewController = {
-        let viewController = ContactsViewController()
-        viewController.delegate = self
-        return viewController
-    }()
+    var contactsViewController: ContactsViewController
 
     /// The view controller used to display settings options
     var settingsViewController: SettingsViewController {
@@ -59,10 +54,25 @@ final class ApplicationCoordinator {
         return viewController
     }
 
-    /// The view controller used for receiving funds
-    lazy var receiveViewController: ReceiveViewController = {
-        return ReceiveViewController(address: "permanent receive address", isPersonalToken: false)
-    }()
+    /// The service object that manages the current stellar account
+    var core: StellarCoreService? {
+        didSet {
+            guard let coreService = core,
+                let accountId = KeychainHelper.accountId,
+                let address = StellarAddress(accountId) else {
+                    return
+            }
+
+            coreService.accountService.delegate = self
+
+            migrateIfEligible(using: coreService.accountService)
+            try? coreService.accountService.restore(with: address)
+            coreService.accountService.startPeriodicUpdates()
+            coreService.accountService.update()
+
+            tradingCoordinator.tradeService = coreService.tradeService
+        }
+    }
 
     /// The view controller used to switch which wallet is currently displayed, deallocated once finished using
     var walletSwitchingViewController: WalletSwitchingViewController?
@@ -99,8 +109,31 @@ final class ApplicationCoordinator {
     weak var delegate: ApplicationCoordinatorDelegate?
 
     init() {
+        let contactsVC = ContactsViewController(account: core?.accountService.account)
+        self.contactsViewController = contactsVC
+
+        let walletVC = WalletViewController()
+        self.walletViewController = walletVC
+
+        walletVC.delegate = self
+        contactsVC.delegate = self
+
         tabController.tabDelegate = self
         tradingCoordinator.delegate = self
+    }
+
+    func migrateIfEligible(using service: StellarAccountService) {
+        if KeychainHelper.canMigrateToNewFormat,
+            let accountId = KeychainHelper.accountId,
+            let address = StellarAddress(accountId) {
+            try? service.migrateAccount(with: address,
+                                        mnemonicKey: KeychainHelper.mnemonicKey,
+                                        seedKey: KeychainHelper.secretSeedKey,
+                                        pubKey: KeychainHelper.publicSeedKey,
+                                        privKey: KeychainHelper.privateSeedKey)
+
+            KeychainHelper.clearStellarSecrets()
+        }
     }
 }
 
@@ -262,6 +295,8 @@ extension ApplicationCoordinator: SettingsDelegate {
             self.displayAuth {
                 KeychainHelper.clearAll()
                 SecurityOptionHelper.clear()
+                try? self.core?.accountService.clear()
+                self.core = nil
                 self.delegate?.switchToOnboarding()
             }
         })
@@ -286,7 +321,8 @@ extension ApplicationCoordinator: SettingsDelegate {
     }
 
     func displayMnemonic() {
-        let mnemonicViewController = MnemonicViewController(mnemonic: KeychainHelper.mnemonic,
+        let mnemonic = core?.accountService.accountMnemonic()
+        let mnemonicViewController = MnemonicViewController(mnemonic: mnemonic,
                                                             shouldSetPin: false,
                                                             hideConfirmation: true)
 
@@ -296,9 +332,9 @@ extension ApplicationCoordinator: SettingsDelegate {
     func displaySecretSeet() {
         var viewController: SecretSeedViewController
 
-        if let seed = KeychainHelper.secretSeed {
+        if let seed = core?.accountService.accountSecretSeed() {
             viewController = SecretSeedViewController(seed)
-        } else if let mnemonic = KeychainHelper.mnemonic {
+        } else if let mnemonic = core?.accountService.accountMnemonic() {
             viewController = SecretSeedViewController(mnemonic: mnemonic)
         } else {
             return

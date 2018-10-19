@@ -7,7 +7,7 @@
 //
 
 import stellarsdk
-import UIKit
+import StellarAccountService
 
 class SendViewController: UIViewController {
     @IBOutlet var addressHolderView: UIView!
@@ -16,31 +16,27 @@ class SendViewController: UIViewController {
     @IBOutlet var sendTitleLabel: UILabel!
     @IBOutlet var sendAddressTextField: UITextField!
 
-    var stellarAccount: StellarAccount = StellarAccount()
-    var currentAssetIndex = 0
+    var stellarAccount: StellarAccount
+    var currentAsset: StellarAsset?
 
     @IBAction func addAmount() {
-        guard let receiver = sendAddressTextField.text,
-            !receiver.isEmpty,
-            receiver.count > 20,
-            receiver != KeychainHelper.accountId else {
+        guard let receiver = StellarAddress(sendAddressTextField.text),
+            receiver.string != KeychainHelper.accountId else {
                 sendAddressTextField.shake()
                 return
         }
 
-        showHud()
+        guard let asset = self.currentAsset else { return }
 
-        PaymentTransactionOperation.checkForExchange(address: receiver) { address in
-            self.view.endEditing(true)
-            self.hideHud()
+        self.view.endEditing(true)
 
-            let sendAmountViewController = SendAmountViewController(stellarAccount: self.stellarAccount,
-                                                                    currentAssetIndex: self.currentAssetIndex,
-                                                                    receiver: receiver,
-                                                                    exchangeName: address)
+        let exchange: Exchange? = AddressResolver.resolve(address: receiver)
+        let sendAmountViewController = SendAmountViewController(stellarAccount: self.stellarAccount,
+                                                                currentAsset: asset,
+                                                                receiver: receiver,
+                                                                exchangeName: exchange?.name)
 
-            self.navigationController?.pushViewController(sendAmountViewController, animated: true)
-        }
+        self.navigationController?.pushViewController(sendAmountViewController, animated: true)
     }
 
     @IBAction func scanQRCode() {
@@ -51,15 +47,15 @@ class SendViewController: UIViewController {
         present(navigationController, animated: true, completion: nil)
     }
 
-    init(stellarAccount: StellarAccount, currentAssetIndex: Int) {
-        super.init(nibName: String(describing: SendViewController.self), bundle: nil)
-
+    init(stellarAccount: StellarAccount, asset: StellarAsset) {
         self.stellarAccount = stellarAccount
-        self.currentAssetIndex = currentAssetIndex
+        self.currentAsset = asset
+
+        super.init(nibName: String(describing: SendViewController.self), bundle: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
@@ -96,14 +92,16 @@ class SendViewController: UIViewController {
         view.backgroundColor = Colors.lightBackground
         tableView.backgroundColor = Colors.lightBackground
 
+        guard let asset = self.currentAsset else { return }
+
         var availableBalance = ""
-        if stellarAccount.assets[currentAssetIndex].assetType == AssetTypeAsString.NATIVE {
+        if asset.assetType == AssetTypeAsString.NATIVE {
             availableBalance = stellarAccount.formattedAvailableBalance
         } else {
-            availableBalance = stellarAccount.assets[currentAssetIndex].formattedBalance
+            availableBalance = asset.formattedBalance
         }
 
-        navigationItem.title = "\(availableBalance) \(stellarAccount.assets[currentAssetIndex].shortCode)"
+        navigationItem.title = "\(availableBalance) \(asset.shortCode)"
     }
 
     func setViewStateToNotEditing() {

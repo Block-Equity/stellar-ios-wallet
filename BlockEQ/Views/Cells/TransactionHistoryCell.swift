@@ -6,15 +6,14 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import UIKit
+import StellarAccountService
 
-class TransactionHistoryCell: UITableViewCell, ReusableView {
+class TransactionHistoryCell: UITableViewCell, ReusableView, NibLoadableView {
     @IBOutlet var activityLabel: UILabel!
     @IBOutlet var amountLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var transactionDisplayView: UIView!
 
-    static let cellIdentifier = "TransactionHistoryCell"
     static let rowHeight: CGFloat = 65.0
 
     override func awakeFromNib() {
@@ -29,6 +28,6 @@ class TransactionHistoryCell: UITableViewCell, ReusableView {
         amountLabel.text = effect.formattedTransactionAmount(asset: asset)
         dateLabel.text = effect.formattedDate
         activityLabel.text = effect.formattedDescription(asset: asset)
-        transactionDisplayView.backgroundColor = effect.color(asset: asset)
+        transactionDisplayView.backgroundColor = effect.color
     }
 }

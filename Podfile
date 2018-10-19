@@ -5,6 +5,9 @@ target 'BlockEQ' do
   # Pods for BlockEQ
   use_frameworks!
 
+  workspace 'BlockEQ.xcworkspace'
+  project 'BlockEQ.xcodeproj'
+
   pod 'stellar-ios-mac-sdk', '~> 1.4.7'
   pod 'KeychainSwift', '~> 10.0'
   pod 'Alamofire', '~> 4.7'
@@ -22,6 +25,19 @@ target 'BlockEQ' do
     # Pods for testing
   end
 
+end
+
+target 'StellarAccountService' do
+  use_frameworks!
+  workspace 'BlockEQ.xcworkspace'
+  project 'StellarAccountService.xcodeproj'
+
+  pod 'stellar-ios-mac-sdk', '~> 1.4.7'
+  pod 'Alamofire', '~> 4.7'
+  pod 'KeychainSwift', '~> 10.0'
+
+  target 'StellarAccountServiceTests' do
+  end
 end
 
 post_install do |installer|

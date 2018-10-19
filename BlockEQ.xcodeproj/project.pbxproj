@@ -41,8 +41,15 @@
 		C4EC5FF120F3E64300769E31 /* AddAssetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4EC5FEF20F3E64300769E31 /* AddAssetViewController.xib */; };
 		C4F4938A211E19EA000B0800 /* String+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F49389211E19EA000B0800 /* String+Base64.swift */; };
 		C50F390220C0AE8100DABB14 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F390120C0AE8100DABB14 /* KeyboardHelper.swift */; };
-		C524DFC3216663DB0068D111 /* RecoveryMnemonic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524DFC2216663DB0068D111 /* RecoveryMnemonic.swift */; };
-		C524DFC5216667550068D111 /* SecretSeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524DFC4216667550068D111 /* SecretSeed.swift */; };
+		C512E69D217F96B300D1AC74 /* WalletSwitchingTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C512E69C217F96B300D1AC74 /* WalletSwitchingTableViewDataSource.swift */; };
+		C51441F5217E5802006C44F4 /* StellarEffect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51441F4217E5802006C44F4 /* StellarEffect+Extensions.swift */; };
+		C51441F7217E64A8006C44F4 /* StellarSeed+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51441F6217E64A8006C44F4 /* StellarSeed+Extensions.swift */; };
+		C51441F9217E7F6F006C44F4 /* StellarAsset+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51441F8217E7F6F006C44F4 /* StellarAsset+Extensions.swift */; };
+		C51441FC217E839E006C44F4 /* WalletTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51441FB217E839E006C44F4 /* WalletTableViewDataSource.swift */; };
+		C514420B217EC25A006C44F4 /* StellarAccountService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C514420A217EC25A006C44F4 /* StellarAccountService.framework */; };
+		C514420C217EC25A006C44F4 /* StellarAccountService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C514420A217EC25A006C44F4 /* StellarAccountService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C514420E217ED2B7006C44F4 /* StellarTransaction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C514420D217ED2B7006C44F4 /* StellarTransaction+Extensions.swift */; };
+		C5144210217ED86F006C44F4 /* FetchExchangesOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C514420F217ED86F006C44F4 /* FetchExchangesOperation.swift */; };
 		C524DFC92167B6240068D111 /* KeychainHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524DFC82167B6240068D111 /* KeychainHelperTests.swift */; };
 		C524DFCB2167CFE40068D111 /* AutoFillHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524DFCA2167CFE40068D111 /* AutoFillHelper.swift */; };
 		C524DFCD2167DF020068D111 /* AutoFillHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524DFCC2167DF020068D111 /* AutoFillHelperTests.swift */; };
@@ -64,9 +71,6 @@
 		C54EFE4821796B61005FA6D3 /* UIInsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EFE4721796B61005FA6D3 /* UIInsetLabel.swift */; };
 		C54EFE4A21798668005FA6D3 /* UIView+Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EFE4921798668005FA6D3 /* UIView+Layer.swift */; };
 		C54EFE4C217A2442005FA6D3 /* TransactionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EFE4B217A2442005FA6D3 /* TransactionSection.swift */; };
-		C54EFE4E217A523F005FA6D3 /* FetchTransactionsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EFE4D217A523F005FA6D3 /* FetchTransactionsOperation.swift */; };
-		C54EFE50217A55BA005FA6D3 /* StellarTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EFE4F217A55BA005FA6D3 /* StellarTransaction.swift */; };
-		C54EFE52217A5D15005FA6D3 /* StellarOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EFE51217A5D15005FA6D3 /* StellarOperation.swift */; };
 		C55458FC2124BB1B00032699 /* AuthenticatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55458FB2124BB1B00032699 /* AuthenticatingViewController.swift */; };
 		C55660492165D30C00DDAAA5 /* QRMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55660482165D30C00DDAAA5 /* QRMap.swift */; };
 		C57A8540217814EF0048A6B5 /* TransactionDetailsSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C57A853F217814EF0048A6B5 /* TransactionDetailsSectionHeader.xib */; };
@@ -99,6 +103,8 @@
 		C5D10755215E8B0D00CC17A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC2015B12052D968009A73C8 /* LaunchScreen.storyboard */; };
 		C5D10756215E8B1900CC17A0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C553ACBA2091572800B2379B /* Localizable.strings */; };
 		C5D10757215E8C7700CC17A0 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C5D10750215E6C6E00CC17A0 /* Settings.bundle */; };
+		C5D8CAC62180D809009F8624 /* AddressCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8CAC52180D809009F8624 /* AddressCoordinator.swift */; };
+		C5D8CAD12182064B009F8624 /* ContactsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8CAD02182064B009F8624 /* ContactsDataSource.swift */; };
 		C5E8594620AFAFD100B77289 /* AppTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E8594520AFAFD100B77289 /* AppTabController.swift */; };
 		C5E8594920AFB45E00B77289 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E8594820AFB45E00B77289 /* ContainerViewController.swift */; };
 		C5E8594B20AFB47900B77289 /* AppTabController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5E8594A20AFB47900B77289 /* AppTabController.xib */; };
@@ -138,8 +144,6 @@
 		EC2015FA20533A89009A73C8 /* MnemonicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2015F820533A89009A73C8 /* MnemonicViewController.swift */; };
 		EC2015FB20533A89009A73C8 /* MnemonicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC2015F920533A89009A73C8 /* MnemonicViewController.xib */; };
 		EC20160120536C68009A73C8 /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC20160020536C68009A73C8 /* PillView.swift */; };
-		EC26838F2062AD830085CAAF /* AccountOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC26838E2062AD830085CAAF /* AccountOperation.swift */; };
-		EC2683912062C7CA0085CAAF /* PaymentTransactionOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2683902062C7CA0085CAAF /* PaymentTransactionOperation.swift */; };
 		EC3609FD20560FDB00FC31F9 /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3609FB20560FDB00FC31F9 /* ScanViewController.swift */; };
 		EC3609FE20560FDB00FC31F9 /* ScanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC3609FC20560FDB00FC31F9 /* ScanViewController.xib */; };
 		EC360A032056181E00FC31F9 /* VerificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC360A012056181E00FC31F9 /* VerificationViewController.xib */; };
@@ -149,8 +153,6 @@
 		EC42584C2054E346000941B5 /* SendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC42584A2054E346000941B5 /* SendViewController.xib */; };
 		EC42584F2054EE76000941B5 /* SendAmountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC42584D2054EE76000941B5 /* SendAmountViewController.swift */; };
 		EC4258502054EE76000941B5 /* SendAmountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC42584E2054EE76000941B5 /* SendAmountViewController.xib */; };
-		EC48C1D520C82CF0009FDEBC /* StellarEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC48C1D420C82CF0009FDEBC /* StellarEffect.swift */; };
-		EC4BB64720BE2C28008252AD /* TradeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4BB64620BE2C28008252AD /* TradeOperation.swift */; };
 		EC4BB64920BE4176008252AD /* String+DecimalFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4BB64820BE4176008252AD /* String+DecimalFormatter.swift */; };
 		EC4F65FE20C8CD2C0036293D /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F65FD20C8CD2C0036293D /* Date+Format.swift */; };
 		EC4F660020C8CF0C0036293D /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F65FF20C8CF0C0036293D /* String+Date.swift */; };
@@ -176,9 +178,8 @@
 		EC6EE89420B6005D0033C299 /* MyOffersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC6EE89220B6005D0033C299 /* MyOffersViewController.xib */; };
 		EC6EE89620B6043C0033C299 /* TradingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6EE89520B6043C0033C299 /* TradingCoordinator.swift */; };
 		EC72C0B22059742900141D6F /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC72C0B12059742900141D6F /* KeychainHelper.swift */; };
-		EC72C0B420597CA600141D6F /* StellarAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC72C0B320597CA600141D6F /* StellarAccount.swift */; };
+		EC72C0B420597CA600141D6F /* StellarAccount+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC72C0B320597CA600141D6F /* StellarAccount+Extensions.swift */; };
 		ECB1D958207E966D0088826D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB1D956207E966D0088826D /* MBProgressHUD.m */; };
-		ECB2F081207BF45E00F53798 /* StellarAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB2F080207BF45E00F53798 /* StellarAsset.swift */; };
 		ECC47A6920589F92002BA573 /* UIView+Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC47A6820589F92002BA573 /* UIView+Shake.swift */; };
 		ECD3A352207D2CE5000609A0 /* WalletItemActivateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD3A350207D2CE5000609A0 /* WalletItemActivateCell.swift */; };
 		ECD3A353207D2CE5000609A0 /* WalletItemActivateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECD3A351207D2CE5000609A0 /* WalletItemActivateCell.xib */; };
@@ -202,6 +203,20 @@
 			remoteInfo = BlockEQ;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C5144204217EC20B006C44F4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C514420C217EC25A006C44F4 /* StellarAccountService.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		5A5A5DF6356AF8BEA53E0A7F /* Pods-BlockEQUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQUITests/Pods-BlockEQUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -240,9 +255,16 @@
 		C4EC5FEF20F3E64300769E31 /* AddAssetViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddAssetViewController.xib; sourceTree = "<group>"; };
 		C4F49389211E19EA000B0800 /* String+Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Base64.swift"; sourceTree = "<group>"; };
 		C50F390120C0AE8100DABB14 /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
+		C512E69C217F96B300D1AC74 /* WalletSwitchingTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletSwitchingTableViewDataSource.swift; sourceTree = "<group>"; };
+		C51441F4217E5802006C44F4 /* StellarEffect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarEffect+Extensions.swift"; sourceTree = "<group>"; };
+		C51441F6217E64A8006C44F4 /* StellarSeed+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarSeed+Extensions.swift"; sourceTree = "<group>"; };
+		C51441F8217E7F6F006C44F4 /* StellarAsset+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarAsset+Extensions.swift"; sourceTree = "<group>"; };
+		C51441FB217E839E006C44F4 /* WalletTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTableViewDataSource.swift; sourceTree = "<group>"; };
+		C5144208217EC233006C44F4 /* StellarAccountService.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StellarAccountService.framework; path = "../../../Library/Developer/Xcode/DerivedData/BlockEQ-gwrkvoohihdsfeakhajltsjvevfp/Build/Products/Debug-iphoneos/StellarAccountService.framework"; sourceTree = "<group>"; };
+		C514420A217EC25A006C44F4 /* StellarAccountService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = StellarAccountService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C514420D217ED2B7006C44F4 /* StellarTransaction+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarTransaction+Extensions.swift"; sourceTree = "<group>"; };
+		C514420F217ED86F006C44F4 /* FetchExchangesOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchExchangesOperation.swift; sourceTree = "<group>"; };
 		C52186B820C06B8100FF2A76 /* SecurityOptionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityOptionHelper.swift; sourceTree = "<group>"; };
-		C524DFC2216663DB0068D111 /* RecoveryMnemonic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryMnemonic.swift; sourceTree = "<group>"; };
-		C524DFC4216667550068D111 /* SecretSeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretSeed.swift; sourceTree = "<group>"; };
 		C524DFC82167B6240068D111 /* KeychainHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainHelperTests.swift; sourceTree = "<group>"; };
 		C524DFCA2167CFE40068D111 /* AutoFillHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoFillHelper.swift; sourceTree = "<group>"; };
 		C524DFCC2167DF020068D111 /* AutoFillHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoFillHelperTests.swift; sourceTree = "<group>"; };
@@ -264,9 +286,6 @@
 		C54EFE4721796B61005FA6D3 /* UIInsetLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIInsetLabel.swift; sourceTree = "<group>"; };
 		C54EFE4921798668005FA6D3 /* UIView+Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layer.swift"; sourceTree = "<group>"; };
 		C54EFE4B217A2442005FA6D3 /* TransactionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSection.swift; sourceTree = "<group>"; };
-		C54EFE4D217A523F005FA6D3 /* FetchTransactionsOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTransactionsOperation.swift; sourceTree = "<group>"; };
-		C54EFE4F217A55BA005FA6D3 /* StellarTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarTransaction.swift; sourceTree = "<group>"; };
-		C54EFE51217A5D15005FA6D3 /* StellarOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarOperation.swift; sourceTree = "<group>"; };
 		C553ACBB2091572800B2379B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C55458FB2124BB1B00032699 /* AuthenticatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatingViewController.swift; sourceTree = "<group>"; };
 		C55660482165D30C00DDAAA5 /* QRMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRMap.swift; sourceTree = "<group>"; };
@@ -299,6 +318,8 @@
 		C5CDE375215A9F3200DB5C90 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		C5D1074E215D7A3E00CC17A0 /* ApplicationCoordinator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ApplicationCoordinator+Extensions.swift"; sourceTree = "<group>"; };
 		C5D10750215E6C6E00CC17A0 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		C5D8CAC52180D809009F8624 /* AddressCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCoordinator.swift; sourceTree = "<group>"; };
+		C5D8CAD02182064B009F8624 /* ContactsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsDataSource.swift; sourceTree = "<group>"; };
 		C5E8594520AFAFD100B77289 /* AppTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabController.swift; sourceTree = "<group>"; };
 		C5E8594820AFB45E00B77289 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		C5E8594A20AFB47900B77289 /* AppTabController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppTabController.xib; sourceTree = "<group>"; };
@@ -346,8 +367,6 @@
 		EC2015F820533A89009A73C8 /* MnemonicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicViewController.swift; sourceTree = "<group>"; };
 		EC2015F920533A89009A73C8 /* MnemonicViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MnemonicViewController.xib; sourceTree = "<group>"; };
 		EC20160020536C68009A73C8 /* PillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillView.swift; sourceTree = "<group>"; };
-		EC26838E2062AD830085CAAF /* AccountOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountOperation.swift; sourceTree = "<group>"; };
-		EC2683902062C7CA0085CAAF /* PaymentTransactionOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTransactionOperation.swift; sourceTree = "<group>"; };
 		EC3609FB20560FDB00FC31F9 /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
 		EC3609FC20560FDB00FC31F9 /* ScanViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanViewController.xib; sourceTree = "<group>"; };
 		EC360A012056181E00FC31F9 /* VerificationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VerificationViewController.xib; sourceTree = "<group>"; };
@@ -357,8 +376,6 @@
 		EC42584A2054E346000941B5 /* SendViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendViewController.xib; sourceTree = "<group>"; };
 		EC42584D2054EE76000941B5 /* SendAmountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendAmountViewController.swift; sourceTree = "<group>"; };
 		EC42584E2054EE76000941B5 /* SendAmountViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendAmountViewController.xib; sourceTree = "<group>"; };
-		EC48C1D420C82CF0009FDEBC /* StellarEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarEffect.swift; sourceTree = "<group>"; };
-		EC4BB64620BE2C28008252AD /* TradeOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradeOperation.swift; sourceTree = "<group>"; };
 		EC4BB64820BE4176008252AD /* String+DecimalFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+DecimalFormatter.swift"; sourceTree = "<group>"; };
 		EC4F65FD20C8CD2C0036293D /* Date+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Format.swift"; sourceTree = "<group>"; };
 		EC4F65FF20C8CF0C0036293D /* String+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Date.swift"; sourceTree = "<group>"; };
@@ -384,11 +401,10 @@
 		EC6EE89220B6005D0033C299 /* MyOffersViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyOffersViewController.xib; sourceTree = "<group>"; };
 		EC6EE89520B6043C0033C299 /* TradingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingCoordinator.swift; sourceTree = "<group>"; };
 		EC72C0B12059742900141D6F /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
-		EC72C0B320597CA600141D6F /* StellarAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarAccount.swift; sourceTree = "<group>"; };
+		EC72C0B320597CA600141D6F /* StellarAccount+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarAccount+Extensions.swift"; sourceTree = "<group>"; };
 		ECB1D951207E94770088826D /* BlockEQ-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BlockEQ-Bridging-Header.h"; sourceTree = "<group>"; };
 		ECB1D956207E966D0088826D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		ECB1D957207E966D0088826D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		ECB2F080207BF45E00F53798 /* StellarAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarAsset.swift; sourceTree = "<group>"; };
 		ECC47A6820589F92002BA573 /* UIView+Shake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shake.swift"; sourceTree = "<group>"; };
 		ECD3A350207D2CE5000609A0 /* WalletItemActivateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletItemActivateCell.swift; sourceTree = "<group>"; };
 		ECD3A351207D2CE5000609A0 /* WalletItemActivateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletItemActivateCell.xib; sourceTree = "<group>"; };
@@ -403,6 +419,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C514420B217EC25A006C44F4 /* StellarAccountService.framework in Frameworks */,
 				A6066F61786CC7405A06A52A /* Pods_BlockEQ.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -466,6 +483,16 @@
 			path = P2P;
 			sourceTree = "<group>";
 		};
+		C51441FA217E836A006C44F4 /* Data Sources */ = {
+			isa = PBXGroup;
+			children = (
+				C51441FB217E839E006C44F4 /* WalletTableViewDataSource.swift */,
+				C512E69C217F96B300D1AC74 /* WalletSwitchingTableViewDataSource.swift */,
+				C5D8CAD02182064B009F8624 /* ContactsDataSource.swift */,
+			);
+			path = "Data Sources";
+			sourceTree = "<group>";
+		};
 		C5401D322177FF8100A12AC2 /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
@@ -473,14 +500,6 @@
 				C5401D352178007300A12AC2 /* TransactionDetailsViewController.xib */,
 			);
 			path = Transactions;
-			sourceTree = "<group>";
-		};
-		C54EFE4621796B52005FA6D3 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				C54EFE4721796B61005FA6D3 /* UIInsetLabel.swift */,
-			);
-			path = UI;
 			sourceTree = "<group>";
 		};
 		C55458FA2124BB0C00032699 /* Protocols */ = {
@@ -582,6 +601,7 @@
 				EC6EE89520B6043C0033C299 /* TradingCoordinator.swift */,
 				C499755E211297BF00E2299C /* P2PCoordinator.swift */,
 				C5FAA1ED211F42010020CB26 /* AuthenticationCoordinator.swift */,
+				C5D8CAC52180D809009F8624 /* AddressCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -638,6 +658,7 @@
 				EC2015A62052D968009A73C8 /* Products */,
 				FE9E1533DC165F0F40C6BF28 /* Pods */,
 				63FABEF3F414DBC8E973CF4E /* Frameworks */,
+				C514420A217EC25A006C44F4 /* StellarAccountService.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -654,7 +675,7 @@
 		EC2015A72052D968009A73C8 /* BlockEQ */ = {
 			isa = PBXGroup;
 			children = (
-				C54EFE4621796B52005FA6D3 /* UI */,
+				C51441FA217E836A006C44F4 /* Data Sources */,
 				C5D10754215E741400CC17A0 /* Resources */,
 				C55458FA2124BB0C00032699 /* Protocols */,
 				C5E8594C20AFCC0000B77289 /* Coordinators */,
@@ -683,6 +704,7 @@
 		EC2015C72052D968009A73C8 /* BlockEQUITests */ = {
 			isa = PBXGroup;
 			children = (
+				C5144208217EC233006C44F4 /* StellarAccountService.framework */,
 				EC2015C82052D968009A73C8 /* BlockEQUITests.swift */,
 				EC2015CA2052D968009A73C8 /* Info.plist */,
 			);
@@ -782,6 +804,7 @@
 			children = (
 				C57A853E217814D40048A6B5 /* Transactions */,
 				EC0B1917205463DC0052802C /* Cells */,
+				C54EFE4721796B61005FA6D3 /* UIInsetLabel.swift */,
 				EC2015F620532F4B009A73C8 /* AppButton.swift */,
 				EC20160020536C68009A73C8 /* PillView.swift */,
 				EC3DE29E20B8F98C00A6EC3C /* TradeHeaderView.swift */,
@@ -801,10 +824,7 @@
 		EC26838D20629D1B0085CAAF /* Operations */ = {
 			isa = PBXGroup;
 			children = (
-				EC26838E2062AD830085CAAF /* AccountOperation.swift */,
-				EC2683902062C7CA0085CAAF /* PaymentTransactionOperation.swift */,
-				EC4BB64620BE2C28008252AD /* TradeOperation.swift */,
-				C54EFE4D217A523F005FA6D3 /* FetchTransactionsOperation.swift */,
+				C514420F217ED86F006C44F4 /* FetchExchangesOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -829,15 +849,13 @@
 		EC72C0B520597CAD00141D6F /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				ECB2F080207BF45E00F53798 /* StellarAsset.swift */,
-				EC72C0B320597CA600141D6F /* StellarAccount.swift */,
-				EC48C1D420C82CF0009FDEBC /* StellarEffect.swift */,
+				C51441F8217E7F6F006C44F4 /* StellarAsset+Extensions.swift */,
+				C514420D217ED2B7006C44F4 /* StellarTransaction+Extensions.swift */,
+				EC72C0B320597CA600141D6F /* StellarAccount+Extensions.swift */,
+				C51441F4217E5802006C44F4 /* StellarEffect+Extensions.swift */,
+				C51441F6217E64A8006C44F4 /* StellarSeed+Extensions.swift */,
 				C41481302124709B0057ED74 /* LocalContact.swift */,
 				C5BED3752162A81C00BEE464 /* Exchange.swift */,
-				C524DFC2216663DB0068D111 /* RecoveryMnemonic.swift */,
-				C524DFC4216667550068D111 /* SecretSeed.swift */,
-				C54EFE4F217A55BA005FA6D3 /* StellarTransaction.swift */,
-				C54EFE51217A5D15005FA6D3 /* StellarOperation.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -878,6 +896,7 @@
 				EC2015A22052D968009A73C8 /* Frameworks */,
 				EC2015A32052D968009A73C8 /* Resources */,
 				1460EE326A7D66920C4BF68D /* [CP] Embed Pods Frameworks */,
+				C5144204217EC20B006C44F4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1186,7 +1205,6 @@
 				C4167B9221234E6C00F44136 /* SecurityOptionHelper.swift in Sources */,
 				C5BED37C2163F1E100BEE464 /* Price+Extensions.swift in Sources */,
 				EC4F660020C8CF0C0036293D /* String+Date.swift in Sources */,
-				EC4BB64720BE2C28008252AD /* TradeOperation.swift in Sources */,
 				C54EFE432179043B005FA6D3 /* TransactionDetailsBasicHeader.swift in Sources */,
 				C5BED3762162A81C00BEE464 /* Exchange.swift in Sources */,
 				ECD3A352207D2CE5000609A0 /* WalletItemActivateCell.swift in Sources */,
@@ -1194,9 +1212,9 @@
 				C5401D342178005B00A12AC2 /* TransactionDetailsViewController.swift in Sources */,
 				EC2015F720532F4B009A73C8 /* AppButton.swift in Sources */,
 				C5AB413D2090436700096A29 /* UIView+NibLoadableView.swift in Sources */,
+				C51441FC217E839E006C44F4 /* WalletTableViewDataSource.swift in Sources */,
 				EC20160120536C68009A73C8 /* PillView.swift in Sources */,
 				ECB1D958207E966D0088826D /* MBProgressHUD.m in Sources */,
-				C54EFE4E217A523F005FA6D3 /* FetchTransactionsOperation.swift in Sources */,
 				C54EFE4A21798668005FA6D3 /* UIView+Layer.swift in Sources */,
 				C595115620BB2B1B00843D33 /* PinDotView.swift in Sources */,
 				EC6EE88B20B600070033C299 /* TradeViewController.swift in Sources */,
@@ -1207,29 +1225,23 @@
 				C54ADD512178FB8F0078F69E /* TransactionSignatureCell.swift in Sources */,
 				EC6EE88F20B6004B0033C299 /* OrderBookViewController.swift in Sources */,
 				C4E9A77420F79F150028651F /* BalanceViewController.swift in Sources */,
-				EC48C1D520C82CF0009FDEBC /* StellarEffect.swift in Sources */,
 				C5AB413B2090433000096A29 /* UIView+ReusableView.swift in Sources */,
 				C5E8595020AFF09800B77289 /* OnboardingCoordinator.swift in Sources */,
 				C499756621129D2D00E2299C /* TrustedPartiesViewController.swift in Sources */,
 				C5E8594920AFB45E00B77289 /* ContainerViewController.swift in Sources */,
 				C439A22F211B6FDC0025C047 /* P2PTransactionViewController.swift in Sources */,
-				C524DFC5216667550068D111 /* SecretSeed.swift in Sources */,
-				EC2683912062C7CA0085CAAF /* PaymentTransactionOperation.swift in Sources */,
+				C5D8CAC62180D809009F8624 /* AddressCoordinator.swift in Sources */,
 				EC0B19262054BC3B0052802C /* AppNavigationController.swift in Sources */,
 				C5AF7C8A2094B60A00F99835 /* UIImage+CALayer.swift in Sources */,
 				C414812E21246A1B0057ED74 /* ContactStellarCell.swift in Sources */,
 				ECF9F44B208937E400160843 /* InflationViewController.swift in Sources */,
-				C54EFE52217A5D15005FA6D3 /* StellarOperation.swift in Sources */,
 				C54EFE4C217A2442005FA6D3 /* TransactionSection.swift in Sources */,
-				C54EFE50217A55BA005FA6D3 /* StellarTransaction.swift in Sources */,
 				C5A5A878215E90BD00007787 /* WebViewController.swift in Sources */,
 				C439A22B211B6F9C0025C047 /* CreateTokenViewController.swift in Sources */,
 				EC1CEE5320577E880005F74E /* WordSuggestionCell.swift in Sources */,
-				C524DFC3216663DB0068D111 /* RecoveryMnemonic.swift in Sources */,
 				C41165152123B7CB00C4CB6E /* ContactsViewController.swift in Sources */,
 				EC42584B2054E346000941B5 /* SendViewController.swift in Sources */,
 				EC52B3C920BB746C006299A1 /* OrderBookHeaderView.swift in Sources */,
-				ECB2F081207BF45E00F53798 /* StellarAsset.swift in Sources */,
 				C593C46E2092E51A00D6047F /* NavigationCell.swift in Sources */,
 				C5FAA1EE211F42010020CB26 /* AuthenticationCoordinator.swift in Sources */,
 				C54EFE4821796B61005FA6D3 /* UIInsetLabel.swift in Sources */,
@@ -1237,10 +1249,12 @@
 				C41165192123C2D300C4CB6E /* ContactCell.swift in Sources */,
 				EC42584F2054EE76000941B5 /* SendAmountViewController.swift in Sources */,
 				C524DFCF2167F1AB0068D111 /* AppleAutoFillProvider.swift in Sources */,
+				C51441F9217E7F6F006C44F4 /* StellarAsset+Extensions.swift in Sources */,
 				C5AB41352090420D00096A29 /* SettingsDelegate.swift in Sources */,
 				C5CDE372215A7DB200DB5C90 /* URLs.swift in Sources */,
 				EC3609FD20560FDB00FC31F9 /* ScanViewController.swift in Sources */,
 				EC52B3D220BC951F006299A1 /* OffersCell.swift in Sources */,
+				C514420E217ED2B7006C44F4 /* StellarTransaction+Extensions.swift in Sources */,
 				EC64CF4F20BF05F5007FE199 /* OrderBookEmptyCell.swift in Sources */,
 				EC2015E52052E8AA009A73C8 /* Constants.swift in Sources */,
 				C499755C2112255C00E2299C /* P2PViewController.swift in Sources */,
@@ -1249,14 +1263,17 @@
 				EC2015ED2052FD1A009A73C8 /* PinViewController.swift in Sources */,
 				EC0B192220549B240052802C /* ReceiveViewController.swift in Sources */,
 				C5A5A87C215E935C00007787 /* UIAlertController+Prompts.swift in Sources */,
+				C5D8CAD12182064B009F8624 /* ContactsDataSource.swift in Sources */,
 				C54ADD4921781EE20078F69E /* TransactionDetailsCell.swift in Sources */,
 				C5AB41392090430900096A29 /* UICollectionView+ReusableCells.swift in Sources */,
 				ECC47A6920589F92002BA573 /* UIView+Shake.swift in Sources */,
 				EC6EE89320B6005D0033C299 /* MyOffersViewController.swift in Sources */,
 				C53978CB20BF417100587D99 /* SettingsSwitchCell.swift in Sources */,
+				C512E69D217F96B300D1AC74 /* WalletSwitchingTableViewDataSource.swift in Sources */,
 				C5D1074F215D7A3E00CC17A0 /* ApplicationCoordinator+Extensions.swift in Sources */,
 				C55660492165D30C00DDAAA5 /* QRMap.swift in Sources */,
 				EC0B191E205486AB0052802C /* TransactionHistoryCell.swift in Sources */,
+				C51441F5217E5802006C44F4 /* StellarEffect+Extensions.swift in Sources */,
 				C589FF2A20902CCC00F5F308 /* SettingsViewController.swift in Sources */,
 				EC52B3CE20BBB1CB006299A1 /* OrderBookCell.swift in Sources */,
 				C5AB41332090369000096A29 /* EQSettings.swift in Sources */,
@@ -1271,8 +1288,7 @@
 				EC2015FA20533A89009A73C8 /* MnemonicViewController.swift in Sources */,
 				C41481312124709B0057ED74 /* LocalContact.swift in Sources */,
 				EC0B191A205465BF0052802C /* WalletCell.swift in Sources */,
-				EC72C0B420597CA600141D6F /* StellarAccount.swift in Sources */,
-				EC26838F2062AD830085CAAF /* AccountOperation.swift in Sources */,
+				EC72C0B420597CA600141D6F /* StellarAccount+Extensions.swift in Sources */,
 				EC3DE29F20B8F98C00A6EC3C /* TradeHeaderView.swift in Sources */,
 				C5CDE376215A9F3200DB5C90 /* Strings.swift in Sources */,
 				EC6EE89620B6043C0033C299 /* TradingCoordinator.swift in Sources */,
@@ -1285,6 +1301,8 @@
 				C414813C21264C210057ED74 /* SelectAssetViewController.swift in Sources */,
 				EC72C0B22059742900141D6F /* KeychainHelper.swift in Sources */,
 				C50F390220C0AE8100DABB14 /* KeyboardHelper.swift in Sources */,
+				C51441F7217E64A8006C44F4 /* StellarSeed+Extensions.swift in Sources */,
+				C5144210217ED86F006C44F4 /* FetchExchangesOperation.swift in Sources */,
 				C5C1D3D6211BF39B0014B39F /* UIDevice.swift in Sources */,
 				EC6EE88620B5C1320033C299 /* TradeSegmentViewController.swift in Sources */,
 				C414814021264C8B0057ED74 /* SelectAssetCell.swift in Sources */,

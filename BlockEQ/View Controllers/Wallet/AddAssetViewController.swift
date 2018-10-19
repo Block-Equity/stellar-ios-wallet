@@ -6,10 +6,10 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import UIKit
+import StellarAccountService
 
 protocol AddAssetViewControllerDelegate: class {
-    func didAddAsset(stellarAccount: StellarAccount)
+    func requestedAdd(_ viewController: AddAssetViewController, asset: StellarAsset)
 }
 
 class AddAssetViewController: UIViewController {
@@ -20,22 +20,6 @@ class AddAssetViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
 
     weak var delegate: AddAssetViewControllerDelegate?
-
-    @IBAction func addAsset() {
-        guard let assetCode = assetCodeTextField.text, !assetCode.isEmpty else {
-            assetCodeTextField.shake()
-            return
-        }
-
-        guard let issuer = issuerTextField.text, !issuer.isEmpty, issuer.count > 20 else {
-            issuerTextField.shake()
-            return
-        }
-
-        view.endEditing(true)
-
-        createTrustLine(issuerAccountId: issuer, assetCode: assetCode)
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +34,7 @@ class AddAssetViewController: UIViewController {
     }
 
     func setupView() {
-        navigationItem.title = "Add Asset".localized()
+        navigationItem.title = "ADD_ASSET".localized()
 
         holdingView.backgroundColor = Colors.lightBackground
         tableView.backgroundColor = Colors.lightBackground
@@ -59,57 +43,35 @@ class AddAssetViewController: UIViewController {
 
     func showHud() {
         let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
-        hud.label.text = "Adding Asset..."
+        hud.label.text = "ADDING_ASSET".localized()
         hud.mode = .indeterminate
     }
 
     func hideHud() {
         MBProgressHUD.hide(for: UIApplication.shared.keyWindow!, animated: true)
     }
-}
 
-/*
- * Operations
- */
-extension AddAssetViewController {
-    func createTrustLine(issuerAccountId: String, assetCode: String) {
-        showHud()
-
-        PaymentTransactionOperation.changeTrust(issuerAccountId: issuerAccountId,
-                                                assetCode: assetCode,
-                                                limit: nil) { completed in
-            if completed {
-                self.getAccountDetails()
-            } else {
-                self.hideHud()
-
-                let alert = UIAlertController(title: "ACTIVATION_ERROR_TITLE".localized(),
-                                              message: "ASSET_ERROR_MESSAGE".localized(),
-                                              preferredStyle: .alert)
-
-                alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
-                                              style: .default,
-                                              handler: nil))
-
-                self.present(alert, animated: true, completion: nil)
-            }
-        }
-    }
-
-    func getAccountDetails() {
-        guard let accountId = KeychainHelper.accountId else {
+    @IBAction func addAsset() {
+        guard let assetCode = assetCodeTextField.text, !assetCode.isEmpty else {
+            assetCodeTextField.shake()
             return
         }
 
-        AccountOperation.getAccountDetails(accountId: accountId) { responseAccounts in
-            self.hideHud()
+        guard let issuer = StellarAddress(issuerTextField.text) else {
+            issuerTextField.shake()
+            return
+        }
 
-            if responseAccounts.count > 0 {
-                self.delegate?.didAddAsset(stellarAccount: responseAccounts[0])
-                self.navigationController?.popViewController(animated: true)
-            } else {
-                self.navigationController?.dismiss(animated: true, completion: nil)
-            }
+        view.endEditing(true)
+        showHud()
+
+        let asset = StellarAsset(assetCode: assetCode, issuer: issuer.string)
+        self.delegate?.requestedAdd(self, asset: asset)
+
+        if self.isBeingPresented {
+            self.navigationController?.dismiss(animated: true, completion: nil)
+        } else {
+            self.navigationController?.popViewController(animated: true)
         }
     }
 }

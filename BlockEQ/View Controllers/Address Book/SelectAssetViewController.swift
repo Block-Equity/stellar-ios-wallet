@@ -7,31 +7,31 @@
 //
 
 import stellarsdk
-import UIKit
+import StellarAccountService
 
 class SelectAssetViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
 
     var allAssets: [StellarAsset] = []
-    var receiver: String = ""
-    var stellarAccount = StellarAccount()
+    var receiver: StellarAddress
+    var stellarAccount: StellarAccount
     var exchangeName: String?
 
     @IBAction func dismissView() {
         self.dismiss(animated: true, completion: nil)
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
-    init(stellarAccount: StellarAccount, receiver: String, exchangeName: String?) {
-        super.init(nibName: String(describing: SelectAssetViewController.self), bundle: nil)
-
+    init(stellarAccount: StellarAccount, receiver: StellarAddress, exchangeName: String?) {
         self.receiver = receiver
         self.stellarAccount = stellarAccount
         self.exchangeName = exchangeName
+
+        super.init(nibName: String(describing: SelectAssetViewController.self), bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
@@ -101,8 +101,9 @@ extension SelectAssetViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
 
+        let asset = stellarAccount.assets[indexPath.row]
         let sendAmountViewController = SendAmountViewController(stellarAccount: stellarAccount,
-                                                                currentAssetIndex: indexPath.row,
+                                                                currentAsset: asset,
                                                                 receiver: receiver,
                                                                 exchangeName: exchangeName)
 

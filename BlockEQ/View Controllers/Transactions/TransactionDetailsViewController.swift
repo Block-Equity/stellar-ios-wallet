@@ -7,6 +7,7 @@
 //
 
 import os.log
+import StellarAccountService
 
 // MARK: View Controller
 // MARK: -

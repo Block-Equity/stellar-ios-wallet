@@ -7,10 +7,10 @@
 //
 
 import stellarsdk
-import UIKit
+import StellarAccountService
 
 protocol MnemonicViewControllerDelegate: AnyObject {
-    func confirmedWrittenMnemonic(_ viewController: MnemonicViewController, mnemonic: RecoveryMnemonic)
+    func confirmedWrittenMnemonic(_ viewController: MnemonicViewController, mnemonic: StellarRecoveryMnemonic)
 }
 
 class MnemonicViewController: UIViewController {
@@ -22,18 +22,18 @@ class MnemonicViewController: UIViewController {
 
     weak var delegate: MnemonicViewControllerDelegate?
 
-    var mnemonic: RecoveryMnemonic?
+    var mnemonic: StellarRecoveryMnemonic?
     var hideConfirmation: Bool = false
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.mnemonic = RecoveryMnemonic(Wallet.generate24WordMnemonic())
+        self.mnemonic = StellarRecoveryMnemonic(Wallet.generate24WordMnemonic())
     }
 
-    init(mnemonic: String?, shouldSetPin: Bool, hideConfirmation: Bool = false) {
+    init(mnemonic: StellarRecoveryMnemonic?, shouldSetPin: Bool, hideConfirmation: Bool = false) {
         super.init(nibName: String(describing: MnemonicViewController.self), bundle: nil)
         self.hideConfirmation = hideConfirmation
-        self.mnemonic = RecoveryMnemonic(mnemonic)
+        self.mnemonic = mnemonic
     }
 
     override func viewDidLoad() {

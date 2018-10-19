@@ -33,30 +33,18 @@ class KeychainHelperTests: XCTestCase {
 
     func testKeychainHelperIsProperlyCleared() {
         KeychainHelper.save(pin: "1234")
-        KeychainHelper.save(seed: "super secret seed")
-        KeychainHelper.save(mnemonic: "super secret mnemonic")
         KeychainHelper.save(accountId: "G1234")
-        KeychainHelper.save(publicKey: "public test".data(using: .utf8)!)
-        KeychainHelper.save(privateKey: "private test".data(using: .utf8)!)
         KeychainHelper.setExistingInstance()
 
         XCTAssertEqual(KeychainHelper.pin, "1234")
-        XCTAssertEqual(KeychainHelper.secretSeed, "super secret seed")
-        XCTAssertEqual(KeychainHelper.mnemonic, "super secret mnemonic")
         XCTAssertEqual(KeychainHelper.accountId, "G1234")
-        XCTAssertEqual(KeychainHelper.publicKey, "public test".data(using: .utf8)!)
-        XCTAssertEqual(KeychainHelper.privateKey, "private test".data(using: .utf8)!)
         XCTAssertTrue(KeychainHelper.isExistingInstance)
         XCTAssertTrue(KeychainHelper.hasPin)
 
         KeychainHelper.clearAll()
 
         XCTAssertNil(KeychainHelper.pin)
-        XCTAssertNil(KeychainHelper.secretSeed)
-        XCTAssertNil(KeychainHelper.mnemonic)
         XCTAssertNil(KeychainHelper.accountId)
-        XCTAssertNil(KeychainHelper.publicKey)
-        XCTAssertNil(KeychainHelper.privateKey)
         XCTAssertFalse(KeychainHelper.isExistingInstance)
         XCTAssertFalse(KeychainHelper.hasPin)
     }
@@ -91,38 +79,38 @@ class KeychainHelperTests: XCTestCase {
         XCTAssertNil(result)
     }
 
-    func testWalletKeyPairReturnsNilIfEitherKeyIsInvalid() {
-        XCTAssertNil(KeychainHelper.publicKey)
-        XCTAssertNil(KeychainHelper.privateKey)
+//    func testWalletKeyPairReturnsNilIfEitherKeyIsInvalid() {
+//        XCTAssertNil(KeychainHelper.publicKey)
+//        XCTAssertNil(KeychainHelper.privateKey)
+//
+//        let invalidKey = String(repeating: "badkey", count: 1000)
+//        KeychainHelper.save(publicKey: invalidKey.data(using: .utf8)!)
+//        KeychainHelper.save(privateKey: invalidKey.data(using: .utf8)!)
+//        XCTAssertNotNil(KeychainHelper.privateKey)
+//        XCTAssertNotNil(KeychainHelper.publicKey)
+//
+//        let result = KeychainHelper.walletKeyPair
+//        XCTAssertNil(result)
+//    }
 
-        let invalidKey = String(repeating: "badkey", count: 1000)
-        KeychainHelper.save(publicKey: invalidKey.data(using: .utf8)!)
-        KeychainHelper.save(privateKey: invalidKey.data(using: .utf8)!)
-        XCTAssertNotNil(KeychainHelper.privateKey)
-        XCTAssertNotNil(KeychainHelper.publicKey)
-
-        let result = KeychainHelper.walletKeyPair
-        XCTAssertNil(result)
-    }
-
-    func testWalletKeyPairReturnsResult() {
-        XCTAssertNil(KeychainHelper.publicKey)
-        XCTAssertNil(KeychainHelper.privateKey)
-
-        let randomKey = try! KeyPair.generateRandomKeyPair()
-        let publicBytes = Data(bytes: randomKey.publicKey.bytes)
-        let privateBytes = Data(bytes: randomKey.privateKey!.bytes)
-
-        KeychainHelper.save(publicKey: publicBytes)
-        KeychainHelper.save(privateKey: privateBytes)
-        XCTAssertNotNil(KeychainHelper.privateKey)
-        XCTAssertNotNil(KeychainHelper.publicKey)
-
-        let result = KeychainHelper.walletKeyPair
-        XCTAssertNotNil(result)
-        XCTAssertEqual(result?.publicKey.bytes, randomKey.publicKey.bytes)
-        XCTAssertEqual(result?.privateKey!.bytes, randomKey.privateKey!.bytes)
-    }
+//    func testWalletKeyPairReturnsResult() {
+//        XCTAssertNil(KeychainHelper.publicKey)
+//        XCTAssertNil(KeychainHelper.privateKey)
+//
+//        let randomKey = try! KeyPair.generateRandomKeyPair()
+//        let publicBytes = Data(bytes: randomKey.publicKey.bytes)
+//        let privateBytes = Data(bytes: randomKey.privateKey!.bytes)
+//
+//        KeychainHelper.save(publicKey: publicBytes)
+//        KeychainHelper.save(privateKey: privateBytes)
+//        XCTAssertNotNil(KeychainHelper.privateKey)
+//        XCTAssertNotNil(KeychainHelper.publicKey)
+//
+//        let result = KeychainHelper.walletKeyPair
+//        XCTAssertNotNil(result)
+//        XCTAssertEqual(result?.publicKey.bytes, randomKey.publicKey.bytes)
+//        XCTAssertEqual(result?.privateKey!.bytes, randomKey.privateKey!.bytes)
+//    }
 
     func testIssuerKeyPairReturnsNilForInvalidAccount() {
         let result = KeychainHelper.issuerKeyPair(accountId: "not good")

@@ -6,7 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import UIKit
+import StellarAccountService
 
 protocol TradeSegmentControllerDelegate: AnyObject {
     func setScroll(offset: CGFloat, page: Int)
@@ -21,6 +21,8 @@ final class TradeSegmentViewController: UIViewController {
     var rightViewController: UIViewController!
     var middleViewController: UIViewController!
     var totalPages: CGFloat!
+    var displayNoAssetOverlay: Bool = true
+
     weak var tradeSegmentDelegate: TradeSegmentControllerDelegate?
 
     override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
@@ -42,6 +44,15 @@ final class TradeSegmentViewController: UIViewController {
         self.middleViewController = middleViewController
         self.rightViewController = rightViewController
         self.totalPages = totalPages
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if displayNoAssetOverlay {
+            displayNoAssetOverlayView()
+        } else {
+            hideNoAssetOverlayView()
+        }
     }
 
     override func viewDidLoad() {
@@ -95,6 +106,10 @@ final class TradeSegmentViewController: UIViewController {
 
     func hideNoAssetOverlayView() {
         noAssetView.isHidden = true
+    }
+
+    func updated(account: StellarAccount) {
+        displayNoAssetOverlay = account.assets.count <= 1 ? true : false
     }
 }
 
