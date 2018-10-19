@@ -16,6 +16,7 @@ final class StellarAccount {
     var totalOffers: Int = 0
     var totalSigners: Int = 0
     var totalBaseReserve: Int = 1
+    var transactions: [StellarTransaction] = []
 
     var baseReserve: Double {
         return Double(totalBaseReserve) * 0.5

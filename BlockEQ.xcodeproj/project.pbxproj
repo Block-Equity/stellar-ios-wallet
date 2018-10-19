@@ -64,6 +64,9 @@
 		C54EFE4821796B61005FA6D3 /* UIInsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EFE4721796B61005FA6D3 /* UIInsetLabel.swift */; };
 		C54EFE4A21798668005FA6D3 /* UIView+Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EFE4921798668005FA6D3 /* UIView+Layer.swift */; };
 		C54EFE4C217A2442005FA6D3 /* TransactionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EFE4B217A2442005FA6D3 /* TransactionSection.swift */; };
+		C54EFE4E217A523F005FA6D3 /* FetchTransactionsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EFE4D217A523F005FA6D3 /* FetchTransactionsOperation.swift */; };
+		C54EFE50217A55BA005FA6D3 /* StellarTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EFE4F217A55BA005FA6D3 /* StellarTransaction.swift */; };
+		C54EFE52217A5D15005FA6D3 /* StellarOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EFE51217A5D15005FA6D3 /* StellarOperation.swift */; };
 		C55458FC2124BB1B00032699 /* AuthenticatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55458FB2124BB1B00032699 /* AuthenticatingViewController.swift */; };
 		C55660492165D30C00DDAAA5 /* QRMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55660482165D30C00DDAAA5 /* QRMap.swift */; };
 		C57A8540217814EF0048A6B5 /* TransactionDetailsSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C57A853F217814EF0048A6B5 /* TransactionDetailsSectionHeader.xib */; };
@@ -261,6 +264,9 @@
 		C54EFE4721796B61005FA6D3 /* UIInsetLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIInsetLabel.swift; sourceTree = "<group>"; };
 		C54EFE4921798668005FA6D3 /* UIView+Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layer.swift"; sourceTree = "<group>"; };
 		C54EFE4B217A2442005FA6D3 /* TransactionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSection.swift; sourceTree = "<group>"; };
+		C54EFE4D217A523F005FA6D3 /* FetchTransactionsOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTransactionsOperation.swift; sourceTree = "<group>"; };
+		C54EFE4F217A55BA005FA6D3 /* StellarTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarTransaction.swift; sourceTree = "<group>"; };
+		C54EFE51217A5D15005FA6D3 /* StellarOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarOperation.swift; sourceTree = "<group>"; };
 		C553ACBB2091572800B2379B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C55458FB2124BB1B00032699 /* AuthenticatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatingViewController.swift; sourceTree = "<group>"; };
 		C55660482165D30C00DDAAA5 /* QRMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRMap.swift; sourceTree = "<group>"; };
@@ -798,6 +804,7 @@
 				EC26838E2062AD830085CAAF /* AccountOperation.swift */,
 				EC2683902062C7CA0085CAAF /* PaymentTransactionOperation.swift */,
 				EC4BB64620BE2C28008252AD /* TradeOperation.swift */,
+				C54EFE4D217A523F005FA6D3 /* FetchTransactionsOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -829,6 +836,8 @@
 				C5BED3752162A81C00BEE464 /* Exchange.swift */,
 				C524DFC2216663DB0068D111 /* RecoveryMnemonic.swift */,
 				C524DFC4216667550068D111 /* SecretSeed.swift */,
+				C54EFE4F217A55BA005FA6D3 /* StellarTransaction.swift */,
+				C54EFE51217A5D15005FA6D3 /* StellarOperation.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -1187,6 +1196,7 @@
 				C5AB413D2090436700096A29 /* UIView+NibLoadableView.swift in Sources */,
 				EC20160120536C68009A73C8 /* PillView.swift in Sources */,
 				ECB1D958207E966D0088826D /* MBProgressHUD.m in Sources */,
+				C54EFE4E217A523F005FA6D3 /* FetchTransactionsOperation.swift in Sources */,
 				C54EFE4A21798668005FA6D3 /* UIView+Layer.swift in Sources */,
 				C595115620BB2B1B00843D33 /* PinDotView.swift in Sources */,
 				EC6EE88B20B600070033C299 /* TradeViewController.swift in Sources */,
@@ -1209,7 +1219,9 @@
 				C5AF7C8A2094B60A00F99835 /* UIImage+CALayer.swift in Sources */,
 				C414812E21246A1B0057ED74 /* ContactStellarCell.swift in Sources */,
 				ECF9F44B208937E400160843 /* InflationViewController.swift in Sources */,
+				C54EFE52217A5D15005FA6D3 /* StellarOperation.swift in Sources */,
 				C54EFE4C217A2442005FA6D3 /* TransactionSection.swift in Sources */,
+				C54EFE50217A55BA005FA6D3 /* StellarTransaction.swift in Sources */,
 				C5A5A878215E90BD00007787 /* WebViewController.swift in Sources */,
 				C439A22B211B6F9C0025C047 /* CreateTokenViewController.swift in Sources */,
 				EC1CEE5320577E880005F74E /* WordSuggestionCell.swift in Sources */,
