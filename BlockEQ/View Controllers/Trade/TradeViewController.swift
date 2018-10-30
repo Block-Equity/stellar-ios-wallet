@@ -291,7 +291,7 @@ class TradeViewController: UIViewController {
 }
 
 extension TradeViewController: AccountUpdatable {
-    func updated(account: StellarAccount) {
+    func update(account: StellarAccount) {
         // do things that require refreshing when the account gets updated
         self.stellarAccount = account
 

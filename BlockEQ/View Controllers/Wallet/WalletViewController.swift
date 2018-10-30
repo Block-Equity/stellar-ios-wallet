@@ -120,20 +120,22 @@ class WalletViewController: UIViewController {
         tableView?.reloadData()
     }
 
-    func update(with account: StellarAccount) {
-        if let currentAsset = dataSource?.asset {
-            self.update(with: account, asset: currentAsset)
-        } else if let asset = account.assets.first {
-            self.update(with: account, asset: asset)
-        }
-    }
-
     func refreshAssetHeader() {
         if let asset = self.dataSource?.asset, let account = self.dataSource?.account {
             self.showNativeHeader = asset.isNative
             self.coinLabel.text = Assets.formattedDisplayTitle(asset: asset)
             self.balanceLabel.text = asset.balance.decimalFormatted
             self.availableBalanceLabel.text = account.formattedAvailableBalance(for: asset)
+        }
+    }
+}
+
+extension WalletViewController: AccountUpdatable {
+    func update(account: StellarAccount) {
+        if let currentAsset = dataSource?.asset {
+            self.update(with: account, asset: currentAsset)
+        } else if let asset = account.assets.first {
+            self.update(with: account, asset: asset)
         }
     }
 }

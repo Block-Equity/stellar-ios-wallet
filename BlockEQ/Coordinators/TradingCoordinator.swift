@@ -9,10 +9,6 @@
 import StellarAccountService
 import stellarsdk
 
-protocol AccountUpdatable: AnyObject {
-    func updated(account: StellarAccount)
-}
-
 protocol TradingCoordinatorDelegate: AnyObject {
     func setScroll(offset: CGFloat, page: Int)
 }
@@ -30,7 +26,7 @@ final class TradingCoordinator {
             guard let account = self.account else { return }
 
             segmentController.updated(account: account)
-            tradeViewController.updated(account: account)
+            tradeViewController.update(account: account)
             myOffersViewController.setOffers(account.tradeOffers)
         }
     }
@@ -89,8 +85,10 @@ final class TradingCoordinator {
             segmentController.present(container, animated: true, completion: nil)
         }
     }
+}
 
-    func update(with account: StellarAccount) {
+extension TradingCoordinator: AccountUpdatable {
+    func update(account: StellarAccount) {
         self.account = account
     }
 }
