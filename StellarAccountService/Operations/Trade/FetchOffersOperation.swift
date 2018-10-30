@@ -36,7 +36,7 @@ final class FetchOffersOperation: AsyncOperation {
         super.main()
 
         let acc = address.string
-        horizon.offers.getOffers(forAccount: acc, cursor: nil, order: Order.ascending, limit: recordCount) { response in
+        horizon.offers.getOffers(forAccount: acc, cursor: nil, order: .descending, limit: recordCount) { response in
             switch response {
             case .success(let offerResponse):
                 let offers = offerResponse.records.compactMap { StellarAccountOffer($0) }

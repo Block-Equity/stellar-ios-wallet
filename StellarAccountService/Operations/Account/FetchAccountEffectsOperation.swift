@@ -30,7 +30,7 @@ final class FetchAccountEffectsOperation: AsyncOperation {
     override func main() {
         super.main()
 
-        horizon.effects.getEffects(forAccount: self.accountId, from: nil, order: .ascending, limit: 200) { response in
+        horizon.effects.getEffects(forAccount: self.accountId, from: nil, order: .descending, limit: 200) { response in
             switch response {
             case .success(let effectsResponse):
                 let effects = effectsResponse.records.map {
