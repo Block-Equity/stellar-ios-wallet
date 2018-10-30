@@ -33,8 +33,10 @@ extension StellarEffect {
     }
 
     public func formattedDescription(asset: StellarAsset) -> String {
-        if type == .tradeEffect {
-            return ""
+        if self.type == .tradeEffect {
+            return String(format: "TRADE_CURRENCY_PAIR_FORMAT".localized(),
+                          assetPair.selling.shortCode,
+                          assetPair.buying.shortCode)
         } else {
             return type.title
         }

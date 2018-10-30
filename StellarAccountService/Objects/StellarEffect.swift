@@ -19,14 +19,8 @@ public final class StellarEffect {
                                            assetCode: nil,
                                            assetIssuer: nil,
                                            balance: "")
-    var soldAsset: StellarAsset = StellarAsset(assetType: AssetTypeAsString.NATIVE,
-                                               assetCode: nil,
-                                               assetIssuer: nil,
-                                               balance: "")
-    var boughtAsset: StellarAsset = StellarAsset(assetType: AssetTypeAsString.NATIVE,
-                                                 assetCode: nil,
-                                                 assetIssuer: nil,
-                                                 balance: "")
+
+    public private(set) var assetPair = StellarAssetPair(buying: StellarAsset.lumens, selling: StellarAsset.lumens)
 
     init(response: EffectResponse) {
         self.identifier = response.id
@@ -80,27 +74,26 @@ public final class StellarEffect {
             return
         }
 
-        soldAsset = StellarAsset(assetType: updatedEffect.soldAssetType,
-                                 assetCode: updatedEffect.soldAssetCode,
-                                 assetIssuer: updatedEffect.soldAssetIssuer,
-                                 balance: "")
+        let selling = StellarAsset(assetType: updatedEffect.soldAssetType,
+                                         assetCode: updatedEffect.soldAssetCode,
+                                         assetIssuer: updatedEffect.soldAssetIssuer,
+                                         balance: "")
 
-        boughtAsset = StellarAsset(assetType: updatedEffect.boughtAssetType,
-                                   assetCode: updatedEffect.boughtAssetCode,
-                                   assetIssuer: updatedEffect.boughtAssetIssuer,
-                                   balance: "")
+        let buying = StellarAsset(assetType: updatedEffect.boughtAssetType,
+                                        assetCode: updatedEffect.boughtAssetCode,
+                                        assetIssuer: updatedEffect.boughtAssetIssuer,
+                                        balance: "")
+
+        self.assetPair = StellarAssetPair(buying: buying, selling: selling)
 
         boughtAmount = updatedEffect.boughtAmount
         soldAmount = updatedEffect.soldAmount
     }
 
     private func setInflationEffect(with effectResponse: EffectResponse) {
-//        guard let updatedEffect = effectResponse as? AccountInflationDestinationUpdatedEffectResponse else {
-//            return
-//        }
     }
 
     public func isBought(asset: StellarAsset) -> Bool {
-        return asset == boughtAsset
+        return asset == self.assetPair.buying
     }
 }

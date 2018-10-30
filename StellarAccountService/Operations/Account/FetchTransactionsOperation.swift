@@ -30,7 +30,7 @@ final class FetchTransactionsOperation: AsyncOperation {
     override func main() {
         super.main()
 
-        horizon.transactions.getTransactions(forAccount: accountId, from: nil, order: .ascending, limit: 200) { resp in
+        horizon.transactions.getTransactions(forAccount: accountId, from: nil, order: .descending, limit: 200) { resp in
             switch resp {
             case .success(let response):
                 let transactions = response.records
