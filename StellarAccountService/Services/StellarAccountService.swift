@@ -11,7 +11,7 @@ import stellarsdk
 public protocol StellarAccountServiceDelegate: AnyObject {
     func accountUpdated(_ service: StellarAccountService, account: StellarAccount, opts: StellarAccount.UpdateOptions)
     func accountInactive(_ service: StellarAccountService, account: StellarAccount)
-    func paymentReceived(_ service: StellarAccountService, operation: StellarOperation)
+    func paymentUpdate(_ service: StellarAccountService, operation: StellarOperation)
 }
 
 /**

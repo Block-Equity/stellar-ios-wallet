@@ -210,7 +210,7 @@ extension ApplicationCoordinator: StellarAccountServiceDelegate {
         self.tradingCoordinator.update(with: account)
     }
 
-    func paymentReceived(_ service: StellarAccountService, operation: StellarOperation) {
-        print("account operation: \(operation)")
+    func paymentUpdate(_ service: StellarAccountService, operation: StellarOperation) {
+        service.update()
     }
 }
