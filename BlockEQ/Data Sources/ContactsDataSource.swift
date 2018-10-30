@@ -25,7 +25,7 @@ final class ContactsDataSource: NSObject {
     var addressBookContacts: [LocalContact] = []
     var filteredStellarContacts: [LocalContact] = []
     var filteredAddressBookContacts: [LocalContact] = []
-    var account: StellarAccount?
+    var account: StellarAccount
 
     var hasFilteredStellarContacts: Bool {
         return filteredStellarContacts.count > 0
@@ -35,7 +35,6 @@ final class ContactsDataSource: NSObject {
         return filteredAddressBookContacts.count > 0
     }
 
-    static let blockEQIdentifier = ".publicaddress@blockeq.com"
     let requiredContactKeys = [
         CNContactGivenNameKey,
         CNContactIdentifierKey,
@@ -43,8 +42,9 @@ final class ContactsDataSource: NSObject {
         CNContactEmailAddressesKey
     ]
 
-    init(contactStore: CNContactStore, cellDelegate: ContactsViewController) {
+    init(contactStore: CNContactStore, account: StellarAccount, cellDelegate: ContactsViewController) {
         self.cellDelegate = cellDelegate
+        self.account = account
 
         let request = CNContactFetchRequest(keysToFetch: requiredContactKeys as [CNKeyDescriptor])
         var cnContacts: [CNContact] = []
@@ -57,13 +57,13 @@ final class ContactsDataSource: NSObject {
 
             var allStellarContacts: [LocalContact] = []
             var allAddressBookContacts: [LocalContact] = []
-            let identifier = ContactsDataSource.blockEQIdentifier
+            let suffix = StellarAddress.Suffix.contactAddress.rawValue
 
             let nonDuplicateContacts = Array(Set(cnContacts))
             for contact in nonDuplicateContacts {
                 let name = "\(contact.givenName) \(contact.familyName)"
                 var stellarEmail = ""
-                for emailAddress in contact.emailAddresses where emailAddress.value.contains(identifier) {
+                for emailAddress in contact.emailAddresses where emailAddress.value.contains(suffix) {
                     stellarEmail = emailAddress.value as String
                 }
 
@@ -147,10 +147,11 @@ extension ContactsViewController: ContactCellDelegate {
 
 extension ContactsViewController: ContactCellStellarDelegate {
     func didSendPayment(indexPath: IndexPath) {
-        guard let account = self.account, let item = dataSource?.filteredStellarContacts[indexPath.row] else { return }
-
-        let addressString = item.address.replacingOccurrences(of: ContactsDataSource.blockEQIdentifier, with: "")
-        guard let receiver = StellarAddress(addressString) else { return }
+        guard let account = self.account,
+            let item = dataSource?.filteredStellarContacts[indexPath.row],
+            let receiver = StellarAddress.from(contactAddress: item.address) else {
+                return
+        }
 
         let exchange: Exchange? = AddressResolver.resolve(address: receiver)
         let selectAssetViewController = SelectAssetViewController(stellarAccount: account,

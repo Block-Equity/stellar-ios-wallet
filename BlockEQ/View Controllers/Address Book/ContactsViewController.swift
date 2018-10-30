@@ -47,8 +47,12 @@ class ContactsViewController: UIViewController {
 
         setupView()
 
+        guard let account = self.account else {
+            return
+        }
+
         checkContactAccess { contactStore in
-            let dataSource = ContactsDataSource(contactStore: contactStore, cellDelegate: self)
+            let dataSource = ContactsDataSource(contactStore: contactStore, account: account, cellDelegate: self)
             self.dataSource = dataSource
             self.tableView.reloadData()
         }
@@ -57,9 +61,13 @@ class ContactsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        guard let account = self.account else {
+            return
+        }
+
         searchBar.text = ""
         checkContactAccess { contactStore in
-            let dataSource = ContactsDataSource(contactStore: contactStore, cellDelegate: self)
+            let dataSource = ContactsDataSource(contactStore: contactStore, account: account, cellDelegate: self)
             self.dataSource = dataSource
         }
 
@@ -123,6 +131,12 @@ class ContactsViewController: UIViewController {
 
     @IBAction func addContact() {
         self.delegate?.selectedAddToAddressBook(identifier: "", name: "", address: "")
+    }
+}
+
+extension ContactsViewController: AccountUpdatable {
+    func update(account: StellarAccount) {
+        self.account = account
     }
 }
 

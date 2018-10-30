@@ -199,15 +199,17 @@ extension ApplicationCoordinator: ContactsViewControllerDelegate {
 extension ApplicationCoordinator: StellarAccountServiceDelegate {
     func accountUpdated(_ service: StellarAccountService, account: StellarAccount, opts: StellarAccount.UpdateOptions) {
         if opts.contains(.effects) || opts.contains(.account) {
-            self.walletViewController.update(with: account)
+            self.walletViewController.update(account: account)
+            self.contactsViewController.update(account: account)
         }
 
-        self.tradingCoordinator.update(with: account)
+        self.tradingCoordinator.update(account: account)
     }
 
     func accountInactive(_ service: StellarAccountService, account: StellarAccount) {
-        self.walletViewController.update(with: account)
-        self.tradingCoordinator.update(with: account)
+        self.walletViewController.update(account: account)
+        self.contactsViewController.update(account: account)
+        self.tradingCoordinator.update(account: account)
     }
 
     func paymentUpdate(_ service: StellarAccountService, operation: StellarOperation) {
