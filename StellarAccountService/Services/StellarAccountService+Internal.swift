@@ -56,7 +56,7 @@ extension StellarAccountService {
                 if operationResponse is PaymentOperationResponse {
                     let operation = StellarOperation(response: operationResponse)
                     DispatchQueue.main.async {
-                        self.delegate?.paymentReceived(self, operation: operation)
+                        self.delegate?.paymentUpdate(self, operation: operation)
                     }
                 }
             case .error(let error):
