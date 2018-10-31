@@ -39,9 +39,7 @@ final class WalletTableViewDataSource: NSObject {
         self.account = account
         self.effects = account.effects.filter {
             $0.asset == asset && WalletTableViewDataSource.supportedEffects.contains($0.type)
-        }.sorted(by: { first, second -> Bool in
-            return first.createdAt > second.createdAt
-        })
+        }
     }
 }
 

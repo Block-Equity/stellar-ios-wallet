@@ -31,7 +31,7 @@ public struct StellarOrderbookOffer {
 
     internal init(_ response: OrderbookOfferResponse) {
         self.price = response.price
-        self.amount = response.price
+        self.amount = response.amount
         self.numerator = response.priceR.numerator
         self.denominator = response.priceR.denominator
     }
