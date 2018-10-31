@@ -40,14 +40,14 @@ final class FetchOrderBookOperation: AsyncOperation {
                                         buyingAssetCode: assetPair.buying.assetCode,
                                         buyingAssetIssuer: assetPair.buying.assetIssuer,
                                         limit: self.recordCount) { response in
-        switch response {
-        case .success(let orderBookResponse):
-            self.result = Result.success(orderBookResponse)
-        case .failure(let error):
-            self.result = Result.failure(error)
-        }
+            switch response {
+            case .success(let orderBookResponse):
+                self.result = Result.success(orderBookResponse)
+            case .failure(let error):
+                self.result = Result.failure(error)
+            }
 
-        self.finish()
+            self.finish()
         }
     }
 
