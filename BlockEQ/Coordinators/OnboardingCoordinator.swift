@@ -47,6 +47,9 @@ final class OnboardingCoordinator {
 
 extension OnboardingCoordinator: LaunchViewControllerDelegate {
     func requestedCreateNewWallet(_ viewController: LaunchViewController, type: StellarRecoveryMnemonic.MnemonicType) {
+
+        core.accountService.clear()
+
         guard let mnemonic = StellarRecoveryMnemonic.generate(type: type) else {
             UIAlertController.simpleAlert(title: "ERROR_TITLE".localized(),
                                           message: "MNEMONIC_GENERATION_ERROR".localized(),
@@ -63,6 +66,7 @@ extension OnboardingCoordinator: LaunchViewControllerDelegate {
             self.mnemonicViewController = mnemonicVC
             navController.pushViewController(mnemonicVC, animated: true)
         } catch {
+            core.accountService.clear()
             UIAlertController.simpleAlert(title: "ERROR_TITLE".localized(),
                                           message: "MNEMONIC_GENERATION_ERROR".localized(),
                                           presentingViewController: navController)

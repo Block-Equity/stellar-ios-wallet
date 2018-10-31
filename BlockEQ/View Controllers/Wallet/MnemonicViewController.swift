@@ -69,7 +69,7 @@ class MnemonicViewController: UIViewController {
         AutoFillHelper.provider = AppleAutoFillProvider()
         AutoFillHelper.save(mnemonic: mnemonic) { error in
             if let error = error {
-                UIAlertController.simpleAlert(title: "ERROR_TITLE",
+                UIAlertController.simpleAlert(title: "ERROR_TITLE".localized(),
                                               message: error.localizedDescription,
                                               presentingViewController: self)
             } else {

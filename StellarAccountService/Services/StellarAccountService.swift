@@ -98,6 +98,7 @@ extension StellarAccountService {
         }
 
         self.startup(keyPair: keyPair)
+        self.secretManager?.store(seed: seed)
     }
 
     public func migrateAccount(with address: StellarAddress,
@@ -170,18 +171,17 @@ extension StellarAccountService {
     }
 
     // Removes all data corresponding to the account managed by this account service
-    public func clear() throws {
-        guard account != nil else { throw ServiceError.notInitialized }
-
+    public func clear() {
         stopPeriodicUpdates()
 
-        guard let secretManager = self.secretManager else {
-            throw ServiceError.secureItemPurge
+        account = nil
+        lastFetch = nil
+
+        if let secrets = self.secretManager {
+            secrets.erase()
+            secretManager = nil
         }
 
-        secretManager.erase()
-
-        self.secretManager = nil
-        account = nil
+        state = .inactive
     }
 }
