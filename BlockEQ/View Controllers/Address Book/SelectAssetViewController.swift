@@ -90,7 +90,7 @@ extension SelectAssetViewController: UITableViewDataSource {
         if item.assetType == AssetTypeAsString.NATIVE {
             cell.amountLabel.text = "\(stellarAccount.formattedAvailableBalance) \(item.shortCode)"
         } else {
-            cell.amountLabel.text = "\(allAssets[indexPath.row].formattedBalance) \(item.shortCode)"
+            cell.amountLabel.text = "\(allAssets[indexPath.row].balance.decimalFormatted) \(item.shortCode)"
         }
 
         return cell
