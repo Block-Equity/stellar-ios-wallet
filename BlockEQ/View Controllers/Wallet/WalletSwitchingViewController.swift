@@ -16,7 +16,7 @@ protocol WalletSwitchingViewControllerDelegate: class {
     func selectedAddAsset()
 
     func createTrustLine(to address: StellarAddress, for asset: StellarAsset)
-    func updateInflation(destination: StellarAddress)
+    func updateInflation()
     func remove(asset: StellarAsset)
     func add(asset: StellarAsset)
 }
@@ -147,6 +147,15 @@ final class WalletSwitchingViewController: UIViewController {
     }
 }
 
+extension WalletSwitchingViewController: AccountUpdatable {
+    func update(account: StellarAccount) {
+        rebuildDataSource(using: account)
+        tableView?.reloadData()
+
+        hideHud()
+    }
+}
+
 extension WalletSwitchingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let section = WalletSwitchingDataSource.Section(rawValue: section),
@@ -204,11 +213,11 @@ extension WalletSwitchingViewController: WalletDataSourceDelegate {
         delegate?.add(asset: asset)
     }
 
-    func updateInflation(_ dataSource: WalletSwitchingDataSource, destination: StellarAddress) {
+    func updateInflation(_ dataSource: WalletSwitchingDataSource) {
         if dataSource.isZeroBalance() {
             displayNoBalanceError()
         } else {
-            delegate?.updateInflation(destination: destination)
+            delegate?.updateInflation()
         }
     }
 }

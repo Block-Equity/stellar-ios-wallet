@@ -9,8 +9,11 @@
 import Whisper
 import StellarAccountService
 
-class InflationViewController: UIViewController {
+protocol InflationViewControllerDelegate: AnyObject {
+    func updateAccountInflation(_ viewController: InflationViewController, destination: StellarAddress)
+}
 
+final class InflationViewController: UIViewController {
     @IBOutlet var addressHolderView: UIView!
     @IBOutlet var holdingView: UIView!
     @IBOutlet var tableView: UITableView!
@@ -19,47 +22,17 @@ class InflationViewController: UIViewController {
     @IBOutlet var subtitleLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet var destinationAddressTextField: UITextField!
 
+    weak var delegate: InflationViewControllerDelegate?
     var account: StellarAccount
-    var inflationDestination: StellarAddress?
     let lumenautInflationDestination = "GCCD6AJOYZCUAQLX32ZJF2MKFFAUJ53PVCFQI3RHWKL3V47QYE2BNAUT"
-
-    @IBAction func addInflationDestination() {
-        guard let inflationDestination = StellarAddress(destinationAddressTextField.text) else {
-            destinationAddressTextField.shake()
-            return
-        }
-
-        let inflationString = inflationDestination.string
-        guard inflationString != account.accountId, inflationString != account.inflationDestination else {
-            destinationAddressTextField.shake()
-            return
-        }
-
-        showHud()
-        account.setInflationDestination(address: inflationDestination, delegate: self)
-    }
 
     init(account: StellarAccount) {
         self.account = account
         super.init(nibName: String(describing: InflationViewController.self), bundle: nil)
     }
 
-    init(account: StellarAccount, inflationDestination: StellarAddress?) {
-        self.account = account
-        self.inflationDestination = inflationDestination
-        super.init(nibName: String(describing: InflationViewController.self), bundle: nil)
-    }
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    @IBAction func scanQRCode() {
-        let scanViewController = ScanViewController()
-        scanViewController.delegate = self
-
-        let navigationController = AppNavigationController(rootViewController: scanViewController)
-        present(navigationController, animated: true, completion: nil)
     }
 
     override func viewDidLoad() {
@@ -68,18 +41,10 @@ class InflationViewController: UIViewController {
         setupView()
     }
 
-    func setupView() {
-        navigationItem.title = "SET_INFLATION".localized()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
-        tableView.backgroundColor = Colors.lightBackground
-        titleLabel.textColor = Colors.darkGrayTransparent
-        subtitleLabel.textColor = Colors.darkGray
-        destinationAddressTextField.textColor = Colors.darkGray
-        addressHolderView.backgroundColor = Colors.lightBackground
-        holdingView.backgroundColor = Colors.lightBackground
-        view.backgroundColor = Colors.lightBackground
-
-        if let currentInflationDestination = inflationDestination?.string {
+        if let currentInflationDestination = account.inflationDestination {
             destinationAddressTextField.text = currentInflationDestination
             subtitleLabel.text = ""
             subtitleLabelTopConstraint.constant = 0.0
@@ -88,6 +53,20 @@ class InflationViewController: UIViewController {
         }
     }
 
+    func setupView() {
+        navigationItem.title = "SET_INFLATION".localized()
+        tableView.backgroundColor = Colors.lightBackground
+        titleLabel.textColor = Colors.darkGrayTransparent
+        subtitleLabel.textColor = Colors.darkGray
+        destinationAddressTextField.textColor = Colors.darkGray
+        addressHolderView.backgroundColor = Colors.lightBackground
+        holdingView.backgroundColor = Colors.lightBackground
+        view.backgroundColor = Colors.lightBackground
+    }
+}
+
+// MARK: - Prompts
+extension InflationViewController {
     func displayInflationSuccess() {
         self.view.endEditing(true)
 
@@ -120,12 +99,43 @@ class InflationViewController: UIViewController {
     }
 }
 
+// MARK: - IBActions
+extension InflationViewController {
+    @IBAction func scanQRCode() {
+        let scanViewController = ScanViewController()
+        scanViewController.delegate = self
+
+        let navigationController = AppNavigationController(rootViewController: scanViewController)
+        present(navigationController, animated: true, completion: nil)
+    }
+
+    @IBAction func addInflationDestination() {
+        guard let inflationDestination = StellarAddress(destinationAddressTextField.text) else {
+            destinationAddressTextField.shake()
+            return
+        }
+
+        let inflationString = inflationDestination.string
+        guard inflationString != account.accountId, inflationString != account.inflationDestination else {
+            UIAlertController.simpleAlert(title: "INVALID_DESTINATION_TITLE".localized(),
+                                          message: "INFLATION_DESTINATION_INVALID".localized(),
+                                          presentingViewController: self)
+            return
+        }
+
+        showHud()
+        delegate?.updateAccountInflation(self, destination: inflationDestination)
+    }
+}
+
+// MARK: - ScanViewControllerDelegate
 extension InflationViewController: ScanViewControllerDelegate {
     func setQR(value: String) {
         destinationAddressTextField.text = value
     }
 }
 
+// MARK: - SetInflationResponseDelegate
 extension InflationViewController: SetInflationResponseDelegate {
     func setInflation(destination: StellarAddress) {
         self.hideHud()
