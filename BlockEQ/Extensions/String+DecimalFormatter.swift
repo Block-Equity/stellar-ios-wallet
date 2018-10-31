@@ -22,7 +22,12 @@ extension Formatter {
 
 extension String {
     var decimalFormatted: String {
-        return Formatter.displayFormatters.string(for: self.doubleValue) ?? ""
+        let value = self.doubleValue
+        if value > 0 && value <= 0.0001 {
+            return "< 0.0001"
+        } else {
+            return Formatter.displayFormatters.string(for: value) ?? ""
+        }
     }
 
     var doubleValue: Double {
@@ -36,12 +41,20 @@ extension String {
 
 extension Decimal {
     var displayFormattedString: String {
-        return Formatter.displayFormatters.string(for: self) ?? ""
+        if self > 0 && self <= 0.0001 {
+            return "< 0.0001"
+        } else {
+            return Formatter.displayFormatters.string(for: self) ?? ""
+        }
     }
 }
 
 extension Double {
     var displayFormattedString: String {
-        return Formatter.displayFormatters.string(for: self) ?? ""
+        if self > 0 && self <= 0.0001 {
+            return "< 0.0001"
+        } else {
+            return Formatter.displayFormatters.string(for: self) ?? ""
+        }
     }
 }

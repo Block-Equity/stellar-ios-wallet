@@ -75,9 +75,3 @@ public struct Assets {
         return Colors.blueGray
     }
 }
-
-extension StellarAsset {
-    public var formattedBalance: String {
-        return balance.decimalFormatted
-    }
-}

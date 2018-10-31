@@ -86,7 +86,7 @@ extension WalletSwitchingDataSource: UITableViewDataSource {
             let item = allAssets[indexPath.row]
             let walletCell: WalletItemCell = tableView.dequeueReusableCell(for: indexPath)
             var viewModel = WalletItemCell.ViewModel(title: Assets.displayTitle(shortCode: item.shortCode),
-                                                     amount: "\(item.formattedBalance) \(item.shortCode)")
+                                                     amount: "\(item.balance.decimalFormatted) \(item.shortCode)")
 
             walletCell.indexPath = indexPath
             walletCell.delegate = self
