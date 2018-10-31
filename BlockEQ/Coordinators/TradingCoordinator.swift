@@ -31,6 +31,8 @@ final class TradingCoordinator {
         }
     }
 
+    static let orderbookUpdateInterval: TimeInterval = 10
+
     let segmentController: TradeSegmentViewController
 
     let tradeViewController: TradeViewController
@@ -44,6 +46,8 @@ final class TradingCoordinator {
     var walletSwitchingViewController: WalletSwitchingViewController?
 
     var wrappingNavController: AppNavigationController?
+
+    var timer: Timer?
 
     weak var delegate: TradingCoordinatorDelegate?
 
@@ -64,6 +68,12 @@ final class TradingCoordinator {
         segmentController.tradeSegmentDelegate = self
         tradeViewController.delegate = self
         myOffersViewController.delegate = self
+
+        let interval = TradingCoordinator.orderbookUpdateInterval
+        timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true, block: { _ in
+            guard let assetPair = self.tradeViewController.assetPair else { return }
+            self.tradeService?.updateOrders(for: assetPair)
+        })
     }
 
     func switchedSegment(_ type: TradeSegment) {
@@ -83,6 +93,13 @@ final class TradingCoordinator {
             walletSwitchVC.updateMenu(account: account)
 
             segmentController.present(container, animated: true, completion: nil)
+        }
+    }
+
+    deinit {
+        if let timer = self.timer {
+            timer.invalidate()
+            self.timer = nil
         }
     }
 }

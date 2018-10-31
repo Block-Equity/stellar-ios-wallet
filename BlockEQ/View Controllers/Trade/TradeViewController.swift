@@ -75,6 +75,14 @@ class TradeViewController: UIViewController {
     var currentTradeType: StellarTradeOfferData.TradeType = .market
     var currentMarketPrice: Double = 0.0
 
+    var assetPair: StellarAssetPair? {
+        if let buyingAsset = self.toAsset, let sellingAsset = self.fromAsset {
+            return StellarAssetPair(buying: buyingAsset, selling: sellingAsset)
+        }
+
+        return nil
+    }
+
     weak var delegate: TradeViewControllerDelegate?
 
     override func viewDidLoad() {
