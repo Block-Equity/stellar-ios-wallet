@@ -295,7 +295,7 @@ extension ApplicationCoordinator: SettingsDelegate {
             self.displayAuth {
                 KeychainHelper.clearAll()
                 SecurityOptionHelper.clear()
-                try? self.core?.accountService.clear()
+                self.core?.accountService.clear()
                 self.core = nil
                 self.delegate?.switchToOnboarding()
             }

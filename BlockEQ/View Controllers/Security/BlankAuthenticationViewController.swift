@@ -23,7 +23,6 @@ final class BlankAuthenticationViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
 
     func setupView() {
-        UIApplication.shared.statusBarStyle = .lightContent
         self.view.backgroundColor = Colors.backgroundDark
         self.authLogo.image = UIImage(named: "logo")
         self.authLogo.contentMode = .top
@@ -31,18 +30,14 @@ final class BlankAuthenticationViewController: UIViewController {
         self.authButton.alpha = 0
         self.authButton.setTitle("AUTHENTICATE_TITLE".localized(), for: .normal)
         self.authButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .title3)
+
+        self.setNeedsStatusBarAppearanceUpdate()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         setupView()
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-
-        UIApplication.shared.statusBarStyle = .default
     }
 
     func displayAuthButton() {
