@@ -9,7 +9,7 @@
 import StellarAccountService
 
 protocol WalletDataSourceDelegate: AnyObject {
-    func updateInflation(_ dataSource: WalletSwitchingDataSource, destination: StellarAddress)
+    func updateInflation(_ dataSource: WalletSwitchingDataSource)
     func createTrustLine(_ dataSource: WalletSwitchingDataSource, to address: StellarAddress, asset: StellarAsset)
     func remove(_ dataSource: WalletSwitchingDataSource, asset: StellarAsset)
     func add(_ dataSource: WalletSwitchingDataSource, asset: StellarAsset)
@@ -129,8 +129,7 @@ extension WalletSwitchingDataSource: UITableViewDataSource {
 
 extension WalletSwitchingDataSource: WalletItemCellDelegate {
     func requestedChangeInflation() {
-        guard let address = stellarAccount.inflationAddress else { return }
-        delegate?.updateInflation(self, destination: address)
+        delegate?.updateInflation(self)
     }
 
     func requestedRemoveAsset(indexPath: IndexPath) {

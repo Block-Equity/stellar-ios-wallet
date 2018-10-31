@@ -131,11 +131,12 @@ extension ApplicationCoordinator: WalletSwitchingViewControllerDelegate {
         }
     }
 
-    func updateInflation(destination: StellarAddress) {
+    func updateInflation() {
         guard let account = core?.accountService.account else { return }
 
-        let inflationViewController = InflationViewController(account: account, inflationDestination: destination)
+        let inflationViewController = InflationViewController(account: account)
         self.inflationViewController = inflationViewController
+        self.inflationViewController?.delegate = self
 
         if let container = walletViewController.navigationContainer {
             container.pushViewController(inflationViewController, animated: true)
@@ -167,6 +168,16 @@ extension ApplicationCoordinator: WalletSwitchingViewControllerDelegate {
         }
 
         account.changeTrust(asset: asset, remove: false, delegate: walletVC)
+    }
+}
+
+extension ApplicationCoordinator: InflationViewControllerDelegate {
+    func updateAccountInflation(_ viewController: InflationViewController, destination: StellarAddress) {
+        guard let account = core?.accountService.account else {
+            return
+        }
+
+        account.setInflationDestination(address: destination, delegate: viewController)
     }
 }
 

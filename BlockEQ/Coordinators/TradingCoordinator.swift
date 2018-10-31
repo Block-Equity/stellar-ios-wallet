@@ -130,10 +130,10 @@ extension TradingCoordinator: WalletSwitchingViewControllerDelegate {
         self.account?.changeTrust(asset: asset, remove: false, delegate: self)
     }
 
-    func updateInflation(destination: StellarAddress) {
+    func updateInflation() {
         guard let account = self.account else { return }
 
-        let inflationViewController = InflationViewController(account: account, inflationDestination: destination)
+        let inflationViewController = InflationViewController(account: account)
 
         wrappingNavController?.pushViewController(inflationViewController, animated: true)
     }
@@ -144,6 +144,14 @@ extension TradingCoordinator: WalletSwitchingViewControllerDelegate {
         self.addAssetViewController = addAssetViewController
 
         wrappingNavController?.pushViewController(addAssetViewController, animated: true)
+    }
+}
+
+extension TradingCoordinator: InflationViewControllerDelegate {
+    func updateAccountInflation(_ viewController: InflationViewController, destination: StellarAddress) {
+        guard let account = self.account else { return }
+
+        account.setInflationDestination(address: destination, delegate: viewController)
     }
 }
 
