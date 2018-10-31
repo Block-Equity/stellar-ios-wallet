@@ -80,7 +80,6 @@ public final class SecretManager {
         let pubKey = keyPair.publicKey
         guard let privKey = keyPair.privateKey else { return }
 
-        KeychainSwift().set(keyPair.secretSeed, forKey: secretSeedKey)
         self.store(pub: pubKey, priv: privKey)
     }
 

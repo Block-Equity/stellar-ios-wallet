@@ -14,10 +14,11 @@ extension StellarAccountService {
 
         let stubAccount = StellarAccount(accountId: address.string)
         self.account = stubAccount
+        stubAccount.service = self
 
         let secretManager = SecretManager(for: address.string)
         self.secretManager = secretManager
-        stubAccount.service = self
+
         state = .active
     }
 
