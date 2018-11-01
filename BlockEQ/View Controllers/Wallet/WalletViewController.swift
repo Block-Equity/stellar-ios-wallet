@@ -124,7 +124,7 @@ class WalletViewController: UIViewController {
         if let asset = self.dataSource?.asset, let account = self.dataSource?.account {
             self.showNativeHeader = asset.isNative
             self.coinLabel.text = Assets.formattedDisplayTitle(asset: asset)
-            self.balanceLabel.text = asset.balance.decimalFormatted
+            self.balanceLabel.text = asset.balance.displayFormatted
             self.availableBalanceLabel.text = account.formattedAvailableBalance(for: asset)
         }
     }

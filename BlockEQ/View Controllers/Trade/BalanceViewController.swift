@@ -68,7 +68,7 @@ class BalanceViewController: UIViewController {
         signersAmountLabel.text = String(describing: stellarAccount.totalSigners)
         signersValueLabel.text = stellarAccount.formattedSigners
         minimumBalanceLabel.text = stellarAccount.formattedMinBalance
-        totalBalanceLabel.text = stellarAsset.balance.decimalFormatted
+        totalBalanceLabel.text = stellarAsset.balance.displayFormatted
     }
 
     @objc func dismissView() {

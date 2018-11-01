@@ -107,13 +107,13 @@ extension OrderBookViewController: UITableViewDataSource {
         let cell: OrderBookCell = tableView.dequeueReusableCell(for: indexPath)
 
         let item = bids[indexPath.row]
-        let numerator = Double(item.numerator)
-        let denominator = Double(item.denominator)
-        let result = denominator / numerator * item.amount.doubleValue
+        let numerator = Decimal(item.numerator)
+        let denominator = Decimal(item.denominator)
+        let result = denominator / numerator * item.amount.decimalValue
 
-        cell.option1Label.text = item.price.decimalFormatted
-        cell.option2Label.text = result.displayFormattedString
-        cell.option3Label.text = item.amount.decimalFormatted
+        cell.option1Label.text = item.price.tradeFormatted
+        cell.option2Label.text = result.tradeFormattedString
+        cell.option3Label.text = item.amount.tradeFormatted
 
         return cell
     }
@@ -122,9 +122,9 @@ extension OrderBookViewController: UITableViewDataSource {
         let cell: OrderBookCell = tableView.dequeueReusableCell(for: indexPath)
 
         let item = asks[indexPath.row]
-        cell.option1Label.text = item.price.decimalFormatted
-        cell.option2Label.text = item.amount.decimalFormatted
-        cell.option3Label.text = item.value.displayFormattedString
+        cell.option1Label.text = item.price.tradeFormatted
+        cell.option2Label.text = item.amount.tradeFormatted
+        cell.option3Label.text = item.value.tradeFormattedString
 
         return cell
     }

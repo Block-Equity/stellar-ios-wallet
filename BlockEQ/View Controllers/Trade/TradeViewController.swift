@@ -214,7 +214,7 @@ class TradeViewController: UIViewController {
         }
 
         var formatString = "TRADE_BALANCE_FORMAT"
-        var balanceAmount = fromAsset.balance.decimalFormatted
+        var balanceAmount = fromAsset.balance.displayFormatted
 
         if fromAsset.isNative {
             formatString = "TRADE_BALANCE_AVAILABLE_FORMAT"
@@ -254,7 +254,7 @@ class TradeViewController: UIViewController {
             tradeFromButton.setTitle(fromAsset?.shortCode, for: .normal)
 
             if let fromAsset = fromAsset {
-                balanceLabel.text = "\(fromAsset.balance.decimalFormatted) \(fromAsset.shortCode)"
+                balanceLabel.text = "\(fromAsset.balance.displayFormatted) \(fromAsset.shortCode)"
             }
 
             toAssetToRemove = fromAsset
