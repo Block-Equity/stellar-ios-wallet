@@ -96,12 +96,12 @@ class SendViewController: UIViewController {
 
         var availableBalance = ""
         if asset.assetType == AssetTypeAsString.NATIVE {
-            availableBalance = stellarAccount.formattedAvailableBalance
+            availableBalance = stellarAccount.availableBalance.tradeFormattedString
         } else {
             availableBalance = asset.balance.displayFormatted
         }
 
-        navigationItem.title = "\(availableBalance) \(asset.shortCode)"
+        navigationItem.title = String(format: "TRADE_BALANCE_FORMAT".localized(), availableBalance, asset.shortCode)
     }
 
     func setViewStateToNotEditing() {

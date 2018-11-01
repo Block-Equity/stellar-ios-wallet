@@ -25,10 +25,6 @@ extension StellarAccount {
         return signers.displayFormattedString
     }
 
-    var minBalance: Double {
-        return baseReserve + trustlines + offers + signers
-    }
-
     var formattedMinBalance: String {
         return minBalance.displayFormattedString
     }
@@ -38,6 +34,9 @@ extension StellarAccount {
     }
 
     func formattedAvailableBalance(for asset: StellarAsset) -> String {
-        return "Available: \(availableBalance.displayFormattedString) \(asset.shortCode)"
+        return String(format: "AVAILABLE_BALANCE_FORMAT_STRING".localized(),
+                      availableBalance.tradeFormattedString,
+                      asset.shortCode
+        )
     }
 }

@@ -58,7 +58,8 @@ class BalanceViewController: UIViewController {
     }
 
     func setLabelValues() {
-        availableBalanceLabel.text = stellarAccount.formattedAvailableBalance
+        totalBalanceLabel.text = stellarAsset.balance.tradeFormatted
+        availableBalanceLabel.text = stellarAccount.availableBalance.tradeFormattedString
         baseReserveAmountLabel.text = String(describing: stellarAccount.totalBaseReserve)
         baseReserveValueLabel.text = stellarAccount.formattedBaseReserve
         trustlinesAmountLabel.text = String(describing: stellarAccount.totalTrustlines)
@@ -68,7 +69,6 @@ class BalanceViewController: UIViewController {
         signersAmountLabel.text = String(describing: stellarAccount.totalSigners)
         signersValueLabel.text = stellarAccount.formattedSigners
         minimumBalanceLabel.text = stellarAccount.formattedMinBalance
-        totalBalanceLabel.text = stellarAsset.balance.displayFormatted
     }
 
     @objc func dismissView() {
