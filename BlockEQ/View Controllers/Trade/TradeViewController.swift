@@ -283,7 +283,7 @@ class TradeViewController: UIViewController {
 
         currentMarketPrice = bestPrice
 
-        if let tradeFromText = tradeFromTextField.text {
+        if self.currentTradeType == .market, let tradeFromText = tradeFromTextField.text {
             setCalculatedMarketPrice(tradeFromText: tradeFromText)
         }
     }
