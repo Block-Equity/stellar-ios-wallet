@@ -8,25 +8,6 @@
 
 import stellarsdk
 
-extension StellarAccount {
-    public struct UpdateOptions: OptionSet {
-        public let rawValue: Int
-        public static let inactive = UpdateOptions(rawValue: 1 << 0)
-        public static let account = UpdateOptions(rawValue: 1 << 1)
-        public static let transactions = UpdateOptions(rawValue: 1 << 2)
-        public static let effects = UpdateOptions(rawValue: 1 << 3)
-        public static let operations = UpdateOptions(rawValue: 1 << 4)
-        public static let tradeOffers = UpdateOptions(rawValue: 1 << 5)
-
-        public static let all: UpdateOptions = [.account, .transactions, .effects, .operations]
-        public static let none: UpdateOptions = []
-
-        public init(rawValue: Int) {
-            self.rawValue = rawValue
-        }
-    }
-}
-
 public final class StellarAccount {
     public internal(set) var accountId = ""
     public internal(set) var inflationDestination: String?
@@ -42,16 +23,8 @@ public final class StellarAccount {
     public internal(set) var mappedOffers: [Int: StellarAccountOffer] = [:]
     internal var rawResponse: AccountResponse?
 
-    internal weak var service: StellarAccountService?
     internal weak var sendResponseDelegate: SendAmountResponseDelegate?
     internal weak var manageAssetResponseDelegate: ManageAssetResponseDelegate?
-
-    internal lazy var accountQueue: OperationQueue = {
-        let queue = OperationQueue()
-        queue.qualityOfService = .userInitiated
-
-        return queue
-    }()
 
     public var address: StellarAddress {
         return StellarAddress(accountId)!
@@ -149,5 +122,25 @@ public final class StellarAccount {
             return calculatedBalance
         }
         return totalBalance
+    }
+}
+
+extension StellarAccount: Hashable {
+    public static func == (lhs: StellarAccount, rhs: StellarAccount) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(accountId)
+        hasher.combine(inflationDestination)
+        hasher.combine(baseReserve)
+        hasher.combine(trustlines)
+        hasher.combine(offers)
+        hasher.combine(signers)
+
+        transactions.forEach { hasher.combine($0.hash) }
+        effects.forEach { hasher.combine($0.operationId) }
+        operations.forEach { hasher.combine($0.transactionHash) }
+        assets.forEach { hasher.combine($0.assetCode) }
     }
 }

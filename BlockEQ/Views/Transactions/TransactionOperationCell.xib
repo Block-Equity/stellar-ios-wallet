@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,46 +20,46 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4h7-4n-Va0">
-                            <rect key="frame" x="20" y="14" width="199.5" height="37.5"/>
+                            <rect key="frame" x="20" y="11.5" width="335" height="42.5"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oui-0o-FpK" userLabel="Operation Title">
-                                    <rect key="frame" x="0.0" y="0.0" width="199.5" height="20.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="335" height="20.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.004983 XLM transferred from x to y" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iyk-kF-oQk" userLabel="Operation Subtitle">
-                                    <rect key="frame" x="0.0" y="20.5" width="199.5" height="17"/>
+                                    <rect key="frame" x="0.0" y="25.5" width="335" height="17"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <color key="textColor" red="0.56470588235294117" green="0.56470588235294117" blue="0.56470588235294117" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88099563176493057" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QN5-Bu-gop" userLabel="Sequence Number">
+                                    <rect key="frame" x="209.5" y="3" width="125.5" height="14.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.56470588239999997" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="Iyk-kF-oQk" firstAttribute="top" secondItem="Oui-0o-FpK" secondAttribute="bottom" id="7YA-Wn-Hoo"/>
+                                <constraint firstAttribute="trailing" secondItem="QN5-Bu-gop" secondAttribute="trailing" id="3Z4-rS-41f"/>
+                                <constraint firstItem="Iyk-kF-oQk" firstAttribute="top" secondItem="Oui-0o-FpK" secondAttribute="bottom" constant="5" id="7YA-Wn-Hoo"/>
                                 <constraint firstAttribute="trailing" secondItem="Oui-0o-FpK" secondAttribute="trailing" id="EED-4e-aFP"/>
                                 <constraint firstItem="Oui-0o-FpK" firstAttribute="top" secondItem="4h7-4n-Va0" secondAttribute="top" id="OkF-xU-LNE"/>
                                 <constraint firstItem="Iyk-kF-oQk" firstAttribute="leading" secondItem="Oui-0o-FpK" secondAttribute="leading" id="QBk-py-Kyv"/>
+                                <constraint firstItem="QN5-Bu-gop" firstAttribute="centerY" secondItem="Oui-0o-FpK" secondAttribute="centerY" id="R82-pe-4sf"/>
                                 <constraint firstItem="Iyk-kF-oQk" firstAttribute="trailing" secondItem="Oui-0o-FpK" secondAttribute="trailing" id="hSB-g8-ubZ"/>
                                 <constraint firstAttribute="bottom" secondItem="Iyk-kF-oQk" secondAttribute="bottom" id="kw8-wl-Tug"/>
                                 <constraint firstItem="Oui-0o-FpK" firstAttribute="leading" secondItem="4h7-4n-Va0" secondAttribute="leading" id="uKG-QW-W9o"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88099563176493057" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QN5-Bu-gop" userLabel="Sequence Number">
-                            <rect key="frame" x="229.5" y="25.5" width="125.5" height="14.5"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.56470588239999997" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="QN5-Bu-gop" firstAttribute="centerY" secondItem="4h7-4n-Va0" secondAttribute="centerY" id="0Qz-vA-r0K"/>
                         <constraint firstItem="4h7-4n-Va0" firstAttribute="leading" secondItem="ZYK-Ny-dzB" secondAttribute="leading" constant="20" id="1BM-YK-LDf"/>
                         <constraint firstItem="4h7-4n-Va0" firstAttribute="centerY" secondItem="ZYK-Ny-dzB" secondAttribute="centerY" id="1gu-Vh-DES"/>
-                        <constraint firstItem="QN5-Bu-gop" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4h7-4n-Va0" secondAttribute="trailing" constant="10" id="Jle-Dv-aQI"/>
-                        <constraint firstAttribute="trailing" secondItem="QN5-Bu-gop" secondAttribute="trailing" constant="20" id="tJu-Bx-Vf2"/>
+                        <constraint firstAttribute="trailing" secondItem="4h7-4n-Va0" secondAttribute="trailing" constant="20" id="37Q-xA-NsT"/>
                     </constraints>
                 </view>
             </subviews>
@@ -73,7 +73,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
-                <outlet property="sequenceNumber" destination="QN5-Bu-gop" id="dvt-y5-sKb"/>
+                <outlet property="sequenceLabel" destination="QN5-Bu-gop" id="Ne5-wD-yps"/>
                 <outlet property="subtitleLabel" destination="Iyk-kF-oQk" id="fDb-vk-KiL"/>
                 <outlet property="titleLabel" destination="Oui-0o-FpK" id="wfJ-yp-nHK"/>
             </connections>

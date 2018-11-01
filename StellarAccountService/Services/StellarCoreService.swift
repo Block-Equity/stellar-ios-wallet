@@ -1,5 +1,5 @@
 //
-//  MasterService.swift
+//  StellarCoreService.swift
 //  StellarAccountService
 //
 //  Created by Nick DiZazzo on 2018-10-26.
@@ -22,6 +22,7 @@ public final class StellarCoreService: CoreService {
 
     public var accountService: StellarAccountService!
     public var tradeService: StellarTradeService!
+    public var indexingService: StellarIndexingService!
 
     public init(with horizonAPI: StellarConfig.HorizonAPI) {
         api = horizonAPI
@@ -29,9 +30,13 @@ public final class StellarCoreService: CoreService {
 
         let accService = StellarAccountService(with: self)
         let trService = StellarTradeService(with: self)
+        let idxService = StellarIndexingService(with: self)
 
         self.accountService = accService
         self.tradeService = trService
+        self.indexingService = idxService
+
+        accService.registerForUpdates(idxService)
     }
 }
 

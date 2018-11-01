@@ -23,7 +23,7 @@ final class StubStellarCoreService: CoreService {
         return []
     }
 
-    init(sdk: StellarSDK, api: StellarConfig.HorizonAPI, secretManager: SecretManagerProtocol?, keyPair: KeyPair) {
+    init(sdk: StellarSDK, api: StellarConfig.HorizonAPI, secretManager: SecretManagerProtocol?, keyPair: KeyPair?) {
         self.sdk = sdk
         self.api = api
         self.secretManager = secretManager
@@ -34,7 +34,7 @@ final class StubStellarCoreService: CoreService {
 final class StubStellarAccountService: StellarAccountServiceProtocol {
     let core: CoreService
 
-    weak var delegate: StellarAccountServiceDelegate?
+    var subscribers: MulticastDelegate<StellarAccountServiceDelegate>
 
     var state: StellarAccountService.AccountState
 
@@ -45,12 +45,12 @@ final class StubStellarAccountService: StellarAccountServiceProtocol {
     init(core: CoreService,
          stubAccount: StellarAccount,
          stubSecretManager: SecretManager,
-         delegate: StellarAccountServiceDelegate,
+         subscribers: MulticastDelegate<StellarAccountServiceDelegate>,
          state: StellarAccountService.AccountState) {
         self.core = core
         self.secretManager = stubSecretManager
         self.account = stubAccount
-        self.delegate = delegate
+        self.subscribers = subscribers
         self.state = state
     }
 }

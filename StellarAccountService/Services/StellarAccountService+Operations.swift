@@ -1,25 +1,47 @@
 //
-//  StellarAccount+Operations.swift
+//  StellarAccountService+Operations.swift
 //  StellarAccountService
 //
-//  Created by Nick DiZazzo on 2018-10-24.
+//  Created by Nick DiZazzo on 2018-11-08.
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import stellarsdk
 
-extension StellarAccount {
-    typealias SetInflationOperationPair = ChainedOperationPair<FetchAccountDataOperation, UpdateInflationOperation>
-    typealias ChangeTrustOperationPair = ChainedOperationPair<ChangeAccountTrustOperation, FetchAccountDataOperation>
+extension StellarAccountService {
+    public struct UpdateOptions: OptionSet {
+        public let rawValue: Int
+        public static let inactive = UpdateOptions(rawValue: 1 << 0)
+        public static let account = UpdateOptions(rawValue: 1 << 1)
+        public static let transactions = UpdateOptions(rawValue: 1 << 2)
+        public static let effects = UpdateOptions(rawValue: 1 << 3)
+        public static let operations = UpdateOptions(rawValue: 1 << 4)
+        public static let tradeOffers = UpdateOptions(rawValue: 1 << 5)
 
-    internal func update(using sdk: StellarSDK, completion: @escaping (StellarAccount, UpdateOptions) -> Void) {
+        public static let all: UpdateOptions = [.account, .transactions, .effects, .operations]
+        public static let none: UpdateOptions = []
+
+        public init(rawValue: Int) {
+            self.rawValue = rawValue
+        }
+    }
+}
+
+// MARK: - Account Update
+extension StellarAccountService {
+    internal func update(account: StellarAccount,
+                         using sdk: StellarSDK,
+                         completion: @escaping (StellarAccount, UpdateOptions) -> Void) {
+        let accountId = account.accountId
+        let address = account.address
+
         let fetchCompletion: FetchAccountDataOperation.SuccessCompletion = { response in
-            self.update(withRaw: response)
-            completion(self, UpdateOptions.account)
+            account.update(withRaw: response)
+            completion(account, UpdateOptions.account)
         }
 
         let failCompletion: ErrorCompletion = { error in
-            completion(self, UpdateOptions.inactive)
+            completion(account, UpdateOptions.inactive)
         }
 
         let fetchAccountOp = FetchAccountDataOperation(horizon: sdk,
@@ -29,48 +51,55 @@ extension StellarAccount {
 
         // Fetch transactions
         let fetchTransactionOp = FetchTransactionsOperation(horizon: sdk, accountId: accountId, completion: { txns in
-            self.mappedTransactions = txns.reduce(into: [:]) { map, transaction in
+            account.mappedTransactions = txns.reduce(into: [:]) { map, transaction in
                 map[transaction.identifier] = transaction
             }
 
-            completion(self, UpdateOptions.transactions)
+            completion(account, UpdateOptions.transactions)
         })
 
         // Fetch operations
         let fetchOperationsOp = FetchAccountOperationsOperation(horizon: sdk, accountId: accountId, completion: { ops in
-            self.mappedOperations = ops.reduce(into: [:], { result, operation in
+            account.mappedOperations = ops.reduce(into: [:], { result, operation in
                 result[operation.identifier] = operation
             })
 
-            completion(self, UpdateOptions.operations)
+            completion(account, UpdateOptions.operations)
         })
 
         // Fetch effects
         let fetchEffectsOp = FetchAccountEffectsOperation(horizon: sdk, accountId: accountId, completion: { effects in
-            self.mappedEffects = effects.reduce(into: [:], { list, effect in
+            account.mappedEffects = effects.reduce(into: [:], { list, effect in
                 list[effect.identifier] = effect
             })
 
-            completion(self, UpdateOptions.effects)
+            completion(account, UpdateOptions.effects)
         })
 
         let fetchOffersOp = FetchOffersOperation(horizon: sdk, address: address, completion: { offers in
-            self.mappedOffers = offers.reduce(into: [:], { list, offer in
+            account.mappedOffers = offers.reduce(into: [:], { list, offer in
                 list[offer.identifier] = offer
             })
 
-            completion(self, UpdateOptions.tradeOffers)
+            completion(account, UpdateOptions.tradeOffers)
         })
 
         let fetchOperations = [fetchAccountOp, fetchTransactionOp, fetchOperationsOp, fetchEffectsOp, fetchOffersOp]
         accountQueue.addOperations(fetchOperations, waitUntilFinished: false)
     }
+}
 
-    public func setInflationDestination(address: StellarAddress, delegate: SetInflationResponseDelegate) {
+// MARK: - Inflation Update
+extension StellarAccountService {
+    typealias SetInflationOperationPair = ChainedOperationPair<FetchAccountDataOperation, UpdateInflationOperation>
+
+    public func setInflationDestination(account: StellarAccount,
+                                        address: StellarAddress,
+                                        delegate: SetInflationResponseDelegate) {
         let completion: BoolCompletion = { completed in
             if completed {
                 DispatchQueue.main.async {
-                    self.inflationDestination = address.string
+                    account.inflationDestination = address.string
                     delegate.setInflation(destination: address)
                 }
             } else {
@@ -81,14 +110,14 @@ extension StellarAccount {
             }
         }
 
-        guard let service = self.service, let keyPair = service.core.walletKeyPair else {
+        guard let keyPair = core.walletKeyPair else {
             delegate.failed(error: StellarAccountService.ServiceError.nonExistentAccount)
             return
         }
 
-        let accountOp = FetchAccountDataOperation(horizon: service.core.sdk, account: accountId)
-        let inflationOp = UpdateInflationOperation(horizon: service.core.sdk,
-                                                   api: service.core.api,
+        let accountOp = FetchAccountDataOperation(horizon: core.sdk, account: account.accountId)
+        let inflationOp = UpdateInflationOperation(horizon: core.sdk,
+                                                   api: core.api,
                                                    address: address,
                                                    userKeys: keyPair,
                                                    completion: completion)
@@ -96,67 +125,65 @@ extension StellarAccount {
         let pair = SetInflationOperationPair(first: accountOp, second: inflationOp)
         accountQueue.addOperations(pair.operationChain, waitUntilFinished: false)
     }
+}
 
+// MARK: - Send Amount
 //swiftlint:disable function_body_length
-    public func sendAmount(data: StellarPaymentData, delegate: SendAmountResponseDelegate) {
-        sendResponseDelegate = delegate
-
+extension StellarAccountService {
+    public func sendAmount(account: StellarAccount, data: StellarPaymentData, delegate: SendAmountResponseDelegate) {
         let completion: BoolCompletion = { completed in
             if completed {
                 DispatchQueue.main.async {
-                    self.sendResponseDelegate?.sentAmount(destination: data.address)
-                    self.sendResponseDelegate = nil
+                    delegate.sentAmount(destination: data.address)
                 }
             } else {
                 DispatchQueue.main.async {
                     let error = StellarAccountService.ServiceError.nonExistentAccount
-                    self.sendResponseDelegate?.failed(error: error)
-                    self.sendResponseDelegate = nil
+                    delegate.failed(error: error)
                 }
             }
         }
 
-        guard let service = self.service, let keyPair = service.core.walletKeyPair else {
-            self.sendResponseDelegate?.failed(error: StellarAccountService.ServiceError.nonExistentAccount)
-                return
+        guard let keyPair = core.walletKeyPair else {
+            delegate.failed(error: ServiceError.nonExistentAccount)
+            return
         }
 
-        let checkAccountOp = FetchAccountDataOperation(horizon: service.core.sdk,
+        let checkAccountOp = FetchAccountDataOperation(horizon: core.sdk,
                                                        account: data.address.string,
                                                        completion: nil,
                                                        failure: nil)
 
-        let createOp = CreateNewAccountOperation(horizon: service.core.sdk,
-                                                 api: service.core.api,
+        let createOp = CreateNewAccountOperation(horizon: core.sdk,
+                                                 api: core.api,
                                                  accountId: data.address.string,
                                                  amount: data.amount,
                                                  userKeys: keyPair,
                                                  completion: completion)
 
-        let sendOp = PostPaymentOperation(horizon: service.core.sdk,
-                                          api: service.core.api,
+        let sendOp = PostPaymentOperation(horizon: core.sdk,
+                                          api: core.api,
                                           data: data,
                                           userKeyPair: keyPair,
                                           completion: completion)
 
-        let refreshOp = FetchAccountDataOperation(horizon: service.core.sdk,
-                                                  account: self.address.string,
+        let refreshOp = FetchAccountDataOperation(horizon: core.sdk,
+                                                  account: account.address.string,
                                                   completion: { response in
-            self.update(withRaw: response)
-
+                                                    account.update(withRaw: response)
             DispatchQueue.main.async {
-                service.delegate?.accountUpdated(service, account: self, opts: .account)
+                self.subscribers.invoke(invocation: { $0.accountUpdated(self, account: account, opts: .account) })
             }
         })
 
-        let accComp: FetchAccountDataOperation.SuccessCompletion = { account in
-            sendOp.inData = self.rawResponse
+        let accComp: FetchAccountDataOperation.SuccessCompletion = { accountResponse in
+            sendOp.inData = account.rawResponse
             refreshOp.removeDependency(createOp)
             createOp.cancel()
         }
 
         let accFail: ErrorCompletion = { _ in
-            createOp.inData = self.rawResponse
+            createOp.inData = account.rawResponse
             refreshOp.removeDependency(sendOp)
             sendOp.cancel()
         }
@@ -171,28 +198,32 @@ extension StellarAccount {
 
         accountQueue.addOperations([checkAccountOp, sendOp, createOp, refreshOp], waitUntilFinished: false)
     }
+}
 //swiftlint:enable function_body_length
 
-    public func changeTrust(asset: StellarAsset, remove: Bool, delegate: ManageAssetResponseDelegate) {
-        manageAssetResponseDelegate = delegate
+// MARK: - Change Trust
+extension StellarAccountService {
+    typealias ChangeTrustOperationPair = ChainedOperationPair<ChangeAccountTrustOperation, FetchAccountDataOperation>
 
-        guard let accountResponse = self.rawResponse else {
+    public func changeTrust(account: StellarAccount,
+                            asset: StellarAsset,
+                            remove: Bool,
+                            delegate: ManageAssetResponseDelegate) {
+        let accountId = account.accountId
+
+        guard let accountResponse = account.rawResponse else {
             delegate.failed(error: StellarAccountService.ServiceError.nonExistentAccount)
             return
         }
 
         let completion: FetchAccountDataOperation.SuccessCompletion = { response in
-            self.update(withRaw: response)
+            account.update(withRaw: response)
 
-            if remove {
-                DispatchQueue.main.async {
-                    self.manageAssetResponseDelegate?.removed(asset: asset, account: self)
-                    self.manageAssetResponseDelegate = nil
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.manageAssetResponseDelegate?.added(asset: asset, account: self)
-                    self.manageAssetResponseDelegate = nil
+            DispatchQueue.main.async {
+                if remove {
+                    delegate.removed(asset: asset, account: account)
+                } else {
+                    delegate.added(asset: asset, account: account)
                 }
             }
         }
@@ -201,19 +232,18 @@ extension StellarAccount {
             guard completed != true else { return }
             DispatchQueue.main.async {
                 let error = StellarAccountService.ServiceError.nonExistentAccount
-                self.manageAssetResponseDelegate?.failed(error: error)
-                self.manageAssetResponseDelegate = nil
+                delegate.failed(error: error)
             }
         }
 
-        guard let service = self.service, let keyPair = service.core.walletKeyPair else {
-            self.manageAssetResponseDelegate?.failed(error: StellarAccountService.ServiceError.nonExistentAccount)
+        guard let keyPair = core.walletKeyPair else {
+            delegate.failed(error: StellarAccountService.ServiceError.nonExistentAccount)
             return
         }
 
-        let accountOp = FetchAccountDataOperation(horizon: service.core.sdk, account: accountId, completion: completion)
-        let changeTrustOp = ChangeAccountTrustOperation(horizon: service.core.sdk,
-                                                        api: service.core.api,
+        let accountOp = FetchAccountDataOperation(horizon: core.sdk, account: accountId, completion: completion)
+        let changeTrustOp = ChangeAccountTrustOperation(horizon: core.sdk,
+                                                        api: core.api,
                                                         asset: asset,
                                                         limit: remove ? Decimal(0.0) : nil,
                                                         accountResponse: accountResponse,

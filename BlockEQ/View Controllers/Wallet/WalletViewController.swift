@@ -131,7 +131,7 @@ class WalletViewController: UIViewController {
 }
 
 extension WalletViewController: AccountUpdatable {
-    func update(account: StellarAccount) {
+    func updated(account: StellarAccount) {
         if let currentAsset = dataSource?.asset {
             self.update(with: account, asset: currentAsset)
         } else if let asset = account.assets.first {

@@ -14,8 +14,8 @@
 		C41165162123B7CB00C4CB6E /* ContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C41165142123B7CB00C4CB6E /* ContactsViewController.xib */; };
 		C41165192123C2D300C4CB6E /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41165172123C2D300C4CB6E /* ContactCell.swift */; };
 		C411651A2123C2D300C4CB6E /* ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C41165182123C2D300C4CB6E /* ContactCell.xib */; };
-		C414812E21246A1B0057ED74 /* ContactStellarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C414812C21246A1B0057ED74 /* ContactStellarCell.swift */; };
-		C414812F21246A1B0057ED74 /* ContactStellarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C414812D21246A1B0057ED74 /* ContactStellarCell.xib */; };
+		C414812E21246A1B0057ED74 /* StellarContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C414812C21246A1B0057ED74 /* StellarContactCell.swift */; };
+		C414812F21246A1B0057ED74 /* StellarContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C414812D21246A1B0057ED74 /* StellarContactCell.xib */; };
 		C41481312124709B0057ED74 /* LocalContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41481302124709B0057ED74 /* LocalContact.swift */; };
 		C414813421248F5B0057ED74 /* StellarContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C414813221248F5B0057ED74 /* StellarContactViewController.swift */; };
 		C414813521248F5B0057ED74 /* StellarContactViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C414813321248F5B0057ED74 /* StellarContactViewController.xib */; };
@@ -41,6 +41,7 @@
 		C4EC5FF120F3E64300769E31 /* AddAssetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4EC5FEF20F3E64300769E31 /* AddAssetViewController.xib */; };
 		C4F4938A211E19EA000B0800 /* String+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F49389211E19EA000B0800 /* String+Base64.swift */; };
 		C50F390220C0AE8100DABB14 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F390120C0AE8100DABB14 /* KeyboardHelper.swift */; };
+		C5114DB7219548AC00C88E4F /* TransactionDetailsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5114DB6219548AC00C88E4F /* TransactionDetailsDataSource.swift */; };
 		C512E69D217F96B300D1AC74 /* WalletSwitchingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C512E69C217F96B300D1AC74 /* WalletSwitchingDataSource.swift */; };
 		C51441F5217E5802006C44F4 /* StellarEffect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51441F4217E5802006C44F4 /* StellarEffect+Extensions.swift */; };
 		C51441F7217E64A8006C44F4 /* StellarSeed+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51441F6217E64A8006C44F4 /* StellarSeed+Extensions.swift */; };
@@ -58,7 +59,6 @@
 		C525C97B20B79890006C138F /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C525C97A20B79890006C138F /* KeyboardView.swift */; };
 		C53978CB20BF417100587D99 /* SettingsSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53978CA20BF417100587D99 /* SettingsSwitchCell.swift */; };
 		C53978CD20BF4EF000587D99 /* SettingsNormalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53978CC20BF4EF000587D99 /* SettingsNormalCell.swift */; };
-		C53C44BA2188D66E0095D1AD /* AccountUpdatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53C44B92188D66E0095D1AD /* AccountUpdatable.swift */; };
 		C53C44BC2188D7F30095D1AD /* StellarAddress+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53C44BB2188D7F30095D1AD /* StellarAddress+Extensions.swift */; };
 		C5401D342178005B00A12AC2 /* TransactionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5401D332178005B00A12AC2 /* TransactionDetailsViewController.swift */; };
 		C5401D362178007300A12AC2 /* TransactionDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5401D352178007300A12AC2 /* TransactionDetailsViewController.xib */; };
@@ -113,6 +113,7 @@
 		C5E8594B20AFB47900B77289 /* AppTabController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5E8594A20AFB47900B77289 /* AppTabController.xib */; };
 		C5E8594E20AFCC0E00B77289 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E8594D20AFCC0E00B77289 /* ApplicationCoordinator.swift */; };
 		C5E8595020AFF09800B77289 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E8594F20AFF09800B77289 /* OnboardingCoordinator.swift */; };
+		C5EC212221961EC5002EA45D /* StellarOperation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EC212121961EC5002EA45D /* StellarOperation+Extensions.swift */; };
 		C5FAA1EE211F42010020CB26 /* AuthenticationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAA1ED211F42010020CB26 /* AuthenticationCoordinator.swift */; };
 		C5FDBC6A211D384C0051AB9F /* BlankAuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FDBC69211D384C0051AB9F /* BlankAuthenticationViewController.swift */; };
 		C5FDBC6C211D385B0051AB9F /* BlankAuthenticationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5FDBC6B211D385B0051AB9F /* BlankAuthenticationViewController.xib */; };
@@ -232,8 +233,8 @@
 		C41165142123B7CB00C4CB6E /* ContactsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactsViewController.xib; sourceTree = "<group>"; };
 		C41165172123C2D300C4CB6E /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		C41165182123C2D300C4CB6E /* ContactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactCell.xib; sourceTree = "<group>"; };
-		C414812C21246A1B0057ED74 /* ContactStellarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactStellarCell.swift; sourceTree = "<group>"; };
-		C414812D21246A1B0057ED74 /* ContactStellarCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactStellarCell.xib; sourceTree = "<group>"; };
+		C414812C21246A1B0057ED74 /* StellarContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarContactCell.swift; sourceTree = "<group>"; };
+		C414812D21246A1B0057ED74 /* StellarContactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StellarContactCell.xib; sourceTree = "<group>"; };
 		C41481302124709B0057ED74 /* LocalContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalContact.swift; sourceTree = "<group>"; };
 		C414813221248F5B0057ED74 /* StellarContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarContactViewController.swift; sourceTree = "<group>"; };
 		C414813321248F5B0057ED74 /* StellarContactViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StellarContactViewController.xib; sourceTree = "<group>"; };
@@ -258,6 +259,7 @@
 		C4EC5FEF20F3E64300769E31 /* AddAssetViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddAssetViewController.xib; sourceTree = "<group>"; };
 		C4F49389211E19EA000B0800 /* String+Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Base64.swift"; sourceTree = "<group>"; };
 		C50F390120C0AE8100DABB14 /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
+		C5114DB6219548AC00C88E4F /* TransactionDetailsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailsDataSource.swift; sourceTree = "<group>"; };
 		C512E69C217F96B300D1AC74 /* WalletSwitchingDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletSwitchingDataSource.swift; sourceTree = "<group>"; };
 		C51441F4217E5802006C44F4 /* StellarEffect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarEffect+Extensions.swift"; sourceTree = "<group>"; };
 		C51441F6217E64A8006C44F4 /* StellarSeed+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarSeed+Extensions.swift"; sourceTree = "<group>"; };
@@ -276,7 +278,6 @@
 		C525C97A20B79890006C138F /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
 		C53978CA20BF417100587D99 /* SettingsSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSwitchCell.swift; sourceTree = "<group>"; };
 		C53978CC20BF4EF000587D99 /* SettingsNormalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNormalCell.swift; sourceTree = "<group>"; };
-		C53C44B92188D66E0095D1AD /* AccountUpdatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUpdatable.swift; sourceTree = "<group>"; };
 		C53C44BB2188D7F30095D1AD /* StellarAddress+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarAddress+Extensions.swift"; sourceTree = "<group>"; };
 		C5401D332178005B00A12AC2 /* TransactionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailsViewController.swift; sourceTree = "<group>"; };
 		C5401D352178007300A12AC2 /* TransactionDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionDetailsViewController.xib; sourceTree = "<group>"; };
@@ -331,6 +332,7 @@
 		C5E8594A20AFB47900B77289 /* AppTabController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppTabController.xib; sourceTree = "<group>"; };
 		C5E8594D20AFCC0E00B77289 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		C5E8594F20AFF09800B77289 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
+		C5EC212121961EC5002EA45D /* StellarOperation+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarOperation+Extensions.swift"; sourceTree = "<group>"; };
 		C5FAA1ED211F42010020CB26 /* AuthenticationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinator.swift; sourceTree = "<group>"; };
 		C5FDBC69211D384C0051AB9F /* BlankAuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankAuthenticationViewController.swift; sourceTree = "<group>"; };
 		C5FDBC6B211D385B0051AB9F /* BlankAuthenticationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlankAuthenticationViewController.xib; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 				C512E69C217F96B300D1AC74 /* WalletSwitchingDataSource.swift */,
 				C5D8CAD02182064B009F8624 /* ContactsDataSource.swift */,
 				C5ADFFCE2190C8CC004EA646 /* TradePickerDataSource.swift */,
+				C5114DB6219548AC00C88E4F /* TransactionDetailsDataSource.swift */,
 			);
 			path = "Data Sources";
 			sourceTree = "<group>";
@@ -513,7 +516,6 @@
 			isa = PBXGroup;
 			children = (
 				C55458FB2124BB1B00032699 /* AuthenticatingViewController.swift */,
-				C53C44B92188D66E0095D1AD /* AccountUpdatable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -630,8 +632,8 @@
 			children = (
 				C414813E21264C8B0057ED74 /* SelectAssetCell.swift */,
 				C414813F21264C8B0057ED74 /* SelectAssetCell.xib */,
-				C414812C21246A1B0057ED74 /* ContactStellarCell.swift */,
-				C414812D21246A1B0057ED74 /* ContactStellarCell.xib */,
+				C414812C21246A1B0057ED74 /* StellarContactCell.swift */,
+				C414812D21246A1B0057ED74 /* StellarContactCell.xib */,
 				C41165172123C2D300C4CB6E /* ContactCell.swift */,
 				C41165182123C2D300C4CB6E /* ContactCell.xib */,
 				EC0B1918205465BF0052802C /* WalletCell.swift */,
@@ -865,6 +867,7 @@
 				C41481302124709B0057ED74 /* LocalContact.swift */,
 				C5BED3752162A81C00BEE464 /* Exchange.swift */,
 				C53C44BB2188D7F30095D1AD /* StellarAddress+Extensions.swift */,
+				C5EC212121961EC5002EA45D /* StellarOperation+Extensions.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -1037,7 +1040,7 @@
 				EC6EE88C20B600070033C299 /* TradeViewController.xib in Resources */,
 				EC2015DA2052DB6D009A73C8 /* LaunchViewController.xib in Resources */,
 				EC2015DE2052E071009A73C8 /* WalletViewController.xib in Resources */,
-				C414812F21246A1B0057ED74 /* ContactStellarCell.xib in Resources */,
+				C414812F21246A1B0057ED74 /* StellarContactCell.xib in Resources */,
 				C57A8540217814EF0048A6B5 /* TransactionDetailsSectionHeader.xib in Resources */,
 				C414814121264C8B0057ED74 /* SelectAssetCell.xib in Resources */,
 				C4EC5FF120F3E64300769E31 /* AddAssetViewController.xib in Resources */,
@@ -1218,6 +1221,7 @@
 				C5BED3762162A81C00BEE464 /* Exchange.swift in Sources */,
 				ECD3A352207D2CE5000609A0 /* WalletItemActivateCell.swift in Sources */,
 				C499755F211297BF00E2299C /* P2PCoordinator.swift in Sources */,
+				C5114DB7219548AC00C88E4F /* TransactionDetailsDataSource.swift in Sources */,
 				C5401D342178005B00A12AC2 /* TransactionDetailsViewController.swift in Sources */,
 				EC2015F720532F4B009A73C8 /* AppButton.swift in Sources */,
 				C5AB413D2090436700096A29 /* UIView+NibLoadableView.swift in Sources */,
@@ -1228,6 +1232,7 @@
 				C595115620BB2B1B00843D33 /* PinDotView.swift in Sources */,
 				EC6EE88B20B600070033C299 /* TradeViewController.swift in Sources */,
 				EC2015F520531963009A73C8 /* NibLoader.swift in Sources */,
+				C5EC212221961EC5002EA45D /* StellarOperation+Extensions.swift in Sources */,
 				EC11062120C7061700FD3684 /* MyOffersHeaderView.swift in Sources */,
 				EC581C7220766BA8003A397E /* WalletSwitchingViewController.swift in Sources */,
 				EC2015E92052EAC7009A73C8 /* WalletTitleViewController.swift in Sources */,
@@ -1242,7 +1247,7 @@
 				C5D8CAC62180D809009F8624 /* AddressCoordinator.swift in Sources */,
 				EC0B19262054BC3B0052802C /* AppNavigationController.swift in Sources */,
 				C5AF7C8A2094B60A00F99835 /* UIImage+CALayer.swift in Sources */,
-				C414812E21246A1B0057ED74 /* ContactStellarCell.swift in Sources */,
+				C414812E21246A1B0057ED74 /* StellarContactCell.swift in Sources */,
 				ECF9F44B208937E400160843 /* InflationViewController.swift in Sources */,
 				C54EFE4C217A2442005FA6D3 /* TransactionSection.swift in Sources */,
 				C5A5A878215E90BD00007787 /* WebViewController.swift in Sources */,
@@ -1255,7 +1260,6 @@
 				C593C46E2092E51A00D6047F /* NavigationCell.swift in Sources */,
 				C5FAA1EE211F42010020CB26 /* AuthenticationCoordinator.swift in Sources */,
 				C54EFE4821796B61005FA6D3 /* UIInsetLabel.swift in Sources */,
-				C53C44BA2188D66E0095D1AD /* AccountUpdatable.swift in Sources */,
 				C524DFCB2167CFE40068D111 /* AutoFillHelper.swift in Sources */,
 				C41165192123C2D300C4CB6E /* ContactCell.swift in Sources */,
 				EC42584F2054EE76000941B5 /* SendAmountViewController.swift in Sources */,

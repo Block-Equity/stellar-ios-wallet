@@ -29,7 +29,7 @@ final class TradingCoordinator {
             guard let account = self.account else { return }
 
             segmentController.updated(account: account)
-            tradeViewController.update(account: account)
+            tradeViewController.updated(account: account)
             myOffersViewController.setOffers(account.tradeOffers)
         }
     }
@@ -101,7 +101,7 @@ final class TradingCoordinator {
 }
 
 extension TradingCoordinator: AccountUpdatable {
-    func update(account: StellarAccount) {
+    func updated(account: StellarAccount) {
         self.account = account
     }
 }
@@ -136,11 +136,13 @@ extension TradingCoordinator: WalletSwitchingViewControllerDelegate {
     func reloadAssets() { }
 
     func remove(asset: StellarAsset) {
-        self.account?.changeTrust(asset: asset, remove: true, delegate: self)
+        guard let account = account else { return }
+        accountService?.changeTrust(account: account, asset: asset, remove: true, delegate: self)
     }
 
     func add(asset: StellarAsset) {
-        self.account?.changeTrust(asset: asset, remove: false, delegate: self)
+        guard let account = account else { return }
+        accountService?.changeTrust(account: account, asset: asset, remove: false, delegate: self)
     }
 
     func updateInflation() {
@@ -164,7 +166,7 @@ extension TradingCoordinator: InflationViewControllerDelegate {
     func updateAccountInflation(_ viewController: InflationViewController, destination: StellarAddress) {
         guard let account = self.account else { return }
 
-        account.setInflationDestination(address: destination, delegate: viewController)
+        accountService?.setInflationDestination(account: account, address: destination, delegate: viewController)
     }
 }
 
@@ -174,7 +176,7 @@ extension TradingCoordinator: AddAssetViewControllerDelegate {
 
         walletVC.displayAddPrompt()
 
-        account.changeTrust(asset: asset, remove: false, delegate: walletVC)
+        accountService?.changeTrust(account: account, asset: asset, remove: false, delegate: walletVC)
     }
 }
 
@@ -219,7 +221,7 @@ extension TradingCoordinator: ManageAssetResponseDelegate {
     func added(asset: StellarAsset, account: StellarAccount) {
         self.segmentController.updated(account: account)
         self.walletSwitchingViewController?.updateMenu(account: account)
-        self.tradeViewController.update(account: account)
+        self.tradeViewController.updated(account: account)
     }
 
     func removed(asset: StellarAsset, account: StellarAccount) {

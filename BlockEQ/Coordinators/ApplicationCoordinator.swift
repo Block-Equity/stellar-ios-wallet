@@ -44,7 +44,12 @@ final class ApplicationCoordinator {
     var walletViewController: WalletViewController
 
     //The view controller responsible for displaying contacts
-    var contactsViewController: ContactsViewController
+    lazy var contactsViewController: ContactsViewController = {
+        let contactsVC = ContactsViewController(service: core!.accountService)
+        contactsVC.delegate = self
+
+        return contactsVC
+    }()
 
     /// The view controller used to display settings options
     var settingsViewController: SettingsViewController {
@@ -63,7 +68,8 @@ final class ApplicationCoordinator {
                     return
             }
 
-            coreService.accountService.delegate = self
+            coreService.accountService.registerForUpdates(self)
+            coreService.indexingService.delegate = self
 
             migrateIfEligible(using: coreService.accountService)
             try? coreService.accountService.restore(with: address)
@@ -110,14 +116,9 @@ final class ApplicationCoordinator {
     weak var delegate: ApplicationCoordinatorDelegate?
 
     init() {
-        let contactsVC = ContactsViewController(account: core?.accountService.account)
-        self.contactsViewController = contactsVC
-
         let walletVC = WalletViewController()
         self.walletViewController = walletVC
-
         walletVC.delegate = self
-        contactsVC.delegate = self
 
         tabController.tabDelegate = self
         tradingCoordinator.delegate = self
@@ -354,5 +355,15 @@ extension ApplicationCoordinator: SettingsDelegate {
         authenticationCoordinator = authCoordinator
 
         authCoordinator.authenticate()
+    }
+}
+
+extension ApplicationCoordinator: StellarIndexingServiceDelegate {
+    func finishedIndexing(_ service: StellarIndexingService) {
+        print("Indexing finished!")
+    }
+
+    func updatedProgress(_ service: StellarIndexingService, progress: Progress) {
+        print("Indexing progress: \(progress.fractionCompleted)")
     }
 }

@@ -27,13 +27,9 @@ class ReceiveViewController: UIViewController {
     @IBAction func copyAddress() {
         if let addressText = addressLabel.text, !addressText.isEmpty {
             UIPasteboard.general.string = addressLabel.text
-
-            let alert = UIAlertController(title: "ADDRESS_COPIED".localized(),
+            UIAlertController.simpleAlert(title: "ADDRESS_COPIED".localized(),
                                           message: nil,
-                                          preferredStyle: .alert)
-
-            alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(), style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+                                          presentingViewController: self)
         }
 
     }

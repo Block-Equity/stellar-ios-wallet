@@ -11,7 +11,7 @@ import Foundation
 public final class StellarP2PService: Subservice {
     let core: CoreService
 
-    var tradeQueue: OperationQueue = {
+    var p2pQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.qualityOfService = .userInitiated
 

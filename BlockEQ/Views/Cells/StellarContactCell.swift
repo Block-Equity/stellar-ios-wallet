@@ -8,18 +8,18 @@
 
 import UIKit
 
-protocol ContactCellStellarDelegate: class {
+protocol StellarContactCellDelegate: class {
     func didSendPayment(indexPath: IndexPath)
 }
 
-class ContactStellarCell: UITableViewCell, ReusableView, NibLoadableView {
+class StellarContactCell: UITableViewCell, ReusableView, NibLoadableView {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var sendPaymentButton: UIButton!
 
     static let rowHeight: CGFloat = 55.0
     var indexPath: IndexPath?
 
-    weak var delegate: ContactCellStellarDelegate?
+    weak var delegate: StellarContactCellDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,12 +29,6 @@ class ContactStellarCell: UITableViewCell, ReusableView, NibLoadableView {
     func setupView() {
         sendPaymentButton.backgroundColor = Colors.green
         nameLabel.textColor = Colors.darkGray
-    }
-
-    @IBAction func sendPayment() {
-        if let currentIndexPath = indexPath {
-            delegate?.didSendPayment(indexPath: currentIndexPath)
-        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -50,5 +44,14 @@ class ContactStellarCell: UITableViewCell, ReusableView, NibLoadableView {
     func setRowColor(selected: Bool) {
         contentView.backgroundColor =  selected ? Colors.lightBlue : Colors.white
         nameLabel.textColor = selected ? Colors.primaryDark : Colors.darkGray
+    }
+}
+
+// MARK: - IBActions
+extension StellarContactCell {
+    @IBAction func sendPayment() {
+        if let currentIndexPath = indexPath {
+            delegate?.didSendPayment(indexPath: currentIndexPath)
+        }
     }
 }

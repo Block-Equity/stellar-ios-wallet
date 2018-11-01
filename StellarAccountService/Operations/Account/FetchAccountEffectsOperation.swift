@@ -11,18 +11,23 @@ import stellarsdk
 final class FetchAccountEffectsOperation: AsyncOperation {
     typealias SuccessCompletion = ([StellarEffect]) -> Void
 
+    static let defaultRecordCount: Int = 200
+
     let horizon: StellarSDK
     let accountId: String
+    let recordCount: Int?
     let completion: SuccessCompletion
     let failure: ErrorCompletion?
     var result: Result<[StellarEffect]> = Result.failure(AsyncOperationError.responseUnset)
 
     init(horizon: StellarSDK,
          accountId: String,
+         recordCount: Int = FetchAccountEffectsOperation.defaultRecordCount,
          completion: @escaping SuccessCompletion,
          failure: ErrorCompletion? = nil) {
         self.horizon = horizon
         self.accountId = accountId
+        self.recordCount = recordCount
         self.completion = completion
         self.failure = failure
     }
@@ -30,11 +35,11 @@ final class FetchAccountEffectsOperation: AsyncOperation {
     override func main() {
         super.main()
 
-        horizon.effects.getEffects(forAccount: self.accountId, from: nil, order: .descending, limit: 200) { response in
-            switch response {
+        horizon.effects.getEffects(forAccount: accountId, from: nil, order: .descending, limit: recordCount) { resp in
+            switch resp {
             case .success(let effectsResponse):
                 let effects = effectsResponse.records.map {
-                    return StellarEffect(response: $0)
+                    return StellarEffect($0)
                 }
 
                 self.result = Result.success(effects)

@@ -7,7 +7,7 @@
 //
 
 extension UIAlertController {
-    static func simpleAlert(title: String, message: String, presentingViewController: UIViewController) {
+    static func simpleAlert(title: String, message: String?, presentingViewController: UIViewController) {
         let controller = UIAlertController.init(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "GENERIC_OK_TEXT".localized(), style: .default, handler: nil)
         controller.addAction(action)

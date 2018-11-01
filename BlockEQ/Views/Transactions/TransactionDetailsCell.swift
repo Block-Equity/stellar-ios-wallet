@@ -12,12 +12,14 @@ final class TransactionDetailsCell: UICollectionViewCell, ReusableView, NibLoada
     struct ViewModel {
         let sourceAccount: String
         let transactionId: String
-        let date: Date
+        let amount: String
+        let date: String
         let sequenceNumber: String
         let fee: String
         let operationCount: String
-        let memoType: String
-        let memoData: String
+        let memoType: String?
+        let memoData: String?
+        let signers: [String]
     }
 
     @IBOutlet weak var bgView: UIView!
@@ -25,7 +27,8 @@ final class TransactionDetailsCell: UICollectionViewCell, ReusableView, NibLoada
     @IBOutlet weak var sourceAccountLabel: UIInsetLabel!
     @IBOutlet weak var transactionIdTitleLabel: UILabel!
     @IBOutlet weak var transactionIdLabel: UILabel!
-    @IBOutlet weak var copyImageView: UIImageView!
+    @IBOutlet weak var amountTitleLabel: UILabel!
+    @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var dateTitleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var sequenceNumberTitleLabel: UILabel!
@@ -37,7 +40,6 @@ final class TransactionDetailsCell: UICollectionViewCell, ReusableView, NibLoada
     @IBOutlet weak var memoTitleLabel: UILabel!
     @IBOutlet weak var memoLabel: UILabel!
     @IBOutlet weak var transactionDetailsContainerView: UIView!
-    @IBOutlet weak var copyButton: UIButton!
 
     static let cellHeight = CGFloat(325.0)
 
@@ -68,14 +70,19 @@ final class TransactionDetailsCell: UICollectionViewCell, ReusableView, NibLoada
         memoTitleLabel.font = primaryHeaderFont
         sourceAccountTitleLabel.font = primaryHeaderFont
         transactionIdTitleLabel.font = primaryHeaderFont
+        transactionIdLabel.numberOfLines = 2
 
         sourceAccountLabel.font = primaryTextFont
         sourceAccountLabel.textColor = primaryTextColor
 
+        amountTitleLabel.font = secondaryTextFont
         dateTitleLabel.font = secondaryTextFont
         feeTitleLabel.font = secondaryTextFont
         operationTitleLabel.font = secondaryTextFont
         sequenceNumberTitleLabel.font = secondaryTextFont
+
+        amountLabel.font = secondaryTextFont
+        amountLabel.textColor = Colors.transactionCellDarkGray
 
         dateLabel.font = secondaryTextFont
         dateLabel.textColor = Colors.transactionCellDarkGray
@@ -97,9 +104,17 @@ final class TransactionDetailsCell: UICollectionViewCell, ReusableView, NibLoada
     }
 
     @IBAction func copySelected(_ sender: Any) {
-        print("selected copy")
     }
 
     func update(with viewModel: ViewModel) {
+        sourceAccountLabel.text = viewModel.sourceAccount
+        transactionIdLabel.text = viewModel.transactionId
+        feeLabel.text = viewModel.fee
+        amountLabel.text = viewModel.amount
+        dateLabel.text = viewModel.date
+        memoLabel.text = viewModel.memoData
+        memoTitleLabel.text = viewModel.memoType?.uppercased()
+        operationLabel.text = viewModel.operationCount
+        sequenceNumberLabel.text = viewModel.sequenceNumber
     }
 }

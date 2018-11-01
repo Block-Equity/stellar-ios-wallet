@@ -16,7 +16,7 @@ class SendViewController: UIViewController {
     @IBOutlet var sendTitleLabel: UILabel!
     @IBOutlet var sendAddressTextField: UITextField!
 
-    var stellarAccount: StellarAccount
+    var accountService: StellarAccountService
     var currentAsset: StellarAsset?
 
     @IBAction func addAmount() {
@@ -31,7 +31,7 @@ class SendViewController: UIViewController {
         self.view.endEditing(true)
 
         let exchange: Exchange? = AddressResolver.resolve(address: receiver)
-        let sendAmountViewController = SendAmountViewController(stellarAccount: self.stellarAccount,
+        let sendAmountViewController = SendAmountViewController(service: accountService,
                                                                 currentAsset: asset,
                                                                 receiver: receiver,
                                                                 exchangeName: exchange?.name)
@@ -47,8 +47,8 @@ class SendViewController: UIViewController {
         present(navigationController, animated: true, completion: nil)
     }
 
-    init(stellarAccount: StellarAccount, asset: StellarAsset) {
-        self.stellarAccount = stellarAccount
+    init(service: StellarAccountService, asset: StellarAsset) {
+        self.accountService = service
         self.currentAsset = asset
 
         super.init(nibName: String(describing: SendViewController.self), bundle: nil)
@@ -92,11 +92,11 @@ class SendViewController: UIViewController {
         view.backgroundColor = Colors.lightBackground
         tableView.backgroundColor = Colors.lightBackground
 
-        guard let asset = self.currentAsset else { return }
+        guard let asset = self.currentAsset, let account = accountService.account else { return }
 
         var availableBalance = ""
         if asset.assetType == AssetTypeAsString.NATIVE {
-            availableBalance = stellarAccount.availableBalance.tradeFormattedString
+            availableBalance = account.availableBalance.tradeFormattedString
         } else {
             availableBalance = asset.balance.displayFormatted
         }

@@ -15,16 +15,16 @@ class SelectAssetViewController: UIViewController {
 
     var allAssets: [StellarAsset] = []
     var receiver: StellarAddress
-    var stellarAccount: StellarAccount
+    var accountService: StellarAccountService
     var exchangeName: String?
 
     @IBAction func dismissView() {
         self.dismiss(animated: true, completion: nil)
     }
 
-    init(stellarAccount: StellarAccount, receiver: StellarAddress, exchangeName: String?) {
+    init(service: StellarAccountService, receiver: StellarAddress, exchangeName: String?) {
         self.receiver = receiver
-        self.stellarAccount = stellarAccount
+        self.accountService = service
         self.exchangeName = exchangeName
 
         super.init(nibName: String(describing: SelectAssetViewController.self), bundle: nil)
@@ -54,7 +54,9 @@ class SelectAssetViewController: UIViewController {
 
         allAssets.removeAll()
 
-        for asset in stellarAccount.assets {
+        guard let account = accountService.account else { return }
+
+        for asset in account.assets {
             allAssets.append(asset)
         }
 
@@ -87,8 +89,8 @@ extension SelectAssetViewController: UITableViewDataSource {
             cell.tokenInitialLabel.text = String(Array(shortcode)[0])
         }
 
-        if item.assetType == AssetTypeAsString.NATIVE {
-            cell.amountLabel.text = "\(stellarAccount.formattedAvailableBalance) \(item.shortCode)"
+        if let account = accountService.account, item.assetType == AssetTypeAsString.NATIVE {
+            cell.amountLabel.text = "\(account.formattedAvailableBalance) \(item.shortCode)"
         } else {
             cell.amountLabel.text = "\(allAssets[indexPath.row].balance.displayFormatted) \(item.shortCode)"
         }
@@ -101,8 +103,10 @@ extension SelectAssetViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
 
-        let asset = stellarAccount.assets[indexPath.row]
-        let sendAmountViewController = SendAmountViewController(stellarAccount: stellarAccount,
+        guard let account = accountService.account else { return }
+
+        let asset = account.assets[indexPath.row]
+        let sendAmountViewController = SendAmountViewController(service: accountService,
                                                                 currentAsset: asset,
                                                                 receiver: receiver,
                                                                 exchangeName: exchangeName)

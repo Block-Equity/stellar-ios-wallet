@@ -51,23 +51,23 @@ enum TransactionSection: Int, RawRepresentable {
         switch self {
         case .ledger: return 0
         case .transaction: return 1
-        case .operations: return 5
-        case .signatures: return 3
+        case .operations: return 0
+        case .signatures: return 0
         }
     }
 
     func headerCell(_ collectionView: UICollectionView,
-                    delegate: TransactionDetailsViewController,
+                    delegate: TransactionDetailsSectionHeaderDelegate?,
                     collapsed: Bool,
                     for index: IndexPath,
-                    with data: StellarEffect?) -> UICollectionReusableView {
+                    with data: String) -> UICollectionReusableView {
         var view: UICollectionReusableView
 
         switch self {
         case .ledger:
             let basicHeader: TransactionDetailsBasicHeader = collectionView.dequeueReusableHeader(for: index)
             basicHeader.leftLabel.text = self.title
-            basicHeader.rightLabel.text = "00000000"//data.ledgerNumber
+            basicHeader.rightLabel.text = data
             view = basicHeader
         default:
             let expandingHeader: TransactionDetailsSectionHeader = collectionView.dequeueReusableHeader(for: index)
@@ -83,30 +83,22 @@ enum TransactionSection: Int, RawRepresentable {
 
     func dataCell(_ collectionView: UICollectionView,
                   for index: IndexPath,
-                  with data: StellarEffect?) -> UICollectionViewCell {
+                  detailsData: TransactionDetailsCell.ViewModel,
+                  opData: TransactionOperationCell.ViewModel?) -> UICollectionViewCell {
         var cell: UICollectionViewCell
 
         switch self {
         case .transaction:
             let detailCell: TransactionDetailsCell = collectionView.dequeueReusableCell(for: index)
-
-            detailCell.update(with: TransactionDetailsCell.ViewModel(
-                sourceAccount: "",
-                transactionId: "",
-                date: Date(),
-                sequenceNumber: "",
-                fee: "",
-                operationCount: "",
-                memoType: "",
-                memoData: ""
-            ))
+            detailCell.update(with: detailsData)
             cell = detailCell
         case .operations:
             let operationCell: TransactionOperationCell = collectionView.dequeueReusableCell(for: index)
+            operationCell.update(with: opData)
             cell = operationCell
         case .signatures:
             let signatureCell: TransactionSignatureCell = collectionView.dequeueReusableCell(for: index)
-            signatureCell.signatureLabel.text = "Signer \(index.row)"
+            signatureCell.update(with: detailsData.signers[index.row])
             cell = signatureCell
         default:
             cell = UICollectionViewCell()

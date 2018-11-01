@@ -15,7 +15,6 @@ protocol ContactsViewControllerDelegate: AnyObject {
 }
 
 class ContactsViewController: UIViewController {
-
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var tableViewHeaderStellar: UIView!
@@ -24,7 +23,7 @@ class ContactsViewController: UIViewController {
     @IBOutlet var tableViewHeaderAddressBookTitleLabel: UILabel!
     @IBOutlet var accessDeniedView: UIView!
 
-    var account: StellarAccount?
+    var accountService: StellarAccountService
     weak var delegate: ContactsViewControllerDelegate?
     var dataSource: ContactsDataSource? {
         didSet {
@@ -33,8 +32,8 @@ class ContactsViewController: UIViewController {
         }
     }
 
-    init(account: StellarAccount?) {
-        self.account = account
+    init(service: StellarAccountService) {
+        self.accountService = service
         super.init(nibName: String(describing: ContactsViewController.self), bundle: nil)
     }
 
@@ -47,7 +46,7 @@ class ContactsViewController: UIViewController {
 
         setupView()
 
-        guard let account = self.account else {
+        guard let account = accountService.account else {
             return
         }
 
@@ -61,7 +60,7 @@ class ContactsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        guard let account = self.account else {
+        guard let account = self.accountService.account else {
             return
         }
 
@@ -89,7 +88,7 @@ class ContactsViewController: UIViewController {
         tableViewHeaderAddressBook.backgroundColor = Colors.lightBackground
         tableViewHeaderAddressBookTitleLabel.textColor = Colors.darkGray
 
-        tableView.registerCell(type: ContactStellarCell.self)
+        tableView.registerCell(type: StellarContactCell.self)
         tableView.registerCell(type: ContactCell.self)
         tableView.delegate = self
 
@@ -131,12 +130,6 @@ class ContactsViewController: UIViewController {
 
     @IBAction func addContact() {
         self.delegate?.selectedAddToAddressBook(identifier: "", name: "", address: "")
-    }
-}
-
-extension ContactsViewController: AccountUpdatable {
-    func update(account: StellarAccount) {
-        self.account = account
     }
 }
 
@@ -207,5 +200,31 @@ extension ContactsViewController {
                 self.displayAccess()
             }
         }
+    }
+}
+
+extension ContactsViewController: ContactCellDelegate {
+    func didSelectAddToAddressBook(indexPath: IndexPath) {
+        guard let item = dataSource?.filteredAddressBookContacts[indexPath.row] else { return }
+        delegate?.selectedAddToAddressBook(identifier: item.identifier, name: item.name, address: item.address)
+    }
+}
+
+extension ContactsViewController: StellarContactCellDelegate {
+    func didSendPayment(indexPath: IndexPath) {
+        guard let item = dataSource?.filteredStellarContacts[indexPath.row],
+            let receiver = StellarAddress.from(contactAddress: item.address) else {
+                return
+        }
+
+        let exchange: Exchange? = AddressResolver.resolve(address: receiver)
+        let selectAssetViewController = SelectAssetViewController(service: accountService,
+                                                                  receiver: receiver,
+                                                                  exchangeName: exchange?.name)
+
+        let navigationController = AppNavigationController(rootViewController: selectAssetViewController)
+        navigationController.navigationBar.prefersLargeTitles = true
+
+        present(navigationController, animated: true, completion: nil)
     }
 }

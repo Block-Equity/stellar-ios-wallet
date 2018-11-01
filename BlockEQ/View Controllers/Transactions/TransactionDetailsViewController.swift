@@ -13,18 +13,9 @@ import StellarAccountService
 // MARK: -
 
 final class TransactionDetailsViewController: UIViewController {
-    typealias SectionState = (collapsed: Bool, itemCount: Int)
-
     @IBOutlet weak var collectionView: UICollectionView!
 
-    var sectionStates: [Int: SectionState] = [
-        0: (collapsed: false, itemCount: 0),
-        1: (collapsed: false, itemCount: 1),
-        2: (collapsed: true, itemCount: 5),
-        3: (collapsed: true, itemCount: 3)
-    ]
-
-    private var effect: StellarEffect?
+    private var dataSource: TransactionDetailsDataSource?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,11 +25,14 @@ final class TransactionDetailsViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        collectionView?.dataSource = self.dataSource
+        collectionView?.reloadData()
     }
 
     func setupView() {
         collectionView.delegate = self
-        collectionView.dataSource = self
+        collectionView.dataSource = dataSource
+        collectionView.allowsSelection = true
         collectionView.registerHeader(type: TransactionDetailsBasicHeader.self)
         collectionView.registerHeader(type: TransactionDetailsSectionHeader.self)
         collectionView.registerCell(type: TransactionDetailsCell.self)
@@ -53,53 +47,9 @@ final class TransactionDetailsViewController: UIViewController {
         collectionView.backgroundColor = backgroundColor
     }
 
-    func update(with data: StellarEffect) {
-        self.effect = data
-        collectionView?.reloadData()
-    }
-}
-
-// MARK: UICollectionViewDataSource
-// MARK: -
-
-extension TransactionDetailsViewController: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return TransactionSection.all.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let state = sectionStates[section] else {
-            return 0
-        }
-
-        return state.collapsed ? 0 : state.itemCount
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let section = TransactionSection.all[indexPath.section]
-        let cell = section.dataCell(collectionView, for: indexPath, with: self.effect)
-        return cell
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        viewForSupplementaryElementOfKind kind: String,
-                        at indexPath: IndexPath) -> UICollectionReusableView {
-        let section = TransactionSection.all[indexPath.section]
-        let view: UICollectionReusableView
-
-        if kind == UICollectionView.elementKindSectionHeader {
-            let state = sectionStates[indexPath.section]!
-            view = section.headerCell(collectionView,
-                                      delegate: self,
-                                      collapsed: state.collapsed,
-                                      for: indexPath,
-                                      with: self.effect)
-        } else {
-            view = UICollectionReusableView(frame: .zero)
-        }
-
-        return view
+    func update(with data: StellarTransaction, _ operations: [StellarOperation]) {
+        let transactionDataSource = TransactionDetailsDataSource(delegate: self, transaction: data, ops: operations)
+        dataSource = transactionDataSource
     }
 }
 
@@ -108,11 +58,32 @@ extension TransactionDetailsViewController: UICollectionViewDataSource {
 
 extension TransactionDetailsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        os_log("Selected item")
+        guard let section = TransactionSection(rawValue: indexPath.section) else { return }
+
+        var copyString: String?
+        var titleString: String = ""
+
+        switch section {
+        case .transaction:
+            copyString = dataSource?.txid
+            titleString = "TXID_COPIED".localized()
+        case .signatures:
+            copyString = dataSource?.signers[indexPath.row]
+            titleString = "SIGNER_COPIED".localized()
+        case .operations:
+            copyString = dataSource?.operations[indexPath.row].identifier
+            titleString = "OPERATION_ID_COPIED".localized()
+        default: break
+        }
+
+        if copyString != nil {
+            UIPasteboard.general.string = copyString
+            UIAlertController.simpleAlert(title: titleString, message: nil, presentingViewController: self)
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return false
+        return true
     }
 }
 
@@ -159,7 +130,8 @@ extension TransactionDetailsViewController: UICollectionViewDelegateFlowLayout {
 
 extension TransactionDetailsViewController: TransactionDetailsSectionHeaderDelegate {
     func toggle(_ view: TransactionDetailsSectionHeader, index: IndexPath, collapsed: Bool) {
-        sectionStates[index.section] = (collapsed: collapsed, TransactionSection.all[index.section].itemCount)
-        collectionView.reloadSections([index.section])
+        let section = index.section
+        dataSource?.sectionStates[section] = (collapsed: collapsed, TransactionSection.all[section].itemCount)
+        collectionView.reloadSections([section])
     }
 }

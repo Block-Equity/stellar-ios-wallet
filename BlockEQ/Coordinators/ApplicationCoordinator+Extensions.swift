@@ -62,9 +62,9 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
     }
 
     func selectedSend(_ viewController: WalletViewController, for asset: StellarAsset) {
-        guard let account = core?.accountService.account else { return }
+        guard let service = core?.accountService else { return }
 
-        let sendVC = SendViewController(stellarAccount: account, asset: asset)
+        let sendVC = SendViewController(service: service, asset: asset)
         let container = AppNavigationController(rootViewController: sendVC)
         container.navigationBar.prefersLargeTitles = true
 
@@ -102,19 +102,15 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
         let transactionVC = TransactionDetailsViewController()
         transactionViewController = transactionVC
 
-//        transactionVC.update(with: TransactionDetailsViewController.EffectViewModel(
-//            sourceAccount: "???",
-//            transactionId: "???",
-//            date: Date(),
-//            sequenceNumber: "293478239874329",
-//            fee: "0.01 XLM",
-//            memo: "This is the memo data",
-//            memoType: "TEXT",
-//            operations: [],
-//            signatures: []
-//        ))
+        if let transaction: StellarTransaction = core?.indexingService.relatedObject(startingAt: effect) {
+            var operations = [StellarOperation]()
+            if let accountOperations = core?.accountService.account?.operations {
+                operations = accountOperations.filter { $0.transactionHash == transaction.hash }
+            }
 
-        wrappingNavController?.pushViewController(transactionVC, animated: true)
+            transactionVC.update(with: transaction, operations)
+            wrappingNavController?.pushViewController(transactionVC, animated: true)
+        }
     }
 }
 
@@ -159,7 +155,7 @@ extension ApplicationCoordinator: WalletSwitchingViewControllerDelegate {
             return
         }
 
-        account.changeTrust(asset: asset, remove: true, delegate: walletVC)
+        core?.accountService.changeTrust(account: account, asset: asset, remove: true, delegate: walletVC)
     }
 
     func add(asset: StellarAsset) {
@@ -167,7 +163,7 @@ extension ApplicationCoordinator: WalletSwitchingViewControllerDelegate {
             return
         }
 
-        account.changeTrust(asset: asset, remove: false, delegate: walletVC)
+        core?.accountService.changeTrust(account: account, asset: asset, remove: false, delegate: walletVC)
     }
 }
 
@@ -177,7 +173,7 @@ extension ApplicationCoordinator: InflationViewControllerDelegate {
             return
         }
 
-        account.setInflationDestination(address: destination, delegate: viewController)
+        core?.accountService.setInflationDestination(account: account, address: destination, delegate: viewController)
     }
 }
 
@@ -190,7 +186,7 @@ extension ApplicationCoordinator: AddAssetViewControllerDelegate {
 
         walletVC.displayAddPrompt()
 
-        account.changeTrust(asset: asset, remove: false, delegate: walletVC)
+        core?.accountService.changeTrust(account: account, asset: asset, remove: false, delegate: walletVC)
     }
 }
 
@@ -208,19 +204,19 @@ extension ApplicationCoordinator: ContactsViewControllerDelegate {
 }
 
 extension ApplicationCoordinator: StellarAccountServiceDelegate {
-    func accountUpdated(_ service: StellarAccountService, account: StellarAccount, opts: StellarAccount.UpdateOptions) {
+    func accountUpdated(_ service: StellarAccountService,
+                        account: StellarAccount,
+                        opts: StellarAccountService.UpdateOptions) {
         if opts.contains(.effects) || opts.contains(.account) {
-            self.walletViewController.update(account: account)
-            self.contactsViewController.update(account: account)
+            self.walletViewController.updated(account: account)
         }
 
-        self.tradingCoordinator.update(account: account)
+        self.tradingCoordinator.updated(account: account)
     }
 
     func accountInactive(_ service: StellarAccountService, account: StellarAccount) {
-        self.walletViewController.update(account: account)
-        self.contactsViewController.update(account: account)
-        self.tradingCoordinator.update(account: account)
+        self.walletViewController.updated(account: account)
+        self.tradingCoordinator.updated(account: account)
     }
 
     func paymentUpdate(_ service: StellarAccountService, operation: StellarOperation) {
