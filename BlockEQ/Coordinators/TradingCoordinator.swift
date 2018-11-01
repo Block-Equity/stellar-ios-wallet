@@ -174,9 +174,11 @@ extension TradingCoordinator: InflationViewControllerDelegate {
 
 extension TradingCoordinator: AddAssetViewControllerDelegate {
     func requestedAdd(_ viewController: AddAssetViewController, asset: StellarAsset) {
-        guard let account = self.account else { return }
+        guard let walletVC = walletSwitchingViewController, let account = self.account else { return }
 
-        walletSwitchingViewController?.updateMenu(account: account)
+        walletVC.displayAddPrompt()
+
+        account.changeTrust(asset: asset, remove: false, delegate: walletVC)
     }
 }
 
