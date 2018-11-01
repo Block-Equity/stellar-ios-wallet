@@ -30,6 +30,8 @@
 		C439A22C211B6F9C0025C047 /* CreateTokenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C439A22A211B6F9C0025C047 /* CreateTokenViewController.xib */; };
 		C439A22F211B6FDC0025C047 /* P2PTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C439A22D211B6FDC0025C047 /* P2PTransactionViewController.swift */; };
 		C439A230211B6FDC0025C047 /* P2PTransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C439A22E211B6FDC0025C047 /* P2PTransactionViewController.xib */; };
+		C4559BF4218A8DA4004E7654 /* CryptoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4559BF2218A8DA4004E7654 /* CryptoViewController.swift */; };
+		C4559BF5218A8DA4004E7654 /* CryptoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4559BF3218A8DA4004E7654 /* CryptoViewController.xib */; };
 		C46CF29920F5284B003CBDA3 /* AddAssetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46CF29820F5284B003CBDA3 /* AddAssetViewController.swift */; };
 		C499755C2112255C00E2299C /* P2PViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C499755A2112255C00E2299C /* P2PViewController.swift */; };
 		C499755D2112255C00E2299C /* P2PViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C499755B2112255C00E2299C /* P2PViewController.xib */; };
@@ -211,6 +213,8 @@
 		C439A22A211B6F9C0025C047 /* CreateTokenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateTokenViewController.xib; sourceTree = "<group>"; };
 		C439A22D211B6FDC0025C047 /* P2PTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2PTransactionViewController.swift; sourceTree = "<group>"; };
 		C439A22E211B6FDC0025C047 /* P2PTransactionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = P2PTransactionViewController.xib; sourceTree = "<group>"; };
+		C4559BF2218A8DA4004E7654 /* CryptoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoViewController.swift; sourceTree = "<group>"; };
+		C4559BF3218A8DA4004E7654 /* CryptoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CryptoViewController.xib; sourceTree = "<group>"; };
 		C46CF29820F5284B003CBDA3 /* AddAssetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAssetViewController.swift; sourceTree = "<group>"; };
 		C499755A2112255C00E2299C /* P2PViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2PViewController.swift; sourceTree = "<group>"; };
 		C499755B2112255C00E2299C /* P2PViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = P2PViewController.xib; sourceTree = "<group>"; };
@@ -430,6 +434,15 @@
 			path = P2P;
 			sourceTree = "<group>";
 		};
+		C4559BF1218A8D80004E7654 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				C4559BF2218A8DA4004E7654 /* CryptoViewController.swift */,
+				C4559BF3218A8DA4004E7654 /* CryptoViewController.xib */,
+			);
+			path = Demo;
+			sourceTree = "<group>";
+		};
 		C55458FA2124BB0C00032699 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -620,6 +633,7 @@
 		EC2015D62052DB34009A73C8 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C4559BF1218A8D80004E7654 /* Demo */,
 				C5BB02472165268800E4AAD1 /* Keys */,
 				C5A5A876215E90AD00007787 /* Misc */,
 				C41165122123B7B500C4CB6E /* Address Book */,
@@ -945,6 +959,7 @@
 				EC581C7920769E0A003A397E /* WalletItemCell.xib in Resources */,
 				EC42584C2054E346000941B5 /* SendViewController.xib in Resources */,
 				EC6EE89020B6004B0033C299 /* OrderBookViewController.xib in Resources */,
+				C4559BF5218A8DA4004E7654 /* CryptoViewController.xib in Resources */,
 				EC1CEE5420577E880005F74E /* WordSuggestionCell.xib in Resources */,
 				C5E8594B20AFB47900B77289 /* AppTabController.xib in Resources */,
 				EC4258502054EE76000941B5 /* SendAmountViewController.xib in Resources */,
@@ -1178,6 +1193,7 @@
 				C41481312124709B0057ED74 /* LocalContact.swift in Sources */,
 				EC0B191A205465BF0052802C /* WalletCell.swift in Sources */,
 				EC72C0B420597CA600141D6F /* StellarAccount.swift in Sources */,
+				C4559BF4218A8DA4004E7654 /* CryptoViewController.swift in Sources */,
 				EC26838F2062AD830085CAAF /* AccountOperation.swift in Sources */,
 				EC3DE29F20B8F98C00A6EC3C /* TradeHeaderView.swift in Sources */,
 				C5CDE376215A9F3200DB5C90 /* Strings.swift in Sources */,
