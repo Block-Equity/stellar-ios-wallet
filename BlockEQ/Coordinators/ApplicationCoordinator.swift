@@ -71,6 +71,7 @@ final class ApplicationCoordinator {
             coreService.accountService.update()
 
             tradingCoordinator.tradeService = coreService.tradeService
+            tradingCoordinator.accountService = coreService.accountService
         }
     }
 
