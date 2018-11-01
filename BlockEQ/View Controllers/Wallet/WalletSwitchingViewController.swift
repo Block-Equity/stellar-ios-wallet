@@ -230,7 +230,7 @@ extension WalletSwitchingViewController: UITableViewDataSource {
             return walletCell
         default:
             let shortCode = updatedSupportedAssets[indexPath.row].shortForm
-            let displayString = String(format: "%@ %@", Assets.displayTitle(shortCode: shortCode), shortCode)
+            let displayString = String(format: "%@ (%@)", Assets.displayTitle(shortCode: shortCode), shortCode)
 
             let walletCell: WalletItemActivateCell = tableView.dequeueReusableCell(for: indexPath)
             var viewModel = WalletItemActivateCell.ViewModel(title: displayString)

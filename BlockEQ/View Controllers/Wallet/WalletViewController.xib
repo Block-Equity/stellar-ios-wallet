@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,6 +17,7 @@
                 <outlet property="availableBalanceView" destination="nbj-eA-uEM" id="zy4-oQ-x1I"/>
                 <outlet property="balanceLabel" destination="kKU-zV-Fep" id="9gB-hr-Gi5"/>
                 <outlet property="coinLabel" destination="nwt-08-vjb" id="ub8-h3-csE"/>
+                <outlet property="depositButton" destination="mTe-Vk-VJF" id="6Lf-Re-l2f"/>
                 <outlet property="emptyView" destination="vYT-Yd-cac" id="JER-rO-97v"/>
                 <outlet property="emptyViewTitleLabel" destination="usa-Ff-oFo" id="TgW-rh-yDQ"/>
                 <outlet property="headerBackgroundView" destination="waF-WU-V1I" id="qwi-KJ-Pq1"/>
@@ -43,7 +45,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="122"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwt-08-vjb">
-                                        <rect key="frame" x="16" y="20" width="297" height="30"/>
+                                        <rect key="frame" x="16" y="40" width="213" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="yZI-Ry-c2Z"/>
                                         </constraints>
@@ -52,7 +54,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kKU-zV-Fep">
-                                        <rect key="frame" x="16" y="57" width="297" height="44"/>
+                                        <rect key="frame" x="16" y="77" width="213" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="Jth-Tp-YHq"/>
                                         </constraints>
@@ -84,18 +86,38 @@
                                             <action selector="displayWalletSwitcher" destination="-1" eventType="touchUpInside" id="9hQ-bT-N8D"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mTe-Vk-VJF">
+                                        <rect key="frame" x="244" y="46" width="75" height="30"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="75" id="KM9-ZR-yo7"/>
+                                            <constraint firstAttribute="height" constant="30" id="xmr-Dd-7Lz"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                        <state key="normal" title="Deposit"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="depositCrypto" destination="-1" eventType="touchUpInside" id="tMb-12-Wsb"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="mTe-Vk-VJF" firstAttribute="centerY" secondItem="waF-WU-V1I" secondAttribute="centerY" id="1f5-fY-nZD"/>
                                     <constraint firstItem="nwt-08-vjb" firstAttribute="top" secondItem="AjD-5v-7aZ" secondAttribute="top" constant="20" id="2U7-mR-eBM"/>
-                                    <constraint firstItem="RhP-ph-wS7" firstAttribute="leading" secondItem="kKU-zV-Fep" secondAttribute="trailing" constant="16" id="7Cp-g5-Y5N"/>
-                                    <constraint firstItem="RhP-ph-wS7" firstAttribute="leading" secondItem="nwt-08-vjb" secondAttribute="trailing" constant="16" id="JXW-sf-P65"/>
                                     <constraint firstItem="RhP-ph-wS7" firstAttribute="centerY" secondItem="waF-WU-V1I" secondAttribute="centerY" id="KVO-2C-7Bh"/>
+                                    <constraint firstItem="mTe-Vk-VJF" firstAttribute="leading" secondItem="nwt-08-vjb" secondAttribute="trailing" constant="15" id="Wus-Eq-Vf4"/>
                                     <constraint firstItem="6hf-LR-dPl" firstAttribute="leading" secondItem="waF-WU-V1I" secondAttribute="leading" id="XYS-dq-Nxf"/>
                                     <constraint firstItem="AjD-5v-7aZ" firstAttribute="bottom" secondItem="6hf-LR-dPl" secondAttribute="bottom" id="atD-RE-Lbw"/>
                                     <constraint firstItem="AjD-5v-7aZ" firstAttribute="trailing" secondItem="RhP-ph-wS7" secondAttribute="trailing" constant="16" id="atG-vX-LYD"/>
                                     <constraint firstItem="nwt-08-vjb" firstAttribute="leading" secondItem="AjD-5v-7aZ" secondAttribute="leading" constant="16" id="d8b-0i-8OV"/>
                                     <constraint firstItem="kKU-zV-Fep" firstAttribute="top" secondItem="nwt-08-vjb" secondAttribute="bottom" constant="7" id="nIQ-a1-gLA"/>
+                                    <constraint firstItem="RhP-ph-wS7" firstAttribute="leading" secondItem="mTe-Vk-VJF" secondAttribute="trailing" constant="10" id="qeu-B8-OqX"/>
+                                    <constraint firstItem="mTe-Vk-VJF" firstAttribute="leading" secondItem="kKU-zV-Fep" secondAttribute="trailing" constant="15" id="sLT-iL-T74"/>
                                     <constraint firstAttribute="trailing" secondItem="6hf-LR-dPl" secondAttribute="trailing" id="sdX-Iz-ZXC"/>
                                     <constraint firstItem="kKU-zV-Fep" firstAttribute="leading" secondItem="AjD-5v-7aZ" secondAttribute="leading" constant="16" id="tA9-fP-qcL"/>
                                 </constraints>
@@ -133,7 +155,7 @@
                 <constraint firstItem="RND-qr-8sK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="UHY-bw-I7y"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="-94.5" y="47.5"/>
+            <point key="canvasLocation" x="-95.200000000000003" y="47.226386806596707"/>
         </view>
         <view contentMode="scaleToFill" id="4NM-Ce-BUW">
             <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>

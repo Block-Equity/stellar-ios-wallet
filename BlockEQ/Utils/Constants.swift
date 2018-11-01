@@ -60,6 +60,7 @@ public struct Assets {
     enum AssetType: String {
         case points = "PTS"
         case cad = "CAD"
+        case ltc = "LTC"
 
         var shortForm: String {
             return self.rawValue
@@ -69,11 +70,12 @@ public struct Assets {
             switch self {
             case .points: return "GBPG7KRYC3PTKHBXQGRD3GMZ5DB4C3D553ZN2ZLH57LBAQIULVY46Z5F"
             case .cad: return "GABK2IHWW7BCRPP3BL6WMOMDBPHCBJR2SLP5HAUBYKNZG5J5RJSROS5S"
+            case .ltc: return "GBZPN5GHACMIWN2HE223UEO5V2XBFULTF2E6JFMZ2ENNTVAJK2F5IZK3"
             }
         }
     }
 
-    static let all: [AssetType] = [.points, .cad]
+    static let all: [AssetType] = [.ltc, .points, .cad]
 
     static func cellDisplay(shortCode: String?) -> String {
         if let assetCode = shortCode {
@@ -89,6 +91,8 @@ public struct Assets {
             return "Block Points"
         } else if shortCode == "CAD" {
             return "Canadian Dollar"
+        } else if shortCode == "LTC" {
+            return "Litecoin"
         }
         return shortCode
     }
@@ -100,6 +104,8 @@ public struct Assets {
             return UIImage(named: "blockpoints")
         } else if shortCode == "CAD" {
             return UIImage(named: "canada")
+        } else if shortCode == "LTC" {
+            return UIImage(named: "litecoin")
         }
         return nil
     }
@@ -110,6 +116,8 @@ public struct Assets {
         } else if shortCode == "PTS" {
             return Colors.primaryDark
         } else if shortCode == "CAD" {
+            return Colors.white
+        } else if shortCode == "LTC" {
             return Colors.white
         }
         return Colors.blueGray

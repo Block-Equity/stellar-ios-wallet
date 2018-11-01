@@ -30,6 +30,7 @@ class WalletViewController: UIViewController {
     @IBOutlet var tableViewHeaderLeftLabel: UILabel!
     @IBOutlet var tableViewHeaderRightLabel: UILabel!
     @IBOutlet var logoImageView: UIImageView!
+    @IBOutlet var depositButton: UIButton!
 
     override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
 
@@ -44,6 +45,14 @@ class WalletViewController: UIViewController {
     var currentAssetIndex = 0
     var paymentStream: Any!
     var isNativeAsset: Bool = false
+    
+    @IBAction func depositCrypto() {
+        let cryptoViewController = CryptoViewController()
+        let navWrapper = AppNavigationController(rootViewController: cryptoViewController)
+        navWrapper.navigationBar.prefersLargeTitles = true
+
+        present(navWrapper, animated: true, completion: nil)
+    }
 
     @IBAction func sendFunds() {
         let currentStellarAccount = accounts[0]
@@ -107,6 +116,8 @@ class WalletViewController: UIViewController {
         tableViewHeaderLeftLabel.textColor = Colors.darkGrayTransparent
         tableViewHeaderRightLabel.textColor = Colors.darkGrayTransparent
         tableView.backgroundColor = Colors.lightBackground
+        
+        depositButton.isHidden = true
     }
 
     func startPollingForAccountFunding() {
@@ -262,6 +273,13 @@ extension WalletViewController {
                 self.coinLabel.text = "\(Assets.displayTitle(shortCode: asset.shortCode))"
             } else {
                 self.coinLabel.text = "\(Assets.displayTitle(shortCode: asset.shortCode)) (\(asset.shortCode))"
+            }
+            
+            // Just for demo purposes
+            if asset.shortCode == "LTC" {
+                self.depositButton.isHidden = false
+            } else {
+                self.depositButton.isHidden = true
             }
 
             self.availableBalanceLabel.text = "Available:  \(self.accounts[0].formattedAvailableBalance) XLM"
