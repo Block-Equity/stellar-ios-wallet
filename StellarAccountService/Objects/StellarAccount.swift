@@ -110,30 +110,30 @@ public final class StellarAccount {
         self.isStub = false
     }
 
-    public var baseReserve: Double {
-        return Double(totalBaseReserve) * 0.5
+    public var baseReserve: Decimal {
+        return Decimal(totalBaseReserve) * 0.5
     }
 
-    public var trustlines: Double {
-        return Double(totalTrustlines) * 0.5
+    public var trustlines: Decimal {
+        return Decimal(totalTrustlines) * 0.5
     }
 
-    public var offers: Double {
-        return Double(totalOffers) * 0.5
+    public var offers: Decimal {
+        return Decimal(totalOffers) * 0.5
     }
 
-    public var signers: Double {
-        return Double(totalSigners) * 0.5
+    public var signers: Decimal {
+        return Decimal(totalSigners) * 0.5
     }
 
-    public var minBalance: Double {
+    public var minBalance: Decimal {
         return baseReserve + trustlines + offers + signers
     }
 
-    public var availableBalance: Double {
-        var totalBalance = 0.00
+    public var availableBalance: Decimal {
+        var totalBalance = Decimal(0.00)
         for asset in assets where asset.assetType == AssetTypeAsString.NATIVE {
-            if let assetBalance = Double(asset.balance) {
+            if let assetBalance = Decimal(string: asset.balance) {
                 totalBalance = assetBalance
             }
         }

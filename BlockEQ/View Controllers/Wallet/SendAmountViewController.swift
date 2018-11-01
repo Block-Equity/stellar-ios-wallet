@@ -88,12 +88,12 @@ class SendAmountViewController: UIViewController {
 
         var availableBalance = ""
         if asset.assetType == AssetTypeAsString.NATIVE {
-            availableBalance = stellarAccount.formattedAvailableBalance
+            availableBalance = stellarAccount.availableBalance.tradeFormattedString
         } else {
             availableBalance = asset.balance.displayFormatted
         }
 
-        navigationItem.title = "\(availableBalance) \(asset.shortCode)"
+        navigationItem.title = String(format: "TRADE_BALANCE_FORMAT".localized(), availableBalance, asset.shortCode)
     }
 
     func setupView() {
@@ -193,14 +193,14 @@ class SendAmountViewController: UIViewController {
 
         guard let asset = self.currentAsset else { return false }
 
-        var totalAvailableBalance: Double = 0.00
+        var totalAvailableBalance: Decimal = 0.00
         if asset.assetType == AssetTypeAsString.NATIVE {
             totalAvailableBalance = stellarAccount.availableBalance
         } else {
-            totalAvailableBalance = Double(asset.balance)!
+            totalAvailableBalance = Decimal(string: asset.balance)!
         }
 
-        if let totalSendable = Double(amount) {
+        if let totalSendable = Decimal(string: amount) {
             return totalSendable.isZero ? false : totalSendable <= totalAvailableBalance
         }
 

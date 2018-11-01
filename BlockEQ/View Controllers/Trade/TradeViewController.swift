@@ -412,7 +412,7 @@ extension TradeViewController {
         }
 
         if fromAsset.isNative {
-            balance = Decimal(account.availableBalance)
+            balance = account.availableBalance
         }
 
         let multiplier = BalanceType.all[sender.tag].decimal
