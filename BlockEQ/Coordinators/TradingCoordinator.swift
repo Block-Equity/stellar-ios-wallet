@@ -14,12 +14,15 @@ protocol TradingCoordinatorDelegate: AnyObject {
 }
 
 final class TradingCoordinator {
-    var tradeService: StellarTradeService? {
-        didSet {
-            tradeService?.tradeDelegate = self
-            tradeService?.offerDelegate = self
-        }
-    }
+    static let orderbookUpdateInterval: TimeInterval = 10
+
+    let segmentController: TradeSegmentViewController
+
+    let tradeViewController: TradeViewController
+
+    let orderBookViewController: OrderBookViewController
+
+    let myOffersViewController: MyOffersViewController
 
     private var account: StellarAccount? {
         didSet {
@@ -31,15 +34,9 @@ final class TradingCoordinator {
         }
     }
 
-    static let orderbookUpdateInterval: TimeInterval = 10
+    var tradeService: StellarTradeService?
 
-    let segmentController: TradeSegmentViewController
-
-    let tradeViewController: TradeViewController
-
-    let orderBookViewController: OrderBookViewController
-
-    let myOffersViewController: MyOffersViewController
+    var accountService: StellarAccountService?
 
     var addAssetViewController: AddAssetViewController?
 
@@ -52,7 +49,6 @@ final class TradingCoordinator {
     weak var delegate: TradingCoordinatorDelegate?
 
     init() {
-
         let tradeVC = TradeViewController()
         let orderBookVC = OrderBookViewController()
         let offersVC = MyOffersViewController()
@@ -72,7 +68,7 @@ final class TradingCoordinator {
         let interval = TradingCoordinator.orderbookUpdateInterval
         timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true, block: { _ in
             guard let assetPair = self.tradeViewController.assetPair else { return }
-            self.tradeService?.updateOrders(for: assetPair)
+            self.tradeService?.updateOrders(for: assetPair, delegate: self)
         })
     }
 
@@ -122,11 +118,11 @@ extension TradingCoordinator: TradeSegmentControllerDelegate {
 
 extension TradingCoordinator: TradeViewControllerDelegate {
     func postTrade(data: StellarTradeOfferData) {
-        tradeService?.postTrade(with: data)
+        tradeService?.postTrade(with: data, delegate: self)
     }
 
     func getOrderBook(for pair: StellarAssetPair) {
-        tradeService?.updateOrders(for: pair)
+        tradeService?.updateOrders(for: pair, delegate: self)
     }
 
     func displayAddAssetForTrade() {
@@ -188,6 +184,7 @@ extension TradingCoordinator: TradeResponseDelegate {
     }
 
     func posted(trade: StellarTradeOfferData) {
+        self.accountService?.update()
         self.tradeViewController.displayTradeSuccess()
     }
 
@@ -214,7 +211,7 @@ extension TradingCoordinator: OfferResponseDelegate {
 extension TradingCoordinator: MyOffersViewControllerDelegate {
     func cancelTrade(offerId: Int, assetPair: StellarAssetPair, price: Price) {
         let tradeData = StellarTradeOfferData(offerId: offerId, assetPair: assetPair, price: price)
-        tradeService?.cancelTrade(with: offerId, data: tradeData)
+        tradeService?.cancelTrade(with: offerId, data: tradeData, delegate: self)
     }
 }
 

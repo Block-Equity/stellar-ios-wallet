@@ -15,9 +15,6 @@ public final class StellarTradeService: Subservice {
     public static let defaultRecordCount = 200
     public static let defaultTimeInterval = TimeInterval(30)
 
-    public weak var tradeDelegate: TradeResponseDelegate?
-    public weak var offerDelegate: OfferResponseDelegate?
-
     let core: CoreService
 
     var tradeQueue: OperationQueue {
@@ -41,18 +38,18 @@ extension StellarTradeService {
 
 // MARK: - Trades
 extension StellarTradeService {
-    public func postTrade(with data: StellarTradeOfferData) {
+    public func postTrade(with data: StellarTradeOfferData, delegate: TradeResponseDelegate) {
         guard let keyPair = core.walletKeyPair else {
-            tradeDelegate?.postingFailed(error: ServiceError.postTrade)
+            delegate.postingFailed(error: ServiceError.postTrade)
             return
         }
 
         let completion: BoolCompletion = { posted in
             DispatchQueue.main.async {
                 if posted {
-                    self.tradeDelegate?.posted(trade: data)
+                    delegate.posted(trade: data)
                 } else {
-                    self.tradeDelegate?.postingFailed(error: ServiceError.postTrade)
+                    delegate.postingFailed(error: ServiceError.postTrade)
                 }
             }
         }
@@ -70,18 +67,18 @@ extension StellarTradeService {
 
     }
 
-    public func cancelTrade(with offerId: Int, data: StellarTradeOfferData) {
+    public func cancelTrade(with offerId: Int, data: StellarTradeOfferData, delegate: TradeResponseDelegate) {
         guard let keyPair = core.walletKeyPair else {
-            tradeDelegate?.cancellationFailed(error: ServiceError.cancelTrade)
+            delegate.cancellationFailed(error: ServiceError.cancelTrade)
             return
         }
 
         let completion: BoolCompletion = { cancelled in
             DispatchQueue.main.async {
                 if cancelled {
-                    self.tradeDelegate?.cancelled(offerId: offerId, trade: data)
+                    delegate.cancelled(offerId: offerId, trade: data)
                 } else {
-                    self.tradeDelegate?.cancellationFailed(error: ServiceError.cancelTrade)
+                    delegate.cancellationFailed(error: ServiceError.cancelTrade)
                 }
             }
         }
@@ -101,12 +98,12 @@ extension StellarTradeService {
 
 // MARK: - Orders & Offers
 extension StellarTradeService {
-    public func updateOrders(for pair: StellarAssetPair) {
+    public func updateOrders(for pair: StellarAssetPair, delegate: OfferResponseDelegate) {
         let completion: FetchOrderBookOperation.SuccessCompletion = { response in
             let orders = StellarOrderbook(response: response)
 
             DispatchQueue.main.async {
-                self.offerDelegate?.updated(orders: orders)
+                delegate.updated(orders: orders)
             }
         }
 
