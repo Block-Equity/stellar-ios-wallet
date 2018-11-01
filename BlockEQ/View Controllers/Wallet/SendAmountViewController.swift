@@ -90,7 +90,7 @@ class SendAmountViewController: UIViewController {
         if asset.assetType == AssetTypeAsString.NATIVE {
             availableBalance = stellarAccount.formattedAvailableBalance
         } else {
-            availableBalance = asset.balance.decimalFormatted
+            availableBalance = asset.balance.displayFormatted
         }
 
         navigationItem.title = "\(availableBalance) \(asset.shortCode)"

@@ -96,7 +96,7 @@ extension MyOffersViewController: UITableViewDataSource {
                           Assets.cellDisplay(shortCode: offer.sellingAsset.assetCode),
                           offer.value.displayFormattedString,
                           Assets.cellDisplay(shortCode: offer.buyingAsset.assetCode),
-                          offer.price.decimalFormatted)
+                          offer.price.displayFormatted)
 
         cell.offerLabel.text = text
 

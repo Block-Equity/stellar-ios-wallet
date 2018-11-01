@@ -9,6 +9,9 @@
 import UIKit
 
 extension Formatter {
+    static let minimumDisplayString = "0.0001"
+    static let minimumDisplayAmount = Decimal(string: minimumDisplayString)!
+
     static let displayFormatters: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -18,43 +21,60 @@ extension Formatter {
         formatter.groupingSeparator = ""
         return formatter
     }()
+
+    static let tradeFormatters: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.generatesDecimalNumbers = true
+        formatter.maximumFractionDigits = 8
+        formatter.minimumFractionDigits = 2
+        formatter.groupingSeparator = ""
+        return formatter
+    }()
+
+    static func minimumAmount(with formatter: NumberFormatter, amount: Decimal) -> String {
+        if amount > 0 && amount < Formatter.minimumDisplayAmount {
+            return String(format: "CRYPTO_DUST_FORMAT_STRING".localized(), minimumDisplayString)
+        } else {
+            return formatter.string(for: amount) ?? ""
+        }
+    }
 }
 
 extension String {
-    var decimalFormatted: String {
-        let value = self.doubleValue
-        if value > 0 && value <= 0.0001 {
-            return "< 0.0001"
-        } else {
-            return Formatter.displayFormatters.string(for: value) ?? ""
-        }
+    var displayFormatted: String {
+        return Formatter.minimumAmount(with: Formatter.displayFormatters, amount: self.decimalValue)
     }
 
-    var doubleValue: Double {
-        guard let double = Double(self) else {
+    var tradeFormatted: String {
+        return Formatter.tradeFormatters.string(for: self.decimalValue) ?? ""
+    }
+
+    var decimalValue: Decimal {
+        guard let decimal = Decimal(string: self) else {
             return 0.00
         }
 
-        return double
+        return decimal
     }
 }
 
 extension Decimal {
     var displayFormattedString: String {
-        if self > 0 && self <= 0.0001 {
-            return "< 0.0001"
-        } else {
-            return Formatter.displayFormatters.string(for: self) ?? ""
-        }
+        return Formatter.minimumAmount(with: Formatter.displayFormatters, amount: self)
+    }
+
+    var tradeFormattedString: String {
+        return Formatter.tradeFormatters.string(for: self) ?? ""
     }
 }
 
 extension Double {
     var displayFormattedString: String {
-        if self > 0 && self <= 0.0001 {
-            return "< 0.0001"
-        } else {
-            return Formatter.displayFormatters.string(for: self) ?? ""
-        }
+        return Formatter.minimumAmount(with: Formatter.displayFormatters, amount: Decimal(self))
+    }
+
+    var tradeFormattedString: String {
+        return Formatter.tradeFormatters.string(for: Decimal(self)) ?? ""
     }
 }

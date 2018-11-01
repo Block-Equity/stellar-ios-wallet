@@ -100,7 +100,7 @@ extension TrustedPartiesViewController: UITableViewDataSource {
         cell.indexPath = indexPath
         cell.delegate = self
         cell.titleLabel.text = Assets.displayTitle(shortCode: item.shortCode)
-        cell.amountLabel.text = "\(item.balance.decimalFormatted) \(item.shortCode)"
+        cell.amountLabel.text = "\(item.balance.displayFormatted) \(item.shortCode)"
         cell.iconImageView.backgroundColor = Assets.displayImageBackgroundColor(shortCode: item.shortCode)
 
         if let image = Assets.displayImage(shortCode: item.shortCode) {
