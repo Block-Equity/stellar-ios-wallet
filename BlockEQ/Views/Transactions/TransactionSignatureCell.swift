@@ -28,4 +28,8 @@ final class TransactionSignatureCell: UICollectionViewCell, ReusableView, NibLoa
         signatureLabel.setCharacterSpacing(kern: -0.4)
         signatureLabel.textColor = Colors.transactionCellDarkGray
     }
+
+    func update(with signer: String) {
+        signatureLabel.text = signer
+    }
 }

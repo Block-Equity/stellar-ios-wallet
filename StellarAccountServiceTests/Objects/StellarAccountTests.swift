@@ -24,12 +24,8 @@ class StellarAccountTests: XCTestCase {
     }
 
     func testThatUpdateOptionsCanBeInitialized() {
-        let options = StellarAccount.UpdateOptions(rawValue: 2)
+        let options = StellarAccountService.UpdateOptions(rawValue: 2)
         XCTAssertEqual(options, .account)
-    }
-
-    func testAccountQueueHasHighPriority() {
-        XCTAssertEqual(stubAccount.accountQueue.qualityOfService, .userInitiated)
     }
 
     func testAccountAddress() {
@@ -121,5 +117,32 @@ class StellarAccountTests: XCTestCase {
         XCTAssertEqual(stubAccount.effects.count, 0)
         XCTAssertEqual(stubAccount.operations.count, 0)
         XCTAssertEqual(stubAccount.tradeOffers.count, 0)
+    }
+
+    func testAccountHash() {
+        let response: AccountResponse = JSONLoader.decodableJSON(name: "account_response")
+        let account = StellarAccount(response)
+
+        let transactionResponse: TransactionResponse = JSONLoader.decodableJSON(name: "transaction_response")
+        let effectsResponse: EffectResponse = JSONLoader.decodableJSON(name: "trade_effect")
+        let operationResponse: OperationResponse = JSONLoader.decodableJSON(name: "operation_response")
+
+        let transaction = StellarTransaction(transactionResponse)
+        let effect = StellarEffect(effectsResponse)
+        let operation = StellarOperation(operationResponse)
+
+        account.mappedTransactions = [transaction.identifier: transaction]
+        account.mappedEffects = [effect.identifier: effect]
+        account.mappedOperations = [operation.identifier: operation]
+
+        XCTAssertEqual(account.hashValue, -1362057893489145949)
+    }
+
+    func testAccountEquals() {
+        let account1 = StellarAccount(accountId: "hello")
+        let account2 = StellarAccount(accountId: "hello")
+        let account3 = StellarAccount(accountId: "its me")
+        XCTAssertEqual(account1, account2)
+        XCTAssertNotEqual(account1, account3)
     }
 }

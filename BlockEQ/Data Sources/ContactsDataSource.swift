@@ -10,6 +10,10 @@ import StellarAccountService
 import stellarsdk
 import Contacts
 
+protocol ContactsDataSourceDelegate: AnyObject {
+    func sendPayment(_ dataSource: ContactsDataSource, contact: LocalContact, receiver: StellarAddress)
+}
+
 final class ContactsDataSource: NSObject {
     enum SectionType: Int {
         case stellarContacts
@@ -20,6 +24,7 @@ final class ContactsDataSource: NSObject {
         }
     }
 
+    weak var delegate: ContactsDataSourceDelegate?
     weak var cellDelegate: ContactsViewController?
     var stellarContacts: [LocalContact] = []
     var addressBookContacts: [LocalContact] = []
@@ -108,7 +113,7 @@ extension ContactsDataSource: UITableViewDataSource {
 
         switch section {
         case .stellarContacts:
-            let cell: ContactStellarCell = tableView.dequeueReusableCell(for: indexPath)
+            let cell: StellarContactCell = tableView.dequeueReusableCell(for: indexPath)
             cell.indexPath = indexPath
             cell.delegate = cellDelegate
             cell.nameLabel.text = filteredStellarContacts[indexPath.row].name
@@ -135,32 +140,5 @@ extension ContactsDataSource: UITableViewDataSource {
             filteredStellarContacts = stellarContacts
             filteredAddressBookContacts = addressBookContacts
         }
-    }
-}
-
-extension ContactsViewController: ContactCellDelegate {
-    func didSelectAddToAddressBook(indexPath: IndexPath) {
-        guard let item = dataSource?.filteredAddressBookContacts[indexPath.row] else { return }
-        delegate?.selectedAddToAddressBook(identifier: item.identifier, name: item.name, address: item.address)
-    }
-}
-
-extension ContactsViewController: ContactCellStellarDelegate {
-    func didSendPayment(indexPath: IndexPath) {
-        guard let account = self.account,
-            let item = dataSource?.filteredStellarContacts[indexPath.row],
-            let receiver = StellarAddress.from(contactAddress: item.address) else {
-                return
-        }
-
-        let exchange: Exchange? = AddressResolver.resolve(address: receiver)
-        let selectAssetViewController = SelectAssetViewController(stellarAccount: account,
-                                                                  receiver: receiver,
-                                                                  exchangeName: exchange?.name)
-
-        let navigationController = AppNavigationController(rootViewController: selectAssetViewController)
-        navigationController.navigationBar.prefersLargeTitles = true
-
-        present(navigationController, animated: true, completion: nil)
     }
 }

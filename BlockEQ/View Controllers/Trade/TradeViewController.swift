@@ -274,7 +274,7 @@ class TradeViewController: UIViewController {
 }
 
 extension TradeViewController: AccountUpdatable {
-    func update(account: StellarAccount) {
+    func updated(account: StellarAccount) {
         self.stellarAccount = account
 
         if let fromAsset = fromAsset {

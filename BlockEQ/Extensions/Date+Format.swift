@@ -15,7 +15,14 @@ extension Date {
             dateFormatter.dateFormat = "MMM dd, yyyy"
            return dateFormatter
         }()
+
+        static let longDateFormatter = { () -> DateFormatter in
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
+            return dateFormatter
+        }()
     }
 
     var dateString: String { return Formatters.dateFormatter.string(from: self) }
+    var longDateString: String { return Formatters.longDateFormatter.string(from: self) }
 }

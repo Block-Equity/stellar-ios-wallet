@@ -148,7 +148,7 @@ final class WalletSwitchingViewController: UIViewController {
 }
 
 extension WalletSwitchingViewController: AccountUpdatable {
-    func update(account: StellarAccount) {
+    func updated(account: StellarAccount) {
         rebuildDataSource(using: account)
         tableView?.reloadData()
 

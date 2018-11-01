@@ -22,7 +22,7 @@ protocol Subservice {
 
 protocol StellarAccountServiceProtocol: AnyObject, Subservice {
     var core: CoreService { get }
-    var delegate: StellarAccountServiceDelegate? { get set }
+    var subscribers: MulticastDelegate<StellarAccountServiceDelegate> { get set }
     var state: StellarAccountService.AccountState { get }
     var secretManager: SecretManager? { get set }
     var account: StellarAccount? { get set }
@@ -31,6 +31,15 @@ protocol StellarAccountServiceProtocol: AnyObject, Subservice {
 protocol StellarTradeServiceProtocol: AnyObject, Subservice {
     var core: CoreService { get }
     var tradeQueue: OperationQueue { get }
+}
+
+protocol StellarIndexingServiceProtocol: Subservice {
+    func updateIndex()
+    func rebuildIndex()
+    func reset()
+    func pause()
+    func resume()
+    func relatedObject<In: IndexableStellarObject, Out: IndexableStellarObject>(startingAt object: In) -> Out?
 }
 
 protocol SecretManagerProtocol: AnyObject {
@@ -42,6 +51,10 @@ protocol SecretManagerProtocol: AnyObject {
     var privateKey: Data? { get }
     var secretSeed: String? { get }
     var mnemonic: String? { get }
+}
+
+public protocol AccountUpdatable: AnyObject {
+    func updated(account: StellarAccount)
 }
 
 // MARK: -
@@ -86,4 +99,10 @@ public protocol P2PResponseDelegate: AnyObject {
     func addFailed(error: Error)
     func removeFailed(error: Error)
     func createFailed(error: Error)
+}
+
+// MARK: -
+public protocol StellarIndexingServiceDelegate: AnyObject {
+    func finishedIndexing(_ service: StellarIndexingService)
+    func updatedProgress(_ service: StellarIndexingService, progress: Progress)
 }

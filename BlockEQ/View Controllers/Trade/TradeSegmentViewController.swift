@@ -113,7 +113,9 @@ final class TradeSegmentViewController: UIViewController {
     func hideNoAssetOverlayView() {
         noAssetView.isHidden = true
     }
+}
 
+extension TradeSegmentViewController: AccountUpdatable {
     func updated(account: StellarAccount) {
         displayNoAssetOverlay = account.assets.count <= 1 ? true : false
 

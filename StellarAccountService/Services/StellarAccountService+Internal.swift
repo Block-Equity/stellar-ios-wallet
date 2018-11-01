@@ -14,7 +14,6 @@ extension StellarAccountService {
 
         let stubAccount = StellarAccount(accountId: address.string)
         self.account = stubAccount
-        stubAccount.service = self
 
         let secretManager = SecretManager(for: address.string)
         self.secretManager = secretManager
@@ -25,7 +24,6 @@ extension StellarAccountService {
     internal func startup(keyPair: KeyPair) {
         let stubAccount = StellarAccount(accountId: keyPair.accountId)
         self.account = stubAccount
-        stubAccount.service = self
 
         let secretManager = SecretManager(for: stubAccount.accountId)
         secretManager.store(keyPair: keyPair)
@@ -50,14 +48,14 @@ extension StellarAccountService {
         let streamItem = core.sdk.payments.stream(for: accountStream)
         self.paymentStreamItem = streamItem
 
-        streamItem.onReceive { response -> Void in
+        streamItem.onReceive { [unowned self] response -> Void in
             switch response {
             case .open: break
             case .response(_, let operationResponse):
                 if operationResponse is PaymentOperationResponse {
                     let operation = StellarOperation(operationResponse)
                     DispatchQueue.main.async {
-                        self.delegate?.paymentUpdate(self, operation: operation)
+                        self.subscribers.invoke(invocation: { $0.paymentUpdate(self, operation: operation) })
                     }
                 }
             case .error(let error):

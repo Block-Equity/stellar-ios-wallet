@@ -9,7 +9,9 @@
 import stellarsdk
 
 public protocol StellarAccountServiceDelegate: AnyObject {
-    func accountUpdated(_ service: StellarAccountService, account: StellarAccount, opts: StellarAccount.UpdateOptions)
+    func accountUpdated(_ service: StellarAccountService,
+                        account: StellarAccount,
+                        opts: StellarAccountService.UpdateOptions)
     func accountInactive(_ service: StellarAccountService, account: StellarAccount)
     func paymentUpdate(_ service: StellarAccountService, operation: StellarOperation)
 }
@@ -42,7 +44,6 @@ public final class StellarAccountService: StellarAccountServiceProtocol {
 
     let core: CoreService
 
-    public weak var delegate: StellarAccountServiceDelegate?
     public internal(set) var account: StellarAccount?
 
     var state: AccountState = .inactive
@@ -50,9 +51,25 @@ public final class StellarAccountService: StellarAccountServiceProtocol {
     var paymentStreamItem: OperationsStreamItem?
     var lastFetch: TimeInterval?
     var timer: Timer?
+    var subscribers: MulticastDelegate<StellarAccountServiceDelegate>
+
+    lazy var accountQueue: OperationQueue = {
+        let operationQueue = OperationQueue()
+        operationQueue.qualityOfService = .userInitiated
+        return operationQueue
+    }()
 
     internal init(with core: CoreService) {
         self.core = core
+        self.subscribers = MulticastDelegate<StellarAccountServiceDelegate>()
+    }
+
+    public func registerForUpdates<T: StellarAccountServiceDelegate>(_ object: T) {
+        subscribers.add(delegate: object)
+    }
+
+    public func unregisterForUpdates<T: StellarAccountServiceDelegate>(_ object: T) {
+        subscribers.remove(delegate: object)
     }
 
     deinit {
@@ -123,18 +140,20 @@ extension StellarAccountService {
             return
         }
 
+        guard let account = self.account else { return }
+
         // Trigger an account update notifying the delegate on the main thread
-        account?.update(using: core.sdk, completion: { account, options in
+        self.update(account: account, using: core.sdk) { account, options in
             DispatchQueue.main.async {
                 self.lastFetch = Date().timeIntervalSinceReferenceDate
 
                 if options.contains(.inactive) {
-                    self.delegate?.accountInactive(self, account: account)
+                    self.subscribers.invoke(invocation: { $0.accountInactive(self, account: account) })
                 } else {
-                    self.delegate?.accountUpdated(self, account: account, opts: options)
+                    self.subscribers.invoke(invocation: { $0.accountUpdated(self, account: account, opts: options) })
                 }
             }
-        })
+        }
     }
 
     public func startPeriodicUpdates() {
