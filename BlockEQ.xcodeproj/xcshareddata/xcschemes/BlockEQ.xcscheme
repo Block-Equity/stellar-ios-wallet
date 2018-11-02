@@ -51,10 +51,18 @@
             BlueprintName = "BlockEQ"
             ReferencedContainer = "container:BlockEQ.xcodeproj">
          </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "C5F1C9CE217A7B60001C847A"
+            BuildableName = "StellarAccountService.framework"
+            BlueprintName = "StellarAccountService"
+            ReferencedContainer = "container:StellarAccountService.xcodeproj">
+         </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
          <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EC2015B82052D968009A73C8"
@@ -64,13 +72,24 @@
             </BuildableReference>
          </TestableReference>
          <TestableReference
-            skipped = "NO">
+            skipped = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EC2015C32052D968009A73C8"
                BuildableName = "BlockEQUITests.xctest"
                BlueprintName = "BlockEQUITests"
                ReferencedContainer = "container:BlockEQ.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C5F1C9D7217A7B60001C847A"
+               BuildableName = "StellarAccountServiceTests.xctest"
+               BlueprintName = "StellarAccountServiceTests"
+               ReferencedContainer = "container:StellarAccountService.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

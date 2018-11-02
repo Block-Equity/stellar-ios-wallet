@@ -100,7 +100,7 @@ extension StellarTradeService {
 extension StellarTradeService {
     public func updateOrders(for pair: StellarAssetPair, delegate: OfferResponseDelegate) {
         let completion: FetchOrderBookOperation.SuccessCompletion = { response in
-            let orders = StellarOrderbook(response: response)
+            let orders = StellarOrderbook(response)
 
             DispatchQueue.main.async {
                 delegate.updated(orders: orders)

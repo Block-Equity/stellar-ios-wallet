@@ -22,13 +22,6 @@ public struct StellarOrderbookOffer {
         return Decimal(0)
     }
 
-    public init(response: OrderbookOfferResponse) {
-        self.price = response.price
-        self.amount = response.amount
-        self.numerator = response.priceR.numerator
-        self.denominator = response.priceR.denominator
-    }
-
     internal init(_ response: OrderbookOfferResponse) {
         self.price = response.price
         self.amount = response.amount

@@ -59,9 +59,9 @@ public struct StellarAsset {
         if let issuer = self.assetIssuer {
             let issuerKeyPair = try? KeyPair(accountId: issuer)
             return Asset(type: type, code: self.assetCode, issuer: issuerKeyPair)!
-        } else {
-            return Asset(type: type, code: self.assetCode, issuer: nil)!
         }
+
+        return Asset(type: type, code: self.assetCode, issuer: nil)!
     }
 
     public var shortCode: String {
@@ -85,7 +85,7 @@ public struct StellarAsset {
     }
 
     public var hasZeroBalance: Bool {
-        if let balance = Double(balance) {
+        if let balance = Decimal(string: balance) {
             return balance.isZero
         }
 

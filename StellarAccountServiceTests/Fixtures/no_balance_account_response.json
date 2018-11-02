@@ -1,0 +1,61 @@
+{
+    "_links": {
+        "self": {
+            "href": "https://horizon.stellar.org/accounts/GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ"
+        },
+        "transactions": {
+            "href": "https://horizon.stellar.org/accounts/GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ/transactions{?cursor,limit,order}",
+            "templated": true
+        },
+        "operations": {
+            "href": "https://horizon.stellar.org/accounts/GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ/operations{?cursor,limit,order}",
+            "templated": true
+        },
+        "payments": {
+            "href": "https://horizon.stellar.org/accounts/GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ/payments{?cursor,limit,order}",
+            "templated": true
+        },
+        "effects": {
+            "href": "https://horizon.stellar.org/accounts/GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ/effects{?cursor,limit,order}",
+            "templated": true
+        },
+        "offers": {
+            "href": "https://horizon.stellar.org/accounts/GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ/offers{?cursor,limit,order}",
+            "templated": true
+        },
+        "trades": {
+            "href": "https://horizon.stellar.org/accounts/GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ/trades{?cursor,limit,order}",
+            "templated": true
+        },
+        "data": {
+            "href": "https://horizon.stellar.org/accounts/GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ/data/{key}",
+            "templated": true
+        }
+    },
+    "id": "GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ",
+    "paging_token": "",
+    "account_id": "GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ",
+    "sequence": "75053501230612599",
+    "subentry_count": 3,
+    "inflation_destination": "GCCD6AJOYZCUAQLX32ZJF2MKFFAUJ53PVCFQI3RHWKL3V47QYE2BNAUT",
+    "thresholds": {
+        "low_threshold": 0,
+        "med_threshold": 0,
+        "high_threshold": 0
+    },
+    "flags": {
+        "auth_required": false,
+        "auth_revocable": false
+    },
+    "balances": [
+    ],
+    "signers": [
+        {
+            "public_key": "GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ",
+            "weight": 1,
+            "key": "GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ",
+            "type": "ed25519_public_key"
+        }
+    ],
+    "data": {}
+}

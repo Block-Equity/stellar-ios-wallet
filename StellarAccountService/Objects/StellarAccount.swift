@@ -78,7 +78,7 @@ public final class StellarAccount {
         return Array(mappedOffers.values)
     }
 
-    public init(response: AccountResponse) {
+    public init(_ response: AccountResponse) {
         self.accountId = response.accountId
         self.inflationDestination = response.inflationDestination
         self.totalTrustlines = response.balances.count - 1
@@ -99,7 +99,7 @@ public final class StellarAccount {
     }
 
     internal func update(withRaw response: AccountResponse) {
-        let account = StellarAccount(response: response)
+        let account = StellarAccount(response)
         self.rawResponse = response
         self.accountId = account.accountId
         self.inflationDestination = account.inflationDestination

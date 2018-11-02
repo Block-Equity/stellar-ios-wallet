@@ -22,13 +22,7 @@ public struct StellarOrderbook {
     public let asks: [StellarOrderbookOffer]
     public let pair: StellarAssetPair
 
-    public init(pair: StellarAssetPair, bids: [StellarOrderbookOffer], asks: [StellarOrderbookOffer]) {
-        self.bids = bids
-        self.asks = asks
-        self.pair = pair
-    }
-
-    public init(response: OrderbookResponse) {
+    public init(_ response: OrderbookResponse) {
         self.pair = StellarAssetPair(buying: StellarAsset(response.buying),
                                      selling: StellarAsset(response.selling))
 
@@ -38,9 +32,9 @@ public struct StellarOrderbook {
 }
 
 extension StellarOrderbook {
-    public var bestPrice: Double? {
+    public var bestPrice: Decimal? {
         guard bids.count > 0 else { return nil }
-        return Double(bids[0].price)
+        return Decimal(string: bids[0].price)
     }
 }
 

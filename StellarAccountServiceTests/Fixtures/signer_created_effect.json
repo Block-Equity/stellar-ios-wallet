@@ -1,0 +1,21 @@
+{
+    "_links": {
+        "operation": {
+            "href": "https://horizon.stellar.org/operations/75053501230637057"
+        },
+        "succeeds": {
+            "href": "https://horizon.stellar.org/effects?order=desc&cursor=75053501230637057-3"
+        },
+        "precedes": {
+            "href": "https://horizon.stellar.org/effects?order=asc&cursor=75053501230637057-3"
+        }
+    },
+    "id": "0075053501230637057-0000000003",
+    "paging_token": "75053501230637057-3",
+    "account": "GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ",
+    "type": "signer_created",
+    "type_i": 10,
+    "created_at": "2018-04-21T20:29:49Z",
+    "weight": 1,
+    "public_key": "GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ"
+    }

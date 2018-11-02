@@ -34,19 +34,7 @@ final class FetchTransactionsOperation: AsyncOperation {
             switch resp {
             case .success(let response):
                 let transactions = response.records
-
-                let stellarTransactions: [StellarTransaction] = transactions.map { item in
-                    return StellarTransaction(account: item.sourceAccount,
-                                              txId: item.id,
-                                              ledger: item.ledger,
-                                              createdAt: item.createdAt,
-                                              feePaid: item.feePaid,
-                                              memo: item.memo,
-                                              memoType: item.memoType,
-                                              operationCount: item.operationCount,
-                                              sequence: item.sourceAccountSequence,
-                                              signatures: item.signatures)
-                }
+                let stellarTransactions: [StellarTransaction] = transactions.map { StellarTransaction($0) }
                 self.result = Result.success(stellarTransactions)
             case .failure(let error):
                 self.result = Result.failure(error)

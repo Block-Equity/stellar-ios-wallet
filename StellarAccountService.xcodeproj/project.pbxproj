@@ -26,6 +26,23 @@
 		C5144216217EDC71006C44F4 /* ChangeP2PTrustOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5144215217EDC71006C44F4 /* ChangeP2PTrustOperation.swift */; };
 		C58898B5218766CB0057D787 /* StellarTradeOfferData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58898B4218766CB0057D787 /* StellarTradeOfferData.swift */; };
 		C58898B7218795B90057D787 /* StellarP2PService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58898B6218795B90057D787 /* StellarP2PService.swift */; };
+		C593DFD6218BFEDD00FA01DD /* StellarOrderbookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593DFD5218BFEDD00FA01DD /* StellarOrderbookTests.swift */; };
+		C593DFD8218BFF6000FA01DD /* orderbook_response.json in Resources */ = {isa = PBXBuildFile; fileRef = C593DFD7218BFF6000FA01DD /* orderbook_response.json */; };
+		C593DFDA218C02D800FA01DD /* empty_orderbook_response.json in Resources */ = {isa = PBXBuildFile; fileRef = C593DFD9218C02D800FA01DD /* empty_orderbook_response.json */; };
+		C593DFDC218C03D000FA01DD /* StellarOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593DFDB218C03D000FA01DD /* StellarOperationTests.swift */; };
+		C593DFDE218C042B00FA01DD /* operation_response.json in Resources */ = {isa = PBXBuildFile; fileRef = C593DFDD218C042B00FA01DD /* operation_response.json */; };
+		C593DFE0218C04D500FA01DD /* StellarTradeOfferDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593DFDF218C04D500FA01DD /* StellarTradeOfferDataTests.swift */; };
+		C593DFE2218C065400FA01DD /* StellarOfferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593DFE1218C065400FA01DD /* StellarOfferTests.swift */; };
+		C593DFE4218C06DB00FA01DD /* orderbook_offer_response.json in Resources */ = {isa = PBXBuildFile; fileRef = C593DFE3218C06DB00FA01DD /* orderbook_offer_response.json */; };
+		C593DFE6218C099E00FA01DD /* bad_orderbook_offer_response.json in Resources */ = {isa = PBXBuildFile; fileRef = C593DFE5218C099E00FA01DD /* bad_orderbook_offer_response.json */; };
+		C593DFE8218C0A1A00FA01DD /* account_offer_response.json in Resources */ = {isa = PBXBuildFile; fileRef = C593DFE7218C0A1A00FA01DD /* account_offer_response.json */; };
+		C593DFEA218C0AD800FA01DD /* missing_seller_offer_response.json in Resources */ = {isa = PBXBuildFile; fileRef = C593DFE9218C0AD800FA01DD /* missing_seller_offer_response.json */; };
+		C593DFEC218C0AF200FA01DD /* bad_amount_offer_response.json in Resources */ = {isa = PBXBuildFile; fileRef = C593DFEB218C0AF200FA01DD /* bad_amount_offer_response.json */; };
+		C593DFEE218C0DF000FA01DD /* bad_price_offer_response.json in Resources */ = {isa = PBXBuildFile; fileRef = C593DFED218C0DF000FA01DD /* bad_price_offer_response.json */; };
+		C593DFF0218C0E5A00FA01DD /* StellarAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593DFEF218C0E5A00FA01DD /* StellarAccountTests.swift */; };
+		C593DFF2218C0F2C00FA01DD /* StellarAccountOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593DFF1218C0F2C00FA01DD /* StellarAccountOperationTests.swift */; };
+		C593DFF4218C10C100FA01DD /* account_response.json in Resources */ = {isa = PBXBuildFile; fileRef = C593DFF3218C10C100FA01DD /* account_response.json */; };
+		C593DFF6218C12DB00FA01DD /* no_balance_account_response.json in Resources */ = {isa = PBXBuildFile; fileRef = C593DFF5218C12DB00FA01DD /* no_balance_account_response.json */; };
 		C5D8CAC9218111CC009F8624 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8CAC8218111CC009F8624 /* Protocols.swift */; };
 		C5D8CACB218112CC009F8624 /* StellarAccount+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8CACA218112CC009F8624 /* StellarAccount+Operations.swift */; };
 		C5D8CACD21812245009F8624 /* StellarPaymentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8CACC21812245009F8624 /* StellarPaymentData.swift */; };
@@ -34,9 +51,8 @@
 		C5D8CAD521824C9B009F8624 /* StellarOrderbook.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8CAD421824C9B009F8624 /* StellarOrderbook.swift */; };
 		C5D8CAD721824CC4009F8624 /* StellarOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8CAD621824CC4009F8624 /* StellarOffer.swift */; };
 		C5D8CAD9218264BC009F8624 /* StellarAssetPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8CAD8218264BC009F8624 /* StellarAssetPair.swift */; };
-		C5ECF41F2183BADE004BB240 /* MasterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ECF41E2183BADE004BB240 /* MasterService.swift */; };
+		C5ECF41F2183BADE004BB240 /* StellarCoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ECF41E2183BADE004BB240 /* StellarCoreService.swift */; };
 		C5F1C9D9217A7B61001C847A /* StellarAccountService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F1C9CF217A7B60001C847A /* StellarAccountService.framework */; };
-		C5F1C9DE217A7B61001C847A /* StellarAccountServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1C9DD217A7B61001C847A /* StellarAccountServiceTests.swift */; };
 		C5F1C9E0217A7B61001C847A /* StellarAccountService.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F1C9D2217A7B60001C847A /* StellarAccountService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5F1C9EB217A7BB4001C847A /* StellarAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1C9EA217A7BB4001C847A /* StellarAsset.swift */; };
 		C5F1C9ED217A7BC0001C847A /* StellarAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1C9EC217A7BC0001C847A /* StellarAccount.swift */; };
@@ -54,6 +70,25 @@
 		C5F1CA08217A9C61001C847A /* CreatePersonalTokenOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1CA07217A9C61001C847A /* CreatePersonalTokenOperation.swift */; };
 		C5F1CA0A217A9C86001C847A /* FetchPersonalTokenOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1CA09217A9C86001C847A /* FetchPersonalTokenOperation.swift */; };
 		C5F1CA0C217A9F1E001C847A /* SecretManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1CA0B217A9F1E001C847A /* SecretManager.swift */; };
+		C5FE757A218BC7EE0090E372 /* StellarAddressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE7579218BC7EE0090E372 /* StellarAddressTests.swift */; };
+		C5FE757C218BC87D0090E372 /* TestHelperData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE757B218BC87D0090E372 /* TestHelperData.swift */; };
+		C5FE757F218BCBE70090E372 /* StellarSeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE757E218BCBE70090E372 /* StellarSeedTests.swift */; };
+		C5FE7581218BCE280090E372 /* StellarAssetPairTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE7580218BCE280090E372 /* StellarAssetPairTests.swift */; };
+		C5FE7583218BCE920090E372 /* StellarRecoveryMnemonicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE7582218BCE920090E372 /* StellarRecoveryMnemonicTests.swift */; };
+		C5FE7585218BD1B10090E372 /* StellarEffectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE7584218BD1B10090E372 /* StellarEffectTests.swift */; };
+		C5FE7588218BD58B0090E372 /* account_created_effect.json in Resources */ = {isa = PBXBuildFile; fileRef = C5FE7587218BD58B0090E372 /* account_created_effect.json */; };
+		C5FE758A218BD5B30090E372 /* JSONLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE7589218BD5B30090E372 /* JSONLoader.swift */; };
+		C5FE758F218BDC1A0090E372 /* account_credited_effect.json in Resources */ = {isa = PBXBuildFile; fileRef = C5FE758E218BDC1A0090E372 /* account_credited_effect.json */; };
+		C5FE7591218BDC420090E372 /* inflation_updated_effect.json in Resources */ = {isa = PBXBuildFile; fileRef = C5FE7590218BDC420090E372 /* inflation_updated_effect.json */; };
+		C5FE7595218BDEC00090E372 /* trade_effect.json in Resources */ = {isa = PBXBuildFile; fileRef = C5FE7594218BDEC00090E372 /* trade_effect.json */; };
+		C5FE7597218BE4990090E372 /* account_debited_effect.json in Resources */ = {isa = PBXBuildFile; fileRef = C5FE7596218BE4990090E372 /* account_debited_effect.json */; };
+		C5FE7599218BE71F0090E372 /* signer_created_effect.json in Resources */ = {isa = PBXBuildFile; fileRef = C5FE7598218BE71F0090E372 /* signer_created_effect.json */; };
+		C5FE759B218BE7BA0090E372 /* StellarPaymentDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE759A218BE7BA0090E372 /* StellarPaymentDataTests.swift */; };
+		C5FE759D218BF06A0090E372 /* StellarAssetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE759C218BF06A0090E372 /* StellarAssetTests.swift */; };
+		C5FE75A1218BF29E0090E372 /* account_balance_response.json in Resources */ = {isa = PBXBuildFile; fileRef = C5FE75A0218BF29E0090E372 /* account_balance_response.json */; };
+		C5FE75A3218BF4BF0090E372 /* offer_asset_response.json in Resources */ = {isa = PBXBuildFile; fileRef = C5FE75A2218BF4BF0090E372 /* offer_asset_response.json */; };
+		C5FE75A5218BFB090090E372 /* StellarTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE75A4218BFB090090E372 /* StellarTransactionTests.swift */; };
+		C5FE75A7218BFCE30090E372 /* transaction_response.json in Resources */ = {isa = PBXBuildFile; fileRef = C5FE75A6218BFCE30090E372 /* transaction_response.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +122,23 @@
 		C5144215217EDC71006C44F4 /* ChangeP2PTrustOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeP2PTrustOperation.swift; sourceTree = "<group>"; };
 		C58898B4218766CB0057D787 /* StellarTradeOfferData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarTradeOfferData.swift; sourceTree = "<group>"; };
 		C58898B6218795B90057D787 /* StellarP2PService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarP2PService.swift; sourceTree = "<group>"; };
+		C593DFD5218BFEDD00FA01DD /* StellarOrderbookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarOrderbookTests.swift; sourceTree = "<group>"; };
+		C593DFD7218BFF6000FA01DD /* orderbook_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = orderbook_response.json; sourceTree = "<group>"; };
+		C593DFD9218C02D800FA01DD /* empty_orderbook_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = empty_orderbook_response.json; sourceTree = "<group>"; };
+		C593DFDB218C03D000FA01DD /* StellarOperationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarOperationTests.swift; sourceTree = "<group>"; };
+		C593DFDD218C042B00FA01DD /* operation_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = operation_response.json; sourceTree = "<group>"; };
+		C593DFDF218C04D500FA01DD /* StellarTradeOfferDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarTradeOfferDataTests.swift; sourceTree = "<group>"; };
+		C593DFE1218C065400FA01DD /* StellarOfferTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarOfferTests.swift; sourceTree = "<group>"; };
+		C593DFE3218C06DB00FA01DD /* orderbook_offer_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = orderbook_offer_response.json; sourceTree = "<group>"; };
+		C593DFE5218C099E00FA01DD /* bad_orderbook_offer_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = bad_orderbook_offer_response.json; sourceTree = "<group>"; };
+		C593DFE7218C0A1A00FA01DD /* account_offer_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = account_offer_response.json; sourceTree = "<group>"; };
+		C593DFE9218C0AD800FA01DD /* missing_seller_offer_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = missing_seller_offer_response.json; sourceTree = "<group>"; };
+		C593DFEB218C0AF200FA01DD /* bad_amount_offer_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = bad_amount_offer_response.json; sourceTree = "<group>"; };
+		C593DFED218C0DF000FA01DD /* bad_price_offer_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = bad_price_offer_response.json; sourceTree = "<group>"; };
+		C593DFEF218C0E5A00FA01DD /* StellarAccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarAccountTests.swift; sourceTree = "<group>"; };
+		C593DFF1218C0F2C00FA01DD /* StellarAccountOperationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarAccountOperationTests.swift; sourceTree = "<group>"; };
+		C593DFF3218C10C100FA01DD /* account_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = account_response.json; sourceTree = "<group>"; };
+		C593DFF5218C12DB00FA01DD /* no_balance_account_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = no_balance_account_response.json; sourceTree = "<group>"; };
 		C5D8CAC8218111CC009F8624 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		C5D8CACA218112CC009F8624 /* StellarAccount+Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarAccount+Operations.swift"; sourceTree = "<group>"; };
 		C5D8CACC21812245009F8624 /* StellarPaymentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarPaymentData.swift; sourceTree = "<group>"; };
@@ -95,12 +147,11 @@
 		C5D8CAD421824C9B009F8624 /* StellarOrderbook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarOrderbook.swift; sourceTree = "<group>"; };
 		C5D8CAD621824CC4009F8624 /* StellarOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarOffer.swift; sourceTree = "<group>"; };
 		C5D8CAD8218264BC009F8624 /* StellarAssetPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarAssetPair.swift; sourceTree = "<group>"; };
-		C5ECF41E2183BADE004BB240 /* MasterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterService.swift; sourceTree = "<group>"; };
+		C5ECF41E2183BADE004BB240 /* StellarCoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarCoreService.swift; sourceTree = "<group>"; };
 		C5F1C9CF217A7B60001C847A /* StellarAccountService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StellarAccountService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5F1C9D2217A7B60001C847A /* StellarAccountService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StellarAccountService.h; sourceTree = "<group>"; };
 		C5F1C9D3217A7B60001C847A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5F1C9D8217A7B61001C847A /* StellarAccountServiceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StellarAccountServiceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5F1C9DD217A7B61001C847A /* StellarAccountServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarAccountServiceTests.swift; sourceTree = "<group>"; };
 		C5F1C9DF217A7B61001C847A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5F1C9EA217A7BB4001C847A /* StellarAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarAsset.swift; sourceTree = "<group>"; };
 		C5F1C9EC217A7BC0001C847A /* StellarAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarAccount.swift; sourceTree = "<group>"; };
@@ -118,6 +169,25 @@
 		C5F1CA07217A9C61001C847A /* CreatePersonalTokenOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePersonalTokenOperation.swift; sourceTree = "<group>"; };
 		C5F1CA09217A9C86001C847A /* FetchPersonalTokenOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPersonalTokenOperation.swift; sourceTree = "<group>"; };
 		C5F1CA0B217A9F1E001C847A /* SecretManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretManager.swift; sourceTree = "<group>"; };
+		C5FE7579218BC7EE0090E372 /* StellarAddressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarAddressTests.swift; sourceTree = "<group>"; };
+		C5FE757B218BC87D0090E372 /* TestHelperData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelperData.swift; sourceTree = "<group>"; };
+		C5FE757E218BCBE70090E372 /* StellarSeedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarSeedTests.swift; sourceTree = "<group>"; };
+		C5FE7580218BCE280090E372 /* StellarAssetPairTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarAssetPairTests.swift; sourceTree = "<group>"; };
+		C5FE7582218BCE920090E372 /* StellarRecoveryMnemonicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarRecoveryMnemonicTests.swift; sourceTree = "<group>"; };
+		C5FE7584218BD1B10090E372 /* StellarEffectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarEffectTests.swift; sourceTree = "<group>"; };
+		C5FE7587218BD58B0090E372 /* account_created_effect.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = account_created_effect.json; sourceTree = "<group>"; };
+		C5FE7589218BD5B30090E372 /* JSONLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONLoader.swift; sourceTree = "<group>"; };
+		C5FE758E218BDC1A0090E372 /* account_credited_effect.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = account_credited_effect.json; sourceTree = "<group>"; };
+		C5FE7590218BDC420090E372 /* inflation_updated_effect.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = inflation_updated_effect.json; sourceTree = "<group>"; };
+		C5FE7594218BDEC00090E372 /* trade_effect.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = trade_effect.json; sourceTree = "<group>"; };
+		C5FE7596218BE4990090E372 /* account_debited_effect.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = account_debited_effect.json; sourceTree = "<group>"; };
+		C5FE7598218BE71F0090E372 /* signer_created_effect.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = signer_created_effect.json; sourceTree = "<group>"; };
+		C5FE759A218BE7BA0090E372 /* StellarPaymentDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarPaymentDataTests.swift; sourceTree = "<group>"; };
+		C5FE759C218BF06A0090E372 /* StellarAssetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarAssetTests.swift; sourceTree = "<group>"; };
+		C5FE75A0218BF29E0090E372 /* account_balance_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = account_balance_response.json; sourceTree = "<group>"; };
+		C5FE75A2218BF4BF0090E372 /* offer_asset_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = offer_asset_response.json; sourceTree = "<group>"; };
+		C5FE75A4218BFB090090E372 /* StellarTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarTransactionTests.swift; sourceTree = "<group>"; };
+		C5FE75A6218BFCE30090E372 /* transaction_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = transaction_response.json; sourceTree = "<group>"; };
 		D0E72A40562857259B5ACB70 /* Pods-StellarAccountService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StellarAccountService.release.xcconfig"; path = "Pods/Target Support Files/Pods-StellarAccountService/Pods-StellarAccountService.release.xcconfig"; sourceTree = "<group>"; };
 		D44B9A475AC354EA7E9A4C34 /* Pods-StellarAccountService-StellarAccountServiceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StellarAccountService-StellarAccountServiceTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-StellarAccountService-StellarAccountServiceTests/Pods-StellarAccountService-StellarAccountServiceTests.release.xcconfig"; sourceTree = "<group>"; };
 		FF2E4A8BCB9710A81DD9FFC2 /* Pods_StellarAccountService_StellarAccountServiceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StellarAccountService_StellarAccountServiceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -208,7 +278,7 @@
 				C51441F2217E2E03006C44F4 /* StellarAccountService+Internal.swift */,
 				C5D8CAD2218242A4009F8624 /* StellarTradeService.swift */,
 				C58898B6218795B90057D787 /* StellarP2PService.swift */,
-				C5ECF41E2183BADE004BB240 /* MasterService.swift */,
+				C5ECF41E2183BADE004BB240 /* StellarCoreService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -259,7 +329,9 @@
 		C5F1C9DC217A7B61001C847A /* StellarAccountServiceTests */ = {
 			isa = PBXGroup;
 			children = (
-				C5F1C9DD217A7B61001C847A /* StellarAccountServiceTests.swift */,
+				C5FE757D218BCBD10090E372 /* Objects */,
+				C5FE758B218BD70B0090E372 /* Utilities */,
+				C5FE7586218BD56D0090E372 /* Fixtures */,
 				C5F1C9DF217A7B61001C847A /* Info.plist */,
 			);
 			path = StellarAccountServiceTests;
@@ -269,6 +341,7 @@
 			isa = PBXGroup;
 			children = (
 				C5F1C9EC217A7BC0001C847A /* StellarAccount.swift */,
+				C5D8CACA218112CC009F8624 /* StellarAccount+Operations.swift */,
 				C5F1C9EA217A7BB4001C847A /* StellarAsset.swift */,
 				C5F1C9F2217A7BEC001C847A /* StellarTransaction.swift */,
 				C5F1C9F4217A7BF3001C847A /* StellarOperation.swift */,
@@ -277,7 +350,6 @@
 				C5F1C9EE217A7BCE001C847A /* StellarAddress.swift */,
 				C5F1C9F0217A7BE1001C847A /* StellarRecoveryMnemonic.swift */,
 				C5F1C9F6217A7C07001C847A /* StellarSeed.swift */,
-				C5D8CACA218112CC009F8624 /* StellarAccount+Operations.swift */,
 				C5D8CAD421824C9B009F8624 /* StellarOrderbook.swift */,
 				C5D8CAD621824CC4009F8624 /* StellarOffer.swift */,
 				C5D8CAD8218264BC009F8624 /* StellarAssetPair.swift */,
@@ -303,6 +375,63 @@
 				C5F1C9D3217A7B60001C847A /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		C5FE757D218BCBD10090E372 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				C593DFEF218C0E5A00FA01DD /* StellarAccountTests.swift */,
+				C593DFF1218C0F2C00FA01DD /* StellarAccountOperationTests.swift */,
+				C5FE759C218BF06A0090E372 /* StellarAssetTests.swift */,
+				C5FE75A4218BFB090090E372 /* StellarTransactionTests.swift */,
+				C593DFDB218C03D000FA01DD /* StellarOperationTests.swift */,
+				C5FE7584218BD1B10090E372 /* StellarEffectTests.swift */,
+				C5FE759A218BE7BA0090E372 /* StellarPaymentDataTests.swift */,
+				C5FE7579218BC7EE0090E372 /* StellarAddressTests.swift */,
+				C5FE7582218BCE920090E372 /* StellarRecoveryMnemonicTests.swift */,
+				C5FE757E218BCBE70090E372 /* StellarSeedTests.swift */,
+				C593DFD5218BFEDD00FA01DD /* StellarOrderbookTests.swift */,
+				C593DFE1218C065400FA01DD /* StellarOfferTests.swift */,
+				C5FE7580218BCE280090E372 /* StellarAssetPairTests.swift */,
+				C593DFDF218C04D500FA01DD /* StellarTradeOfferDataTests.swift */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		C5FE7586218BD56D0090E372 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				C5FE757B218BC87D0090E372 /* TestHelperData.swift */,
+				C5FE7598218BE71F0090E372 /* signer_created_effect.json */,
+				C5FE7587218BD58B0090E372 /* account_created_effect.json */,
+				C5FE7590218BDC420090E372 /* inflation_updated_effect.json */,
+				C5FE7596218BE4990090E372 /* account_debited_effect.json */,
+				C5FE758E218BDC1A0090E372 /* account_credited_effect.json */,
+				C5FE7594218BDEC00090E372 /* trade_effect.json */,
+				C5FE75A0218BF29E0090E372 /* account_balance_response.json */,
+				C5FE75A2218BF4BF0090E372 /* offer_asset_response.json */,
+				C5FE75A6218BFCE30090E372 /* transaction_response.json */,
+				C593DFD7218BFF6000FA01DD /* orderbook_response.json */,
+				C593DFD9218C02D800FA01DD /* empty_orderbook_response.json */,
+				C593DFDD218C042B00FA01DD /* operation_response.json */,
+				C593DFE3218C06DB00FA01DD /* orderbook_offer_response.json */,
+				C593DFE5218C099E00FA01DD /* bad_orderbook_offer_response.json */,
+				C593DFE7218C0A1A00FA01DD /* account_offer_response.json */,
+				C593DFE9218C0AD800FA01DD /* missing_seller_offer_response.json */,
+				C593DFEB218C0AF200FA01DD /* bad_amount_offer_response.json */,
+				C593DFED218C0DF000FA01DD /* bad_price_offer_response.json */,
+				C593DFF3218C10C100FA01DD /* account_response.json */,
+				C593DFF5218C12DB00FA01DD /* no_balance_account_response.json */,
+			);
+			path = Fixtures;
+			sourceTree = "<group>";
+		};
+		C5FE758B218BD70B0090E372 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				C5FE7589218BD5B30090E372 /* JSONLoader.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		CC419E44E668B412DD7D59A6 /* Pods */ = {
@@ -419,6 +548,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C593DFD8218BFF6000FA01DD /* orderbook_response.json in Resources */,
+				C5FE75A7218BFCE30090E372 /* transaction_response.json in Resources */,
+				C5FE75A3218BF4BF0090E372 /* offer_asset_response.json in Resources */,
+				C5FE7591218BDC420090E372 /* inflation_updated_effect.json in Resources */,
+				C593DFDA218C02D800FA01DD /* empty_orderbook_response.json in Resources */,
+				C5FE7599218BE71F0090E372 /* signer_created_effect.json in Resources */,
+				C5FE7597218BE4990090E372 /* account_debited_effect.json in Resources */,
+				C593DFE8218C0A1A00FA01DD /* account_offer_response.json in Resources */,
+				C593DFEC218C0AF200FA01DD /* bad_amount_offer_response.json in Resources */,
+				C5FE7595218BDEC00090E372 /* trade_effect.json in Resources */,
+				C5FE758F218BDC1A0090E372 /* account_credited_effect.json in Resources */,
+				C5FE7588218BD58B0090E372 /* account_created_effect.json in Resources */,
+				C593DFF4218C10C100FA01DD /* account_response.json in Resources */,
+				C593DFE4218C06DB00FA01DD /* orderbook_offer_response.json in Resources */,
+				C593DFEE218C0DF000FA01DD /* bad_price_offer_response.json in Resources */,
+				C593DFE6218C099E00FA01DD /* bad_orderbook_offer_response.json in Resources */,
+				C593DFF6218C12DB00FA01DD /* no_balance_account_response.json in Resources */,
+				C593DFEA218C0AD800FA01DD /* missing_seller_offer_response.json in Resources */,
+				C593DFDE218C042B00FA01DD /* operation_response.json in Resources */,
+				C5FE75A1218BF29E0090E372 /* account_balance_response.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -556,7 +705,7 @@
 				C51441EE217D7481006C44F4 /* StellarConfig.swift in Sources */,
 				C51441E5217AEE17006C44F4 /* FetchOffersOperation.swift in Sources */,
 				C5F1C9EF217A7BCE001C847A /* StellarAddress.swift in Sources */,
-				C5ECF41F2183BADE004BB240 /* MasterService.swift in Sources */,
+				C5ECF41F2183BADE004BB240 /* StellarCoreService.swift in Sources */,
 				C5F1C9ED217A7BC0001C847A /* StellarAccount.swift in Sources */,
 				C5144216217EDC71006C44F4 /* ChangeP2PTrustOperation.swift in Sources */,
 				C5F1CA0C217A9F1E001C847A /* SecretManager.swift in Sources */,
@@ -569,7 +718,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5F1C9DE217A7B61001C847A /* StellarAccountServiceTests.swift in Sources */,
+				C593DFE2218C065400FA01DD /* StellarOfferTests.swift in Sources */,
+				C593DFF2218C0F2C00FA01DD /* StellarAccountOperationTests.swift in Sources */,
+				C593DFF0218C0E5A00FA01DD /* StellarAccountTests.swift in Sources */,
+				C593DFD6218BFEDD00FA01DD /* StellarOrderbookTests.swift in Sources */,
+				C593DFE0218C04D500FA01DD /* StellarTradeOfferDataTests.swift in Sources */,
+				C5FE7585218BD1B10090E372 /* StellarEffectTests.swift in Sources */,
+				C5FE7581218BCE280090E372 /* StellarAssetPairTests.swift in Sources */,
+				C5FE759B218BE7BA0090E372 /* StellarPaymentDataTests.swift in Sources */,
+				C5FE757A218BC7EE0090E372 /* StellarAddressTests.swift in Sources */,
+				C593DFDC218C03D000FA01DD /* StellarOperationTests.swift in Sources */,
+				C5FE759D218BF06A0090E372 /* StellarAssetTests.swift in Sources */,
+				C5FE7583218BCE920090E372 /* StellarRecoveryMnemonicTests.swift in Sources */,
+				C5FE75A5218BFB090090E372 /* StellarTransactionTests.swift in Sources */,
+				C5FE757C218BC87D0090E372 /* TestHelperData.swift in Sources */,
+				C5FE757F218BCBE70090E372 /* StellarSeedTests.swift in Sources */,
+				C5FE758A218BD5B30090E372 /* JSONLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
