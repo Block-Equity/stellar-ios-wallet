@@ -22,7 +22,7 @@ class CryptoViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
     
-    var address: String = "LU6eDU72nL4oHSWrzSGKHjyM8EMqgTD6Xq"
+    var address: String = "Le23FrsrTzzUkH4RvbndFMj1sXF32JrXh5"
     
     @IBAction func copyAddress() {
         if let addressText = addressLabel.text, !addressText.isEmpty {
