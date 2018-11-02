@@ -73,7 +73,7 @@ class TradeViewController: UIViewController {
     var fromAsset: StellarAsset?
     var toAsset: StellarAsset?
     var currentTradeType: StellarTradeOfferData.TradeType = .market
-    var currentMarketPrice: Double = 0.0
+    var currentMarketPrice: Decimal = 0.0
 
     var assetPair: StellarAssetPair? {
         if let buyingAsset = self.toAsset, let sellingAsset = self.fromAsset {
@@ -289,7 +289,7 @@ class TradeViewController: UIViewController {
     }
 
     func setCalculatedMarketPrice(tradeFromText: String) {
-        guard let tradeFromValue = Double(tradeFromText) else {
+        guard let tradeFromValue = Decimal(string: tradeFromText) else {
             return
         }
 

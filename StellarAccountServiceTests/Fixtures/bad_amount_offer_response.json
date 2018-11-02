@@ -1,0 +1,29 @@
+{
+    "_links": {
+        "self": {
+            "href": "https://horizon.stellar.org/offers/42514469"
+        },
+        "offer_maker": {
+            "href": "https://horizon.stellar.org/accounts/GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ"
+        }
+    },
+    "id": 42514469,
+    "paging_token": "42514469",
+    "seller": "GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ",
+    "selling": {
+        "asset_type": "native"
+    },
+    "buying": {
+        "asset_type": "credit_alphanum4",
+        "asset_code": "CAD",
+        "asset_issuer": "GABK2IHWW7BCRPP3BL6WMOMDBPHCBJR2SLP5HAUBYKNZG5J5RJSROS5S"
+    },
+    "amount": "not convertable",
+    "price_r": {
+        "n": 3,
+        "d": 1
+    },
+    "price": "3.0000000",
+    "last_modified_ledger": 20779187,
+    "last_modified_time": null
+}

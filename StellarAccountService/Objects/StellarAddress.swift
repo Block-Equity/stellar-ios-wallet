@@ -15,6 +15,7 @@ public struct StellarAddress {
     }
 
     public let string: String
+
     public var kind: AddressType {
         return .normal
     }

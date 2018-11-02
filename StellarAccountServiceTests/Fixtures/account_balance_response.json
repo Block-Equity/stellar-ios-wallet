@@ -1,0 +1,9 @@
+{
+    "balance": "100.000000",
+    "buying_liabilities": "no",
+    "selling_liabilities": "no",
+    "limit": "1000000.000000",
+    "asset_type": "native",
+    "asset_code": null,
+    "asset_issuer": null,
+}

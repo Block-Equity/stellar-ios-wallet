@@ -33,12 +33,7 @@ final class FetchAccountOperationsOperation: AsyncOperation {
         horizon.operations.getOperations(forAccount: self.accountId) { operationResponse in
             switch operationResponse {
             case .success(let operationResponse):
-                let operations = operationResponse.records.map { operation in
-                    return StellarOperation(identifier: operation.id,
-                                            createdAt: operation.createdAt,
-                                            operationType: operation.operationType)
-                }
-
+                let operations = operationResponse.records.map { StellarOperation($0) }
                 self.result = Result.success(operations)
             case .failure(let error):
                 self.result = Result.failure(error)

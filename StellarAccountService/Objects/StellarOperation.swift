@@ -12,17 +12,10 @@ public struct StellarOperation {
     public let identifier: String
     public let createdAt: Date
     public let operationType: OperationType
-    public internal(set) var effects: [StellarEffect] = []
 
-    init(response: OperationResponse) {
+    init(_ response: OperationResponse) {
         self.identifier = response.id
         self.createdAt = response.createdAt
         self.operationType = response.operationType
-    }
-
-    init(identifier: String, createdAt: Date, operationType: OperationType) {
-        self.identifier = identifier
-        self.createdAt = createdAt
-        self.operationType = operationType
     }
 }

@@ -55,7 +55,7 @@ extension StellarAccountService {
             case .open: break
             case .response(_, let operationResponse):
                 if operationResponse is PaymentOperationResponse {
-                    let operation = StellarOperation(response: operationResponse)
+                    let operation = StellarOperation(operationResponse)
                     DispatchQueue.main.async {
                         self.delegate?.paymentUpdate(self, operation: operation)
                     }

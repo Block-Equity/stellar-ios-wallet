@@ -15,11 +15,7 @@ public final class StellarEffect {
     public private(set) var boughtAmount = ""
     public private(set) var createdAt: String = ""
     public private(set) var type: EffectType = .accountCreated
-    public private(set) var asset: StellarAsset = StellarAsset(assetType: AssetTypeAsString.NATIVE,
-                                           assetCode: nil,
-                                           assetIssuer: nil,
-                                           balance: "")
-
+    public private(set) var asset: StellarAsset = StellarAsset.lumens
     public private(set) var assetPair = StellarAssetPair(buying: StellarAsset.lumens, selling: StellarAsset.lumens)
 
     init(response: EffectResponse) {
