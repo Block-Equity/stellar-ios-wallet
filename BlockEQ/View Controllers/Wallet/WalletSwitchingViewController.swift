@@ -185,8 +185,10 @@ extension WalletSwitchingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
 
-        guard let section = WalletSwitchingDataSource.Section(rawValue: indexPath.section) else { return }
-        guard let asset = dataSource?.allAssets[indexPath.row] else { return }
+        guard let section = WalletSwitchingDataSource.Section(rawValue: indexPath.section),
+            section == .userAssets, let asset = dataSource?.allAssets[indexPath.row] else {
+                return
+        }
 
         switch section {
         case WalletSwitchingDataSource.Section.userAssets:
@@ -205,6 +207,11 @@ extension WalletSwitchingViewController: WalletDataSourceDelegate {
 
     func remove(_ dataSource: WalletSwitchingDataSource, asset: StellarAsset) {
         displayRemovePrompt()
+
+        if let nativeAsset = dataSource.allAssets.first {
+            delegate?.switchWallet(to: nativeAsset)
+        }
+
         delegate?.remove(asset: asset)
     }
 

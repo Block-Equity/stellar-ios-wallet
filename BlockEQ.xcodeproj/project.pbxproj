@@ -41,7 +41,7 @@
 		C4EC5FF120F3E64300769E31 /* AddAssetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4EC5FEF20F3E64300769E31 /* AddAssetViewController.xib */; };
 		C4F4938A211E19EA000B0800 /* String+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F49389211E19EA000B0800 /* String+Base64.swift */; };
 		C50F390220C0AE8100DABB14 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F390120C0AE8100DABB14 /* KeyboardHelper.swift */; };
-		C512E69D217F96B300D1AC74 /* WalletSwitchingTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C512E69C217F96B300D1AC74 /* WalletSwitchingTableViewDataSource.swift */; };
+		C512E69D217F96B300D1AC74 /* WalletSwitchingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C512E69C217F96B300D1AC74 /* WalletSwitchingDataSource.swift */; };
 		C51441F5217E5802006C44F4 /* StellarEffect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51441F4217E5802006C44F4 /* StellarEffect+Extensions.swift */; };
 		C51441F7217E64A8006C44F4 /* StellarSeed+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51441F6217E64A8006C44F4 /* StellarSeed+Extensions.swift */; };
 		C51441F9217E7F6F006C44F4 /* StellarAsset+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51441F8217E7F6F006C44F4 /* StellarAsset+Extensions.swift */; };
@@ -257,7 +257,7 @@
 		C4EC5FEF20F3E64300769E31 /* AddAssetViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddAssetViewController.xib; sourceTree = "<group>"; };
 		C4F49389211E19EA000B0800 /* String+Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Base64.swift"; sourceTree = "<group>"; };
 		C50F390120C0AE8100DABB14 /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
-		C512E69C217F96B300D1AC74 /* WalletSwitchingTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletSwitchingTableViewDataSource.swift; sourceTree = "<group>"; };
+		C512E69C217F96B300D1AC74 /* WalletSwitchingDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletSwitchingDataSource.swift; sourceTree = "<group>"; };
 		C51441F4217E5802006C44F4 /* StellarEffect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarEffect+Extensions.swift"; sourceTree = "<group>"; };
 		C51441F6217E64A8006C44F4 /* StellarSeed+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarSeed+Extensions.swift"; sourceTree = "<group>"; };
 		C51441F8217E7F6F006C44F4 /* StellarAsset+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarAsset+Extensions.swift"; sourceTree = "<group>"; };
@@ -491,7 +491,7 @@
 			isa = PBXGroup;
 			children = (
 				C51441FB217E839E006C44F4 /* WalletTableViewDataSource.swift */,
-				C512E69C217F96B300D1AC74 /* WalletSwitchingTableViewDataSource.swift */,
+				C512E69C217F96B300D1AC74 /* WalletSwitchingDataSource.swift */,
 				C5D8CAD02182064B009F8624 /* ContactsDataSource.swift */,
 			);
 			path = "Data Sources";
@@ -1276,7 +1276,7 @@
 				ECC47A6920589F92002BA573 /* UIView+Shake.swift in Sources */,
 				EC6EE89320B6005D0033C299 /* MyOffersViewController.swift in Sources */,
 				C53978CB20BF417100587D99 /* SettingsSwitchCell.swift in Sources */,
-				C512E69D217F96B300D1AC74 /* WalletSwitchingTableViewDataSource.swift in Sources */,
+				C512E69D217F96B300D1AC74 /* WalletSwitchingDataSource.swift in Sources */,
 				C5D1074F215D7A3E00CC17A0 /* ApplicationCoordinator+Extensions.swift in Sources */,
 				C55660492165D30C00DDAAA5 /* QRMap.swift in Sources */,
 				EC0B191E205486AB0052802C /* TransactionHistoryCell.swift in Sources */,
