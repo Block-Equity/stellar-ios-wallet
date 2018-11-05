@@ -12,6 +12,7 @@ public final class StellarConfig {
     internal struct HorizonHostURLs {
         static let production = "https://horizon.stellar.org"
         static let test = "https://horizon-testnet.stellar.org"
+        static let local = "localhost:3030"
     }
 
     public enum HorizonURL {
@@ -29,6 +30,7 @@ public final class StellarConfig {
     public enum HorizonAPI {
         case production
         case test
+        case local
 
         public var url: URL {
             return URL(string: self.urlString)!
@@ -38,6 +40,7 @@ public final class StellarConfig {
             switch self {
             case .production: return HorizonHostURLs.production
             case .test: return HorizonHostURLs.test
+            case .local: return HorizonHostURLs.local
             }
         }
 
@@ -45,6 +48,7 @@ public final class StellarConfig {
             switch self {
             case .production: return Network.public
             case .test: return Network.testnet
+            case .local: return Network.testnet
             }
         }
     }

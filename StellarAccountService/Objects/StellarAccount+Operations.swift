@@ -62,36 +62,28 @@ extension StellarAccount {
             completion(self, UpdateOptions.tradeOffers)
         })
 
-        let queue = OperationQueue()
-        queue.qualityOfService = .userInitiated
-
         let fetchOperations = [fetchAccountOp, fetchTransactionOp, fetchOperationsOp, fetchEffectsOp, fetchOffersOp]
-        queue.addOperations(fetchOperations, waitUntilFinished: false)
+        accountQueue.addOperations(fetchOperations, waitUntilFinished: false)
     }
 
     public func setInflationDestination(address: StellarAddress, delegate: SetInflationResponseDelegate) {
-        inflationResponseDelegate = delegate
-
         let completion: BoolCompletion = { completed in
             if completed {
                 DispatchQueue.main.async {
                     self.inflationDestination = address.string
-                    self.inflationResponseDelegate?.setInflation(destination: address)
-                    self.inflationResponseDelegate = nil
+                    delegate.setInflation(destination: address)
                 }
             } else {
                 DispatchQueue.main.async {
                     let error = StellarAccountService.ServiceError.nonExistentAccount
-                    self.inflationResponseDelegate?.failed(error: error)
-                    self.inflationResponseDelegate = nil
+                    delegate.failed(error: error)
                 }
             }
         }
 
         guard let service = self.service, let keyPair = service.core.walletKeyPair else {
-            self.inflationResponseDelegate?.failed(error: StellarAccountService.ServiceError.nonExistentAccount)
+            delegate.failed(error: StellarAccountService.ServiceError.nonExistentAccount)
             return
-
         }
 
         let accountOp = FetchAccountDataOperation(horizon: service.core.sdk, account: accountId)

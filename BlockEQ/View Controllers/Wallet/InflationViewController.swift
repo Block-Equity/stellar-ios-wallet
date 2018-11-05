@@ -137,12 +137,7 @@ extension InflationViewController: ScanViewControllerDelegate {
 
 // MARK: - SetInflationResponseDelegate
 extension InflationViewController: SetInflationResponseDelegate {
-    func setInflation(destination: StellarAddress) {
-        self.hideHud()
-        self.displayInflationSuccess()
-    }
-
-    func failed(error: Error) {
+    func failed(error: StellarAccountService.ServiceError) {
         self.hideHud()
         let alert = UIAlertController(title: "INFLATION_ERROR_TITLE".localized(),
                                       message: "INFLATION_ERROR_MESSAGE".localized(),
@@ -151,5 +146,10 @@ extension InflationViewController: SetInflationResponseDelegate {
         alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(), style: .default, handler: nil))
 
         self.present(alert, animated: true, completion: nil)
+    }
+
+    func setInflation(destination: StellarAddress) {
+        self.hideHud()
+        self.displayInflationSuccess()
     }
 }

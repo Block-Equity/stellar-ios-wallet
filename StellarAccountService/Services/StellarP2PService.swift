@@ -11,12 +11,12 @@ import Foundation
 public final class StellarP2PService: Subservice {
     let core: CoreService
 
-    var tradeQueue: OperationQueue {
+    var tradeQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.qualityOfService = .userInitiated
 
         return queue
-    }
+    }()
 
     internal init(with core: CoreService) {
         self.core = core

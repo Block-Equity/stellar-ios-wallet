@@ -43,6 +43,7 @@
 		C593DFF2218C0F2C00FA01DD /* StellarAccountOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593DFF1218C0F2C00FA01DD /* StellarAccountOperationTests.swift */; };
 		C593DFF4218C10C100FA01DD /* account_response.json in Resources */ = {isa = PBXBuildFile; fileRef = C593DFF3218C10C100FA01DD /* account_response.json */; };
 		C593DFF6218C12DB00FA01DD /* no_balance_account_response.json in Resources */ = {isa = PBXBuildFile; fileRef = C593DFF5218C12DB00FA01DD /* no_balance_account_response.json */; };
+		C5B37B08218CECB400F9937D /* TestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B37B07218CECB400F9937D /* TestObjects.swift */; };
 		C5D8CAC9218111CC009F8624 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8CAC8218111CC009F8624 /* Protocols.swift */; };
 		C5D8CACB218112CC009F8624 /* StellarAccount+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8CACA218112CC009F8624 /* StellarAccount+Operations.swift */; };
 		C5D8CACD21812245009F8624 /* StellarPaymentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8CACC21812245009F8624 /* StellarPaymentData.swift */; };
@@ -139,6 +140,7 @@
 		C593DFF1218C0F2C00FA01DD /* StellarAccountOperationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarAccountOperationTests.swift; sourceTree = "<group>"; };
 		C593DFF3218C10C100FA01DD /* account_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = account_response.json; sourceTree = "<group>"; };
 		C593DFF5218C12DB00FA01DD /* no_balance_account_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = no_balance_account_response.json; sourceTree = "<group>"; };
+		C5B37B07218CECB400F9937D /* TestObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestObjects.swift; sourceTree = "<group>"; };
 		C5D8CAC8218111CC009F8624 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		C5D8CACA218112CC009F8624 /* StellarAccount+Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarAccount+Operations.swift"; sourceTree = "<group>"; };
 		C5D8CACC21812245009F8624 /* StellarPaymentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarPaymentData.swift; sourceTree = "<group>"; };
@@ -271,6 +273,13 @@
 			path = Tools;
 			sourceTree = "<group>";
 		};
+		C5B37B06218CC94500F9937D /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
 		C5D8CADA2183A792009F8624 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -329,10 +338,12 @@
 		C5F1C9DC217A7B61001C847A /* StellarAccountServiceTests */ = {
 			isa = PBXGroup;
 			children = (
+				C5B37B06218CC94500F9937D /* Operations */,
 				C5FE757D218BCBD10090E372 /* Objects */,
 				C5FE758B218BD70B0090E372 /* Utilities */,
 				C5FE7586218BD56D0090E372 /* Fixtures */,
 				C5F1C9DF217A7B61001C847A /* Info.plist */,
+				C5B37B07218CECB400F9937D /* TestObjects.swift */,
 			);
 			path = StellarAccountServiceTests;
 			sourceTree = "<group>";
@@ -728,6 +739,7 @@
 				C5FE759B218BE7BA0090E372 /* StellarPaymentDataTests.swift in Sources */,
 				C5FE757A218BC7EE0090E372 /* StellarAddressTests.swift in Sources */,
 				C593DFDC218C03D000FA01DD /* StellarOperationTests.swift in Sources */,
+				C5B37B08218CECB400F9937D /* TestObjects.swift in Sources */,
 				C5FE759D218BF06A0090E372 /* StellarAssetTests.swift in Sources */,
 				C5FE7583218BCE920090E372 /* StellarRecoveryMnemonicTests.swift in Sources */,
 				C5FE75A5218BFB090090E372 /* StellarTransactionTests.swift in Sources */,
