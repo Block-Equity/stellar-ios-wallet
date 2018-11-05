@@ -26,16 +26,19 @@ final class WalletTableViewDataSource: NSObject {
         .accountInflationDestinationUpdated
     ]
 
-    private var index: Int?
+    private var index: Int
     var effects: [StellarEffect] = []
     var account: StellarAccount
     var asset: StellarAsset? {
-        guard let index = index else { return nil }
+        if index >= account.assets.count {
+            self.index = 0
+        }
+
         return account.assets[index]
     }
 
     init(account: StellarAccount, asset: StellarAsset) {
-        self.index = account.assets.firstIndex(of: asset)
+        self.index = account.assets.firstIndex(of: asset) ?? 0
         self.account = account
         self.effects = account.effects
             .filter { $0.asset == asset && WalletTableViewDataSource.supportedEffects.contains($0.type) }

@@ -121,6 +121,7 @@ extension WalletSwitchingDataSource: UITableViewDataSource {
             viewModel.icon = Assets.displayImage(shortCode: shortCode)
 
             walletCell.update(with: viewModel)
+            walletCell.selectionStyle = .none
 
             return walletCell
         }
