@@ -9,7 +9,7 @@
 import StellarAccountService
 import stellarsdk
 
-final class WalletTableViewDataSource: NSObject {
+final class WalletDataSource: NSObject {
     enum Section: Int, RawRepresentable {
         case assetHeader
         case effectList
@@ -41,12 +41,12 @@ final class WalletTableViewDataSource: NSObject {
         self.index = account.assets.firstIndex(of: asset) ?? 0
         self.account = account
         self.effects = account.effects
-            .filter { $0.asset == asset && WalletTableViewDataSource.supportedEffects.contains($0.type) }
+            .filter { $0.asset == asset && WalletDataSource.supportedEffects.contains($0.type) }
             .sorted(by: { (first, second) -> Bool in first.createdAt > second.createdAt })
     }
 }
 
-extension WalletTableViewDataSource: UITableViewDataSource {
+extension WalletDataSource: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return Section.all.count
     }

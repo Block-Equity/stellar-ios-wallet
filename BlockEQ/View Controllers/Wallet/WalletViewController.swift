@@ -36,7 +36,7 @@ class WalletViewController: UIViewController {
 
     weak var delegate: WalletViewControllerDelegate?
     var navigationContainer: AppNavigationController?
-    var dataSource: WalletTableViewDataSource?
+    var dataSource: WalletDataSource?
     var showNativeHeader: Bool = false
 
     override func viewDidLoad() {
@@ -108,7 +108,7 @@ class WalletViewController: UIViewController {
     }
 
     func update(with account: StellarAccount, asset: StellarAsset) {
-        dataSource = WalletTableViewDataSource(account: account, asset: asset)
+        dataSource = WalletDataSource(account: account, asset: asset)
 
         guard self.isViewLoaded else { return }
 
@@ -142,7 +142,7 @@ extension WalletViewController: AccountUpdatable {
 
 extension WalletViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let section = WalletTableViewDataSource.Section(rawValue: section) else { return nil }
+        guard let section = WalletDataSource.Section(rawValue: section) else { return nil }
 
         switch section {
         case .assetHeader: return showNativeHeader ? availableBalanceView : nil
@@ -154,7 +154,7 @@ extension WalletViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard let section = WalletTableViewDataSource.Section(rawValue: section) else { return 0 }
+        guard let section = WalletDataSource.Section(rawValue: section) else { return 0 }
 
         switch section {
         case .assetHeader: return showNativeHeader ? availableBalanceView.frame.size.height : 0

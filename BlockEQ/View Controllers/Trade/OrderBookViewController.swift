@@ -35,6 +35,11 @@ class OrderBookViewController: UIViewController {
         setupView()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        refreshView()
+    }
+
     func setupView() {
         tableView.registerCell(type: OrderBookCell.self)
         tableView.registerCell(type: OrderBookEmptyCell.self)
@@ -44,12 +49,15 @@ class OrderBookViewController: UIViewController {
         tableHeaderView.backgroundColor = Colors.white
     }
 
+    func refreshView() {
+        guard isViewLoaded else { return }
+        tableHeaderLabel.text = "\(sellAsset.shortCode) - \(buyAsset.shortCode)"
+        tableView.reloadData()
+    }
+
     func setOrderBook(orderbook: StellarOrderbook) {
         self.orderbook = orderbook
-
-        tableHeaderLabel.text = "\(sellAsset.shortCode) - \(buyAsset.shortCode)"
-
-        tableView.reloadData()
+        refreshView()
     }
 }
 
