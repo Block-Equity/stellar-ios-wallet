@@ -16,7 +16,7 @@ public final class StellarCoreService: CoreService {
         return [accountService, tradeService]
     }
 
-    internal var secretManager: SecretManager? {
+    internal var secretManager: SecretManagerProtocol? {
         return accountService.secretManager
     }
 

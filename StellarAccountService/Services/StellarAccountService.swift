@@ -21,7 +21,7 @@ public protocol StellarAccountServiceDelegate: AnyObject {
  * One service object corresponds to one account, and data for each is independently managed and passed back to the app.
  *
  */
-public final class StellarAccountService: Subservice {
+public final class StellarAccountService: StellarAccountServiceProtocol {
     public enum ServiceError: Error {
         case nonExistentAccount
         case alreadyInitialized
@@ -43,11 +43,7 @@ public final class StellarAccountService: Subservice {
     let core: CoreService
 
     public weak var delegate: StellarAccountServiceDelegate?
-    public internal(set) var account: StellarAccount? {
-        didSet {
-            state = account != nil ? .active : .inactive
-        }
-    }
+    public internal(set) var account: StellarAccount?
 
     var state: AccountState = .inactive
     var secretManager: SecretManager?

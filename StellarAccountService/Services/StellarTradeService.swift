@@ -8,7 +8,7 @@
 
 import stellarsdk
 
-public final class StellarTradeService: Subservice {
+public final class StellarTradeService: StellarTradeServiceProtocol {
     typealias PostTradeOperationPair = ChainedOperationPair<FetchAccountDataOperation, PostTradeOperation>
     typealias CancelTradeOperationPair = ChainedOperationPair<FetchAccountDataOperation, CancelTradeOperation>
 
@@ -17,12 +17,12 @@ public final class StellarTradeService: Subservice {
 
     let core: CoreService
 
-    var tradeQueue: OperationQueue {
+    lazy var tradeQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.qualityOfService = .userInitiated
 
         return queue
-    }
+    }()
 
     internal init(with core: CoreService) {
         self.core = core

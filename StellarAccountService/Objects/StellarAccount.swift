@@ -43,16 +43,15 @@ public final class StellarAccount {
     internal var rawResponse: AccountResponse?
 
     internal weak var service: StellarAccountService?
-    internal weak var inflationResponseDelegate: SetInflationResponseDelegate?
     internal weak var sendResponseDelegate: SendAmountResponseDelegate?
     internal weak var manageAssetResponseDelegate: ManageAssetResponseDelegate?
 
-    internal var accountQueue: OperationQueue {
+    internal lazy var accountQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.qualityOfService = .userInitiated
 
         return queue
-    }
+    }()
 
     public var address: StellarAddress {
         return StellarAddress(accountId)!

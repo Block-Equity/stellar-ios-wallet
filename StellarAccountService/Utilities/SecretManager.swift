@@ -9,7 +9,7 @@
 import KeychainSwift
 import stellarsdk
 
-public final class SecretManager {
+public final class SecretManager: SecretManagerProtocol {
     static let publicSeedKeyFormat = "%@_publicKey"
     static let privateSeedKeyFormat = "%@_privateKey"
     static let secretSeedKeyFormat = "%@_secretSeed"
