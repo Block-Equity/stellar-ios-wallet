@@ -69,14 +69,23 @@ class TradeViewController: UIViewController {
     let tradeFromPickerView = UIPickerView()
     let tradeToPickerView = UIPickerView()
     var stellarAccount: StellarAccount?
-    var toAssets: [StellarAsset] = []
-    var fromAsset: StellarAsset?
-    var toAsset: StellarAsset?
+
+    var fromDataSource: TradePickerDataSource?
+    var toDataSource: TradePickerDataSource?
+
     var currentTradeType: StellarTradeOfferData.TradeType = .market
     var currentMarketPrice: Decimal = 0.0
 
+    var fromAsset: StellarAsset? {
+        return fromDataSource?.selected
+    }
+
+    var toAsset: StellarAsset? {
+        return toDataSource?.selected
+    }
+
     var assetPair: StellarAssetPair? {
-        if let buyingAsset = self.toAsset, let sellingAsset = self.fromAsset {
+        if let buyingAsset = toAsset, let sellingAsset = fromAsset {
             return StellarAssetPair(buying: buyingAsset, selling: sellingAsset)
         }
 
@@ -92,20 +101,7 @@ class TradeViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         refreshView()
-    }
-
-    func refreshView() {
-        guard self.isViewLoaded, let account = self.stellarAccount else {
-            return
-        }
-
-        if self.fromAsset == nil {
-            self.setTradeSelectors(fromAsset: account.assets.first, toAsset: nil)
-        }
-
-        self.updateBalances()
     }
 
     func setupView() {
@@ -140,12 +136,6 @@ class TradeViewController: UIViewController {
             }
         }
 
-        tradeFromPickerView.dataSource = self
-        tradeFromPickerView.delegate = self
-
-        tradeToPickerView.dataSource = self
-        tradeToPickerView.delegate = self
-
         tradeFromTextField.inputAccessoryView = tradeFromInputAccessoryView
         tradeToTextField.inputAccessoryView = tradeToInputAccessoryView
         tradeFromSelectorTextField.inputAccessoryView = tradeFromSelectorAccessoryInputView
@@ -155,6 +145,19 @@ class TradeViewController: UIViewController {
         tradeToSelectorTextField.inputView = tradeToPickerView
 
         setTradeViews()
+    }
+
+    func refreshView() {
+        guard self.isViewLoaded else {
+            return
+        }
+
+        setTradeSelectors()
+        updateBalances()
+
+        if self.currentTradeType == .market, let tradeFromText = tradeFromTextField.text {
+            setCalculatedMarketPrice(tradeFromText: tradeFromText)
+        }
     }
 
     func setTradeViews() {
@@ -173,27 +176,33 @@ class TradeViewController: UIViewController {
         }
     }
 
-    func setTradeSelectors(fromAsset: StellarAsset?, toAsset: StellarAsset?) {
-        if let selectedFromAsset = fromAsset {
-            self.fromAsset = selectedFromAsset
-            setTradeFromSelector()
-            getOrderBook()
-            return
+    func setTradeSelectors() {
+        guard let account = self.stellarAccount else { return }
+
+        var formatString = "TRADE_BALANCE_FORMAT"
+        var balanceAmount: String
+
+        if let fromAsset = fromAsset {
+            balanceAmount = fromAsset.balance.displayFormatted
+
+            if fromAsset.isNative {
+                formatString = "TRADE_BALANCE_AVAILABLE_FORMAT"
+                balanceAmount = account.availableBalance.displayFormattedString
+            }
+
+            tradeFromButton.setTitle(fromAsset.shortCode, for: .normal)
+            balanceLabel.text = String(format: formatString.localized(), balanceAmount, fromAsset.shortCode)
         }
 
-        if let selectedToAsset = toAsset {
-            self.toAsset = selectedToAsset
-            setTradeToSelector()
-            getOrderBook()
-            return
+        if let toAsset = toAsset {
+            tradeToButton.setTitle(toAsset.shortCode, for: .normal)
         }
     }
 
     func updateBalances() {
         guard let account = self.stellarAccount else { return }
 
-        if let asset = account.assets.first(where: { $0 == self.fromAsset }) {
-            self.fromAsset = asset
+        if let asset = account.assets.first(where: { $0 == fromAsset }) {
             var balance = asset.balance
             var labelFormat = "TRADE_BALANCE_FORMAT".localized()
 
@@ -206,86 +215,13 @@ class TradeViewController: UIViewController {
         }
     }
 
-    func setTradeFromSelector() {
-        guard let account = self.stellarAccount,
-            let fromAsset = self.fromAsset,
-            let removableIndex = account.assets.index(of: fromAsset) else {
-                return
-        }
-
-        var formatString = "TRADE_BALANCE_FORMAT"
-        var balanceAmount = fromAsset.balance.displayFormatted
-
-        if fromAsset.isNative {
-            formatString = "TRADE_BALANCE_AVAILABLE_FORMAT"
-            balanceAmount = account.availableBalance.displayFormattedString
-        }
-
-        tradeFromButton.setTitle(fromAsset.shortCode, for: .normal)
-        balanceLabel.text = String(format: formatString.localized(), balanceAmount, fromAsset.shortCode)
-
-        toAssets = account.assets
-        toAssets.remove(at: removableIndex)
-
-        if let toAsset = toAssets.first {
-            self.toAsset = toAsset
-            tradeToButton.setTitle(toAsset.shortCode, for: .normal)
-        }
-
-        tradeFromPickerView.reloadAllComponents()
-        tradeToPickerView.reloadAllComponents()
-        tradeToPickerView.selectRow(0, inComponent: 0, animated: false)
-    }
-
-    func setTradeToSelector() {
-        if let toShortCode = toAsset?.shortCode,
-            let fromButtonText = tradeFromButton.titleLabel?.text,
-            !fromButtonText.elementsEqual(toShortCode) {
-                tradeToButton.setTitle(toShortCode, for: .normal)
-                return
-        }
-
-        var toAssetToRemove: StellarAsset!
-
-        guard let account = self.stellarAccount else { return }
-
-        for asset in account.assets where tradeFromButton.titleLabel?.text != asset.shortCode {
-            fromAsset = asset
-            tradeFromButton.setTitle(fromAsset?.shortCode, for: .normal)
-
-            if let fromAsset = fromAsset {
-                balanceLabel.text = "\(fromAsset.balance.displayFormatted) \(fromAsset.shortCode)"
-            }
-
-            toAssetToRemove = fromAsset
-        }
-
-        guard let removableToAsset = toAssetToRemove,
-            let removableIndex = account.assets.index(of: removableToAsset) else {
-            return
-        }
-
-        tradeToButton.setTitle(toAsset?.shortCode, for: .normal)
-
-        toAssets = account.assets
-        toAssets.remove(at: removableIndex)
-
-        tradeFromPickerView.reloadAllComponents()
-        tradeToPickerView.reloadAllComponents()
-
-        tradeFromPickerView.selectRow(0, inComponent: 0, animated: false)
-    }
-
     func setMarketPrice(orderbook: StellarOrderbook) {
         guard let bestPrice = orderbook.bestPrice else {
             return
         }
 
         currentMarketPrice = bestPrice
-
-        if self.currentTradeType == .market, let tradeFromText = tradeFromTextField.text {
-            setCalculatedMarketPrice(tradeFromText: tradeFromText)
-        }
+        self.refreshView()
     }
 
     func setCalculatedMarketPrice(tradeFromText: String) {
@@ -296,56 +232,85 @@ class TradeViewController: UIViewController {
         let toValue = tradeFromValue * currentMarketPrice
         tradeToTextField.text = toValue.displayFormattedString
     }
+
+    func buildFromDataSource(with selectedAsset: StellarAsset?) {
+        guard let account = self.stellarAccount else { return }
+
+        let selectedFromAsset = selectedAsset ?? account.assets.first
+        let fromDataSource = TradePickerDataSource(assets: account.assets,
+                                                   selected: selectedFromAsset,
+                                                   excluding: nil)
+        fromDataSource.delegate = self
+
+        self.tradeFromPickerView.dataSource = fromDataSource
+        self.tradeFromPickerView.delegate = fromDataSource
+        self.fromDataSource = fromDataSource
+
+        tradeFromPickerView.reloadAllComponents()
+    }
+
+    func buildToDataSource(with selectedAsset: StellarAsset?) {
+        guard let account = self.stellarAccount else { return }
+
+        let selectedFromAsset = self.fromAsset
+
+        let selectedToAsset = firstAssetExcluding(selectedFromAsset, in: account)
+        let toDataSource = TradePickerDataSource(assets: account.assets,
+                                                 selected: selectedToAsset,
+                                                 excluding: selectedFromAsset)
+        toDataSource.delegate = self
+
+        self.tradeToPickerView.dataSource = toDataSource
+        self.tradeToPickerView.delegate = toDataSource
+        self.toDataSource = toDataSource
+
+        tradeToPickerView.reloadAllComponents()
+    }
+
+    func firstAssetExcluding(_ asset: StellarAsset?, in account: StellarAccount) -> StellarAsset? {
+        let nonSelectedAssets = account.assets.filter { $0 != asset }
+        return nonSelectedAssets.first
+    }
 }
 
 extension TradeViewController: AccountUpdatable {
     func update(account: StellarAccount) {
-        // do things that require refreshing when the account gets updated
         self.stellarAccount = account
+
+        if let fromAsset = fromAsset {
+            fromDataSource?.selected = account.indexedAssets[fromAsset.shortCode]
+        }
+
+        if let toAsset = toAsset {
+            toDataSource?.selected = account.indexedAssets[toAsset.shortCode]
+        }
+
+        buildFromDataSource(with: fromAsset)
+        buildToDataSource(with: toAsset)
 
         self.refreshView()
     }
 }
 
-// MARK: - UIPickerViewDataSource
-extension TradeViewController: UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        guard let account = self.stellarAccount else { return 0 }
+// MARK: - TradePickerDataSource
+extension TradeViewController: TradePickerDataSourceDelegate {
+    func selectedAsset(_ pickerView: UIPickerView, asset: StellarAsset?) {
+        tradeFromTextField.text = ""
+        tradeToTextField.text = ""
 
         if pickerView == tradeFromPickerView {
-            return account.assets.count
-        }
-        return toAssets.count
-    }
-
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        guard let account = self.stellarAccount else { return }
-
-        if pickerView == tradeFromPickerView {
-            setTradeSelectors(fromAsset: account.assets[row], toAsset: nil)
+            buildFromDataSource(with: asset)
+            buildToDataSource(with: nil)
+            setTradeSelectors()
+            tradeToPickerView.selectRow(0, inComponent: 0, animated: false)
         } else {
-            setTradeSelectors(fromAsset: nil, toAsset: toAssets[row])
-        }
-    }
-}
-
-// MARK: - UIPickerViewDelegate
-extension TradeViewController: UIPickerViewDelegate {
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        guard let account = self.stellarAccount else { return nil }
-
-        let formatString = "%@ (%@)"
-        if pickerView == tradeFromPickerView {
-            let asset = account.assets[row]
-            return String(format: formatString, Assets.displayTitle(shortCode: asset.shortCode), asset.shortCode)
+            buildFromDataSource(with: nil)
+            buildToDataSource(with: asset)
+            setTradeSelectors()
+            tradeFromPickerView.selectRow(0, inComponent: 0, animated: false)
         }
 
-        let asset = toAssets[row]
-        return String(format: formatString, Assets.displayTitle(shortCode: asset.shortCode), asset.shortCode)
+        getOrderBook()
     }
 }
 
@@ -405,8 +370,7 @@ extension TradeViewController {
     }
 
     @IBAction func setBalanceAmount(sender: UIButton) {
-        guard let account = self.stellarAccount,
-            let fromAsset = self.fromAsset,
+        guard let account = self.stellarAccount, let fromAsset = self.fromAsset,
             var balance = Decimal(string: fromAsset.balance) else {
                 return
         }
@@ -510,4 +474,4 @@ extension TradeViewController {
         }
     }
 }
-//swiftlint:enable file_length type_body_length
+//swiftlint:enable file_length

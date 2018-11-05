@@ -40,6 +40,16 @@ class StellarAccountTests: XCTestCase {
         XCTAssertEqual(stubAccount.inflationAddress, StellarAddress("GCCD6AJOYZCUAQLX32ZJF2MKFFAUJ53PVCFQI3RHWKL3V47QYE2BNAUT"))
     }
 
+    func testIndexedAssetsReturnsCorrectValues() {
+        let response: AccountResponse = JSONLoader.decodableJSON(name: "account_response")
+        let account = StellarAccount(response)
+
+        XCTAssertEqual(account.indexedAssets.count, account.assets.count)
+        XCTAssertEqual(account.indexedAssets["XLM"], StellarAsset.lumens)
+        XCTAssertEqual(account.indexedAssets["CAD"], StellarAsset(assetCode: "CAD", issuer: "GABK2IHWW7BCRPP3BL6WMOMDBPHCBJR2SLP5HAUBYKNZG5J5RJSROS5S"))
+        XCTAssertEqual(account.indexedAssets["PTS"], StellarAsset(assetCode: "PTS", issuer: "GBPG7KRYC3PTKHBXQGRD3GMZ5DB4C3D553ZN2ZLH57LBAQIULVY46Z5F"))
+    }
+
     func testResponseInitializer() {
         let response: AccountResponse = JSONLoader.decodableJSON(name: "account_response")
         let account = StellarAccount(response)

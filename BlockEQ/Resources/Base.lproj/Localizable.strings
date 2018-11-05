@@ -168,3 +168,4 @@
 "INFLATION_DESTINATION_INVALID" = "Unable to update the inflation destination to your own account, or the account it's already set to.";
 "CRYPTO_DUST_FORMAT_STRING" = "< %@";
 "AVAILABLE_BALANCE_FORMAT_STRING" = "Available: %@ %@";
+"TRADE_PICKER_FORMAT_STRING" = "%@ (%@)";

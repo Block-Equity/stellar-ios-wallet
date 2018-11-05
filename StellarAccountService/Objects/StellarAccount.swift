@@ -77,6 +77,12 @@ public final class StellarAccount {
         return Array(mappedOffers.values)
     }
 
+    public var indexedAssets: [String: StellarAsset] {
+        return assets.reduce(into: [:], { list, asset in
+            list[asset.shortCode] = asset
+        })
+    }
+
     public init(_ response: AccountResponse) {
         self.accountId = response.accountId
         self.inflationDestination = response.inflationDestination

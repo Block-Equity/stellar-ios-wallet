@@ -48,16 +48,22 @@ final class TradeSegmentViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if displayNoAssetOverlay {
-            displayNoAssetOverlayView()
-        } else {
-            hideNoAssetOverlayView()
-        }
+        self.refreshView()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+    }
+
+    func refreshView() {
+        guard self.isViewLoaded else { return }
+
+        if displayNoAssetOverlay {
+            displayNoAssetOverlayView()
+        } else {
+            hideNoAssetOverlayView()
+        }
     }
 
     func setupView() {
@@ -110,6 +116,8 @@ final class TradeSegmentViewController: UIViewController {
 
     func updated(account: StellarAccount) {
         displayNoAssetOverlay = account.assets.count <= 1 ? true : false
+
+        self.refreshView()
     }
 }
 

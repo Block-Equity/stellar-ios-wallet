@@ -219,6 +219,7 @@ extension TradingCoordinator: ManageAssetResponseDelegate {
     func added(asset: StellarAsset, account: StellarAccount) {
         self.segmentController.updated(account: account)
         self.walletSwitchingViewController?.updateMenu(account: account)
+        self.tradeViewController.update(account: account)
     }
 
     func removed(asset: StellarAsset, account: StellarAccount) {
