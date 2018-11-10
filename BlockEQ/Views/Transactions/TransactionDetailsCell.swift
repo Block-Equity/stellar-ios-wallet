@@ -40,6 +40,7 @@ final class TransactionDetailsCell: UICollectionViewCell, ReusableView, NibLoada
     @IBOutlet weak var memoTitleLabel: UILabel!
     @IBOutlet weak var memoLabel: UILabel!
     @IBOutlet weak var transactionDetailsContainerView: UIView!
+    @IBOutlet weak var dataStackView: UIStackView!
 
     static let cellHeight = CGFloat(325.0)
 
@@ -101,9 +102,6 @@ final class TransactionDetailsCell: UICollectionViewCell, ReusableView, NibLoada
 
         transactionDetailsContainerView.topBorder(with: Colors.transactionCellBorderGray, width: 1)
         transactionDetailsContainerView.bottomBorder(with: Colors.transactionCellBorderGray, width: 1)
-    }
-
-    @IBAction func copySelected(_ sender: Any) {
     }
 
     func update(with viewModel: ViewModel) {

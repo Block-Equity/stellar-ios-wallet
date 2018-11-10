@@ -344,6 +344,7 @@
                 <outlet property="amountLabel" destination="2RG-9z-nx6" id="5yX-HJ-asq"/>
                 <outlet property="amountTitleLabel" destination="15A-TS-NZz" id="SXA-Mk-EDE"/>
                 <outlet property="bgView" destination="hP3-Dq-43N" id="k0a-0V-meY"/>
+                <outlet property="dataStackView" destination="Ggq-eo-n4F" id="GHq-64-QLn"/>
                 <outlet property="dateLabel" destination="wEr-Pw-0fI" id="qNw-6f-aAe"/>
                 <outlet property="dateTitleLabel" destination="YSl-oW-jgG" id="QHK-GE-bjf"/>
                 <outlet property="feeLabel" destination="QRv-5S-4a9" id="hin-g6-Lis"/>

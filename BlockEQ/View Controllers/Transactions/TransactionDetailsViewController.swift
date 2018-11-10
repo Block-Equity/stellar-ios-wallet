@@ -47,8 +47,11 @@ final class TransactionDetailsViewController: UIViewController {
         collectionView.backgroundColor = backgroundColor
     }
 
-    func update(with data: StellarTransaction, _ operations: [StellarOperation]) {
-        let transactionDataSource = TransactionDetailsDataSource(delegate: self, transaction: data, ops: operations)
+    func update(with data: StellarTransaction, _ operations: [StellarOperation], _ effect: StellarEffect) {
+        let transactionDataSource = TransactionDetailsDataSource(delegate: self,
+                                                                 transaction: data,
+                                                                 ops: operations,
+                                                                 effect: effect)
         dataSource = transactionDataSource
     }
 }
@@ -78,7 +81,7 @@ extension TransactionDetailsViewController: UICollectionViewDelegate {
 
         if copyString != nil {
             UIPasteboard.general.string = copyString
-            UIAlertController.simpleAlert(title: titleString, message: nil, presentingViewController: self)
+            UIAlertController.simpleAlert(title: titleString, message: copyString, presentingViewController: self)
         }
     }
 
