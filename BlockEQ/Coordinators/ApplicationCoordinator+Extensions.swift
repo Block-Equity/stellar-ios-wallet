@@ -108,7 +108,7 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
                 operations = accountOperations.filter { $0.transactionHash == transaction.hash }
             }
 
-            transactionVC.update(with: transaction, operations)
+            transactionVC.update(with: transaction, operations, effect)
             wrappingNavController?.pushViewController(transactionVC, animated: true)
         }
     }

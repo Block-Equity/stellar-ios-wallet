@@ -33,13 +33,16 @@ final class TransactionDetailsDataSource: NSObject {
     let operations: [StellarOperation]
     let signers: [String]
 
-    init(delegate: TransactionDetailsViewController, transaction: StellarTransaction, ops: [StellarOperation]) {
+    init(delegate: TransactionDetailsViewController,
+         transaction: StellarTransaction,
+         ops: [StellarOperation],
+         effect: StellarEffect) {
         headerDelegate = delegate
         ledgerHeaderText = String(transaction.ledger)
         signers = transaction.signatures
         sourceAccount = transaction.sourceAccount
         txid = transaction.identifier
-        amount = "---"
+        amount = effect.amount.isEmpty ? "---" : effect.amount
         date = transaction.createdAt
         sequenceNumber = transaction.sequenceNumber
         fee = transaction.feePaid
@@ -80,14 +83,14 @@ extension TransactionDetailsDataSource: UICollectionViewDataSource {
         var memoString = ""
 
         if let unwrappedMemo = memo?.string, let type = memoType {
-            memoTitle = String(format: "MEMO_TITLE_FORMAT_STRING", type)
+            memoTitle = String(format: "MEMO_TITLE_FORMAT_STRING".localized(), type)
             memoString = unwrappedMemo
         }
 
         let viewModel = TransactionDetailsCell.ViewModel(
             sourceAccount: sourceAccount,
             transactionId: txid,
-            amount: "---",
+            amount: amount,
             date: date.longDateString,
             sequenceNumber: sequenceNumber,
             fee: String(format: "XLM_FORMAT_STRING".localized(), stroopFee.tradeFormattedString),
