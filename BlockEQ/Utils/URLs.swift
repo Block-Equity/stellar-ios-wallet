@@ -24,6 +24,7 @@ enum BlockEQURL {
     case site
     case exchangeDirectory
     case assetDirectory
+    case diagnosticReport
     case termsAndConditions
     case privacyPolicy
 
@@ -34,6 +35,7 @@ enum BlockEQURL {
         case .site: return "https://blockeq.com"
         case .exchangeDirectory: return "https://api.blockeq.com/directory/exchanges?asArray"
         case .assetDirectory: return "https://api.blockeq.com/directory/assets?asArray"
+        case .diagnosticReport: return "https://api.blockeq.com/diagnostic"
         case .privacyPolicy: return "https://blockeq.com/privacy.html"
         case .termsAndConditions: return "https://blockeq.com/terms.html"
         }
