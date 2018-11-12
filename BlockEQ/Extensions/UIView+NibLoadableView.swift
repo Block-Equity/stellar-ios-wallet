@@ -24,3 +24,11 @@ extension NibLoadableView {
     }
 // swiftlint:enable force_cast
 }
+
+extension NibLoadableView where Self: UIView {
+    func bindContentView(_ contentView: UIView) {
+        contentView.frame = bounds
+        addSubview(contentView)
+        constrainViewToAllEdges(contentView)
+    }
+}

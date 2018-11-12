@@ -223,3 +223,8 @@ extension ApplicationCoordinator: StellarAccountServiceDelegate {
         service.update()
     }
 }
+
+extension ApplicationCoordinator: DiagnosticCoordinatorDelegate {
+    func completedDiagnostic(_ coordinator: DiagnosticCoordinator) {
+    }
+}

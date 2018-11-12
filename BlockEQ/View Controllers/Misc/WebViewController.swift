@@ -48,7 +48,7 @@ class WebViewController: UIViewController {
     }
 
     private func setupConstraints() {
-        view.constrainViewToAllEdges(webView)
+        view.constrainViewToAllSafeEdges(webView)
     }
 }
 
