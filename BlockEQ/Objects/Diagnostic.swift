@@ -97,9 +97,10 @@ struct Diagnostic {
         case recoveredMnemonic = "Recovered from Mnemonic"
     }
 
+    var reportId: Int?
     var walletAddress: String?
     var walletCreationMethod: CreationMethod?
-    var walletPassphrase: Bool?
+    var walletUsesPassphrase: Bool?
     let emailAddress: String
     let issueSummary: String
 
@@ -133,7 +134,7 @@ struct Diagnostic {
     init(address: String, creationMethod: CreationMethod, passphrase: Bool, email: String, issue: String) {
         walletAddress = address
         walletCreationMethod = creationMethod
-        walletPassphrase = passphrase
+        walletUsesPassphrase = passphrase
         issueSummary = issue
         emailAddress = email
     }
@@ -141,5 +142,55 @@ struct Diagnostic {
     init(email: String, issue: String) {
         emailAddress = email
         issueSummary = issue
+    }
+}
+
+extension Diagnostic: Codable {
+    enum FieldsCodingKeys: String, CodingKey {
+        case fields
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case walletAddress = "Public Wallet Address"
+        case walletCreationMethod = "Wallet Creation Method"
+        case walletUsesPassphrase = "Used Passphrase"
+        case emailAddress = "Email"
+        case issueSummary = "Summary"
+        case hardwareDevice = "Device Hardware"
+        case batteryState = "Battery State"
+        case locale = "Locale"
+        case osVersion = "Platform"
+        case appVersion = "App Version"
+        case reportId = "Report Id"
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var fieldsContainer = encoder.container(keyedBy: FieldsCodingKeys.self)
+        var container = fieldsContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: .fields)
+
+        try container.encode(self.appVersion, forKey: .appVersion)
+        try container.encode(self.batteryState, forKey: .batteryState)
+        try container.encode(self.emailAddress, forKey: .emailAddress)
+        try container.encode(self.hardwareDevice, forKey: .hardwareDevice)
+        try container.encode(self.issueSummary, forKey: .issueSummary)
+        try container.encode(self.locale, forKey: .locale)
+        try container.encode(self.osVersion, forKey: .osVersion)
+        try container.encodeIfPresent(self.walletAddress, forKey: .walletAddress)
+        try container.encodeIfPresent(self.walletUsesPassphrase, forKey: .walletUsesPassphrase)
+        try container.encodeIfPresent(self.walletCreationMethod?.rawValue, forKey: .walletCreationMethod)
+    }
+
+    init(from decoder: Decoder) throws {
+        let fieldsContainer = try decoder.container(keyedBy: FieldsCodingKeys.self)
+        let container = try fieldsContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: .fields)
+        self.reportId = try container.decodeIfPresent(Int.self, forKey: .reportId)
+        self.emailAddress = try container.decode(String.self, forKey: .emailAddress)
+        self.issueSummary = try container.decode(String.self, forKey: .issueSummary)
+    }
+}
+
+extension Diagnostic {
+    enum DiagnosticError: LocalizedError {
+        case encodingFailure
     }
 }

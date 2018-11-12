@@ -61,6 +61,8 @@
 		C53978CD20BF4EF000587D99 /* SettingsNormalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53978CC20BF4EF000587D99 /* SettingsNormalCell.swift */; };
 		C53C44BC2188D7F30095D1AD /* StellarAddress+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53C44BB2188D7F30095D1AD /* StellarAddress+Extensions.swift */; };
 		C53E628421989050006BF2F1 /* Diagnostic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53E628321989050006BF2F1 /* Diagnostic.swift */; };
+		C53E62862199DC94006BF2F1 /* SendDiagnosticOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53E62852199DC94006BF2F1 /* SendDiagnosticOperation.swift */; };
+		C53E62882199E667006BF2F1 /* Alamofire+JSONEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53E62872199E667006BF2F1 /* Alamofire+JSONEncoding.swift */; };
 		C5401D342178005B00A12AC2 /* TransactionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5401D332178005B00A12AC2 /* TransactionDetailsViewController.swift */; };
 		C5401D362178007300A12AC2 /* TransactionDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5401D352178007300A12AC2 /* TransactionDetailsViewController.xib */; };
 		C54ADD4921781EE20078F69E /* TransactionDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54ADD4821781EE20078F69E /* TransactionDetailsCell.swift */; };
@@ -281,6 +283,8 @@
 		C53978CC20BF4EF000587D99 /* SettingsNormalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNormalCell.swift; sourceTree = "<group>"; };
 		C53C44BB2188D7F30095D1AD /* StellarAddress+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarAddress+Extensions.swift"; sourceTree = "<group>"; };
 		C53E628321989050006BF2F1 /* Diagnostic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagnostic.swift; sourceTree = "<group>"; };
+		C53E62852199DC94006BF2F1 /* SendDiagnosticOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDiagnosticOperation.swift; sourceTree = "<group>"; };
+		C53E62872199E667006BF2F1 /* Alamofire+JSONEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alamofire+JSONEncoding.swift"; sourceTree = "<group>"; };
 		C5401D332178005B00A12AC2 /* TransactionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailsViewController.swift; sourceTree = "<group>"; };
 		C5401D352178007300A12AC2 /* TransactionDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionDetailsViewController.xib; sourceTree = "<group>"; };
 		C54ADD4821781EE20078F69E /* TransactionDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailsCell.swift; sourceTree = "<group>"; };
@@ -759,6 +763,7 @@
 				C5A5A87B215E935C00007787 /* UIAlertController+Prompts.swift */,
 				C5BED37B2163F1E100BEE464 /* Price+Extensions.swift */,
 				C54EFE4921798668005FA6D3 /* UIView+Layer.swift */,
+				C53E62872199E667006BF2F1 /* Alamofire+JSONEncoding.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -837,6 +842,7 @@
 			isa = PBXGroup;
 			children = (
 				C514420F217ED86F006C44F4 /* FetchExchangesOperation.swift */,
+				C53E62852199DC94006BF2F1 /* SendDiagnosticOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -1223,6 +1229,7 @@
 				C54EFE432179043B005FA6D3 /* TransactionDetailsBasicHeader.swift in Sources */,
 				C5BED3762162A81C00BEE464 /* Exchange.swift in Sources */,
 				ECD3A352207D2CE5000609A0 /* WalletItemActivateCell.swift in Sources */,
+				C53E62862199DC94006BF2F1 /* SendDiagnosticOperation.swift in Sources */,
 				C499755F211297BF00E2299C /* P2PCoordinator.swift in Sources */,
 				C5114DB7219548AC00C88E4F /* TransactionDetailsDataSource.swift in Sources */,
 				C5401D342178005B00A12AC2 /* TransactionDetailsViewController.swift in Sources */,
@@ -1282,6 +1289,7 @@
 				EC0B192220549B240052802C /* ReceiveViewController.swift in Sources */,
 				C5A5A87C215E935C00007787 /* UIAlertController+Prompts.swift in Sources */,
 				C5D8CAD12182064B009F8624 /* ContactsDataSource.swift in Sources */,
+				C53E62882199E667006BF2F1 /* Alamofire+JSONEncoding.swift in Sources */,
 				C54ADD4921781EE20078F69E /* TransactionDetailsCell.swift in Sources */,
 				C5AB41392090430900096A29 /* UICollectionView+ReusableCells.swift in Sources */,
 				ECC47A6920589F92002BA573 /* UIView+Shake.swift in Sources */,
