@@ -12,4 +12,26 @@ extension UIDevice {
     var iPhoneX: Bool {
         return UIScreen.main.nativeBounds.height == 2436
     }
+
+    var modelName: String {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        let machineMirror = Mirror(reflecting: systemInfo.machine)
+        let identifier = machineMirror.children.reduce("") { identifier, element in
+            guard let value = element.value as? Int8, value != 0 else { return identifier }
+            return identifier + String(UnicodeScalar(UInt8(value)))
+        }
+        return identifier
+    }
+}
+
+extension UIDevice.BatteryState {
+    var stateString: String {
+        switch self {
+        case .charging: return "Charging"
+        case .unplugged: return "Unplugged"
+        case .full: return "Full"
+        case .unknown: return "Unknown"
+        }
+    }
 }

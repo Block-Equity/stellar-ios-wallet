@@ -130,7 +130,8 @@
 
 "SELL_SUMMARY_FORMAT" = "Sell %@ %@ for %@ %@ at a price of %@";
 "ADDRESS_COPIED" = "Your address has been successfully copied.";
-"APPINFO_FORMAT" = "@\nVersion: %@ (%@)";
+"VERSION_FORMAT" = "%@ (%@)";
+"APPINFO_FORMAT" = "%@\nVersion: %@";
 "BLOCKEQ_WEBSITE" = "BlockEQ Website";
 "COPY" = "Copy";
 
