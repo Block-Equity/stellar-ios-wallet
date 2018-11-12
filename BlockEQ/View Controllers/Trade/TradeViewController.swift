@@ -253,10 +253,9 @@ class TradeViewController: UIViewController {
         guard let account = self.stellarAccount else { return }
 
         let selectedFromAsset = self.fromAsset
-
-        let selectedToAsset = firstAssetExcluding(selectedFromAsset, in: account)
+        let toAsset = selectedAsset ?? firstAssetExcluding(selectedFromAsset, in: account)
         let toDataSource = TradePickerDataSource(assets: account.assets,
-                                                 selected: selectedToAsset,
+                                                 selected: toAsset,
                                                  excluding: selectedFromAsset)
         toDataSource.delegate = self
 
@@ -298,19 +297,39 @@ extension TradeViewController: TradePickerDataSourceDelegate {
         tradeFromTextField.text = ""
         tradeToTextField.text = ""
 
+        guard let lastSelectedToAsset = toAsset, let lastSelectedFromAsset = fromAsset else {
+            return
+        }
+
         if pickerView == tradeFromPickerView {
             buildFromDataSource(with: asset)
             buildToDataSource(with: nil)
+
+            reselectItem(in: toDataSource, picker: tradeToPickerView, lastAsset: lastSelectedToAsset)
             setTradeSelectors()
-            tradeToPickerView.selectRow(0, inComponent: 0, animated: false)
         } else {
             buildFromDataSource(with: nil)
             buildToDataSource(with: asset)
+
+            reselectItem(in: fromDataSource, picker: tradeFromPickerView, lastAsset: lastSelectedFromAsset)
             setTradeSelectors()
-            tradeFromPickerView.selectRow(0, inComponent: 0, animated: false)
         }
 
         getOrderBook()
+    }
+
+    /// When the currently selected item from the tradeToPicker gets removed, we need to reselect the first row.
+    ///
+    /// - Parameters:
+    ///   - dataSource: The data source to use.
+    ///   - picker: the UIPicker object to select within.
+    ///   - lastAsset: The previously selected asset to search for.
+    func reselectItem(in dataSource: TradePickerDataSource?, picker: UIPickerView, lastAsset: StellarAsset) {
+        if let index = dataSource?.assets.firstIndex(of: lastAsset) {
+            picker.selectRow(index, inComponent: 0, animated: false)
+        } else {
+            picker.selectRow(0, inComponent: 0, animated: false)
+        }
     }
 }
 
