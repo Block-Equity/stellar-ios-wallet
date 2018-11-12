@@ -29,6 +29,8 @@ final class ApplicationCoordinator {
     // The coordinator responsible for the peer to peer flow
     let p2pCoordinator = P2PCoordinator()
 
+    let diagnosticCoordinator = DiagnosticCoordinator()
+
     /// The view that handles all switching in the header
     lazy var tradeHeaderView: TradeHeaderView = {
         let rect = CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.size.width, height: 44.0))
@@ -267,6 +269,11 @@ extension ApplicationCoordinator: SettingsDelegate {
     func pushWebViewController(with url: URL, title: String?) {
         let webController = WebViewController(url: url, pageTitle: title ?? "")
         self.wrappingNavController?.pushViewController(webController, animated: true)
+    }
+
+    func presentDiagnostics() {
+        diagnosticCoordinator.reset()
+        wrappingNavController?.present(diagnosticCoordinator.diagnosticViewController, animated: true, completion: nil)
     }
 
     func displayApplicationInfo() {

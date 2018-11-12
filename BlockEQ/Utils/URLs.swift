@@ -27,6 +27,7 @@ enum BlockEQURL {
     case diagnosticReport
     case termsAndConditions
     case privacyPolicy
+    case diagnostics
 
     var url: URL { return URL(string: self.string)! }
 
@@ -38,6 +39,7 @@ enum BlockEQURL {
         case .diagnosticReport: return "https://api.blockeq.com/diagnostic"
         case .privacyPolicy: return "https://blockeq.com/privacy.html"
         case .termsAndConditions: return "https://blockeq.com/terms.html"
+        case .diagnostics: return "https://api.airtable.com/v0/app09oC6VlZ8iDpWP/Reports"
         }
     }
 }

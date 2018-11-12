@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DiagnosticViewController" customModule="BlockEQ" customModuleProvider="target">
+            <connections>
+                <outlet property="closeButton" destination="qfR-HK-2Q5" id="Xhn-L7-8q1"/>
+                <outlet property="descriptionLabel" destination="afy-Hd-fde" id="Zr6-Dx-iMR"/>
+                <outlet property="nextButton" destination="ft2-SZ-mGr" id="9Ez-KT-lVq"/>
+                <outlet property="stepCollectionView" destination="Yic-NI-grK" id="c10-i5-342"/>
+                <outlet property="titleLabel" destination="5d3-Dt-H6N" id="gkG-Sb-TWI"/>
+                <outlet property="view" destination="iN0-l3-epB" id="1gD-Ex-ozX"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="Container View">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qfR-HK-2Q5" userLabel="Close Button">
+                    <rect key="frame" x="316" y="35" width="44" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="4L6-TE-1zn"/>
+                        <constraint firstAttribute="width" constant="44" id="mVz-OK-zvf"/>
+                    </constraints>
+                    <state key="normal" image="close"/>
+                    <connections>
+                        <action selector="selectedClose:" destination="-1" eventType="touchUpInside" id="rsE-S8-cOJ"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2NO-OD-1EX">
+                    <rect key="frame" x="25" y="84" width="325" height="107.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wallet Diagnostics" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5d3-Dt-H6N" userLabel="Title Label">
+                            <rect key="frame" x="0.0" y="0.0" width="325" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="afy-Hd-fde" userLabel="Description Label">
+                            <rect key="frame" x="0.0" y="26" width="325" height="81.5"/>
+                            <string key="text">This tool collects non-private information about your wallet in order to help diagnose issues with your wallet during a support request.</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="107.5" id="0U2-UQ-h2I"/>
+                        <constraint firstItem="afy-Hd-fde" firstAttribute="leading" secondItem="2NO-OD-1EX" secondAttribute="leading" id="8cY-fY-8mG"/>
+                        <constraint firstItem="afy-Hd-fde" firstAttribute="top" secondItem="5d3-Dt-H6N" secondAttribute="bottom" constant="5" id="Bq9-g0-doZ"/>
+                        <constraint firstItem="5d3-Dt-H6N" firstAttribute="leading" secondItem="2NO-OD-1EX" secondAttribute="leading" id="D4s-Ps-2br"/>
+                        <constraint firstAttribute="bottom" secondItem="afy-Hd-fde" secondAttribute="bottom" id="EmN-oH-c6C"/>
+                        <constraint firstAttribute="trailing" secondItem="5d3-Dt-H6N" secondAttribute="trailing" id="alk-S5-LV8"/>
+                        <constraint firstAttribute="trailing" secondItem="afy-Hd-fde" secondAttribute="trailing" id="olZ-73-SJu"/>
+                        <constraint firstItem="5d3-Dt-H6N" firstAttribute="top" secondItem="2NO-OD-1EX" secondAttribute="top" id="sBE-vy-wtx"/>
+                    </constraints>
+                </view>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Yic-NI-grK" userLabel="Step Collection View">
+                    <rect key="frame" x="0.0" y="216.5" width="375" height="353.5"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hW8-Es-3FE">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ft2-SZ-mGr" userLabel="Next Button">
+                    <rect key="frame" x="169" y="595" width="37" height="37"/>
+                    <state key="normal" image="disclosure_indicator"/>
+                    <connections>
+                        <action selector="selectedNext:" destination="-1" eventType="touchUpInside" id="9e9-kE-5c3"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.16470588235294117" green="0.19607843137254902" blue="0.23921568627450979" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="2NO-OD-1EX" firstAttribute="top" secondItem="qfR-HK-2Q5" secondAttribute="bottom" constant="5" id="1F6-48-aOU"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Yic-NI-grK" secondAttribute="trailing" id="ALd-s6-XZx"/>
+                <constraint firstItem="ft2-SZ-mGr" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="IJf-Cd-cOv"/>
+                <constraint firstItem="ft2-SZ-mGr" firstAttribute="top" secondItem="Yic-NI-grK" secondAttribute="bottom" constant="25" id="YUL-hh-9Lh"/>
+                <constraint firstItem="2NO-OD-1EX" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="25" id="cKX-la-dQr"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ft2-SZ-mGr" secondAttribute="bottom" constant="35" id="dUb-NZ-2Lh"/>
+                <constraint firstItem="Yic-NI-grK" firstAttribute="top" secondItem="afy-Hd-fde" secondAttribute="bottom" constant="25" id="hSm-X0-Fx7"/>
+                <constraint firstItem="Yic-NI-grK" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="mzg-lZ-XPN"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="qfR-HK-2Q5" secondAttribute="trailing" constant="15" id="nhy-n0-Wbg"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="2NO-OD-1EX" secondAttribute="trailing" constant="25" id="pdm-oX-KfK"/>
+                <constraint firstItem="qfR-HK-2Q5" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="15" id="yWm-n5-YAH"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="38" y="66"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="close" width="14" height="14"/>
+        <image name="disclosure_indicator" width="37.5" height="37.5"/>
+    </resources>
+</document>
