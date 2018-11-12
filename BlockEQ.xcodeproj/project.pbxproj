@@ -60,6 +60,7 @@
 		C53978CB20BF417100587D99 /* SettingsSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53978CA20BF417100587D99 /* SettingsSwitchCell.swift */; };
 		C53978CD20BF4EF000587D99 /* SettingsNormalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53978CC20BF4EF000587D99 /* SettingsNormalCell.swift */; };
 		C53C44BC2188D7F30095D1AD /* StellarAddress+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53C44BB2188D7F30095D1AD /* StellarAddress+Extensions.swift */; };
+		C53E628421989050006BF2F1 /* Diagnostic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53E628321989050006BF2F1 /* Diagnostic.swift */; };
 		C5401D342178005B00A12AC2 /* TransactionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5401D332178005B00A12AC2 /* TransactionDetailsViewController.swift */; };
 		C5401D362178007300A12AC2 /* TransactionDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5401D352178007300A12AC2 /* TransactionDetailsViewController.xib */; };
 		C54ADD4921781EE20078F69E /* TransactionDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54ADD4821781EE20078F69E /* TransactionDetailsCell.swift */; };
@@ -279,6 +280,7 @@
 		C53978CA20BF417100587D99 /* SettingsSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSwitchCell.swift; sourceTree = "<group>"; };
 		C53978CC20BF4EF000587D99 /* SettingsNormalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNormalCell.swift; sourceTree = "<group>"; };
 		C53C44BB2188D7F30095D1AD /* StellarAddress+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarAddress+Extensions.swift"; sourceTree = "<group>"; };
+		C53E628321989050006BF2F1 /* Diagnostic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagnostic.swift; sourceTree = "<group>"; };
 		C5401D332178005B00A12AC2 /* TransactionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailsViewController.swift; sourceTree = "<group>"; };
 		C5401D352178007300A12AC2 /* TransactionDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionDetailsViewController.xib; sourceTree = "<group>"; };
 		C54ADD4821781EE20078F69E /* TransactionDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailsCell.swift; sourceTree = "<group>"; };
@@ -868,6 +870,7 @@
 				C5BED3752162A81C00BEE464 /* Exchange.swift */,
 				C53C44BB2188D7F30095D1AD /* StellarAddress+Extensions.swift */,
 				C5EC212121961EC5002EA45D /* StellarOperation+Extensions.swift */,
+				C53E628321989050006BF2F1 /* Diagnostic.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -1297,6 +1300,7 @@
 				EC2015A92052D968009A73C8 /* AppDelegate.swift in Sources */,
 				EC2015D92052DB6D009A73C8 /* LaunchViewController.swift in Sources */,
 				C53978CD20BF4EF000587D99 /* SettingsNormalCell.swift in Sources */,
+				C53E628421989050006BF2F1 /* Diagnostic.swift in Sources */,
 				C5FDBC6A211D384C0051AB9F /* BlankAuthenticationViewController.swift in Sources */,
 				C5AB4137209042E800096A29 /* UITableView+ReusableCells.swift in Sources */,
 				EC4BB64920BE4176008252AD /* String+DecimalFormatter.swift in Sources */,
