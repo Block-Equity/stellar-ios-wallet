@@ -86,13 +86,16 @@ extension DiagnosticDataCell {
 
 extension DiagnosticDataCell.ViewModel {
     init(with diagnostic: Diagnostic) {
-        self.walletAddress = diagnostic.walletAddress ?? ""
-        self.walletCreation = diagnostic.walletCreationMethod?.rawValue ?? ""
-        self.walletPassphrase = (diagnostic.walletUsesPassphrase ?? false) ? "Uses passphrase" : "No passphrase"
-        self.osVersion = diagnostic.osVersion
-        self.device = diagnostic.hardwareDevice
-        self.locale = diagnostic.locale
-        self.batteryState = diagnostic.batteryState
-        self.appVersion = diagnostic.appVersion
+        let walletDiagnostic = diagnostic.walletDiagnostic
+        let appDiagnostic = diagnostic.appDiagnostic
+
+        self.walletAddress = walletDiagnostic?.walletAddress ?? ""
+        self.walletCreation = walletDiagnostic?.walletCreationMethod?.rawValue ?? ""
+        self.walletPassphrase = (walletDiagnostic?.walletUsesPassphrase ?? false) ? "Uses passphrase" : "No passphrase"
+        self.osVersion = appDiagnostic?.osVersion ?? ""
+        self.device = appDiagnostic?.hardwareDevice ?? ""
+        self.locale = appDiagnostic?.locale ?? ""
+        self.batteryState = appDiagnostic?.batteryState ?? ""
+        self.appVersion = appDiagnostic?.appVersion ?? ""
     }
 }

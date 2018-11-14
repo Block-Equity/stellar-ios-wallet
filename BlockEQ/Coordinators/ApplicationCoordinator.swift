@@ -275,6 +275,7 @@ extension ApplicationCoordinator: SettingsDelegate {
 
     func presentDiagnostics() {
         diagnosticCoordinator.reset()
+        diagnosticCoordinator.runWalletDiagnostic()
         wrappingNavController?.present(diagnosticCoordinator.diagnosticViewController, animated: true, completion: nil)
     }
 
