@@ -86,8 +86,10 @@
 		C54EFE4821796B61005FA6D3 /* UIInsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EFE4721796B61005FA6D3 /* UIInsetLabel.swift */; };
 		C54EFE4A21798668005FA6D3 /* UIView+Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EFE4921798668005FA6D3 /* UIView+Layer.swift */; };
 		C54EFE4C217A2442005FA6D3 /* TransactionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EFE4B217A2442005FA6D3 /* TransactionSection.swift */; };
+		C5518B3F219CCD0C00E60AD4 /* DeviceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5518B3E219CCD0C00E60AD4 /* DeviceData.swift */; };
 		C55458FC2124BB1B00032699 /* AuthenticatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55458FB2124BB1B00032699 /* AuthenticatingViewController.swift */; };
 		C55660492165D30C00DDAAA5 /* QRMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55660482165D30C00DDAAA5 /* QRMap.swift */; };
+		C564059F219DC1900084CD5E /* Diagnostic+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C564059E219DC1900084CD5E /* Diagnostic+Extensions.swift */; };
 		C57A8540217814EF0048A6B5 /* TransactionDetailsSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C57A853F217814EF0048A6B5 /* TransactionDetailsSectionHeader.xib */; };
 		C57A8542217815410048A6B5 /* TransactionDetailsSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57A8541217815410048A6B5 /* TransactionDetailsSectionHeader.swift */; };
 		C589FF2A20902CCC00F5F308 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C589FF2920902CCC00F5F308 /* SettingsViewController.swift */; };
@@ -318,9 +320,11 @@
 		C54EFE4721796B61005FA6D3 /* UIInsetLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIInsetLabel.swift; sourceTree = "<group>"; };
 		C54EFE4921798668005FA6D3 /* UIView+Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layer.swift"; sourceTree = "<group>"; };
 		C54EFE4B217A2442005FA6D3 /* TransactionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSection.swift; sourceTree = "<group>"; };
+		C5518B3E219CCD0C00E60AD4 /* DeviceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceData.swift; sourceTree = "<group>"; };
 		C553ACBB2091572800B2379B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C55458FB2124BB1B00032699 /* AuthenticatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatingViewController.swift; sourceTree = "<group>"; };
 		C55660482165D30C00DDAAA5 /* QRMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRMap.swift; sourceTree = "<group>"; };
+		C564059E219DC1900084CD5E /* Diagnostic+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Diagnostic+Extensions.swift"; sourceTree = "<group>"; };
 		C57A853F217814EF0048A6B5 /* TransactionDetailsSectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionDetailsSectionHeader.xib; sourceTree = "<group>"; };
 		C57A8541217815410048A6B5 /* TransactionDetailsSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailsSectionHeader.swift; sourceTree = "<group>"; };
 		C589FF2920902CCC00F5F308 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -913,16 +917,18 @@
 		EC72C0B520597CAD00141D6F /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				C53E628321989050006BF2F1 /* Diagnostic.swift */,
+				C5518B3E219CCD0C00E60AD4 /* DeviceData.swift */,
+				C41481302124709B0057ED74 /* LocalContact.swift */,
+				C5BED3752162A81C00BEE464 /* Exchange.swift */,
+				C564059E219DC1900084CD5E /* Diagnostic+Extensions.swift */,
 				C51441F8217E7F6F006C44F4 /* StellarAsset+Extensions.swift */,
 				C514420D217ED2B7006C44F4 /* StellarTransaction+Extensions.swift */,
 				EC72C0B320597CA600141D6F /* StellarAccount+Extensions.swift */,
 				C51441F4217E5802006C44F4 /* StellarEffect+Extensions.swift */,
 				C51441F6217E64A8006C44F4 /* StellarSeed+Extensions.swift */,
-				C41481302124709B0057ED74 /* LocalContact.swift */,
-				C5BED3752162A81C00BEE464 /* Exchange.swift */,
 				C53C44BB2188D7F30095D1AD /* StellarAddress+Extensions.swift */,
 				C5EC212121961EC5002EA45D /* StellarOperation+Extensions.swift */,
-				C53E628321989050006BF2F1 /* Diagnostic.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -1333,6 +1339,7 @@
 				EC3609FD20560FDB00FC31F9 /* ScanViewController.swift in Sources */,
 				EC52B3D220BC951F006299A1 /* OffersCell.swift in Sources */,
 				C514420E217ED2B7006C44F4 /* StellarTransaction+Extensions.swift in Sources */,
+				C5518B3F219CCD0C00E60AD4 /* DeviceData.swift in Sources */,
 				EC64CF4F20BF05F5007FE199 /* OrderBookEmptyCell.swift in Sources */,
 				EC2015E52052E8AA009A73C8 /* Constants.swift in Sources */,
 				C499755C2112255C00E2299C /* P2PViewController.swift in Sources */,
@@ -1361,6 +1368,7 @@
 				C4F4938A211E19EA000B0800 /* String+Base64.swift in Sources */,
 				C46CF29920F5284B003CBDA3 /* AddAssetViewController.swift in Sources */,
 				EC2015A92052D968009A73C8 /* AppDelegate.swift in Sources */,
+				C564059F219DC1900084CD5E /* Diagnostic+Extensions.swift in Sources */,
 				EC2015D92052DB6D009A73C8 /* LaunchViewController.swift in Sources */,
 				C53978CD20BF4EF000587D99 /* SettingsNormalCell.swift in Sources */,
 				C53E628421989050006BF2F1 /* Diagnostic.swift in Sources */,

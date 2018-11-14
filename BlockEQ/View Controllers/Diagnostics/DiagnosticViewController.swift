@@ -26,6 +26,7 @@ final class DiagnosticViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
 
     weak var delegate: DiagnosticViewControllerDelegate?
+    var viewModel: DiagnosticDataCell.ViewModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,6 +76,8 @@ final class DiagnosticViewController: UIViewController {
     }
 
     func update(with diagnostic: Diagnostic) {
+        self.viewModel = DiagnosticDataCell.ViewModel(with: diagnostic)
+        self.stepCollectionView?.reloadData()
     }
 }
 
@@ -88,18 +91,12 @@ extension DiagnosticViewController: UICollectionViewDataSource {
 
         var cell: UICollectionViewCell
 
-        // temp
-        let diag = Diagnostic(address: "G1234",
-                              creationMethod: .recoveredMnemonic,
-                              passphrase: true,
-                              email: "nick.dizazzo@gmail.com",
-                              issue: "Can't find my pants")
-
         switch indexPath.row {
         case 0:
             let dataCell: DiagnosticDataCell = collectionView.dequeueReusableCell(for: indexPath)
-            let viewModel = DiagnosticDataCell.ViewModel(with: diag)
-            dataCell.update(with: viewModel)
+            if let viewModel = self.viewModel {
+                dataCell.update(with: viewModel)
+            }
             cell = dataCell
         case 1:
             let inputCell: DiagnosticInputCell = collectionView.dequeueReusableCell(for: indexPath)

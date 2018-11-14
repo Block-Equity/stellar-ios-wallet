@@ -80,13 +80,14 @@ extension OnboardingCoordinator: LaunchViewControllerDelegate {
 
 extension OnboardingCoordinator: MnemonicViewControllerDelegate {
     func confirmedWrittenMnemonic(_ viewController: MnemonicViewController, mnemonic: StellarRecoveryMnemonic) {
+        recordWalletDiagnostic(mnemonic: mnemonic, recovered: false, passphrase: false)
         authenticate()
     }
 }
 
 extension OnboardingCoordinator: VerificationViewControllerDelegate {
     func validatedAccount(_ viewController: VerificationViewController, mnemonic: StellarRecoveryMnemonic) {
-        save(mnemonic: mnemonic)
+        save(mnemonic: mnemonic, recovered: false, passphrase: false)
         authenticate()
     }
 
@@ -116,21 +117,33 @@ extension OnboardingCoordinator: AuthenticationCoordinatorDelegate {
     func authenticationCompleted(_ coordinator: AuthenticationCoordinator,
                                  options: AuthenticationCoordinator.AuthenticationContext?) {
         authenticationCoordinator = nil
-        KeychainHelper.setExistingInstance()
 
         if let account = core.accountService.account {
             KeychainHelper.save(accountId: account.accountId)
         }
+
+        KeychainHelper.setExistingInstance()
 
         delegate?.onboardingCompleted(service: core)
     }
 }
 
 extension OnboardingCoordinator {
-    func save(mnemonic: StellarRecoveryMnemonic) {
+    func recordWalletDiagnostic(mnemonic: StellarRecoveryMnemonic, recovered: Bool, passphrase: Bool) {
+        guard let accountId = core.accountService.account?.accountId else { return }
+
+        let creationMethod = WalletDiagnostic.CreationMethod.from(mnemonic: mnemonic, recovered: recovered)
+        let diagnostic = WalletDiagnostic(address: accountId,
+                                          creationMethod: creationMethod,
+                                          usesPassphrase: passphrase)
+
+        KeychainHelper.setDiagnostic(diagnostic)
+    }
+
+    func save(mnemonic: StellarRecoveryMnemonic, recovered: Bool, passphrase: Bool) {
         do {
             try core.accountService.initializeAccount(with: mnemonic)
-
+            recordWalletDiagnostic(mnemonic: mnemonic, recovered: recovered, passphrase: passphrase)
         } catch {
             // error
         }
@@ -139,6 +152,12 @@ extension OnboardingCoordinator {
     func save(secret: StellarSeed) {
         do {
             try core.accountService.initializeAccount(with: secret)
+
+            guard let accountId = core.accountService.account?.accountId else { return }
+            let diagnostic = WalletDiagnostic(address: accountId, creationMethod: .recoveredSeed, usesPassphrase: false)
+
+            KeychainHelper.setDiagnostic(diagnostic)
+
         } catch {
             // error
         }

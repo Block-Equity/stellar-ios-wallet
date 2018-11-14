@@ -6,8 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
-
+// MARK: - Diagnostic Issues
 enum DiagnosticSupportSummary: String, RawRepresentable {
     case paymentsFailing = "My payments are failing"
     case exchangeMissingFunds = "The exchange hasn’t received my funds"
@@ -18,92 +17,92 @@ enum DiagnosticSupportSummary: String, RawRepresentable {
     case receivingSmallTransactions = "I’m receiving small transactions"
 }
 
+// MARK: - Diagnostic
 struct Diagnostic {
-    static let deviceNamesByCode: [String: String] = [
-        "i386": "Simulator",
-        "x86_64": "Simulator",
-        "iPod1,1": "iPod Touch",
-        "iPod2,1": "iPod Touch",
-        "iPod3,1": "iPod Touch",
-        "iPod4,1": "iPod Touch",
-        "iPod7,1": "iPod Touch",
-        "iPhone1,1": "iPhone",
-        "iPhone1,2": "iPhone",
-        "iPhone2,1": "iPhone",
-        "iPad1,1": "iPad",
-        "iPad2,1": "iPad 2",
-        "iPad3,1": "iPad",
-        "iPhone3,1": "iPhone 4",
-        "iPhone3,3": "iPhone 4",
-        "iPhone4,1": "iPhone 4S",
-        "iPhone5,1": "iPhone 5",
-        "iPhone5,2": "iPhone 5",
-        "iPad3,4": "iPad",
-        "iPad2,5": "iPad Mini",
-        "iPhone5,3": "iPhone 5c",
-        "iPhone5,4": "iPhone 5c",
-        "iPhone6,1": "iPhone 5s",
-        "iPhone6,2": "iPhone 5s",
-        "iPhone7,1": "iPhone 6 Plus",
-        "iPhone7,2": "iPhone 6",
-        "iPhone8,1": "iPhone 6S",
-        "iPhone8,2": "iPhone 6S Plus",
-        "iPhone8,4": "iPhone SE",
-        "iPhone9,1": "iPhone 7",
-        "iPhone9,3": "iPhone 7",
-        "iPhone9,2": "iPhone 7 Plus",
-        "iPhone9,4": "iPhone 7 Plus",
-        "iPhone10,1": "iPhone 8",
-        "iPhone10,4": "iPhone 8",
-        "iPhone10,2": "iPhone 8 Plus",
-        "iPhone10,5": "iPhone 8 Plus",
-        "iPhone10,3": "iPhone X",
-        "iPhone10,6": "iPhone X",
-        "iPhone11,2": "iPhone XS",
-        "iPhone11,4": "iPhone XS Max",
-        "iPhone11,6": "iPhone XS Max",
-        "iPhone11,8": "iPhone XR",
-        "iPad4,1": "iPad Air",
-        "iPad4,2": "iPad Air",
-        "iPad4,4": "iPad Mini",
-        "iPad4,5": "iPad Mini",
-        "iPad4,7": "iPad Mini",
-        "iPad6,7": "iPad Pro (12.9\")",
-        "iPad6,8": "iPad Pro (12.9\")",
-        "iPad6,3": "iPad Pro (9.7\")",
-        "iPad6,4": "iPad Pro (9.7\")",
-        "iPad6,11": "iPad (5th gen)",
-        "iPad6,12": "iPad (5th gen)",
-        "iPad7,1": "iPad Pro (12.9\" - 2nd gen)",
-        "iPad7,2": "iPad Pro (12.9\" - 2nd gen)",
-        "iPad7,3": "iPad Pro (10.5\" - 2nd gen)",
-        "iPad7,4": "iPad Pro (10.5\" - 2nd gen)",
-        "iPad7,5": "iPad (6th gen)",
-        "iPad7,6": "iPad (6th gen)",
-        "iPad8,1": "iPad Pro (11\" - 3rd gen)",
-        "iPad8,2": "iPad Pro (11\" - 3rd gen)",
-        "iPad8,3": "iPad Pro (11\" - 3rd gen)",
-        "iPad8,4": "iPad Pro (11\" - 3rd gen)",
-        "iPad8,5": "iPad Pro (12.9\" - 3rd gen)",
-        "iPad8,6": "iPad Pro (12.9\" - 3rd gen)",
-        "iPad8,7": "iPad Pro (12.9\" - 3rd gen)",
-        "iPad8,8": "iPad Pro (12.9\" - 3rd gen)"
-    ]
+    var reportId: Int?
+    var emailAddress: String?
+    var issueSummary: String?
+    var walletDiagnostic: WalletDiagnostic?
+    var appDiagnostic: AppDiagnostic?
 
-    enum CreationMethod: String, RawRepresentable {
-        case mnemonic12 = "12-word Mnemonic"
-        case mnemonic24 = "24-word Mnemonic"
-        case recoveredSeed = "Recovered from Secret Seed"
-        case recoveredMnemonic = "Recovered from Mnemonic"
+    init(email: String, issue: String) {
+        issueSummary = issue
+        emailAddress = email
     }
 
-    var reportId: Int?
-    var walletAddress: String?
-    var walletCreationMethod: CreationMethod?
-    var walletUsesPassphrase: Bool?
-    let emailAddress: String
-    let issueSummary: String
+    init(walletDiagnostic: WalletDiagnostic?) {
+        self.walletDiagnostic = walletDiagnostic
+    }
 
+    init(email: String, issue: String, walletDiagnostic: WalletDiagnostic) {
+        emailAddress = email
+        issueSummary = issue
+        self.walletDiagnostic = walletDiagnostic
+        self.appDiagnostic = AppDiagnostic()
+    }
+}
+
+extension Diagnostic: Codable {
+    enum FieldsCodingKeys: String, CodingKey {
+        case fields
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case reportId = "Report Id"
+        case emailAddress = "Email"
+        case issueSummary = "Summary"
+        case wallet = "wallet"
+        case app = "app"
+
+        // Can't encode keys from WalletDiagnostic, have to copy/paste here
+        case walletAddress = "Public Wallet Address"
+        case walletCreationMethod = "Wallet Creation Method"
+        case walletUsesPassphrase = "Used Passphrase"
+
+        // Can't encode keys from AppDiagnostic, have to copy/paste here
+        case hardwareDevice = "Device Hardware"
+        case batteryState = "Battery State"
+        case locale = "Locale"
+        case osVersion = "Platform"
+        case appVersion = "App Version"
+    }
+
+    init(from decoder: Decoder) throws {
+        let fieldsContainer = try decoder.container(keyedBy: FieldsCodingKeys.self)
+        let container = try fieldsContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: .fields)
+        self.reportId = try container.decodeIfPresent(Int.self, forKey: .reportId)
+        self.emailAddress = try container.decode(String.self, forKey: .emailAddress)
+        self.issueSummary = try container.decode(String.self, forKey: .issueSummary)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var fieldsContainer = encoder.container(keyedBy: FieldsCodingKeys.self)
+        var container = fieldsContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: .fields)
+
+        try container.encodeIfPresent(reportId, forKey: .reportId)
+        try container.encode(emailAddress, forKey: .emailAddress)
+        try container.encode(issueSummary, forKey: .issueSummary)
+
+        try container.encodeIfPresent(walletDiagnostic?.walletAddress, forKey: .walletAddress)
+        try container.encodeIfPresent(walletDiagnostic?.walletUsesPassphrase, forKey: .walletUsesPassphrase)
+        try container.encodeIfPresent(walletDiagnostic?.walletCreationMethod?.rawValue, forKey: .walletCreationMethod)
+
+        try container.encodeIfPresent(appDiagnostic?.appVersion, forKey: .appVersion)
+        try container.encodeIfPresent(appDiagnostic?.batteryState, forKey: .batteryState)
+        try container.encodeIfPresent(appDiagnostic?.hardwareDevice, forKey: .hardwareDevice)
+        try container.encodeIfPresent(appDiagnostic?.locale, forKey: .locale)
+        try container.encodeIfPresent(appDiagnostic?.osVersion, forKey: .osVersion)
+    }
+}
+
+extension Diagnostic {
+    enum DiagnosticError: LocalizedError {
+        case encodingFailure
+    }
+}
+
+// MARK: - App Diagnostic
+struct AppDiagnostic {
     var appVersion: String {
         return DeviceString.version.value
     }
@@ -128,69 +127,72 @@ struct Diagnostic {
     }
 
     var hardwareDevice: String {
-        return Diagnostic.deviceNamesByCode[self.rawHardwareDevice] ?? "Unknown"
-    }
-
-    init(address: String, creationMethod: CreationMethod, passphrase: Bool, email: String, issue: String) {
-        walletAddress = address
-        walletCreationMethod = creationMethod
-        walletUsesPassphrase = passphrase
-        issueSummary = issue
-        emailAddress = email
-    }
-
-    init(email: String, issue: String) {
-        emailAddress = email
-        issueSummary = issue
+        return DeviceData.deviceNamesByCode[self.rawHardwareDevice] ?? "Unknown"
     }
 }
 
-extension Diagnostic: Codable {
-    enum FieldsCodingKeys: String, CodingKey {
-        case fields
+extension AppDiagnostic: Encodable {
+    enum CodingKeys: String, CodingKey {
+        case hardwareDevice = "Device Hardware"
+        case batteryState = "Battery State"
+        case locale = "Locale"
+        case osVersion = "Platform"
+        case appVersion = "App Version"
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.appVersion, forKey: .appVersion)
+        try container.encode(self.batteryState, forKey: .batteryState)
+        try container.encode(self.hardwareDevice, forKey: .hardwareDevice)
+        try container.encode(self.locale, forKey: .locale)
+        try container.encode(self.osVersion, forKey: .osVersion)
+    }
+}
+
+// MARK: - Wallet Diagnostic
+struct WalletDiagnostic {
+    enum CreationMethod: String, RawRepresentable {
+        case createdMnemonic12 = "Created with 12-word Mnemonic"
+        case createdMnemonic24 = "Created with 24-word Mnemonic"
+        case recoveredMnemonic12 = "Recovered with 12-word Mnemonic"
+        case recoveredMnemonic24 = "Recovered with 24-word Mnemonic"
+        case recoveredSeed = "Recovered from Secret Seed"
+        case unknown = "Unknown"
+    }
+
+    var walletAddress: String?
+    var walletCreationMethod: CreationMethod?
+    var walletUsesPassphrase: Bool?
+}
+
+extension WalletDiagnostic: Codable {
+    init(address: String, creationMethod: CreationMethod, usesPassphrase: Bool) {
+        walletAddress = address
+        walletCreationMethod = creationMethod
+        walletUsesPassphrase = usesPassphrase
     }
 
     enum CodingKeys: String, CodingKey {
         case walletAddress = "Public Wallet Address"
         case walletCreationMethod = "Wallet Creation Method"
         case walletUsesPassphrase = "Used Passphrase"
-        case emailAddress = "Email"
-        case issueSummary = "Summary"
-        case hardwareDevice = "Device Hardware"
-        case batteryState = "Battery State"
-        case locale = "Locale"
-        case osVersion = "Platform"
-        case appVersion = "App Version"
-        case reportId = "Report Id"
     }
 
     func encode(to encoder: Encoder) throws {
-        var fieldsContainer = encoder.container(keyedBy: FieldsCodingKeys.self)
-        var container = fieldsContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: .fields)
-
-        try container.encode(self.appVersion, forKey: .appVersion)
-        try container.encode(self.batteryState, forKey: .batteryState)
-        try container.encode(self.emailAddress, forKey: .emailAddress)
-        try container.encode(self.hardwareDevice, forKey: .hardwareDevice)
-        try container.encode(self.issueSummary, forKey: .issueSummary)
-        try container.encode(self.locale, forKey: .locale)
-        try container.encode(self.osVersion, forKey: .osVersion)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.walletAddress, forKey: .walletAddress)
         try container.encodeIfPresent(self.walletUsesPassphrase, forKey: .walletUsesPassphrase)
         try container.encodeIfPresent(self.walletCreationMethod?.rawValue, forKey: .walletCreationMethod)
     }
 
     init(from decoder: Decoder) throws {
-        let fieldsContainer = try decoder.container(keyedBy: FieldsCodingKeys.self)
-        let container = try fieldsContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: .fields)
-        self.reportId = try container.decodeIfPresent(Int.self, forKey: .reportId)
-        self.emailAddress = try container.decode(String.self, forKey: .emailAddress)
-        self.issueSummary = try container.decode(String.self, forKey: .issueSummary)
-    }
-}
+        let container = try decoder.container(keyedBy: CodingKeys.self)
 
-extension Diagnostic {
-    enum DiagnosticError: LocalizedError {
-        case encodingFailure
+        self.walletAddress = try container.decodeIfPresent(String.self, forKey: .walletAddress)
+        self.walletUsesPassphrase = try container.decodeIfPresent(Bool.self, forKey: .walletUsesPassphrase)
+
+        let creationMethod = try container.decodeIfPresent(String.self, forKey: .walletCreationMethod) ?? ""
+        self.walletCreationMethod = CreationMethod(rawValue: creationMethod) ?? .unknown
     }
 }

@@ -73,15 +73,15 @@ final class DiagnosticCoordinator {
     }
 
     func runWalletDiagnostic() {
-        currentDiagnostic = Diagnostic(address: "",
-                                       creationMethod: .mnemonic12,
-                                       passphrase: false,
-                                       email: "wallet",
-                                       issue: "diagnostic")
+        let diagnostic = Diagnostic(walletDiagnostic: KeychainHelper.walletDiagnostic)
+        currentDiagnostic = diagnostic
+        diagnosticViewController.update(with: diagnostic)
     }
 
     func runBasicDiagnostic() {
-        currentDiagnostic = Diagnostic(email: "basic", issue: "diagnostic")
+        let diagnostic = Diagnostic(email: "basic", issue: "diagnostic")
+        currentDiagnostic = diagnostic
+        diagnosticViewController.update(with: diagnostic)
     }
 
     func sendDiagnostic() {

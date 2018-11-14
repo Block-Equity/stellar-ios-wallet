@@ -17,6 +17,7 @@ final class KeychainHelper {
     static let privateSeedKey = "privateKey"
     static let pinKey = "pin"
     static let isFreshInstallKey = "isFreshInstall"
+    static let walletDiagnosticKey = "walletDiagnostic"
 
     public static func save(pin: String) {
         KeychainSwift().set(pin, forKey: pinKey)
@@ -69,11 +70,30 @@ final class KeychainHelper {
         UserDefaults.standard.set(true, forKey: isFreshInstallKey)
     }
 
+    public static func setDiagnostic(_ walletDiagnostic: WalletDiagnostic) {
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(walletDiagnostic) {
+            KeychainSwift().set(data, forKey: walletDiagnosticKey)
+        }
+    }
+
+    public static var walletDiagnostic: WalletDiagnostic? {
+        let jsonDecoder = JSONDecoder()
+
+        guard let data = KeychainSwift().getData(walletDiagnosticKey),
+            let diagnostic = try? jsonDecoder.decode(WalletDiagnostic.self, from: data) else {
+                return nil
+        }
+
+        return diagnostic
+    }
+
     public static func clearAll() {
         UserDefaults.standard.set(false, forKey: isFreshInstallKey)
         self.clearStellarSecrets()
         KeychainSwift().delete(accountIdKey)
         KeychainSwift().delete(pinKey)
+        KeychainSwift().delete(walletDiagnosticKey)
     }
 
     public static func clearStellarSecrets() {
