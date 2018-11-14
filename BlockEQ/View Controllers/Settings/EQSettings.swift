@@ -13,9 +13,9 @@ struct EQSettings {
     /// This initalizer populates options based on the scheme selected. Debug options are only included in debug builds.
     static var options: [SettingNode] {
         #if DEBUG
-        return [walletSection, securitySection, aboutSection]
+        return [walletSection, securitySection, supportSection, aboutSection]
         #else
-        return [walletSection, securitySection, aboutSection]
+        return [walletSection, securitySection, supportSection, aboutSection]
         #endif
     }
 
@@ -72,10 +72,6 @@ struct EQSettings {
                              identifier: "about-application",
                              enabled: true,
                              type: .normal)
-//            SettingNode.node(name: "SETTINGS_OPTION_SUPPORT".localized(),
-//                             identifier: "about-support",
-//                             enabled: false,
-//                             type: .normal)
         ]
     }
 
@@ -92,6 +88,15 @@ struct EQSettings {
             SettingNode.node(name: "SETTINGS_OPTION_EXPORT_KEYPAIR".localized(),
                              identifier: "keys-export-private-key",
                              enabled: false,
+                             type: .normal)
+        ]
+    }
+
+    static var supportItems: [SettingNode] {
+        return [
+            SettingNode.node(name: "SETTINGS_OPTION_DIAGNOSTICS".localized(),
+                             identifier: "support-start-diagnostic",
+                             enabled: true,
                              type: .normal)
         ]
     }
@@ -118,6 +123,12 @@ struct EQSettings {
         return SettingNode.section(name: "SETTINGS_SECTION_SECURITY".localized(),
                                    identifier: "section-security",
                                    items: [pinSection])
+    }
+
+    static var supportSection: SettingNode {
+        return SettingNode.section(name: "SETTINGS_SECTION_SUPPORT".localized(),
+                                   identifier: "section-support",
+                                   items: supportItems)
     }
 
     static var aboutSection: SettingNode {

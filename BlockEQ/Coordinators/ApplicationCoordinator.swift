@@ -208,6 +208,8 @@ extension ApplicationCoordinator: SettingsDelegate {
             pushAdvancedPinControl(with: setting)
         case .section(_, let identifier, _) where identifier == "section-keys":
             pushKeyManagement(with: setting)
+        case .node(_, let identifier, _, _) where identifier ==  "support-start-diagnostic":
+            presentDiagnostics()
         default: print("Selected: \(String(describing: setting.name)) \(setting.identifier)")
         }
     }
