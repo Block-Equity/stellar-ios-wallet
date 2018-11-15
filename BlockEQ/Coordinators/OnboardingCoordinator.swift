@@ -154,10 +154,9 @@ extension OnboardingCoordinator {
             try core.accountService.initializeAccount(with: secret)
 
             guard let accountId = core.accountService.account?.accountId else { return }
+
             let diagnostic = WalletDiagnostic(address: accountId, creationMethod: .recoveredSeed, usesPassphrase: false)
-
             KeychainHelper.setDiagnostic(diagnostic)
-
         } catch {
             // error
         }

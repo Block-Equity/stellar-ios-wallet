@@ -21,3 +21,23 @@ extension WalletDiagnostic.CreationMethod {
         return creationMethod
     }
 }
+
+extension WalletDiagnostic {
+    static func extractFromKeychain() {
+        var walletCreationMethod: WalletDiagnostic.CreationMethod = .unknown
+        let accountId = KeychainHelper.accountId ?? ""
+
+        if let mnemonic = StellarRecoveryMnemonic(KeychainHelper.mnemonic) {
+            walletCreationMethod = CreationMethod.from(mnemonic: mnemonic, recovered: false)
+        } else if StellarSeed(KeychainHelper.secretSeed) != nil {
+            walletCreationMethod = .recoveredSeed
+        }
+
+        let diag = WalletDiagnostic(address: accountId,
+                                    creationMethod: walletCreationMethod,
+                                    usesPassphrase: false,
+                                    walletMigrated: true)
+
+        KeychainHelper.setDiagnostic(diag)
+    }
+}
