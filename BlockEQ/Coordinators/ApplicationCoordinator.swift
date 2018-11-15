@@ -136,6 +136,7 @@ final class ApplicationCoordinator {
                                         pubKey: KeychainHelper.publicSeedKey,
                                         privKey: KeychainHelper.privateSeedKey)
 
+            WalletDiagnostic.extractFromKeychain()
             KeychainHelper.clearStellarSecrets()
         }
     }

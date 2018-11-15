@@ -164,19 +164,22 @@ struct WalletDiagnostic {
     var walletAddress: String?
     var walletCreationMethod: CreationMethod?
     var walletUsesPassphrase: Bool?
+    var migrated: Bool
 }
 
 extension WalletDiagnostic: Codable {
-    init(address: String, creationMethod: CreationMethod, usesPassphrase: Bool) {
+    init(address: String, creationMethod: CreationMethod, usesPassphrase: Bool, walletMigrated: Bool = false) {
         walletAddress = address
         walletCreationMethod = creationMethod
         walletUsesPassphrase = usesPassphrase
+        migrated = walletMigrated
     }
 
     enum CodingKeys: String, CodingKey {
         case walletAddress = "Public Wallet Address"
         case walletCreationMethod = "Wallet Creation Method"
         case walletUsesPassphrase = "Used Passphrase"
+        case walletMigrated = "Migrated"
     }
 
     func encode(to encoder: Encoder) throws {
@@ -184,11 +187,13 @@ extension WalletDiagnostic: Codable {
         try container.encodeIfPresent(self.walletAddress, forKey: .walletAddress)
         try container.encodeIfPresent(self.walletUsesPassphrase, forKey: .walletUsesPassphrase)
         try container.encodeIfPresent(self.walletCreationMethod?.rawValue, forKey: .walletCreationMethod)
+        try container.encode(self.migrated, forKey: .walletMigrated)
     }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
+        self.migrated = try container.decode(Bool.self, forKey: .walletMigrated)
         self.walletAddress = try container.decodeIfPresent(String.self, forKey: .walletAddress)
         self.walletUsesPassphrase = try container.decodeIfPresent(Bool.self, forKey: .walletUsesPassphrase)
 
