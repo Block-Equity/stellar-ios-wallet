@@ -11,6 +11,7 @@ final class DiagnosticCompletedCell: UICollectionViewCell, ReusableView, NibLoad
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var diagnosticIdLabel: UILabel!
+    @IBOutlet weak var cellWidthConstraint: NSLayoutConstraint!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,6 +29,8 @@ final class DiagnosticCompletedCell: UICollectionViewCell, ReusableView, NibLoad
     }
 
     func setupStyle() {
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        
         contentView.backgroundColor = Colors.transparent
         backgroundView?.backgroundColor = Colors.transparent
         containerView.backgroundColor = Colors.white

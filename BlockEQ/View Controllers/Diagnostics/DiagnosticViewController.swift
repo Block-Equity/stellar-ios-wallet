@@ -64,6 +64,10 @@ final class DiagnosticViewController: UIViewController {
         layout?.scrollDirection = .horizontal
         layout?.minimumLineSpacing = DiagnosticViewController.cellSpacing
         layout?.minimumInteritemSpacing = DiagnosticViewController.cellSpacing
+        layout?.estimatedItemSize = CGSize(width: stepCollectionView.frame.width, height: 200)
+
+        titleLabel?.text = DiagnosticCoordinator.DiagnosticStep.summary.title
+        descriptionLabel?.text = DiagnosticCoordinator.DiagnosticStep.summary.description
     }
 
     func scrollTo(step: DiagnosticCoordinator.DiagnosticStep, animated: Bool) {
@@ -121,15 +125,6 @@ extension DiagnosticViewController: UICollectionViewDelegate {
 }
 
 extension DiagnosticViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        let cellWidth = collectionView.frame.width - DiagnosticViewController.cellSpacing * 2
-        let cellHeight = collectionView.frame.height
-        return CGSize(width: cellWidth, height: cellHeight)
-    }
-
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {

@@ -1,5 +1,5 @@
 //
-//  DiagnosticCardCell.swift
+//  DiagnosticInputCell.swift
 //  BlockEQ
 //
 //  Created by Nick DiZazzo on 2018-11-12.
@@ -12,8 +12,11 @@ final class DiagnosticInputCell: UICollectionViewCell, ReusableView, NibLoadable
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var headerBackgroundView: UIView!
     @IBOutlet weak var iconImageView: UIImageView!
-    @IBOutlet weak var issueSummaryLabel: UILabel!
-    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var summaryTitleLabel: UILabel!
+    @IBOutlet weak var emailTitleLabel: UILabel!
+    @IBOutlet weak var summaryTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var cellWidthConstraint: NSLayoutConstraint!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,6 +35,8 @@ final class DiagnosticInputCell: UICollectionViewCell, ReusableView, NibLoadable
     }
 
     func setupStyle() {
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        
         contentView.backgroundColor = Colors.transparent
         backgroundView?.backgroundColor = Colors.transparent
         containerView.backgroundColor = Colors.white
@@ -41,12 +46,12 @@ final class DiagnosticInputCell: UICollectionViewCell, ReusableView, NibLoadable
         iconImageView.tintColor = Colors.white
         iconImageView.contentMode = .scaleAspectFit
 
-        issueSummaryLabel.font = UIFont.systemFont(ofSize: 18, weight: .heavy)
-        issueSummaryLabel.text = "ISSUE_SUMMARY".localized()
-        issueSummaryLabel.textColor = Colors.transactionCellDarkGray
+        summaryTitleLabel.font = UIFont.systemFont(ofSize: 18, weight: .heavy)
+        summaryTitleLabel.text = "ISSUE_SUMMARY".localized()
+        summaryTitleLabel.textColor = Colors.transactionCellDarkGray
 
-        emailLabel.font = UIFont.systemFont(ofSize: 18, weight: .heavy)
-        emailLabel.text = "EMAIL_ADDRESS".localized()
-        emailLabel.textColor = Colors.transactionCellDarkGray
+        emailTitleLabel.font = UIFont.systemFont(ofSize: 18, weight: .heavy)
+        emailTitleLabel.text = "EMAIL_ADDRESS".localized()
+        emailTitleLabel.textColor = Colors.transactionCellDarkGray
     }
 }

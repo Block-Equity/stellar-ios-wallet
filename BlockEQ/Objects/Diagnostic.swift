@@ -28,10 +28,12 @@ struct Diagnostic {
     init(email: String, issue: String) {
         issueSummary = issue
         emailAddress = email
+        self.appDiagnostic = AppDiagnostic()
     }
 
     init(walletDiagnostic: WalletDiagnostic?) {
         self.walletDiagnostic = walletDiagnostic
+        self.appDiagnostic = AppDiagnostic()
     }
 
     init(email: String, issue: String, walletDiagnostic: WalletDiagnostic) {
@@ -119,9 +121,9 @@ struct AppDiagnostic {
         return "\(UIDevice.current.systemName) \(UIDevice.current.systemVersion)"
     }
 
-    var batteryState: String {
+    var batteryState: String? {
         switch UIDevice.current.batteryState {
-        case .unknown: return "Unknown"
+        case .unknown: return nil
         default: return "\(UIDevice.current.batteryState.stateString) - \(UIDevice.current.batteryLevel * 100.0)%"
         }
     }

@@ -87,7 +87,7 @@ extension OnboardingCoordinator: MnemonicViewControllerDelegate {
 
 extension OnboardingCoordinator: VerificationViewControllerDelegate {
     func validatedAccount(_ viewController: VerificationViewController, mnemonic: StellarRecoveryMnemonic) {
-        save(mnemonic: mnemonic, recovered: false, passphrase: false)
+        save(mnemonic: mnemonic, recovered: true, passphrase: false)
         authenticate()
     }
 
