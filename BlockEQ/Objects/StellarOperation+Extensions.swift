@@ -39,7 +39,13 @@ extension StellarOperation {
         case .manageOffer: return "OPERATION_MOFFER_DESCRIPTION".localized()
         case .pathPayment: return "OPERATION_PATHPAYMENT_DESCRIPTION".localized()
         case .payment: return"OPERATION_PAYMENT_DESCRIPTION".localized()
-        case .setOptions: return "OPERATION_OPTIONS_DESCRIPTION".localized()
+        case .setOptions:
+            switch "0" { // fix when support for different operation types are available
+            case "0": return "OPERATION_OPTIONS_SET_INFLATION_DESCRIPTION".localized()
+            case "1": return "OPERATION_OPTIONS_SET_HOMEDOMAIN_DESCRIPTION".localized()
+            case "2": return "OPERATION_OPTIONS_SET_SIGNER_DESCRIPTION".localized()
+            default: return "OPERATION_OPTIONS_DESCRIPTION".localized()
+            }
         }
     }
 }
