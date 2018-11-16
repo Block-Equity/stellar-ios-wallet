@@ -9,7 +9,7 @@
 import Foundation
 
 protocol NodeIndexingDelegate: AnyObject {
-    func updatedProgress(_ operation: Operation, fractionCompleted: Double)
+    func updatedProgress(_ operation: NodeIndexingOperation, fractionCompleted: Double)
 }
 
 final class NodeIndexingOperation: Operation {

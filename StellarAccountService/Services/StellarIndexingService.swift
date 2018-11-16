@@ -212,8 +212,9 @@ extension StellarIndexingService: StellarAccountServiceDelegate {
 }
 
 extension StellarIndexingService: NodeIndexingDelegate {
-    func updatedProgress(_ operation: Operation, fractionCompleted: Double) {
+    func updatedProgress(_ operation: NodeIndexingOperation, fractionCompleted: Double) {
         DispatchQueue.main.async {
+            self.graph.edges.formUnion(operation.edges)
             self.delegate?.updatedProgress(self, completed: fractionCompleted)
         }
     }
