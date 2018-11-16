@@ -107,6 +107,9 @@ final class ApplicationCoordinator {
     //The view controller responsible for adding and editing Stellar Contacts
     var stellarContactViewController: StellarContactViewController?
 
+    //The view controller responsible for adding and editing Stellar Contacts
+    var indexingViewController: IndexingViewController?
+
     /// The completion handler to call when the pin view controller completes successfully
     var authCompletion: PinEntryCompletion?
 
@@ -211,6 +214,8 @@ extension ApplicationCoordinator: SettingsDelegate {
             pushKeyManagement(with: setting)
         case .node(_, let identifier, _, _) where identifier ==  "support-start-diagnostic":
             presentDiagnostics()
+        case .node(_, let identifier, _, _) where identifier ==  "debug-check-indexing":
+            presentIndexingStatus()
         default: print("Selected: \(String(describing: setting.name)) \(setting.identifier)")
         }
     }
@@ -278,6 +283,16 @@ extension ApplicationCoordinator: SettingsDelegate {
         diagnosticCoordinator.reset()
         diagnosticCoordinator.runWalletDiagnostic()
         wrappingNavController?.present(diagnosticCoordinator.diagnosticViewController, animated: true, completion: nil)
+    }
+
+    func presentIndexingStatus() {
+        let indexVC = IndexingViewController()
+        indexVC.delegate = self
+
+        indexingViewController = indexVC
+        indexVC.update(with: nil, error: nil)
+
+        wrappingNavController?.present(indexVC, animated: true)
     }
 
     func displayApplicationInfo() {
@@ -372,9 +387,31 @@ extension ApplicationCoordinator: SettingsDelegate {
 extension ApplicationCoordinator: StellarIndexingServiceDelegate {
     func finishedIndexing(_ service: StellarIndexingService) {
         print("Indexing finished!")
+        indexingViewController?.update(with: 1, error: nil)
     }
 
-    func updatedProgress(_ service: StellarIndexingService, progress: Progress) {
-        print("Indexing progress: \(progress.fractionCompleted)")
+    func errorIndexing(_ service: StellarIndexingService, error: Error?) {
+        if let error = error {
+            print("Indexing Error:", error.localizedDescription)
+            indexingViewController?.update(with: nil, error: error)
+        } else {
+            print("Indexing Error with no reason specified.")
+        }
+    }
+
+    func updatedProgress(_ service: StellarIndexingService, completed: Double) {
+        indexingViewController?.update(with: completed, error: nil)
+    }
+}
+
+extension ApplicationCoordinator: IndexingViewControllerDelegate {
+    func requestedCancelIndexing(_ viewController: IndexingViewController) {
+        core?.indexingService.haltIndexing()
+        indexingViewController?.update(with: nil, error: nil)
+    }
+
+    func requestedRestartIndexing(_ viewController: IndexingViewController) {
+        core?.indexingService.rebuildIndex()
+        indexingViewController?.update(with: 0, error: nil)
     }
 }

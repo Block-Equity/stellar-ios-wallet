@@ -13,7 +13,7 @@ struct EQSettings {
     /// This initalizer populates options based on the scheme selected. Debug options are only included in debug builds.
     static var options: [SettingNode] {
         #if DEBUG
-        return [walletSection, securitySection, supportSection, aboutSection]
+        return [debugSettings, walletSection, securitySection, supportSection, aboutSection]
         #else
         return [walletSection, securitySection, supportSection, aboutSection]
         #endif
@@ -101,6 +101,15 @@ struct EQSettings {
         ]
     }
 
+    static var debugItems: [SettingNode] {
+        return [
+            SettingNode.node(name: "SETTINGS_OPTION_INDEXING".localized(),
+                             identifier: "debug-check-indexing",
+                             enabled: true,
+                             type: .normal)
+        ]
+    }
+
     static var walletSection: SettingNode {
         return SettingNode.section(name: "SETTINGS_SECTION_WALLET".localized(),
                                    identifier: "section-wallet",
@@ -140,6 +149,6 @@ struct EQSettings {
     static var debugSettings: SettingNode {
         return SettingNode.section(name: "SETTINGS_SECTION_DEBUG".localized(),
                                    identifier: "section-debug",
-                                   items: [])
+                                   items: debugItems)
     }
 }
