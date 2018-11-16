@@ -110,6 +110,10 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
 
             transactionVC.update(with: transaction, operations, effect)
             wrappingNavController?.pushViewController(transactionVC, animated: true)
+        } else {
+            UIAlertController.simpleAlert(title: "TRANSACTIONS_INDEXING_TITLE".localized(),
+                                          message: "TRANSACTIONS_INDEXING_MESSAGE".localized(),
+                                          presentingViewController: self.tabController)
         }
     }
 }

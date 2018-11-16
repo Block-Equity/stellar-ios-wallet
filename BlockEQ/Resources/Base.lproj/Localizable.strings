@@ -38,6 +38,7 @@
 "SETTINGS_OPTION_DISPLAY_SECRET_SEED" = "Display Seed Information";
 "SETTINGS_OPTION_EXPORT_KEYPAIR" = "Export Key Pair";
 "SETTINGS_OPTION_DIAGNOSTICS" = "Run Diagnostic";
+"SETTINGS_OPTION_INDEXING" = "Indexing Service";
 
 "BIOMETRIC_AUTH_TITLE" = "Unlock your wallet";
 "AUTHENTICATE_TITLE" = "Authenticate";
@@ -217,3 +218,6 @@
 "OPERATION_OPTIONS_SET_INFLATION_DESCRIPTION" = "Inflation destination set to %@";
 "OPERATION_OPTIONS_SET_HOMEDOMAIN_DESCRIPTION" = "Home domain set to %@";
 "OPERATION_OPTIONS_SET_SIGNER_DESCRIPTION" = "%@ signer %@ with weight %@";
+
+"TRANSACTIONS_INDEXING_TITLE" = "Indexing Transactions";
+"TRANSACTIONS_INDEXING_MESSAGE" = "Transactions are still being indexed. Once completed, you will be able to see the details for this transaction.";

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IndexingViewController" customModule="BlockEQ" customModuleProvider="target">
+            <connections>
+                <outlet property="cancelButton" destination="JqA-he-kkV" id="guW-PC-Rhy"/>
+                <outlet property="closeButton" destination="RAM-31-MGe" id="DQj-Vd-bm1"/>
+                <outlet property="progressLabel" destination="a02-AU-kyF" id="rce-AF-oTy"/>
+                <outlet property="progressView" destination="Kr1-No-hJd" id="0zm-1W-y1y"/>
+                <outlet property="restartButton" destination="ehS-X8-Xja" id="GVG-0O-6Ii"/>
+                <outlet property="view" destination="iN0-l3-epB" id="NXJ-HW-fBF"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RAM-31-MGe">
+                    <rect key="frame" x="315" y="45" width="35" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="3iI-HK-pmp"/>
+                        <constraint firstAttribute="width" constant="35" id="u8e-FF-kKo"/>
+                    </constraints>
+                    <state key="normal" image="close"/>
+                    <connections>
+                        <action selector="closeSelected:" destination="-1" eventType="touchUpInside" id="xAI-cx-dLa"/>
+                    </connections>
+                </button>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Kr1-No-hJd">
+                    <rect key="frame" x="50" y="342.5" width="275" height="2"/>
+                </progressView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Indexing Progress" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a02-AU-kyF">
+                    <rect key="frame" x="50" y="352" width="275" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JqA-he-kkV">
+                    <rect key="frame" x="50" y="389" width="48" height="30"/>
+                    <state key="normal" title="Cancel"/>
+                    <connections>
+                        <action selector="selectedCancel:" destination="-1" eventType="touchUpInside" id="l0Q-15-fZ1"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ehS-X8-Xja">
+                    <rect key="frame" x="275" y="389" width="50" height="30"/>
+                    <state key="normal" title="Restart"/>
+                    <connections>
+                        <action selector="selectedRestart:" destination="-1" eventType="touchUpInside" id="GYt-Td-OcZ"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="a02-AU-kyF" firstAttribute="leading" secondItem="Kr1-No-hJd" secondAttribute="leading" id="3lr-Kd-w4i"/>
+                <constraint firstItem="a02-AU-kyF" firstAttribute="top" secondItem="Kr1-No-hJd" secondAttribute="bottom" constant="7.5" id="7dU-AH-COz"/>
+                <constraint firstItem="JqA-he-kkV" firstAttribute="top" secondItem="a02-AU-kyF" secondAttribute="bottom" constant="16" id="F2o-tn-kYc"/>
+                <constraint firstItem="Kr1-No-hJd" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="QIV-eE-dRI"/>
+                <constraint firstItem="JqA-he-kkV" firstAttribute="leading" secondItem="a02-AU-kyF" secondAttribute="leading" id="TZY-Ob-k44"/>
+                <constraint firstItem="Kr1-No-hJd" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="50" id="c0c-FG-I0I"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Kr1-No-hJd" secondAttribute="trailing" constant="50" id="gwa-0b-VJN"/>
+                <constraint firstItem="RAM-31-MGe" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="25" id="hTG-bw-7O4"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="RAM-31-MGe" secondAttribute="trailing" constant="25" id="k8c-DP-8zb"/>
+                <constraint firstItem="ehS-X8-Xja" firstAttribute="trailing" secondItem="a02-AU-kyF" secondAttribute="trailing" id="ohw-xx-c1q"/>
+                <constraint firstItem="ehS-X8-Xja" firstAttribute="top" secondItem="JqA-he-kkV" secondAttribute="top" id="qnG-qo-mdX"/>
+                <constraint firstItem="a02-AU-kyF" firstAttribute="trailing" secondItem="Kr1-No-hJd" secondAttribute="trailing" id="r34-av-jqk"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="53.600000000000001" y="48.125937031484263"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="close" width="14" height="14"/>
+    </resources>
+</document>

@@ -35,16 +35,23 @@ extension StellarOperation: IndexableStellarObject {
 public final class StellarIndexingService: StellarIndexingServiceProtocol {
     let core: CoreService
     let graph: StellarDataGraph
-    var progressObserver: NSKeyValueObservation?
     var lastAccountIndexHash: Int = 0
 
     internal lazy var indexQueue: OperationQueue = {
         let queue = OperationQueue()
-        queue.qualityOfService = .background
+        queue.qualityOfService = .utility
         queue.maxConcurrentOperationCount = 1
 
         return queue
     }()
+
+    public var progress: Progress? {
+        if let indexingOperation = indexQueue.operations.first as? NodeIndexingOperation {
+            return indexingOperation.overallProgress
+        }
+
+        return nil
+    }
 
     public weak var delegate: StellarIndexingServiceDelegate?
 
@@ -59,26 +66,22 @@ public final class StellarIndexingService: StellarIndexingServiceProtocol {
     internal func updateIndex() {
         guard !indexQueue.isSuspended else { return }
 
-        print("Creating index operation")
         let indexOperation = NodeIndexingOperation(operations: graph.operationNodes,
                                                    effects: graph.effectNodes,
                                                    transactions: graph.transactionNodes)
+        indexOperation.delegate = self
 
         indexOperation.completionBlock = { [unowned self] in
             self.graph.edges.formUnion(indexOperation.edges)
-            self.progressObserver?.invalidate()
-            self.progressObserver = nil
 
             DispatchQueue.main.async {
-                self.delegate?.finishedIndexing(self)
+                if indexOperation.result.isSuccess {
+                    self.delegate?.finishedIndexing(self)
+                } else {
+                    self.delegate?.errorIndexing(self, error: indexOperation.result.error)
+                }
             }
         }
-
-//        progressObserver = indexOperation.progress.observe(\.fractionCompleted) { [unowned self] object, _ in
-//            DispatchQueue.main.async {
-//                self.delegate?.updatedProgress(self, progress: object)
-//            }
-//        }
 
         indexQueue.addOperation(indexOperation)
     }
@@ -89,8 +92,14 @@ public final class StellarIndexingService: StellarIndexingServiceProtocol {
         updateIndex()
     }
 
+    /// Immediately halts the indexing process.
+    public func haltIndexing() {
+        indexQueue.cancelAllOperations()
+    }
+
     /// Removes all objects from the index and does not begin to rebuild it.
-    func reset() {
+    public func reset() {
+        haltIndexing()
         graph.clear()
     }
 
@@ -199,5 +208,13 @@ extension StellarIndexingService: StellarAccountServiceDelegate {
 
     public func paymentUpdate(_ service: StellarAccountService, operation: StellarOperation) {
         // Do nothing
+    }
+}
+
+extension StellarIndexingService: NodeIndexingDelegate {
+    func updatedProgress(_ operation: Operation, fractionCompleted: Double) {
+        DispatchQueue.main.async {
+            self.delegate?.updatedProgress(self, completed: fractionCompleted)
+        }
     }
 }

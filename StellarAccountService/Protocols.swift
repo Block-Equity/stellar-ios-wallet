@@ -104,5 +104,6 @@ public protocol P2PResponseDelegate: AnyObject {
 // MARK: -
 public protocol StellarIndexingServiceDelegate: AnyObject {
     func finishedIndexing(_ service: StellarIndexingService)
-    func updatedProgress(_ service: StellarIndexingService, progress: Progress)
+    func errorIndexing(_ service: StellarIndexingService, error: Error?)
+    func updatedProgress(_ service: StellarIndexingService, completed: Double)
 }

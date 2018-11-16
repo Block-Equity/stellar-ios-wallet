@@ -90,11 +90,15 @@ class StellarIndexingServiceTests: XCTestCase {
 }
 
 final class MockIndexingServiceDelegate: StellarIndexingServiceDelegate {
+    func updatedProgress(_ service: StellarIndexingService, completed: Double) {
+
+    }
+
     func finishedIndexing(_ service: StellarIndexingService) {
         let _: StellarTransaction? = service.relatedObject(startingAt: effect)
     }
 
-    func updatedProgress(_ service: StellarIndexingService, progress: Progress) {
+    func errorIndexing(_ service: StellarIndexingService, error: Error?) {
 
     }
 }
