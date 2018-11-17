@@ -39,6 +39,7 @@
 "SETTINGS_OPTION_EXPORT_KEYPAIR" = "Export Key Pair";
 "SETTINGS_OPTION_DIAGNOSTICS" = "Run Diagnostic";
 "SETTINGS_OPTION_INDEXING" = "Indexing Service";
+"SETTINGS_OPTION_MIMIC" = "Mimic Account";
 
 "BIOMETRIC_AUTH_TITLE" = "Unlock your wallet";
 "AUTHENTICATE_TITLE" = "Authenticate";

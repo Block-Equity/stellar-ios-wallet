@@ -30,7 +30,7 @@ final class DiagnosticCompletedCell: UICollectionViewCell, ReusableView, NibLoad
 
     func setupStyle() {
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         contentView.backgroundColor = Colors.transparent
         backgroundView?.backgroundColor = Colors.transparent
         containerView.backgroundColor = Colors.white

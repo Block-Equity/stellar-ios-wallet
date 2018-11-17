@@ -36,7 +36,7 @@ final class DiagnosticInputCell: UICollectionViewCell, ReusableView, NibLoadable
 
     func setupStyle() {
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         contentView.backgroundColor = Colors.transparent
         backgroundView?.backgroundColor = Colors.transparent
         containerView.backgroundColor = Colors.white
