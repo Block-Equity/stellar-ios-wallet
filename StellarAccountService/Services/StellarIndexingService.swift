@@ -72,9 +72,9 @@ public final class StellarIndexingService: StellarIndexingServiceProtocol {
         indexOperation.delegate = self
 
         indexOperation.completionBlock = { [unowned self] in
-            self.graph.edges.formUnion(indexOperation.edges)
-
             DispatchQueue.main.async {
+                self.graph.edges.formUnion(indexOperation.edges)
+
                 if indexOperation.result.isSuccess {
                     self.delegate?.finishedIndexing(self)
                 } else {
