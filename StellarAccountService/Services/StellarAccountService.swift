@@ -200,3 +200,22 @@ extension StellarAccountService {
         state = .inactive
     }
 }
+
+#if DEBUG
+extension StellarAccountService {
+    /// This method perminantly writes the provided account data to the keychain with no public key. It's used for
+    /// debugging purposes when mimicing other accounts.
+    ///
+    /// - Parameter account: The account string
+    public func overrideWithAccount(id accountId: String) {
+        self.account = StellarAccount(accountId: accountId)
+
+        let secretManager = SecretManager(for: accountId)
+        self.secretManager = secretManager
+
+        if let keyPair = try? KeyPair(accountId: accountId) {
+            secretManager.store(keyPair: keyPair)
+        }
+    }
+}
+#endif

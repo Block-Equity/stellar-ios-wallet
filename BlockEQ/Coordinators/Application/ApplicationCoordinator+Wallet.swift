@@ -1,49 +1,14 @@
 //
-//  ApplicationCoordinator+Extensions.swift
+//  ApplicationCoordinator+Wallet.swift
 //  BlockEQ
 //
-//  Created by Nick DiZazzo on 2018-09-27.
+//  Created by Nick DiZazzo on 2018-11-17.
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
 import StellarAccountService
 
-extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
-    func authenticationCancelled(_ coordinator: AuthenticationCoordinator,
-                                 options: AuthenticationCoordinator.AuthenticationContext) {
-        // We need to re-set the previously switched setting, in the case the user cancels the authentication challenge
-        SecurityOptionHelper.set(option: .pinEnabled, value: temporaryPinSetting)
-        SecurityOptionHelper.set(option: .useBiometrics, value: temporaryBiometricSetting)
-
-        settingsViewController.tableView?.reloadData()
-    }
-
-    func authenticationFailed(_ coordinator: AuthenticationCoordinator,
-                              error: AuthenticationCoordinator.AuthenticationError?,
-                              options: AuthenticationCoordinator.AuthenticationContext) {
-        // We need to re-set the previously switched setting, in the case the user cancels the authentication challenge
-        SecurityOptionHelper.set(option: .pinEnabled, value: temporaryPinSetting)
-        SecurityOptionHelper.set(option: .useBiometrics, value: temporaryBiometricSetting)
-
-        settingsViewController.tableView?.reloadData()
-
-        KeychainHelper.clearAll()
-        SecurityOptionHelper.clear()
-
-        self.delegate?.switchToOnboarding()
-
-        authenticationCoordinator = nil
-    }
-
-    func authenticationCompleted(_ coordinator: AuthenticationCoordinator,
-                                 options: AuthenticationCoordinator.AuthenticationContext?) {
-        authenticationCoordinator = nil
-
-        authCompletion?()
-        authCompletion = nil
-    }
-}
-
+// MARK: - WalletViewControllerDelegate
 extension ApplicationCoordinator: WalletViewControllerDelegate {
     func selectedWalletSwitch(_ viewController: WalletViewController) {
         guard let account = core?.accountService.account else { return }
@@ -118,6 +83,7 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
     }
 }
 
+// MARK: - WalletSwitchingViewControllerDelegate
 extension ApplicationCoordinator: WalletSwitchingViewControllerDelegate {
     func selectedAddAsset() {
         let addAssetViewController = AddAssetViewController()
@@ -171,16 +137,7 @@ extension ApplicationCoordinator: WalletSwitchingViewControllerDelegate {
     }
 }
 
-extension ApplicationCoordinator: InflationViewControllerDelegate {
-    func updateAccountInflation(_ viewController: InflationViewController, destination: StellarAddress) {
-        guard let account = core?.accountService.account else {
-            return
-        }
-
-        core?.accountService.setInflationDestination(account: account, address: destination, delegate: viewController)
-    }
-}
-
+// MARK: - AddAssetViewControllerDelegate
 extension ApplicationCoordinator: AddAssetViewControllerDelegate {
     func requestedAdd(_ viewController: AddAssetViewController, asset: StellarAsset) {
 
@@ -194,41 +151,13 @@ extension ApplicationCoordinator: AddAssetViewControllerDelegate {
     }
 }
 
-extension ApplicationCoordinator: ContactsViewControllerDelegate {
-    func selectedAddToAddressBook(identifier: String, name: String, address: String) {
-        let stellarContactVC = StellarContactViewController(identifier: identifier, name: name, address: address)
-        let container = AppNavigationController(rootViewController: stellarContactVC)
-
-        stellarContactViewController = stellarContactVC
-        wrappingNavController = container
-        wrappingNavController?.navigationBar.prefersLargeTitles = true
-
-        tabController.present(container, animated: true, completion: nil)
-    }
-}
-
-extension ApplicationCoordinator: StellarAccountServiceDelegate {
-    func accountUpdated(_ service: StellarAccountService,
-                        account: StellarAccount,
-                        opts: StellarAccountService.UpdateOptions) {
-        if opts.contains(.effects) || opts.contains(.account) {
-            self.walletViewController.updated(account: account)
+// MARK: - InflationViewControllerDelegate
+extension ApplicationCoordinator: InflationViewControllerDelegate {
+    func updateAccountInflation(_ viewController: InflationViewController, destination: StellarAddress) {
+        guard let account = core?.accountService.account else {
+            return
         }
 
-        self.tradingCoordinator.updated(account: account)
-    }
-
-    func accountInactive(_ service: StellarAccountService, account: StellarAccount) {
-        self.walletViewController.updated(account: account)
-        self.tradingCoordinator.updated(account: account)
-    }
-
-    func paymentUpdate(_ service: StellarAccountService, operation: StellarOperation) {
-        service.update()
-    }
-}
-
-extension ApplicationCoordinator: DiagnosticCoordinatorDelegate {
-    func completedDiagnostic(_ coordinator: DiagnosticCoordinator) {
+        core?.accountService.setInflationDestination(account: account, address: destination, delegate: viewController)
     }
 }

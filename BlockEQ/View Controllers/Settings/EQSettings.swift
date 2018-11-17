@@ -103,6 +103,10 @@ struct EQSettings {
 
     static var debugItems: [SettingNode] {
         return [
+            SettingNode.node(name: "SETTINGS_OPTION_MIMIC".localized(),
+                             identifier: "debug-mimic-account",
+                             enabled: true,
+                             type: .normal),
             SettingNode.node(name: "SETTINGS_OPTION_INDEXING".localized(),
                              identifier: "debug-check-indexing",
                              enabled: true,
