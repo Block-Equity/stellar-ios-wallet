@@ -8,7 +8,7 @@
 
 import stellarsdk
 
-public final class StellarTransaction: Codable {
+public struct StellarTransaction: Codable {
     public let sourceAccount: String
     public let identifier: String
     public let ledger: Int
