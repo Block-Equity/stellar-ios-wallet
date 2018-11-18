@@ -8,7 +8,7 @@
 
 import stellarsdk
 
-public final class StellarOperation: Codable {
+public struct StellarOperation: Codable {
     public let identifier: String
     public let createdAt: Date
     public let operationType: OperationType

@@ -71,10 +71,10 @@ public final class StellarIndexingService: StellarIndexingServiceProtocol {
                                                    transactions: graph.transactionNodes)
         indexOperation.delegate = self
 
+        graph.edges.formUnion(indexOperation.edges)
+
         indexOperation.completionBlock = { [unowned self] in
             DispatchQueue.main.async {
-                self.graph.edges.formUnion(indexOperation.edges)
-
                 if indexOperation.result.isSuccess {
                     self.delegate?.finishedIndexing(self)
                 } else {
@@ -213,8 +213,9 @@ extension StellarIndexingService: StellarAccountServiceDelegate {
 
 extension StellarIndexingService: NodeIndexingDelegate {
     func updatedProgress(_ operation: NodeIndexingOperation, fractionCompleted: Double) {
+        graph.edges.formUnion(operation.edges)
+
         DispatchQueue.main.async {
-            self.graph.edges.formUnion(operation.edges)
             self.delegate?.updatedProgress(self, completed: fractionCompleted)
         }
     }

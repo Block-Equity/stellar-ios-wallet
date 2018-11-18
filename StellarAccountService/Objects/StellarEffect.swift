@@ -8,7 +8,7 @@
 
 import stellarsdk
 
-public final class StellarEffect: Codable {
+public struct StellarEffect {
     public let identifier: String
     public let pagingToken: String
     public let type: EffectType
@@ -41,7 +41,7 @@ public final class StellarEffect: Codable {
     }
 
     // MARK: - Helpers
-    private func setUpdatedEffect(with effectResponse: EffectResponse) {
+    private mutating func setUpdatedEffect(with effectResponse: EffectResponse) {
         guard let updatedEffect = effectResponse as? AccountCreatedEffectResponse else {
             return
         }
@@ -49,7 +49,7 @@ public final class StellarEffect: Codable {
         amount = updatedEffect.startingBalance
     }
 
-    private func setDebitedEffect(with effectResponse: EffectResponse) {
+    private mutating func setDebitedEffect(with effectResponse: EffectResponse) {
         guard let updatedEffect = effectResponse as? AccountDebitedEffectResponse else {
             return
         }
@@ -61,7 +61,7 @@ public final class StellarEffect: Codable {
                              balance: "")
     }
 
-    private func setCreditedEffect(with effectResponse: EffectResponse) {
+    private mutating func setCreditedEffect(with effectResponse: EffectResponse) {
         guard let updatedEffect = effectResponse as? AccountCreditedEffectResponse else {
             return
         }
@@ -73,7 +73,7 @@ public final class StellarEffect: Codable {
                              balance: "")
     }
 
-    private func setTradeEffect(with effectResponse: EffectResponse) {
+    private mutating func setTradeEffect(with effectResponse: EffectResponse) {
         guard let updatedEffect = effectResponse as? TradeEffectResponse else {
             return
         }
@@ -88,7 +88,7 @@ public final class StellarEffect: Codable {
                                         assetIssuer: updatedEffect.boughtAssetIssuer,
                                         balance: "")
 
-        self.assetPair = StellarAssetPair(buying: buying, selling: selling)
+        assetPair = StellarAssetPair(buying: buying, selling: selling)
 
         boughtAmount = updatedEffect.boughtAmount
         soldAmount = updatedEffect.soldAmount
@@ -98,10 +98,12 @@ public final class StellarEffect: Codable {
     }
 
     public func isBought(asset: StellarAsset) -> Bool {
-        return asset == self.assetPair.buying
+        return asset == assetPair.buying
     }
+}
 
-    // MARK: - Codable
+// MARK: - Codable
+extension StellarEffect: Codable {
     enum CodingKeys: CodingKey {
         case identifier
         case pagingToken
@@ -119,11 +121,11 @@ public final class StellarEffect: Codable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.createdAt = try container.decode(String.self, forKey: .createdAt)
-        self.pagingToken = try container.decode(String.self, forKey: .pagingToken)
+        identifier = try container.decode(String.self, forKey: .identifier)
+        createdAt = try container.decode(String.self, forKey: .createdAt)
+        pagingToken = try container.decode(String.self, forKey: .pagingToken)
 
         let typeInt = try container.decode(Int.self, forKey: .type)
-        self.type = EffectType(rawValue: typeInt) ?? .sequenceBumpedEffect
+        type = EffectType(rawValue: typeInt) ?? .sequenceBumpedEffect
     }
 }
