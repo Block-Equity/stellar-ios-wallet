@@ -135,11 +135,13 @@ extension ApplicationCoordinator: SettingsDelegate {
         }
 
         let mimicAction = UIAlertAction(title: "Mimic", style: .default) { _ in
+            #if DEBUG
             if let accountId = alert.textFields![0].text {
                 KeychainHelper.save(accountId: accountId)
                 self.core?.accountService.overrideWithAccount(id: accountId)
                 self.core?.accountService.update()
             }
+            #endif
         }
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
