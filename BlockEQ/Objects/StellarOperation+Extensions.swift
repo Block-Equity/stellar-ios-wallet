@@ -28,24 +28,58 @@ extension StellarOperation {
 
     var descriptionString: String {
         switch operationType {
-        case .accountCreated: return "OPERATION_CREATED_DESCRIPTION".localized()
-        case .accountMerge: return "OPERATION_MERGED_DESCRIPTION".localized()
-        case .allowTrust: return "OPERATION_ATRUST_DESCRIPTION".localized()
-        case .bumpSequence: return "OPERATION_BUMP_DESCRIPTION".localized()
-        case .changeTrust: return "OPERATION_CTRUST_DESCRIPTION".localized()
-        case .createPassiveOffer: return "OPERATION_POFFER_DESCRIPTION".localized()
-        case .inflation: return"OPERATION_INFLATION_DESCRIPTION".localized()
-        case .manageData: return "OPERATION_MANAGEDATA_DESCRIPTION".localized()
-        case .manageOffer: return "OPERATION_MOFFER_DESCRIPTION".localized()
-        case .pathPayment: return "OPERATION_PATHPAYMENT_DESCRIPTION".localized()
-        case .payment: return"OPERATION_PAYMENT_DESCRIPTION".localized()
+        case .accountCreated:
+            guard let createData = self.createData else { return "" }
+            return String(format: "OPERATION_CREATED_DESCRIPTION".localized(),
+                          createData.account, createData.balance.displayFormattedString)
+        case .accountMerge:
+            guard let mergeData = self.mergeData else { return "" }
+            return String(format: "OPERATION_MERGED_DESCRIPTION".localized(), mergeData.from, mergeData.into)
+        case .allowTrust:
+            guard let trustData = self.allowTrustData else { return "" }
+            let allowDeny = trustData.allow ? "OPERATION_ALLOWTRUST".localized() : "OPERATION_DENYTRUST".localized()
+            return String(format: "OPERATION_ATRUST_DESCRIPTION".localized(),
+                          allowDeny,
+                          trustData.trustor,
+                          trustData.asset.shortCode,
+                          trustData.trustee)
+        case .changeTrust:
+            guard let trustData = self.changeTrustData else { return "" }
+            return String(format: "OPERATION_CTRUST_DESCRIPTION".localized(),
+                          trustData.asset.shortCode,
+                          trustData.trustee)
+        case .manageOffer:
+            guard let manageData = self.manageData else { return "" }
+            return String(format: "OPERATION_MOFFER_DESCRIPTION".localized(),
+                          manageData.pair.selling.shortCode,
+                          manageData.pair.buying.shortCode,
+                          manageData.price.displayFormatted,
+                          "\(manageData.pair.buying.shortCode)/\(manageData.pair.selling.shortCode)")
+        case .payment:
+            guard let paymentData = self.paymentData else { return "" }
+            return String(format: "OPERATION_PAYMENT_DESCRIPTION".localized(),
+                          paymentData.asset.shortCode,
+                          paymentData.destination)
         case .setOptions:
-            switch "0" { // fix when support for different operation types are available
-            case "0": return "OPERATION_OPTIONS_SET_INFLATION_DESCRIPTION".localized()
-            case "1": return "OPERATION_OPTIONS_SET_HOMEDOMAIN_DESCRIPTION".localized()
-            case "2": return "OPERATION_OPTIONS_SET_SIGNER_DESCRIPTION".localized()
-            default: return "OPERATION_OPTIONS_DESCRIPTION".localized()
+            if let inflationDest = self.optionsData?.inflationDest {
+                return String(format: "OPERATION_OPTIONS_SET_INFLATION_DESCRIPTION".localized(), inflationDest)
+            } else if let domain = self.optionsData?.homeDomain {
+                return String(format: "OPERATION_OPTIONS_SET_HOMEDOMAIN_DESCRIPTION".localized(), domain)
+            } else if let signer = self.optionsData?.signerKey, let weight = self.optionsData?.signerWeight {
+                return String(format: "OPERATION_OPTIONS_SET_SIGNER_DESCRIPTION".localized(), signer, weight)
+            } else {
+                return "OPERATION_OPTIONS_DESCRIPTION".localized()
             }
+        case .pathPayment:
+            return "OPERATION_PATHPAYMENT_DESCRIPTION".localized()
+        case .bumpSequence:
+            return "OPERATION_BUMP_DESCRIPTION".localized()
+        case .createPassiveOffer:
+            return "OPERATION_POFFER_DESCRIPTION".localized()
+        case .inflation:
+            return "OPERATION_INFLATION_DESCRIPTION".localized()
+        case .manageData:
+            return "OPERATION_MANAGEDATA_DESCRIPTION".localized()
         }
     }
 }

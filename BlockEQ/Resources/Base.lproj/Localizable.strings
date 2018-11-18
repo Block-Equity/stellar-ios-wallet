@@ -205,16 +205,18 @@
 "OPERATION_OPTIONS_TITLE" = "Set Options";
 
 "OPERATION_CREATED_DESCRIPTION" = "Account %@ created with starting balance %@ XLM ";
-"OPERATION_MERGED_DESCRIPTION" = "Account %@ merged with %@ ";
-"OPERATION_ATRUST_DESCRIPTION" = "Allow %@ to Trust %@ from %@ ";
+"OPERATION_MERGED_DESCRIPTION" = "Account %@ merged with %@";
+"OPERATION_ATRUST_DESCRIPTION" = "%@ %@ to trust %@ from %@";
+"OPERATION_ALLOWTRUST" = "Allow";
+"OPERATION_DENYTRUST" = "Disallow";
+"OPERATION_CTRUST_DESCRIPTION" = "Changed trustline to %@ from %@";
+"OPERATION_MOFFER_DESCRIPTION" = "Created offer selling %@ for %@ at %@ %@";
+"OPERATION_PAYMENT_DESCRIPTION" = "Sent %@ to %@";
 "OPERATION_BUMP_DESCRIPTION" = "Unsupported";
-"OPERATION_CTRUST_DESCRIPTION" = "Trustline %@ to %@ from %@";
 "OPERATION_POFFER_DESCRIPTION" = "Unsupported";
 "OPERATION_INFLATION_DESCRIPTION" = "Unsupported";
 "OPERATION_MANAGEDATA_DESCRIPTION" = "Unsupported";
-"OPERATION_MOFFER_DESCRIPTION" = "Created offer selling %@ %@ for %@ %@ at %@ %@";
-"OPERATION_PATHPAYMENT_DESCRIPTION" = "Unsupported ";
-"OPERATION_PAYMENT_DESCRIPTION" = "Sent %@ %@ to %@";
+"OPERATION_PATHPAYMENT_DESCRIPTION" = "Unsupported";
 
 "OPERATION_OPTIONS_SET_INFLATION_DESCRIPTION" = "Inflation destination set to %@";
 "OPERATION_OPTIONS_SET_HOMEDOMAIN_DESCRIPTION" = "Home domain set to %@";

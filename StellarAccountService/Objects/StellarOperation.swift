@@ -9,17 +9,84 @@
 import stellarsdk
 
 public struct StellarOperation: Codable {
+    public typealias PaymentData = (asset: StellarAsset, destination: String)
+    public typealias ManageData = (pair: StellarAssetPair, amount: String, price: String)
+    public typealias CreateData = (account: String, balance: Decimal)
+    public typealias OptionsData = (inflationDest: String?, homeDomain: String?, signerKey: String?, signerWeight: Int?)
+    public typealias ChangeTrustData = (asset: StellarAsset, trustee: String, trustor: String)
+    public typealias AllowTrustData = (asset: StellarAsset, trustee: String, trustor: String, allow: Bool)
+    public typealias MergeData = (from: String, into: String)
+
     public let identifier: String
     public let createdAt: Date
     public let operationType: OperationType
     public let transactionHash: String
 
+    public var paymentData: PaymentData?
+    public var manageData: ManageData?
+    public var createData: CreateData?
+    public var optionsData: OptionsData?
+    public var changeTrustData: ChangeTrustData?
+    public var allowTrustData: AllowTrustData?
+    public var mergeData: MergeData?
+
+    //swiftlint:disable function_body_length
     init(_ response: OperationResponse) {
         self.identifier = response.id
         self.createdAt = response.createdAt
         self.operationType = response.operationType
         self.transactionHash = response.transactionHash
+
+        if let paymentResponse = response as? PaymentOperationResponse {
+            paymentData = (destination: paymentResponse.to,
+                           asset: StellarAsset(assetType: paymentResponse.assetType,
+                                               assetCode: paymentResponse.assetCode,
+                                               assetIssuer: paymentResponse.assetIssuer,
+                                               balance: paymentResponse.amount))
+        } else if let manageOfferResponse = response as? ManageOfferOperationResponse {
+            let sellAsset = StellarAsset(assetType: manageOfferResponse.sellingAssetType,
+                                         assetCode: manageOfferResponse.sellingAssetCode,
+                                         assetIssuer: manageOfferResponse.sellingAssetIssuer,
+                                         balance: "")
+
+            let buyAsset = StellarAsset(assetType: manageOfferResponse.buyingAssetType,
+                                        assetCode: manageOfferResponse.buyingAssetCode,
+                                        assetIssuer: manageOfferResponse.buyingAssetIssuer,
+                                        balance: "")
+
+            manageData = (price: manageOfferResponse.price,
+                          amount: manageOfferResponse.amount,
+                          pair: StellarAssetPair(buying: buyAsset, selling: sellAsset))
+
+        } else if let trustResponse = response as? AllowTrustOperationResponse {
+            allowTrustData = (asset: StellarAsset(assetType: trustResponse.assetType,
+                                                  assetCode: trustResponse.assetCode,
+                                                  assetIssuer: trustResponse.assetIssuer,
+                                                  balance: ""),
+                              trustee: trustResponse.trustee,
+                              trustor: trustResponse.trustor,
+                              allow: trustResponse.authorize)
+        } else if let trustResponse = response as? ChangeTrustOperationResponse {
+            changeTrustData = (asset: StellarAsset(assetType: trustResponse.assetType,
+                                                   assetCode: trustResponse.assetCode,
+                                                   assetIssuer: trustResponse.assetIssuer,
+                                                   balance: trustResponse.limit ?? ""),
+                               trustee: trustResponse.trustee,
+                               trustor: trustResponse.trustor)
+        } else if let optionsResponse = response as? SetOptionsOperationResponse {
+            optionsData = (inflationDest: optionsResponse.inflationDestination,
+                           homeDomain: optionsResponse.homeDomain,
+                           signerKey: optionsResponse.signerKey,
+                           signerWeight: optionsResponse.signerWeight)
+        } else if let createdResponse = response as? AccountCreatedOperationResponse {
+            createData = (account: createdResponse.account, balance: createdResponse.startingBalance)
+        } else if let mergeResponse = response as? AccountMergeOperationResponse {
+            mergeData = (from: response.sourceAccount, into: mergeResponse.into)
+        } else {
+            debugPrint("Unhandled operation type when processing operation '\(identifier)'")
+        }
     }
+    //swiftlint:enable function_body_length
 
     // MARK: - Codable
     enum CodingKeys: CodingKey {
