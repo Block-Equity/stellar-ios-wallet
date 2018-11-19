@@ -49,7 +49,6 @@ final class DiagnosticViewController: UIViewController {
         descriptionLabel.font = UIFont.systemFont(ofSize: 18, weight: .light)
 
         stepCollectionView.registerCell(type: DiagnosticDataCell.self)
-        stepCollectionView.registerCell(type: DiagnosticInputCell.self)
         stepCollectionView.registerCell(type: DiagnosticCompletedCell.self)
 
         stepCollectionView.isPagingEnabled = true
@@ -102,9 +101,6 @@ extension DiagnosticViewController: UICollectionViewDataSource {
                 dataCell.update(with: viewModel)
             }
             cell = dataCell
-        case 1:
-            let inputCell: DiagnosticInputCell = collectionView.dequeueReusableCell(for: indexPath)
-            cell = inputCell
         default:
             let completedCell: DiagnosticCompletedCell = collectionView.dequeueReusableCell(for: indexPath)
             cell = completedCell

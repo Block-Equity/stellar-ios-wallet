@@ -66,8 +66,6 @@
 		C53E628A219A0175006BF2F1 /* DiagnosticCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53E6289219A0175006BF2F1 /* DiagnosticCoordinator.swift */; };
 		C53E628D219A01C9006BF2F1 /* DiagnosticViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53E628C219A01C9006BF2F1 /* DiagnosticViewController.swift */; };
 		C53E628F219A01F2006BF2F1 /* DiagnosticViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53E628E219A01F2006BF2F1 /* DiagnosticViewController.xib */; };
-		C53E6291219A2A00006BF2F1 /* DiagnosticInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53E6290219A2A00006BF2F1 /* DiagnosticInputCell.swift */; };
-		C53E6293219A2A5E006BF2F1 /* DiagnosticInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53E6292219A2A5E006BF2F1 /* DiagnosticInputCell.xib */; };
 		C53E6295219A4432006BF2F1 /* DiagnosticDataCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53E6294219A4432006BF2F1 /* DiagnosticDataCell.xib */; };
 		C53E6297219A444D006BF2F1 /* DiagnosticCompletedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53E6296219A444D006BF2F1 /* DiagnosticCompletedCell.xib */; };
 		C53E6299219A4480006BF2F1 /* DiagnosticDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53E6298219A4480006BF2F1 /* DiagnosticDataCell.swift */; };
@@ -305,8 +303,6 @@
 		C53E6289219A0175006BF2F1 /* DiagnosticCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticCoordinator.swift; sourceTree = "<group>"; };
 		C53E628C219A01C9006BF2F1 /* DiagnosticViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticViewController.swift; sourceTree = "<group>"; };
 		C53E628E219A01F2006BF2F1 /* DiagnosticViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiagnosticViewController.xib; sourceTree = "<group>"; };
-		C53E6290219A2A00006BF2F1 /* DiagnosticInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticInputCell.swift; sourceTree = "<group>"; };
-		C53E6292219A2A5E006BF2F1 /* DiagnosticInputCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiagnosticInputCell.xib; sourceTree = "<group>"; };
 		C53E6294219A4432006BF2F1 /* DiagnosticDataCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiagnosticDataCell.xib; sourceTree = "<group>"; };
 		C53E6296219A444D006BF2F1 /* DiagnosticCompletedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiagnosticCompletedCell.xib; sourceTree = "<group>"; };
 		C53E6298219A4480006BF2F1 /* DiagnosticDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticDataCell.swift; sourceTree = "<group>"; };
@@ -557,8 +553,6 @@
 			children = (
 				C53E6298219A4480006BF2F1 /* DiagnosticDataCell.swift */,
 				C53E6294219A4432006BF2F1 /* DiagnosticDataCell.xib */,
-				C53E6290219A2A00006BF2F1 /* DiagnosticInputCell.swift */,
-				C53E6292219A2A5E006BF2F1 /* DiagnosticInputCell.xib */,
 				C53E629A219A449B006BF2F1 /* DiagnosticCompletedCell.swift */,
 				C53E6296219A444D006BF2F1 /* DiagnosticCompletedCell.xib */,
 			);
@@ -1151,7 +1145,6 @@
 				EC4258502054EE76000941B5 /* SendAmountViewController.xib in Resources */,
 				C53E628F219A01F2006BF2F1 /* DiagnosticViewController.xib in Resources */,
 				C525C97920B79695006C138F /* KeyboardView.xib in Resources */,
-				C53E6293219A2A5E006BF2F1 /* DiagnosticInputCell.xib in Resources */,
 				C5401D362178007300A12AC2 /* TransactionDetailsViewController.xib in Resources */,
 				EC11062320C7062000FD3684 /* MyOffersHeaderView.xib in Resources */,
 				C499755D2112255C00E2299C /* P2PViewController.xib in Resources */,
@@ -1312,7 +1305,6 @@
 				C53E62862199DC94006BF2F1 /* SendDiagnosticOperation.swift in Sources */,
 				C499755F211297BF00E2299C /* P2PCoordinator.swift in Sources */,
 				C5114DB7219548AC00C88E4F /* TransactionDetailsDataSource.swift in Sources */,
-				C53E6291219A2A00006BF2F1 /* DiagnosticInputCell.swift in Sources */,
 				C5401D342178005B00A12AC2 /* TransactionDetailsViewController.swift in Sources */,
 				EC2015F720532F4B009A73C8 /* AppButton.swift in Sources */,
 				C5AB413D2090436700096A29 /* UIView+NibLoadableView.swift in Sources */,

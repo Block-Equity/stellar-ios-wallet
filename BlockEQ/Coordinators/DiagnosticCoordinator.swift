@@ -15,7 +15,6 @@ protocol DiagnosticCoordinatorDelegate: AnyObject {
 final class DiagnosticCoordinator {
     enum DiagnosticStep: Int, RawRepresentable {
         case summary
-        case input
         case completion
 
         var next: DiagnosticStep {
@@ -27,7 +26,6 @@ final class DiagnosticCoordinator {
         var title: String {
             switch self {
             case .summary: return "WALLET_DIAGNOSTICS_TITLE".localized()
-            case .input: return "ADDITIONAL_INFORMATION_TITLE".localized()
             case .completion: return "DIAGNOSTIC_COMPLETE_TITLE".localized()
             }
         }
@@ -35,12 +33,11 @@ final class DiagnosticCoordinator {
         var description: String {
             switch self {
             case .summary: return "WALLET_DIAGNOSTICS_DESCRIPTION".localized()
-            case .input: return "ADDITIONAL_INFORMATION_DESCRIPTION".localized()
             case .completion: return "DIAGNOSTIC_COMPLETE_DESCRIPTION".localized()
             }
         }
 
-        static let all: [DiagnosticStep] = [.summary, .input, .completion]
+        static let all: [DiagnosticStep] = [.summary, .completion]
     }
 
     var isOnLastStep: Bool {
@@ -79,7 +76,7 @@ final class DiagnosticCoordinator {
     }
 
     func runBasicDiagnostic() {
-        let diagnostic = Diagnostic(email: "basic", issue: "diagnostic")
+        let diagnostic = Diagnostic()
         currentDiagnostic = diagnostic
         diagnosticViewController.update(with: diagnostic)
     }
