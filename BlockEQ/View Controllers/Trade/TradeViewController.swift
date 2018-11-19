@@ -233,13 +233,13 @@ class TradeViewController: UIViewController {
         tradeToTextField.text = toValue.displayFormattedString
     }
 
-    func buildFromDataSource(with selectedAsset: StellarAsset?) {
+    func buildFromDataSource(with selectedAsset: StellarAsset?, excluding: StellarAsset? = nil) {
         guard let account = self.stellarAccount else { return }
 
         let selectedFromAsset = selectedAsset ?? account.assets.first
         let fromDataSource = TradePickerDataSource(assets: account.assets,
                                                    selected: selectedFromAsset,
-                                                   excluding: nil)
+                                                   excluding: excluding)
         fromDataSource.delegate = self
 
         self.tradeFromPickerView.dataSource = fromDataSource
@@ -297,21 +297,25 @@ extension TradeViewController: TradePickerDataSourceDelegate {
         tradeFromTextField.text = ""
         tradeToTextField.text = ""
 
-        guard let lastSelectedToAsset = toAsset, let lastSelectedFromAsset = fromAsset else {
+        guard var lastToAsset = toAsset, let lastFromAsset = fromAsset, let account = self.stellarAccount else {
             return
         }
 
         if pickerView == tradeFromPickerView {
-            buildFromDataSource(with: asset)
-            buildToDataSource(with: nil)
+            if asset == lastToAsset, let newAsset = firstAssetExcluding(asset, in: account) {
+                lastToAsset = newAsset
+            }
 
-            reselectItem(in: toDataSource, picker: tradeToPickerView, lastAsset: lastSelectedToAsset)
+            buildFromDataSource(with: asset)
+            buildToDataSource(with: lastToAsset)
+
+            reselectItem(in: toDataSource, picker: tradeToPickerView, lastAsset: lastToAsset)
             setTradeSelectors()
         } else {
-            buildFromDataSource(with: nil)
+            buildFromDataSource(with: lastFromAsset)
             buildToDataSource(with: asset)
 
-            reselectItem(in: fromDataSource, picker: tradeFromPickerView, lastAsset: lastSelectedFromAsset)
+            reselectItem(in: fromDataSource, picker: tradeFromPickerView, lastAsset: lastFromAsset)
             setTradeSelectors()
         }
 
