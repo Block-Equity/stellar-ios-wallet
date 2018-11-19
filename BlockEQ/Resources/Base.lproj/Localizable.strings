@@ -37,7 +37,7 @@
 "SETTINGS_OPTION_PRIVATE_KEY" = "Private Key";
 "SETTINGS_OPTION_DISPLAY_SECRET_SEED" = "Display Seed Information";
 "SETTINGS_OPTION_EXPORT_KEYPAIR" = "Export Key Pair";
-"SETTINGS_OPTION_DIAGNOSTICS" = "Run Diagnostic";
+"SETTINGS_OPTION_DIAGNOSTICS" = "Send Diagnostic";
 "SETTINGS_OPTION_INDEXING" = "Indexing Service";
 "SETTINGS_OPTION_MIMIC" = "Mimic Account";
 
@@ -181,10 +181,8 @@
 "OPERATION_ID_COPIED" = "Operation ID Copied";
 "SIGNER_COPIED" = "Public Signature Copied";
 "WALLET_DIAGNOSTICS_TITLE" = "Wallet Diagnostics";
-"ADDITIONAL_INFORMATION_TITLE" = "Additional Information";
 "DIAGNOSTIC_COMPLETE_TITLE" = "Diagnostic Complete";
 "WALLET_DIAGNOSTICS_DESCRIPTION" = "This tool collects non-private information about your wallet in order to help diagnose issues.";
-"ADDITIONAL_INFORMATION_DESCRIPTION" = "We need some additional information in order to help you.";
 "DIAGNOSTIC_COMPLETE_DESCRIPTION" = "When you contact BlockEQ for support, refer to your diagnostic ID below.";
 "DIAGNOSTIC_ID_TITLE" = "Diagnostic ID";
 "DIAGNOSTIC_DATA_TITLE" = "Diagnostic Data";

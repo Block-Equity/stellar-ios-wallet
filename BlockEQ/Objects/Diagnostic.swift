@@ -25,6 +25,10 @@ struct Diagnostic {
     var walletDiagnostic: WalletDiagnostic?
     var appDiagnostic: AppDiagnostic?
 
+    init() {
+        self.appDiagnostic = AppDiagnostic()
+    }
+
     init(email: String, issue: String) {
         issueSummary = issue
         emailAddress = email
