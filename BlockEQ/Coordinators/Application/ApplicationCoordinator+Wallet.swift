@@ -64,22 +64,11 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
     }
 
     func selectedEffect(_ viewController: WalletViewController, effect: StellarEffect) {
-        let transactionVC = TransactionDetailsViewController()
+        let transactionVC = TransactionDetailsViewController(effect: effect)
         transactionViewController = transactionVC
+        transactionVC.delegate = self
 
-        if let transaction: StellarTransaction = core?.indexingService.relatedObject(startingAt: effect) {
-            var operations = [StellarOperation]()
-            if let accountOperations = core?.accountService.account?.operations {
-                operations = accountOperations.filter { $0.transactionHash == transaction.hash }
-            }
-
-            transactionVC.update(with: transaction, operations, effect)
-            wrappingNavController?.pushViewController(transactionVC, animated: true)
-        } else {
-            UIAlertController.simpleAlert(title: "TRANSACTIONS_INDEXING_TITLE".localized(),
-                                          message: "TRANSACTIONS_INDEXING_MESSAGE".localized(),
-                                          presentingViewController: self.tabController)
-        }
+        wrappingNavController?.pushViewController(transactionVC, animated: true)
     }
 }
 
@@ -159,5 +148,21 @@ extension ApplicationCoordinator: InflationViewControllerDelegate {
         }
 
         core?.accountService.setInflationDestination(account: account, address: destination, delegate: viewController)
+    }
+}
+
+extension ApplicationCoordinator: TransactionDetailsViewControllerDelegate {
+    func requestedTransaction(_ viewController: TransactionDetailsViewController,
+                              for effect: StellarEffect) -> StellarTransaction? {
+        return core?.indexingService.relatedObject(startingAt: effect)
+    }
+
+    func requestedOperations(_ viewController: TransactionDetailsViewController,
+                             for transaction: StellarTransaction) -> [StellarOperation] {
+        if let accountOperations = core?.accountService.account?.operations {
+            return accountOperations.filter { $0.transactionHash == transaction.hash }
+        }
+
+        return []
     }
 }

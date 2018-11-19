@@ -222,5 +222,4 @@
 "OPERATION_OPTIONS_SET_HOMEDOMAIN_DESCRIPTION" = "Home domain set to %@";
 "OPERATION_OPTIONS_SET_SIGNER_DESCRIPTION" = "%@ signer %@ with weight %@";
 
-"TRANSACTIONS_INDEXING_TITLE" = "Indexing Transactions";
-"TRANSACTIONS_INDEXING_MESSAGE" = "Transactions are still being indexed. Once completed, you will be able to see the details for this transaction.";
+"LOADING_TRANSACTION" = "Loading Transaction...";
