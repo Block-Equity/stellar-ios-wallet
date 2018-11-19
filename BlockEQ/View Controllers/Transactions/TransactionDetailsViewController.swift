@@ -9,6 +9,13 @@
 import os.log
 import StellarAccountService
 
+protocol TransactionDetailsViewControllerDelegate: AnyObject {
+    func requestedTransaction(_ viewController: TransactionDetailsViewController,
+                              for effect: StellarEffect) -> StellarTransaction?
+    func requestedOperations(_ viewController: TransactionDetailsViewController,
+                             for transaction: StellarTransaction) -> [StellarOperation]
+}
+
 // MARK: View Controller
 // MARK: -
 
@@ -16,6 +23,17 @@ final class TransactionDetailsViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
 
     private var dataSource: TransactionDetailsDataSource?
+    weak var delegate: TransactionDetailsViewControllerDelegate?
+    let effect: StellarEffect
+
+    init(effect: StellarEffect) {
+        self.effect = effect
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +43,7 @@ final class TransactionDetailsViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        collectionView?.dataSource = self.dataSource
-        collectionView?.reloadData()
+        requestData()
     }
 
     func setupView() {
@@ -47,12 +64,37 @@ final class TransactionDetailsViewController: UIViewController {
         collectionView.backgroundColor = backgroundColor
     }
 
+    func showHud() {
+        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+        hud.label.text = "LOADING_TRANSACTION".localized()
+        hud.mode = .indeterminate
+    }
+
+    func hideHud() {
+        MBProgressHUD.hide(for: UIApplication.shared.keyWindow!, animated: true)
+    }
+
+    func requestData() {
+        guard let delegate = self.delegate else { return }
+
+        if let transaction = delegate.requestedTransaction(self, for: self.effect) {
+            let operations = delegate.requestedOperations(self, for: transaction)
+            update(with: transaction, operations, effect)
+        } else {
+            showHud()
+        }
+    }
+
     func update(with data: StellarTransaction, _ operations: [StellarOperation], _ effect: StellarEffect) {
+        hideHud()
+
         let transactionDataSource = TransactionDetailsDataSource(delegate: self,
                                                                  transaction: data,
                                                                  ops: operations,
                                                                  effect: effect)
         dataSource = transactionDataSource
+        collectionView?.dataSource = transactionDataSource
+        collectionView?.reloadData()
     }
 }
 

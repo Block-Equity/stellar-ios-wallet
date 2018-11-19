@@ -197,6 +197,7 @@ extension ApplicationCoordinator: StellarIndexingServiceDelegate {
     func finishedIndexing(_ service: StellarIndexingService) {
         print("Indexing finished!")
         indexingViewController?.update(with: 1, error: nil)
+        transactionViewController?.requestData()
     }
 
     func errorIndexing(_ service: StellarIndexingService, error: Error?) {
