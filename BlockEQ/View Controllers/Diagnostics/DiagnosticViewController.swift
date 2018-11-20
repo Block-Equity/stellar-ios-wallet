@@ -20,17 +20,25 @@ final class DiagnosticViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var stepCollectionView: UICollectionView!
 
+    static let compressedHeight = CGFloat(290)
     static let cellSpacing = CGFloat(30)
-    static let stepCornerRadius = CGFloat(25)
+    static let cellCornerRadius = CGFloat(25)
 
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
 
     weak var delegate: DiagnosticViewControllerDelegate?
-    var viewModel: DiagnosticDataCell.ViewModel?
+    var dataViewModel: DiagnosticDataCell.ViewModel?
+    var completedViewModel: DiagnosticCompletedCell.ViewModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        completedViewModel = nil
+        dataViewModel = nil
     }
 
     func setupView() {
@@ -51,58 +59,98 @@ final class DiagnosticViewController: UIViewController {
         stepCollectionView.registerCell(type: DiagnosticDataCell.self)
         stepCollectionView.registerCell(type: DiagnosticCompletedCell.self)
 
-        stepCollectionView.isPagingEnabled = true
-        stepCollectionView.backgroundColor = .clear
         stepCollectionView.delegate = self
         stepCollectionView.dataSource = self
+        stepCollectionView.isScrollEnabled = false
+        stepCollectionView.backgroundColor = .clear
         stepCollectionView.showsVerticalScrollIndicator = false
         stepCollectionView.showsHorizontalScrollIndicator = false
-        stepCollectionView.isScrollEnabled = false
+        stepCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
 
-        let layout = stepCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
-        layout?.scrollDirection = .horizontal
-        layout?.minimumLineSpacing = DiagnosticViewController.cellSpacing
-        layout?.minimumInteritemSpacing = DiagnosticViewController.cellSpacing
-        layout?.estimatedItemSize = CGSize(width: stepCollectionView.frame.width, height: 200)
+        if let layout = stepCollectionView.collectionViewLayout as? CenteredCollectionViewFlowLayout {
+            layout.scrollDirection = .horizontal
+            layout.minimumLineSpacing = DiagnosticViewController.cellSpacing
+            layout.minimumInteritemSpacing = stepCollectionView.bounds.height
+            layout.itemSize = cellSize(for: stepCollectionView)
+        }
 
         titleLabel?.text = DiagnosticCoordinator.DiagnosticStep.summary.title
         descriptionLabel?.text = DiagnosticCoordinator.DiagnosticStep.summary.description
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        if let layout = stepCollectionView.collectionViewLayout as? CenteredCollectionViewFlowLayout {
+            layout.itemSize = cellSize(for: stepCollectionView)
+        }
+    }
+
     func scrollTo(step: DiagnosticCoordinator.DiagnosticStep, animated: Bool) {
         titleLabel?.text = step.title
         descriptionLabel?.text = step.description
-        nextButton?.isHidden = step == .completion
+        nextButton?.isHidden = step != DiagnosticCoordinator.DiagnosticStep.summary
 
-        let indexPath = IndexPath(row: step.rawValue, section: 0)
+        let indexPath = IndexPath(row: step.index, section: 0)
         stepCollectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
 
     func update(with diagnostic: Diagnostic) {
-        self.viewModel = DiagnosticDataCell.ViewModel(with: diagnostic)
+        self.dataViewModel = DiagnosticDataCell.ViewModel(with: diagnostic)
         self.stepCollectionView?.reloadData()
+    }
+
+    func update(with result: DiagnosticCoordinator.DiagnosticStep, identifier: Int?) {
+        hideHud()
+
+        completedViewModel = DiagnosticCompletedCell.ViewModel(
+            image: result.image,
+            text: result.status,
+            color: result.color
+        )
+
+        self.scrollTo(step: result, animated: true)
+    }
+
+    func showHud() {
+        let hud = MBProgressHUD.showAdded(to: view, animated: true)
+        hud.label.text = "SENDING_DIAGNOSTIC".localized()
+        hud.mode = .indeterminate
+    }
+
+    func hideHud() {
+        MBProgressHUD.hide(for: view, animated: true)
+    }
+
+    func cellSize(for collectionView: UICollectionView) -> CGSize {
+        let minHeight = min(DiagnosticViewController.compressedHeight, stepCollectionView.bounds.height)
+        let height = UIDevice.current.shortScreen ? stepCollectionView.frame.height : minHeight
+        let width = collectionView.frame.width - DiagnosticViewController.cellSpacing * 2
+        return CGSize(width: width, height: height)
     }
 }
 
 extension DiagnosticViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return DiagnosticCoordinator.DiagnosticStep.all.count
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         var cell: UICollectionViewCell
-
         switch indexPath.row {
         case 0:
             let dataCell: DiagnosticDataCell = collectionView.dequeueReusableCell(for: indexPath)
-            if let viewModel = self.viewModel {
+            if let viewModel = self.dataViewModel {
                 dataCell.update(with: viewModel)
             }
             cell = dataCell
         default:
             let completedCell: DiagnosticCompletedCell = collectionView.dequeueReusableCell(for: indexPath)
+            if let viewModel = self.completedViewModel {
+                completedCell.update(with: viewModel)
+            }
             cell = completedCell
         }
 
@@ -117,15 +165,6 @@ extension DiagnosticViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("selected \(indexPath.row)")
-    }
-}
-
-extension DiagnosticViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: DiagnosticViewController.cellSpacing,
-                            bottom: 0, right: DiagnosticViewController.cellSpacing)
     }
 }
 

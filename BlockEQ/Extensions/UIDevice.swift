@@ -13,6 +13,10 @@ extension UIDevice {
         return UIScreen.main.nativeBounds.height == 2436
     }
 
+    var shortScreen: Bool {
+        return UIScreen.main.nativeBounds.height <= 1136
+    }
+
     var modelName: String {
         var systemInfo = utsname()
         uname(&systemInfo)

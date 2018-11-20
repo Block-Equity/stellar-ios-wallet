@@ -37,7 +37,7 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2NO-OD-1EX">
-                    <rect key="frame" x="25" y="84" width="325" height="107.5"/>
+                    <rect key="frame" x="25" y="60" width="325" height="107.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wallet Diagnostics" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5d3-Dt-H6N" userLabel="Title Label">
                             <rect key="frame" x="0.0" y="0.0" width="325" height="21"/>
@@ -66,9 +66,9 @@
                     </constraints>
                 </view>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Yic-NI-grK" userLabel="Step Collection View">
-                    <rect key="frame" x="0.0" y="216.5" width="375" height="353.5"/>
+                    <rect key="frame" x="0.0" y="192.5" width="375" height="382.5"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hW8-Es-3FE">
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="AKw-UF-9PC" customClass="CenteredCollectionViewFlowLayout" customModule="BlockEQ" customModuleProvider="target">
                         <size key="itemSize" width="50" height="50"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -85,16 +85,16 @@
             </subviews>
             <color key="backgroundColor" red="0.16470588235294117" green="0.19607843137254902" blue="0.23921568627450979" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="2NO-OD-1EX" firstAttribute="top" secondItem="qfR-HK-2Q5" secondAttribute="bottom" constant="5" id="1F6-48-aOU"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Yic-NI-grK" secondAttribute="trailing" id="ALd-s6-XZx"/>
                 <constraint firstItem="ft2-SZ-mGr" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="IJf-Cd-cOv"/>
-                <constraint firstItem="ft2-SZ-mGr" firstAttribute="top" secondItem="Yic-NI-grK" secondAttribute="bottom" constant="25" id="YUL-hh-9Lh"/>
+                <constraint firstItem="ft2-SZ-mGr" firstAttribute="top" secondItem="Yic-NI-grK" secondAttribute="bottom" constant="20" id="YUL-hh-9Lh"/>
                 <constraint firstItem="2NO-OD-1EX" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="25" id="cKX-la-dQr"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ft2-SZ-mGr" secondAttribute="bottom" constant="35" id="dUb-NZ-2Lh"/>
                 <constraint firstItem="Yic-NI-grK" firstAttribute="top" secondItem="afy-Hd-fde" secondAttribute="bottom" constant="25" id="hSm-X0-Fx7"/>
                 <constraint firstItem="Yic-NI-grK" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="mzg-lZ-XPN"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="qfR-HK-2Q5" secondAttribute="trailing" constant="15" id="nhy-n0-Wbg"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="2NO-OD-1EX" secondAttribute="trailing" constant="25" id="pdm-oX-KfK"/>
+                <constraint firstItem="2NO-OD-1EX" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="40" id="tuS-O9-j2L"/>
                 <constraint firstItem="qfR-HK-2Q5" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="15" id="yWm-n5-YAH"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

@@ -13,20 +13,20 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="C56-wj-Eee" customClass="DiagnosticDataCell" customModule="BlockEQ" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="315" height="456"/>
+            <rect key="frame" x="0.0" y="0.0" width="250" height="456"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                <rect key="frame" x="0.0" y="0.0" width="315" height="456"/>
+                <rect key="frame" x="0.0" y="0.0" width="250" height="456"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Gi-Oc-BsE" userLabel="Container View">
-                        <rect key="frame" x="0.0" y="0.0" width="315" height="456"/>
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="456"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E3I-h9-0Ai" userLabel="Header View">
-                                <rect key="frame" x="0.0" y="0.0" width="315" height="100"/>
+                                <rect key="frame" x="0.0" y="0.0" width="250" height="100"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zrS-3z-2LD" userLabel="Header Circle">
-                                        <rect key="frame" x="127.5" y="25" width="60" height="60"/>
+                                        <rect key="frame" x="95" y="25" width="60" height="60"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Vh-lx-ouY">
                                                 <rect key="frame" x="10" y="10" width="40" height="40"/>
@@ -51,19 +51,22 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2a4-gJ-xLO" userLabel="Summary View">
-                                <rect key="frame" x="25" y="100" width="265" height="356"/>
+                                <rect key="frame" x="25" y="100" width="200" height="356"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Diagnostic Data" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7VB-d9-2yM" userLabel="Page Title Label">
-                                        <rect key="frame" x="0.0" y="0.0" width="265" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="SJh-g4-XAT"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="nVY-he-sXv" userLabel="Data List">
-                                        <rect key="frame" x="0.0" y="35.5" width="265" height="305.5"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nVY-he-sXv" userLabel="Data List">
+                                        <rect key="frame" x="0.0" y="35" width="200" height="311"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fe2-36-UKQ">
-                                                <rect key="frame" x="0.0" y="0.0" width="265" height="305.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="200" height="311"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -79,7 +82,7 @@
                                     <constraint firstAttribute="trailing" secondItem="nVY-he-sXv" secondAttribute="trailing" id="cXT-QC-TvL"/>
                                     <constraint firstItem="7VB-d9-2yM" firstAttribute="top" secondItem="2a4-gJ-xLO" secondAttribute="top" id="gov-LS-gh3"/>
                                     <constraint firstItem="7VB-d9-2yM" firstAttribute="leading" secondItem="2a4-gJ-xLO" secondAttribute="leading" id="mAn-fn-u4n"/>
-                                    <constraint firstAttribute="bottom" secondItem="nVY-he-sXv" secondAttribute="bottom" constant="15" id="w61-9i-Vgq"/>
+                                    <constraint firstAttribute="bottom" secondItem="nVY-he-sXv" secondAttribute="bottom" constant="10" id="w61-9i-Vgq"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -88,7 +91,6 @@
                             <constraint firstAttribute="bottom" secondItem="2a4-gJ-xLO" secondAttribute="bottom" id="4wr-Zr-GOc"/>
                             <constraint firstItem="E3I-h9-0Ai" firstAttribute="leading" secondItem="7Gi-Oc-BsE" secondAttribute="leading" id="Ail-7E-BxF"/>
                             <constraint firstAttribute="trailing" secondItem="2a4-gJ-xLO" secondAttribute="trailing" constant="25" id="NLp-ne-xqf"/>
-                            <constraint firstAttribute="width" constant="315" id="UbB-gY-FeW"/>
                             <constraint firstItem="E3I-h9-0Ai" firstAttribute="top" secondItem="7Gi-Oc-BsE" secondAttribute="top" id="Wwo-US-oZ2"/>
                             <constraint firstItem="2a4-gJ-xLO" firstAttribute="leading" secondItem="7Gi-Oc-BsE" secondAttribute="leading" constant="25" id="ZUv-00-4hS"/>
                             <constraint firstItem="2a4-gJ-xLO" firstAttribute="top" secondItem="E3I-h9-0Ai" secondAttribute="bottom" id="kif-tt-44B"/>
@@ -104,16 +106,16 @@
                 <constraint firstItem="7Gi-Oc-BsE" firstAttribute="top" secondItem="C56-wj-Eee" secondAttribute="top" id="k93-Ov-mui"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="X46-si-jFf"/>
-            <size key="customSize" width="315" height="456"/>
+            <size key="customSize" width="250" height="456"/>
             <connections>
-                <outlet property="cellWidthConstraint" destination="UbB-gY-FeW" id="fqR-WK-95I"/>
                 <outlet property="containerView" destination="7Gi-Oc-BsE" id="4qc-3u-hiC"/>
                 <outlet property="dataStackView" destination="nVY-he-sXv" id="e8i-0g-sic"/>
                 <outlet property="headerBackgroundView" destination="zrS-3z-2LD" id="obM-bg-4jH"/>
                 <outlet property="iconImageView" destination="7Vh-lx-ouY" id="RZY-3A-XXi"/>
+                <outlet property="titleHeightConstraint" destination="SJh-g4-XAT" id="phT-hc-XEe"/>
                 <outlet property="titleLabel" destination="7VB-d9-2yM" id="T5S-EC-8tO"/>
             </connections>
-            <point key="canvasLocation" x="-394.6875" y="1391.1971830985915"/>
+            <point key="canvasLocation" x="-455.625" y="1391.1971830985915"/>
         </collectionViewCell>
     </objects>
 </document>

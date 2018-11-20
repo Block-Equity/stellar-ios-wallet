@@ -12,7 +12,7 @@ final class DiagnosticDataCell: UICollectionViewCell, ReusableView, NibLoadableV
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dataStackView: UIStackView!
-    @IBOutlet weak var cellWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var titleHeightConstraint: NSLayoutConstraint!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,12 +26,11 @@ final class DiagnosticDataCell: UICollectionViewCell, ReusableView, NibLoadableV
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        containerView.layer.cornerRadius = DiagnosticViewController.stepCornerRadius
+        containerView.layer.cornerRadius = DiagnosticViewController.cellCornerRadius
         headerBackgroundView.layer.cornerRadius = headerBackgroundView.frame.width / 2.0
     }
 
     func setupStyle() {
-        contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.backgroundColor = Colors.transparent
         backgroundView?.backgroundColor = Colors.transparent
         containerView.backgroundColor = Colors.white
@@ -44,6 +43,11 @@ final class DiagnosticDataCell: UICollectionViewCell, ReusableView, NibLoadableV
         titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .heavy)
         titleLabel.text = "DIAGNOSTIC_DATA_TITLE".localized()
         titleLabel.textColor = Colors.transactionCellDarkGray
+
+        // We dont have enough vertical space on short devices
+        if UIDevice.current.shortScreen {
+            titleHeightConstraint.constant = 0
+        }
     }
 
     func update(with diagnostic: DiagnosticDataCell.ViewModel) {
@@ -69,17 +73,6 @@ final class DiagnosticDataCell: UICollectionViewCell, ReusableView, NibLoadableV
             label.lineBreakMode = .byTruncatingMiddle
             dataStackView.addArrangedSubview(label)
         }
-    }
-
-    override func preferredLayoutAttributesFitting(
-        _ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        setNeedsLayout()
-        layoutIfNeeded()
-        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
-        var frame = layoutAttributes.frame
-        frame.size.height = ceil(size.height)
-        layoutAttributes.frame = frame
-        return layoutAttributes
     }
 }
 

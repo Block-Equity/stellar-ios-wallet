@@ -11,7 +11,6 @@ final class DiagnosticCompletedCell: UICollectionViewCell, ReusableView, NibLoad
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var diagnosticIdLabel: UILabel!
-    @IBOutlet weak var cellWidthConstraint: NSLayoutConstraint!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,12 +24,10 @@ final class DiagnosticCompletedCell: UICollectionViewCell, ReusableView, NibLoad
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        containerView.layer.cornerRadius = DiagnosticViewController.stepCornerRadius
+        containerView.layer.cornerRadius = DiagnosticViewController.cellCornerRadius
     }
 
     func setupStyle() {
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-
         contentView.backgroundColor = Colors.transparent
         backgroundView?.backgroundColor = Colors.transparent
         containerView.backgroundColor = Colors.white
@@ -46,7 +43,17 @@ final class DiagnosticCompletedCell: UICollectionViewCell, ReusableView, NibLoad
         diagnosticIdLabel.text = "31"
     }
 
-    func update(with diagnosticId: String) {
-        diagnosticIdLabel.text = diagnosticId
+    func update(with viewModel: ViewModel) {
+        diagnosticIdLabel.text = viewModel.text
+        imageView.image = viewModel.image
+        imageView.tintColor = viewModel.color
+    }
+}
+
+extension DiagnosticCompletedCell {
+    struct ViewModel {
+        let image: UIImage?
+        let text: String
+        let color: UIColor
     }
 }

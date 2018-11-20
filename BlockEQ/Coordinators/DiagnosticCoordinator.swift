@@ -13,37 +13,6 @@ protocol DiagnosticCoordinatorDelegate: AnyObject {
 }
 
 final class DiagnosticCoordinator {
-    enum DiagnosticStep: Int, RawRepresentable {
-        case summary
-        case completion
-
-        var next: DiagnosticStep {
-            let value = rawValue + 1
-            let step = self != .completion ? DiagnosticStep(rawValue: value)! : DiagnosticStep.completion
-            return step
-        }
-
-        var title: String {
-            switch self {
-            case .summary: return "WALLET_DIAGNOSTICS_TITLE".localized()
-            case .completion: return "DIAGNOSTIC_COMPLETE_TITLE".localized()
-            }
-        }
-
-        var description: String {
-            switch self {
-            case .summary: return "WALLET_DIAGNOSTICS_DESCRIPTION".localized()
-            case .completion: return "DIAGNOSTIC_COMPLETE_DESCRIPTION".localized()
-            }
-        }
-
-        static let all: [DiagnosticStep] = [.summary, .completion]
-    }
-
-    var isOnLastStep: Bool {
-        return step.rawValue < DiagnosticStep.all.count
-    }
-
     var diagnosticQueue: OperationQueue {
         let operationQueue = OperationQueue()
         operationQueue.qualityOfService = .background
@@ -86,34 +55,94 @@ final class DiagnosticCoordinator {
             return
         }
 
+        diagnosticViewController.showHud()
+
         let diagnosticOperation = SendDiagnosticOperation(
             diagnostic: diagnostic,
             completion: { result in
-                print(String(result ?? 0))
-        },
-            failure: { error in
-                print(error.localizedDescription)
+                self.step =  .completion(result)
+                self.diagnosticViewController.update(with: self.step, identifier: result)
         })
 
         diagnosticQueue.addOperation(diagnosticOperation)
     }
 }
 
+// MARK: - DiagnosticViewControllerDelegate
 extension DiagnosticCoordinator: DiagnosticViewControllerDelegate {
     func selectedNextStep(_ viewController: DiagnosticViewController) {
-        if step == .completion {
+        if step == .summary {
             sendDiagnostic()
         }
-
-        let nextStep = step.next
-        diagnosticViewController.scrollTo(step: nextStep, animated: true)
-
-        step = nextStep
     }
 
     func selectedClose(_ viewController: DiagnosticViewController) {
         diagnosticViewController.dismiss(animated: true) {
             self.delegate?.completedDiagnostic(self)
         }
+    }
+}
+
+// MARK: - DiagnosticStep
+extension DiagnosticCoordinator {
+    enum DiagnosticStep: Equatable {
+        case summary
+        case completion(Int?)
+
+        var title: String {
+            switch self {
+            case .summary: return "WALLET_DIAGNOSTICS_TITLE".localized()
+            case .completion(let result):
+                let incomplete = "DIAGNOSTIC_INCOMPLETE_TITLE".localized()
+                let complete = "DIAGNOSTIC_COMPLETE_TITLE".localized()
+                return result != nil ? complete : incomplete
+            }
+        }
+
+        var description: String {
+            switch self {
+            case .summary:
+                let shortDescription = "WALLET_DIAGNOSTICS_DESCRIPTION_SHORT".localized()
+                let normalDescription = "WALLET_DIAGNOSTICS_DESCRIPTION".localized()
+                return UIDevice.current.shortScreen ? shortDescription : normalDescription
+            case .completion(let result):
+                let incomplete = "DIAGNOSTIC_INCOMPLETE_DESCRIPTION".localized()
+                let complete = "DIAGNOSTIC_COMPLETE_DESCRIPTION".localized()
+                return result != nil ? complete : incomplete
+            }
+        }
+
+        var image: UIImage? {
+            switch self {
+            case .summary:
+                return UIImage(named: "icon-clipboard")
+            case .completion(let result):
+                return result != nil ? UIImage(named: "icon-check") : UIImage(named: "icon-delete")
+            }
+        }
+
+        var color: UIColor {
+            switch self {
+            case .summary: return .black
+            case .completion(let result): return result != nil ? Colors.green : Colors.red
+            }
+        }
+
+        var index: Int {
+            switch self {
+            case .summary: return 0
+            case .completion: return 1
+            }
+        }
+
+        var status: String {
+            switch self {
+            case .summary: return ""
+            case .completion(let result):
+                return result != nil ? String(result!) : "FAILED_DIAGNOSTIC".localized()
+            }
+        }
+
+        static let all: [DiagnosticStep] = [.summary, .completion(nil)]
     }
 }

@@ -51,6 +51,7 @@
 		C514420C217EC25A006C44F4 /* StellarAccountService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C514420A217EC25A006C44F4 /* StellarAccountService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C514420E217ED2B7006C44F4 /* StellarTransaction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C514420D217ED2B7006C44F4 /* StellarTransaction+Extensions.swift */; };
 		C5144210217ED86F006C44F4 /* FetchExchangesOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C514420F217ED86F006C44F4 /* FetchExchangesOperation.swift */; };
+		C5173A8621A4A94800B5272F /* CenteredCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5173A8521A4A94800B5272F /* CenteredCollectionViewFlowLayout.swift */; };
 		C524DFC92167B6240068D111 /* KeychainHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524DFC82167B6240068D111 /* KeychainHelperTests.swift */; };
 		C524DFCB2167CFE40068D111 /* AutoFillHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524DFCA2167CFE40068D111 /* AutoFillHelper.swift */; };
 		C524DFCD2167DF020068D111 /* AutoFillHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524DFCC2167DF020068D111 /* AutoFillHelperTests.swift */; };
@@ -287,6 +288,7 @@
 		C514420A217EC25A006C44F4 /* StellarAccountService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = StellarAccountService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C514420D217ED2B7006C44F4 /* StellarTransaction+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarTransaction+Extensions.swift"; sourceTree = "<group>"; };
 		C514420F217ED86F006C44F4 /* FetchExchangesOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchExchangesOperation.swift; sourceTree = "<group>"; };
+		C5173A8521A4A94800B5272F /* CenteredCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteredCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		C52186B820C06B8100FF2A76 /* SecurityOptionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityOptionHelper.swift; sourceTree = "<group>"; };
 		C524DFC82167B6240068D111 /* KeychainHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainHelperTests.swift; sourceTree = "<group>"; };
 		C524DFCA2167CFE40068D111 /* AutoFillHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoFillHelper.swift; sourceTree = "<group>"; };
@@ -539,6 +541,14 @@
 			path = "Data Sources";
 			sourceTree = "<group>";
 		};
+		C5173A8421A4A93B00B5272F /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				C5173A8521A4A94800B5272F /* CenteredCollectionViewFlowLayout.swift */,
+			);
+			path = Layouts;
+			sourceTree = "<group>";
+		};
 		C53E628B219A01B5006BF2F1 /* Diagnostics */ = {
 			isa = PBXGroup;
 			children = (
@@ -765,6 +775,7 @@
 				EC26838D20629D1B0085CAAF /* Operations */,
 				EC2015EF2053181C009A73C8 /* Views */,
 				EC2015D62052DB34009A73C8 /* View Controllers */,
+				C5173A8421A4A93B00B5272F /* Layouts */,
 				EC2015E32052E881009A73C8 /* Utils */,
 				EC2015A82052D968009A73C8 /* AppDelegate.swift */,
 			);
@@ -1312,6 +1323,7 @@
 				EC20160120536C68009A73C8 /* PillView.swift in Sources */,
 				ECB1D958207E966D0088826D /* MBProgressHUD.m in Sources */,
 				C54EFE4A21798668005FA6D3 /* UIView+Layer.swift in Sources */,
+				C5173A8621A4A94800B5272F /* CenteredCollectionViewFlowLayout.swift in Sources */,
 				C595115620BB2B1B00843D33 /* PinDotView.swift in Sources */,
 				EC6EE88B20B600070033C299 /* TradeViewController.swift in Sources */,
 				EC2015F520531963009A73C8 /* NibLoader.swift in Sources */,

@@ -6,17 +6,6 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-// MARK: - Diagnostic Issues
-enum DiagnosticSupportSummary: String, RawRepresentable {
-    case paymentsFailing = "My payments are failing"
-    case exchangeMissingFunds = "The exchange hasn’t received my funds"
-    case incorrectMemo = "I sent an incorrect memo"
-    case crashing = "The app is crashing"
-    case cantAddAssets = "I can’t add more assets"
-    case cantTrade = "My trades are failing"
-    case receivingSmallTransactions = "I’m receiving small transactions"
-}
-
 // MARK: - Diagnostic
 struct Diagnostic {
     var reportId: Int?
@@ -77,17 +66,16 @@ extension Diagnostic: Codable {
         let fieldsContainer = try decoder.container(keyedBy: FieldsCodingKeys.self)
         let container = try fieldsContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: .fields)
         self.reportId = try container.decodeIfPresent(Int.self, forKey: .reportId)
-        self.emailAddress = try container.decode(String.self, forKey: .emailAddress)
-        self.issueSummary = try container.decode(String.self, forKey: .issueSummary)
+        self.emailAddress = try container.decodeIfPresent(String.self, forKey: .emailAddress)
+        self.issueSummary = try container.decodeIfPresent(String.self, forKey: .issueSummary)
     }
 
     func encode(to encoder: Encoder) throws {
         var fieldsContainer = encoder.container(keyedBy: FieldsCodingKeys.self)
         var container = fieldsContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: .fields)
 
-        try container.encodeIfPresent(reportId, forKey: .reportId)
-        try container.encode(emailAddress, forKey: .emailAddress)
-        try container.encode(issueSummary, forKey: .issueSummary)
+        try container.encodeIfPresent(emailAddress, forKey: .emailAddress)
+        try container.encodeIfPresent(issueSummary, forKey: .issueSummary)
 
         try container.encodeIfPresent(walletDiagnostic?.walletAddress, forKey: .walletAddress)
         try container.encodeIfPresent(walletDiagnostic?.walletUsesPassphrase, forKey: .walletUsesPassphrase)
@@ -126,10 +114,19 @@ struct AppDiagnostic {
     }
 
     var batteryState: String? {
+        var stateString: String?
+        let device = UIDevice.current
+        device.isBatteryMonitoringEnabled = true
         switch UIDevice.current.batteryState {
-        case .unknown: return nil
-        default: return "\(UIDevice.current.batteryState.stateString) - \(UIDevice.current.batteryLevel * 100.0)%"
+        case .unknown:
+            break
+        default:
+            stateString = "\(UIDevice.current.batteryState.stateString) - \(UIDevice.current.batteryLevel * 100.0)%"
         }
+
+        device.isBatteryMonitoringEnabled = false
+
+        return stateString
     }
 
     var hardwareDevice: String {
@@ -207,3 +204,7 @@ extension WalletDiagnostic: Codable {
         self.walletCreationMethod = CreationMethod(rawValue: creationMethod) ?? .unknown
     }
 }
+
+extension WalletDiagnostic: Hashable { }
+extension AppDiagnostic: Hashable { }
+extension Diagnostic: Hashable { }
