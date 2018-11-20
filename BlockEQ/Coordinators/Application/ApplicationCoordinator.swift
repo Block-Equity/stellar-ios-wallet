@@ -127,6 +127,8 @@ final class ApplicationCoordinator {
 
         tabController.tabDelegate = self
         tradingCoordinator.delegate = self
+
+        AddressResolver.fetchExchangeData()
     }
 
     func migrateIfEligible(using service: StellarAccountService) {
