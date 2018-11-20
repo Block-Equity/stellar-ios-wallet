@@ -13,9 +13,9 @@ extension WalletDiagnostic.CreationMethod {
         var creationMethod: WalletDiagnostic.CreationMethod = .unknown
 
         if recovered {
-            creationMethod = mnemonic.type == .twelve ? .recoveredMnemonic12 : .recoveredMnemonic12
+            creationMethod = mnemonic.type == .twelve ? .recoveredMnemonic12 : .recoveredMnemonic24
         } else {
-            creationMethod = mnemonic.type == .twentyFour ? .createdMnemonic24 : .createdMnemonic24
+            creationMethod = mnemonic.type == .twelve ? .createdMnemonic12 : .createdMnemonic24
         }
 
         return creationMethod

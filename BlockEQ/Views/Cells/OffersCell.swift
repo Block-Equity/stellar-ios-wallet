@@ -33,5 +33,6 @@ class OffersCell: UITableViewCell, ReusableView, NibLoadableView {
 
         offerLabel.textColor = Colors.darkGray
         deleteButton.tintColor = Colors.red
+        deleteButton.contentMode = .scaleAspectFit
     }
 }

@@ -182,8 +182,11 @@
 "SIGNER_COPIED" = "Public Signature Copied";
 "WALLET_DIAGNOSTICS_TITLE" = "Wallet Diagnostics";
 "DIAGNOSTIC_COMPLETE_TITLE" = "Diagnostic Complete";
+"DIAGNOSTIC_INCOMPLETE_TITLE" = "Diagnostic Incomplete";
 "WALLET_DIAGNOSTICS_DESCRIPTION" = "This tool collects non-private information about your wallet in order to help diagnose issues.";
+"WALLET_DIAGNOSTICS_DESCRIPTION_SHORT" = "Press the arrow below to transmit diagnostic data to BlockEQ.";
 "DIAGNOSTIC_COMPLETE_DESCRIPTION" = "When you contact BlockEQ for support, refer to your diagnostic ID below.";
+"DIAGNOSTIC_INCOMPLETE_DESCRIPTION" = "Your wallet diagnostic was unable to be sent. Please try again later.";
 "DIAGNOSTIC_ID_TITLE" = "Diagnostic ID";
 "DIAGNOSTIC_DATA_TITLE" = "Diagnostic Data";
 "ISSUE_SUMMARY" = "Issue Summary";
@@ -221,3 +224,5 @@
 "OPERATION_OPTIONS_SET_SIGNER_DESCRIPTION" = "%@ signer %@ with weight %@";
 
 "LOADING_TRANSACTION" = "Loading Transaction...";
+"SENDING_DIAGNOSTIC" = "Sending Diagnostic...";
+"FAILED_DIAGNOSTIC" = "Failed";

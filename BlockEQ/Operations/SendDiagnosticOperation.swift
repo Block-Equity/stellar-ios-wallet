@@ -10,19 +10,16 @@ import Alamofire
 import StellarAccountService
 
 final class SendDiagnosticOperation: AsyncOperation {
-    typealias SuccessCallback = (Int?) -> Void
-    typealias FailureCallback = (Error) -> Void
+    typealias CompletionCallback = (Int?) -> Void
 
-    let completion: SuccessCallback
-    let failure: FailureCallback?
+    let completion: CompletionCallback
     let diagnostic: Diagnostic
 
     var result: Result<Int?> = Result.failure(AsyncOperationError.responseUnset)
 
-    init(diagnostic: Diagnostic, completion: @escaping SuccessCallback, failure: FailureCallback?) {
+    init(diagnostic: Diagnostic, completion: @escaping CompletionCallback) {
         self.diagnostic = diagnostic
         self.completion = completion
-        self.failure = failure
     }
 
     override func main() {
@@ -58,8 +55,8 @@ final class SendDiagnosticOperation: AsyncOperation {
             switch self.result {
             case .success(let response):
                 self.completion(response)
-            case .failure(let error):
-                self.failure?(error)
+            case .failure:
+                self.completion(nil)
             }
         }
     }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,15 +27,16 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bought 200 PTS using 1 XLM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ma8-ZD-7tG">
-                        <rect key="frame" x="16" y="0.0" width="239" height="48"/>
+                        <rect key="frame" x="16" y="0.0" width="243" height="48.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zK2-eM-cX9">
-                        <rect key="frame" x="265" y="0.0" width="55" height="48"/>
+                        <rect key="frame" x="274" y="9.5" width="30" height="30"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="55" id="ead-nz-l3c"/>
+                            <constraint firstAttribute="width" constant="30" id="B0p-4z-UQB"/>
+                            <constraint firstAttribute="width" secondItem="zK2-eM-cX9" secondAttribute="height" multiplier="1:1" id="HlB-Y3-LIL"/>
                         </constraints>
                         <state key="normal" image="icon-delete"/>
                         <connections>
@@ -42,7 +44,7 @@
                         </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2fw-2q-ugr">
-                        <rect key="frame" x="0.0" y="48" width="320" height="1"/>
+                        <rect key="frame" x="0.0" y="48.5" width="320" height="1"/>
                         <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="OHI-A3-yMW"/>
@@ -50,19 +52,18 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="zK2-eM-cX9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="0Iu-VE-GL0"/>
                     <constraint firstAttribute="trailing" secondItem="wfV-Qc-0lF" secondAttribute="trailing" id="0MK-wL-uyQ"/>
-                    <constraint firstItem="zK2-eM-cX9" firstAttribute="leading" secondItem="Ma8-ZD-7tG" secondAttribute="trailing" constant="10" id="9fl-nQ-nkV"/>
-                    <constraint firstItem="2fw-2q-ugr" firstAttribute="top" secondItem="zK2-eM-cX9" secondAttribute="bottom" id="ELt-Qg-fs4"/>
+                    <constraint firstItem="zK2-eM-cX9" firstAttribute="leading" secondItem="Ma8-ZD-7tG" secondAttribute="trailing" constant="15" id="9fl-nQ-nkV"/>
                     <constraint firstAttribute="bottom" secondItem="2fw-2q-ugr" secondAttribute="bottom" id="HSZ-XR-KPc"/>
                     <constraint firstAttribute="trailing" secondItem="2fw-2q-ugr" secondAttribute="trailing" id="KwL-Zf-bTE"/>
                     <constraint firstItem="2fw-2q-ugr" firstAttribute="top" secondItem="Ma8-ZD-7tG" secondAttribute="bottom" id="Lxx-yg-KDt"/>
                     <constraint firstItem="Ma8-ZD-7tG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="SOT-RX-h8S"/>
-                    <constraint firstAttribute="trailing" secondItem="zK2-eM-cX9" secondAttribute="trailing" id="U3L-yg-lz1"/>
+                    <constraint firstAttribute="trailing" secondItem="zK2-eM-cX9" secondAttribute="trailing" constant="16" id="U3L-yg-lz1"/>
                     <constraint firstItem="Ma8-ZD-7tG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="ZoQ-uL-Qa3"/>
                     <constraint firstItem="wfV-Qc-0lF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="azo-Fd-CBN"/>
                     <constraint firstAttribute="bottom" secondItem="wfV-Qc-0lF" secondAttribute="bottom" id="bxN-QQ-Vbd"/>
                     <constraint firstItem="2fw-2q-ugr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="n5y-iK-txC"/>
+                    <constraint firstItem="zK2-eM-cX9" firstAttribute="centerY" secondItem="Ma8-ZD-7tG" secondAttribute="centerY" id="qI4-Ce-LhI"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -74,6 +75,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="icon-delete" width="24" height="24"/>
+        <image name="icon-delete" width="64" height="64"/>
     </resources>
 </document>
