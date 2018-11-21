@@ -3,7 +3,7 @@ PODS:
   - KeychainSwift (10.0.0)
   - Kingfisher (4.10.0)
   - SCLAlertView (0.8.1)
-  - stellar-ios-mac-sdk (1.4.7)
+  - stellar-ios-mac-sdk (1.5.1)
   - Whisper (6.0.2)
 
 DEPENDENCIES:
@@ -11,7 +11,7 @@ DEPENDENCIES:
   - KeychainSwift (~> 10.0)
   - Kingfisher (~> 4.10)
   - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift`, branch `master`)
-  - stellar-ios-mac-sdk (~> 1.4.7)
+  - stellar-ios-mac-sdk (from `https://github.com/Soneso/stellar-ios-mac-sdk.git`)
   - Whisper (from `https://github.com/freeubi/Whisper.git`, branch `swift-4.2-support`)
 
 SPEC REPOS:
@@ -19,12 +19,13 @@ SPEC REPOS:
     - Alamofire
     - KeychainSwift
     - Kingfisher
-    - stellar-ios-mac-sdk
 
 EXTERNAL SOURCES:
   SCLAlertView:
     :branch: master
     :git: https://github.com/vikmeup/SCLAlertView-Swift
+  stellar-ios-mac-sdk:
+    :git: https://github.com/Soneso/stellar-ios-mac-sdk.git
   Whisper:
     :branch: swift-4.2-support
     :git: https://github.com/freeubi/Whisper.git
@@ -33,6 +34,9 @@ CHECKOUT OPTIONS:
   SCLAlertView:
     :commit: d371170ca2e276462ff229e675a2d2020ad2bb72
     :git: https://github.com/vikmeup/SCLAlertView-Swift
+  stellar-ios-mac-sdk:
+    :commit: 2170512bb059a405d4b755a82a621b299286700c
+    :git: https://github.com/Soneso/stellar-ios-mac-sdk.git
   Whisper:
     :commit: 86880dea149a871ec5cb909cc3b93e7fb5804788
     :git: https://github.com/freeubi/Whisper.git
@@ -42,9 +46,9 @@ SPEC CHECKSUMS:
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
   Kingfisher: 43c4b802d8b5256cf1f4379e9cd10b329be6d3e2
   SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
-  stellar-ios-mac-sdk: 112012a49569b60afaa38dea99bf914d7ac9a32c
+  stellar-ios-mac-sdk: 3834cc1c2e4dfafc9ed488b53f3bb1036bdbf449
   Whisper: 8c499b08f3b56d5c80162d775e3462318ad7f4fe
 
-PODFILE CHECKSUM: 4ec5aaad5ac0fb885551b3bb9ea66362eac2e4b1
+PODFILE CHECKSUM: 57c4b33f504cce406b04ece6bbee0b9345e31922
 
 COCOAPODS: 1.5.3
