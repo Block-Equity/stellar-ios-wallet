@@ -24,6 +24,7 @@ public final class CoreService: CoreServiceProtocol {
     public var tradeService: TradeService!
     public var indexingService: IndexingService!
     public var streamService: StreamService!
+    public var downloadService: StellarAccountDownloadService!
     public var updateService: AccountUpdateService!
 
     public init(with horizonAPI: StellarConfig.HorizonAPI) {
@@ -35,13 +36,16 @@ public final class CoreService: CoreServiceProtocol {
         let idxService = IndexingService(with: self)
         let streamService = StreamService(with: self)
         let updateService = AccountUpdateService(with: self)
+        let dlService = StellarAccountDownloadService(with: self)
 
         self.accountService = accService
         self.tradeService = trService
         self.indexingService = idxService
+        self.downloadService = dlService
         self.streamService = streamService
         self.updateService = updateService
 
+        dlService.download()
         start()
     }
 

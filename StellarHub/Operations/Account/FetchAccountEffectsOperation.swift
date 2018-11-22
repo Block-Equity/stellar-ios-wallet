@@ -9,35 +9,43 @@
 import stellarsdk
 
 final class FetchAccountEffectsOperation: AsyncOperation {
-    typealias SuccessCompletion = ([StellarEffect]) -> Void
+    typealias SuccessCompletion = ([StellarEffect], FetchAccountEffectsOperation) -> Void
 
     static let defaultRecordCount: Int = 200
 
     let horizon: StellarSDK
     let accountId: String
-    let recordCount: Int?
     let completion: SuccessCompletion
     let failure: ErrorCompletion?
+    let recordCount: Int?
+    let cursor: String?
     var result: Result<[StellarEffect]> = Result.failure(AsyncOperationError.responseUnset)
+    var next: FetchAccountEffectsOperation?
 
     init(horizon: StellarSDK,
          accountId: String,
-         recordCount: Int = FetchAccountEffectsOperation.defaultRecordCount,
          completion: @escaping SuccessCompletion,
-         failure: ErrorCompletion? = nil) {
+         failure: ErrorCompletion? = nil,
+         recordCount: Int? = FetchAccountEffectsOperation.defaultRecordCount,
+         cursor: String? = nil) {
         self.horizon = horizon
         self.accountId = accountId
-        self.recordCount = recordCount
         self.completion = completion
         self.failure = failure
+        self.recordCount = recordCount
+        self.cursor = cursor
     }
 
     override func main() {
         super.main()
 
-        horizon.effects.getEffects(forAccount: accountId, from: nil, order: .descending, limit: recordCount) { resp in
+        horizon.effects.getEffects(forAccount: accountId,
+                                   from: self.cursor,
+                                   order: .descending,
+                                   limit: recordCount) { resp in
             switch resp {
             case .success(let effectsResponse):
+                self.setupNextRequest(response: effectsResponse)
                 let effects = effectsResponse.records.map {
                     return StellarEffect($0)
                 }
@@ -56,9 +64,24 @@ final class FetchAccountEffectsOperation: AsyncOperation {
 
         switch result {
         case .success(let response):
-            completion(response)
+            completion(response, self)
         case .failure(let error):
             failure?(error)
+        }
+    }
+}
+
+extension FetchAccountEffectsOperation: PageableOperation {
+    typealias ResponseType = EffectResponse
+
+    func setupNextRequest(response: PageResponse<EffectResponse>) {
+        if let cursor = self.getCursor(for: response) {
+            self.next = FetchAccountEffectsOperation(horizon: self.horizon,
+                                                     accountId: self.accountId,
+                                                     completion: self.completion,
+                                                     failure: self.failure,
+                                                     recordCount: self.recordCount,
+                                                     cursor: cursor)
         }
     }
 }
