@@ -165,12 +165,15 @@ public final class StellarIndexingService: StellarIndexingServiceProtocol {
             return firstNodeIsntInputNode && firstNodeIsDifferentType && secondNodeIsDifferentType
         }
 
+        var possibleNodes: [AnyDataNode?] = []
+
         for edge in incidentEdges.enumerated() {
             let destinationNode = edge.element.second
-            return self.traverse(for: destinationNode, edgeList: filteredEdges)
+            let subSearch = self.traverse(for: destinationNode, edgeList: filteredEdges)
+            possibleNodes.append(subSearch)
         }
 
-        return nil
+        return possibleNodes.compactMap { $0 }.first
     }
 }
 

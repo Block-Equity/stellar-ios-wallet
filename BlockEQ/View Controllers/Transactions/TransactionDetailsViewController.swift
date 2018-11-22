@@ -50,6 +50,7 @@ final class TransactionDetailsViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = dataSource
         collectionView.allowsSelection = true
+        collectionView.alwaysBounceVertical = true
         collectionView.registerHeader(type: TransactionDetailsBasicHeader.self)
         collectionView.registerHeader(type: TransactionDetailsSectionHeader.self)
         collectionView.registerCell(type: TransactionDetailsCell.self)
@@ -65,13 +66,13 @@ final class TransactionDetailsViewController: UIViewController {
     }
 
     func showHud() {
-        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.label.text = "LOADING_TRANSACTION".localized()
         hud.mode = .indeterminate
     }
 
     func hideHud() {
-        MBProgressHUD.hide(for: UIApplication.shared.keyWindow!, animated: true)
+        MBProgressHUD.hide(for: self.view, animated: true)
     }
 
     func requestData() {

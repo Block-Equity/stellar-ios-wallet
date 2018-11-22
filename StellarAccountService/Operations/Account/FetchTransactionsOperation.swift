@@ -11,21 +11,23 @@ import stellarsdk
 final class FetchTransactionsOperation: AsyncOperation {
     typealias SuccessCompletion = ([StellarTransaction]) -> Void
 
+    static let defaultRecordCount: Int = 200
+
     let horizon: StellarSDK
     let accountId: String
-    let limit: Int
+    let recordCount: Int?
     let completion: SuccessCompletion
     let failure: ErrorCompletion?
     var result: Result<[StellarTransaction]> = Result.failure(AsyncOperationError.responseUnset)
 
     init(horizon: StellarSDK,
          accountId: String,
-         limit: Int = 200,
+         limit: Int? = FetchTransactionsOperation.defaultRecordCount,
          completion: @escaping SuccessCompletion,
          failure: ErrorCompletion? = nil) {
         self.horizon = horizon
         self.accountId = accountId
-        self.limit = limit
+        self.recordCount = limit
         self.completion = completion
         self.failure = failure
     }
@@ -36,7 +38,7 @@ final class FetchTransactionsOperation: AsyncOperation {
         horizon.transactions.getTransactions(forAccount: accountId,
                                              from: nil,
                                              order: .descending,
-                                             limit: self.limit) { resp in
+                                             limit: self.recordCount) { resp in
             switch resp {
             case .success(let response):
                 let transactions = response.records

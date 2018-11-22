@@ -69,7 +69,7 @@ final class ContactsDataSource: NSObject {
                 let name = "\(contact.givenName) \(contact.familyName)"
                 var stellarEmail = ""
                 for emailAddress in contact.emailAddresses where emailAddress.value.contains(suffix) {
-                    stellarEmail = emailAddress.value as String
+                    stellarEmail = emailAddress.value.replacingOccurrences(of: suffix, with: "") as String
                 }
 
                 let localContact = LocalContact(identifier: contact.identifier, name: name, address: stellarEmail)

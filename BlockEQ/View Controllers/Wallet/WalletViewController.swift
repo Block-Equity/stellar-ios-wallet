@@ -87,6 +87,7 @@ class WalletViewController: UIViewController {
         tableViewHeaderLeftLabel.textColor = Colors.darkGrayTransparent
         tableViewHeaderRightLabel.textColor = Colors.darkGrayTransparent
         tableView?.backgroundColor = Colors.lightBackground
+        tableView?.separatorStyle = .none
     }
 
     @IBAction func selectBalance() {
@@ -172,7 +173,7 @@ extension WalletViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        guard let effect = self.dataSource?.effects[indexPath.row] else { return }
+        guard let effect = self.dataSource?.effects[indexPath.row], effect.type != .tradeEffect else { return }
         delegate?.selectedEffect(self, effect: effect)
     }
 }

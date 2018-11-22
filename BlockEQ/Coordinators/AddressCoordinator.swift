@@ -19,11 +19,7 @@ final class AddressResolver {
     private var mappedContacts: [String: LocalContact] = [:]
 
     static func lookup(address: StellarAddress) -> AddressType {
-        if let _: LocalContact = self.resolve(address: address) {
-            return .contact
-        } else {
-            return .exchange
-        }
+        return .exchange
     }
 
     static func resolve(address: StellarAddress) -> LocalContact? {
