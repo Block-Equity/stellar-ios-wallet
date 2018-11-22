@@ -29,5 +29,8 @@ class TransactionHistoryCell: UITableViewCell, ReusableView, NibLoadableView {
         dateLabel.text = effect.formattedDate
         activityLabel.text = effect.formattedDescription(asset: asset)
         transactionDisplayView.backgroundColor = effect.color
+
+        accessoryType = effect.type == .tradeEffect ? .none : .disclosureIndicator
+        contentView.bottomBorder(with: UIColor(red: 0.957, green: 0.957, blue: 0.957, alpha: 1.000), width: 1)
     }
 }

@@ -41,13 +41,6 @@ final class FetchAccountOperationsOperation: AsyncOperation {
                                          limit: recordCount) { operationResponse in
             switch operationResponse {
             case .success(let operationResponse):
-                /*
-                 ManageOfferOperationResponse
-                 PaymentOperationResponse
-                 ChangeTrustOperationResponse
-                 SetOptionsOperationResponse
-                 AccountCreatedOperationResponse
-                 */
                 let operations = operationResponse.records.map { StellarOperation($0) }
                 self.result = Result.success(operations)
             case .failure(let error):

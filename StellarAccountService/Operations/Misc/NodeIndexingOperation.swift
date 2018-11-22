@@ -92,8 +92,12 @@ final class NodeIndexingOperation: Operation {
 
         guard !indexingWasCancelled else { return }
 
-        let operationIdMap: [String: OperationType] = operations.reduce(into: [:]) { result, node in
-            result[node.object().identifier] = node
+        let operationIdMap: [String: [OperationType]] = operations.reduce(into: [:]) { result, node in
+            let key = node.object().identifier
+            var list = result[key] ?? [OperationType]()
+            list.append(node)
+
+            result[key] = list
             operationIdMapProgress.completedUnitCount += 1
         }
 
@@ -101,8 +105,13 @@ final class NodeIndexingOperation: Operation {
 
         guard !indexingWasCancelled else { return }
 
-        let operationTransactionHashMap: [String: OperationType] = operations.reduce(into: [:]) { result, node in
-            result[node.object().transactionHash] = node
+        let operationTransactionHashMap: [String: [OperationType]] = operations.reduce(into: [:]) { result, node in
+            let key = node.object().transactionHash
+            var list = result[key] ?? [OperationType]()
+
+            list.append(node)
+            result[key] = list
+
             operationTransactionHashMapProgress.completedUnitCount += 1
         }
 
@@ -131,7 +140,7 @@ final class NodeIndexingOperation: Operation {
         result = Result.success(true)
     }
 
-    private func processOperationEdges(operationMap: [String: NodeIndexingOperation.OperationType],
+    private func processOperationEdges(operationMap: [String: [OperationType]],
                                        effectMap: [String: EffectType]) {
         guard !indexingWasCancelled else { return }
 
@@ -143,17 +152,19 @@ final class NodeIndexingOperation: Operation {
             reportProgress()
 
             let key = item.element.key
-            guard let effect = effectMap[key], let operation = operationMap[key] else { continue }
+            guard let effect = effectMap[key], let operationList = operationMap[key] else { continue }
 
-            let pair = (forward: Edge(AnyDataNode(effect), AnyDataNode(operation)),
-                        reverse: Edge(AnyDataNode(operation), AnyDataNode(effect)))
+            for item in operationList {
+                let pair = (forward: Edge(AnyDataNode(effect), AnyDataNode(item)),
+                            reverse: Edge(AnyDataNode(item), AnyDataNode(effect)))
 
-            self.add(pair)
+                self.add(pair)
+            }
         }
     }
 
-    private func processTransactionEdges(transactionMap: [String: NodeIndexingOperation.TransactionType],
-                                         operationMap: [String: NodeIndexingOperation.OperationType]) {
+    private func processTransactionEdges(transactionMap: [String: TransactionType],
+                                         operationMap: [String: [OperationType]]) {
         guard !indexingWasCancelled else { return }
 
         for item in transactionMap.enumerated() {
@@ -164,12 +175,14 @@ final class NodeIndexingOperation: Operation {
             reportProgress()
 
             let key = item.element.key
-            guard let operation = operationMap[key], let transaction = transactionMap[key] else { continue }
+            guard let operationList = operationMap[key], let transaction = transactionMap[key] else { continue }
 
-            let pair = EdgePair(forward: Edge(AnyDataNode(transaction), AnyDataNode(operation)),
-                                reverse: Edge(AnyDataNode(operation), AnyDataNode(transaction)))
+            for item in operationList {
+                let pair = EdgePair(forward: Edge(AnyDataNode(transaction), AnyDataNode(item)),
+                                    reverse: Edge(AnyDataNode(item), AnyDataNode(transaction)))
 
-            self.add(pair)
+                self.add(pair)
+            }
         }
     }
 

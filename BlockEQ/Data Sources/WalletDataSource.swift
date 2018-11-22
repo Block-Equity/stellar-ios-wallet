@@ -68,6 +68,8 @@ extension WalletDataSource: UITableViewDataSource {
             cell.update(with: asset, effect: effect)
         }
 
+        cell.selectionStyle = effect.type == .tradeEffect ? .none : .default
+
         return cell
     }
 }

@@ -15,8 +15,8 @@ final class TransactionDetailsDataSource: NSObject {
     var sectionStates: [Int: SectionState] = [
         0: (collapsed: false, itemCount: 0),
         1: (collapsed: false, itemCount: 1),
-        2: (collapsed: true, itemCount: 5),
-        3: (collapsed: true, itemCount: 3)
+        2: (collapsed: true, itemCount: 0),
+        3: (collapsed: true, itemCount: 0)
     ]
 
     weak var headerDelegate: TransactionDetailsSectionHeaderDelegate?

@@ -12,6 +12,7 @@ extension StellarAddress {
     enum Suffix: String, RawRepresentable {
         case contactAddress = ".publicaddress@blockeq.com"
     }
+
     static func from(contactAddress: String) -> StellarAddress? {
         let stripped = contactAddress.replacingOccurrences(of: Suffix.contactAddress.rawValue, with: "")
         return StellarAddress(stripped)

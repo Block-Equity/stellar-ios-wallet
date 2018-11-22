@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     let container = WrapperVC()
+    let core = StellarCoreService(with: .production)
     let onboardingCoordinator = OnboardingCoordinator()
     var appCoordinator = ApplicationCoordinator()
     var authenticationCoordinator: AuthenticationCoordinator?
@@ -29,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         onboardingCoordinator.delegate = self
         appCoordinator.delegate = self
 
+        onboardingCoordinator.core = self.core
+
         if !KeychainHelper.isExistingInstance {
             onboardingContainer = true
             container.moveToViewController(onboardingCoordinator.navController,
@@ -36,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                            animated: false,
                                            completion: nil)
         } else {
-            appCoordinator.core = StellarCoreService(with: .production)
+            appCoordinator.core = self.core
 
             onboardingContainer = false
             container.moveToViewController(appCoordinator.tabController,

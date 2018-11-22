@@ -21,13 +21,11 @@ final class OnboardingCoordinator {
 
     weak var delegate: OnboardingCoordinatorDelegate?
     var authenticationCoordinator: AuthenticationCoordinator?
-    var core: StellarCoreService
+    var core: StellarCoreService!
 
     init() {
         navController = AppNavigationController(rootViewController: launchViewController)
         navController.navigationBar.prefersLargeTitles = true
-
-        core = StellarCoreService(with: .production)
 
         verificationViewController.delegate = self
         launchViewController.delegate = self
