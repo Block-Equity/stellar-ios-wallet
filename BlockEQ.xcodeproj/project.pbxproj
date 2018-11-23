@@ -89,6 +89,7 @@
 		C55458FC2124BB1B00032699 /* AuthenticatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55458FB2124BB1B00032699 /* AuthenticatingViewController.swift */; };
 		C55660492165D30C00DDAAA5 /* QRMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55660482165D30C00DDAAA5 /* QRMap.swift */; };
 		C564059F219DC1900084CD5E /* Diagnostic+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C564059E219DC1900084CD5E /* Diagnostic+Extensions.swift */; };
+		C5681BB921A779AB00ACEB21 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5681BB821A779AB00ACEB21 /* Reachability.swift */; };
 		C57053E4219F34B400E6B69E /* IndexingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C57053E3219F34B400E6B69E /* IndexingViewController.xib */; };
 		C57053E6219F357300E6B69E /* IndexingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57053E5219F357300E6B69E /* IndexingViewController.swift */; };
 		C57A8540217814EF0048A6B5 /* TransactionDetailsSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C57A853F217814EF0048A6B5 /* TransactionDetailsSectionHeader.xib */; };
@@ -328,6 +329,7 @@
 		C55458FB2124BB1B00032699 /* AuthenticatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatingViewController.swift; sourceTree = "<group>"; };
 		C55660482165D30C00DDAAA5 /* QRMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRMap.swift; sourceTree = "<group>"; };
 		C564059E219DC1900084CD5E /* Diagnostic+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Diagnostic+Extensions.swift"; sourceTree = "<group>"; };
+		C5681BB821A779AB00ACEB21 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		C57053E3219F34B400E6B69E /* IndexingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IndexingViewController.xib; sourceTree = "<group>"; };
 		C57053E5219F357300E6B69E /* IndexingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexingViewController.swift; sourceTree = "<group>"; };
 		C57A853F217814EF0048A6B5 /* TransactionDetailsSectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionDetailsSectionHeader.xib; sourceTree = "<group>"; };
@@ -861,6 +863,7 @@
 				C55660482165D30C00DDAAA5 /* QRMap.swift */,
 				C524DFCA2167CFE40068D111 /* AutoFillHelper.swift */,
 				C524DFCE2167F1AB0068D111 /* AppleAutoFillProvider.swift */,
+				C5681BB821A779AB00ACEB21 /* Reachability.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1339,6 +1342,7 @@
 				C5E8595020AFF09800B77289 /* OnboardingCoordinator.swift in Sources */,
 				C499756621129D2D00E2299C /* TrustedPartiesViewController.swift in Sources */,
 				C5E8594920AFB45E00B77289 /* ContainerViewController.swift in Sources */,
+				C5681BB921A779AB00ACEB21 /* Reachability.swift in Sources */,
 				C439A22F211B6FDC0025C047 /* P2PTransactionViewController.swift in Sources */,
 				C5D8CAC62180D809009F8624 /* AddressCoordinator.swift in Sources */,
 				EC0B19262054BC3B0052802C /* AppNavigationController.swift in Sources */,
