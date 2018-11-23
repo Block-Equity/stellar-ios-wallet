@@ -62,6 +62,13 @@
 "CREATE_MNEMONIC_TWENTYFOUR" = "Use a 24-word recovery phrase";
 "RECOVER_WALLET" = "Recover Wallet";
 "REENTER_PHRASE" = "Re-enter Your Phrase";
+"MNEMONIC_PASSPHRASE_TITLE" = "Mnemonic Passphrase";
+"MNEMONIC_PASSPHRASE_MESSAGE" = "Enter a passphrase to protect your mnemonic";
+"CONFIRM_PASSPHRASE_TITLE" = "Confirm Passphrase";
+"CONFIRM_PASSPHRASE_MESSAGE" = "Please confirm your passphrase";
+
+"ENTER_PASSPHRASE_PLACEHOLDER" = "Enter Passphrase";
+"PASSPHRASE_SET" = "Mnemonic passphrase has been set";
 
 "RECOVER_SECRET_SEED" = "Recover with Stellar secret key";
 "RECOVER_MNEMONIC" = "Recover with mnemonic";
@@ -226,3 +233,8 @@
 "LOADING_TRANSACTION" = "Loading Transaction...";
 "SENDING_DIAGNOSTIC" = "Sending Diagnostic...";
 "FAILED_DIAGNOSTIC" = "Failed";
+
+"CONFIRMED_SECRET_TITLE" = "I have written it down";
+"ADVANCED_SECURITY_TITLE" = "Advanced Security";
+"MISMATCHED_PASSPHRASE_TITLE" = "Mismatched Phrase";
+"MISMATCHED_PASSPHRASE_MESSAGE" = "Your passphrase was not set because they didn't match. Please try again.";

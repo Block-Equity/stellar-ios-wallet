@@ -89,10 +89,14 @@ extension StellarAccountService {
     }
 
     // Creates a new account with the provided mnemonic
-    public func initializeAccount(with mnemonic: StellarRecoveryMnemonic, index: Int = 0) throws {
+    public func initializeAccount(with mnemonic: StellarRecoveryMnemonic,
+                                  passphrase: StellarMnemonicPassphrase?,
+                                  index: Int = 0) throws {
         guard account == nil else { throw ServiceError.alreadyInitialized }
 
-        guard let keyPair = try? Wallet.createKeyPair(mnemonic: mnemonic.string, passphrase: nil, index: index) else {
+        guard let keyPair = try? Wallet.createKeyPair(mnemonic: mnemonic.string,
+                                                      passphrase: passphrase?.string,
+                                                      index: index) else {
             throw ServiceError.keypairCreation
         }
 

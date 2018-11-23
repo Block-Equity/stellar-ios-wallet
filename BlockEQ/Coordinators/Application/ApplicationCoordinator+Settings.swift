@@ -129,27 +129,17 @@ extension ApplicationCoordinator: SettingsDelegate {
     }
 
     func presentMimicAccount() {
-        let alert = UIAlertController(title: "Account", message: "Enter Account ID to mimic", preferredStyle: .alert)
-        alert.addTextField { field in
-            field.placeholder = "Account ID"
-        }
+        guard let viewController = self.wrappingNavController else { return }
 
-        let mimicAction = UIAlertAction(title: "Mimic", style: .default) { _ in
+        UIAlertController.prompt(title: "Account", message: "Enter Account ID to mimic", handler: { controller in
             #if DEBUG
-            if let accountId = alert.textFields![0].text {
+            if let accountId = controller.textFields![0].text {
                 KeychainHelper.save(accountId: accountId)
                 self.core?.accountService.overrideWithAccount(id: accountId)
                 self.core?.accountService.update()
             }
             #endif
-        }
-
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-
-        alert.addAction(cancelAction)
-        alert.addAction(mimicAction)
-
-        wrappingNavController?.present(alert, animated: true, completion: nil)
+        }, presentingViewController: viewController, placeholder: "Account ID")
     }
 
     func displayApplicationInfo() {

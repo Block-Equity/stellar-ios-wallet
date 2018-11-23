@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VerificationViewController" customModule="BlockEQ" customModuleProvider="target">
             <connections>
+                <outlet property="advancedSecurityButton" destination="Qvp-6Y-ujm" id="FRf-VQ-bSN"/>
                 <outlet property="collectionView" destination="uar-6Q-8gN" id="kUn-rl-saH"/>
                 <outlet property="progressView" destination="Uzi-m7-v4Y" id="YRr-GK-FXZ"/>
                 <outlet property="progressViewWidthConstraint" destination="iCg-9p-Tvw" id="qJJ-bb-QQy"/>
@@ -108,7 +109,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QNY-cd-5bI" customClass="AppButton" customModule="BlockEQ" customModuleProvider="target">
-                    <rect key="frame" x="16" y="318" width="343" height="48"/>
+                    <rect key="frame" x="16" y="362" width="343" height="48"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="sNe-X3-8CN"/>
                     </constraints>
@@ -123,6 +124,13 @@
                         <action selector="nextButtonSelected" destination="-1" eventType="touchUpInside" id="cK0-jK-aOj"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qvp-6Y-ujm" userLabel="Advanced Security Button">
+                    <rect key="frame" x="16" y="317" width="343" height="30"/>
+                    <state key="normal" title="Advanced Security"/>
+                    <connections>
+                        <action selector="advancedSecuritySelected:" destination="-1" eventType="touchUpInside" id="Vfy-B8-xgH"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -134,9 +142,12 @@
                 <constraint firstItem="Smi-Lv-1zE" firstAttribute="top" secondItem="1RZ-No-B37" secondAttribute="bottom" id="Fz5-sH-MW8"/>
                 <constraint firstItem="QNY-cd-5bI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="HD7-Ny-ghs"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="1RZ-No-B37" secondAttribute="trailing" id="SeI-5X-qW8"/>
-                <constraint firstItem="QNY-cd-5bI" firstAttribute="top" secondItem="Smi-Lv-1zE" secondAttribute="bottom" constant="15" id="ZYF-Cs-lAd"/>
+                <constraint firstItem="Qvp-6Y-ujm" firstAttribute="trailing" secondItem="QNY-cd-5bI" secondAttribute="trailing" id="XLE-Jx-IBC"/>
                 <constraint firstItem="hA1-Ss-YK5" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="aKN-eX-VST"/>
+                <constraint firstItem="QNY-cd-5bI" firstAttribute="top" secondItem="Qvp-6Y-ujm" secondAttribute="bottom" constant="15" id="fpV-FY-vzv"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="QNY-cd-5bI" secondAttribute="trailing" constant="16" id="g1r-eS-r8n"/>
+                <constraint firstItem="Qvp-6Y-ujm" firstAttribute="leading" secondItem="QNY-cd-5bI" secondAttribute="leading" id="hBV-yu-ezA"/>
+                <constraint firstItem="Qvp-6Y-ujm" firstAttribute="top" secondItem="1RZ-No-B37" secondAttribute="bottom" constant="15" id="q7o-65-WgL"/>
                 <constraint firstItem="1RZ-No-B37" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="zWX-7s-we5"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
