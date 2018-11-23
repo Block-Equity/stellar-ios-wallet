@@ -55,20 +55,11 @@ extension OnboardingCoordinator: LaunchViewControllerDelegate {
             return
         }
 
-        do {
-            try core.accountService.initializeAccount(with: mnemonic)
+        let mnemonicVC = MnemonicViewController(mnemonic: mnemonic, shouldSetPin: false, hideConfirmation: false)
+        mnemonicVC.delegate = self
 
-            let mnemonicVC = MnemonicViewController(mnemonic: mnemonic, shouldSetPin: false, hideConfirmation: false)
-            mnemonicVC.delegate = self
-
-            self.mnemonicViewController = mnemonicVC
-            navController.pushViewController(mnemonicVC, animated: true)
-        } catch {
-            core.accountService.clear()
-            UIAlertController.simpleAlert(title: "ERROR_TITLE".localized(),
-                                          message: "MNEMONIC_GENERATION_ERROR".localized(),
-                                          presentingViewController: navController)
-        }
+        self.mnemonicViewController = mnemonicVC
+        navController.pushViewController(mnemonicVC, animated: true)
     }
 
     func requestedImportWallet(_ viewController: LaunchViewController) {
@@ -77,15 +68,29 @@ extension OnboardingCoordinator: LaunchViewControllerDelegate {
 }
 
 extension OnboardingCoordinator: MnemonicViewControllerDelegate {
-    func confirmedWrittenMnemonic(_ viewController: MnemonicViewController, mnemonic: StellarRecoveryMnemonic) {
-        recordWalletDiagnostic(mnemonic: mnemonic, recovered: false, passphrase: false)
+    func confirmedWrittenMnemonic(_ viewController: MnemonicViewController,
+                                  mnemonic: StellarRecoveryMnemonic,
+                                  passphrase: StellarMnemonicPassphrase?) {
+        do {
+            try core.accountService.initializeAccount(with: mnemonic, passphrase: passphrase)
+        } catch {
+            core.accountService.clear()
+            UIAlertController.simpleAlert(title: "ERROR_TITLE".localized(),
+                                          message: "MNEMONIC_GENERATION_ERROR".localized(),
+                                          presentingViewController: navController)
+            return
+        }
+
+        recordWalletDiagnostic(mnemonic: mnemonic, recovered: false, passphrase: passphrase != nil)
         authenticate()
     }
 }
 
 extension OnboardingCoordinator: VerificationViewControllerDelegate {
-    func validatedAccount(_ viewController: VerificationViewController, mnemonic: StellarRecoveryMnemonic) {
-        save(mnemonic: mnemonic, recovered: true, passphrase: false)
+    func validatedAccount(_ viewController: VerificationViewController,
+                          mnemonic: StellarRecoveryMnemonic,
+                          passphrase: StellarMnemonicPassphrase?) {
+        save(mnemonic: mnemonic, recovered: true, passphrase: passphrase)
         authenticate()
     }
 
@@ -138,10 +143,10 @@ extension OnboardingCoordinator {
         KeychainHelper.setDiagnostic(diagnostic)
     }
 
-    func save(mnemonic: StellarRecoveryMnemonic, recovered: Bool, passphrase: Bool) {
+    func save(mnemonic: StellarRecoveryMnemonic, recovered: Bool, passphrase: StellarMnemonicPassphrase?) {
         do {
-            try core.accountService.initializeAccount(with: mnemonic)
-            recordWalletDiagnostic(mnemonic: mnemonic, recovered: recovered, passphrase: passphrase)
+            try core.accountService.initializeAccount(with: mnemonic, passphrase: passphrase)
+            recordWalletDiagnostic(mnemonic: mnemonic, recovered: recovered, passphrase: passphrase != nil)
         } catch {
             // error
         }

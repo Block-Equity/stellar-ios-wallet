@@ -10,8 +10,10 @@ import StellarAccountService
 import stellarsdk
 
 protocol VerificationViewControllerDelegate: AnyObject {
-    func validatedAccount(_ viewController: VerificationViewController, mnemonic: StellarRecoveryMnemonic)
     func validatedAccount(_ viewController: VerificationViewController, secret: StellarSeed)
+    func validatedAccount(_ viewController: VerificationViewController,
+                          mnemonic: StellarRecoveryMnemonic,
+                          passphrase: StellarMnemonicPassphrase?)
 }
 
 class VerificationViewController: UIViewController {
@@ -25,6 +27,7 @@ class VerificationViewController: UIViewController {
     @IBOutlet var questionTitleLabel: UILabel!
     @IBOutlet var questionSubtitleLabel: UILabel!
     @IBOutlet var questionViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var advancedSecurityButton: UIButton!
 
     weak var delegate: VerificationViewControllerDelegate?
 
@@ -37,6 +40,8 @@ class VerificationViewController: UIViewController {
     let questionTextViewHeight: CGFloat = 48.0
     let totalQuestionCount = 4
     var questionsAnswered = 0
+    var mnemonicPassphrase: StellarMnemonicPassphrase?
+
     var progressWidth: CGFloat {
         return UIScreen.main.bounds.size.width / CGFloat(totalQuestionCount)
     }
@@ -54,45 +59,32 @@ class VerificationViewController: UIViewController {
     var questionWords: [String] = []
     var currentWord: String = ""
 
-    @IBAction func nextButtonSelected() {
-        switch type {
-        default:
-            if let recoveryMnemonic = StellarRecoveryMnemonic(textView.text) {
-                textView.text = ""
-                delegate?.validatedAccount(self, mnemonic: recoveryMnemonic)
-            } else if let recoverySeed = StellarSeed(textView.text) {
-                textView.text = ""
-                delegate?.validatedAccount(self, secret: recoverySeed)
-            } else {
-                displayInvalidAnswer()
-            }
-        }
-    }
-
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
     init(type: VerificationType, mnemonic: StellarRecoveryMnemonic?) {
         super.init(nibName: String(describing: VerificationViewController.self), bundle: nil)
-
         self.type = type
-//        self.mnemonic = mnemonic
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         textView.becomeFirstResponder()
+        mnemonicPassphrase = nil
+
+        setupView()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         textView.text = ""
+        mnemonicPassphrase = nil
     }
 
     func setupView() {
@@ -122,12 +114,8 @@ class VerificationViewController: UIViewController {
         questionTitleLabel.textColor = Colors.darkGray
         questionSubtitleLabel.textColor = Colors.darkGray
         view.backgroundColor = Colors.lightBackground
-    }
 
-    @objc func dismissView() {
-        view.endEditing(true)
-
-        dismiss(animated: true, completion: nil)
+        styleAdvancedSecurity()
     }
 
     func getWords(string: String) -> [String] {
@@ -178,6 +166,29 @@ class VerificationViewController: UIViewController {
                 self.view.layoutIfNeeded()
             }
         }
+    }
+}
+
+// MARK: - IBActions / Actions
+extension VerificationViewController {
+    @IBAction func nextButtonSelected() {
+        switch type {
+        default:
+            if let recoveryMnemonic = StellarRecoveryMnemonic(textView.text) {
+                textView.text = ""
+                delegate?.validatedAccount(self, mnemonic: recoveryMnemonic, passphrase: mnemonicPassphrase)
+            } else if let recoverySeed = StellarSeed(textView.text) {
+                textView.text = ""
+                delegate?.validatedAccount(self, secret: recoverySeed)
+            } else {
+                displayInvalidAnswer()
+            }
+        }
+    }
+
+    @IBAction func advancedSecuritySelected(_ sender: Any) {
+        self.mnemonicPassphrase = nil
+        self.passphrasePrompt(confirm: false, completion: self.setPassphrase)
     }
 }
 

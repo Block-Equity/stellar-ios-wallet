@@ -14,4 +14,27 @@ extension UIAlertController {
 
         presentingViewController.present(controller, animated: true, completion: nil)
     }
+
+    static func prompt(title: String,
+                       message: String?,
+                       handler: @escaping (UIAlertController) -> Void,
+                       presentingViewController: UIViewController,
+                       placeholder: String? = nil,
+                       okText: String? = "GENERIC_OK_TEXT".localized(),
+                       cancelText: String? = "CANCEL_ACTION".localized()
+                       ) {
+        let controller = UIAlertController.init(title: title, message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: cancelText, style: .cancel, handler: nil)
+        let okAction = UIAlertAction(title: okText, style: .default, handler: { _ in
+            handler(controller)
+        })
+
+        controller.addAction(okAction)
+        controller.addAction(cancelAction)
+        controller.addTextField { field in
+            field.placeholder = placeholder
+        }
+
+        presentingViewController.present(controller, animated: true, completion: nil)
+    }
 }

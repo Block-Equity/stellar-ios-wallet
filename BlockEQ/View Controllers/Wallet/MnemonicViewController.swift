@@ -10,7 +10,9 @@ import stellarsdk
 import StellarAccountService
 
 protocol MnemonicViewControllerDelegate: AnyObject {
-    func confirmedWrittenMnemonic(_ viewController: MnemonicViewController, mnemonic: StellarRecoveryMnemonic)
+    func confirmedWrittenMnemonic(_ viewController: MnemonicViewController,
+                                  mnemonic: StellarRecoveryMnemonic,
+                                  passphrase: StellarMnemonicPassphrase?)
 }
 
 class MnemonicViewController: UIViewController {
@@ -18,12 +20,14 @@ class MnemonicViewController: UIViewController {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var mnemonicHolderView: UIView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var advancedSecurityButton: UIButton!
     @IBOutlet weak var confirmationButton: AppButton!
 
     weak var delegate: MnemonicViewControllerDelegate?
 
     var mnemonic: StellarRecoveryMnemonic?
     var hideConfirmation: Bool = false
+    var mnemonicPassphrase: StellarMnemonicPassphrase?
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -38,7 +42,6 @@ class MnemonicViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
         generateMnemonicViews()
     }
 
@@ -46,43 +49,29 @@ class MnemonicViewController: UIViewController {
         super.viewWillAppear(animated)
         self.titleLabel.text = mnemonic != nil ? "MNEMONIC_REMINDER_MESSAGE".localized() : "NO_MNEMONIC_SET".localized()
         self.confirmationButton.isHidden = self.hideConfirmation
+        mnemonicPassphrase = nil
+
+        setupView()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        mnemonicPassphrase = nil
     }
 
     func setupView() {
         navigationItem.title = "SECRET_PHRASE".localized()
         title = "SECRET_PHRASE".localized()
 
+        confirmationButton.setTitle("CONFIRMED_SECRET_TITLE".localized(), for: .normal)
+
         holderView.backgroundColor = Colors.lightBackground
         titleLabel.textColor = Colors.darkGray
 
         let navButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveToKeychain(_:)))
         navigationItem.rightBarButtonItem = navButton
-    }
 
-    @IBAction func confirmedWrittenDown(_ sender: Any) {
-        guard let mnemonic = self.mnemonic else { return }
-        delegate?.confirmedWrittenMnemonic(self, mnemonic: mnemonic)
-    }
-
-    @objc func saveToKeychain(_ sender: UIBarButtonItem) {
-        guard let mnemonic = self.mnemonic?.string else { return }
-        AutoFillHelper.provider = AppleAutoFillProvider()
-        AutoFillHelper.save(mnemonic: mnemonic) { error in
-            if let error = error {
-                UIAlertController.simpleAlert(title: "ERROR_TITLE".localized(),
-                                              message: error.localizedDescription,
-                                              presentingViewController: self)
-            } else {
-                UIAlertController.simpleAlert(title: "SAVED".localized(),
-                                              message: "MNEMONIC_STORED".localized(),
-                                              presentingViewController: self)
-            }
-        }
-    }
-
-    @objc func dismissView() {
-        view.endEditing(true)
-        dismiss(animated: true, completion: nil)
+        styleAdvancedSecurity()
     }
 
     func generateMnemonicViews() {
@@ -116,5 +105,39 @@ class MnemonicViewController: UIViewController {
                 originX += pillView.frame.size.width
             }
         }
+    }
+}
+
+// MARK: - IBActions / Actions
+extension MnemonicViewController {
+    @IBAction func confirmedWrittenDown(_ sender: Any) {
+        guard let mnemonic = self.mnemonic else { return }
+        delegate?.confirmedWrittenMnemonic(self, mnemonic: mnemonic, passphrase: mnemonicPassphrase)
+    }
+
+    @IBAction func selectedAdvancedSecurity(_ sender: Any) {
+        self.mnemonicPassphrase = nil
+        self.passphrasePrompt(confirm: false, completion: self.setPassphrase)
+    }
+
+    @objc func saveToKeychain(_ sender: UIBarButtonItem) {
+        guard let mnemonic = self.mnemonic?.string else { return }
+        AutoFillHelper.provider = AppleAutoFillProvider()
+        AutoFillHelper.save(mnemonic: mnemonic) { error in
+            if let error = error {
+                UIAlertController.simpleAlert(title: "ERROR_TITLE".localized(),
+                                              message: error.localizedDescription,
+                                              presentingViewController: self)
+            } else {
+                UIAlertController.simpleAlert(title: "SAVED".localized(),
+                                              message: "MNEMONIC_STORED".localized(),
+                                              presentingViewController: self)
+            }
+        }
+    }
+
+    @objc func dismissView() {
+        view.endEditing(true)
+        dismiss(animated: true, completion: nil)
     }
 }
