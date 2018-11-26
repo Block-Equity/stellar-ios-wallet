@@ -42,9 +42,10 @@ final class WalletDataSource: NSObject {
         self.account = account
         self.effects = account.effects
             .filter {
-                let isBaseAsset = $0.asset == asset && WalletDataSource.supportedEffects.contains($0.type)
+                let isSupportedType = WalletDataSource.supportedEffects.contains($0.type)
+                let isBaseAsset = $0.asset == asset
                 let isPairAsset = $0.assetPair.buying == asset || $0.assetPair.selling == asset
-                return isBaseAsset || isPairAsset
+                return isSupportedType && (isBaseAsset || isPairAsset)
             }
             .sorted(by: { (first, second) -> Bool in first.createdAt > second.createdAt })
     }
