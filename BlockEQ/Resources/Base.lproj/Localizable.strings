@@ -238,3 +238,5 @@
 "ADVANCED_SECURITY_TITLE" = "Advanced Security";
 "MISMATCHED_PASSPHRASE_TITLE" = "Mismatched Phrase";
 "MISMATCHED_PASSPHRASE_MESSAGE" = "Your passphrase was not set because they didn't match. Please try again.";
+"INVALID_PASSPHRASE_TITLE" = "Invalid Phrase";
+"INVALID_PASSPHRASE_MESSAGE" = "That passphrase contains one or more disallowed characters. Please try again.";
