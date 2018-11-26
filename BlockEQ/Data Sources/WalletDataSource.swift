@@ -41,7 +41,11 @@ final class WalletDataSource: NSObject {
         self.index = account.assets.firstIndex(of: asset) ?? 0
         self.account = account
         self.effects = account.effects
-            .filter { $0.asset == asset && WalletDataSource.supportedEffects.contains($0.type) }
+            .filter {
+                let isBaseAsset = $0.asset == asset && WalletDataSource.supportedEffects.contains($0.type)
+                let isPairAsset = $0.assetPair.buying == asset || $0.assetPair.selling == asset
+                return isBaseAsset || isPairAsset
+            }
             .sorted(by: { (first, second) -> Bool in first.createdAt > second.createdAt })
     }
 }
