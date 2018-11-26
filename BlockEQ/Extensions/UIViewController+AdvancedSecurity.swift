@@ -42,6 +42,12 @@ extension PassphrasePromptable where Self: UIViewController {
                                       presentingViewController: self)
     }
 
+    func invalidPrompt() {
+        UIAlertController.simpleAlert(title: "INVALID_PASSPHRASE_TITLE".localized(),
+                                      message: "INVALID_PASSPHRASE_MESSAGE".localized(),
+                                      presentingViewController: self)
+    }
+
     func updatePassphraseSet(with phrase: StellarMnemonicPassphrase ) {
         passphraseButton.setTitle("PASSPHRASE_SET".localized(), for: .normal)
         self.mnemonicPassphrase = phrase
@@ -55,6 +61,7 @@ extension PassphrasePromptable where Self: UIViewController {
     func setPassphrase(with phrase: StellarMnemonicPassphrase?) {
         guard let passphrase = phrase else {
             clearPassphrase()
+            invalidPrompt()
             return
         }
 
