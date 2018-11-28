@@ -126,16 +126,25 @@ extension MnemonicViewController {
 
     @objc func saveToKeychain(_ sender: UIBarButtonItem) {
         guard let mnemonic = self.mnemonic?.string else { return }
-        AutoFillHelper.provider = AppleAutoFillProvider()
+
+        let keychainProvider = AppleAutoFillProvider()
+        AutoFillHelper.provider = keychainProvider
+
         AutoFillHelper.save(mnemonic: mnemonic) { error in
             if let error = error {
                 UIAlertController.simpleAlert(title: "ERROR_TITLE".localized(),
                                               message: error.localizedDescription,
                                               presentingViewController: self)
             } else {
-                UIAlertController.simpleAlert(title: "SAVED".localized(),
-                                              message: "MNEMONIC_STORED".localized(),
-                                              presentingViewController: self)
+//                This has been removed to not scare users since the error case is never triggered even if the user
+//                selects "don't allow" in the OS prompt.
+//
+//                A radar bug has been filed with Apple for this.
+
+//
+//                UIAlertController.simpleAlert(title: "SAVED".localized(),
+//                                              message: "MNEMONIC_STORED".localized(),
+//                                              presentingViewController: self)
             }
         }
     }
