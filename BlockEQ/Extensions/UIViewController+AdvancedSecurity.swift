@@ -33,7 +33,8 @@ extension PassphrasePromptable where Self: UIViewController {
                                  message: message,
                                  handler: handler,
                                  presentingViewController: self,
-                                 placeholder: "ENTER_PASSPHRASE_PLACEHOLDER".localized())
+                                 placeholder: "ENTER_PASSPHRASE_PLACEHOLDER".localized(),
+                                 secureText: true)
     }
 
     func mismatchedPrompt() {
