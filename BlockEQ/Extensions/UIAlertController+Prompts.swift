@@ -21,7 +21,8 @@ extension UIAlertController {
                        presentingViewController: UIViewController,
                        placeholder: String? = nil,
                        okText: String? = "GENERIC_OK_TEXT".localized(),
-                       cancelText: String? = "CANCEL_ACTION".localized()
+                       cancelText: String? = "CANCEL_ACTION".localized(),
+                       secureText: Bool = false
                        ) {
         let controller = UIAlertController.init(title: title, message: message, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: cancelText, style: .cancel, handler: nil)
@@ -33,6 +34,9 @@ extension UIAlertController {
         controller.addAction(cancelAction)
         controller.addTextField { field in
             field.placeholder = placeholder
+            field.autocorrectionType = .no
+            field.autocapitalizationType = .none
+            field.isSecureTextEntry = secureText
         }
 
         presentingViewController.present(controller, animated: true, completion: nil)
