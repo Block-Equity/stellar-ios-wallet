@@ -27,6 +27,7 @@ class MnemonicViewController: UIViewController {
 
     var mnemonic: StellarRecoveryMnemonic?
     var hideConfirmation: Bool = false
+    var hideAdvancedSecurity: Bool = true
     var mnemonicPassphrase: StellarMnemonicPassphrase?
 
     required init?(coder aDecoder: NSCoder) {
@@ -34,9 +35,10 @@ class MnemonicViewController: UIViewController {
         self.mnemonic = StellarRecoveryMnemonic(Wallet.generate24WordMnemonic())
     }
 
-    init(mnemonic: StellarRecoveryMnemonic?, shouldSetPin: Bool, hideConfirmation: Bool = false) {
+    init(mnemonic: StellarRecoveryMnemonic?, hideConfirmation: Bool = false, advancedSecurity: Bool = false) {
         super.init(nibName: String(describing: MnemonicViewController.self), bundle: nil)
         self.hideConfirmation = hideConfirmation
+        self.hideAdvancedSecurity = !advancedSecurity
         self.mnemonic = mnemonic
     }
 
@@ -70,6 +72,8 @@ class MnemonicViewController: UIViewController {
 
         let navButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveToKeychain(_:)))
         navigationItem.rightBarButtonItem = navButton
+
+        advancedSecurityButton.isHidden = hideAdvancedSecurity
 
         styleAdvancedSecurity()
     }
