@@ -208,7 +208,8 @@ extension ApplicationCoordinator: SettingsDelegate {
         if let seed = core?.accountService.accountSecretSeed() {
             viewController = SecretSeedViewController(seed)
         } else if let mnemonic = core?.accountService.accountMnemonic() {
-            viewController = SecretSeedViewController(mnemonic: mnemonic)
+            let passphrase = core?.accountService.accountPassphrase()
+            viewController = SecretSeedViewController(mnemonic: mnemonic, passphrase: passphrase)
         } else {
             return
         }

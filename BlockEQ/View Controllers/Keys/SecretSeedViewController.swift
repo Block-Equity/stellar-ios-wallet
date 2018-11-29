@@ -19,12 +19,15 @@ final class SecretSeedViewController: UIViewController {
 
     let blurEffect = UIBlurEffect(style: .light)
     let concealingView = UIVisualEffectView(effect: nil)
-    var mnemonic: String?
+    var mnemonic: StellarRecoveryMnemonic?
+    var passphrase: StellarMnemonicPassphrase?
     var seed: String?
     var revealed: Bool = false
 
-    init(mnemonic: StellarRecoveryMnemonic?) {
-        self.mnemonic = mnemonic?.string
+    init(mnemonic: StellarRecoveryMnemonic?, passphrase: StellarMnemonicPassphrase?) {
+        self.mnemonic = mnemonic
+        self.passphrase = passphrase
+
         super.init(nibName: String(describing: SecretSeedViewController.self), bundle: nil)
     }
 
@@ -143,8 +146,10 @@ final class SecretSeedViewController: UIViewController {
         }
 
         DispatchQueue.global(qos: .userInitiated).async {
+            let phrase = self.passphrase?.string
+
             if let mnemonic = self.mnemonic,
-                let keyPair = try? Wallet.createKeyPair(mnemonic: mnemonic, passphrase: nil, index: 0),
+                let keyPair = try? Wallet.createKeyPair(mnemonic: mnemonic.string, passphrase: phrase, index: 0),
                 let secretSeed = keyPair.secretSeed {
                 DispatchQueue.main.async {
                     self.setQRCode(QRMap(with: secretSeed, correctionLevel: .full), text: secretSeed)
