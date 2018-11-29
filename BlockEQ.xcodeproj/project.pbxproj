@@ -97,6 +97,8 @@
 		C57A8542217815410048A6B5 /* TransactionDetailsSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57A8541217815410048A6B5 /* TransactionDetailsSectionHeader.swift */; };
 		C589FF2A20902CCC00F5F308 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C589FF2920902CCC00F5F308 /* SettingsViewController.swift */; };
 		C589FF2C20902CE300F5F308 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C589FF2B20902CE300F5F308 /* SettingsViewController.xib */; };
+		C58D374921B06A23009B44C0 /* PillViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58D374721B06A22009B44C0 /* PillViewCell.swift */; };
+		C58D374A21B06A23009B44C0 /* PillViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58D374821B06A22009B44C0 /* PillViewCell.xib */; };
 		C590B9BE21A0984400B5262A /* ApplicationCoordinator+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = C590B9BD21A0984400B5262A /* ApplicationCoordinator+Debug.swift */; };
 		C590B9C021A098B600B5262A /* ApplicationCoordinator+Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C590B9BF21A098B600B5262A /* ApplicationCoordinator+Settings.swift */; };
 		C590B9C221A09A6000B5262A /* ApplicationCoordinator+Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C590B9C121A09A6000B5262A /* ApplicationCoordinator+Wallet.swift */; };
@@ -168,7 +170,6 @@
 		EC2015F720532F4B009A73C8 /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2015F620532F4B009A73C8 /* AppButton.swift */; };
 		EC2015FA20533A89009A73C8 /* MnemonicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2015F820533A89009A73C8 /* MnemonicViewController.swift */; };
 		EC2015FB20533A89009A73C8 /* MnemonicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC2015F920533A89009A73C8 /* MnemonicViewController.xib */; };
-		EC20160120536C68009A73C8 /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC20160020536C68009A73C8 /* PillView.swift */; };
 		EC3609FD20560FDB00FC31F9 /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3609FB20560FDB00FC31F9 /* ScanViewController.swift */; };
 		EC3609FE20560FDB00FC31F9 /* ScanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC3609FC20560FDB00FC31F9 /* ScanViewController.xib */; };
 		EC360A032056181E00FC31F9 /* VerificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC360A012056181E00FC31F9 /* VerificationViewController.xib */; };
@@ -338,6 +339,8 @@
 		C57A8541217815410048A6B5 /* TransactionDetailsSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailsSectionHeader.swift; sourceTree = "<group>"; };
 		C589FF2920902CCC00F5F308 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C589FF2B20902CE300F5F308 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		C58D374721B06A22009B44C0 /* PillViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PillViewCell.swift; sourceTree = "<group>"; };
+		C58D374821B06A22009B44C0 /* PillViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PillViewCell.xib; sourceTree = "<group>"; };
 		C590B9BD21A0984400B5262A /* ApplicationCoordinator+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ApplicationCoordinator+Debug.swift"; sourceTree = "<group>"; };
 		C590B9BF21A098B600B5262A /* ApplicationCoordinator+Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ApplicationCoordinator+Settings.swift"; sourceTree = "<group>"; };
 		C590B9C121A09A6000B5262A /* ApplicationCoordinator+Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ApplicationCoordinator+Wallet.swift"; sourceTree = "<group>"; };
@@ -416,7 +419,6 @@
 		EC2015F620532F4B009A73C8 /* AppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
 		EC2015F820533A89009A73C8 /* MnemonicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicViewController.swift; sourceTree = "<group>"; };
 		EC2015F920533A89009A73C8 /* MnemonicViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MnemonicViewController.xib; sourceTree = "<group>"; };
-		EC20160020536C68009A73C8 /* PillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillView.swift; sourceTree = "<group>"; };
 		EC3609FB20560FDB00FC31F9 /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
 		EC3609FC20560FDB00FC31F9 /* ScanViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanViewController.xib; sourceTree = "<group>"; };
 		EC360A012056181E00FC31F9 /* VerificationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VerificationViewController.xib; sourceTree = "<group>"; };
@@ -715,6 +717,8 @@
 			isa = PBXGroup;
 			children = (
 				C53E629E219B5A6E006BF2F1 /* Diagnostics */,
+				C58D374721B06A22009B44C0 /* PillViewCell.swift */,
+				C58D374821B06A22009B44C0 /* PillViewCell.xib */,
 				C414813E21264C8B0057ED74 /* SelectAssetCell.swift */,
 				C414813F21264C8B0057ED74 /* SelectAssetCell.xib */,
 				C414812C21246A1B0057ED74 /* StellarContactCell.swift */,
@@ -907,7 +911,6 @@
 				EC0B1917205463DC0052802C /* Cells */,
 				C54EFE4721796B61005FA6D3 /* UIInsetLabel.swift */,
 				EC2015F620532F4B009A73C8 /* AppButton.swift */,
-				EC20160020536C68009A73C8 /* PillView.swift */,
 				EC3DE29E20B8F98C00A6EC3C /* TradeHeaderView.swift */,
 				EC3DE2A020B8F9C300A6EC3C /* TradeHeaderView.xib */,
 				C525C97820B79695006C138F /* KeyboardView.xib */,
@@ -1119,6 +1122,7 @@
 				C439A230211B6FDC0025C047 /* P2PTransactionViewController.xib in Resources */,
 				C41713E621211A8800C29FE2 /* AddPeerViewController.xib in Resources */,
 				C54ADD4B21781F990078F69E /* TransactionDetailsCell.xib in Resources */,
+				C58D374A21B06A23009B44C0 /* PillViewCell.xib in Resources */,
 				EC0B192320549B240052802C /* ReceiveViewController.xib in Resources */,
 				EC2015FB20533A89009A73C8 /* MnemonicViewController.xib in Resources */,
 				EC6EE88720B5C1320033C299 /* TradeSegmentViewController.xib in Resources */,
@@ -1319,6 +1323,7 @@
 				C54EFE432179043B005FA6D3 /* TransactionDetailsBasicHeader.swift in Sources */,
 				C5BED3762162A81C00BEE464 /* Exchange.swift in Sources */,
 				C5681BBB21A8B9BD00ACEB21 /* UIViewController+AdvancedSecurity.swift in Sources */,
+				C58D374921B06A23009B44C0 /* PillViewCell.swift in Sources */,
 				ECD3A352207D2CE5000609A0 /* WalletItemActivateCell.swift in Sources */,
 				C53E62862199DC94006BF2F1 /* SendDiagnosticOperation.swift in Sources */,
 				C499755F211297BF00E2299C /* P2PCoordinator.swift in Sources */,
@@ -1327,7 +1332,6 @@
 				EC2015F720532F4B009A73C8 /* AppButton.swift in Sources */,
 				C5AB413D2090436700096A29 /* UIView+NibLoadableView.swift in Sources */,
 				C51441FC217E839E006C44F4 /* WalletDataSource.swift in Sources */,
-				EC20160120536C68009A73C8 /* PillView.swift in Sources */,
 				ECB1D958207E966D0088826D /* MBProgressHUD.m in Sources */,
 				C54EFE4A21798668005FA6D3 /* UIView+Layer.swift in Sources */,
 				C5173A8621A4A94800B5272F /* CenteredCollectionViewFlowLayout.swift in Sources */,

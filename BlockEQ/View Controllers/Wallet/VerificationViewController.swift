@@ -40,6 +40,8 @@ class VerificationViewController: UIViewController {
     let questionTextViewHeight: CGFloat = 48.0
     let totalQuestionCount = 4
     var questionsAnswered = 0
+
+    var temporaryPassphrase: StellarMnemonicPassphrase?
     var mnemonicPassphrase: StellarMnemonicPassphrase?
 
     var progressWidth: CGFloat {
@@ -187,7 +189,7 @@ extension VerificationViewController {
     }
 
     @IBAction func advancedSecuritySelected(_ sender: Any) {
-        self.mnemonicPassphrase = nil
+        self.clearPassphrase()
         self.passphrasePrompt(confirm: false, completion: self.setPassphrase)
     }
 }

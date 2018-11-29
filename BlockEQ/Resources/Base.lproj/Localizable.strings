@@ -111,7 +111,7 @@
 "NEW_WALLET" = "New Wallet";
 "MY_WALLET" = "My Wallet";
 "LUMEN_BALANCE" = "XLM Balance";
-"SECRET_PHRASE" = "Secret Phrase";
+"SECRET_PHRASE" = "Mnemonic Phrase";
 "TOKEN_ADDRESS" = "Token Address";
 "YOUR_TOKEN_ADDRESS" = "Your Token Address";
 "YOUR_WALLET_ADDRESS" = "Your Wallet Address";
@@ -240,3 +240,4 @@
 "MISMATCHED_PASSPHRASE_MESSAGE" = "Your passphrase was not set because they didn't match. Please try again.";
 "INVALID_PASSPHRASE_TITLE" = "Invalid Phrase";
 "INVALID_PASSPHRASE_MESSAGE" = "That passphrase contains one or more disallowed characters. Please try again.";
+"PASSPHRASE_LABEL" = "Passphrase";
