@@ -14,6 +14,7 @@ public final class SecretManager: SecretManagerProtocol {
     static let privateSeedKeyFormat = "%@_privateKey"
     static let secretSeedKeyFormat = "%@_secretSeed"
     static let mnemonicKeyFormat = "%@_mnemonic"
+    static let passphraseKeyFormat = "%@_passphrase"
 
     let accountId: String
 
@@ -33,10 +34,15 @@ public final class SecretManager: SecretManagerProtocol {
         return String(format: SecretManager.mnemonicKeyFormat, accountId)
     }
 
+    private static func passphraseKey(for accountId: String) -> String {
+        return String(format: SecretManager.passphraseKeyFormat, accountId)
+    }
+
     var publicKeyKey: String { return SecretManager.publicKeyKey(for: self.accountId) }
     var privateKeyKey: String { return SecretManager.privateKeyKey(for: self.accountId) }
     var secretSeedKey: String { return SecretManager.secretSeedKey(for: self.accountId) }
     var mnemonicKey: String { return SecretManager.mnemonicKey(for: self.accountId) }
+    var passphraseKey: String { return SecretManager.passphraseKey(for: self.accountId) }
 
     init(for account: String) {
         self.accountId = account
@@ -76,6 +82,10 @@ public final class SecretManager: SecretManagerProtocol {
         return KeychainSwift().get(mnemonicKey)
     }
 
+    var passphrase: String? {
+        return KeychainSwift().get(passphraseKey)
+    }
+
     internal func store(keyPair: KeyPair) {
         let pubKey = keyPair.publicKey
         guard let privKey = keyPair.privateKey else { return }
@@ -83,8 +93,11 @@ public final class SecretManager: SecretManagerProtocol {
         self.store(pub: pubKey, priv: privKey)
     }
 
-    internal func store(mnemonic: StellarRecoveryMnemonic) {
+    internal func store(mnemonic: StellarRecoveryMnemonic, passphrase: StellarMnemonicPassphrase? = nil) {
         KeychainSwift().set(mnemonic.string, forKey: mnemonicKey)
+
+        guard let phrase = passphrase?.string else { return }
+        KeychainSwift().set(phrase, forKey: passphraseKey)
     }
 
     internal func store(seed: StellarSeed) {
@@ -101,5 +114,6 @@ public final class SecretManager: SecretManagerProtocol {
         KeychainSwift().delete(publicKeyKey)
         KeychainSwift().delete(secretSeedKey)
         KeychainSwift().delete(mnemonicKey)
+        KeychainSwift().delete(passphraseKey)
     }
 }

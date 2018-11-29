@@ -101,7 +101,7 @@ extension StellarAccountService {
         }
 
         self.startup(keyPair: keyPair)
-        self.secretManager?.store(mnemonic: mnemonic)
+        self.secretManager?.store(mnemonic: mnemonic, passphrase: passphrase)
     }
 
     // Creates a new account with the provided seed
@@ -183,6 +183,10 @@ extension StellarAccountService {
 extension StellarAccountService {
     public func accountMnemonic() -> StellarRecoveryMnemonic? {
         return StellarRecoveryMnemonic(secretManager?.mnemonic)
+    }
+
+    public func accountPassphrase() -> StellarMnemonicPassphrase? {
+        return StellarMnemonicPassphrase(secretManager?.passphrase)
     }
 
     public func accountSecretSeed() -> StellarSeed? {
