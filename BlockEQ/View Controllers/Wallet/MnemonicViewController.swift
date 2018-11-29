@@ -18,8 +18,7 @@ protocol MnemonicViewControllerDelegate: AnyObject {
 class MnemonicViewController: UIViewController {
     @IBOutlet var holderView: UIView!
     @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var mnemonicHolderView: UIView!
-    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var advancedSecurityButton: UIButton!
     @IBOutlet weak var confirmationButton: AppButton!
 
@@ -28,30 +27,34 @@ class MnemonicViewController: UIViewController {
     var mnemonic: StellarRecoveryMnemonic?
     var hideConfirmation: Bool = false
     var hideAdvancedSecurity: Bool = true
-    var mnemonicPassphrase: StellarMnemonicPassphrase?
+
+    var temporaryPassphrase: StellarMnemonicPassphrase?
+    var mnemonicPassphrase: StellarMnemonicPassphrase? {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.mnemonic = StellarRecoveryMnemonic(Wallet.generate24WordMnemonic())
     }
 
-    init(mnemonic: StellarRecoveryMnemonic?, hideConfirmation: Bool = false, advancedSecurity: Bool = false) {
+    init(mnemonic: StellarRecoveryMnemonic?,
+         passphrase: StellarMnemonicPassphrase? = nil,
+         hideConfirmation: Bool = false,
+         advancedSecurity: Bool = false) {
         super.init(nibName: String(describing: MnemonicViewController.self), bundle: nil)
         self.hideConfirmation = hideConfirmation
         self.hideAdvancedSecurity = !advancedSecurity
         self.mnemonic = mnemonic
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        generateMnemonicViews()
+        self.mnemonicPassphrase = passphrase
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.titleLabel.text = mnemonic != nil ? "MNEMONIC_REMINDER_MESSAGE".localized() : "NO_MNEMONIC_SET".localized()
         self.confirmationButton.isHidden = self.hideConfirmation
-        mnemonicPassphrase = nil
 
         setupView()
     }
@@ -75,40 +78,24 @@ class MnemonicViewController: UIViewController {
 
         advancedSecurityButton.isHidden = hideAdvancedSecurity
 
-        styleAdvancedSecurity()
-    }
+        collectionView.registerCell(type: PillViewCell.self)
+        collectionView.delegate = self
+        collectionView.dataSource = self
 
-    func generateMnemonicViews() {
-        activityIndicator.stopAnimating()
+        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.invalidateLayout()
+            layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+            layout.minimumLineSpacing = 6
+            layout.minimumInteritemSpacing = 4
 
-        guard let mnemonic = self.mnemonic?.string else { return }
-
-        let words = mnemonic.components(separatedBy: " ")
-        var originX: CGFloat = 0.0
-        var originY: CGFloat = 0.0
-
-        for (index, word) in words.enumerated() {
-            let pillView = PillView(index: String(index + 1), title: word, origin: .zero)
-
-            if index == 0 {
-                mnemonicHolderView.addSubview(pillView)
-                originX += pillView.frame.size.width
-            } else {
-                let delta = mnemonicHolderView.frame.size.width - pillView.horizontalSpacing
-                if originX + pillView.frame.size.width > delta {
-                    originY += pillView.verticalSpacing
-                    originX = 0.0
-                } else {
-                    originX += pillView.horizontalSpacing
-                }
-
-                pillView.frame.origin = CGPoint(x: originX, y: originY)
-
-                mnemonicHolderView.addSubview(pillView)
-
-                originX += pillView.frame.size.width
+            if !UIDevice.current.shortScreen {
+                collectionView.contentInset = UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40)
+                layout.minimumLineSpacing = 16
+                layout.minimumInteritemSpacing = 8
             }
         }
+
+        styleAdvancedSecurity()
     }
 }
 
@@ -120,7 +107,7 @@ extension MnemonicViewController {
     }
 
     @IBAction func selectedAdvancedSecurity(_ sender: Any) {
-        self.mnemonicPassphrase = nil
+        self.clearPassphrase()
         self.passphrasePrompt(confirm: false, completion: self.setPassphrase)
     }
 
@@ -152,5 +139,34 @@ extension MnemonicViewController {
     @objc func dismissView() {
         view.endEditing(true)
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension MnemonicViewController: UICollectionViewDelegate { }
+
+extension MnemonicViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let mnemonic = self.mnemonic else { return 0 }
+
+        let count = mnemonic.words.count
+
+        return mnemonicPassphrase != nil ? count + 1 : count
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+        let pillCell: PillViewCell = collectionView.dequeueReusableCell(for: indexPath)
+
+        guard let mnemonic = self.mnemonic else { return pillCell }
+
+        if indexPath.row < mnemonic.words.count {
+            let word = mnemonic.words[indexPath.row]
+            pillCell.update(label: String(indexPath.row + 1), text: word)
+        } else if let phrase = self.mnemonicPassphrase {
+            pillCell.update(label: "PASSPHRASE_LABEL".localized(), text: phrase.string)
+        }
+
+        return pillCell
     }
 }

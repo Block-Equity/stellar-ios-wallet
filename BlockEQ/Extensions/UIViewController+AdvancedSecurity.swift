@@ -9,6 +9,7 @@
 import StellarAccountService
 
 protocol PassphrasePromptable: AnyObject {
+    var temporaryPassphrase: StellarMnemonicPassphrase? { get set }
     var mnemonicPassphrase: StellarMnemonicPassphrase? { get set }
     var passphraseButton: UIButton { get }
 }
@@ -51,7 +52,8 @@ extension PassphrasePromptable where Self: UIViewController {
 
     func updatePassphraseSet(with phrase: StellarMnemonicPassphrase ) {
         passphraseButton.setTitle("PASSPHRASE_SET".localized(), for: .normal)
-        self.mnemonicPassphrase = phrase
+        self.mnemonicPassphrase = temporaryPassphrase
+        self.temporaryPassphrase = nil
     }
 
     func clearPassphrase() {
@@ -66,9 +68,9 @@ extension PassphrasePromptable where Self: UIViewController {
             return
         }
 
-        if let original = self.mnemonicPassphrase, original == passphrase {
+        if let original = self.temporaryPassphrase, original == passphrase {
             updatePassphraseSet(with: passphrase)
-        } else if let original = self.mnemonicPassphrase, original != passphrase {
+        } else if let original = self.temporaryPassphrase, original != passphrase {
             clearPassphrase()
             mismatchedPrompt()
         } else {
@@ -76,7 +78,7 @@ extension PassphrasePromptable where Self: UIViewController {
                 self.setPassphrase(with: string)
             }
 
-            self.mnemonicPassphrase = passphrase
+            self.temporaryPassphrase = passphrase
             self.passphrasePrompt(confirm: true, completion: confirmationCallback)
         }
     }

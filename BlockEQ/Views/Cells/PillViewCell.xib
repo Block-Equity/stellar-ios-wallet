@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="NJ0-t1-DVn" customClass="PillViewCell" customModule="BlockEQ" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="75" height="24"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                <rect key="frame" x="0.0" y="0.0" width="75" height="24"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7iM-pY-25o">
+                        <rect key="frame" x="0.0" y="0.0" width="75" height="24"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BaY-5d-wUy">
+                                <rect key="frame" x="0.0" y="0.0" width="35.5" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LE6-XZ-aYC">
+                                <rect key="frame" x="43.5" y="0.0" width="31.5" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="BaY-5d-wUy" firstAttribute="leading" secondItem="7iM-pY-25o" secondAttribute="leading" id="2z1-Bm-9iC"/>
+                            <constraint firstItem="LE6-XZ-aYC" firstAttribute="bottom" secondItem="BaY-5d-wUy" secondAttribute="bottom" id="6um-Ab-Ppi"/>
+                            <constraint firstAttribute="bottom" secondItem="BaY-5d-wUy" secondAttribute="bottom" id="FHA-c7-CXt"/>
+                            <constraint firstItem="BaY-5d-wUy" firstAttribute="top" secondItem="7iM-pY-25o" secondAttribute="top" id="FoO-Fz-k7h"/>
+                            <constraint firstAttribute="trailing" secondItem="LE6-XZ-aYC" secondAttribute="trailing" id="Ya8-Wx-bqi"/>
+                            <constraint firstItem="LE6-XZ-aYC" firstAttribute="leading" secondItem="BaY-5d-wUy" secondAttribute="trailing" constant="8" id="c9L-NB-Gv4"/>
+                            <constraint firstItem="LE6-XZ-aYC" firstAttribute="top" secondItem="BaY-5d-wUy" secondAttribute="top" id="nIv-fN-svc"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="7iM-pY-25o" secondAttribute="trailing" id="7g1-e0-bKb"/>
+                <constraint firstAttribute="bottom" secondItem="7iM-pY-25o" secondAttribute="bottom" id="HhW-BL-S73"/>
+                <constraint firstItem="7iM-pY-25o" firstAttribute="top" secondItem="NJ0-t1-DVn" secondAttribute="top" id="Zi8-Br-2FP"/>
+                <constraint firstItem="7iM-pY-25o" firstAttribute="leading" secondItem="NJ0-t1-DVn" secondAttribute="leading" id="bl3-ES-5b3"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="X5X-fT-Xtu"/>
+            <size key="customSize" width="75" height="24"/>
+            <connections>
+                <outlet property="bottomConstraint" destination="HhW-BL-S73" id="Elb-uG-jIb"/>
+                <outlet property="containerView" destination="7iM-pY-25o" id="A9W-LI-RJB"/>
+                <outlet property="indexLabel" destination="BaY-5d-wUy" id="zHh-6f-bM8"/>
+                <outlet property="leftConstraint" destination="bl3-ES-5b3" id="vmT-Md-3KU"/>
+                <outlet property="rightConstraint" destination="7g1-e0-bKb" id="mQB-5m-a2e"/>
+                <outlet property="titleLabel" destination="LE6-XZ-aYC" id="dym-bh-EqQ"/>
+                <outlet property="topConstraint" destination="Zi8-Br-2FP" id="leb-JX-L0S"/>
+            </connections>
+            <point key="canvasLocation" x="77.599999999999994" y="36.881559220389811"/>
+        </collectionViewCell>
+    </objects>
+</document>
