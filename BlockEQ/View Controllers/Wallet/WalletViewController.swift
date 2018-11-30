@@ -173,7 +173,9 @@ extension WalletViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        guard let effect = self.dataSource?.effects[indexPath.row], effect.type != .tradeEffect else { return }
+        guard let effect = self.dataSource?.effects[indexPath.row],
+            WalletDataSource.supportedDetails.contains(effect.type) else { return }
+
         delegate?.selectedEffect(self, effect: effect)
     }
 }

@@ -26,6 +26,12 @@ final class WalletDataSource: NSObject {
         .accountInflationDestinationUpdated
     ]
 
+    static let supportedDetails: [EffectType] = [
+        .accountCredited,
+        .accountDebited,
+        .accountInflationDestinationUpdated
+    ]
+
     private var index: Int
     var effects: [StellarEffect] = []
     var account: StellarAccount
@@ -73,7 +79,7 @@ extension WalletDataSource: UITableViewDataSource {
             cell.update(with: asset, effect: effect)
         }
 
-        cell.selectionStyle = effect.type == .tradeEffect ? .none : .default
+        cell.selectionStyle = WalletDataSource.supportedDetails.contains(effect.type) ? .default : .none
 
         return cell
     }
