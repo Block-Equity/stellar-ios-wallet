@@ -60,7 +60,7 @@ final class DiagnosticCoordinator {
         let diagnosticOperation = SendDiagnosticOperation(
             diagnostic: diagnostic,
             completion: { result in
-                self.step =  .completion(result)
+                self.step = .completion(result)
                 self.diagnosticViewController.update(with: self.step, identifier: result)
         })
 

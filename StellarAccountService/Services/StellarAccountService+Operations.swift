@@ -40,7 +40,7 @@ extension StellarAccountService {
             completion(account, UpdateOptions.account)
         }
 
-        let failCompletion: ErrorCompletion = { error in
+        let failCompletion: ServiceErrorCompletion = { error in
             completion(account, UpdateOptions.inactive)
         }
 
@@ -96,22 +96,20 @@ extension StellarAccountService {
     public func setInflationDestination(account: StellarAccount,
                                         address: StellarAddress,
                                         delegate: SetInflationResponseDelegate) {
-        let completion: BoolCompletion = { completed in
-            if completed {
-                DispatchQueue.main.async {
+        let completion: ServiceErrorCompletion = { error in
+            DispatchQueue.main.async {
+                if let error = error {
+                    delegate.failed(error: error)
+                } else {
                     account.inflationDestination = address.string
                     delegate.setInflation(destination: address)
-                }
-            } else {
-                DispatchQueue.main.async {
-                    let error = StellarAccountService.ServiceError.nonExistentAccount
-                    delegate.failed(error: error)
                 }
             }
         }
 
         guard let keyPair = core.walletKeyPair else {
-            delegate.failed(error: StellarAccountService.ServiceError.nonExistentAccount)
+            let wrappedError = FrameworkError(error: FrameworkError.AccountServiceError.nonExistentAccount)
+            delegate.failed(error: wrappedError)
             return
         }
 
@@ -131,21 +129,19 @@ extension StellarAccountService {
 //swiftlint:disable function_body_length
 extension StellarAccountService {
     public func sendAmount(account: StellarAccount, data: StellarPaymentData, delegate: SendAmountResponseDelegate) {
-        let completion: BoolCompletion = { completed in
-            if completed {
-                DispatchQueue.main.async {
-                    delegate.sentAmount(destination: data.address)
-                }
-            } else {
-                DispatchQueue.main.async {
-                    let error = StellarAccountService.ServiceError.nonExistentAccount
+        let completion: ServiceErrorCompletion = { error in
+            DispatchQueue.main.async {
+                if let error = error {
                     delegate.failed(error: error)
+                } else {
+                    delegate.sentAmount(destination: data.address)
                 }
             }
         }
 
         guard let keyPair = core.walletKeyPair else {
-            delegate.failed(error: ServiceError.nonExistentAccount)
+            let wrappedError = FrameworkError(error: FrameworkError.AccountServiceError.nonExistentAccount)
+            delegate.failed(error: wrappedError)
             return
         }
 
@@ -182,7 +178,7 @@ extension StellarAccountService {
             createOp.cancel()
         }
 
-        let accFail: ErrorCompletion = { _ in
+        let accFail: ServiceErrorCompletion = { _ in
             createOp.inData = account.rawResponse
             refreshOp.removeDependency(sendOp)
             sendOp.cancel()
@@ -212,7 +208,10 @@ extension StellarAccountService {
         let accountId = account.accountId
 
         guard let accountResponse = account.rawResponse else {
-            delegate.failed(error: StellarAccountService.ServiceError.nonExistentAccount)
+            DispatchQueue.main.async {
+                let wrappedError = FrameworkError(error: FrameworkError.AccountServiceError.nonExistentAccount)
+                delegate.failed(error: wrappedError)
+            }
             return
         }
 
@@ -228,16 +227,17 @@ extension StellarAccountService {
             }
         }
 
-        let trustCompletion: BoolCompletion = { completed in
-            guard completed != true else { return }
+        let trustCompletion: ServiceErrorCompletion = { error in
+            guard let error = error else { return }
+
             DispatchQueue.main.async {
-                let error = StellarAccountService.ServiceError.nonExistentAccount
-                delegate.failed(error: error)
+                delegate.failed(error: FrameworkError(error: error))
             }
         }
 
         guard let keyPair = core.walletKeyPair else {
-            delegate.failed(error: StellarAccountService.ServiceError.nonExistentAccount)
+            let wrappedError = FrameworkError(error: FrameworkError.AccountServiceError.nonExistentAccount)
+            delegate.failed(error: wrappedError)
             return
         }
 

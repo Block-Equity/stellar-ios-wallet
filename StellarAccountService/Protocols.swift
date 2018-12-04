@@ -60,28 +60,28 @@ public protocol AccountUpdatable: AnyObject {
 // MARK: -
 public protocol SendAmountResponseDelegate: AnyObject {
     func sentAmount(destination: StellarAddress)
-    func failed(error: Error)
+    func failed(error: FrameworkError)
 }
 
 // MARK: -
 public protocol SetInflationResponseDelegate: AnyObject {
     func setInflation(destination: StellarAddress)
-    func failed(error: StellarAccountService.ServiceError)
+    func failed(error: FrameworkError)
 }
 
 // MARK: -
 public protocol ManageAssetResponseDelegate: AnyObject {
     func added(asset: StellarAsset, account: StellarAccount)
     func removed(asset: StellarAsset, account: StellarAccount)
-    func failed(error: Error)
+    func failed(error: FrameworkError)
 }
 
 // MARK: -
 public protocol TradeResponseDelegate: AnyObject {
     func cancelled(offerId: Int, trade: StellarTradeOfferData)
     func posted(trade: StellarTradeOfferData)
-    func cancellationFailed(error: Error)
-    func postingFailed(error: Error)
+    func cancellationFailed(error: FrameworkError)
+    func postingFailed(error: FrameworkError)
 }
 
 // MARK: -

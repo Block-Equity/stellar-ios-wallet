@@ -16,7 +16,7 @@ internal final class CancelTradeOperation: AsyncOperation, ChainableOperation {
     let api: StellarConfig.HorizonAPI
     let tradeData: StellarTradeOfferData
     let userKeys: KeyPair
-    let completion: BoolCompletion?
+    let completion: ServiceErrorCompletion
 
     var inData: AccountResponse?
     var outData: Bool?
@@ -27,7 +27,7 @@ internal final class CancelTradeOperation: AsyncOperation, ChainableOperation {
          api: StellarConfig.HorizonAPI,
          tradeData: StellarTradeOfferData,
          userKeys: KeyPair,
-         completion: BoolCompletion? = nil) {
+         completion: @escaping ServiceErrorCompletion) {
         self.horizon = horizon
         self.api = api
         self.tradeData = tradeData
@@ -82,13 +82,15 @@ internal final class CancelTradeOperation: AsyncOperation, ChainableOperation {
     func finish() {
         state = .finished
 
-        var value = false
-
         switch result {
-        case .success: value = true
-        case .failure: value = false
-        }
+        case .success:
+            outData = true
+            completion(nil)
+        case .failure(let error):
+            let wrappedError = FrameworkError(error: error)
+            outData = false
 
-        completion?(value)
+            completion(wrappedError)
+        }
     }
 }

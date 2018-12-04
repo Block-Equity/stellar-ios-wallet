@@ -137,7 +137,7 @@ extension InflationViewController: ScanViewControllerDelegate {
 
 // MARK: - SetInflationResponseDelegate
 extension InflationViewController: SetInflationResponseDelegate {
-    func failed(error: StellarAccountService.ServiceError) {
+    func failed(error: FrameworkError) {
         self.hideHud()
         let alert = UIAlertController(title: "INFLATION_ERROR_TITLE".localized(),
                                       message: "INFLATION_ERROR_MESSAGE".localized(),

@@ -363,20 +363,18 @@ extension TradeViewController {
         }
     }
 
-    func displayTradeError() {
+    func displayTradeError(_ error: FrameworkError) {
         self.hideHud()
 
-        let alert = UIAlertController(title: "TRADE_ERROR_TITLE".localized(),
-                                      message: "TRADE_ERROR_MESSAGE".localized(),
-                                      preferredStyle: .alert)
+        let fallbackTitle = "TRANSACTION_ERROR_TITLE".localized()
+        let fallbackMessage = "TRANSACTION_ERROR_MESSAGE".localized()
 
-        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
-                                      style: .default,
-                                      handler: nil))
-
-        self.present(alert, animated: true, completion: nil)
+        self.displayFrameworkError(error, fallbackData: (title: fallbackTitle, message: fallbackMessage))
     }
 }
+
+// MARK: - FrameworkErrorPresentable
+extension TradeViewController: FrameworkErrorPresentable { }
 
 // MARK: - IBActions
 extension TradeViewController {

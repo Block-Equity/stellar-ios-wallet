@@ -16,7 +16,7 @@ internal final class PostTradeOperation: AsyncOperation, ChainableOperation {
     let api: StellarConfig.HorizonAPI
     let tradeData: StellarTradeOfferData
     let userKeys: KeyPair
-    let completion: BoolCompletion?
+    let completion: ServiceErrorCompletion
 
     var inData: AccountResponse?
     var outData: Bool?
@@ -27,7 +27,7 @@ internal final class PostTradeOperation: AsyncOperation, ChainableOperation {
          api: StellarConfig.HorizonAPI,
          tradeData: StellarTradeOfferData,
          userKeys: KeyPair,
-         completion: BoolCompletion? = nil) {
+         completion: @escaping ServiceErrorCompletion) {
         self.horizon = horizon
         self.api = api
         self.tradeData = tradeData
@@ -41,12 +41,12 @@ internal final class PostTradeOperation: AsyncOperation, ChainableOperation {
         super.main()
 
         guard let accountResponse = self.inData else {
-            self.finish()
+            finish()
             return
         }
 
         let finalNumerator = tradeData.type == .market ? tradeData.numerator * Decimal(0.999) : tradeData.numerator
-        let price = self.scaledPrice(price: (finalNumerator, tradeData.denominator))
+        let price = scaledPrice(price: (finalNumerator, tradeData.denominator))
         let buyAsset = tradeData.assetPair.buying.toRawAsset()
         let sellAsset = tradeData.assetPair.selling.toRawAsset()
 
@@ -76,23 +76,24 @@ internal final class PostTradeOperation: AsyncOperation, ChainableOperation {
                 self.finish()
             }
         } catch let error {
-            self.result = Result.failure(error)
-            self.finish()
+            result = Result.failure(error)
+            finish()
         }
     }
 
     func finish() {
         state = .finished
 
-        var value = false
-
         switch result {
-        case .success: value = true
-        case .failure: value = false
-        }
+        case .success:
+            outData = true
+            completion(nil)
+        case .failure(let error):
+            let wrappedError = FrameworkError(error: error)
+            outData = false
 
-        outData = value
-        completion?(value)
+            completion(wrappedError)
+        }
     }
 
     internal func scaledPrice(price: (numerator: Decimal, denominator: Decimal)) -> Price {

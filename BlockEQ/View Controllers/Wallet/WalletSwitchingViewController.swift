@@ -94,24 +94,16 @@ final class WalletSwitchingViewController: UIViewController {
         MBProgressHUD.hide(for: UIApplication.shared.keyWindow!, animated: true)
     }
 
-    func displayAssetActivationError() {
-        let alert = UIAlertController(title: "ACTIVATION_ERROR_TITLE".localized(),
-                                      message: "ASSET_BALANCE_ERROR_MESSAGE".localized(),
-                                      preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(), style: .default, handler: nil))
-
-        self.present(alert, animated: true, completion: nil)
+    func displayAssetActivationError(_ error: FrameworkError) {
+        let fallbackTitle = "ACTIVATION_ERROR_TITLE".localized()
+        let fallbackMessage = "ASSET_BALANCE_ERROR_MESSAGE".localized()
+        self.displayFrameworkError(error, fallbackData: (title: fallbackTitle, message: fallbackMessage))
     }
 
-    func displayAssetDeactivationError() {
-        let alert = UIAlertController(title: "ACTIVATION_ERROR_TITLE".localized(),
-                                      message: "ASSET_REMOVE_ERROR_MESSAGE".localized(),
-                                      preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(), style: .default, handler: nil))
-
-        self.present(alert, animated: true, completion: nil)
+    func displayAssetDeactivationError(_ error: FrameworkError) {
+        let fallbackTitle = "ACTIVATION_ERROR_TITLE".localized()
+        let fallbackMessage = "ASSET_REMOVE_ERROR_MESSAGE".localized()
+        self.displayFrameworkError(error, fallbackData: (title: fallbackTitle, message: fallbackMessage))
     }
 
     func displayNoBalanceError() {
@@ -242,12 +234,16 @@ extension WalletSwitchingViewController: ManageAssetResponseDelegate {
         self.tableView?.reloadData()
     }
 
-    func failed(error: Error) {
-        self.hideHud()
+    func failed(error: FrameworkError) {
+        hideHud()
+
         if isAddingAsset {
-            self.displayAssetActivationError()
+            self.displayAssetActivationError(error)
         } else {
-            self.displayAssetDeactivationError()
+            self.displayAssetDeactivationError(error)
         }
     }
 }
+
+// MARK: - FrameworkErrorPresentable
+extension WalletSwitchingViewController: FrameworkErrorPresentable { }

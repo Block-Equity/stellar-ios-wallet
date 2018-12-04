@@ -8,3 +8,4 @@
 
 typealias BoolCompletion = (Bool) -> Void
 typealias ErrorCompletion = (Error) -> Void
+typealias ServiceErrorCompletion = (FrameworkError?) -> Void

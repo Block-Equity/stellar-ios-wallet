@@ -190,12 +190,12 @@ extension TradingCoordinator: TradeResponseDelegate {
         self.tradeViewController.displayTradeSuccess()
     }
 
-    func cancellationFailed(error: Error) {
-        self.myOffersViewController.displayCancelFailure()
+    func cancellationFailed(error: FrameworkError) {
+        self.myOffersViewController.displayCancelFailure(error)
     }
 
-    func postingFailed(error: Error) {
-        self.tradeViewController.displayTradeError()
+    func postingFailed(error: FrameworkError) {
+        self.tradeViewController.displayTradeError(error)
     }
 }
 
@@ -229,8 +229,8 @@ extension TradingCoordinator: ManageAssetResponseDelegate {
         self.walletSwitchingViewController?.updateMenu(account: account)
     }
 
-    func failed(error: Error) {
+    func failed(error: FrameworkError) {
         self.walletSwitchingViewController?.hideHud()
-        self.walletSwitchingViewController?.displayAssetActivationError()
+        self.walletSwitchingViewController?.displayAssetActivationError(error)
     }
 }
