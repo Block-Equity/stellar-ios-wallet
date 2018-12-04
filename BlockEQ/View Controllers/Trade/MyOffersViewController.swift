@@ -48,12 +48,12 @@ class MyOffersViewController: UIViewController {
         MBProgressHUD.hide(for: (navigationController?.view)!, animated: true)
     }
 
-    func displayCancelFailure() {
+    func displayCancelFailure(_ error: FrameworkError) {
         self.hideHud()
 
-        UIAlertController.simpleAlert(title: "ERROR_TITLE".localized(),
-                                      message: "CANCEL_TRADE_ERROR".localized(),
-                                      presentingViewController: self)
+        let fallbackTitle = "ERROR_TITLE".localized()
+        let fallbackMessage = "CANCEL_TRADE_ERROR".localized()
+        self.displayFrameworkError(error, fallbackData: (title: fallbackTitle, message: fallbackMessage))
     }
 
     func setOffers(_ offers: [StellarAccountOffer]) {
@@ -108,6 +108,9 @@ extension MyOffersViewController: UITableViewDataSource {
         return cell
     }
 }
+
+// MARK: - FrameworkErrorPresentable
+extension MyOffersViewController: FrameworkErrorPresentable { }
 
 // MARK: - UITableViewDelegate
 extension MyOffersViewController: UITableViewDelegate {

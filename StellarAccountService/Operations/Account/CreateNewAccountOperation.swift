@@ -18,7 +18,7 @@ final class CreateNewAccountOperation: AsyncOperation, ChainableOperation {
     let accountId: String
     let amount: Decimal
     let userKeys: KeyPair
-    let completion: BoolCompletion?
+    let completion: ServiceErrorCompletion
     var result: Result<SubmitTransactionResponse> = Result.failure(AsyncOperationError.responseUnset)
 
     var outData: Bool?
@@ -29,7 +29,7 @@ final class CreateNewAccountOperation: AsyncOperation, ChainableOperation {
          accountId: String,
          amount: Decimal,
          userKeys: KeyPair,
-         completion: BoolCompletion? = nil) {
+         completion: @escaping ServiceErrorCompletion) {
         self.horizon = horizon
         self.api = api
         self.accountId = accountId
@@ -72,22 +72,21 @@ final class CreateNewAccountOperation: AsyncOperation, ChainableOperation {
                 self.finish()
             }
         } catch let error {
-            self.result = Result.failure(error)
-            self.finish()
+            result = Result.failure(error)
+            finish()
         }
     }
 
     func finish() {
         state = .finished
 
-        var value = false
-
         switch result {
-        case .success: value = true
-        case .failure: value = false
+        case .success:
+            outData = true
+            completion(nil)
+        case .failure(let error):
+            let wrappedError = FrameworkError(error: error)
+            completion(wrappedError)
         }
-
-        outData = value
-        completion?(value)
     }
 }

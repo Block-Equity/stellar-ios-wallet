@@ -29,32 +29,32 @@ public final class StellarTradeService: StellarTradeServiceProtocol {
     }
 }
 
-extension StellarTradeService {
-    public enum ServiceError: LocalizedError {
-        case postTrade
-        case cancelTrade
-    }
-}
-
 // MARK: - Trades
 extension StellarTradeService {
     public func postTrade(with data: StellarTradeOfferData, delegate: TradeResponseDelegate) {
         guard let keyPair = core.walletKeyPair else {
-            delegate.postingFailed(error: ServiceError.postTrade)
+            DispatchQueue.main.async {
+                let wrappedError = FrameworkError(error: FrameworkError.TradeServiceError.postTrade)
+                delegate.postingFailed(error: wrappedError)
+            }
             return
         }
 
-        let completion: BoolCompletion = { posted in
+        let completion: ServiceErrorCompletion = { error in
             DispatchQueue.main.async {
-                if posted {
-                    delegate.posted(trade: data)
+                if let error = error {
+                    delegate.postingFailed(error: error)
                 } else {
-                    delegate.postingFailed(error: ServiceError.postTrade)
+                    delegate.posted(trade: data)
                 }
             }
         }
 
-        let accountOp = FetchAccountDataOperation(horizon: core.sdk, account: keyPair.accountId)
+        let accountOp = FetchAccountDataOperation(horizon: core.sdk,
+                                                  account: keyPair.accountId,
+                                                  completion: nil,
+                                                  failure: completion)
+
         let postTradeOp = PostTradeOperation(horizon: core.sdk,
                                              api: core.api,
                                              tradeData: data,
@@ -64,26 +64,32 @@ extension StellarTradeService {
         let pair = PostTradeOperationPair(first: accountOp, second: postTradeOp)
 
         tradeQueue.addOperations(pair.operationChain, waitUntilFinished: false)
-
     }
 
     public func cancelTrade(with offerId: Int, data: StellarTradeOfferData, delegate: TradeResponseDelegate) {
         guard let keyPair = core.walletKeyPair else {
-            delegate.cancellationFailed(error: ServiceError.cancelTrade)
+            DispatchQueue.main.async {
+                let wrappedError = FrameworkError(error: FrameworkError.TradeServiceError.cancelTrade)
+                delegate.cancellationFailed(error: wrappedError)
+            }
             return
         }
 
-        let completion: BoolCompletion = { cancelled in
+        let completion: ServiceErrorCompletion = { error in
             DispatchQueue.main.async {
-                if cancelled {
-                    delegate.cancelled(offerId: offerId, trade: data)
+                if let error = error {
+                    delegate.cancellationFailed(error: error)
                 } else {
-                    delegate.cancellationFailed(error: ServiceError.cancelTrade)
+                    delegate.cancelled(offerId: offerId, trade: data)
                 }
             }
         }
 
-        let accountOp = FetchAccountDataOperation(horizon: core.sdk, account: keyPair.accountId)
+        let accountOp = FetchAccountDataOperation(horizon: core.sdk,
+                                                  account: keyPair.accountId,
+                                                  completion: nil,
+                                                  failure: completion)
+
         let cancelTradeOp = CancelTradeOperation(horizon: core.sdk,
                                                  api: core.api,
                                                  tradeData: data,

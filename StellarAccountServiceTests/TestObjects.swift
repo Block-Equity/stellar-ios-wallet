@@ -83,17 +83,17 @@ final class StubSecretManager: SecretManagerProtocol {
 // MARK: - Mocks
 final class MockInflationResponseDelegate: SetInflationResponseDelegate {
     var setInflationAddress: StellarAddress?
-    var error: StellarAccountService.ServiceError?
+    var error: FrameworkError?
 
     var setInflationCompletion: ((StellarAddress) -> Void)?
-    var errorCompletion: ((StellarAccountService.ServiceError) -> Void)?
+    var errorCompletion: (ServiceErrorCompletion)?
 
     func setInflation(destination: StellarAddress) {
         setInflationAddress = destination
         setInflationCompletion?(destination)
     }
 
-    func failed(error: StellarAccountService.ServiceError) {
+    func failed(error: FrameworkError) {
         self.error = error
         self.errorCompletion?(error)
     }

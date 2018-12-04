@@ -16,7 +16,7 @@ internal final class UpdateInflationOperation: AsyncOperation, ChainableOperatio
     let api: StellarConfig.HorizonAPI
     let address: StellarAddress
     let userKeys: KeyPair
-    let completion: BoolCompletion?
+    let completion: ServiceErrorCompletion
 
     var inData: AccountResponse?
     var outData: Bool?
@@ -31,7 +31,7 @@ internal final class UpdateInflationOperation: AsyncOperation, ChainableOperatio
          api: StellarConfig.HorizonAPI,
          address: StellarAddress,
          userKeys: KeyPair,
-         completion: BoolCompletion? = nil) {
+         completion: @escaping ServiceErrorCompletion) {
         self.horizon = horizon
         self.api = api
         self.address = address
@@ -67,7 +67,7 @@ internal final class UpdateInflationOperation: AsyncOperation, ChainableOperatio
                                               memo: Memo.none,
                                               timeBounds: nil)
 
-            try transaction.sign(keyPair: self.userKeys, network: api.network)
+            try transaction.sign(keyPair: userKeys, network: api.network)
 
             try horizon.transactions.submitTransaction(transaction: transaction) { response -> Void in
                 switch response {
@@ -88,14 +88,13 @@ internal final class UpdateInflationOperation: AsyncOperation, ChainableOperatio
     func finish() {
         state = .finished
 
-        var updated: Bool = false
-
         switch result {
-        case .success: updated = true
-        case .failure: updated = false
+        case .success:
+            outData = true
+            completion(nil)
+        case .failure(let error):
+            let wrappedError = FrameworkError(error: error)
+            completion(wrappedError)
         }
-
-        outData = updated
-        completion?(updated)
     }
 }

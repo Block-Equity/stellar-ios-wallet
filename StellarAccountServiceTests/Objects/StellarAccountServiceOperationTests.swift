@@ -70,7 +70,7 @@ class StellarAccountServiceOperationTests: XCTestCase {
         let mockDelegate = MockInflationResponseDelegate()
         let newInflationAddress = StellarAddress("GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ")!
         self.service.setInflationDestination(account: stubAccount, address: newInflationAddress, delegate: mockDelegate)
-        XCTAssertEqual(mockDelegate.error, StellarAccountService.ServiceError.nonExistentAccount)
+        XCTAssertEqual(mockDelegate.error, FrameworkError(error: FrameworkError.AccountServiceError.nonExistentAccount))
     }
 
     func testSetInflationEnqueuesCorrectOperations() {

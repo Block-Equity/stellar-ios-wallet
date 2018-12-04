@@ -24,16 +24,6 @@ public protocol StellarAccountServiceDelegate: AnyObject {
  *
  */
 public final class StellarAccountService: StellarAccountServiceProtocol {
-    public enum ServiceError: Error {
-        case nonExistentAccount
-        case alreadyInitialized
-        case keypairCreation
-        case initializationFailure
-        case notInitialized
-        case secureItemPurge
-        case migrationFailed
-    }
-
     public enum AccountState {
         case inactive
         case initializing
@@ -83,7 +73,7 @@ extension StellarAccountService {
     // Reloads a StellarAccountService object that's previously been associated with an account by assuming secrets have
     // already been stored for the account.
     public func restore(with address: StellarAddress) throws {
-        guard account == nil else { throw ServiceError.alreadyInitialized }
+        guard account == nil else { throw FrameworkError.AccountServiceError.alreadyInitialized }
 
         startup(address: address)
     }
@@ -92,12 +82,12 @@ extension StellarAccountService {
     public func initializeAccount(with mnemonic: StellarRecoveryMnemonic,
                                   passphrase: StellarMnemonicPassphrase?,
                                   index: Int = 0) throws {
-        guard account == nil else { throw ServiceError.alreadyInitialized }
+        guard account == nil else { throw FrameworkError.AccountServiceError.alreadyInitialized }
 
         guard let keyPair = try? Wallet.createKeyPair(mnemonic: mnemonic.string,
                                                       passphrase: passphrase?.string,
                                                       index: index) else {
-            throw ServiceError.keypairCreation
+            throw FrameworkError.AccountServiceError.keypairCreation
         }
 
         self.startup(keyPair: keyPair)
@@ -106,12 +96,12 @@ extension StellarAccountService {
 
     // Creates a new account with the provided seed
     public func initializeAccount(with seed: StellarSeed) throws {
-        guard account == nil else { throw ServiceError.alreadyInitialized }
+        guard account == nil else { throw FrameworkError.AccountServiceError.alreadyInitialized }
 
         state = .initializing
 
         guard let keyPair = try? KeyPair(secretSeed: seed.string) else {
-            throw ServiceError.keypairCreation
+            throw FrameworkError.AccountServiceError.keypairCreation
         }
 
         self.startup(keyPair: keyPair)
@@ -123,7 +113,7 @@ extension StellarAccountService {
                                seedKey: String,
                                pubKey: String,
                                privKey: String) throws {
-        guard account == nil else { throw ServiceError.alreadyInitialized }
+        guard account == nil else { throw FrameworkError.AccountServiceError.alreadyInitialized }
 
         let migrator = StellarAccountMigrator(address: address,
                                               mnemonicKey: mnemonicKey,

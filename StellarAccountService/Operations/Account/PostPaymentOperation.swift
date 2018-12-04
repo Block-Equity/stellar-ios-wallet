@@ -16,7 +16,7 @@ final class PostPaymentOperation: AsyncOperation, ChainableOperation {
     let api: StellarConfig.HorizonAPI
     let data: StellarPaymentData
     let userKeyPair: KeyPair
-    let completion: BoolCompletion
+    let completion: ServiceErrorCompletion
 
     var inData: AccountResponse?
     var outData: Bool?
@@ -27,7 +27,7 @@ final class PostPaymentOperation: AsyncOperation, ChainableOperation {
          api: StellarConfig.HorizonAPI,
          data: StellarPaymentData,
          userKeyPair: KeyPair,
-         completion: @escaping BoolCompletion) {
+         completion: @escaping ServiceErrorCompletion) {
         self.horizon = horizon
         self.api = api
         self.userKeyPair = userKeyPair
@@ -68,23 +68,25 @@ final class PostPaymentOperation: AsyncOperation, ChainableOperation {
                 self.finish()
                 return
             }
-        } catch {
-            self.finish()
-            return
+        } catch let error {
+            result = Result.failure(error)
+            finish()
         }
     }
 
     func finish() {
         state = .finished
 
-        var updated: Bool = false
-
         switch result {
-        case .success: updated = true
-        case .failure: updated = false
-        }
+        case .success:
+            outData = true
+            completion(nil)
+        case .failure(let error):
+            let wrappedError = FrameworkError(error: error)
+            outData = false
 
-        completion(updated)
+            completion(wrappedError)
+        }
     }
 
     private func createMemo(from memoId: String?) -> Memo {

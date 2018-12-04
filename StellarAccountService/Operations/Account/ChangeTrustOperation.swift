@@ -18,7 +18,7 @@ internal final class ChangeAccountTrustOperation: AsyncOperation, ChainableOpera
     let userKeyPair: KeyPair
     let asset: StellarAsset
     let accountResponse: AccountResponse
-    let completion: BoolCompletion?
+    let completion: ServiceErrorCompletion
 
     var inData: Void?
     var outData: Bool?
@@ -31,7 +31,7 @@ internal final class ChangeAccountTrustOperation: AsyncOperation, ChainableOpera
          limit: Decimal?,
          accountResponse: AccountResponse,
          userKeyPair: KeyPair,
-         completion: BoolCompletion? = nil) {
+         completion: @escaping ServiceErrorCompletion) {
         self.horizon = horizon
         self.api = api
         self.userKeyPair = userKeyPair
@@ -77,14 +77,13 @@ internal final class ChangeAccountTrustOperation: AsyncOperation, ChainableOpera
     func finish() {
         state = .finished
 
-        var updated: Bool = false
-
         switch result {
-        case .success: updated = true
-        case .failure: updated = false
+        case .success:
+            outData = true
+            completion(nil)
+        case .failure(let error):
+            let wrappedError = FrameworkError(error: error)
+            completion(wrappedError)
         }
-
-        outData = updated
-        completion?(updated)
     }
 }

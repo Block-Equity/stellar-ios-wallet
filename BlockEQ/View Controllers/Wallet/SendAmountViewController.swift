@@ -135,20 +135,6 @@ class SendAmountViewController: UIViewController {
         }
     }
 
-    func displayTransactionError() {
-        hideHud()
-
-        let alert = UIAlertController(title: "TRANSACTION_ERROR_TITLE".localized(),
-                                      message: "TRANSACTION_ERROR_MESSAGE".localized(),
-                                      preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(),
-                                      style: .default,
-                                      handler: nil))
-
-        present(alert, animated: true, completion: nil)
-    }
-
     func displayTransactionSuccess() {
         hideHud()
 
@@ -249,6 +235,9 @@ extension SendAmountViewController: UITextFieldDelegate {
     }
 }
 
+// MARK: - ServiceErrorPresentable
+extension SendAmountViewController: FrameworkErrorPresentable { }
+
 // MARK: - AuthenticationCoordinatorDelegate
 extension SendAmountViewController: AuthenticationCoordinatorDelegate {
     func authenticationCompleted(_ coordinator: AuthenticationCoordinator,
@@ -315,7 +304,11 @@ extension SendAmountViewController: SendAmountResponseDelegate {
         self.displayTransactionSuccess()
     }
 
-    func failed(error: Error) {
-        self.displayTransactionError()
+    func failed(error: FrameworkError) {
+        hideHud()
+
+        let fallbackTitle = "TRANSACTION_ERROR_TITLE".localized()
+        let fallbackMessage = "TRANSACTION_ERROR_MESSAGE".localized()
+        self.displayFrameworkError(error, fallbackData: (title: fallbackTitle, message: fallbackMessage))
     }
 }

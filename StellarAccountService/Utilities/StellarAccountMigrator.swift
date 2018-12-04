@@ -50,7 +50,7 @@ internal final class StellarAccountMigrator {
 
         if requireMnemonic && requireSeed {
             // ERROR: Can't migrate account data
-            throw StellarAccountService.ServiceError.migrationFailed
+            throw FrameworkError.AccountServiceError.migrationFailed
         }
 
         if let pubData = KeychainSwift().getData(oldPubkKey), let privData = KeychainSwift().getData(oldPrivkKey) {
@@ -58,7 +58,7 @@ internal final class StellarAccountMigrator {
             let qKey = try PrivateKey(privData.bytes)
             secretManager.store(pub: pKey, priv: qKey)
         } else {
-            throw StellarAccountService.ServiceError.migrationFailed
+            throw FrameworkError.AccountServiceError.migrationFailed
         }
     }
 
