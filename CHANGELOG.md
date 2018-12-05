@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Please keep this human readable! Omit classnames and technical details where possible.
 
+## [2.4.1] - 2018-12-05
+### Changed
+- Fixed an issue relating to displaying incorrect effects in the wallet across different asset types
+
 ## [2.4.0] - 2018-11-30
 ### Added
 - Ability to debug the wallet using a public Stellar address in view-only mode
