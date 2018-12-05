@@ -10,8 +10,6 @@ import stellarsdk
 
 extension StellarAccountService {
     internal func startup(address: StellarAddress) {
-        guard SecretManager.hasSecrets(for: address.string) else { return }
-
         let stubAccount = StellarAccount(accountId: address.string)
         self.account = stubAccount
 
