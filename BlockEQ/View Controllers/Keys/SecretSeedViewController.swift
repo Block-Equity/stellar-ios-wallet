@@ -14,7 +14,7 @@ final class SecretSeedViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var qrImageView: UIImageView!
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var toggleVisibilityButton: UIButton!
+    @IBOutlet weak var toggleVisibilityButton: AppButton!
     @IBOutlet weak var secretSeedLabel: UILabel!
 
     let blurEffect = UIBlurEffect(style: .light)
@@ -23,6 +23,12 @@ final class SecretSeedViewController: UIViewController {
     var passphrase: StellarMnemonicPassphrase?
     var seed: String?
     var revealed: Bool = false
+
+    enum KeychainError: Error {
+        case noPassword
+        case unexpectedPasswordData
+        case unhandledError(status: OSStatus)
+    }
 
     init(mnemonic: StellarRecoveryMnemonic?, passphrase: StellarMnemonicPassphrase?) {
         self.mnemonic = mnemonic
@@ -67,36 +73,14 @@ final class SecretSeedViewController: UIViewController {
         navigationItem.rightBarButtonItem = navButton
     }
 
-    enum KeychainError: Error {
-        case noPassword
-        case unexpectedPasswordData
-        case unhandledError(status: OSStatus)
-    }
-
-    @objc func saveToKeychain(_ sender: UIBarButtonItem) {
-        guard let seed = self.seed else { return }
-
-        AutoFillHelper.provider = AppleAutoFillProvider()
-        AutoFillHelper.save(secret: seed) { error in
-            if let error = error {
-                UIAlertController.simpleAlert(title: "ERROR_TITLE".localized(),
-                                              message: error.localizedDescription,
-                                              presentingViewController: self)
-            } else {
-                UIAlertController.simpleAlert(title: "SAVED".localized(),
-                                              message: "MNEMONIC_STORED".localized(),
-                                              presentingViewController: self)
-            }
-        }
-    }
-
     func setupStyle() {
         descriptionLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
         secretSeedLabel.font = UIFont.systemFont(ofSize: 8, weight: .bold)
         secretSeedLabel.textColor = Colors.darkGray
         toggleVisibilityButton.backgroundColor = Colors.primaryDark
         toggleVisibilityButton.setTitleColor(Colors.white, for: .normal)
-        toggleVisibilityButton.layer.cornerRadius = 2
+        toggleVisibilityButton.layer.cornerRadius = 5
+        toggleVisibilityButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         qrImageView.alpha = 0
 
         concealingView.effect = blurEffect
@@ -116,23 +100,10 @@ final class SecretSeedViewController: UIViewController {
         qrImageView.image = nil
         secretSeedLabel.text = ""
     }
+}
 
-    @IBAction func selectedToggleButton(_ sender: Any) {
-        toggleVisibility()
-    }
-
-    private func toggleVisibility() {
-        if revealed {
-            UIView.animate(withDuration: 0.5) { self.concealingView.effect = self.blurEffect }
-            self.toggleVisibilityButton.setTitle("REVEAL_SECRET_SEED_INFORMATION".localized(), for: .normal)
-        } else {
-            UIView.animate(withDuration: 0.5) { self.concealingView.effect = nil }
-            self.toggleVisibilityButton.setTitle("CONCEAL_SECRET_SEED_INFORMATION".localized(), for: .normal)
-        }
-
-        revealed.toggle()
-    }
-
+// MARK: - QR Codes
+extension SecretSeedViewController {
     private func setQRCode(_ map: QRMap, text: String) {
         self.secretSeedLabel.text = text
         self.qrImageView.image = map.scaledTemplateImage(scale: 10)
@@ -157,4 +128,35 @@ final class SecretSeedViewController: UIViewController {
             }
         }
     }
+}
+
+// MARK: - IBActions
+extension SecretSeedViewController {
+    @IBAction func selectedToggleButton(_ sender: Any) {
+        toggleVisibility(revealText: "REVEAL_SECRET_SEED_INFORMATION".localized(),
+                         concealText: "CONCEAL_SECRET_SEED_INFORMATION".localized())
+    }
+
+    @objc func saveToKeychain(_ sender: UIBarButtonItem) {
+        guard let seed = self.seed else { return }
+
+        AutoFillHelper.provider = AppleAutoFillProvider()
+        AutoFillHelper.save(secret: seed) { error in
+            if let error = error {
+                UIAlertController.simpleAlert(title: "ERROR_TITLE".localized(),
+                                              message: error.localizedDescription,
+                                              presentingViewController: self)
+            } else {
+                UIAlertController.simpleAlert(title: "SAVED".localized(),
+                                              message: "MNEMONIC_STORED".localized(),
+                                              presentingViewController: self)
+            }
+        }
+    }
+}
+
+// MARK: - Blurrable
+extension SecretSeedViewController: Blurrable {
+    var blurContainerView: UIView? { return containerView }
+    var toggleButton: UIButton? { return toggleVisibilityButton }
 }

@@ -198,9 +198,7 @@ extension ApplicationCoordinator: SettingsDelegate {
     func displayMnemonic() {
         let mnemonic = core?.accountService.accountMnemonic()
         let phrase = core?.accountService.accountPassphrase()
-        let mnemonicViewController = MnemonicViewController(mnemonic: mnemonic,
-                                                            passphrase: phrase,
-                                                            hideConfirmation: true)
+        let mnemonicViewController = MnemonicViewController(mnemonic: mnemonic, passphrase: phrase, mode: .view)
 
         wrappingNavController?.pushViewController(mnemonicViewController, animated: true)
     }
