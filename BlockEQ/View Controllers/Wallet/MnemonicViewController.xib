@@ -54,50 +54,50 @@
                                 <action selector="selectedAdvancedSecurity:" destination="-1" eventType="touchUpInside" id="2jR-JJ-k36"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PsE-ef-7Q4" customClass="AppButton" customModule="BlockEQ" customModuleProvider="target">
-                            <rect key="frame" x="16" y="500" width="288" height="48"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="48" id="Ca0-sc-TJA"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
-                            <state key="normal" title="I have written it down">
-                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </state>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                    <integer key="value" value="5"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="confirmedWrittenDown:" destination="-1" eventType="touchUpInside" id="hc3-e0-KsO"/>
-                            </connections>
-                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="PsE-ef-7Q4" secondAttribute="trailing" constant="16" id="0Vl-oW-S2s"/>
+                        <constraint firstItem="ade-cp-0Fg" firstAttribute="leading" secondItem="7kd-ui-elz" secondAttribute="leading" id="Gt5-aR-dGD"/>
                         <constraint firstItem="7kd-ui-elz" firstAttribute="top" secondItem="osg-Wz-f6c" secondAttribute="bottom" constant="16" id="LgT-YM-f4k"/>
-                        <constraint firstItem="PsE-ef-7Q4" firstAttribute="top" secondItem="ade-cp-0Fg" secondAttribute="bottom" constant="25" id="MLm-Va-Vnk"/>
-                        <constraint firstItem="ade-cp-0Fg" firstAttribute="leading" secondItem="PsE-ef-7Q4" secondAttribute="leading" id="PH2-r2-LF1"/>
+                        <constraint firstAttribute="bottom" secondItem="ade-cp-0Fg" secondAttribute="bottom" constant="93" id="SnM-J9-bhg"/>
                         <constraint firstItem="osg-Wz-f6c" firstAttribute="top" secondItem="3Jg-1T-pTn" secondAttribute="top" constant="30" id="StX-UF-ueb"/>
-                        <constraint firstAttribute="bottom" secondItem="PsE-ef-7Q4" secondAttribute="bottom" constant="20" id="WMA-Oj-2kc"/>
                         <constraint firstItem="osg-Wz-f6c" firstAttribute="leading" secondItem="3Jg-1T-pTn" secondAttribute="leading" constant="16" id="hp3-zb-58Z"/>
                         <constraint firstAttribute="trailing" secondItem="osg-Wz-f6c" secondAttribute="trailing" constant="16" id="imB-Jr-5Se"/>
-                        <constraint firstItem="ade-cp-0Fg" firstAttribute="trailing" secondItem="PsE-ef-7Q4" secondAttribute="trailing" id="ixX-1x-dmZ"/>
                         <constraint firstAttribute="trailing" secondItem="7kd-ui-elz" secondAttribute="trailing" constant="16" id="jzv-HN-K9j"/>
                         <constraint firstItem="7kd-ui-elz" firstAttribute="leading" secondItem="3Jg-1T-pTn" secondAttribute="leading" constant="16" id="otW-t4-8bq"/>
-                        <constraint firstItem="PsE-ef-7Q4" firstAttribute="leading" secondItem="3Jg-1T-pTn" secondAttribute="leading" constant="16" id="uPE-hX-M5H"/>
                         <constraint firstItem="ade-cp-0Fg" firstAttribute="top" secondItem="7kd-ui-elz" secondAttribute="bottom" constant="10" id="v9O-VI-C7h"/>
+                        <constraint firstItem="ade-cp-0Fg" firstAttribute="trailing" secondItem="7kd-ui-elz" secondAttribute="trailing" id="wkO-cI-Bwt"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PsE-ef-7Q4" customClass="AppButton" customModule="BlockEQ" customModuleProvider="target">
+                    <rect key="frame" x="16" y="490" width="288" height="48"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="Ca0-sc-TJA"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                    <state key="normal" title="I have written it down">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <integer key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="selectedConfirmation:" destination="-1" eventType="touchUpInside" id="nbt-f3-oRA"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="3Jg-1T-pTn" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="5IZ-u1-1pV"/>
                 <constraint firstItem="3Jg-1T-pTn" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="-20" id="Khc-yH-aSO"/>
+                <constraint firstItem="PsE-ef-7Q4" firstAttribute="leading" secondItem="3Jg-1T-pTn" secondAttribute="leading" constant="16" id="XZu-8y-AyB"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="PsE-ef-7Q4" secondAttribute="bottom" constant="30" id="d9V-pH-aqD"/>
                 <constraint firstItem="3Jg-1T-pTn" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="lb0-s9-wqb"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="3Jg-1T-pTn" secondAttribute="bottom" id="m3l-9K-Aar"/>
+                <constraint firstItem="3Jg-1T-pTn" firstAttribute="trailing" secondItem="PsE-ef-7Q4" secondAttribute="trailing" constant="16" id="ql8-iB-zuf"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="33" y="54"/>

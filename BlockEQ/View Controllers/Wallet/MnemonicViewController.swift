@@ -16,6 +16,25 @@ protocol MnemonicViewControllerDelegate: AnyObject {
 }
 
 class MnemonicViewController: UIViewController {
+    enum MnemonicMode {
+        case view
+        case confirm
+
+        var hideConfirmation: Bool {
+            switch self {
+            case .confirm: return false
+            case .view: return false
+            }
+        }
+
+        var hideAdvancedSecurity: Bool {
+            switch self {
+            case .confirm: return false
+            case .view: return true
+            }
+        }
+    }
+
     @IBOutlet var holderView: UIView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -24,9 +43,11 @@ class MnemonicViewController: UIViewController {
 
     weak var delegate: MnemonicViewControllerDelegate?
 
+    let blurEffect = UIBlurEffect(style: .light)
+    let concealingView = UIVisualEffectView(effect: nil)
     var mnemonic: StellarRecoveryMnemonic?
-    var hideConfirmation: Bool = false
-    var hideAdvancedSecurity: Bool = true
+    var mode: MnemonicMode = .confirm
+    var revealed: Bool = false
 
     var temporaryPassphrase: StellarMnemonicPassphrase?
     var mnemonicPassphrase: StellarMnemonicPassphrase? {
@@ -40,21 +61,17 @@ class MnemonicViewController: UIViewController {
         self.mnemonic = StellarRecoveryMnemonic(Wallet.generate24WordMnemonic())
     }
 
-    init(mnemonic: StellarRecoveryMnemonic?,
-         passphrase: StellarMnemonicPassphrase? = nil,
-         hideConfirmation: Bool = false,
-         advancedSecurity: Bool = false) {
+    init(mnemonic: StellarRecoveryMnemonic?, passphrase: StellarMnemonicPassphrase? = nil, mode: MnemonicMode = .view) {
         super.init(nibName: String(describing: MnemonicViewController.self), bundle: nil)
-        self.hideConfirmation = hideConfirmation
-        self.hideAdvancedSecurity = !advancedSecurity
         self.mnemonic = mnemonic
         self.mnemonicPassphrase = passphrase
+        self.mode = mode
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.titleLabel.text = mnemonic != nil ? "MNEMONIC_REMINDER_MESSAGE".localized() : "NO_MNEMONIC_SET".localized()
-        self.confirmationButton.isHidden = self.hideConfirmation
+        self.confirmationButton.isHidden = mode.hideConfirmation
 
         setupView()
     }
@@ -68,7 +85,14 @@ class MnemonicViewController: UIViewController {
         navigationItem.title = "SECRET_PHRASE".localized()
         title = "SECRET_PHRASE".localized()
 
-        confirmationButton.setTitle("CONFIRMED_SECRET_TITLE".localized(), for: .normal)
+        if mode == .confirm {
+            confirmationButton.setTitle("CONFIRMED_SECRET_TITLE".localized(), for: .normal)
+        } else {
+            confirmationButton.setTitle("REVEAL_MNEMONIC_INFORMATION".localized(), for: .normal)
+        }
+
+        confirmationButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        confirmationButton.layer.cornerRadius = 5
 
         holderView.backgroundColor = Colors.lightBackground
         titleLabel.textColor = Colors.darkGray
@@ -76,7 +100,7 @@ class MnemonicViewController: UIViewController {
         let navButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveToKeychain(_:)))
         navigationItem.rightBarButtonItem = navButton
 
-        advancedSecurityButton.isHidden = hideAdvancedSecurity
+        advancedSecurityButton.isHidden = mode.hideAdvancedSecurity
 
         collectionView.registerCell(type: PillViewCell.self)
         collectionView.delegate = self
@@ -96,14 +120,26 @@ class MnemonicViewController: UIViewController {
         }
 
         styleAdvancedSecurity()
+
+        if mode == .view {
+            holderView.addSubview(concealingView)
+            holderView.constrainViewToAllEdges(concealingView)
+            concealingView.backgroundColor = .clear
+            concealingView.effect = blurEffect
+        }
     }
 }
 
 // MARK: - IBActions / Actions
 extension MnemonicViewController {
-    @IBAction func confirmedWrittenDown(_ sender: Any) {
-        guard let mnemonic = self.mnemonic else { return }
-        delegate?.confirmedWrittenMnemonic(self, mnemonic: mnemonic, passphrase: mnemonicPassphrase)
+    @IBAction func selectedConfirmation(_ sender: Any) {
+        if mode == .confirm {
+            guard let mnemonic = self.mnemonic else { return }
+            delegate?.confirmedWrittenMnemonic(self, mnemonic: mnemonic, passphrase: mnemonicPassphrase)
+        } else {
+            toggleVisibility(revealText: "REVEAL_MNEMONIC_INFORMATION".localized(),
+                             concealText: "CONCEAL_MNEMONIC_INFORMATION".localized())
+        }
     }
 
     @IBAction func selectedAdvancedSecurity(_ sender: Any) {
@@ -169,4 +205,10 @@ extension MnemonicViewController: UICollectionViewDataSource {
 
         return pillCell
     }
+}
+
+// MARK: - Blurrable
+extension MnemonicViewController: Blurrable {
+    var blurContainerView: UIView? { return holderView }
+    var toggleButton: UIButton? { return confirmationButton }
 }

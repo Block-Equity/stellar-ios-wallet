@@ -157,6 +157,8 @@
 "DISPLAY_SECRET_SEED_DESCRIPTION" = "This QR code represents your 56-character Stellar secret key. Please ensure you keep it safe!";
 "REVEAL_SECRET_SEED_INFORMATION" = "Reveal Secret Key";
 "CONCEAL_SECRET_SEED_INFORMATION" = "Conceal Secret Key";
+"REVEAL_MNEMONIC_INFORMATION" = "Reveal Mnemonic";
+"CONCEAL_MNEMONIC_INFORMATION" = "Conceal Mnemonic";
 "SECRET_SEED_PREFIX" = "Seed:";
 "MNEMONIC_PREFIX" = "Mnemonic:";
 "BLOCKEQ_WALLET" = "BlockEQ Wallet";

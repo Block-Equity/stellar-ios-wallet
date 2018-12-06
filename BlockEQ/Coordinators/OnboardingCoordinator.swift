@@ -55,7 +55,7 @@ extension OnboardingCoordinator: LaunchViewControllerDelegate {
             return
         }
 
-        let mnemonicVC = MnemonicViewController(mnemonic: mnemonic, hideConfirmation: false, advancedSecurity: true)
+        let mnemonicVC = MnemonicViewController(mnemonic: mnemonic, mode: .confirm)
         mnemonicVC.delegate = self
 
         self.mnemonicViewController = mnemonicVC
