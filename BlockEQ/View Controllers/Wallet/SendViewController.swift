@@ -7,7 +7,7 @@
 //
 
 import stellarsdk
-import StellarAccountService
+import StellarHub
 
 class SendViewController: UIViewController {
     @IBOutlet var addressHolderView: UIView!
@@ -16,7 +16,7 @@ class SendViewController: UIViewController {
     @IBOutlet var sendTitleLabel: UILabel!
     @IBOutlet var sendAddressTextField: UITextField!
 
-    var accountService: StellarAccountService
+    var accountService: AccountManagementService
     var currentAsset: StellarAsset?
 
     @IBAction func addAmount() {
@@ -47,7 +47,7 @@ class SendViewController: UIViewController {
         present(navigationController, animated: true, completion: nil)
     }
 
-    init(service: StellarAccountService, asset: StellarAsset) {
+    init(service: AccountManagementService, asset: StellarAsset) {
         self.accountService = service
         self.currentAsset = asset
 

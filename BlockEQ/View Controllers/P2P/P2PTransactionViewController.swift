@@ -7,7 +7,7 @@
 //
 
 import stellarsdk
-import StellarAccountService
+import StellarHub
 
 enum P2PTradeType: Int {
     case buy

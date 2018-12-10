@@ -6,7 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import StellarAccountService
+import StellarHub
 
 protocol TradePickerDataSourceDelegate: AnyObject {
     func selectedAsset(_ pickerView: UIPickerView, asset: StellarAsset?)

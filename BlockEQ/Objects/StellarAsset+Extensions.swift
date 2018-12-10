@@ -6,7 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import StellarAccountService
+import StellarHub
 
 public struct Assets {
     enum AssetType: String {

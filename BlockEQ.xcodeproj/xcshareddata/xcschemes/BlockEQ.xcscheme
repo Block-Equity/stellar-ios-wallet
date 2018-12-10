@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C5F1C9CE217A7B60001C847A"
-               BuildableName = "StellarAccountService.framework"
-               BlueprintName = "StellarAccountService"
-               ReferencedContainer = "container:StellarAccountService.xcodeproj">
+               BuildableName = "StellarHub.framework"
+               BlueprintName = "StellarHub"
+               ReferencedContainer = "container:StellarHub.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -54,9 +54,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C5F1C9CE217A7B60001C847A"
-            BuildableName = "StellarAccountService.framework"
-            BlueprintName = "StellarAccountService"
-            ReferencedContainer = "container:StellarAccountService.xcodeproj">
+            BuildableName = "StellarHub.framework"
+            BlueprintName = "StellarHub"
+            ReferencedContainer = "container:StellarHub.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
@@ -87,9 +87,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C5F1C9D7217A7B60001C847A"
-               BuildableName = "StellarAccountServiceTests.xctest"
-               BlueprintName = "StellarAccountServiceTests"
-               ReferencedContainer = "container:StellarAccountService.xcodeproj">
+               BuildableName = "StellarHubTests.xctest"
+               BlueprintName = "StellarHubTests"
+               ReferencedContainer = "container:StellarHub.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

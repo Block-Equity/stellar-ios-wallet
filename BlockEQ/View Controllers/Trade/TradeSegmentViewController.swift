@@ -6,7 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import StellarAccountService
+import StellarHub
 
 protocol TradeSegmentControllerDelegate: AnyObject {
     func setScroll(offset: CGFloat, page: Int)

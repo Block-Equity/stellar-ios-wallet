@@ -6,7 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import StellarAccountService
+import StellarHub
 import WebKit
 import os.log
 
@@ -62,7 +62,7 @@ final class ApplicationCoordinator {
     }
 
     /// The service object that manages the current stellar account
-    var core: StellarCoreService? {
+    var core: CoreService? {
         didSet {
             guard let coreService = core,
                 let accountId = KeychainHelper.accountId,
@@ -131,7 +131,7 @@ final class ApplicationCoordinator {
         AddressResolver.fetchExchangeData()
     }
 
-    func migrateIfEligible(using service: StellarAccountService) {
+    func migrateIfEligible(using service: AccountManagementService) {
         if KeychainHelper.canMigrateToNewFormat,
             let accountId = KeychainHelper.accountId,
             let address = StellarAddress(accountId) {
@@ -195,14 +195,14 @@ extension ApplicationCoordinator: AppTabControllerDelegate {
     }
 }
 
-extension ApplicationCoordinator: StellarIndexingServiceDelegate {
-    func finishedIndexing(_ service: StellarIndexingService) {
+extension ApplicationCoordinator: IndexingServiceDelegate {
+    func finishedIndexing(_ service: IndexingService) {
         print("Indexing finished!")
         indexingViewController?.update(with: 1, error: nil)
         transactionViewController?.requestData()
     }
 
-    func errorIndexing(_ service: StellarIndexingService, error: Error?) {
+    func errorIndexing(_ service: IndexingService, error: Error?) {
         if let error = error {
             print("Indexing Error:", error.localizedDescription)
             indexingViewController?.update(with: nil, error: error)
@@ -211,7 +211,7 @@ extension ApplicationCoordinator: StellarIndexingServiceDelegate {
         }
     }
 
-    func updatedProgress(_ service: StellarIndexingService, completed: Double) {
+    func updatedProgress(_ service: IndexingService, completed: Double) {
         indexingViewController?.update(with: completed, error: nil)
     }
 }

@@ -7,7 +7,7 @@
 //
 
 import Alamofire
-import StellarAccountService
+import StellarHub
 
 final class FetchExchangesOperation: AsyncOperation {
     typealias SuccessCallback = ([Exchange]) -> Void

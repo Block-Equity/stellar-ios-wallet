@@ -7,7 +7,7 @@
 //
 
 import stellarsdk
-import StellarAccountService
+import StellarHub
 
 protocol WalletSwitchingViewControllerDelegate: class {
     func reloadAssets()

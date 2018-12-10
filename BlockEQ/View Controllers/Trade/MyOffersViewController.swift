@@ -7,7 +7,7 @@
 //
 
 import stellarsdk
-import StellarAccountService
+import StellarHub
 
 protocol MyOffersViewControllerDelegate: AnyObject {
     func cancelTrade(offerId: Int, assetPair: StellarAssetPair, price: Price)

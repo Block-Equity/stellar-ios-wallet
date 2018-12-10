@@ -28,14 +28,14 @@ target 'BlockEQ' do
 
 end
 
-target 'StellarAccountService' do
+target 'StellarHub' do
   use_frameworks!
   workspace 'BlockEQ.xcworkspace'
-  project 'StellarAccountService.xcodeproj'
+  project 'StellarHub.xcodeproj'
 
   shared_pods
 
-  target 'StellarAccountServiceTests' do
+  target 'StellarHubTests' do
   end
 end
 

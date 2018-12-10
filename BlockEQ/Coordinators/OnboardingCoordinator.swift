@@ -7,10 +7,10 @@
 //
 
 import stellarsdk
-import StellarAccountService
+import StellarHub
 
 protocol OnboardingCoordinatorDelegate: AnyObject {
-    func onboardingCompleted(service: StellarCoreService)
+    func onboardingCompleted(service: CoreService)
 }
 
 final class OnboardingCoordinator {
@@ -21,7 +21,7 @@ final class OnboardingCoordinator {
 
     weak var delegate: OnboardingCoordinatorDelegate?
     var authenticationCoordinator: AuthenticationCoordinator?
-    var core: StellarCoreService!
+    var core: CoreService!
 
     init() {
         navController = AppNavigationController(rootViewController: launchViewController)

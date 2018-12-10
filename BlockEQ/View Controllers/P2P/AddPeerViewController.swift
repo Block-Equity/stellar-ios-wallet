@@ -7,7 +7,7 @@
 //
 
 import Whisper
-import StellarAccountService
+import StellarHub
 
 protocol AddPeerViewControllerDelegate: AnyObject {
     func selectedScanAddress()

@@ -7,7 +7,7 @@
 //
 
 import os.log
-import StellarAccountService
+import StellarHub
 
 protocol TransactionDetailsViewControllerDelegate: AnyObject {
     func requestedTransaction(_ viewController: TransactionDetailsViewController,

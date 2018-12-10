@@ -6,7 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import StellarAccountService
+import StellarHub
 import stellarsdk
 import Contacts
 
@@ -23,7 +23,7 @@ class ContactsViewController: UIViewController {
     @IBOutlet var tableViewHeaderAddressBookTitleLabel: UILabel!
     @IBOutlet var accessDeniedView: UIView!
 
-    var accountService: StellarAccountService
+    var accountService: AccountManagementService
     weak var delegate: ContactsViewControllerDelegate?
     var dataSource: ContactsDataSource? {
         didSet {
@@ -32,7 +32,7 @@ class ContactsViewController: UIViewController {
         }
     }
 
-    init(service: StellarAccountService) {
+    init(service: AccountManagementService) {
         self.accountService = service
         super.init(nibName: String(describing: ContactsViewController.self), bundle: nil)
     }

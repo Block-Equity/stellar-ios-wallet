@@ -6,7 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import StellarAccountService
+import StellarHub
 
 protocol FrameworkErrorPresentable {
     func displayFrameworkError(_ error: FrameworkError?, fallbackData: (title: String, message: String))
