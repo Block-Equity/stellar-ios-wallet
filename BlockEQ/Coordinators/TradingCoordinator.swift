@@ -6,7 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import StellarAccountService
+import StellarHub
 import stellarsdk
 
 protocol TradingCoordinatorDelegate: AnyObject {
@@ -34,9 +34,9 @@ final class TradingCoordinator {
         }
     }
 
-    var tradeService: StellarTradeService?
+    var tradeService: TradeService?
 
-    var accountService: StellarAccountService?
+    var accountService: AccountManagementService?
 
     var addAssetViewController: AddAssetViewController?
 

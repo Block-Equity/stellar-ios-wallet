@@ -7,7 +7,7 @@
 //
 
 import Whisper
-import StellarAccountService
+import StellarHub
 
 class CreateTokenViewController: UIViewController {
     @IBOutlet var tokenNameTextField: UITextField!

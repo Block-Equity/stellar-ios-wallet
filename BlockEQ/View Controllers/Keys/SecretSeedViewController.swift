@@ -8,7 +8,7 @@
 
 import Whisper
 import stellarsdk
-import StellarAccountService
+import StellarHub
 
 final class SecretSeedViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!

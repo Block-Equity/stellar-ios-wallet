@@ -3,7 +3,7 @@ PODS:
   - KeychainSwift (10.0.0)
   - Kingfisher (4.10.1)
   - SCLAlertView (0.8.1)
-  - stellar-ios-mac-sdk (1.5.5)
+  - stellar-ios-mac-sdk (1.5.6)
   - Whisper (6.0.2)
 
 DEPENDENCIES:
@@ -35,7 +35,7 @@ CHECKOUT OPTIONS:
     :commit: 86ea7613c99cd4896765fabfa773b39b40bc8590
     :git: https://github.com/vikmeup/SCLAlertView-Swift
   stellar-ios-mac-sdk:
-    :commit: a9f01dbebac62cb647a27fcaa1c2d6ea8487c5cb
+    :commit: 9041d7189c00d898dcf95cf4cbb681ade65635c4
     :git: https://github.com/Soneso/stellar-ios-mac-sdk.git
   Whisper:
     :commit: 86880dea149a871ec5cb909cc3b93e7fb5804788
@@ -46,9 +46,9 @@ SPEC CHECKSUMS:
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
-  stellar-ios-mac-sdk: 615df69c06e7d63ec7a13631fc9dac6a29fe6912
+  stellar-ios-mac-sdk: b0c589f5d5a7776edffcf4ebbe4e12d988030e7e
   Whisper: 8c499b08f3b56d5c80162d775e3462318ad7f4fe
 
-PODFILE CHECKSUM: 57c4b33f504cce406b04ece6bbee0b9345e31922
+PODFILE CHECKSUM: be41ad30e44ce617175a63ae7751ba972cb202ce
 
 COCOAPODS: 1.5.3

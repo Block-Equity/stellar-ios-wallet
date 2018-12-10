@@ -7,7 +7,7 @@
 //
 
 import Whisper
-import StellarAccountService
+import StellarHub
 
 protocol InflationViewControllerDelegate: AnyObject {
     func updateAccountInflation(_ viewController: InflationViewController, destination: StellarAddress)

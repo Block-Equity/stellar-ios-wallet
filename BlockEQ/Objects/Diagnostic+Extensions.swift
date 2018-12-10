@@ -6,7 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import StellarAccountService
+import StellarHub
 
 extension WalletDiagnostic.CreationMethod {
     static func from(mnemonic: StellarRecoveryMnemonic, recovered: Bool) -> WalletDiagnostic.CreationMethod {

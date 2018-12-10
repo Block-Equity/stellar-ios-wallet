@@ -7,7 +7,7 @@
 //
 
 import stellarsdk
-import StellarAccountService
+import StellarHub
 
 protocol MnemonicViewControllerDelegate: AnyObject {
     func confirmedWrittenMnemonic(_ viewController: MnemonicViewController,

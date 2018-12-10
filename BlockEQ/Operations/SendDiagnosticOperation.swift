@@ -7,7 +7,7 @@
 //
 
 import Alamofire
-import StellarAccountService
+import StellarHub
 
 final class SendDiagnosticOperation: AsyncOperation {
     typealias CompletionCallback = (Int?) -> Void

@@ -8,7 +8,7 @@
 
 import Whisper
 import stellarsdk
-import StellarAccountService
+import StellarHub
 
 class SendAmountViewController: UIViewController {
     @IBOutlet var amountLabel: UILabel!
@@ -27,13 +27,16 @@ class SendAmountViewController: UIViewController {
 
     var receiver: StellarAddress
     var sendingAmount: String = "0"
-    var accountService: StellarAccountService
+    var accountService: AccountManagementService
     var currentAsset: StellarAsset?
     var isExchangeAddress: Bool = false
     var exchangeName: String = ""
     var authenticationCoordinator: AuthenticationCoordinator?
 
-    init(service: StellarAccountService, currentAsset: StellarAsset, receiver: StellarAddress, exchangeName: String?) {
+    init(service: AccountManagementService,
+         currentAsset: StellarAsset,
+         receiver: StellarAddress,
+         exchangeName: String?) {
         self.receiver = receiver
         self.accountService = service
         self.currentAsset = currentAsset

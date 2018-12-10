@@ -6,7 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import StellarAccountService
+import StellarHub
 import os.log
 
 @UIApplicationMain
@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     let container = WrapperVC()
-    let core = StellarCoreService(with: .production)
+    let core = CoreService(with: .production)
     let onboardingCoordinator = OnboardingCoordinator()
     var appCoordinator = ApplicationCoordinator()
     var authenticationCoordinator: AuthenticationCoordinator?
@@ -98,7 +98,7 @@ extension AppDelegate: ApplicationCoordinatorDelegate {
 }
 
 extension AppDelegate: OnboardingCoordinatorDelegate {
-    func onboardingCompleted(service: StellarCoreService) {
+    func onboardingCompleted(service: CoreService) {
         onboardingContainer = false
         appCoordinator.core = service
         container.moveToViewController(appCoordinator.tabController,

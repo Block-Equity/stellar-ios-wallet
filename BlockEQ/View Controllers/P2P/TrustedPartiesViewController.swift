@@ -7,7 +7,7 @@
 //
 
 import stellarsdk
-import StellarAccountService
+import StellarHub
 
 class TrustedPartiesViewController: UIViewController {
     @IBOutlet var activityIndicator: UIActivityIndicatorView!

@@ -6,7 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import StellarAccountService
+import StellarHub
 
 // MARK: - AuthenticationCoordinatorDelegate
 extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
@@ -59,11 +59,11 @@ extension ApplicationCoordinator: ContactsViewControllerDelegate {
     }
 }
 
-// MARK: - StellarAccountServiceDelegate
-extension ApplicationCoordinator: StellarAccountServiceDelegate {
-    func accountUpdated(_ service: StellarAccountService,
+// MARK: - AccountManagementServiceDelegate
+extension ApplicationCoordinator: AccountManagementServiceDelegate {
+    func accountUpdated(_ service: AccountManagementService,
                         account: StellarAccount,
-                        opts: StellarAccountService.UpdateOptions) {
+                        opts: AccountManagementService.UpdateOptions) {
         if opts.contains(.effects) || opts.contains(.account) {
             self.walletViewController.updated(account: account)
         }
@@ -71,12 +71,12 @@ extension ApplicationCoordinator: StellarAccountServiceDelegate {
         self.tradingCoordinator.updated(account: account)
     }
 
-    func accountInactive(_ service: StellarAccountService, account: StellarAccount) {
+    func accountInactive(_ service: AccountManagementService, account: StellarAccount) {
         self.walletViewController.updated(account: account)
         self.tradingCoordinator.updated(account: account)
     }
 
-    func paymentUpdate(_ service: StellarAccountService, operation: StellarOperation) {
+    func paymentUpdate(_ service: AccountManagementService, operation: StellarOperation) {
         service.update()
     }
 }

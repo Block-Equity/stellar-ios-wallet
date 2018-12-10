@@ -7,7 +7,7 @@
 //
 
 import stellarsdk
-import StellarAccountService
+import StellarHub
 
 protocol WalletViewControllerDelegate: AnyObject {
     func selectedEffect(_ viewController: WalletViewController, effect: StellarEffect)

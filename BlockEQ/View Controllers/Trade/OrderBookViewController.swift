@@ -7,7 +7,7 @@
 //
 
 import stellarsdk
-import StellarAccountService
+import StellarHub
 
 class OrderBookViewController: UIViewController {
     @IBOutlet var tableView: UITableView!

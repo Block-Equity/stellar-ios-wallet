@@ -7,7 +7,7 @@
 //
 
 import stellarsdk
-import StellarAccountService
+import StellarHub
 
 class SelectAssetViewController: UIViewController {
 
@@ -15,14 +15,14 @@ class SelectAssetViewController: UIViewController {
 
     var allAssets: [StellarAsset] = []
     var receiver: StellarAddress
-    var accountService: StellarAccountService
+    var accountService: AccountManagementService
     var exchangeName: String?
 
     @IBAction func dismissView() {
         self.dismiss(animated: true, completion: nil)
     }
 
-    init(service: StellarAccountService, receiver: StellarAddress, exchangeName: String?) {
+    init(service: AccountManagementService, receiver: StellarAddress, exchangeName: String?) {
         self.receiver = receiver
         self.accountService = service
         self.exchangeName = exchangeName
