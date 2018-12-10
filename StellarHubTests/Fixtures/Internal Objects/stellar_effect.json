@@ -1,0 +1,11 @@
+{
+    "type": 0,
+    "identifier": "123",
+    "amount": "",
+    "asset": "",
+    "paging_token": "12345-1",
+    "created_at": "2018-12",
+    "sold_amount": "",
+    "bought_amount": "",
+    "asset_pair": ""
+}

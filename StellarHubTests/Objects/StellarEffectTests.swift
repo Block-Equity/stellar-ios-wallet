@@ -72,4 +72,24 @@ class StellarEffectTests: XCTestCase {
         XCTAssertEqual(effect.pagingToken, "75053501230637057-1")
         XCTAssertEqual(effect.operationId, "75053501230637057")
     }
+
+    func testIsBoughtReturnsIfEffectRelatesToAssetPair() {
+        let testResponse: TradeEffectResponse = JSONLoader.decodableJSON(name: "trade_effect")
+        let effect = StellarEffect(testResponse)
+
+        let comparingAsset = StellarAsset(assetCode: "PTS", issuer: "G1234")
+        XCTAssertTrue(effect.isBought(asset: comparingAsset))
+    }
+
+    func testOperationCanDecodeAndEncode() {
+        let effect: StellarEffect = JSONLoader.decodableJSON(name: "stellar_effect")
+        XCTAssertNotNil(effect)
+        XCTAssertEqual(effect.type, .accountCreated)
+        XCTAssertEqual(effect.identifier, "123")
+        XCTAssertEqual(effect.createdAt, "2018-12")
+        XCTAssertEqual(effect.pagingToken, "12345-1")
+
+        let encodedBytes = try? JSONEncoder().encode(effect)
+        XCTAssertNotNil(encodedBytes)
+    }
 }
