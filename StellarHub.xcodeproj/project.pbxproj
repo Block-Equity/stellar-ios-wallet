@@ -32,6 +32,8 @@
 		C5144212217ED9CE006C44F4 /* PostPaymentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5144211217ED9CE006C44F4 /* PostPaymentOperation.swift */; };
 		C5144214217EDBCF006C44F4 /* ChangeTrustOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5144213217EDBCF006C44F4 /* ChangeTrustOperation.swift */; };
 		C5144216217EDC71006C44F4 /* ChangeP2PTrustOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5144215217EDC71006C44F4 /* ChangeP2PTrustOperation.swift */; };
+		C556AF4321BF0FEE00F6C80C /* ChainableOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C556AF4221BF0FEE00F6C80C /* ChainableOperationTests.swift */; };
+		C556AF4521C0043D00F6C80C /* stellar_effect.json in Resources */ = {isa = PBXBuildFile; fileRef = C556AF4421C0043D00F6C80C /* stellar_effect.json */; };
 		C558412821AC459C0090D463 /* StellarMnemonicPassphrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C558412721AC459C0090D463 /* StellarMnemonicPassphrase.swift */; };
 		C558412A21AC49BB0090D463 /* StellarMnemonicPassphraseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C558412921AC49BB0090D463 /* StellarMnemonicPassphraseTests.swift */; };
 		C58898B5218766CB0057D787 /* StellarTradeOfferData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58898B4218766CB0057D787 /* StellarTradeOfferData.swift */; };
@@ -141,6 +143,8 @@
 		C5144211217ED9CE006C44F4 /* PostPaymentOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPaymentOperation.swift; sourceTree = "<group>"; };
 		C5144213217EDBCF006C44F4 /* ChangeTrustOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeTrustOperation.swift; sourceTree = "<group>"; };
 		C5144215217EDC71006C44F4 /* ChangeP2PTrustOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeP2PTrustOperation.swift; sourceTree = "<group>"; };
+		C556AF4221BF0FEE00F6C80C /* ChainableOperationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainableOperationTests.swift; sourceTree = "<group>"; };
+		C556AF4421C0043D00F6C80C /* stellar_effect.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = stellar_effect.json; sourceTree = "<group>"; };
 		C558412721AC459C0090D463 /* StellarMnemonicPassphrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarMnemonicPassphrase.swift; sourceTree = "<group>"; };
 		C558412921AC49BB0090D463 /* StellarMnemonicPassphraseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarMnemonicPassphraseTests.swift; sourceTree = "<group>"; };
 		C58898B4218766CB0057D787 /* StellarTradeOfferData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarTradeOfferData.swift; sourceTree = "<group>"; };
@@ -296,6 +300,52 @@
 			path = Misc;
 			sourceTree = "<group>";
 		};
+		C556AF4121BF0FD900F6C80C /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				C556AF4221BF0FEE00F6C80C /* ChainableOperationTests.swift */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
+		C556AF4621C0051D00F6C80C /* SDK Response Objects */ = {
+			isa = PBXGroup;
+			children = (
+				C5FE7594218BDEC00090E372 /* trade_effect.json */,
+				C5FE75A0218BF29E0090E372 /* account_balance_response.json */,
+				C5FE75A2218BF4BF0090E372 /* offer_asset_response.json */,
+				C5FE75A6218BFCE30090E372 /* transaction_response.json */,
+				C593DFD7218BFF6000FA01DD /* orderbook_response.json */,
+				C593DFD9218C02D800FA01DD /* empty_orderbook_response.json */,
+				C5FE7598218BE71F0090E372 /* signer_created_effect.json */,
+				C5FE7587218BD58B0090E372 /* account_created_effect.json */,
+				C5FE7590218BDC420090E372 /* inflation_updated_effect.json */,
+				C5FE7596218BE4990090E372 /* account_debited_effect.json */,
+				C5FE758E218BDC1A0090E372 /* account_credited_effect.json */,
+				C593DFDD218C042B00FA01DD /* operation_response.json */,
+				C593DFE3218C06DB00FA01DD /* orderbook_offer_response.json */,
+				C593DFE5218C099E00FA01DD /* bad_orderbook_offer_response.json */,
+				C593DFE7218C0A1A00FA01DD /* account_offer_response.json */,
+				C593DFE9218C0AD800FA01DD /* missing_seller_offer_response.json */,
+				C593DFEB218C0AF200FA01DD /* bad_amount_offer_response.json */,
+				C593DFED218C0DF000FA01DD /* bad_price_offer_response.json */,
+				C593DFF3218C10C100FA01DD /* account_response.json */,
+				C593DFF5218C12DB00FA01DD /* no_balance_account_response.json */,
+				C5114DAA21929C5900C88E4F /* account_transactions.json */,
+				C5114DAC21929C7500C88E4F /* account_operations.json */,
+				C5114DAE21929C8B00C88E4F /* account_effects.json */,
+			);
+			path = "SDK Response Objects";
+			sourceTree = "<group>";
+		};
+		C556AF4721C0059900F6C80C /* Internal Objects */ = {
+			isa = PBXGroup;
+			children = (
+				C556AF4421C0043D00F6C80C /* stellar_effect.json */,
+			);
+			path = "Internal Objects";
+			sourceTree = "<group>";
+		};
 		C5D8CADA2183A792009F8624 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,6 +410,7 @@
 			children = (
 				C5FE758B218BD70B0090E372 /* Utilities */,
 				C5114DA72192984900C88E4F /* Services */,
+				C556AF4121BF0FD900F6C80C /* Operations */,
 				C5FE757D218BCBD10090E372 /* Objects */,
 				C5FE7586218BD56D0090E372 /* Fixtures */,
 				C5F1C9DF217A7B61001C847A /* Info.plist */,
@@ -434,30 +485,9 @@
 		C5FE7586218BD56D0090E372 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
+				C556AF4721C0059900F6C80C /* Internal Objects */,
+				C556AF4621C0051D00F6C80C /* SDK Response Objects */,
 				C5FE757B218BC87D0090E372 /* TestHelperData.swift */,
-				C5FE7598218BE71F0090E372 /* signer_created_effect.json */,
-				C5FE7587218BD58B0090E372 /* account_created_effect.json */,
-				C5FE7590218BDC420090E372 /* inflation_updated_effect.json */,
-				C5FE7596218BE4990090E372 /* account_debited_effect.json */,
-				C5FE758E218BDC1A0090E372 /* account_credited_effect.json */,
-				C5FE7594218BDEC00090E372 /* trade_effect.json */,
-				C5FE75A0218BF29E0090E372 /* account_balance_response.json */,
-				C5FE75A2218BF4BF0090E372 /* offer_asset_response.json */,
-				C5FE75A6218BFCE30090E372 /* transaction_response.json */,
-				C593DFD7218BFF6000FA01DD /* orderbook_response.json */,
-				C593DFD9218C02D800FA01DD /* empty_orderbook_response.json */,
-				C593DFDD218C042B00FA01DD /* operation_response.json */,
-				C593DFE3218C06DB00FA01DD /* orderbook_offer_response.json */,
-				C593DFE5218C099E00FA01DD /* bad_orderbook_offer_response.json */,
-				C593DFE7218C0A1A00FA01DD /* account_offer_response.json */,
-				C593DFE9218C0AD800FA01DD /* missing_seller_offer_response.json */,
-				C593DFEB218C0AF200FA01DD /* bad_amount_offer_response.json */,
-				C593DFED218C0DF000FA01DD /* bad_price_offer_response.json */,
-				C593DFF3218C10C100FA01DD /* account_response.json */,
-				C593DFF5218C12DB00FA01DD /* no_balance_account_response.json */,
-				C5114DAA21929C5900C88E4F /* account_transactions.json */,
-				C5114DAC21929C7500C88E4F /* account_operations.json */,
-				C5114DAE21929C8B00C88E4F /* account_effects.json */,
 			);
 			path = Fixtures;
 			sourceTree = "<group>";
@@ -590,6 +620,7 @@
 				C5114DAB21929C5900C88E4F /* account_transactions.json in Resources */,
 				C5FE75A3218BF4BF0090E372 /* offer_asset_response.json in Resources */,
 				C5FE7591218BDC420090E372 /* inflation_updated_effect.json in Resources */,
+				C556AF4521C0043D00F6C80C /* stellar_effect.json in Resources */,
 				C593DFDA218C02D800FA01DD /* empty_orderbook_response.json in Resources */,
 				C5FE7599218BE71F0090E372 /* signer_created_effect.json in Resources */,
 				C5FE7597218BE4990090E372 /* account_debited_effect.json in Resources */,
@@ -782,6 +813,7 @@
 				C5FE757C218BC87D0090E372 /* TestHelperData.swift in Sources */,
 				C5FE757F218BCBE70090E372 /* StellarSeedTests.swift in Sources */,
 				C5FE758A218BD5B30090E372 /* JSONLoader.swift in Sources */,
+				C556AF4321BF0FEE00F6C80C /* ChainableOperationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -103,20 +103,25 @@ public struct StellarEffect {
 }
 
 // MARK: - Codable
-extension StellarEffect: Codable {
-    enum CodingKeys: CodingKey {
-        case identifier
-        case pagingToken
+extension StellarEffect: Decodable {
+    enum CodingKeys: String, CodingKey {
         case type
-        case createdAt
+        case identifier
+        case amount
+        case asset
+        case pagingToken = "paging_token"
+        case createdAt = "created_at"
+        case soldAmount = "sold_amount"
+        case boughtAmount = "bought_amount"
+        case assetPair = "asset_pair"
     }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(self.identifier, forKey: .identifier)
-        try container.encode(self.pagingToken, forKey: .pagingToken)
-        try container.encode(self.type.rawValue, forKey: .type)
-        try container.encode(self.createdAt, forKey: .createdAt)
+        try container.encode(identifier, forKey: .identifier)
+        try container.encode(pagingToken, forKey: .pagingToken)
+        try container.encode(type.rawValue, forKey: .type)
+        try container.encode(createdAt, forKey: .createdAt)
     }
 
     public init(from decoder: Decoder) throws {

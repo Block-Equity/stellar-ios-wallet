@@ -38,9 +38,14 @@ final class ChainedOperationPair<FirstType: ChainableOperation, SecondType: Chai
     init(first: FirstType, second: SecondType) {
         firstOperation = first
         secondOperation = second
-        adapter = BlockOperation(block: { [unowned firstOperation, unowned secondOperation] in
-            guard !secondOperation.isCancelled else { return }
-            secondOperation.inData = firstOperation.outData
+
+        self.adapter = BlockOperation(block: { [unowned firstOperation, unowned secondOperation] in
+            if firstOperation.isCancelled {
+                secondOperation.cancel()
+                return
+            } else {
+                secondOperation.inData = firstOperation.outData
+            }
         })
 
         secondOperation.addDependency(adapter)
