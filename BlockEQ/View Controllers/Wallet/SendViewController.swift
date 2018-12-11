@@ -66,11 +66,12 @@ class SendViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        setViewStateToNotEditing()
+        view.endEditing(true)
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        view.endEditing(true)
     }
 
     func setupView() {
@@ -102,10 +103,6 @@ class SendViewController: UIViewController {
         }
 
         navigationItem.title = String(format: "TRADE_BALANCE_FORMAT".localized(), availableBalance, asset.shortCode)
-    }
-
-    func setViewStateToNotEditing() {
-        view.endEditing(true)
     }
 
     @objc func dismissView() {

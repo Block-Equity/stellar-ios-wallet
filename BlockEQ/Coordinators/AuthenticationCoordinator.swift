@@ -205,6 +205,9 @@ final class AuthenticationCoordinator {
 // MARK: - Private / internal methods
 extension AuthenticationCoordinator {
     private func presentAuthenticationChallenge() {
+
+        dismissApplicationKeyboard()
+
         var useBiometrics = SecurityOptionHelper.check(.useBiometrics)
         let biometricsAvailable = AuthenticationCoordinator.evaluateLAPolicy(AuthenticationCoordinator.authPolicy,
                                                                              context: self.authContext) == nil
@@ -351,6 +354,10 @@ extension AuthenticationCoordinator {
         }
 
         container.setNeedsStatusBarAppearanceUpdate()
+    }
+
+    private func dismissApplicationKeyboard() {
+        UIApplication.shared.keyWindow?.rootViewController?.view.endEditing(true)
     }
 }
 

@@ -162,9 +162,11 @@ final class AppTabController: ContainerViewController {
         }
 
         addChild(viewController)
+        viewController.willMove(toParent: self)
+
         container.addSubview(viewController.view)
-        viewController.didMove(toParent: self)
         viewController.view.frame = container.bounds
+
         currentViewController = viewController
 
         self.setNeedsStatusBarAppearanceUpdate()

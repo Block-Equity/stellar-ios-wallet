@@ -14,7 +14,7 @@ protocol ContactsViewControllerDelegate: AnyObject {
     func selectedAddToAddressBook(identifier: String, name: String, address: String)
 }
 
-class ContactsViewController: UIViewController {
+final class ContactsViewController: UIViewController {
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var tableViewHeaderStellar: UIView!

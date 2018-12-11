@@ -75,9 +75,9 @@ extension UIViewController {
         viewController.didMove(toParent: self)
     }
 
-    func addContentView(_ view: UIView) {
-        adjustFrameForView(view)
-        self.view.addSubview(view)
+    func addContentView(_ contentView: UIView) {
+        adjustFrameForView(contentView)
+        view.addSubview(contentView)
     }
 
     func adjustFrameForView(_ view: UIView) {

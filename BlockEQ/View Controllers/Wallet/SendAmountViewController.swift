@@ -74,6 +74,11 @@ class SendAmountViewController: UIViewController {
         navigationItem.title = String(format: "TRADE_BALANCE_FORMAT".localized(), availableBalance, asset.shortCode)
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        view.endEditing(true)
+    }
+
     func setupView() {
         let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
                                                  style: .plain,
