@@ -145,6 +145,14 @@ final class ApplicationCoordinator {
             KeychainHelper.clearStellarSecrets()
         }
     }
+
+    func didBecomeActive() {
+        refreshAccount()
+    }
+
+    func refreshAccount() {
+        core?.accountService.update()
+    }
 }
 
 extension ApplicationCoordinator: TradeHeaderViewDelegate {

@@ -65,6 +65,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         authenticate()
     }
 
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        if !onboardingContainer {
+            appCoordinator.didBecomeActive()
+        }
+    }
+
     func authenticate(_ style: AuthenticationCoordinator.AuthenticationStyle? = nil) {
         guard SecurityOptionHelper.check(.pinOnLaunch) else {
             return
