@@ -33,6 +33,11 @@ class AddAssetViewController: UIViewController {
         assetCodeTextField.becomeFirstResponder()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        view.endEditing(true)
+    }
+
     func setupView() {
         navigationItem.title = "ADD_ASSET".localized()
 

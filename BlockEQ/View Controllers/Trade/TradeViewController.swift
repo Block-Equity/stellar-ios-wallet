@@ -104,6 +104,11 @@ class TradeViewController: UIViewController {
         refreshView()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        view.endEditing(true)
+    }
+
     func setupView() {
         tradeFromView.layer.borderWidth = 0.5
         tradeFromView.layer.borderColor = Colors.red.cgColor
