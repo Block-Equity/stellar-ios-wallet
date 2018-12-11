@@ -62,7 +62,8 @@ class AddAssetViewController: UIViewController {
             return
         }
 
-        guard let issuer = StellarAddress(issuerTextField.text) else {
+        let selfAddress = StellarAddress(KeychainHelper.accountId)
+        guard let issuer = StellarAddress(issuerTextField.text), issuer != selfAddress else {
             issuerTextField.shake()
             return
         }

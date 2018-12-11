@@ -267,7 +267,7 @@
 
 "UNKNOWN_ERROR_MESSAGE" = "An unknown error has occured. If this issue persists, please contact support.";
 "REQUEST_FAILED_ERROR_MESSAGE" = "Your network connection appears to be offline. Please connect to a Wifi or cellular network to complete this operation.";
-"BAD_REQUEST_ERROR_MESSAGE" = "Bad Request error message";
+"BAD_REQUEST_ERROR_MESSAGE" = "There was an error processing this request. If this issue persists, please contact support.";
 "INVALID_RESPONSE_ERROR_MESSAGE" = "";
 "UNAUTHORIZED_ERROR_MESSAGE" = "";
 "FORBIDDEN_ERROR_MESSAGE" = "";
