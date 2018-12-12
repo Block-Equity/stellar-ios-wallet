@@ -107,4 +107,14 @@ class StellarAssetTests: XCTestCase {
         let asset = StellarAsset(assetType: "credit_alphanum12", assetCode: nil, assetIssuer: "", balance: "0.00")
         XCTAssertTrue(asset.hasZeroBalance)
     }
+
+    func testStellarAssetHashesToSameValueIfShortCodeIdentical() {
+        let asset = StellarAsset(assetCode: "PTS", issuer: "some issuing address")
+        let customNativeAsset = StellarAsset(assetCode: "XLM", issuer: "")
+        let nativeAsset = StellarAsset.lumens
+
+        XCTAssertNotEqual(asset.hashValue, nativeAsset.hashValue)
+        XCTAssertEqual(customNativeAsset.hashValue, nativeAsset.hashValue)
+        XCTAssertNotEqual(nativeAsset, customNativeAsset)
+    }
 }

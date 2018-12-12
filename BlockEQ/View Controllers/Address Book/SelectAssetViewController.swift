@@ -89,10 +89,8 @@ extension SelectAssetViewController: UITableViewDataSource {
             cell.tokenInitialLabel.text = String(Array(shortcode)[0])
         }
 
-        if let account = accountService.account, item.assetType == AssetTypeAsString.NATIVE {
-            cell.amountLabel.text = "\(account.formattedAvailableBalance) \(item.shortCode)"
-        } else {
-            cell.amountLabel.text = "\(allAssets[indexPath.row].balance.displayFormatted) \(item.shortCode)"
+        if let account = accountService.account {
+            cell.amountLabel.text = "\(account.availableBalance(for: item)) \(item.shortCode)"
         }
 
         return cell

@@ -95,13 +95,7 @@ class SendViewController: UIViewController {
 
         guard let asset = self.currentAsset, let account = accountService.account else { return }
 
-        var availableBalance = ""
-        if asset.assetType == AssetTypeAsString.NATIVE {
-            availableBalance = account.availableBalance.tradeFormattedString
-        } else {
-            availableBalance = asset.balance.displayFormatted
-        }
-
+        let availableBalance = account.availableBalance(for: asset).displayFormattedString
         navigationItem.title = String(format: "TRADE_BALANCE_FORMAT".localized(), availableBalance, asset.shortCode)
     }
 

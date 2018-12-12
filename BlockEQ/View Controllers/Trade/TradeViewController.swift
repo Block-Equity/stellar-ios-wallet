@@ -184,17 +184,11 @@ class TradeViewController: UIViewController {
     func setTradeSelectors() {
         guard let account = self.stellarAccount else { return }
 
-        var formatString = "TRADE_BALANCE_FORMAT"
         var balanceAmount: String
 
         if let fromAsset = fromAsset {
-            balanceAmount = fromAsset.balance.displayFormatted
-
-            if fromAsset.isNative {
-                formatString = "TRADE_BALANCE_AVAILABLE_FORMAT"
-                balanceAmount = account.availableBalance.displayFormattedString
-            }
-
+            let formatString = fromAsset.isNative ? "TRADE_BALANCE_AVAILABLE_FORMAT" : "TRADE_BALANCE_FORMAT"
+            balanceAmount = account.availableBalance(for: fromAsset).tradeFormattedString
             tradeFromButton.setTitle(fromAsset.shortCode, for: .normal)
             balanceLabel.text = String(format: formatString.localized(), balanceAmount, fromAsset.shortCode)
         }
@@ -208,15 +202,9 @@ class TradeViewController: UIViewController {
         guard let account = self.stellarAccount else { return }
 
         if let asset = account.assets.first(where: { $0 == fromAsset }) {
-            var balance = asset.balance
-            var labelFormat = "TRADE_BALANCE_FORMAT".localized()
-
-            if asset.isNative {
-                labelFormat = "TRADE_BALANCE_AVAILABLE_FORMAT".localized()
-                balance = account.availableBalance.displayFormattedString
-            }
-
-            self.balanceLabel.text = String(format: labelFormat, balance, asset.shortCode)
+            let balance = account.availableBalance(for: asset).tradeFormattedString
+            let labelFormat = asset.isNative ? "TRADE_BALANCE_AVAILABLE_FORMAT" : "TRADE_BALANCE_FORMAT"
+            self.balanceLabel.text = String(format: labelFormat.localized(), balance, asset.shortCode)
         }
     }
 
@@ -235,7 +223,7 @@ class TradeViewController: UIViewController {
         }
 
         let toValue = tradeFromValue * currentMarketPrice
-        tradeToTextField.text = toValue.displayFormattedString
+        tradeToTextField.text = toValue.tradeFormattedString
     }
 
     func buildFromDataSource(with selectedAsset: StellarAsset?, excluding: StellarAsset? = nil) {
@@ -396,19 +384,15 @@ extension TradeViewController {
     }
 
     @IBAction func setBalanceAmount(sender: UIButton) {
-        guard let account = self.stellarAccount, let fromAsset = self.fromAsset,
-            var balance = Decimal(string: fromAsset.balance) else {
-                return
+        guard let account = self.stellarAccount, let fromAsset = self.fromAsset else {
+            return
         }
 
-        if fromAsset.isNative {
-            balance = account.availableBalance
-        }
-
+        let balance = account.availableBalance(for: fromAsset)
         let multiplier = BalanceType.all[sender.tag].decimal
         let scaledBalance = balance * multiplier
 
-        let value = scaledBalance.displayFormattedString
+        let value = scaledBalance.tradeFormattedString
         tradeFromTextField.text = value
 
         if currentTradeType == .market {

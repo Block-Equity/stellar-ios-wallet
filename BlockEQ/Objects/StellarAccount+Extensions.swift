@@ -29,13 +29,10 @@ extension StellarAccount {
         return minBalance.displayFormattedString
     }
 
-    var formattedAvailableBalance: String {
-        return availableBalance.displayFormattedString
-    }
-
     func formattedAvailableBalance(for asset: StellarAsset) -> String {
+        let balance = availableBalance(for: asset)
         return String(format: "AVAILABLE_BALANCE_FORMAT_STRING".localized(),
-                      availableBalance.tradeFormattedString,
+                      balance.tradeFormattedString,
                       asset.shortCode
         )
     }

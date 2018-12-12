@@ -21,6 +21,7 @@ public final class StellarAccount {
     public internal(set) var mappedTransactions: [String: StellarTransaction] = [:]
     public internal(set) var mappedOperations: [String: StellarOperation] = [:]
     public internal(set) var mappedOffers: [Int: StellarAccountOffer] = [:]
+    public internal(set) var outstandingTradeAmounts: [StellarAsset: Decimal] = [:]
     internal var rawResponse: AccountResponse?
 
     internal weak var sendResponseDelegate: SendAmountResponseDelegate?
@@ -108,7 +109,12 @@ public final class StellarAccount {
         return baseReserve + trustlines + offers + signers
     }
 
-    public var availableBalance: Decimal {
+    /**
+     Returns the amount of Lumens available on the account, less required minimum XLM balance.
+
+     - Note: This amount does not consider amounts locked up in trades.
+     */
+    public var availableNativeBalance: Decimal {
         var totalBalance = Decimal(0.00)
         for asset in assets where asset.assetType == AssetTypeAsString.NATIVE {
             if let assetBalance = Decimal(string: asset.balance) {
@@ -117,11 +123,30 @@ public final class StellarAccount {
         }
 
         let calculatedBalance = totalBalance - minBalance
+        return calculatedBalance >= 0.0 ? calculatedBalance : totalBalance
+    }
 
-        if calculatedBalance >= 0.0 {
-            return calculatedBalance
+    /**
+     Returns the computed available balance for an asset, less any amount of that asset offered in trades.
+
+     - Parameter asset: The balance of the requested asset.
+     - Returns: A balance amount if there is a trustline to the asset with a positive balance, 0 otherwise.
+    */
+    public func availableBalance(for asset: StellarAsset, subtractTradeAmounts: Bool = true) -> Decimal {
+        var balance: Decimal = 0
+
+        guard let requestedAsset = assets.first(where: { $0 == asset }) else {
+            return balance
         }
-        return totalBalance
+
+        if requestedAsset.isNative {
+            balance = availableNativeBalance
+        } else {
+            balance = Decimal(string: requestedAsset.balance) ?? 0
+        }
+
+        let outstandingTradeAmount = outstandingTradeAmounts[asset] ?? 0
+        return subtractTradeAmounts ? balance - outstandingTradeAmount : balance
     }
 }
 
