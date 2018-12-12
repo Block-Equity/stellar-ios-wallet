@@ -94,24 +94,6 @@ class StellarAccountTests: XCTestCase {
         XCTAssertEqual(account.signers, 0.5)
     }
 
-    func testMinBalanceCalculation() {
-        let response: AccountResponse = JSONLoader.decodableJSON(name: "account_response")
-        let account = StellarAccount(response)
-        XCTAssertEqual(account.minBalance, 2.5)
-    }
-
-    func testAvailableBalanceCalculation() {
-        let response: AccountResponse = JSONLoader.decodableJSON(name: "account_response")
-        let account = StellarAccount(response)
-        XCTAssertEqual(account.availableBalance.description, "1713.3672173")
-    }
-
-    func testAvailableBalanceCalculationReturnsZeroIfNoAssets() {
-        let response: AccountResponse = JSONLoader.decodableJSON(name: "no_balance_account_response")
-        let account = StellarAccount(response)
-        XCTAssertEqual(account.availableBalance.description, "0")
-    }
-
     func testEmptyArraysMapped() {
         XCTAssertEqual(stubAccount.transactions.count, 0)
         XCTAssertEqual(stubAccount.effects.count, 0)
@@ -144,5 +126,110 @@ class StellarAccountTests: XCTestCase {
         let account3 = StellarAccount(accountId: "its me")
         XCTAssertEqual(account1, account2)
         XCTAssertNotEqual(account1, account3)
+    }
+
+    func testMinBalanceCalculation() {
+        let response: AccountResponse = JSONLoader.decodableJSON(name: "account_response")
+        let account = StellarAccount(response)
+        XCTAssertEqual(account.minBalance, 2.5)
+    }
+
+    func testAvailableBalanceCalculation() {
+        let response: AccountResponse = JSONLoader.decodableJSON(name: "account_response")
+        let account = StellarAccount(response)
+        let balance = account.availableBalance(for: StellarAsset.lumens)
+        XCTAssertEqual(balance.description, "1713.3672173")
+    }
+
+    func testAvailableBalanceCalculationReturnsZeroIfNoAssets() {
+        let response: AccountResponse = JSONLoader.decodableJSON(name: "no_balance_account_response")
+        let account = StellarAccount(response)
+        let balance = account.availableBalance(for: StellarAsset.lumens)
+        XCTAssertEqual(balance.description, "0")
+    }
+
+    func testAvailableNativeBalanceReturnsZeroWithNoData() {
+        let account = StellarAccount(accountId: "hello")
+        XCTAssertEqual(account.availableNativeBalance, 0)
+    }
+
+    func testAvailableNativeBalanceReturnsZeroWithManyMinimumBalanceItems() {
+        let account = StellarAccount(accountId: "hello")
+        account.totalSigners = 2
+        account.totalOffers = 4
+        account.totalTrustlines = 6
+        XCTAssertEqual(account.availableNativeBalance, 0)
+    }
+
+    func testAvailableNativeBalanceReturnsNonZeroWithBalanceAndManyMinimumBalanceItems() {
+        let account = StellarAccount(accountId: "hello")
+        account.assets[0] = StellarAsset(assetType: AssetTypeAsString.NATIVE,
+                                         assetCode: nil,
+                                         assetIssuer: nil,
+                                         balance: "1000")
+        account.totalSigners = 1
+        account.totalOffers = 4
+        account.totalTrustlines = 6
+        XCTAssertEqual(account.availableNativeBalance, 994)
+    }
+
+    func testAvailableBalanceForAssetReturnsZeroIfNoAsset() {
+        let account = StellarAccount(accountId: "hello")
+        let asset = StellarAsset(assetType: AssetTypeAsString.CREDIT_ALPHANUM4,
+                                 assetCode: "NOP",
+                                 assetIssuer: nil,
+                                 balance: "")
+        XCTAssertEqual(account.availableBalance(for: asset), 0)
+    }
+
+    func testAssetAvailableBalanceReturnsFullAmountIfNoTradesForNative() {
+        let account = StellarAccount(accountId: "hello")
+        let asset = StellarAsset(assetType: AssetTypeAsString.NATIVE, assetCode: nil, assetIssuer: nil, balance: "1000")
+        account.assets[0] = asset
+        account.totalSigners = 1
+        account.totalOffers = 4
+        account.totalTrustlines = 6
+        XCTAssertEqual(account.availableBalance(for: asset), 994)
+    }
+
+    func testAssetAvailableBalanceReturnsAmountWithTradesSubtractedForNative() {
+        let account = StellarAccount(accountId: "hello")
+        let asset = StellarAsset(assetType: AssetTypeAsString.NATIVE, assetCode: nil, assetIssuer: nil, balance: "1000")
+        account.assets[0] = asset
+        account.totalSigners = 1
+        account.totalOffers = 1
+        account.totalTrustlines = 1
+        account.outstandingTradeAmounts[asset] = 900
+        XCTAssertEqual(account.availableBalance(for: asset), 98)
+    }
+
+    func testAssetAvailableBalanceReturnsFullAmountIfNoTrades() {
+        let account = StellarAccount(accountId: "hello")
+        let asset = StellarAsset(assetType: AssetTypeAsString.CREDIT_ALPHANUM4, assetCode: "PTS", assetIssuer: nil, balance: "100")
+        account.assets[0] = asset
+        XCTAssertEqual(account.availableBalance(for: asset), 100)
+    }
+
+    func testAssetAvailableBalanceReturnsAmountWithTradesSubtracted() {
+        let account = StellarAccount(accountId: "hello")
+        let asset = StellarAsset(assetType: AssetTypeAsString.CREDIT_ALPHANUM4, assetCode: "PTS", assetIssuer: nil, balance: "100")
+        account.assets[0] = asset
+        account.outstandingTradeAmounts[asset] = 90
+        XCTAssertEqual(account.availableBalance(for: asset), 10)
+    }
+
+    func testAssetAvailableBalanceReturnsZeroIfInvalidBalanceAmount() {
+        let account = StellarAccount(accountId: "hello")
+        let asset = StellarAsset(assetType: AssetTypeAsString.CREDIT_ALPHANUM4, assetCode: "PTS", assetIssuer: nil, balance: "invalid number")
+        account.assets[0] = asset
+        XCTAssertEqual(account.availableBalance(for: asset), 0)
+    }
+
+    func testAssetAvailableBalanceDoesntSubtractTradesIfParameterProvided() {
+        let account = StellarAccount(accountId: "hello")
+        let asset = StellarAsset(assetType: AssetTypeAsString.CREDIT_ALPHANUM4, assetCode: "PTS", assetIssuer: nil, balance: "100")
+        account.assets[0] = asset
+        account.outstandingTradeAmounts[asset] = 90
+        XCTAssertEqual(account.availableBalance(for: asset, subtractTradeAmounts: false), 100)
     }
 }

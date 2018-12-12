@@ -81,6 +81,11 @@ extension AccountManagementService {
                 list[offer.identifier] = offer
             })
 
+            account.outstandingTradeAmounts = offers.reduce(into: [:], { list, offer in
+                let currentAmount = list[offer.sellingAsset] ?? 0
+                list[offer.sellingAsset] = currentAmount + offer.amount
+            })
+
             completion(account, UpdateOptions.tradeOffers)
         })
 

@@ -64,13 +64,7 @@ class SendAmountViewController: UIViewController {
 
         guard let asset = self.currentAsset, let account = accountService.account else { return }
 
-        var availableBalance = ""
-        if asset.assetType == AssetTypeAsString.NATIVE {
-            availableBalance = account.availableBalance.tradeFormattedString
-        } else {
-            availableBalance = asset.balance.displayFormatted
-        }
-
+        let availableBalance = account.availableBalance(for: asset).tradeFormattedString
         navigationItem.title = String(format: "TRADE_BALANCE_FORMAT".localized(), availableBalance, asset.shortCode)
     }
 
@@ -159,16 +153,9 @@ class SendAmountViewController: UIViewController {
     }
 
     func isValidSendAmount(amount: String) -> Bool {
-
         guard let asset = self.currentAsset, let account = accountService.account else { return false }
 
-        var totalAvailableBalance: Decimal = 0.00
-        if asset.assetType == AssetTypeAsString.NATIVE {
-            totalAvailableBalance = account.availableBalance
-        } else {
-            totalAvailableBalance = Decimal(string: asset.balance)!
-        }
-
+        let totalAvailableBalance = account.availableBalance(for: asset)
         if let totalSendable = Decimal(string: amount) {
             return totalSendable.isZero ? false : totalSendable <= totalAvailableBalance
         }
