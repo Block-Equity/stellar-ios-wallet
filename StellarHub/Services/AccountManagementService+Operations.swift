@@ -113,7 +113,7 @@ extension AccountManagementService {
         }
 
         guard let keyPair = core.walletKeyPair else {
-            let wrappedError = FrameworkError(error: FrameworkError.AccountServiceError.nonExistentAccount)
+            let wrappedError = FrameworkError(error: FrameworkError.AccountServiceError.missingKeypair)
             delegate.failed(error: wrappedError)
             return
         }
@@ -145,7 +145,7 @@ extension AccountManagementService {
         }
 
         guard let keyPair = core.walletKeyPair else {
-            let wrappedError = FrameworkError(error: FrameworkError.AccountServiceError.nonExistentAccount)
+            let wrappedError = FrameworkError(error: FrameworkError.AccountServiceError.missingKeypair)
             delegate.failed(error: wrappedError)
             return
         }
@@ -241,7 +241,7 @@ extension AccountManagementService {
         }
 
         guard let keyPair = core.walletKeyPair else {
-            let wrappedError = FrameworkError(error: FrameworkError.AccountServiceError.nonExistentAccount)
+            let wrappedError = FrameworkError(error: FrameworkError.AccountServiceError.missingKeypair)
             delegate.failed(error: wrappedError)
             return
         }
