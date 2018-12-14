@@ -96,10 +96,7 @@ extension AppDelegate: ApplicationCoordinatorDelegate {
         container.moveToViewController(onboardingCoordinator.navController,
                                        fromViewController: appCoordinator.tabController,
                                        animated: true,
-                                       completion: {
-                                        self.appCoordinator = ApplicationCoordinator()
-                                        self.appCoordinator.delegate = self
-        })
+                                       completion: nil)
     }
 }
 
