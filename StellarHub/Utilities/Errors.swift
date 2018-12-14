@@ -142,6 +142,7 @@ extension FrameworkError: ErrorDisplayable { }
 // MARK: - Framework Specific Errors
 extension FrameworkError {
     public enum AccountServiceError: ErrorCategorizable, ErrorDisplayable {
+        case missingKeypair
         case nonExistentAccount
         case alreadyInitialized
         case keypairCreation
@@ -153,6 +154,7 @@ extension FrameworkError {
 
         public var errorKey: String {
             switch self {
+            case .missingKeypair: return "MISSING_KEYPAIR_ERROR"
             case .nonExistentAccount: return "NO_ACCOUNT_ERROR"
             case .alreadyInitialized: return "ALREADY_INITIALIZED_ERROR"
             case .keypairCreation: return "KEYPAIR_CREATION_ERROR"

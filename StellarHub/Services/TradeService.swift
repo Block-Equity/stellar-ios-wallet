@@ -69,7 +69,7 @@ extension TradeService {
     public func cancelTrade(with offerId: Int, data: StellarTradeOfferData, delegate: TradeResponseDelegate) {
         guard let keyPair = core.walletKeyPair else {
             DispatchQueue.main.async {
-                let wrappedError = FrameworkError(error: FrameworkError.TradeServiceError.cancelTrade)
+                let wrappedError = FrameworkError(error: FrameworkError.AccountServiceError.missingKeypair)
                 delegate.cancellationFailed(error: wrappedError)
             }
             return
