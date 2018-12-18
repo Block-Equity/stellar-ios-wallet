@@ -36,6 +36,8 @@ final class TradingCoordinator {
 
     var tradeService: TradeService?
 
+    var updateService: AccountUpdateService?
+
     var accountService: AccountManagementService?
 
     var addAssetViewController: AddAssetViewController?
@@ -186,7 +188,7 @@ extension TradingCoordinator: TradeResponseDelegate {
     }
 
     func posted(trade: StellarTradeOfferData) {
-        self.accountService?.update()
+        self.updateService?.update()
         self.tradeViewController.displayTradeSuccess()
     }
 

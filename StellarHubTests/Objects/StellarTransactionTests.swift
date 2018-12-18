@@ -35,4 +35,22 @@ class StellarTransactionTests: XCTestCase {
             "aBJG0AWQzrqyiC/7J7XB1xabzVWi64J2cb9MNjkAMwTE6Agh3VDWLiO/Dxo9IkMIz4EFxt+ZfkepheXdbz28Cg=="
             ])
     }
+
+    func testEncodingWorks() {
+        let response: TransactionResponse = JSONLoader.decodableJSON(name: "transaction_response")
+        let transaction = StellarTransaction(response)
+
+        let encoded = try? JSONEncoder().encode(transaction)
+        XCTAssertNotNil(encoded)
+        XCTAssertEqual(encoded?.bytes.count, 472)
+    }
+
+    func testDecodingWorks() {
+        if let data = JSONLoader.load(jsonFixture: "transaction_response") {
+            let transaction = try? JSONDecoder().decode(StellarTransaction.self, from: data)
+            XCTAssertNotNil(transaction)
+        } else {
+            XCTFail("Data was unexpectedly nil")
+        }
+    }
 }

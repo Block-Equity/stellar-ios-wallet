@@ -136,7 +136,7 @@ extension ApplicationCoordinator: SettingsDelegate {
             if let accountId = controller.textFields![0].text {
                 KeychainHelper.save(accountId: accountId)
                 self.core?.accountService.overrideWithAccount(id: accountId)
-                self.core?.accountService.update()
+                self.core?.updateService.update()
             }
             #endif
         }, presentingViewController: viewController, placeholder: "Account ID")

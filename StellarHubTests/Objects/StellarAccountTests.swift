@@ -23,11 +23,6 @@ class StellarAccountTests: XCTestCase {
         super.tearDown()
     }
 
-    func testThatUpdateOptionsCanBeInitialized() {
-        let options = AccountManagementService.UpdateOptions(rawValue: 2)
-        XCTAssertEqual(options, .account)
-    }
-
     func testAccountAddress() {
         XCTAssertEqual(stubAccount.address, StellarAddress("GCCD6AJOYZCUAQLX32ZJF2MKFFAUJ53PVCFQI3RHWKL3V47QYE2BNAUT"))
     }

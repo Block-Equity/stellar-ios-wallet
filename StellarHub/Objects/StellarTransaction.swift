@@ -36,16 +36,16 @@ public struct StellarTransaction: Codable {
     }
 
     // MARK: - Codable
-    enum CodingKeys: CodingKey {
-        case account
-        case identifier
+    enum CodingKeys: String, CodingKey {
+        case account = "source_account"
+        case identifier = "id"
         case ledger
-        case createdAt
-        case fee
+        case createdAt = "created_at"
+        case fee = "fee_paid"
         case memo
-        case memoType
-        case operationCount
-        case sequence
+        case memoType = "memo_type"
+        case operationCount = "operation_count"
+        case sequence = "source_account_sequence"
         case hash
         case signatures
     }

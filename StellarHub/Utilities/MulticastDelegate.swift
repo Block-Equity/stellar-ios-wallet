@@ -29,6 +29,10 @@ internal final class MulticastDelegate <T> {
             invocation(delegate)
         }
     }
+
+    var subscriberCount: Int {
+        return delegates.count
+    }
 }
 
 func += <T: AnyObject> (left: MulticastDelegate<T>, right: T) {

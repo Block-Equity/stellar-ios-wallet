@@ -135,8 +135,8 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "OS_ACTIVITY_MODE"
-            value = "disable"
-            isEnabled = "NO">
+            value = "${DEBUG_ACTIVITY_MODE}"
+            isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
       <AdditionalOptions>

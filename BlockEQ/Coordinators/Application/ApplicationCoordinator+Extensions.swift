@@ -61,23 +61,21 @@ extension ApplicationCoordinator: ContactsViewControllerDelegate {
 
 // MARK: - AccountManagementServiceDelegate
 extension ApplicationCoordinator: AccountManagementServiceDelegate {
-    func accountUpdated(_ service: AccountManagementService,
+    func accountSwitched(_ service: AccountManagementService, account: StellarAccount) {
+        // ?
+    }
+}
+
+// MARK: - AccountUpdateServiceDelegate
+extension ApplicationCoordinator: AccountUpdateServiceDelegate {
+    func accountUpdated(_ service: AccountUpdateService,
                         account: StellarAccount,
-                        opts: AccountManagementService.UpdateOptions) {
-        if opts.contains(.effects) || opts.contains(.account) {
+                        options: AccountUpdateService.UpdateOptions) {
+        if options.contains(.effects) || options.contains(.account) {
             self.walletViewController.updated(account: account)
         }
 
         self.tradingCoordinator.updated(account: account)
-    }
-
-    func accountInactive(_ service: AccountManagementService, account: StellarAccount) {
-        self.walletViewController.updated(account: account)
-        self.tradingCoordinator.updated(account: account)
-    }
-
-    func paymentUpdate(_ service: AccountManagementService, operation: StellarOperation) {
-        service.update()
     }
 }
 

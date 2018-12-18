@@ -8,92 +8,6 @@
 
 import stellarsdk
 
-extension AccountManagementService {
-    public struct UpdateOptions: OptionSet {
-        public let rawValue: Int
-        public static let inactive = UpdateOptions(rawValue: 1 << 0)
-        public static let account = UpdateOptions(rawValue: 1 << 1)
-        public static let transactions = UpdateOptions(rawValue: 1 << 2)
-        public static let effects = UpdateOptions(rawValue: 1 << 3)
-        public static let operations = UpdateOptions(rawValue: 1 << 4)
-        public static let tradeOffers = UpdateOptions(rawValue: 1 << 5)
-
-        public static let all: UpdateOptions = [.account, .transactions, .effects, .operations]
-        public static let none: UpdateOptions = []
-
-        public init(rawValue: Int) {
-            self.rawValue = rawValue
-        }
-    }
-}
-
-// MARK: - Account Update
-extension AccountManagementService {
-    internal func update(account: StellarAccount,
-                         using sdk: StellarSDK,
-                         completion: @escaping (StellarAccount, UpdateOptions) -> Void) {
-        let accountId = account.accountId
-        let address = account.address
-
-        let fetchCompletion: FetchAccountDataOperation.SuccessCompletion = { response in
-            account.update(withRaw: response)
-            completion(account, UpdateOptions.account)
-        }
-
-        let failCompletion: ServiceErrorCompletion = { error in
-            completion(account, UpdateOptions.inactive)
-        }
-
-        let fetchAccountOp = FetchAccountDataOperation(horizon: sdk,
-                                                       account: accountId,
-                                                       completion: fetchCompletion,
-                                                       failure: failCompletion)
-
-        // Fetch transactions
-        let fetchTransactionOp = FetchTransactionsOperation(horizon: sdk, accountId: accountId, completion: { txns in
-            account.mappedTransactions = txns.reduce(into: [:]) { map, transaction in
-                map[transaction.identifier] = transaction
-            }
-
-            completion(account, UpdateOptions.transactions)
-        })
-
-        // Fetch operations
-        let fetchOperationsOp = FetchAccountOperationsOperation(horizon: sdk, accountId: accountId, completion: { ops in
-            account.mappedOperations = ops.reduce(into: [:], { result, operation in
-                result[operation.identifier] = operation
-            })
-
-            completion(account, UpdateOptions.operations)
-        })
-
-        // Fetch effects
-        let fetchEffectsOp = FetchAccountEffectsOperation(horizon: sdk, accountId: accountId, completion: { effects in
-            account.mappedEffects = effects.reduce(into: [:], { list, effect in
-                list[effect.identifier] = effect
-            })
-
-            completion(account, UpdateOptions.effects)
-        })
-
-        let fetchOffersOp = FetchOffersOperation(horizon: sdk, address: address, completion: { offers in
-            account.mappedOffers = offers.reduce(into: [:], { list, offer in
-                list[offer.identifier] = offer
-            })
-
-            account.outstandingTradeAmounts = offers.reduce(into: [:], { list, offer in
-                let currentAmount = list[offer.sellingAsset] ?? 0
-                list[offer.sellingAsset] = currentAmount + offer.amount
-            })
-
-            completion(account, UpdateOptions.tradeOffers)
-        })
-
-        let fetchOperations = [fetchAccountOp, fetchTransactionOp, fetchOperationsOp, fetchEffectsOp, fetchOffersOp]
-        accountQueue.addOperations(fetchOperations, waitUntilFinished: false)
-    }
-}
-
 // MARK: - Inflation Update
 extension AccountManagementService {
     typealias SetInflationOperationPair = ChainedOperationPair<FetchAccountDataOperation, UpdateInflationOperation>
@@ -172,9 +86,9 @@ extension AccountManagementService {
                                                   account: account.address.string,
                                                   completion: { response in
                                                     account.update(withRaw: response)
-            DispatchQueue.main.async {
-                self.subscribers.invoke(invocation: { $0.accountUpdated(self, account: account, opts: .account) })
-            }
+//            DispatchQueue.main.async {
+//                self.subscribers.invoke(invocation: { $0.accountUpdated(self, account: account, opts: .account) })
+//            }
         })
 
         let accComp: FetchAccountDataOperation.SuccessCompletion = { accountResponse in
