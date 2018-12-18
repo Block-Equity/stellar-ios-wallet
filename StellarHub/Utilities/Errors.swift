@@ -178,4 +178,17 @@ extension FrameworkError {
             }
         }
     }
+
+    /// Errors relating to problems that can occur when performing operations on a stream.
+    ///
+    /// - invalidStreamState: Used when an operation can't be performed on the stream becuase it's in the wrong state.
+    /// - unsupportedStreamType: Communication with this Horizon stream is not supported.
+    public enum StreamServiceError: ErrorCategorizable {
+        case invalidStreamState
+        case unsupportedStreamType
+
+        public var category: ErrorCategory {
+            return .internal
+        }
+    }
 }

@@ -8,6 +8,7 @@
 
 import stellarsdk
 
+// MARK: - Core Services
 protocol CoreServiceProtocol {
     var sdk: StellarSDK { get }
     var api: StellarConfig.HorizonAPI { get }
@@ -20,19 +21,68 @@ protocol Subservice {
     var core: CoreServiceProtocol { get }
 }
 
+// MARK: - AccountUpdateService
+protocol AccountUpdateServiceProtocol: AnyObject, Subservice {
+    var account: StellarAccount? { get }
+    var subscribers: MulticastDelegate<AccountUpdateServiceDelegate> { get set }
+}
+
+public protocol AccountUpdateServiceDelegate: AnyObject {
+    func accountUpdated(_ service: AccountUpdateService,
+                        account: StellarAccount,
+                        options: AccountUpdateService.UpdateOptions)
+}
+
+// MARK: - AccountManagementService
 protocol AccountManagementServiceProtocol: AnyObject, Subservice {
-    var core: CoreServiceProtocol { get }
     var subscribers: MulticastDelegate<AccountManagementServiceDelegate> { get set }
     var state: AccountManagementService.AccountState { get }
     var secretManager: SecretManager? { get set }
     var account: StellarAccount? { get set }
 }
 
+public protocol AccountManagementServiceDelegate: AnyObject {
+    func accountSwitched(_ service: AccountManagementService, account: StellarAccount)
+}
+
+public protocol AccountUpdatable: AnyObject {
+    func updated(account: StellarAccount)
+}
+
+public protocol SendAmountResponseDelegate: AnyObject {
+    func sentAmount(destination: StellarAddress)
+    func failed(error: FrameworkError)
+}
+
+public protocol SetInflationResponseDelegate: AnyObject {
+    func setInflation(destination: StellarAddress)
+    func failed(error: FrameworkError)
+}
+
+public protocol ManageAssetResponseDelegate: AnyObject {
+    func added(asset: StellarAsset, account: StellarAccount)
+    func removed(asset: StellarAsset, account: StellarAccount)
+    func failed(error: FrameworkError)
+}
+
+// MARK: - TradeService
 protocol TradeServiceProtocol: AnyObject, Subservice {
-    var core: CoreServiceProtocol { get }
     var tradeQueue: OperationQueue { get }
 }
 
+public protocol TradeResponseDelegate: AnyObject {
+    func cancelled(offerId: Int, trade: StellarTradeOfferData)
+    func posted(trade: StellarTradeOfferData)
+    func cancellationFailed(error: FrameworkError)
+    func postingFailed(error: FrameworkError)
+}
+
+public protocol OfferResponseDelegate: AnyObject {
+    func updated(orders: StellarOrderbook)
+    func updated(offers: [StellarAccountOffer])
+}
+
+// MARK: - IndexingService
 protocol IndexingServiceProtocol: Subservice {
     func updateIndex()
     func rebuildIndex()
@@ -42,6 +92,25 @@ protocol IndexingServiceProtocol: Subservice {
     func relatedObject<In: IndexableStellarObject, Out: IndexableStellarObject>(startingAt object: In) -> Out?
 }
 
+public protocol IndexingServiceDelegate: AnyObject {
+    func finishedIndexing(_ service: IndexingService)
+    func errorIndexing(_ service: IndexingService, error: Error?)
+    func updatedProgress(_ service: IndexingService, completed: Double)
+}
+
+// MARK: - StreamService
+protocol StreamServiceProtocol: AnyObject, Subservice {
+    var effectsStream: AnyStreamListener? { get }
+    var operationsStream: AnyStreamListener? { get }
+    var transactionsStream: AnyStreamListener? { get }
+
+    func subscribe(to stream: StreamService.StreamType, account: StellarAccount) throws
+    func unsubscribe(from stream: StreamService.StreamType) throws
+    func subscribeAll(account: StellarAccount)
+    func unsubscribeAll()
+}
+
+// MARK: - SecretManager
 protocol SecretManagerProtocol: AnyObject {
     var publicKeyKey: String { get }
     var privateKeyKey: String { get }
@@ -53,43 +122,6 @@ protocol SecretManagerProtocol: AnyObject {
     var mnemonic: String? { get }
 }
 
-public protocol AccountUpdatable: AnyObject {
-    func updated(account: StellarAccount)
-}
-
-// MARK: -
-public protocol SendAmountResponseDelegate: AnyObject {
-    func sentAmount(destination: StellarAddress)
-    func failed(error: FrameworkError)
-}
-
-// MARK: -
-public protocol SetInflationResponseDelegate: AnyObject {
-    func setInflation(destination: StellarAddress)
-    func failed(error: FrameworkError)
-}
-
-// MARK: -
-public protocol ManageAssetResponseDelegate: AnyObject {
-    func added(asset: StellarAsset, account: StellarAccount)
-    func removed(asset: StellarAsset, account: StellarAccount)
-    func failed(error: FrameworkError)
-}
-
-// MARK: -
-public protocol TradeResponseDelegate: AnyObject {
-    func cancelled(offerId: Int, trade: StellarTradeOfferData)
-    func posted(trade: StellarTradeOfferData)
-    func cancellationFailed(error: FrameworkError)
-    func postingFailed(error: FrameworkError)
-}
-
-// MARK: -
-public protocol OfferResponseDelegate: AnyObject {
-    func updated(orders: StellarOrderbook)
-    func updated(offers: [StellarAccountOffer])
-}
-
 // MARK: -
 public protocol P2PResponseDelegate: AnyObject {
     func retrieved(personalToken: String?)
@@ -99,11 +131,4 @@ public protocol P2PResponseDelegate: AnyObject {
     func addFailed(error: Error)
     func removeFailed(error: Error)
     func createFailed(error: Error)
-}
-
-// MARK: -
-public protocol IndexingServiceDelegate: AnyObject {
-    func finishedIndexing(_ service: IndexingService)
-    func errorIndexing(_ service: IndexingService, error: Error?)
-    func updatedProgress(_ service: IndexingService, completed: Double)
 }

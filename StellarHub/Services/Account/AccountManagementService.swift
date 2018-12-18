@@ -8,14 +8,6 @@
 
 import stellarsdk
 
-public protocol AccountManagementServiceDelegate: AnyObject {
-    func accountUpdated(_ service: AccountManagementService,
-                        account: StellarAccount,
-                        opts: AccountManagementService.UpdateOptions)
-    func accountInactive(_ service: AccountManagementService, account: StellarAccount)
-    func paymentUpdate(_ service: AccountManagementService, operation: StellarOperation)
-}
-
 /**
  * The `AccountService` is responsible for managing a single Stellar account for the BlockEQ wallet. It controls
  * all communication with the Stellar SDK, and is meant to be a lightweight wrapper for operations concering an account.
@@ -38,9 +30,6 @@ public final class AccountManagementService: AccountManagementServiceProtocol {
 
     var state: AccountState = .inactive
     var secretManager: SecretManager?
-    var paymentStreamItem: OperationsStreamItem?
-    var lastFetch: TimeInterval?
-    var timer: Timer?
     var subscribers: MulticastDelegate<AccountManagementServiceDelegate>
 
     lazy var accountQueue: OperationQueue = {
@@ -60,10 +49,6 @@ public final class AccountManagementService: AccountManagementServiceProtocol {
 
     public func unregisterForUpdates<T: AccountManagementServiceDelegate>(_ object: T) {
         subscribers.remove(delegate: object)
-    }
-
-    deinit {
-        stopPeriodicUpdates()
     }
 }
 
@@ -125,51 +110,7 @@ extension AccountManagementService {
     }
 }
 
-// MARK: -
-// MARK: Account Updating
-extension AccountManagementService {
-    /// Requests data that's occured between now and the last time data was fetched
-    public func update() {
-        guard state == .active else {
-            return
-        }
-
-        guard let account = self.account else { return }
-
-        // Trigger an account update notifying the delegate on the main thread
-        self.update(account: account, using: core.sdk) { account, options in
-            DispatchQueue.main.async {
-                self.lastFetch = Date().timeIntervalSinceReferenceDate
-
-                if options.contains(.inactive) {
-                    self.subscribers.invoke(invocation: { $0.accountInactive(self, account: account) })
-                } else {
-                    self.subscribers.invoke(invocation: { $0.accountUpdated(self, account: account, opts: options) })
-                }
-            }
-        }
-    }
-
-    public func startPeriodicUpdates() {
-        startPeriodicTimer()
-        startPaymentStream()
-    }
-
-    public func stopPeriodicUpdates() {
-        if let streamItem = self.paymentStreamItem {
-            streamItem.closeStream()
-            paymentStreamItem = nil
-        }
-
-        if let timer = self.timer {
-            timer.invalidate()
-            self.timer = nil
-        }
-    }
-}
-
-// MARK: -
-// MARK: Data Management
+// MARK: - Data Management
 extension AccountManagementService {
     public func accountMnemonic() -> StellarRecoveryMnemonic? {
         return StellarRecoveryMnemonic(secretManager?.mnemonic)
@@ -185,10 +126,7 @@ extension AccountManagementService {
 
     // Removes all data corresponding to the account managed by this account service
     public func clear() {
-        stopPeriodicUpdates()
-
         account = nil
-        lastFetch = nil
 
         if let secrets = self.secretManager {
             secrets.erase()
@@ -196,6 +134,34 @@ extension AccountManagementService {
         }
 
         state = .inactive
+    }
+}
+
+// MARK: - Internal
+extension AccountManagementService {
+    internal func startup(address: StellarAddress) {
+        let stubAccount = StellarAccount(accountId: address.string)
+        self.account = stubAccount
+
+        let secretManager = SecretManager(for: address.string)
+        self.secretManager = secretManager
+
+        state = .active
+
+        self.subscribers.invoke(invocation: { $0.accountSwitched(self, account: stubAccount) })
+    }
+
+    internal func startup(keyPair: KeyPair) {
+        let stubAccount = StellarAccount(accountId: keyPair.accountId)
+        self.account = stubAccount
+
+        let secretManager = SecretManager(for: stubAccount.accountId)
+        secretManager.store(keyPair: keyPair)
+        self.secretManager = secretManager
+
+        state = .active
+
+        self.subscribers.invoke(invocation: { $0.accountSwitched(self, account: stubAccount) })
     }
 }
 

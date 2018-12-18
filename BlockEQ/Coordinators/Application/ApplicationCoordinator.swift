@@ -71,14 +71,16 @@ final class ApplicationCoordinator {
             }
 
             coreService.accountService.registerForUpdates(self)
+            coreService.updateService.registerForUpdates(self)
             coreService.indexingService.delegate = self
 
             migrateIfEligible(using: coreService.accountService)
             try? coreService.accountService.restore(with: address)
-            coreService.accountService.startPeriodicUpdates()
-            coreService.accountService.update()
+            coreService.updateService.startPeriodicUpdates()
+            coreService.updateService.update()
 
             tradingCoordinator.tradeService = coreService.tradeService
+            tradingCoordinator.updateService = coreService.updateService
             tradingCoordinator.accountService = coreService.accountService
         }
     }
@@ -151,7 +153,7 @@ final class ApplicationCoordinator {
     }
 
     func refreshAccount() {
-        core?.accountService.update()
+        core?.updateService.update()
     }
 }
 

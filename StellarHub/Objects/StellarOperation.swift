@@ -8,9 +8,9 @@
 
 import stellarsdk
 
-public struct StellarOperation: Codable {
+public struct StellarOperation {
     public typealias PaymentData = (asset: StellarAsset, destination: String)
-    public typealias ManageData = (pair: StellarAssetPair, amount: String, price: String)
+    public typealias ManageData = (pair: StellarAssetPair, amount: String, price: String, offerId: Int)
     public typealias CreateData = (account: String, balance: Decimal)
     public typealias OptionsData = (inflationDest: String?, homeDomain: String?, signerKey: String?, signerWeight: Int?)
     public typealias ChangeTrustData = (asset: StellarAsset, trustee: String, trustor: String)
@@ -56,7 +56,8 @@ public struct StellarOperation: Codable {
 
             manageData = (price: manageOfferResponse.price,
                           amount: manageOfferResponse.amount,
-                          pair: StellarAssetPair(buying: buyAsset, selling: sellAsset))
+                          pair: StellarAssetPair(buying: buyAsset, selling: sellAsset),
+                          offerId: manageOfferResponse.offerId)
 
         } else if let trustResponse = response as? AllowTrustOperationResponse {
             allowTrustData = (asset: StellarAsset(assetType: trustResponse.assetType,
@@ -81,19 +82,19 @@ public struct StellarOperation: Codable {
         } else if let createdResponse = response as? AccountCreatedOperationResponse {
             createData = (account: createdResponse.account, balance: createdResponse.startingBalance)
         } else if let mergeResponse = response as? AccountMergeOperationResponse {
-            mergeData = (from: response.sourceAccount, into: mergeResponse.into)
-        } else {
-            debugPrint("Unhandled operation type when processing operation '\(identifier)'")
+            mergeData = (from: mergeResponse.account, into: mergeResponse.into)
         }
     }
     //swiftlint:enable function_body_length
+}
 
-    // MARK: - Codable
-    enum CodingKeys: CodingKey {
-        case identifier
-        case createdAt
-        case type
-        case hash
+// MARK: - Codable
+extension StellarOperation: Codable {
+    enum CodingKeys: String, CodingKey {
+        case identifier = "id"
+        case createdAt = "created_at"
+        case type = "type_i"
+        case hash = "transaction_hash"
     }
 
     public init(from decoder: Decoder) throws {

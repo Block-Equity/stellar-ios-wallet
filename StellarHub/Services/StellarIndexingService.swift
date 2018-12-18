@@ -193,10 +193,10 @@ extension StellarDataGraph {
     }
 }
 
-extension IndexingService: AccountManagementServiceDelegate {
-    public func accountUpdated(_ service: AccountManagementService,
+extension IndexingService: AccountUpdateServiceDelegate {
+    public func accountUpdated(_ service: AccountUpdateService,
                                account: StellarAccount,
-                               opts: AccountManagementService.UpdateOptions) {
+                               options: AccountUpdateService.UpdateOptions) {
         graph.add(account.effects)
         graph.add(account.transactions)
         graph.add(account.operations)
@@ -205,14 +205,6 @@ extension IndexingService: AccountManagementServiceDelegate {
             lastAccountIndexHash = account.hashValue
             updateIndex()
         }
-    }
-
-    public func accountInactive(_ service: AccountManagementService, account: StellarAccount) {
-        // Do nothing
-    }
-
-    public func paymentUpdate(_ service: AccountManagementService, operation: StellarOperation) {
-        // Do nothing
     }
 }
 

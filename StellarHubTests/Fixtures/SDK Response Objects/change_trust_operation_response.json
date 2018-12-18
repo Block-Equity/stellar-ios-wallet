@@ -1,0 +1,34 @@
+{
+    "_links": {
+        "self": {
+            "href": "https://horizon.stellar.org/operations/75053501230637057"
+        },
+        "transaction": {
+            "href": "https://horizon.stellar.org/transactions/82b5d7c4c8dd9884160a6a7bf5516d0abeb18b568552f6656e8eceb672436474"
+        },
+        "effects": {
+            "href": "https://horizon.stellar.org/operations/75053501230637057/effects"
+        },
+        "succeeds": {
+            "href": "https://horizon.stellar.org/effects?order=desc\u0026cursor=75053501230637057"
+        },
+        "precedes": {
+            "href": "https://horizon.stellar.org/effects?order=asc\u0026cursor=75053501230637057"
+        }
+    },
+    "id": "75053501230637057",
+    "paging_token": "75053501230637057",
+    "source_account": "GCO2IP3MJNUOKS4PUDI4C7LGGMQDJGXG3COYX3WSB4HHNAHKYV5YL3VC",
+    "type": "create_account",
+    "type_i": 0,
+    "created_at": 1000.0,
+    "transaction_hash": "82b5d7c4c8dd9884160a6a7bf5516d0abeb18b568552f6656e8eceb672436474",
+    "starting_balance": "599.3900000",
+    "funder": "GCO2IP3MJNUOKS4PUDI4C7LGGMQDJGXG3COYX3WSB4HHNAHKYV5YL3VC",
+    "account": "GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ",
+    "trustor": "GCO2IP3MJNUOKS4PUDI4C7LGGMQDJGXG3COYX3WSB4HHNAHKYV5YL3VC",
+    "trustee": "GDUFDDGP6B6VLXC2Z62UYW34VOHHQFL7PXCGWQRLWZXYNJGER3F2QRTZ",
+    "asset_type": "credit_alphanum4",
+    "asset_code": "PTS",
+    "asset_issuer": "GCO2IP3MJNUOKS4PUDI4C7LGGMQDJGXG3COYX3WSB4HHNAHKYV5YL3VC",
+}

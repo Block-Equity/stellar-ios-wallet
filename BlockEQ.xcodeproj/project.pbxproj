@@ -1653,6 +1653,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_ACTIVITY_MODE = "";
+				"DEBUG_ACTIVITY_MODE[sdk=iphonesimulator*]" = disable;
 				DEVELOPMENT_TEAM = NR37PD6J6Z;
 				INFOPLIST_FILE = "$(SRCROOT)/BlockEQ/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1676,6 +1678,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: BlockEquity Inc. (NR37PD6J6Z)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: BlockEquity Inc. (NR37PD6J6Z)";
 				CODE_SIGN_STYLE = Manual;
+				DEBUG_ACTIVITY_MODE = "";
 				DEVELOPMENT_TEAM = NR37PD6J6Z;
 				INFOPLIST_FILE = "$(SRCROOT)/BlockEQ/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

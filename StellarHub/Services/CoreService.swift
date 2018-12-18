@@ -23,6 +23,8 @@ public final class CoreService: CoreServiceProtocol {
     public var accountService: AccountManagementService!
     public var tradeService: TradeService!
     public var indexingService: IndexingService!
+    public var streamService: StreamService!
+    public var updateService: AccountUpdateService!
 
     public init(with horizonAPI: StellarConfig.HorizonAPI) {
         api = horizonAPI
@@ -31,12 +33,21 @@ public final class CoreService: CoreServiceProtocol {
         let accService = AccountManagementService(with: self)
         let trService = TradeService(with: self)
         let idxService = IndexingService(with: self)
+        let streamService = StreamService(with: self)
+        let updateService = AccountUpdateService(with: self)
 
         self.accountService = accService
         self.tradeService = trService
         self.indexingService = idxService
+        self.streamService = streamService
+        self.updateService = updateService
 
-        accService.registerForUpdates(idxService)
+        // Register the services to be notified when the account data is updated
+        updateService.registerForUpdates(idxService)
+
+        // Register the services to be notified when the current account is changed
+        accService.registerForUpdates(streamService)
+        accService.registerForUpdates(updateService)
     }
 }
 
