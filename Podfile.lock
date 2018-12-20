@@ -35,7 +35,7 @@ CHECKOUT OPTIONS:
     :commit: 86ea7613c99cd4896765fabfa773b39b40bc8590
     :git: https://github.com/vikmeup/SCLAlertView-Swift
   stellar-ios-mac-sdk:
-    :commit: 9041d7189c00d898dcf95cf4cbb681ade65635c4
+    :commit: 9e8b6e11bbcf1b078939d210261bdc086f687240
     :git: https://github.com/Soneso/stellar-ios-mac-sdk.git
   Whisper:
     :commit: 86880dea149a871ec5cb909cc3b93e7fb5804788
