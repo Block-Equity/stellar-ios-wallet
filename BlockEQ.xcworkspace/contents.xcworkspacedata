@@ -5,12 +5,9 @@
       location = "group:BlockEQ.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:/Users/ndizazzo/dev/BlockEQ/stellar-ios-wallet/StellarHub.xcodeproj">
+      location = "group:StellarHub.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:StellarHub.xcodeproj">
    </FileRef>
 </Workspace>
