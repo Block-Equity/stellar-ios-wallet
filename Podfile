@@ -5,6 +5,7 @@ def shared_pods
   pod 'stellar-ios-mac-sdk', :git => 'https://github.com/Soneso/stellar-ios-mac-sdk.git'
   pod 'KeychainSwift', '~> 10.0'
   pod 'Alamofire', '~> 4.7'
+  pod 'Repeat', '~> 0.5'
 end
 
 target 'BlockEQ' do

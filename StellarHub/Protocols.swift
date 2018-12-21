@@ -110,6 +110,11 @@ protocol StreamServiceProtocol: AnyObject, Subservice {
     func unsubscribeAll()
 }
 
+public protocol StreamServiceDelegate: AnyObject {
+    func receivedObjects(stream: StreamService.StreamType)
+    func streamError(stream: StreamService.StreamType, error: FrameworkError)
+}
+
 // MARK: - SecretManager
 protocol SecretManagerProtocol: AnyObject {
     var publicKeyKey: String { get }

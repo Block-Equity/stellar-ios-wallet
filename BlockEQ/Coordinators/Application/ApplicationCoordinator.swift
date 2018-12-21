@@ -73,6 +73,7 @@ final class ApplicationCoordinator {
             coreService.accountService.registerForUpdates(self)
             coreService.updateService.registerForUpdates(self)
             coreService.indexingService.delegate = self
+            coreService.streamService.delegate = self
 
             migrateIfEligible(using: coreService.accountService)
             try? coreService.accountService.restore(with: address)

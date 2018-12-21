@@ -84,3 +84,13 @@ extension ApplicationCoordinator: DiagnosticCoordinatorDelegate {
     func completedDiagnostic(_ coordinator: DiagnosticCoordinator) {
     }
 }
+
+// MARK: - StreamServiceDelegate
+extension ApplicationCoordinator: StreamServiceDelegate {
+    func streamError(stream: StreamService.StreamType, error: FrameworkError) {
+    }
+
+    func receivedObjects(stream: StreamService.StreamType) {
+        core?.updateService.update()
+    }
+}
