@@ -63,11 +63,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         authenticate()
+
+        appCoordinator.willEnterForeground()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         if !onboardingContainer {
             appCoordinator.didBecomeActive()
+        }
+    }
+
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        if !onboardingContainer {
+            appCoordinator.didEnterBackground()
         }
     }
 

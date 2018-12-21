@@ -153,6 +153,15 @@ final class ApplicationCoordinator {
         refreshAccount()
     }
 
+    func willEnterForeground() {
+        guard let account = core?.accountService.account else { return }
+        core?.streamService.subscribeAll(account: account)
+    }
+
+    func didEnterBackground() {
+        core?.streamService.unsubscribeAll()
+    }
+
     func refreshAccount() {
         core?.updateService.update()
     }

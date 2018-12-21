@@ -65,7 +65,7 @@ public final class StreamService: StreamServiceProtocol {
      - Parameter stream: The stream to begin listening to.
      - Throws: An `unsupportedStreamType` error when the current stream is unimplemented.
      */
-    func subscribe(to stream: StreamType, account: StellarAccount) throws {
+    public func subscribe(to stream: StreamType, account: StellarAccount) throws {
 
         var streamObject: AnyStreamListener
 
@@ -101,7 +101,7 @@ public final class StreamService: StreamServiceProtocol {
      - Parameter stream: The stream to begin listening to.
      - Throws: An `unsupportedStreamType` error when the current stream is unimplemented.
      */
-    func unsubscribe(from stream: StreamType) throws {
+    public func unsubscribe(from stream: StreamType) throws {
         switch stream {
         case .effects:
             effectsStream?.close()
@@ -123,7 +123,7 @@ public final class StreamService: StreamServiceProtocol {
      - Parameter stream: The stream to toggle state for.
      - Throws: An `unsupportedStreamType` error when the current stream is unimplemented.
      */
-    func toggle(stream: StreamType) throws {
+    public func toggle(stream: StreamType) throws {
         switch stream {
         case .effects:
             try effectsStream?.toggle()
@@ -137,14 +137,14 @@ public final class StreamService: StreamServiceProtocol {
     }
 
     /// Creates listeners for all supported streams.
-    func subscribeAll(account: StellarAccount) {
+    public func subscribeAll(account: StellarAccount) {
         StreamType.supportedStreams.forEach {
             try? subscribe(to: $0, account: account)
         }
     }
 
     /// Removes listeners for all supported streams.
-    func unsubscribeAll() {
+    public func unsubscribeAll() {
         StreamType.supportedStreams.forEach {
             try? unsubscribe(from: $0)
         }
