@@ -68,6 +68,11 @@ public final class IndexingService: IndexingServiceProtocol {
     internal func updateIndex() {
         guard !indexQueue.isSuspended else { return }
 
+        if let existingIndexOperation = indexQueue.operations.first as? NodeIndexingOperation,
+            existingIndexOperation.isExecuting || !existingIndexOperation.isReady {
+            return
+        }
+
         let indexOperation = NodeIndexingOperation(operations: graph.operationNodes,
                                                    effects: graph.effectNodes,
                                                    transactions: graph.transactionNodes)
