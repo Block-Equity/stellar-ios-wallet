@@ -7,9 +7,10 @@
 //
 
 import stellarsdk
+import Repeat
 
 extension StreamService {
-    enum StreamType {
+    public enum StreamType {
         case effects
         case ledgers
         case offers
@@ -27,7 +28,7 @@ extension StreamService {
     /// - listening: The stream is actively listening, processing, and notifying listeners of events.
     /// - stopped: The stream is still open, but not processing and notifying listeners of events.
     /// - closed: The stream is closed.
-    enum StreamStatus {
+    public enum StreamStatus {
         case listening
         case stopped
         case closed
@@ -42,6 +43,12 @@ public final class StreamService: StreamServiceProtocol {
     internal var effectsStream: AnyStreamListener?
     internal var operationsStream: AnyStreamListener?
     internal var transactionsStream: AnyStreamListener?
+
+    public weak var delegate: StreamServiceDelegate?
+
+    private static let debounceInterval = Repeater.Interval.seconds(5)
+    private let delegateDebouncer: Debouncer = Debouncer(StreamService.debounceInterval)
+    private let errorDebouncer: Debouncer = Debouncer(StreamService.debounceInterval)
 
     /**
      Initializer for StreamService
@@ -65,15 +72,21 @@ public final class StreamService: StreamServiceProtocol {
         switch stream {
         case .effects:
             guard effectsStream == nil else { return }
-            streamObject = EffectStreamListener(core: core, account: account)
-            effectsStream = streamObject
+            let eStream = EffectStreamListener(core: core, account: account)
+            eStream.delegate = self
+            streamObject = eStream
+            self.effectsStream = streamObject
         case .operations:
             guard operationsStream == nil else { return }
-            streamObject = OperationStreamListener(core: core, account: account)
+            let oStream = OperationStreamListener(core: core, account: account)
+            oStream.delegate = self
+            streamObject = oStream
             operationsStream = streamObject
         case .transactions:
             guard transactionsStream == nil else { return }
-            streamObject = TransactionStreamListener(core: core, account: account)
+            let tStream = TransactionStreamListener(core: core, account: account)
+            tStream.delegate = self
+            streamObject = tStream
             transactionsStream = streamObject
         default:
             throw FrameworkError.StreamServiceError.unsupportedStreamType
@@ -146,5 +159,42 @@ extension StreamService: AccountManagementServiceDelegate {
     public func accountSwitched(_ service: AccountManagementService, account: StellarAccount) {
         self.unsubscribeAll()
         self.subscribeAll(account: account)
+    }
+}
+
+extension StreamService: StreamDelegate {
+    func streamError<ProcessedDataType>(dataType: ProcessedDataType, error: Error) {
+        errorDebouncer.callback = { [unowned self] in
+            let frameworkError = FrameworkError(error: error)
+            switch dataType {
+            case is StellarOperation:
+                self.delegate?.streamError(stream: .operations, error: frameworkError)
+            case is StellarTransaction:
+                self.delegate?.streamError(stream: .transactions, error: frameworkError)
+            case is StellarEffect:
+                self.delegate?.streamError(stream: .effects, error: frameworkError)
+            default:
+                break
+            }
+        }
+
+        errorDebouncer.call()
+    }
+
+    func updated<ProcessedDataType>(data: ProcessedDataType) where ProcessedDataType: StreamableStellarObject {
+        delegateDebouncer.callback = { [unowned self] in
+            switch data {
+            case is StellarOperation:
+                self.delegate?.receivedObjects(stream: .operations)
+            case is StellarEffect:
+                self.delegate?.receivedObjects(stream: .effects)
+            case is StellarTransaction:
+                self.delegate?.receivedObjects(stream: .transactions)
+            default:
+                break
+            }
+        }
+
+        delegateDebouncer.call()
     }
 }

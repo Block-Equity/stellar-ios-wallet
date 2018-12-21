@@ -22,8 +22,6 @@ public final class AccountManagementService: AccountManagementServiceProtocol {
         case active
     }
 
-    static let accountUpdateInterval: TimeInterval = 30
-
     let core: CoreServiceProtocol
 
     public internal(set) var account: StellarAccount?

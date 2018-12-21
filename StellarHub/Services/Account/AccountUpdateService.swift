@@ -9,6 +9,8 @@
 import stellarsdk
 
 public final class AccountUpdateService: AccountUpdateServiceProtocol {
+    static let accountUpdateInterval: TimeInterval = 180
+
     let core: CoreServiceProtocol
     var account: StellarAccount?
     var lastFetch: TimeInterval?
@@ -155,7 +157,7 @@ extension AccountUpdateService {
     internal func startPeriodicTimer() {
         guard self.timer == nil else { return }
 
-        let interval = AccountManagementService.accountUpdateInterval
+        let interval = AccountUpdateService.accountUpdateInterval
         self.timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true, block: { _ in
             self.update()
         })

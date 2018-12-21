@@ -29,7 +29,7 @@ protocol StreamListener: AnyStreamListener {
 /// of the protocol will know what object type they expect.
 protocol StreamDelegate: AnyObject {
     func updated<ProcessedDataType: StreamableStellarObject>(data: ProcessedDataType)
-    func streamError(error: Error)
+    func streamError<ProcessedDataType>(dataType: ProcessedDataType, error: Error)
 }
 
 /**
@@ -104,7 +104,7 @@ where
                 guard let error = error as? HorizonRequestError else { return }
                 let errorTag = String(describing: self)
                 StellarSDKLog.printHorizonRequestErrorMessage(tag: errorTag, horizonRequestError: error)
-                self.delegate?.streamError(error: error)
+                self.delegate?.streamError(dataType: ProcessedDataType.self, error: error)
             }
         }
     }
