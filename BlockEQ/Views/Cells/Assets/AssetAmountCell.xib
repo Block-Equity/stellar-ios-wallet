@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AssetAmountCell" customModule="BlockEQ" customModuleProvider="target">
+            <connections>
+                <outlet property="cardView" destination="jW7-3K-LMp" id="oLZ-x5-23H"/>
+                <outlet property="headerContainer" destination="Wi7-WM-e62" id="HEP-2T-tha"/>
+                <outlet property="priceContainer" destination="fAV-5Y-7hG" id="cIL-G4-3XT"/>
+                <outlet property="view" destination="Xcv-2H-dDJ" id="8T9-Lp-P2w"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="Xcv-2H-dDJ">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jW7-3K-LMp" userLabel="Card">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wi7-WM-e62" userLabel="Header Container" customClass="AssetHeaderView" customModule="BlockEQ" customModuleProvider="target">
+                                <rect key="frame" x="15" y="15" width="225" height="50"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="225" id="Hd1-kJ-GHb"/>
+                                </constraints>
+                                <viewLayoutGuide key="safeArea" id="Cpc-eG-5GU"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fAV-5Y-7hG" userLabel="Price Container" customClass="AssetPriceView" customModule="BlockEQ" customModuleProvider="target">
+                                <rect key="frame" x="260" y="25" width="100" height="30"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="8jn-P5-l44"/>
+                                    <constraint firstAttribute="width" constant="100" id="Hkn-TU-24F"/>
+                                </constraints>
+                                <viewLayoutGuide key="safeArea" id="e4q-WA-2lf"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Wi7-WM-e62" firstAttribute="leading" secondItem="81Q-GF-vSL" secondAttribute="leading" constant="15" id="GpC-Nt-ruE"/>
+                            <constraint firstItem="81Q-GF-vSL" firstAttribute="trailing" secondItem="fAV-5Y-7hG" secondAttribute="trailing" constant="15" id="Jst-Ae-raT"/>
+                            <constraint firstItem="fAV-5Y-7hG" firstAttribute="centerY" secondItem="Wi7-WM-e62" secondAttribute="centerY" id="NHe-wm-4Q3"/>
+                            <constraint firstItem="81Q-GF-vSL" firstAttribute="bottom" secondItem="Wi7-WM-e62" secondAttribute="bottom" constant="15" id="NT5-w2-Ibg"/>
+                            <constraint firstItem="fAV-5Y-7hG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Wi7-WM-e62" secondAttribute="trailing" constant="15" id="VI0-8t-6ea"/>
+                            <constraint firstItem="Wi7-WM-e62" firstAttribute="top" secondItem="81Q-GF-vSL" secondAttribute="top" constant="15" id="kp0-UT-pux"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="81Q-GF-vSL"/>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="jW7-3K-LMp" firstAttribute="top" secondItem="Xcv-2H-dDJ" secondAttribute="top" id="3IC-Td-sns"/>
+                <constraint firstItem="jW7-3K-LMp" firstAttribute="leading" secondItem="Xcv-2H-dDJ" secondAttribute="leading" id="Q62-M2-CzX"/>
+                <constraint firstAttribute="trailing" secondItem="jW7-3K-LMp" secondAttribute="trailing" id="pyh-y4-Wh2"/>
+                <constraint firstAttribute="bottom" secondItem="jW7-3K-LMp" secondAttribute="bottom" id="uso-zd-uJa"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="o66-u5-DAT"/>
+            <size key="customSize" width="410" height="138"/>
+            <point key="canvasLocation" x="340" y="88.15592203898052"/>
+        </collectionViewCell>
+    </objects>
+</document>

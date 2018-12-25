@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AssetPriceView" customModule="BlockEQ" customModuleProvider="target">
+            <connections>
+                <outlet property="amountLabel" destination="I4w-gU-euv" id="sff-cR-6sA"/>
+                <outlet property="priceLabel" destination="bS2-Or-eMQ" id="zX8-4X-NMG"/>
+                <outlet property="stackView" destination="UEY-lb-Emj" id="VnV-0Q-gja"/>
+                <outlet property="view" destination="iN0-l3-epB" id="Il6-as-0v4"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="82" height="34"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="UEY-lb-Emj">
+                    <rect key="frame" x="0.0" y="0.0" width="82" height="34"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123.45" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I4w-gU-euv" userLabel="Amount Label">
+                            <rect key="frame" x="0.0" y="0.0" width="82" height="17"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                            <color key="textColor" red="0.25098039215686274" green="0.25098039215686274" blue="0.25098039215686274" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$13,889.13" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bS2-Or-eMQ" userLabel="Approximate Price Label">
+                            <rect key="frame" x="0.0" y="17" width="82" height="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                            <color key="textColor" red="0.62745098039215685" green="0.62745098039215685" blue="0.62745098039215685" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="VLX-nL-9GP"/>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="UEY-lb-Emj" secondAttribute="trailing" id="217-AA-dFP"/>
+                <constraint firstItem="UEY-lb-Emj" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="MPX-bv-vpq"/>
+                <constraint firstAttribute="bottom" secondItem="UEY-lb-Emj" secondAttribute="bottom" id="Nxw-t6-q71"/>
+                <constraint firstItem="UEY-lb-Emj" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="UP3-jV-jiA"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="-96" y="-131.33433283358323"/>
+        </view>
+    </objects>
+</document>

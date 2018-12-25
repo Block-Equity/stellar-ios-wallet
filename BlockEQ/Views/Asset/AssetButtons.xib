@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AssetButtons" customModule="BlockEQ" customModuleProvider="target">
+            <connections>
+                <outlet property="button1" destination="A3W-Tp-vl2" id="bgZ-n6-LtD"/>
+                <outlet property="button2" destination="Z7d-JB-WJd" id="c7M-i4-2wk"/>
+                <outlet property="button3" destination="b1b-Xp-KOT" id="LXC-bg-RsE"/>
+                <outlet property="stackView" destination="KMJ-rO-cvA" id="dw3-yF-qd4"/>
+                <outlet property="view" destination="iN0-l3-epB" id="upl-ib-CZi"/>
+                <outletCollection property="buttonCollection" destination="A3W-Tp-vl2" collectionClass="NSMutableArray" id="f9q-Kq-2w9"/>
+                <outletCollection property="buttonCollection" destination="Z7d-JB-WJd" collectionClass="NSMutableArray" id="zSd-fg-XhF"/>
+                <outletCollection property="buttonCollection" destination="b1b-Xp-KOT" collectionClass="NSMutableArray" id="iec-la-eBT"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lqw-oL-qRe">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="KMJ-rO-cvA">
+                            <rect key="frame" x="0.0" y="10" width="375" height="20"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b1b-Xp-KOT" userLabel="Third Button" customClass="AssetButton" customModule="BlockEQ" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="115" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="cFK-Xs-xdf"/>
+                                    </constraints>
+                                    <state key="normal" title="Button 3"/>
+                                    <connections>
+                                        <action selector="selectedThirdButton:" destination="-1" eventType="touchUpInside" id="rwT-hQ-mRg"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z7d-JB-WJd" userLabel="Second Button" customClass="AssetButton" customModule="BlockEQ" customModuleProvider="target">
+                                    <rect key="frame" x="130" y="0.0" width="115" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="8nE-aU-vfm"/>
+                                    </constraints>
+                                    <state key="normal" title="Button 2"/>
+                                    <connections>
+                                        <action selector="selectedSecondButton:" destination="-1" eventType="touchUpInside" id="ZDI-O3-Uax"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A3W-Tp-vl2" userLabel="First Button" customClass="AssetButton" customModule="BlockEQ" customModuleProvider="target">
+                                    <rect key="frame" x="260" y="0.0" width="115" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="lM9-W8-mka"/>
+                                    </constraints>
+                                    <state key="normal" title="Button 1"/>
+                                    <connections>
+                                        <action selector="selectedFirstButton:" destination="-1" eventType="touchUpInside" id="PnQ-Wl-yB3"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="iQh-hS-skX"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="KMJ-rO-cvA" firstAttribute="leading" secondItem="lqw-oL-qRe" secondAttribute="leading" id="XvX-8p-laj"/>
+                        <constraint firstItem="KMJ-rO-cvA" firstAttribute="centerY" secondItem="lqw-oL-qRe" secondAttribute="centerY" id="bBa-dN-cC8"/>
+                        <constraint firstAttribute="trailing" secondItem="KMJ-rO-cvA" secondAttribute="trailing" id="gIZ-c4-c5D"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="lqw-oL-qRe" secondAttribute="bottom" id="38h-ej-Tbo"/>
+                <constraint firstItem="lqw-oL-qRe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="TL2-fM-lgf"/>
+                <constraint firstAttribute="trailing" secondItem="lqw-oL-qRe" secondAttribute="trailing" id="b0Y-kj-EpS"/>
+                <constraint firstItem="lqw-oL-qRe" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="raw-uU-2gX"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="53.600000000000001" y="-143.02848575712144"/>
+        </view>
+    </objects>
+</document>
