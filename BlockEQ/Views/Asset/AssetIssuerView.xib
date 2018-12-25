@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AssetIssuerView" customModule="BlockEQ" customModuleProvider="target">
+            <connections>
+                <outlet property="addressDescriptionLabel" destination="B8D-vj-z9N" id="U1j-rK-GB2"/>
+                <outlet property="addressTitleLabel" destination="BLA-WQ-xZ0" id="pag-VG-BiK"/>
+                <outlet property="issuedDescriptionLabel" destination="2zc-vM-4ri" id="Ygi-J1-liS"/>
+                <outlet property="issuedTitleLabel" destination="KT4-yh-zWX" id="efj-s3-hWL"/>
+                <outlet property="labelContainer" destination="Woj-uH-FMu" id="27o-LN-j2I"/>
+                <outlet property="view" destination="iN0-l3-epB" id="qNS-Dt-Cuk"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nRF-YQ-dMq" userLabel="Container">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Woj-uH-FMu" userLabel="Label Container">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="yjP-Wm-9O4" userLabel="Description Group">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="37.5"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Issued by Block Equity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KT4-yh-zWX">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="19"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The official BlockPoints (PTS) token of BlockEQ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2zc-vM-4ri">
+                                            <rect key="frame" x="0.0" y="19" width="320" height="18.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <viewLayoutGuide key="safeArea" id="Ez2-PW-z2C"/>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="dJM-aX-8xA" userLabel="Issuing Address Group">
+                                    <rect key="frame" x="0.0" y="47.5" width="320" height="37.5"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Issuing Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BLA-WQ-xZ0">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="19"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GDDSCLKSTRNVLLCPNZ2J5SNG5SAMCWIVHWBSRWAGQUP2IPIKPJMFGKQQ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B8D-vj-z9N">
+                                            <rect key="frame" x="0.0" y="19" width="320" height="18.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <viewLayoutGuide key="safeArea" id="H3j-nh-c72"/>
+                                </stackView>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="MeR-ka-NW5" firstAttribute="trailing" secondItem="Woj-uH-FMu" secondAttribute="trailing" id="vu3-U8-kGg"/>
+                        <constraint firstItem="Woj-uH-FMu" firstAttribute="top" secondItem="MeR-ka-NW5" secondAttribute="top" id="x4l-La-4n6"/>
+                        <constraint firstItem="MeR-ka-NW5" firstAttribute="bottom" secondItem="Woj-uH-FMu" secondAttribute="bottom" id="xTG-ct-j2M"/>
+                        <constraint firstItem="Woj-uH-FMu" firstAttribute="leading" secondItem="MeR-ka-NW5" secondAttribute="leading" id="zEy-6k-5g2"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="MeR-ka-NW5"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="nRF-YQ-dMq" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="BBB-0I-InV"/>
+                <constraint firstItem="nRF-YQ-dMq" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="CJF-qN-OQa"/>
+                <constraint firstItem="nRF-YQ-dMq" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="lp4-uQ-7BB"/>
+                <constraint firstItem="nRF-YQ-dMq" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="tLs-pF-vRK"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+        </view>
+    </objects>
+</document>

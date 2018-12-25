@@ -4,6 +4,7 @@ PODS:
   - Kingfisher (4.10.1)
   - Repeat (0.5.7)
   - SCLAlertView (0.8.1)
+  - SnapshotTesting (1.1.0)
   - stellar-ios-mac-sdk (1.5.6)
   - Whisper (6.0.2)
 
@@ -13,6 +14,7 @@ DEPENDENCIES:
   - Kingfisher (~> 4.10)
   - Repeat (~> 0.5)
   - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift`, branch `master`)
+  - SnapshotTesting
   - stellar-ios-mac-sdk (from `https://github.com/Soneso/stellar-ios-mac-sdk.git`)
   - Whisper (from `https://github.com/freeubi/Whisper.git`, branch `swift-4.2-support`)
 
@@ -22,6 +24,7 @@ SPEC REPOS:
     - KeychainSwift
     - Kingfisher
     - Repeat
+    - SnapshotTesting
 
 EXTERNAL SOURCES:
   SCLAlertView:
@@ -50,9 +53,10 @@ SPEC CHECKSUMS:
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   Repeat: 73c5ee602aed8f3c7bf1aa12d4cd0d3dc3edea0a
   SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
+  SnapshotTesting: 8ed6a4dceee63f59a60e1bc86f9adbba54eb9287
   stellar-ios-mac-sdk: b0c589f5d5a7776edffcf4ebbe4e12d988030e7e
   Whisper: 8c499b08f3b56d5c80162d775e3462318ad7f4fe
 
-PODFILE CHECKSUM: d46e6c1590a99ec04f3be0460ce8ed64ac408dde
+PODFILE CHECKSUM: 99220f30ba1e6263a13e320307eec97f1fecc58e
 
 COCOAPODS: 1.5.3
