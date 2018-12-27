@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6CA036894DEF6D15A1236D60 /* Pods_BlockEQUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F11566C29656B9766ABA838 /* Pods_BlockEQUITests.framework */; };
+		8F526FDF337C6C532FE90C59 /* Pods_BlockEQSnapshotTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9DCADA4581DE2E0E351FE5E /* Pods_BlockEQSnapshotTests.framework */; };
 		A16180E5561280B9BC6ED64C /* Pods_BlockEQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4971CBF1A348A6771C0FDD79 /* Pods_BlockEQ.framework */; };
 		C41165152123B7CB00C4CB6E /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41165132123B7CB00C4CB6E /* ContactsViewController.swift */; };
 		C41165162123B7CB00C4CB6E /* ContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C41165142123B7CB00C4CB6E /* ContactsViewController.xib */; };
@@ -118,8 +119,6 @@
 		C59AA3D721D15653007E8362 /* AssetAmountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59AA3D621D15653007E8362 /* AssetAmountCell.swift */; };
 		C59AA3D921D15661007E8362 /* AssetActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59AA3D821D15661007E8362 /* AssetActionCell.swift */; };
 		C59AA3DB21D15691007E8362 /* AssetAmountCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C59AA3DA21D15691007E8362 /* AssetAmountCell.xib */; };
-		C59AA3DE21D15D69007E8362 /* AssetCardSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59AA3DD21D15D69007E8362 /* AssetCardSnapshotTests.swift */; };
-		C59AA3E021D15E91007E8362 /* SnapshotSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59AA3DF21D15E91007E8362 /* SnapshotSettings.swift */; };
 		C5A5A878215E90BD00007787 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A5A877215E90BD00007787 /* WebViewController.swift */; };
 		C5A5A87A215E91F500007787 /* UIView+Autolayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A5A879215E91F500007787 /* UIView+Autolayout.swift */; };
 		C5A5A87C215E935C00007787 /* UIAlertController+Prompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A5A87B215E935C00007787 /* UIAlertController+Prompts.swift */; };
@@ -134,6 +133,9 @@
 		C5ADFFCF2190C8CC004EA646 /* TradePickerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ADFFCE2190C8CC004EA646 /* TradePickerDataSource.swift */; };
 		C5AF7C8A2094B60A00F99835 /* UIImage+CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AF7C892094B60A00F99835 /* UIImage+CALayer.swift */; };
 		C5B0A5E021D5429C00E87DD3 /* AssetIssuerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5B0A5DF21D5429C00E87DD3 /* AssetIssuerCell.xib */; };
+		C5B0A5E621D57FA700E87DD3 /* AssetCardSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59AA3DD21D15D69007E8362 /* AssetCardSnapshotTests.swift */; };
+		C5B0A5E721D57FA700E87DD3 /* SnapshotTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E0149D21D531990074A552 /* SnapshotTest.swift */; };
+		C5B0A5ED21D57FA700E87DD3 /* Pods_BlockEQTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8600D470712206F40F7DC51 /* Pods_BlockEQTests.framework */; };
 		C5B3F9BF21B5C9BA009375AC /* UIViewController+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B3F9BE21B5C9BA009375AC /* UIViewController+Error.swift */; };
 		C5BB02492165269F00E4AAD1 /* SecretSeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5BB02482165269F00E4AAD1 /* SecretSeedViewController.xib */; };
 		C5BB024B2165274200E4AAD1 /* SecretSeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5BB024A2165274200E4AAD1 /* SecretSeedViewController.swift */; };
@@ -150,7 +152,6 @@
 		C5D83B1121D1EF0100361018 /* AssetManageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5D83B1021D1EF0100361018 /* AssetManageCell.xib */; };
 		C5D8CAC62180D809009F8624 /* AddressCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8CAC52180D809009F8624 /* AddressCoordinator.swift */; };
 		C5D8CAD12182064B009F8624 /* ContactsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8CAD02182064B009F8624 /* ContactsDataSource.swift */; };
-		C5E0149E21D531990074A552 /* SnapshotTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E0149D21D531990074A552 /* SnapshotTest.swift */; };
 		C5E014A021D5328E0074A552 /* AssetActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5E0149F21D5328E0074A552 /* AssetActionCell.xib */; };
 		C5E8594620AFAFD100B77289 /* AppTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E8594520AFAFD100B77289 /* AppTabController.swift */; };
 		C5E8594920AFB45E00B77289 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E8594820AFB45E00B77289 /* ContainerViewController.swift */; };
@@ -236,6 +237,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		C5B0A5E321D57FA700E87DD3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EC20159D2052D968009A73C8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EC2015A42052D968009A73C8;
+			remoteInfo = BlockEQ;
+		};
 		EC2015BA2052D968009A73C8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EC20159D2052D968009A73C8 /* Project object */;
@@ -384,7 +392,6 @@
 		C59AA3D821D15661007E8362 /* AssetActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetActionCell.swift; sourceTree = "<group>"; };
 		C59AA3DA21D15691007E8362 /* AssetAmountCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetAmountCell.xib; sourceTree = "<group>"; };
 		C59AA3DD21D15D69007E8362 /* AssetCardSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCardSnapshotTests.swift; sourceTree = "<group>"; };
-		C59AA3DF21D15E91007E8362 /* SnapshotSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotSettings.swift; sourceTree = "<group>"; };
 		C5A5A877215E90BD00007787 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		C5A5A879215E91F500007787 /* UIView+Autolayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Autolayout.swift"; sourceTree = "<group>"; };
 		C5A5A87B215E935C00007787 /* UIAlertController+Prompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Prompts.swift"; sourceTree = "<group>"; };
@@ -399,6 +406,8 @@
 		C5ADFFCE2190C8CC004EA646 /* TradePickerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradePickerDataSource.swift; sourceTree = "<group>"; };
 		C5AF7C892094B60A00F99835 /* UIImage+CALayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+CALayer.swift"; sourceTree = "<group>"; };
 		C5B0A5DF21D5429C00E87DD3 /* AssetIssuerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetIssuerCell.xib; sourceTree = "<group>"; };
+		C5B0A5F321D57FA700E87DD3 /* BlockEQSnapshotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlockEQSnapshotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5B0A5F621D580FB00E87DD3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5B3F9BE21B5C9BA009375AC /* UIViewController+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Error.swift"; sourceTree = "<group>"; };
 		C5BB02482165269F00E4AAD1 /* SecretSeedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecretSeedViewController.xib; sourceTree = "<group>"; };
 		C5BB024A2165274200E4AAD1 /* SecretSeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretSeedViewController.swift; sourceTree = "<group>"; };
@@ -426,6 +435,8 @@
 		C5FDBC69211D384C0051AB9F /* BlankAuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankAuthenticationViewController.swift; sourceTree = "<group>"; };
 		C5FDBC6B211D385B0051AB9F /* BlankAuthenticationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlankAuthenticationViewController.xib; sourceTree = "<group>"; };
 		C6231CDF8E8848513C7F29A0 /* Pods-BlockEQ.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQ.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQ/Pods-BlockEQ.release.xcconfig"; sourceTree = "<group>"; };
+		DCDE50E6F1CB5A3752489633 /* Pods-BlockEQSnapshotTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQSnapshotTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQSnapshotTests/Pods-BlockEQSnapshotTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E3AA25C6C356C297542DBDB8 /* Pods-BlockEQSnapshotTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQSnapshotTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQSnapshotTests/Pods-BlockEQSnapshotTests.release.xcconfig"; sourceTree = "<group>"; };
 		E8600D470712206F40F7DC51 /* Pods_BlockEQTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockEQTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC0B1918205465BF0052802C /* WalletCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCell.swift; sourceTree = "<group>"; };
 		EC0B1919205465BF0052802C /* WalletCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletCell.xib; sourceTree = "<group>"; };
@@ -507,9 +518,19 @@
 		ECD3A351207D2CE5000609A0 /* WalletItemActivateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletItemActivateCell.xib; sourceTree = "<group>"; };
 		ECF9F449208937E400160843 /* InflationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InflationViewController.swift; sourceTree = "<group>"; };
 		ECF9F44A208937E400160843 /* InflationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InflationViewController.xib; sourceTree = "<group>"; };
+		F9DCADA4581DE2E0E351FE5E /* Pods_BlockEQSnapshotTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockEQSnapshotTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C5B0A5EC21D57FA700E87DD3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C5B0A5ED21D57FA700E87DD3 /* Pods_BlockEQTests.framework in Frameworks */,
+				8F526FDF337C6C532FE90C59 /* Pods_BlockEQSnapshotTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EC2015A22052D968009A73C8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -544,6 +565,7 @@
 				4971CBF1A348A6771C0FDD79 /* Pods_BlockEQ.framework */,
 				E8600D470712206F40F7DC51 /* Pods_BlockEQTests.framework */,
 				2F11566C29656B9766ABA838 /* Pods_BlockEQUITests.framework */,
+				F9DCADA4581DE2E0E351FE5E /* Pods_BlockEQSnapshotTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -557,6 +579,8 @@
 				B5C51FFE53AC1DD557F89DBC /* Pods-BlockEQTests.release.xcconfig */,
 				8CDC3DA854682675770C43F3 /* Pods-BlockEQUITests.debug.xcconfig */,
 				857C507AC39FF93CB947C686 /* Pods-BlockEQUITests.release.xcconfig */,
+				DCDE50E6F1CB5A3752489633 /* Pods-BlockEQSnapshotTests.debug.xcconfig */,
+				E3AA25C6C356C297542DBDB8 /* Pods-BlockEQSnapshotTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -647,6 +671,22 @@
 			path = Diagnostics;
 			sourceTree = "<group>";
 		};
+		C53E747121D581E7009FD693 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				C59AA3DD21D15D69007E8362 /* AssetCardSnapshotTests.swift */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		C53E747221D581F3009FD693 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				C5E0149D21D531990074A552 /* SnapshotTest.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		C5401D322177FF8100A12AC2 /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
@@ -723,22 +763,22 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
-		C59AA3DC21D15D39007E8362 /* Snapshot Tests */ = {
-			isa = PBXGroup;
-			children = (
-				C59AA3DD21D15D69007E8362 /* AssetCardSnapshotTests.swift */,
-				C59AA3DF21D15E91007E8362 /* SnapshotSettings.swift */,
-				C5E0149D21D531990074A552 /* SnapshotTest.swift */,
-			);
-			path = "Snapshot Tests";
-			sourceTree = "<group>";
-		};
 		C5A5A876215E90AD00007787 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
 				C5A5A877215E90BD00007787 /* WebViewController.swift */,
 			);
 			path = Misc;
+			sourceTree = "<group>";
+		};
+		C5B0A5F521D5806100E87DD3 /* BlockEQSnapshotTests */ = {
+			isa = PBXGroup;
+			children = (
+				C53E747121D581E7009FD693 /* Assets */,
+				C53E747221D581F3009FD693 /* Utilities */,
+				C5B0A5F621D580FB00E87DD3 /* Info.plist */,
+			);
+			path = BlockEQSnapshotTests;
 			sourceTree = "<group>";
 		};
 		C5BB02472165268800E4AAD1 /* Keys */ = {
@@ -851,6 +891,7 @@
 			children = (
 				EC2015A72052D968009A73C8 /* BlockEQ */,
 				EC2015BC2052D968009A73C8 /* BlockEQTests */,
+				C5B0A5F521D5806100E87DD3 /* BlockEQSnapshotTests */,
 				EC2015C72052D968009A73C8 /* BlockEQUITests */,
 				EC2015A62052D968009A73C8 /* Products */,
 				C599F3D521BEE8B400749AF8 /* StellarHub.framework */,
@@ -865,6 +906,7 @@
 				EC2015A52052D968009A73C8 /* BlockEQ.app */,
 				EC2015B92052D968009A73C8 /* BlockEQTests.xctest */,
 				EC2015C42052D968009A73C8 /* BlockEQUITests.xctest */,
+				C5B0A5F321D57FA700E87DD3 /* BlockEQSnapshotTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -873,7 +915,6 @@
 			isa = PBXGroup;
 			children = (
 				C51441FA217E836A006C44F4 /* Data Sources */,
-				C5D10754215E741400CC17A0 /* Resources */,
 				C55458FA2124BB0C00032699 /* Protocols */,
 				C5E8594C20AFCC0000B77289 /* Coordinators */,
 				EC2015DF2052E63D009A73C8 /* Extensions */,
@@ -883,6 +924,7 @@
 				EC2015D62052DB34009A73C8 /* View Controllers */,
 				C5173A8421A4A93B00B5272F /* Layouts */,
 				EC2015E32052E881009A73C8 /* Utils */,
+				C5D10754215E741400CC17A0 /* Resources */,
 				EC2015A82052D968009A73C8 /* AppDelegate.swift */,
 			);
 			path = BlockEQ;
@@ -891,7 +933,6 @@
 		EC2015BC2052D968009A73C8 /* BlockEQTests */ = {
 			isa = PBXGroup;
 			children = (
-				C59AA3DC21D15D39007E8362 /* Snapshot Tests */,
 				C524DFC82167B6240068D111 /* KeychainHelperTests.swift */,
 				EC2015BD2052D968009A73C8 /* BlockEQTests.swift */,
 				EC2015BF2052D968009A73C8 /* Info.plist */,
@@ -1083,6 +1124,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		C5B0A5E121D57FA700E87DD3 /* BlockEQSnapshotTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C5B0A5F021D57FA700E87DD3 /* Build configuration list for PBXNativeTarget "BlockEQSnapshotTests" */;
+			buildPhases = (
+				C5B0A5E421D57FA700E87DD3 /* [CP] Check Pods Manifest.lock */,
+				C5B0A5E521D57FA700E87DD3 /* Sources */,
+				C5B0A5EC21D57FA700E87DD3 /* Frameworks */,
+				C5B0A5EE21D57FA700E87DD3 /* Resources */,
+				C5B0A5EF21D57FA700E87DD3 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C5B0A5E221D57FA700E87DD3 /* PBXTargetDependency */,
+			);
+			name = BlockEQSnapshotTests;
+			productName = BlockEQTests;
+			productReference = C5B0A5F321D57FA700E87DD3 /* BlockEQSnapshotTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		EC2015A42052D968009A73C8 /* BlockEQ */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EC2015CD2052D968009A73C8 /* Build configuration list for PBXNativeTarget "BlockEQ" */;
@@ -1114,7 +1175,6 @@
 				EC2015B52052D968009A73C8 /* Sources */,
 				EC2015B62052D968009A73C8 /* Frameworks */,
 				EC2015B72052D968009A73C8 /* Resources */,
-				6962C28C9B3043AD590312CA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1155,6 +1215,9 @@
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = BlockEQ;
 				TargetAttributes = {
+					C5B0A5E121D57FA700E87DD3 = {
+						ProvisioningStyle = Manual;
+					};
 					EC2015A42052D968009A73C8 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 0920;
@@ -1195,11 +1258,19 @@
 				EC2015A42052D968009A73C8 /* BlockEQ */,
 				EC2015B82052D968009A73C8 /* BlockEQTests */,
 				EC2015C32052D968009A73C8 /* BlockEQUITests */,
+				C5B0A5E121D57FA700E87DD3 /* BlockEQSnapshotTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C5B0A5EE21D57FA700E87DD3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EC2015A32052D968009A73C8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1349,28 +1420,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BlockEQ/Pods-BlockEQ-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6962C28C9B3043AD590312CA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-BlockEQTests/Pods-BlockEQTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SnapshotTesting/SnapshotTesting.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapshotTesting.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BlockEQTests/Pods-BlockEQTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C59C7240215979D20092C17B /* Run Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1384,6 +1433,50 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n    cd ${SRCROOT}/BlockEQ # This ensures we only lint our project source files\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		C5B0A5E421D57FA700E87DD3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BlockEQSnapshotTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C5B0A5EF21D57FA700E87DD3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-BlockEQSnapshotTests/Pods-BlockEQSnapshotTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SnapshotTesting/SnapshotTesting.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapshotTesting.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BlockEQSnapshotTests/Pods-BlockEQSnapshotTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		C5D10753215E70B400CC17A0 /* Copy ACKNOWLEDGEMENTS */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1468,6 +1561,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C5B0A5E521D57FA700E87DD3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C5B0A5E621D57FA700E87DD3 /* AssetCardSnapshotTests.swift in Sources */,
+				C5B0A5E721D57FA700E87DD3 /* SnapshotTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EC2015A12052D968009A73C8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1624,12 +1726,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C59AA3DE21D15D69007E8362 /* AssetCardSnapshotTests.swift in Sources */,
-				C5E0149E21D531990074A552 /* SnapshotTest.swift in Sources */,
 				C524DFCD2167DF020068D111 /* AutoFillHelperTests.swift in Sources */,
 				EC2015BE2052D968009A73C8 /* BlockEQTests.swift in Sources */,
 				C524DFC92167B6240068D111 /* KeychainHelperTests.swift in Sources */,
-				C59AA3E021D15E91007E8362 /* SnapshotSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1644,6 +1743,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		C5B0A5E221D57FA700E87DD3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EC2015A42052D968009A73C8 /* BlockEQ */;
+			targetProxy = C5B0A5E321D57FA700E87DD3 /* PBXContainerItemProxy */;
+		};
 		EC2015BB2052D968009A73C8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EC2015A42052D968009A73C8 /* BlockEQ */;
@@ -1676,6 +1780,42 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		C5B0A5F121D57FA700E87DD3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DCDE50E6F1CB5A3752489633 /* Pods-BlockEQSnapshotTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = BlockEQSnapshotTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.blockeq.BlockEQSnapshotTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BlockEQ.app/BlockEQ";
+			};
+			name = Debug;
+		};
+		C5B0A5F221D57FA700E87DD3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E3AA25C6C356C297542DBDB8 /* Pods-BlockEQSnapshotTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = BlockEQSnapshotTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.blockeq.BlockEQSnapshotTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BlockEQ.app/BlockEQ";
+			};
+			name = Release;
+		};
 		EC2015CB2052D968009A73C8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1912,6 +2052,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C5B0A5F021D57FA700E87DD3 /* Build configuration list for PBXNativeTarget "BlockEQSnapshotTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C5B0A5F121D57FA700E87DD3 /* Debug */,
+				C5B0A5F221D57FA700E87DD3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		EC2015A02052D968009A73C8 /* Build configuration list for PBXProject "BlockEQ" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
