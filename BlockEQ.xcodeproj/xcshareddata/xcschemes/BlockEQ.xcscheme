@@ -72,6 +72,16 @@
             </BuildableReference>
          </TestableReference>
          <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C5B0A5E121D57FA700E87DD3"
+               BuildableName = "BlockEQSnapshotTests.xctest"
+               BlueprintName = "BlockEQSnapshotTests"
+               ReferencedContainer = "container:BlockEQ.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
             skipped = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
