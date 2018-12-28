@@ -6,13 +6,13 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import UIKit
+import Reusable
 
 protocol StellarContactCellDelegate: class {
     func didSendPayment(indexPath: IndexPath)
 }
 
-class StellarContactCell: UITableViewCell, ReusableView, NibLoadableView {
+class StellarContactCell: UITableViewCell, NibReusable {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var sendPaymentButton: UIButton!
 

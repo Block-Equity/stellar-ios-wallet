@@ -12,85 +12,85 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AssetIssuerCell" customModule="BlockEQ" customModuleProvider="target">
             <connections>
-                <outlet property="assetContainer" destination="Lr7-fO-emO" id="0oG-r1-49f"/>
-                <outlet property="cardView" destination="JTk-Uk-lGL" id="fCW-mm-XEs"/>
-                <outlet property="headerContainer" destination="LvZ-Vz-Ofk" id="Nlc-KB-Yki"/>
-                <outlet property="issuerContainer" destination="q9e-IP-nDO" id="x7R-ho-d2e"/>
-                <outlet property="priceContainer" destination="96L-P3-S6Q" id="nIs-3a-4jr"/>
-                <outlet property="view" destination="Rrh-pc-WQP" id="1cO-UJ-v8q"/>
+                <outlet property="assetContainer" destination="HpB-YQ-Hbd" id="LBW-Gp-8kr"/>
+                <outlet property="cardBottomInset" destination="5Os-m1-vvX" id="BCW-vi-RtA"/>
+                <outlet property="cardLeftInset" destination="EGj-Lh-ir6" id="077-KW-enZ"/>
+                <outlet property="cardRightInset" destination="QSQ-Hr-u2n" id="3Rf-rr-Cz9"/>
+                <outlet property="cardTopInset" destination="lAv-IP-2nU" id="1Nz-jZ-y6p"/>
+                <outlet property="cardView" destination="dEf-10-lJE" id="108-11-UB4"/>
+                <outlet property="headerContainer" destination="eqt-VE-vIV" id="JDV-9z-1Gd"/>
+                <outlet property="issuerContainer" destination="X1U-dS-6jb" id="PJU-4K-SQf"/>
+                <outlet property="priceContainer" destination="Wu1-tg-Ywp" id="QXJ-X3-ZF5"/>
+                <outlet property="view" destination="K5R-DY-ai9" id="WJG-Q9-v2r"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Rrh-pc-WQP">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+        <view contentMode="scaleToFill" id="K5R-DY-ai9">
+            <rect key="frame" x="0.0" y="0.0" width="325" height="180"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JTk-Uk-lGL" userLabel="Card">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="Lr7-fO-emO" userLabel="Asset Container">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LvZ-Vz-Ofk" userLabel="Header Container" customClass="AssetHeaderView" customModule="BlockEQ" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="15" width="225" height="52"/>
-                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="225" id="wTw-zU-bqU"/>
-                                        </constraints>
-                                        <viewLayoutGuide key="safeArea" id="0cx-20-boK"/>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="96L-P3-S6Q" userLabel="Price Container" customClass="AssetPriceView" customModule="BlockEQ" customModuleProvider="target">
-                                        <rect key="frame" x="260" y="26" width="100" height="30"/>
-                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="6RC-Um-0RG"/>
-                                            <constraint firstAttribute="height" constant="30" id="cIM-Qt-XjH"/>
-                                        </constraints>
-                                        <viewLayoutGuide key="safeArea" id="hcR-D7-7Rb"/>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="96L-P3-S6Q" secondAttribute="trailing" constant="15" id="A9B-z2-Mku"/>
-                                    <constraint firstItem="96L-P3-S6Q" firstAttribute="centerY" secondItem="LvZ-Vz-Ofk" secondAttribute="centerY" id="Kp1-FJ-qWA"/>
-                                    <constraint firstAttribute="bottom" secondItem="LvZ-Vz-Ofk" secondAttribute="bottom" constant="3" id="aDn-Tw-Yix"/>
-                                    <constraint firstItem="LvZ-Vz-Ofk" firstAttribute="leading" secondItem="Lr7-fO-emO" secondAttribute="leading" constant="15" id="eRS-HX-GGF"/>
-                                    <constraint firstItem="96L-P3-S6Q" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="LvZ-Vz-Ofk" secondAttribute="trailing" constant="15" id="htZ-vP-arj"/>
-                                    <constraint firstItem="LvZ-Vz-Ofk" firstAttribute="top" secondItem="Lr7-fO-emO" secondAttribute="top" constant="15" id="kpn-eU-jEI"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q9e-IP-nDO" userLabel="Issuer Container">
-                                <rect key="frame" x="15" y="80" width="345" height="85"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="85" id="T8K-5A-0Dy"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="q9e-IP-nDO" firstAttribute="leading" secondItem="LvZ-Vz-Ofk" secondAttribute="leading" id="93h-S9-iXk"/>
-                            <constraint firstItem="q9e-IP-nDO" firstAttribute="top" secondItem="Lr7-fO-emO" secondAttribute="bottom" constant="10" id="EjX-fh-Iin"/>
-                            <constraint firstItem="XMz-8T-WeL" firstAttribute="leading" secondItem="Lr7-fO-emO" secondAttribute="leading" id="JH6-6g-Q1U"/>
-                            <constraint firstItem="Lr7-fO-emO" firstAttribute="trailing" secondItem="XMz-8T-WeL" secondAttribute="trailing" id="iI9-on-XLF"/>
-                            <constraint firstItem="XMz-8T-WeL" firstAttribute="top" secondItem="Lr7-fO-emO" secondAttribute="top" id="r9i-GW-Msw"/>
-                            <constraint firstItem="q9e-IP-nDO" firstAttribute="trailing" secondItem="96L-P3-S6Q" secondAttribute="trailing" id="wgn-e8-WnK"/>
-                            <constraint firstItem="XMz-8T-WeL" firstAttribute="bottom" secondItem="q9e-IP-nDO" secondAttribute="bottom" constant="15" id="zG4-tV-YA0"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="XMz-8T-WeL"/>
-                    </view>
-                </subviews>
-            </view>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dEf-10-lJE" userLabel="Card">
+                    <rect key="frame" x="0.0" y="0.0" width="325" height="180"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="HpB-YQ-Hbd" userLabel="Asset Container">
+                            <rect key="frame" x="0.0" y="0.0" width="325" height="70"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eqt-VE-vIV" userLabel="Header Container" customClass="AssetHeaderView" customModule="BlockEQ" customModuleProvider="target">
+                                    <rect key="frame" x="15" y="15" width="180" height="55"/>
+                                    <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <viewLayoutGuide key="safeArea" id="4jG-aV-CMq"/>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wu1-tg-Ywp" userLabel="Price Container" customClass="AssetPriceView" customModule="BlockEQ" customModuleProvider="target">
+                                    <rect key="frame" x="210" y="27.5" width="100" height="30"/>
+                                    <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="100" id="3GG-lD-5Iz"/>
+                                        <constraint firstAttribute="height" constant="30" id="Vu6-Pq-K0A"/>
+                                    </constraints>
+                                    <viewLayoutGuide key="safeArea" id="npw-Nq-FeT"/>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="eqt-VE-vIV" secondAttribute="bottom" id="ERA-z7-Ttd"/>
+                                <constraint firstItem="Wu1-tg-Ywp" firstAttribute="centerY" secondItem="eqt-VE-vIV" secondAttribute="centerY" id="ecB-hf-9aT"/>
+                                <constraint firstAttribute="trailing" secondItem="Wu1-tg-Ywp" secondAttribute="trailing" constant="15" id="gIa-Ub-PiF"/>
+                                <constraint firstItem="eqt-VE-vIV" firstAttribute="leading" secondItem="HpB-YQ-Hbd" secondAttribute="leading" constant="15" id="ikZ-2Q-UTS"/>
+                                <constraint firstItem="eqt-VE-vIV" firstAttribute="top" secondItem="HpB-YQ-Hbd" secondAttribute="top" constant="15" id="usY-5s-yf2"/>
+                                <constraint firstItem="Wu1-tg-Ywp" firstAttribute="leading" secondItem="eqt-VE-vIV" secondAttribute="trailing" constant="15" id="yEx-yJ-qoB"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X1U-dS-6jb" userLabel="Issuer Container" customClass="AssetIssuerView" customModule="BlockEQ" customModuleProvider="target">
+                            <rect key="frame" x="15" y="80" width="295" height="85"/>
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="85" id="X4c-XC-IF7"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Lcr-ZU-dJE" firstAttribute="bottom" secondItem="X1U-dS-6jb" secondAttribute="bottom" constant="15" id="BWK-9x-Bno"/>
+                        <constraint firstItem="HpB-YQ-Hbd" firstAttribute="trailing" secondItem="Lcr-ZU-dJE" secondAttribute="trailing" id="E9l-0C-MZv"/>
+                        <constraint firstItem="X1U-dS-6jb" firstAttribute="leading" secondItem="eqt-VE-vIV" secondAttribute="leading" id="PlV-y7-8mF"/>
+                        <constraint firstItem="Lcr-ZU-dJE" firstAttribute="top" secondItem="HpB-YQ-Hbd" secondAttribute="top" id="Ssj-lV-ix4"/>
+                        <constraint firstItem="X1U-dS-6jb" firstAttribute="top" secondItem="HpB-YQ-Hbd" secondAttribute="bottom" constant="10" id="Ym3-se-yrm"/>
+                        <constraint firstItem="Lcr-ZU-dJE" firstAttribute="leading" secondItem="HpB-YQ-Hbd" secondAttribute="leading" id="cum-pS-JM3"/>
+                        <constraint firstItem="X1U-dS-6jb" firstAttribute="trailing" secondItem="Wu1-tg-Ywp" secondAttribute="trailing" id="ezg-Wi-wKw"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="Lcr-ZU-dJE"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="JTk-Uk-lGL" firstAttribute="top" secondItem="Rrh-pc-WQP" secondAttribute="top" id="7Wq-Wu-Uvc"/>
-                <constraint firstAttribute="trailing" secondItem="JTk-Uk-lGL" secondAttribute="trailing" id="RqE-ZQ-fAC"/>
-                <constraint firstItem="JTk-Uk-lGL" firstAttribute="leading" secondItem="Rrh-pc-WQP" secondAttribute="leading" id="ViO-oD-fqZ"/>
-                <constraint firstAttribute="bottom" secondItem="JTk-Uk-lGL" secondAttribute="bottom" id="daH-Kc-O1K"/>
+                <constraint firstAttribute="bottom" secondItem="dEf-10-lJE" secondAttribute="bottom" id="5Os-m1-vvX"/>
+                <constraint firstItem="dEf-10-lJE" firstAttribute="leading" secondItem="K5R-DY-ai9" secondAttribute="leading" id="EGj-Lh-ir6"/>
+                <constraint firstAttribute="trailing" secondItem="dEf-10-lJE" secondAttribute="trailing" id="QSQ-Hr-u2n"/>
+                <constraint firstItem="dEf-10-lJE" firstAttribute="top" secondItem="K5R-DY-ai9" secondAttribute="top" id="lAv-IP-2nU"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="bHD-de-qzr"/>
-        </collectionViewCell>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="2eP-DC-SeK"/>
+            <point key="canvasLocation" x="168" y="153.82308845577214"/>
+        </view>
     </objects>
 </document>

@@ -6,51 +6,54 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
+import Reusable
 
-final class AssetAmountCell: UICollectionViewCell, ReusableView, NibLoadableView {
+final class AssetAmountCell: UICollectionViewCell, Reusable, NibOwnerLoadable, IndexableCell {
     @IBOutlet var view: UIView!
     @IBOutlet weak var cardView: UIView!
-    @IBOutlet weak var headerContainer: UIView!
-    @IBOutlet weak var priceContainer: UIView!
+    @IBOutlet weak var headerContainer: AssetHeaderView!
+    @IBOutlet weak var priceContainer: AssetPriceView!
 
-    let headerView = AssetHeaderView(frame: .zero)
-    let priceView = AssetPriceView(frame: .zero)
+    @IBOutlet weak var cardBottomInset: NSLayoutConstraint!
+    @IBOutlet weak var cardLeftInset: NSLayoutConstraint!
+    @IBOutlet weak var cardTopInset: NSLayoutConstraint!
+    @IBOutlet weak var cardRightInset: NSLayoutConstraint!
+
+    var cardInset: UIEdgeInsets = .zero
+    var preferredWidth: CGFloat?
+    var indexPath: IndexPath?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+        self.loadNibContent()
         setupStyle()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupView()
+        self.loadNibContent()
         setupStyle()
     }
 
-    func setupView() {
-        let nibView: UIView = NibLoader<UIView>(nibName: AssetAmountCell.nibName).loadView(owner: self)
-        contentView.addSubview(nibView)
-        contentView.constrainViewToAllEdges(nibView)
-
-        headerContainer.addSubview(headerView)
-        headerContainer.constrainViewToAllEdges(headerView)
-
-        priceContainer.addSubview(priceView)
-        priceContainer.constrainViewToAllEdges(priceView)
-    }
-
     func setupStyle() {
+        view.backgroundColor = .clear
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 5
         cardView.clipsToBounds = false
         cardView.layer.masksToBounds = false
+
+        applyCardStyle()
     }
 
-    func update(with viewModel: ViewModel) {
-        headerView.update(with: viewModel.headerData)
-        priceView.update(with: viewModel.priceData)
+    func update(with viewModel: ViewModel, indexPath path: IndexPath) {
+        headerContainer.update(with: viewModel.headerData)
+        priceContainer.update(with: viewModel.priceData)
+        indexPath = path
+    }
+
+    override func preferredLayoutAttributesFitting(
+        _ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        return self.cellLayoutAttributes(attributes: layoutAttributes)
     }
 }
 
@@ -60,3 +63,5 @@ extension AssetAmountCell {
         var priceData: AssetPriceView.ViewModel
     }
 }
+
+extension AssetAmountCell: StylableCardCell { }

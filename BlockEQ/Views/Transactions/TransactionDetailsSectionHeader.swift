@@ -6,7 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
+import Reusable
 
 // See: https://stackoverflow.com/a/46737582
 class ZOrderBugLayer: CALayer {
@@ -20,7 +20,7 @@ protocol TransactionDetailsSectionHeaderDelegate: AnyObject {
     func toggle(_ view: TransactionDetailsSectionHeader, index: IndexPath, collapsed: Bool)
 }
 
-final class TransactionDetailsSectionHeader: UICollectionReusableView, ReusableView, NibLoadableView {
+final class TransactionDetailsSectionHeader: UICollectionReusableView, NibReusable {
     @IBOutlet weak var headerTitle: UILabel!
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var containerView: UIView!

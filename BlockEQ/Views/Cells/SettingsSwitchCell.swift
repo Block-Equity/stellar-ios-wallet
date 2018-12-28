@@ -6,13 +6,13 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
+import Reusable
 
 protocol SettingsSwitchCellDelegate: AnyObject {
     func toggledSwitch(for node: SettingNode, enabled: Bool)
 }
 
-final class SettingsSwitchCell: UITableViewCell, ReusableView {
+final class SettingsSwitchCell: UITableViewCell, Reusable {
     let switchControl = UISwitch(frame: .zero)
 
     weak var delegate: SettingsSwitchCellDelegate?

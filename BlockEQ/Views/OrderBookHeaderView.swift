@@ -6,14 +6,14 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import UIKit
+import Reusable
 
 enum OrderType: Int {
     case buy
     case sell
 }
 
-class OrderBookHeaderView: UIView {
+class OrderBookHeaderView: UIView, NibOwnerLoadable {
 
     @IBOutlet weak var option1Label: UILabel!
     @IBOutlet weak var option2Label: UILabel!
@@ -23,27 +23,20 @@ class OrderBookHeaderView: UIView {
     @IBOutlet weak var view: UIView!
 
     static let height: CGFloat = 71.0
-    fileprivate static let nibName = "OrderBookHeaderView"
 
     init(frame: CGRect, type: OrderType, buyAsset: String, sellAsset: String) {
         super.init(frame: frame)
-
+        self.loadNibContent()
         setupView(type: type, buyAsset: buyAsset, sellAsset: sellAsset)
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-
+        self.loadNibContent()
         setupView(type: .buy, buyAsset: "", sellAsset: "")
     }
 
     private func setupView(type: OrderType, buyAsset: String, sellAsset: String) {
-        view = NibLoader<UIView>(nibName: OrderBookHeaderView.nibName).loadView(owner: self)
-        view.frame = CGRect(origin: .zero, size: frame.size)
-        view.autoresizingMask = .flexibleWidth
-
-        addSubview(view)
-
         switch type {
         case .buy:
             titleView.backgroundColor = Colors.green

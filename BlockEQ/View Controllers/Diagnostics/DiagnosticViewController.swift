@@ -56,8 +56,8 @@ final class DiagnosticViewController: UIViewController {
         titleLabel.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
         descriptionLabel.font = UIFont.systemFont(ofSize: 18, weight: .light)
 
-        stepCollectionView.registerCell(type: DiagnosticDataCell.self)
-        stepCollectionView.registerCell(type: DiagnosticCompletedCell.self)
+        stepCollectionView.register(cellType: DiagnosticDataCell.self)
+        stepCollectionView.register(cellType: DiagnosticCompletedCell.self)
 
         stepCollectionView.delegate = self
         stepCollectionView.dataSource = self

@@ -6,9 +6,9 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
+import Reusable
 
-final class AssetPriceView: UIView, NibLoadableView {
+final class AssetPriceView: UIView, NibOwnerLoadable {
     @IBOutlet var view: UIView!
     @IBOutlet var stackView: UIStackView!
     @IBOutlet var amountLabel: UILabel!
@@ -16,20 +16,14 @@ final class AssetPriceView: UIView, NibLoadableView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+        self.loadNibContent()
         setupStyle()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupView()
+        self.loadNibContent()
         setupStyle()
-    }
-
-    func setupView() {
-        let nibView: UIView = NibLoader<UIView>(nibName: AssetPriceView.nibName).loadView(owner: self)
-        self.addSubview(nibView)
-        self.constrainViewToAllEdges(nibView)
     }
 
     func setupStyle() {

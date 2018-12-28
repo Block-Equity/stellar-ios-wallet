@@ -6,9 +6,9 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
+import Reusable
 
-final class TransactionDetailsBasicHeader: UICollectionReusableView, ReusableView, NibLoadableView {
+final class TransactionDetailsBasicHeader: UICollectionReusableView, NibReusable {
     @IBOutlet weak var leftLabel: UILabel!
     @IBOutlet weak var rightLabel: UILabel!
 

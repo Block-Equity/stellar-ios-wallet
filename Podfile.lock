@@ -3,9 +3,14 @@ PODS:
   - KeychainSwift (10.0.0)
   - Kingfisher (4.10.1)
   - Repeat (0.5.7)
+  - Reusable (4.0.5):
+    - Reusable/Storyboard (= 4.0.5)
+    - Reusable/View (= 4.0.5)
+  - Reusable/Storyboard (4.0.5)
+  - Reusable/View (4.0.5)
   - SCLAlertView (0.8.1)
   - SnapshotTesting (1.1.0)
-  - stellar-ios-mac-sdk (1.5.6)
+  - stellar-ios-mac-sdk (1.5.7)
   - Whisper (6.0.2)
 
 DEPENDENCIES:
@@ -13,6 +18,7 @@ DEPENDENCIES:
   - KeychainSwift (~> 10.0)
   - Kingfisher (~> 4.10)
   - Repeat (~> 0.5)
+  - Reusable (~> 4.0)
   - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift`, branch `master`)
   - SnapshotTesting
   - stellar-ios-mac-sdk (from `https://github.com/Soneso/stellar-ios-mac-sdk.git`)
@@ -24,6 +30,7 @@ SPEC REPOS:
     - KeychainSwift
     - Kingfisher
     - Repeat
+    - Reusable
     - SnapshotTesting
 
 EXTERNAL SOURCES:
@@ -41,7 +48,7 @@ CHECKOUT OPTIONS:
     :commit: 86ea7613c99cd4896765fabfa773b39b40bc8590
     :git: https://github.com/vikmeup/SCLAlertView-Swift
   stellar-ios-mac-sdk:
-    :commit: 9e8b6e11bbcf1b078939d210261bdc086f687240
+    :commit: 94c125b446ba5e1f6aeac7979338d2b6abb41268
     :git: https://github.com/Soneso/stellar-ios-mac-sdk.git
   Whisper:
     :commit: 86880dea149a871ec5cb909cc3b93e7fb5804788
@@ -52,11 +59,12 @@ SPEC CHECKSUMS:
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   Repeat: 73c5ee602aed8f3c7bf1aa12d4cd0d3dc3edea0a
+  Reusable: 188be1a54ac0691bc66e5bb24ec6eb91971b315b
   SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
   SnapshotTesting: 8ed6a4dceee63f59a60e1bc86f9adbba54eb9287
-  stellar-ios-mac-sdk: b0c589f5d5a7776edffcf4ebbe4e12d988030e7e
+  stellar-ios-mac-sdk: 7a49cbb604d6ec8e0e3fefddf34d0d9340db2f1c
   Whisper: 8c499b08f3b56d5c80162d775e3462318ad7f4fe
 
-PODFILE CHECKSUM: 4b87dd70d13831495df760f3642c34e40a71a1a0
+PODFILE CHECKSUM: 4c68b0beba69c0e968a19d5fe7325db741227842
 
 COCOAPODS: 1.5.3

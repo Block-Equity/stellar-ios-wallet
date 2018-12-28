@@ -6,13 +6,13 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import UIKit
+import Reusable
 
 protocol OffersCellDelegate: AnyObject {
     func deleteOffer(indexPath: IndexPath)
 }
 
-class OffersCell: UITableViewCell, ReusableView, NibLoadableView {
+final class OffersCell: UITableViewCell, NibReusable {
     @IBOutlet weak var offerLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
 

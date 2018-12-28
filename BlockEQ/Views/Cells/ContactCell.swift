@@ -6,13 +6,13 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import UIKit
+import Reusable
 
 protocol ContactCellDelegate: class {
     func didSelectAddToAddressBook(indexPath: IndexPath)
 }
 
-class ContactCell: UITableViewCell, ReusableView, NibLoadableView {
+class ContactCell: UITableViewCell, NibReusable {
 
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var addressButton: UIButton!

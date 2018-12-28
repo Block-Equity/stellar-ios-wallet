@@ -31,7 +31,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="6rd-MH-qdV" secondAttribute="height" multiplier="1:1" id="CT1-K8-CSw"/>
-                                <constraint firstAttribute="height" constant="50" id="qoa-87-AFS"/>
+                                <constraint firstAttribute="height" constant="50" id="UQe-wp-IWe"/>
                             </constraints>
                         </imageView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="PhO-oG-GOG" userLabel="Label Container">
@@ -65,6 +65,7 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="6rd-MH-qdV" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="1ar-ex-ZFB"/>
                 <constraint firstItem="Ys7-7w-fDX" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="9Vh-mE-Rel"/>
                 <constraint firstItem="Ys7-7w-fDX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="USf-i2-JYz"/>
                 <constraint firstAttribute="trailing" secondItem="Ys7-7w-fDX" secondAttribute="trailing" id="fHP-Wv-Qcx"/>

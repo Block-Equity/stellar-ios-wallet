@@ -6,6 +6,7 @@ def shared_pods
   pod 'KeychainSwift', '~> 10.0'
   pod 'Alamofire', '~> 4.7'
   pod 'Repeat', '~> 0.5'
+  pod 'Reusable', '~> 4.0'
 end
 
 target 'BlockEQ' do

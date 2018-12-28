@@ -41,8 +41,8 @@ class OrderBookViewController: UIViewController {
     }
 
     func setupView() {
-        tableView.registerCell(type: OrderBookCell.self)
-        tableView.registerCell(type: OrderBookEmptyCell.self)
+        tableView.register(cellType: OrderBookCell.self)
+        tableView.register(cellType: OrderBookEmptyCell.self)
 
         tableView.backgroundColor = Colors.lightBackground
         tableHeaderLabel.textColor = Colors.blueGray

@@ -6,13 +6,13 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import UIKit
+import Reusable
 
 protocol WalletItemActivateCellDelegate: class {
     func didAddAsset(indexPath: IndexPath)
 }
 
-class WalletItemActivateCell: UITableViewCell, ReusableView, NibLoadableView {
+class WalletItemActivateCell: UITableViewCell, Reusable {
     struct ViewModel {
         var title: String
         var icon: UIImage?

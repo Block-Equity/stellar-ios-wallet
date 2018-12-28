@@ -6,14 +6,14 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
+import Reusable
 
 protocol UpdatableCell {
     func update(for node: SettingNode)
     func setValue(_ value: String)
 }
 
-final class SettingsNormalCell: UITableViewCell, ReusableView {
+final class SettingsNormalCell: UITableViewCell, Reusable {
     override var reuseIdentifier: String? { return "SettingsNormalCell" }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

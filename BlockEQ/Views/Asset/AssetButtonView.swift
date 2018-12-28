@@ -6,7 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
+import Reusable
 
 protocol AssetButtonsDelegate: AnyObject {
     func selectedFirstButton(button: AssetButton)
@@ -14,7 +14,7 @@ protocol AssetButtonsDelegate: AnyObject {
     func selectedThirdButton(button: AssetButton)
 }
 
-final class AssetButtons: UIView, NibLoadableView {
+final class AssetButtonView: UIView, Reusable, NibOwnerLoadable {
     static let ButtonSpacing = 15
 
     @IBOutlet var view: UIView!
@@ -29,27 +29,18 @@ final class AssetButtons: UIView, NibLoadableView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+        self.loadNibContent()
         setupStyle()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupView()
+        self.loadNibContent()
         setupStyle()
     }
 
-    func setupView() {
-        let nibView: UIView = NibLoader<UIView>(nibName: AssetButtons.nibName).loadView(owner: self)
-        self.addSubview(nibView)
-        self.constrainViewToAllEdges(nibView)
-    }
-
     func setupStyle() {
-        stackView.spacing = CGFloat(AssetButtons.ButtonSpacing)
-        button1.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: .medium)
-        button2.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: .medium)
-        button3.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+        stackView.spacing = CGFloat(AssetButtonView.ButtonSpacing)
     }
 
     func update(with viewModel: ViewModel) {
@@ -69,7 +60,7 @@ final class AssetButtons: UIView, NibLoadableView {
 }
 
 //swiftlint:disable nesting
-extension AssetButtons {
+extension AssetButtonView {
     struct ViewModel {
         typealias ButtonData = (title: String, backgroundColor: UIColor, textColor: UIColor, enabled: Bool)
         var buttonData: [ButtonData]
@@ -77,7 +68,7 @@ extension AssetButtons {
 }
 //swiftlint:enable nesting
 
-extension AssetButtons {
+extension AssetButtonView {
     @IBAction func selectedFirstButton(_ sender: Any) {
         delegate?.selectedFirstButton(button: button1)
     }

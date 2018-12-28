@@ -6,14 +6,14 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import UIKit
+import Reusable
 
 protocol WalletItemCellDelegate: class {
     func requestedRemoveAsset(indexPath: IndexPath)
     func requestedChangeInflation()
 }
 
-class WalletItemCell: UITableViewCell, ReusableView, NibLoadableView {
+class WalletItemCell: UITableViewCell, NibReusable {
     enum ButtonMode {
         case none
         case removeAsset

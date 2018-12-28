@@ -6,9 +6,9 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import UIKit
+import Reusable
 
-class MyOffersHeaderView: UIView {
+class MyOffersHeaderView: UIView, NibOwnerLoadable {
 
     @IBOutlet weak var option1Label: UILabel!
     @IBOutlet weak var option2Label: UILabel!
@@ -16,27 +16,20 @@ class MyOffersHeaderView: UIView {
     @IBOutlet weak var view: UIView!
 
     static let height: CGFloat = 36.0
-    fileprivate static let nibName = "MyOffersHeaderView"
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        self.loadNibContent()
         setupView()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-
+        self.loadNibContent()
         setupView()
     }
 
     private func setupView() {
-        view = NibLoader<UIView>(nibName: MyOffersHeaderView.nibName).loadView(owner: self)
-        view.frame = CGRect(origin: .zero, size: frame.size)
-        view.autoresizingMask = .flexibleWidth
-
-        addSubview(view)
-
         option1Label.text = "Selling"
         option2Label.text = "Price"
         option3Label.text = "Receiving"

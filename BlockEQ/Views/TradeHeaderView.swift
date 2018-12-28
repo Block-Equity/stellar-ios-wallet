@@ -6,7 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import UIKit
+import Reusable
 
 enum TradeSegment: Int {
     case trade
@@ -22,7 +22,7 @@ protocol TradeHeaderViewDelegate: AnyObject {
     func switchedSegment(_ type: TradeSegment)
 }
 
-class TradeHeaderView: UIView {
+class TradeHeaderView: UIView, NibOwnerLoadable {
 
     @IBOutlet weak var view: UIView!
     @IBOutlet weak var tradeButton: UIButton!
@@ -41,25 +41,18 @@ class TradeHeaderView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        self.loadNibContent()
         setupView()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-
+        self.loadNibContent()
         setupView()
     }
 
     private func setupView() {
-        view = NibLoader<UIView>(nibName: TradeHeaderView.nibName).loadView(owner: self)
-        view.frame = CGRect(origin: .zero, size: frame.size)
-        view.autoresizingMask = .flexibleWidth
-
-        addSubview(view)
-
         buttons = [tradeButton, orderBookButton, myOffersButton]
-
         setSelected(selectedButton: tradeButton, animated: false)
     }
 

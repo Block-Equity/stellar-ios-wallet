@@ -6,7 +6,9 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-final class DiagnosticDataCell: UICollectionViewCell, ReusableView, NibLoadableView {
+import Reusable
+
+final class DiagnosticDataCell: UICollectionViewCell, NibReusable {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var headerBackgroundView: UIView!
     @IBOutlet weak var iconImageView: UIImageView!

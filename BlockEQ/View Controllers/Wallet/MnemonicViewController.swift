@@ -103,7 +103,7 @@ class MnemonicViewController: UIViewController {
 
         advancedSecurityButton.isHidden = mode.hideAdvancedSecurity
 
-        collectionView.registerCell(type: PillViewCell.self)
+        collectionView.register(cellType: PillViewCell.self)
         collectionView.delegate = self
         collectionView.dataSource = self
 

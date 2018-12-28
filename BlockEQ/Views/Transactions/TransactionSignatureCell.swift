@@ -6,9 +6,9 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
+import Reusable
 
-final class TransactionSignatureCell: UICollectionViewCell, ReusableView, NibLoadableView {
+final class TransactionSignatureCell: UICollectionViewCell, NibReusable {
     @IBOutlet weak var signatureLabel: UILabel!
 
     static let cellHeight = CGFloat(44.0)
