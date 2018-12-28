@@ -6,9 +6,9 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import UIKit
+import Reusable
 
-class SelectAssetCell: UITableViewCell, ReusableView {
+class SelectAssetCell: UITableViewCell, Reusable {
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var amountLabel: UILabel!

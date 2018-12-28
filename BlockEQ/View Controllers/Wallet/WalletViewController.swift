@@ -63,7 +63,7 @@ class WalletViewController: UIViewController {
 
     func setupView() {
         tableView?.delegate = self
-        tableView?.registerCell(type: TransactionHistoryCell.self)
+        tableView?.register(cellType: TransactionHistoryCell.self)
 
         let leftBarButtonItem = UIBarButtonItem(title: "ITEM_RECEIVE".localized(),
                                                 style: .plain,

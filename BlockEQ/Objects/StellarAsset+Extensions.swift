@@ -75,3 +75,57 @@ public struct Assets {
         return Colors.blueGray
     }
 }
+
+extension StellarAsset {
+    var title: String {
+        switch shortCode.uppercased() {
+        case "XLM": return "Stellar Lumens"
+        case "PTS": return "Block Points"
+        case "CAD": return "Canadian Dollar"
+        default: return shortCode
+        }
+    }
+
+    func issuer(for account: String?) -> String {
+        switch account {
+        case "GBPG7KRYC3PTKHBXQGRD3GMZ5DB4C3D553ZN2ZLH57LBAQIULVY46Z5F":
+            return "Block Equity"
+        case "GABK2IHWW7BCRPP3BL6WMOMDBPHCBJR2SLP5HAUBYKNZG5J5RJSROS5S":
+            return "Block Equity"
+        default:
+            return ""
+        }
+    }
+
+    var subtitleWithIssuer: String {
+        let issuer = self.issuer(for: assetIssuer)
+        let uppercaseShortCode = shortCode.uppercased()
+
+        if issuer.isEmpty {
+            return String(format: "%@", uppercaseShortCode)
+        }
+
+        return String(format: "%@ (%@)", uppercaseShortCode, issuer)
+    }
+
+    var headerIcon: UIImage? {
+        let lowercaseShortCode = shortCode.lowercased()
+        return UIImage(named: lowercaseShortCode)
+    }
+
+    var headerViewModel: AssetHeaderView.ViewModel {
+        return AssetHeaderView.ViewModel(image: headerIcon,
+                                         assetTitle: title,
+                                         assetSubtitle: subtitleWithIssuer)
+    }
+
+    var priceViewModel: AssetPriceView.ViewModel {
+        let assetBalance = self.hasZeroBalance ? "N/A" : balance
+        let assetPrice = self.hasZeroBalance ? "---" : "$123,456.78"
+        return AssetPriceView.ViewModel(amount: assetBalance, price: assetPrice)
+    }
+
+    var primaryColor: UIColor {
+        return UIColor(red: 0.086, green: 0.712, blue: 0.905, alpha: 1.000)
+    }
+}

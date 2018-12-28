@@ -6,9 +6,9 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
+import Reusable
 
-final class AssetHeaderView: UIView, NibLoadableView {
+final class AssetHeaderView: UIView, NibOwnerLoadable {
     @IBOutlet var view: UIView!
     @IBOutlet var containerView: UIView!
     @IBOutlet var assetImageView: UIImageView!
@@ -17,20 +17,14 @@ final class AssetHeaderView: UIView, NibLoadableView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+        self.loadNibContent()
         setupStyle()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupView()
+        self.loadNibContent()
         setupStyle()
-    }
-
-    func setupView() {
-        let nibView: UIView = NibLoader<UIView>(nibName: AssetHeaderView.nibName).loadView(owner: self)
-        self.addSubview(nibView)
-        self.constrainViewToAllEdges(nibView)
     }
 
     func setupStyle() {
@@ -42,15 +36,15 @@ final class AssetHeaderView: UIView, NibLoadableView {
 
     func update(with viewModel: ViewModel) {
         assetImageView.image = viewModel.image ?? UIImage(named: "pts")
-        assetNameLabel.text = viewModel.assetName
-        assetCodeLabel.text = viewModel.assetCode
+        assetNameLabel.text = viewModel.assetTitle
+        assetCodeLabel.text = viewModel.assetSubtitle
     }
 }
 
 extension AssetHeaderView {
     struct ViewModel {
         var image: UIImage?
-        var assetName: String
-        var assetCode: String
+        var assetTitle: String
+        var assetSubtitle: String
     }
 }

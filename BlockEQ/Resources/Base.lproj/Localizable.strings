@@ -299,3 +299,7 @@
 "TYPE_HEADER_TITLE" = "Type";
 "AMOUNT_HEADER_TITLE" = "Amount";
 "XLM_HEADER_TITLE" = "XLM";
+
+"BLOCKEQ_ASSET_TITLE" = "BlockEQ Assets";
+"NO_ASSETS_TITLE" = "Your account has no assets";
+"NO_ASSETS_DESCRIPTION" = "When you add assets, you will see them displayed here.";

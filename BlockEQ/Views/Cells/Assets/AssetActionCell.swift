@@ -6,61 +6,62 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
+import Reusable
 
-final class AssetActionCell: UICollectionViewCell, ReusableView, NibLoadableView {
-    @IBOutlet var view: UIView!
+protocol AssetActionCellDelegate: AnyObject {
+    func selectedOption(optionIndex: Int, cellPath: IndexPath?)
+}
+
+final class AssetActionCell: UICollectionViewCell, Reusable, NibOwnerLoadable, IndexableCell {
+    @IBOutlet weak var view: UIView!
     @IBOutlet weak var cardView: UIView!
-    @IBOutlet weak var headerContainer: UIView!
-    @IBOutlet weak var priceContainer: UIView!
-    @IBOutlet weak var buttonContainer: UIView!
+    @IBOutlet weak var headerContainer: AssetHeaderView!
+    @IBOutlet weak var priceContainer: AssetPriceView!
+    @IBOutlet weak var buttonContainer: AssetButtonView!
 
-    let headerView = AssetHeaderView(frame: .zero)
-    let priceView = AssetPriceView(frame: .zero)
-    let buttonView = AssetButtons(frame: .zero)
+    @IBOutlet weak var cardLeftInset: NSLayoutConstraint!
+    @IBOutlet weak var cardRightInset: NSLayoutConstraint!
+    @IBOutlet weak var cardBottomInset: NSLayoutConstraint!
+    @IBOutlet weak var cardTopInset: NSLayoutConstraint!
+
+    weak var delegate: AssetActionCellDelegate?
+
+    var indexPath: IndexPath?
+    var preferredWidth: CGFloat?
+    var cardInset: UIEdgeInsets = .zero
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+        loadNibContent()
         setupStyle()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupView()
+        loadNibContent()
         setupStyle()
     }
 
-    func setupView() {
-        let nibView: UIView = NibLoader<UIView>(nibName: AssetActionCell.nibName).loadView(owner: self)
-        contentView.addSubview(nibView)
-        contentView.constrainViewToAllEdges(nibView)
-
-        headerContainer.addSubview(headerView)
-        headerContainer.constrainViewToAllEdges(headerView)
-
-        priceContainer.addSubview(priceView)
-        priceContainer.constrainViewToAllEdges(priceView)
-
-        buttonContainer.addSubview(buttonView)
-        buttonContainer.constrainViewToAllEdges(buttonView)
-    }
-
     func setupStyle() {
-        cardView.backgroundColor = .white
-        cardView.layer.cornerRadius = 5
-        cardView.clipsToBounds = false
-        cardView.layer.masksToBounds = false
+        view.backgroundColor = .clear
 
         headerContainer.backgroundColor = .clear
         priceContainer.backgroundColor = .clear
         buttonContainer.backgroundColor = .clear
+
+        applyCardStyle()
     }
 
-    func update(with viewModel: ViewModel) {
-        headerView.update(with: viewModel.headerData)
-        priceView.update(with: viewModel.priceData)
-        buttonView.update(with: viewModel.buttonData)
+    func update(with viewModel: ViewModel, indexPath path: IndexPath) {
+        headerContainer.update(with: viewModel.headerData)
+        priceContainer.update(with: viewModel.priceData)
+        buttonContainer.update(with: viewModel.buttonData)
+        indexPath = path
+    }
+
+    override func preferredLayoutAttributesFitting(
+        _ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        return self.cellLayoutAttributes(attributes: layoutAttributes)
     }
 }
 
@@ -68,6 +69,23 @@ extension AssetActionCell {
     struct ViewModel {
         var headerData: AssetHeaderView.ViewModel
         var priceData: AssetPriceView.ViewModel
-        var buttonData: AssetButtons.ViewModel
+        var buttonData: AssetButtonView.ViewModel
     }
 }
+
+extension AssetActionCell: AssetButtonsDelegate {
+    func selectedFirstButton(button: AssetButton) {
+        delegate?.selectedOption(optionIndex: 0, cellPath: indexPath)
+    }
+
+    func selectedSecondButton(button: AssetButton) {
+        delegate?.selectedOption(optionIndex: 1, cellPath: indexPath)
+    }
+
+    func selectedThirdButton(button: AssetButton) {
+        delegate?.selectedOption(optionIndex: 2, cellPath: indexPath)
+    }
+}
+
+// MARK: - StylableCardCell
+extension AssetActionCell: StylableCardCell { }

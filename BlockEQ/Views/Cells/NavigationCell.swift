@@ -6,9 +6,9 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
+import Reusable
 
-final class NavigationCell: UITableViewCell, ReusableView {
+final class NavigationCell: UITableViewCell, Reusable {
 
     struct Constants {
         static let cellHeight: CGFloat = 65

@@ -6,9 +6,9 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
+import Reusable
 
-final class TransactionDetailsCell: UICollectionViewCell, ReusableView, NibLoadableView {
+final class TransactionDetailsCell: UICollectionViewCell, NibReusable {
     struct ViewModel {
         let sourceAccount: String
         let transactionId: String

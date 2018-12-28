@@ -109,8 +109,8 @@
 		C599F3D621BEE8B400749AF8 /* StellarHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C599F3D521BEE8B400749AF8 /* StellarHub.framework */; };
 		C599F3D721BEE8B400749AF8 /* StellarHub.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C599F3D521BEE8B400749AF8 /* StellarHub.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C59AA3C421D13C38007E8362 /* AssetPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59AA3C321D13C38007E8362 /* AssetPriceView.swift */; };
-		C59AA3C621D14444007E8362 /* AssetButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59AA3C521D14444007E8362 /* AssetButtons.swift */; };
-		C59AA3C821D14475007E8362 /* AssetButtons.xib in Resources */ = {isa = PBXBuildFile; fileRef = C59AA3C721D14475007E8362 /* AssetButtons.xib */; };
+		C59AA3C621D14444007E8362 /* AssetButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59AA3C521D14444007E8362 /* AssetButtonView.swift */; };
+		C59AA3C821D14475007E8362 /* AssetButtonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C59AA3C721D14475007E8362 /* AssetButtonView.xib */; };
 		C59AA3CA21D1450A007E8362 /* AssetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59AA3C921D1450A007E8362 /* AssetButton.swift */; };
 		C59AA3CC21D14F7A007E8362 /* AssetIssuerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C59AA3CB21D14F7A007E8362 /* AssetIssuerView.xib */; };
 		C59AA3CE21D14F88007E8362 /* AssetIssuerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59AA3CD21D14F88007E8362 /* AssetIssuerView.swift */; };
@@ -119,6 +119,10 @@
 		C59AA3D721D15653007E8362 /* AssetAmountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59AA3D621D15653007E8362 /* AssetAmountCell.swift */; };
 		C59AA3D921D15661007E8362 /* AssetActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59AA3D821D15661007E8362 /* AssetActionCell.swift */; };
 		C59AA3DB21D15691007E8362 /* AssetAmountCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C59AA3DA21D15691007E8362 /* AssetAmountCell.xib */; };
+		C5A4542C21D67E890096467A /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A4542B21D67E890096467A /* UICollectionView+Extensions.swift */; };
+		C5A4542E21DA84B30096467A /* AssetListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5A4542D21DA84B30096467A /* AssetListHeader.xib */; };
+		C5A4543021DA84D40096467A /* AssetListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A4542F21DA84D40096467A /* AssetListHeader.swift */; };
+		C5A4543221DA8C080096467A /* UIView+CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A4543121DA8C080096467A /* UIView+CardCell.swift */; };
 		C5A5A878215E90BD00007787 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A5A877215E90BD00007787 /* WebViewController.swift */; };
 		C5A5A87A215E91F500007787 /* UIView+Autolayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A5A879215E91F500007787 /* UIView+Autolayout.swift */; };
 		C5A5A87C215E935C00007787 /* UIAlertController+Prompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A5A87B215E935C00007787 /* UIAlertController+Prompts.swift */; };
@@ -126,10 +130,10 @@
 		C5AB413120902F7500096A29 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB413020902F7500096A29 /* String+Localization.swift */; };
 		C5AB41332090369000096A29 /* EQSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB41322090369000096A29 /* EQSettings.swift */; };
 		C5AB41352090420D00096A29 /* SettingsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB41342090420D00096A29 /* SettingsDelegate.swift */; };
-		C5AB4137209042E800096A29 /* UITableView+ReusableCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB4136209042E800096A29 /* UITableView+ReusableCells.swift */; };
-		C5AB41392090430900096A29 /* UICollectionView+ReusableCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB41382090430900096A29 /* UICollectionView+ReusableCells.swift */; };
-		C5AB413B2090433000096A29 /* UIView+ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB413A2090433000096A29 /* UIView+ReusableView.swift */; };
-		C5AB413D2090436700096A29 /* UIView+NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AB413C2090436700096A29 /* UIView+NibLoadableView.swift */; };
+		C5ADC57321D58AC300DDAF1E /* AssetListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5ADC57221D58AC300DDAF1E /* AssetListViewController.xib */; };
+		C5ADC57521D58ACF00DDAF1E /* AssetListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ADC57421D58ACF00DDAF1E /* AssetListViewController.swift */; };
+		C5ADC57721D58D7100DDAF1E /* AccountAssetListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ADC57621D58D7100DDAF1E /* AccountAssetListDataSource.swift */; };
+		C5ADC57921D598F100DDAF1E /* AssetListSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ADC57821D598F100DDAF1E /* AssetListSnapshotTests.swift */; };
 		C5ADFFCF2190C8CC004EA646 /* TradePickerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ADFFCE2190C8CC004EA646 /* TradePickerDataSource.swift */; };
 		C5AF7C8A2094B60A00F99835 /* UIImage+CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AF7C892094B60A00F99835 /* UIImage+CALayer.swift */; };
 		C5B0A5E021D5429C00E87DD3 /* AssetIssuerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5B0A5DF21D5429C00E87DD3 /* AssetIssuerCell.xib */; };
@@ -153,6 +157,7 @@
 		C5D8CAC62180D809009F8624 /* AddressCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8CAC52180D809009F8624 /* AddressCoordinator.swift */; };
 		C5D8CAD12182064B009F8624 /* ContactsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8CAD02182064B009F8624 /* ContactsDataSource.swift */; };
 		C5E014A021D5328E0074A552 /* AssetActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5E0149F21D5328E0074A552 /* AssetActionCell.xib */; };
+		C5E4980321D5F8E00013883A /* UICollectionViewCell+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E4980221D5F8E00013883A /* UICollectionViewCell+Reusable.swift */; };
 		C5E8594620AFAFD100B77289 /* AppTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E8594520AFAFD100B77289 /* AppTabController.swift */; };
 		C5E8594920AFB45E00B77289 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E8594820AFB45E00B77289 /* ContainerViewController.swift */; };
 		C5E8594B20AFB47900B77289 /* AppTabController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5E8594A20AFB47900B77289 /* AppTabController.xib */; };
@@ -189,7 +194,6 @@
 		EC2015EA2052EAC7009A73C8 /* WalletTitleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC2015E82052EAC7009A73C8 /* WalletTitleViewController.xib */; };
 		EC2015ED2052FD1A009A73C8 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2015EB2052FD1A009A73C8 /* PinViewController.swift */; };
 		EC2015EE2052FD1A009A73C8 /* PinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC2015EC2052FD1A009A73C8 /* PinViewController.xib */; };
-		EC2015F520531963009A73C8 /* NibLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2015F420531963009A73C8 /* NibLoader.swift */; };
 		EC2015F720532F4B009A73C8 /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2015F620532F4B009A73C8 /* AppButton.swift */; };
 		EC2015FA20533A89009A73C8 /* MnemonicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2015F820533A89009A73C8 /* MnemonicViewController.swift */; };
 		EC2015FB20533A89009A73C8 /* MnemonicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC2015F920533A89009A73C8 /* MnemonicViewController.xib */; };
@@ -381,8 +385,8 @@
 		C595115520BB2B1B00843D33 /* PinDotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinDotView.swift; sourceTree = "<group>"; };
 		C599F3D521BEE8B400749AF8 /* StellarHub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = StellarHub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C59AA3C321D13C38007E8362 /* AssetPriceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetPriceView.swift; sourceTree = "<group>"; };
-		C59AA3C521D14444007E8362 /* AssetButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetButtons.swift; sourceTree = "<group>"; };
-		C59AA3C721D14475007E8362 /* AssetButtons.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetButtons.xib; sourceTree = "<group>"; };
+		C59AA3C521D14444007E8362 /* AssetButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetButtonView.swift; sourceTree = "<group>"; };
+		C59AA3C721D14475007E8362 /* AssetButtonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetButtonView.xib; sourceTree = "<group>"; };
 		C59AA3C921D1450A007E8362 /* AssetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetButton.swift; sourceTree = "<group>"; };
 		C59AA3CB21D14F7A007E8362 /* AssetIssuerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetIssuerView.xib; sourceTree = "<group>"; };
 		C59AA3CD21D14F88007E8362 /* AssetIssuerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetIssuerView.swift; sourceTree = "<group>"; };
@@ -392,6 +396,10 @@
 		C59AA3D821D15661007E8362 /* AssetActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetActionCell.swift; sourceTree = "<group>"; };
 		C59AA3DA21D15691007E8362 /* AssetAmountCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetAmountCell.xib; sourceTree = "<group>"; };
 		C59AA3DD21D15D69007E8362 /* AssetCardSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCardSnapshotTests.swift; sourceTree = "<group>"; };
+		C5A4542B21D67E890096467A /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
+		C5A4542D21DA84B30096467A /* AssetListHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetListHeader.xib; sourceTree = "<group>"; };
+		C5A4542F21DA84D40096467A /* AssetListHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetListHeader.swift; sourceTree = "<group>"; };
+		C5A4543121DA8C080096467A /* UIView+CardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+CardCell.swift"; sourceTree = "<group>"; };
 		C5A5A877215E90BD00007787 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		C5A5A879215E91F500007787 /* UIView+Autolayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Autolayout.swift"; sourceTree = "<group>"; };
 		C5A5A87B215E935C00007787 /* UIAlertController+Prompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Prompts.swift"; sourceTree = "<group>"; };
@@ -399,10 +407,10 @@
 		C5AB413020902F7500096A29 /* String+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
 		C5AB41322090369000096A29 /* EQSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EQSettings.swift; sourceTree = "<group>"; };
 		C5AB41342090420D00096A29 /* SettingsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDelegate.swift; sourceTree = "<group>"; };
-		C5AB4136209042E800096A29 /* UITableView+ReusableCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+ReusableCells.swift"; sourceTree = "<group>"; };
-		C5AB41382090430900096A29 /* UICollectionView+ReusableCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+ReusableCells.swift"; sourceTree = "<group>"; };
-		C5AB413A2090433000096A29 /* UIView+ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ReusableView.swift"; sourceTree = "<group>"; };
-		C5AB413C2090436700096A29 /* UIView+NibLoadableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NibLoadableView.swift"; sourceTree = "<group>"; };
+		C5ADC57221D58AC300DDAF1E /* AssetListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetListViewController.xib; sourceTree = "<group>"; };
+		C5ADC57421D58ACF00DDAF1E /* AssetListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetListViewController.swift; sourceTree = "<group>"; };
+		C5ADC57621D58D7100DDAF1E /* AccountAssetListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAssetListDataSource.swift; sourceTree = "<group>"; };
+		C5ADC57821D598F100DDAF1E /* AssetListSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetListSnapshotTests.swift; sourceTree = "<group>"; };
 		C5ADFFCE2190C8CC004EA646 /* TradePickerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradePickerDataSource.swift; sourceTree = "<group>"; };
 		C5AF7C892094B60A00F99835 /* UIImage+CALayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+CALayer.swift"; sourceTree = "<group>"; };
 		C5B0A5DF21D5429C00E87DD3 /* AssetIssuerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetIssuerCell.xib; sourceTree = "<group>"; };
@@ -425,6 +433,7 @@
 		C5D8CAD02182064B009F8624 /* ContactsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsDataSource.swift; sourceTree = "<group>"; };
 		C5E0149D21D531990074A552 /* SnapshotTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTest.swift; sourceTree = "<group>"; };
 		C5E0149F21D5328E0074A552 /* AssetActionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetActionCell.xib; sourceTree = "<group>"; };
+		C5E4980221D5F8E00013883A /* UICollectionViewCell+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Reusable.swift"; sourceTree = "<group>"; };
 		C5E8594520AFAFD100B77289 /* AppTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabController.swift; sourceTree = "<group>"; };
 		C5E8594820AFB45E00B77289 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		C5E8594A20AFB47900B77289 /* AppTabController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppTabController.xib; sourceTree = "<group>"; };
@@ -471,7 +480,6 @@
 		EC2015E82052EAC7009A73C8 /* WalletTitleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletTitleViewController.xib; sourceTree = "<group>"; };
 		EC2015EB2052FD1A009A73C8 /* PinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
 		EC2015EC2052FD1A009A73C8 /* PinViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PinViewController.xib; sourceTree = "<group>"; };
-		EC2015F420531963009A73C8 /* NibLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoader.swift; sourceTree = "<group>"; };
 		EC2015F620532F4B009A73C8 /* AppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
 		EC2015F820533A89009A73C8 /* MnemonicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicViewController.swift; sourceTree = "<group>"; };
 		EC2015F920533A89009A73C8 /* MnemonicViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MnemonicViewController.xib; sourceTree = "<group>"; };
@@ -623,6 +631,7 @@
 				C5D8CAD02182064B009F8624 /* ContactsDataSource.swift */,
 				C5ADFFCE2190C8CC004EA646 /* TradePickerDataSource.swift */,
 				C5114DB6219548AC00C88E4F /* TransactionDetailsDataSource.swift */,
+				C5ADC57621D58D7100DDAF1E /* AccountAssetListDataSource.swift */,
 			);
 			path = "Data Sources";
 			sourceTree = "<group>";
@@ -642,8 +651,8 @@
 				C531E30021D133CA00875B5E /* AssetPriceView.xib */,
 				C531E30221D13B4400875B5E /* AssetHeaderView.swift */,
 				C59AA3C321D13C38007E8362 /* AssetPriceView.swift */,
-				C59AA3C521D14444007E8362 /* AssetButtons.swift */,
-				C59AA3C721D14475007E8362 /* AssetButtons.xib */,
+				C59AA3C521D14444007E8362 /* AssetButtonView.swift */,
+				C59AA3C721D14475007E8362 /* AssetButtonView.xib */,
 				C59AA3C921D1450A007E8362 /* AssetButton.swift */,
 				C59AA3CB21D14F7A007E8362 /* AssetIssuerView.xib */,
 				C59AA3CD21D14F88007E8362 /* AssetIssuerView.swift */,
@@ -675,6 +684,7 @@
 			isa = PBXGroup;
 			children = (
 				C59AA3DD21D15D69007E8362 /* AssetCardSnapshotTests.swift */,
+				C5ADC57821D598F100DDAF1E /* AssetListSnapshotTests.swift */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -759,6 +769,8 @@
 				C5B0A5DF21D5429C00E87DD3 /* AssetIssuerCell.xib */,
 				C59AA3D821D15661007E8362 /* AssetActionCell.swift */,
 				C5E0149F21D5328E0074A552 /* AssetActionCell.xib */,
+				C5A4542D21DA84B30096467A /* AssetListHeader.xib */,
+				C5A4542F21DA84D40096467A /* AssetListHeader.swift */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -769,6 +781,15 @@
 				C5A5A877215E90BD00007787 /* WebViewController.swift */,
 			);
 			path = Misc;
+			sourceTree = "<group>";
+		};
+		C5ADC57121D58AAC00DDAF1E /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				C5ADC57221D58AC300DDAF1E /* AssetListViewController.xib */,
+				C5ADC57421D58ACF00DDAF1E /* AssetListViewController.swift */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		C5B0A5F521D5806100E87DD3 /* BlockEQSnapshotTests */ = {
@@ -953,6 +974,7 @@
 		EC2015D62052DB34009A73C8 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C5ADC57121D58AAC00DDAF1E /* Assets */,
 				C53E628B219A01B5006BF2F1 /* Diagnostics */,
 				C5401D322177FF8100A12AC2 /* Transactions */,
 				C5BB02472165268800E4AAD1 /* Keys */,
@@ -972,26 +994,25 @@
 			isa = PBXGroup;
 			children = (
 				C5AF7C892094B60A00F99835 /* UIImage+CALayer.swift */,
-				ECC47A6820589F92002BA573 /* UIView+Shake.swift */,
 				C5AB413020902F7500096A29 /* String+Localization.swift */,
-				C5AB4136209042E800096A29 /* UITableView+ReusableCells.swift */,
-				C5AB41382090430900096A29 /* UICollectionView+ReusableCells.swift */,
-				C5AB413A2090433000096A29 /* UIView+ReusableView.swift */,
-				C5AB413C2090436700096A29 /* UIView+NibLoadableView.swift */,
 				EC4BB64820BE4176008252AD /* String+DecimalFormatter.swift */,
 				EC4F65FD20C8CD2C0036293D /* Date+Format.swift */,
 				EC4F65FF20C8CF0C0036293D /* String+Date.swift */,
 				C4F49389211E19EA000B0800 /* String+Base64.swift */,
 				C5C1D3D5211BF39B0014B39F /* UIDevice.swift */,
+				ECC47A6820589F92002BA573 /* UIView+Shake.swift */,
 				C5A5A879215E91F500007787 /* UIView+Autolayout.swift */,
+				C54EFE4921798668005FA6D3 /* UIView+Layer.swift */,
 				C5A5A87B215E935C00007787 /* UIAlertController+Prompts.swift */,
 				C5BED37B2163F1E100BEE464 /* Price+Extensions.swift */,
-				C54EFE4921798668005FA6D3 /* UIView+Layer.swift */,
 				C53E62872199E667006BF2F1 /* Alamofire+JSONEncoding.swift */,
 				C53E629C219B41FF006BF2F1 /* UIStackView+Extensions.swift */,
 				C5681BBA21A8B9BD00ACEB21 /* UIViewController+AdvancedSecurity.swift */,
 				C5B3F9BE21B5C9BA009375AC /* UIViewController+Error.swift */,
 				C51B6E5B21B9B553001DFEF7 /* UIViewController+Blurrable.swift */,
+				C5E4980221D5F8E00013883A /* UICollectionViewCell+Reusable.swift */,
+				C5A4542B21D67E890096467A /* UICollectionView+Extensions.swift */,
+				C5A4543121DA8C080096467A /* UIView+CardCell.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1001,7 +1022,6 @@
 			children = (
 				ECB1D955207E965C0088826D /* Progress HUD */,
 				EC2015E42052E8AA009A73C8 /* Constants.swift */,
-				EC2015F420531963009A73C8 /* NibLoader.swift */,
 				EC0B19252054BC3B0052802C /* AppNavigationController.swift */,
 				EC72C0B12059742900141D6F /* KeychainHelper.swift */,
 				C52186B820C06B8100FF2A76 /* SecurityOptionHelper.swift */,
@@ -1296,6 +1316,7 @@
 				ECD3A353207D2CE5000609A0 /* WalletItemActivateCell.xib in Resources */,
 				EC6EE89420B6005D0033C299 /* MyOffersViewController.xib in Resources */,
 				EC52B3CF20BBB1CB006299A1 /* OrderBookCell.xib in Resources */,
+				C5ADC57321D58AC300DDAF1E /* AssetListViewController.xib in Resources */,
 				EC0B191B205465BF0052802C /* WalletCell.xib in Resources */,
 				C5E014A021D5328E0074A552 /* AssetActionCell.xib in Resources */,
 				C54ADD4F2178CFC70078F69E /* TransactionOperationCell.xib in Resources */,
@@ -1323,12 +1344,13 @@
 				EC0B191F205486AB0052802C /* TransactionHistoryCell.xib in Resources */,
 				EC2015EE2052FD1A009A73C8 /* PinViewController.xib in Resources */,
 				C54ADD532178FB9B0078F69E /* TransactionSignatureCell.xib in Resources */,
+				C5A4542E21DA84B30096467A /* AssetListHeader.xib in Resources */,
 				EC581C7320766BA8003A397E /* WalletSwitchingViewController.xib in Resources */,
 				EC360A032056181E00FC31F9 /* VerificationViewController.xib in Resources */,
 				EC581C7920769E0A003A397E /* WalletItemCell.xib in Resources */,
 				EC42584C2054E346000941B5 /* SendViewController.xib in Resources */,
 				EC6EE89020B6004B0033C299 /* OrderBookViewController.xib in Resources */,
-				C59AA3C821D14475007E8362 /* AssetButtons.xib in Resources */,
+				C59AA3C821D14475007E8362 /* AssetButtonView.xib in Resources */,
 				EC1CEE5420577E880005F74E /* WordSuggestionCell.xib in Resources */,
 				C5E8594B20AFB47900B77289 /* AppTabController.xib in Resources */,
 				EC4258502054EE76000941B5 /* SendAmountViewController.xib in Resources */,
@@ -1399,6 +1421,7 @@
 				"${BUILT_PRODUCTS_DIR}/KeychainSwift/KeychainSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Repeat/Repeat.framework",
+				"${BUILT_PRODUCTS_DIR}/Reusable/Reusable.framework",
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/Whisper/Whisper.framework",
 				"${BUILT_PRODUCTS_DIR}/stellar-ios-mac-sdk/stellarsdk.framework",
@@ -1411,6 +1434,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Repeat.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reusable.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Whisper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/stellarsdk.framework",
@@ -1565,6 +1589,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5ADC57921D598F100DDAF1E /* AssetListSnapshotTests.swift in Sources */,
 				C5B0A5E621D57FA700E87DD3 /* AssetCardSnapshotTests.swift in Sources */,
 				C5B0A5E721D57FA700E87DD3 /* SnapshotTest.swift in Sources */,
 			);
@@ -1589,15 +1614,14 @@
 				C51B6E5C21B9B553001DFEF7 /* UIViewController+Blurrable.swift in Sources */,
 				C5401D342178005B00A12AC2 /* TransactionDetailsViewController.swift in Sources */,
 				EC2015F720532F4B009A73C8 /* AppButton.swift in Sources */,
-				C5AB413D2090436700096A29 /* UIView+NibLoadableView.swift in Sources */,
+				C5A4543021DA84D40096467A /* AssetListHeader.swift in Sources */,
 				C51441FC217E839E006C44F4 /* WalletDataSource.swift in Sources */,
 				ECB1D958207E966D0088826D /* MBProgressHUD.m in Sources */,
 				C54EFE4A21798668005FA6D3 /* UIView+Layer.swift in Sources */,
-				C59AA3C621D14444007E8362 /* AssetButtons.swift in Sources */,
+				C59AA3C621D14444007E8362 /* AssetButtonView.swift in Sources */,
 				C5173A8621A4A94800B5272F /* CenteredCollectionViewFlowLayout.swift in Sources */,
 				C595115620BB2B1B00843D33 /* PinDotView.swift in Sources */,
 				EC6EE88B20B600070033C299 /* TradeViewController.swift in Sources */,
-				EC2015F520531963009A73C8 /* NibLoader.swift in Sources */,
 				C5EC212221961EC5002EA45D /* StellarOperation+Extensions.swift in Sources */,
 				EC11062120C7061700FD3684 /* MyOffersHeaderView.swift in Sources */,
 				EC581C7220766BA8003A397E /* WalletSwitchingViewController.swift in Sources */,
@@ -1606,7 +1630,6 @@
 				C54ADD512178FB8F0078F69E /* TransactionSignatureCell.swift in Sources */,
 				EC6EE88F20B6004B0033C299 /* OrderBookViewController.swift in Sources */,
 				C4E9A77420F79F150028651F /* BalanceViewController.swift in Sources */,
-				C5AB413B2090433000096A29 /* UIView+ReusableView.swift in Sources */,
 				C5E8595020AFF09800B77289 /* OnboardingCoordinator.swift in Sources */,
 				C59AA3C421D13C38007E8362 /* AssetPriceView.swift in Sources */,
 				C499756621129D2D00E2299C /* TrustedPartiesViewController.swift in Sources */,
@@ -1620,6 +1643,7 @@
 				ECF9F44B208937E400160843 /* InflationViewController.swift in Sources */,
 				C54EFE4C217A2442005FA6D3 /* TransactionSection.swift in Sources */,
 				C5A5A878215E90BD00007787 /* WebViewController.swift in Sources */,
+				C5A4543221DA8C080096467A /* UIView+CardCell.swift in Sources */,
 				C439A22B211B6F9C0025C047 /* CreateTokenViewController.swift in Sources */,
 				C590B9C221A09A6000B5262A /* ApplicationCoordinator+Wallet.swift in Sources */,
 				EC1CEE5320577E880005F74E /* WordSuggestionCell.swift in Sources */,
@@ -1645,6 +1669,7 @@
 				EC52B3D220BC951F006299A1 /* OffersCell.swift in Sources */,
 				C514420E217ED2B7006C44F4 /* StellarTransaction+Extensions.swift in Sources */,
 				C5B3F9BF21B5C9BA009375AC /* UIViewController+Error.swift in Sources */,
+				C5A4542C21D67E890096467A /* UICollectionView+Extensions.swift in Sources */,
 				C5518B3F219CCD0C00E60AD4 /* DeviceData.swift in Sources */,
 				EC64CF4F20BF05F5007FE199 /* OrderBookEmptyCell.swift in Sources */,
 				EC2015E52052E8AA009A73C8 /* Constants.swift in Sources */,
@@ -1656,10 +1681,11 @@
 				EC2015ED2052FD1A009A73C8 /* PinViewController.swift in Sources */,
 				EC0B192220549B240052802C /* ReceiveViewController.swift in Sources */,
 				C5A5A87C215E935C00007787 /* UIAlertController+Prompts.swift in Sources */,
+				C5ADC57721D58D7100DDAF1E /* AccountAssetListDataSource.swift in Sources */,
 				C5D8CAD12182064B009F8624 /* ContactsDataSource.swift in Sources */,
+				C5ADC57521D58ACF00DDAF1E /* AssetListViewController.swift in Sources */,
 				C53E62882199E667006BF2F1 /* Alamofire+JSONEncoding.swift in Sources */,
 				C54ADD4921781EE20078F69E /* TransactionDetailsCell.swift in Sources */,
-				C5AB41392090430900096A29 /* UICollectionView+ReusableCells.swift in Sources */,
 				ECC47A6920589F92002BA573 /* UIView+Shake.swift in Sources */,
 				EC6EE89320B6005D0033C299 /* MyOffersViewController.swift in Sources */,
 				C53978CB20BF417100587D99 /* SettingsSwitchCell.swift in Sources */,
@@ -1681,7 +1707,6 @@
 				C53978CD20BF4EF000587D99 /* SettingsNormalCell.swift in Sources */,
 				C53E628421989050006BF2F1 /* Diagnostic.swift in Sources */,
 				C5FDBC6A211D384C0051AB9F /* BlankAuthenticationViewController.swift in Sources */,
-				C5AB4137209042E800096A29 /* UITableView+ReusableCells.swift in Sources */,
 				C531E30321D13B4400875B5E /* AssetHeaderView.swift in Sources */,
 				EC4BB64920BE4176008252AD /* String+DecimalFormatter.swift in Sources */,
 				EC2015FA20533A89009A73C8 /* MnemonicViewController.swift in Sources */,
@@ -1713,6 +1738,7 @@
 				C55458FC2124BB1B00032699 /* AuthenticatingViewController.swift in Sources */,
 				C53E628A219A0175006BF2F1 /* DiagnosticCoordinator.swift in Sources */,
 				C41713E521211A8800C29FE2 /* AddPeerViewController.swift in Sources */,
+				C5E4980321D5F8E00013883A /* UICollectionViewCell+Reusable.swift in Sources */,
 				C57A8542217815410048A6B5 /* TransactionDetailsSectionHeader.swift in Sources */,
 				C414813421248F5B0057ED74 /* StellarContactViewController.swift in Sources */,
 				C525C97B20B79890006C138F /* KeyboardView.swift in Sources */,

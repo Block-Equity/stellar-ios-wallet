@@ -6,63 +6,65 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
+import Reusable
 
-protocol AssetManageCellDelegate: AnyObject {
-    func selectedAction(mode: AssetManageCell.Mode)
+protocol IndexableCell {
+    var indexPath: IndexPath? { get }
 }
 
-final class AssetManageCell: UICollectionViewCell, ReusableView, NibLoadableView {
+protocol AssetManageCellDelegate: AnyObject {
+    func selectedAction(mode: AssetManageCell.Mode, cellPath: IndexPath?)
+}
+
+final class AssetManageCell: UICollectionViewCell, Reusable, NibOwnerLoadable, IndexableCell {
     @IBOutlet var view: UIView!
     @IBOutlet weak var cardView: UIView!
-    @IBOutlet weak var headerContainer: UIView!
+    @IBOutlet weak var headerContainer: AssetHeaderView!
     @IBOutlet weak var actionButton: UIButton!
 
-    let headerView = AssetHeaderView(frame: .zero)
+    @IBOutlet weak var cardLeftInset: NSLayoutConstraint!
+    @IBOutlet weak var cardBottomInset: NSLayoutConstraint!
+    @IBOutlet weak var cardTopInset: NSLayoutConstraint!
+    @IBOutlet weak var cardRightInset: NSLayoutConstraint!
 
     weak var delegate: AssetManageCellDelegate?
+
     var mode: Mode = .add
+    var indexPath: IndexPath?
+    var preferredWidth: CGFloat?
+    var cardInset: UIEdgeInsets = .zero
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+        self.loadNibContent()
         setupStyle()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupView()
+        self.loadNibContent()
         setupStyle()
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func prepareForReuse() {
+        super.prepareForReuse()
         actionButton.layer.cornerRadius = actionButton.frame.width / 2
     }
 
-    func setupView() {
-        let nibView: UIView = NibLoader<UIView>(nibName: AssetManageCell.nibName).loadView(owner: self)
-        contentView.addSubview(nibView)
-        contentView.constrainViewToAllEdges(nibView)
-
-        headerContainer.addSubview(headerView)
-        headerContainer.constrainViewToAllEdges(headerView)
-    }
-
     func setupStyle() {
-        cardView.backgroundColor = .white
-        cardView.layer.cornerRadius = 5
-        cardView.clipsToBounds = false
-        cardView.layer.masksToBounds = false
+        view.backgroundColor = .clear
 
+        actionButton.layer.cornerRadius = actionButton.frame.width / 2
         actionButton.contentVerticalAlignment = .center
         actionButton.titleLabel?.baselineAdjustment = .alignCenters
         actionButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         actionButton.tintColor = .white
+
+        applyCardStyle()
     }
 
-    func update(with viewModel: ViewModel) {
-        headerView.update(with: viewModel.headerData)
+    func update(with viewModel: ViewModel, indexPath path: IndexPath) {
+        headerContainer.update(with: viewModel.headerData)
         mode = viewModel.mode
 
         switch viewModel.mode {
@@ -74,12 +76,25 @@ final class AssetManageCell: UICollectionViewCell, ReusableView, NibLoadableView
             actionButton.setTitle("-", for: .normal)
             actionButton.backgroundColor = Colors.red
         }
+
+        indexPath = path
     }
 
-    @IBAction func selectedAction(_ sender: Any) {
-        delegate?.selectedAction(mode: mode)
+    override func preferredLayoutAttributesFitting(
+        _ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        return self.cellLayoutAttributes(attributes: layoutAttributes)
     }
 }
+
+// MARK: - IBActions
+extension AssetManageCell {
+    @IBAction func selectedAction(_ sender: Any) {
+        delegate?.selectedAction(mode: mode, cellPath: indexPath)
+    }
+}
+
+// MARK: - StylableCardCell
+extension AssetManageCell: StylableCardCell { }
 
 extension AssetManageCell {
     enum Mode {

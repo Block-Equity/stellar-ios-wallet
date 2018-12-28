@@ -88,8 +88,8 @@ final class ContactsViewController: UIViewController {
         tableViewHeaderAddressBook.backgroundColor = Colors.lightBackground
         tableViewHeaderAddressBookTitleLabel.textColor = Colors.darkGray
 
-        tableView.registerCell(type: StellarContactCell.self)
-        tableView.registerCell(type: ContactCell.self)
+        tableView.register(cellType: StellarContactCell.self)
+        tableView.register(cellType: ContactCell.self)
         tableView.delegate = self
 
         accessDeniedView.isHidden = true

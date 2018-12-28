@@ -9,6 +9,7 @@
 import StellarHub
 import os.log
 
+import stellarsdk
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

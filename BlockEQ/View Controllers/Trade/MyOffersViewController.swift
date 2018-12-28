@@ -28,8 +28,8 @@ class MyOffersViewController: UIViewController {
     }
 
     func setupView() {
-        tableView.registerCell(type: OrderBookEmptyCell.self)
-        tableView.registerCell(type: OffersCell.self)
+        tableView.register(cellType: OrderBookEmptyCell.self)
+        tableView.register(cellType: OffersCell.self)
         tableView.backgroundColor = Colors.lightBackground
     }
 

@@ -10,65 +10,64 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AssetManageCell">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AssetManageCell" customModule="BlockEQ" customModuleProvider="target">
             <connections>
-                <outlet property="actionButton" destination="Aw7-Qo-CIa" id="WjU-WN-cbW"/>
-                <outlet property="cardView" destination="YuB-d9-OEJ" id="44s-5B-yR9"/>
-                <outlet property="headerContainer" destination="mXc-TR-w5l" id="vk2-Oa-SRq"/>
-                <outlet property="view" destination="ZDa-Nr-b3F" id="07T-E8-wZX"/>
+                <outlet property="actionButton" destination="Aw7-Qo-CIa" id="C2V-Rl-DY0"/>
+                <outlet property="cardBottomInset" destination="g2S-BS-WEm" id="GFr-k1-2xa"/>
+                <outlet property="cardLeftInset" destination="0YW-Lh-2A2" id="nAA-Nh-k4b"/>
+                <outlet property="cardRightInset" destination="r4Z-Hv-x0O" id="DXe-h9-gA2"/>
+                <outlet property="cardTopInset" destination="XY1-gP-Qzu" id="nOz-Rm-MZI"/>
+                <outlet property="cardView" destination="YuB-d9-OEJ" id="rn3-b5-jHg"/>
+                <outlet property="headerContainer" destination="mXc-TR-w5l" id="WJ8-K9-vre"/>
+                <outlet property="view" destination="8b2-kq-jKn" id="BVy-zQ-cES"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="ZDa-Nr-b3F">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+        <view contentMode="scaleToFill" id="8b2-kq-jKn">
+            <rect key="frame" x="0.0" y="0.0" width="325" height="100"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YuB-d9-OEJ" userLabel="Card">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mXc-TR-w5l" userLabel="Header Container" customClass="AssetHeaderView" customModule="BlockEQ" customModuleProvider="target">
-                                <rect key="frame" x="15" y="15" width="290" height="50"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="290" id="cIl-E3-wXF"/>
-                                </constraints>
-                                <viewLayoutGuide key="safeArea" id="syu-lW-zml"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aw7-Qo-CIa" userLabel="Action Button">
-                                <rect key="frame" x="330" y="25" width="30" height="30"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="Aw7-Qo-CIa" secondAttribute="height" multiplier="1:1" id="bXc-wJ-21o"/>
-                                    <constraint firstAttribute="width" constant="30" id="tbf-5e-RfK"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="selectedAction:" destination="-1" eventType="touchUpInside" id="6q4-Ml-PjY"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="Yom-46-jbH" firstAttribute="trailing" secondItem="Aw7-Qo-CIa" secondAttribute="trailing" constant="15" id="7WG-xu-ihP"/>
-                            <constraint firstItem="mXc-TR-w5l" firstAttribute="top" secondItem="Yom-46-jbH" secondAttribute="top" constant="15" id="JA4-Is-uHp"/>
-                            <constraint firstItem="Yom-46-jbH" firstAttribute="bottom" secondItem="mXc-TR-w5l" secondAttribute="bottom" constant="15" id="UR4-et-WS3"/>
-                            <constraint firstItem="mXc-TR-w5l" firstAttribute="leading" secondItem="Yom-46-jbH" secondAttribute="leading" constant="15" id="YCN-gB-S15"/>
-                            <constraint firstItem="Aw7-Qo-CIa" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mXc-TR-w5l" secondAttribute="trailing" constant="5" id="ZyS-Uh-MXS"/>
-                            <constraint firstItem="Aw7-Qo-CIa" firstAttribute="centerY" secondItem="mXc-TR-w5l" secondAttribute="centerY" id="sP0-BY-fic"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="Yom-46-jbH"/>
-                    </view>
-                </subviews>
-            </view>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YuB-d9-OEJ" userLabel="Card">
+                    <rect key="frame" x="0.0" y="0.0" width="325" height="100"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mXc-TR-w5l" userLabel="Header Container" customClass="AssetHeaderView" customModule="BlockEQ" customModuleProvider="target">
+                            <rect key="frame" x="15" y="15" width="250" height="70"/>
+                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <viewLayoutGuide key="safeArea" id="syu-lW-zml"/>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aw7-Qo-CIa" userLabel="Action Button">
+                            <rect key="frame" x="280" y="35" width="30" height="30"/>
+                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="Aw7-Qo-CIa" secondAttribute="height" multiplier="1:1" id="bXc-wJ-21o"/>
+                                <constraint firstAttribute="width" constant="30" id="tbf-5e-RfK"/>
+                            </constraints>
+                            <connections>
+                                <action selector="selectedAction:" destination="-1" eventType="touchUpInside" id="gA3-vd-EIc"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Yom-46-jbH" firstAttribute="trailing" secondItem="Aw7-Qo-CIa" secondAttribute="trailing" constant="15" id="7WG-xu-ihP"/>
+                        <constraint firstItem="mXc-TR-w5l" firstAttribute="top" secondItem="Yom-46-jbH" secondAttribute="top" constant="15" id="JA4-Is-uHp"/>
+                        <constraint firstItem="Yom-46-jbH" firstAttribute="bottom" secondItem="mXc-TR-w5l" secondAttribute="bottom" constant="15" id="UR4-et-WS3"/>
+                        <constraint firstItem="mXc-TR-w5l" firstAttribute="leading" secondItem="Yom-46-jbH" secondAttribute="leading" constant="15" id="YCN-gB-S15"/>
+                        <constraint firstItem="Aw7-Qo-CIa" firstAttribute="leading" secondItem="mXc-TR-w5l" secondAttribute="trailing" constant="15" id="ZyS-Uh-MXS"/>
+                        <constraint firstItem="Aw7-Qo-CIa" firstAttribute="centerY" secondItem="mXc-TR-w5l" secondAttribute="centerY" id="sP0-BY-fic"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="Yom-46-jbH"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="YuB-d9-OEJ" secondAttribute="bottom" id="7xF-tu-XuY"/>
-                <constraint firstItem="YuB-d9-OEJ" firstAttribute="top" secondItem="ZDa-Nr-b3F" secondAttribute="top" id="O5O-hf-jUV"/>
-                <constraint firstItem="YuB-d9-OEJ" firstAttribute="leading" secondItem="ZDa-Nr-b3F" secondAttribute="leading" id="cIv-oz-iat"/>
-                <constraint firstAttribute="trailing" secondItem="YuB-d9-OEJ" secondAttribute="trailing" id="q5r-ad-B5q"/>
+                <constraint firstItem="YuB-d9-OEJ" firstAttribute="leading" secondItem="8b2-kq-jKn" secondAttribute="leading" id="0YW-Lh-2A2"/>
+                <constraint firstItem="YuB-d9-OEJ" firstAttribute="top" secondItem="8b2-kq-jKn" secondAttribute="top" id="XY1-gP-Qzu"/>
+                <constraint firstAttribute="bottom" secondItem="YuB-d9-OEJ" secondAttribute="bottom" id="g2S-BS-WEm"/>
+                <constraint firstAttribute="trailing" secondItem="YuB-d9-OEJ" secondAttribute="trailing" id="r4Z-Hv-x0O"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="1Ea-nw-pnk"/>
-        </collectionViewCell>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="lOS-VL-gd5"/>
+        </view>
     </objects>
 </document>

@@ -6,9 +6,9 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import UIKit
+import Reusable
 
-class OrderBookEmptyCell: UITableViewCell, ReusableView, NibLoadableView {
+class OrderBookEmptyCell: UITableViewCell, Reusable {
     @IBOutlet weak var label: UILabel!
 
     static let rowHeight: CGFloat = 100.0

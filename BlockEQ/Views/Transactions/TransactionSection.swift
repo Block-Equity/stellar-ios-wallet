@@ -65,12 +65,12 @@ enum TransactionSection: Int, RawRepresentable {
 
         switch self {
         case .ledger:
-            let basicHeader: TransactionDetailsBasicHeader = collectionView.dequeueReusableHeader(for: index)
+            let basicHeader: TransactionDetailsBasicHeader = collectionView.dequeueHeader(for: index)
             basicHeader.leftLabel.text = self.title
             basicHeader.rightLabel.text = data
             view = basicHeader
         default:
-            let expandingHeader: TransactionDetailsSectionHeader = collectionView.dequeueReusableHeader(for: index)
+            let expandingHeader: TransactionDetailsSectionHeader = collectionView.dequeueFooter(for: index)
             expandingHeader.collapsed = collapsed
             expandingHeader.headerTitle.text = self.title
             expandingHeader.delegate = delegate

@@ -6,9 +6,9 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
+import Reusable
 
-final class UppercasedTableViewHeader: UITableViewHeaderFooterView, ReusableView {
+final class UppercasedTableViewHeader: UITableViewHeaderFooterView, Reusable {
     override func layoutSubviews() {
         super.layoutSubviews()
         textLabel?.text = self.textLabel?.text?.uppercased()
@@ -62,9 +62,9 @@ final class SettingsViewController: UIViewController {
     }
 
     func setupView() {
-        tableView?.registerHeader(type: UppercasedTableViewHeader.self)
-        tableView?.registerCell(type: SettingsNormalCell.self)
-        tableView?.registerCell(type: SettingsSwitchCell.self)
+        tableView?.register(headerFooterViewType: UppercasedTableViewHeader.self)
+        tableView?.register(cellType: SettingsNormalCell.self)
+        tableView?.register(cellType: SettingsSwitchCell.self)
         tableView?.delegate = self
         tableView?.dataSource = self
     }
@@ -117,8 +117,8 @@ extension SettingsViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header: UppercasedTableViewHeader = tableView.dequeueReusableHeader()
-        header.textLabel?.text = optionList[section].name
+        let header: UppercasedTableViewHeader? = tableView.dequeueReusableHeaderFooterView()
+        header?.textLabel?.text = optionList[section].name
         return header
     }
 

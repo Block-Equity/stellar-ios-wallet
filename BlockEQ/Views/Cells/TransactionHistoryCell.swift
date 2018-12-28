@@ -7,8 +7,9 @@
 //
 
 import StellarHub
+import Reusable
 
-class TransactionHistoryCell: UITableViewCell, ReusableView, NibLoadableView {
+final class TransactionHistoryCell: UITableViewCell, NibReusable {
     @IBOutlet var activityLabel: UILabel!
     @IBOutlet var amountLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!

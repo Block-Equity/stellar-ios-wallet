@@ -51,11 +51,13 @@ final class TransactionDetailsViewController: UIViewController {
         collectionView.dataSource = dataSource
         collectionView.allowsSelection = true
         collectionView.alwaysBounceVertical = true
-        collectionView.registerHeader(type: TransactionDetailsBasicHeader.self)
-        collectionView.registerHeader(type: TransactionDetailsSectionHeader.self)
-        collectionView.registerCell(type: TransactionDetailsCell.self)
-        collectionView.registerCell(type: TransactionOperationCell.self)
-        collectionView.registerCell(type: TransactionSignatureCell.self)
+        collectionView.register(supplementaryViewType: TransactionDetailsBasicHeader.self,
+                                ofKind: UICollectionView.elementKindSectionHeader)
+        collectionView.register(supplementaryViewType: TransactionDetailsSectionHeader.self,
+                                ofKind: UICollectionView.elementKindSectionHeader)
+        collectionView.register(cellType: TransactionDetailsCell.self)
+        collectionView.register(cellType: TransactionOperationCell.self)
+        collectionView.register(cellType: TransactionSignatureCell.self)
     }
 
     func setupStyle() {

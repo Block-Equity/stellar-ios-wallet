@@ -6,9 +6,9 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import UIKit
+import Reusable
 
-class WalletCell: UICollectionViewCell, ReusableView {
+class WalletCell: UICollectionViewCell, Reusable {
     @IBOutlet var holdingView: UIView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var currencyLabel: UILabel!

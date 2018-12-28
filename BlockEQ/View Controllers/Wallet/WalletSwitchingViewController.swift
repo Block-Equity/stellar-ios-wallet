@@ -54,8 +54,8 @@ final class WalletSwitchingViewController: UIViewController {
         tableViewHeaderTitleLabel.textColor = Colors.darkGray
 
         tableView?.delegate = self
-        tableView.registerCell(type: WalletItemCell.self)
-        tableView.registerCell(type: WalletItemActivateCell.self)
+        tableView.register(cellType: WalletItemCell.self)
+        tableView.register(cellType: WalletItemActivateCell.self)
     }
 
     func addNavigationHeader() {

@@ -6,9 +6,9 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
+import Reusable
 
-final class TransactionOperationCell: UICollectionViewCell, ReusableView, NibLoadableView {
+final class TransactionOperationCell: UICollectionViewCell, NibReusable {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var sequenceLabel: UILabel!

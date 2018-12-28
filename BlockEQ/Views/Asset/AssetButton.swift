@@ -6,13 +6,13 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Foundation
+import Reusable
 
 @IBDesignable
 final class AssetButton: UIButton {
     var buttonColor: UIColor? {
         didSet {
-            self.backgroundColor = self.buttonColor
+            backgroundColor = buttonColor
         }
     }
 
@@ -22,8 +22,13 @@ final class AssetButton: UIButton {
     }
 
     func setupView() {
-        self.backgroundColor = Colors.stellarBlue
-        self.layer.cornerRadius = 5
+        layer.cornerRadius = 5
+        backgroundColor = Colors.stellarBlue
+
+        setTitle("Button", for: .normal)
+        setTitleColor(Colors.white, for: .normal)
+        titleLabel?.font = UIFont.systemFont(ofSize: 11, weight: .medium)
+        titleLabel?.textColor = Colors.white
     }
 
     override func prepareForInterfaceBuilder() {

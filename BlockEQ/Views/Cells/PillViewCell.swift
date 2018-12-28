@@ -6,9 +6,9 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import UIKit
+import Reusable
 
-final class PillViewCell: UICollectionViewCell, NibLoadableView, ReusableView {
+final class PillViewCell: UICollectionViewCell, NibReusable {
     static let cellPadding = CGFloat(10)
     static let edgeInsets = UIEdgeInsets(top: PillViewCell.cellPadding / 2,
                                          left: PillViewCell.cellPadding,
