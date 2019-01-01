@@ -27,14 +27,17 @@ final class AssetPriceView: UIView, NibOwnerLoadable {
     }
 
     func setupStyle() {
+        view.backgroundColor = .clear
         stackView.backgroundColor = .clear
-        amountLabel.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
-        priceLabel.font = UIFont.systemFont(ofSize: 9, weight: .regular)
+
+        amountLabel.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        priceLabel.font = UIFont.systemFont(ofSize: 10, weight: .regular)
     }
 
     func update(with viewModel: ViewModel) {
         amountLabel.text = viewModel.amount
         priceLabel.text = viewModel.price
+        priceLabel.isHidden = viewModel.hidePrice
     }
 }
 
@@ -42,5 +45,18 @@ extension AssetPriceView {
     struct ViewModel {
         var amount: String
         var price: String
+        var hidePrice: Bool
+
+        init(amount: String, price: String) {
+            self.amount = amount
+            self.price = price
+            self.hidePrice = price.isEmpty
+        }
+
+        init(amount: String, price: String, hidePrice: Bool) {
+            self.amount = amount
+            self.price = price
+            self.hidePrice = hidePrice
+        }
     }
 }

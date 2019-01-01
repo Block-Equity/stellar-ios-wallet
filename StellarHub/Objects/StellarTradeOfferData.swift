@@ -16,12 +16,12 @@ public struct StellarTradeOfferData {
         public static let all: [TradeType] = [.market, .limit]
     }
 
-    let type: TradeType
-    let assetPair: StellarAssetPair
-    let price: Price
-    let numerator: Decimal
-    let denominator: Decimal
-    let offerId: Int?
+    public let type: TradeType
+    public let assetPair: StellarAssetPair
+    public let price: Price
+    public let numerator: Decimal
+    public let denominator: Decimal
+    public let offerId: Int?
 
     public init(type: TradeType,
                 assetPair: StellarAssetPair,

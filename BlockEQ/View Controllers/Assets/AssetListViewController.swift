@@ -10,17 +10,8 @@ import StellarHub
 import Reusable
 
 protocol AssetListDelegate: AnyObject {
-    func requestedAddNewAsset()
-}
-
-protocol AssetActionDelegate: AnyObject {
-    func requestedAdd(asset: StellarAsset)
-    func requestedRemove(asset: StellarAsset)
-    func requestedAction(_ actionIndex: Int, for asset: StellarAsset)
-}
-
-protocol AssetSelectionDelegate: AnyObject {
-    func selected(_ asset: StellarAsset)
+    func requestedAddNewAsset(_ viewController: UIViewController)
+    func requestedDismiss(_ viewController: UIViewController)
 }
 
 final class AssetListViewController: UIViewController {
@@ -40,7 +31,7 @@ final class AssetListViewController: UIViewController {
 
     weak var delegate: AssetListDelegate?
 
-    weak var dataSource: AccountAssetListDataSource? {
+    weak var dataSource: AssetListDataSource? {
         didSet {
             collectionView.dataSource = dataSource
             collectionView.delegate = dataSource
@@ -51,6 +42,11 @@ final class AssetListViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         setupStyle()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        reload()
     }
 
     func setupView() {
@@ -87,6 +83,14 @@ final class AssetListViewController: UIViewController {
         emptyAssetDescriptionLabel.text = "NO_ASSETS_DESCRIPTION".localized()
         emptyAssetDescriptionLabel.textColor = Colors.transactionCellMediumGray
         emptyAssetDescriptionLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+
+        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(self.dismissView))
+
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+        navigationItem.title = "ASSETS".localized()
     }
 
     func reload(section: Int? = nil) {
@@ -97,7 +101,7 @@ final class AssetListViewController: UIViewController {
             collectionView.reloadData()
         }
 
-        if dataSource?.collectionView(collectionView, numberOfItemsInSection: 0) == 0 {
+        if let dataSource = dataSource, dataSource.collectionView(collectionView, numberOfItemsInSection: 0) == 0 {
             showEmptyAssets()
         } else {
             hideEmptyAssets()
@@ -122,13 +126,69 @@ final class AssetListViewController: UIViewController {
         emptyAssetView.isHidden = true
     }
 
-    @IBAction func selectedAddAsset(_ sender: Any) {
-        guard let asset = dataSource?.asset(for: IndexPath(row: 0, section: 0)), asset.isNative else {
-//                        displayNoBalanceError()
-            print("error! fixme!")
-            return
-        }
+    func showHud(message: String) {
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.label.text = message
+        hud.mode = .indeterminate
+    }
 
-        delegate?.requestedAddNewAsset()
+    func hideHud() {
+        MBProgressHUD.hide(for: self.view, animated: true)
+    }
+
+    func displayAssetActivationError(_ error: FrameworkError) {
+        let fallbackTitle = "ACTIVATION_ERROR_TITLE".localized()
+        let fallbackMessage = "ASSET_BALANCE_ERROR_MESSAGE".localized()
+        self.displayFrameworkError(error, fallbackData: (title: fallbackTitle, message: fallbackMessage))
+    }
+
+    func displayAssetDeactivationError(_ error: FrameworkError) {
+        let fallbackTitle = "ACTIVATION_ERROR_TITLE".localized()
+        let fallbackMessage = "ASSET_REMOVE_ERROR_MESSAGE".localized()
+        self.displayFrameworkError(error, fallbackData: (title: fallbackTitle, message: fallbackMessage))
+    }
+
+    func displayLowBalanceError(minimum: String) {
+        let message = String(format: "LOW_BALANCE_ERROR_MESSAGE".localized(), minimum)
+        let alert = UIAlertController(title: "NO_BALANCE_ERROR_TITLE".localized(),
+                                      message: message,
+                                      preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(), style: .default, handler: nil))
+
+        self.present(alert, animated: true, completion: nil)
+    }
+}
+
+// MARK: - ManageAssetDisplayable
+extension AssetListViewController: ManageAssetDisplayable {
+    func displayLoading(for asset: StellarAsset? = nil) {
+        let message = asset != nil ? "REMOVING_ASSET".localized() : "ADDING_ASSET".localized()
+        showHud(message: message)
+    }
+
+    func hideLoading() {
+        hideHud()
+    }
+
+    func displayError(error: FrameworkError) {
+        hideHud()
+
+        // fixme
+        self.displayFrameworkError(error, fallbackData: (title: "", message: ""))
+    }
+}
+
+// MARK: - FrameworkErrorPresentable
+extension AssetListViewController: FrameworkErrorPresentable { }
+
+// MARK: - IBActions
+extension AssetListViewController {
+    @IBAction func dismissView() {
+        delegate?.requestedDismiss(self)
+    }
+
+    @IBAction func selectedAddAsset(_ sender: Any) {
+        delegate?.requestedAddNewAsset(self)
     }
 }

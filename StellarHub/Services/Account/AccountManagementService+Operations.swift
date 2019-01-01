@@ -18,7 +18,7 @@ extension AccountManagementService {
         let completion: ServiceErrorCompletion = { error in
             DispatchQueue.main.async {
                 if let error = error {
-                    delegate.failed(error: error)
+                    delegate.inflationFailed(error: error)
                 } else {
                     account.inflationDestination = address.string
                     delegate.setInflation(destination: address)
@@ -28,7 +28,7 @@ extension AccountManagementService {
 
         guard let keyPair = core.walletKeyPair else {
             let wrappedError = FrameworkError(error: FrameworkError.AccountServiceError.missingKeypair)
-            delegate.failed(error: wrappedError)
+            delegate.inflationFailed(error: wrappedError)
             return
         }
 
@@ -129,7 +129,7 @@ extension AccountManagementService {
         guard let accountResponse = account.rawResponse else {
             DispatchQueue.main.async {
                 let wrappedError = FrameworkError(error: FrameworkError.AccountServiceError.nonExistentAccount)
-                delegate.failed(error: wrappedError)
+                delegate.manageFailed(error: wrappedError)
             }
             return
         }
@@ -150,13 +150,13 @@ extension AccountManagementService {
             guard let error = error else { return }
 
             DispatchQueue.main.async {
-                delegate.failed(error: FrameworkError(error: error))
+                delegate.manageFailed(error: FrameworkError(error: error))
             }
         }
 
         guard let keyPair = core.walletKeyPair else {
             let wrappedError = FrameworkError(error: FrameworkError.AccountServiceError.missingKeypair)
-            delegate.failed(error: wrappedError)
+            delegate.manageFailed(error: wrappedError)
             return
         }
 

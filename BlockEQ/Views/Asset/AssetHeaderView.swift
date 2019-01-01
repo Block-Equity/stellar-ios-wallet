@@ -28,7 +28,9 @@ final class AssetHeaderView: UIView, NibOwnerLoadable {
     }
 
     func setupStyle() {
+        view.backgroundColor = .clear
         containerView.backgroundColor = .clear
+
         assetImageView.image = UIImage(named: "eth")
         assetNameLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         assetCodeLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)

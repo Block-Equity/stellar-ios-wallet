@@ -41,6 +41,9 @@ final class AssetButtonView: UIView, Reusable, NibOwnerLoadable {
 
     func setupStyle() {
         stackView.spacing = CGFloat(AssetButtonView.ButtonSpacing)
+        stackView.backgroundColor = .clear
+        view.backgroundColor = .clear
+        backgroundColor = .clear
     }
 
     func update(with viewModel: ViewModel) {
@@ -74,10 +77,10 @@ extension AssetButtonView {
     }
 
     @IBAction func selectedSecondButton(_ sender: Any) {
-        delegate?.selectedFirstButton(button: button2)
+        delegate?.selectedSecondButton(button: button2)
     }
 
     @IBAction func selectedThirdButton(_ sender: Any) {
-        delegate?.selectedFirstButton(button: button3)
+        delegate?.selectedThirdButton(button: button3)
     }
 }

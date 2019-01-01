@@ -10,7 +10,7 @@ import StellarHub
 
 protocol TradeSegmentControllerDelegate: AnyObject {
     func setScroll(offset: CGFloat, page: Int)
-    func displayAddAsset()
+    func displayAssetList()
 }
 
 final class TradeSegmentViewController: UIViewController {
@@ -28,7 +28,7 @@ final class TradeSegmentViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
 
     @IBAction func addAsset() {
-        tradeSegmentDelegate?.displayAddAsset()
+        tradeSegmentDelegate?.displayAssetList()
     }
 
     required init?(coder aDecoder: NSCoder) {

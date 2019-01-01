@@ -9,10 +9,6 @@
 import StellarHub
 
 extension StellarAccount {
-    var formattedBaseReserve: String {
-        return baseReserve.displayFormattedString
-    }
-
     var formattedTrustlines: String {
         return trustlines.displayFormattedString
     }
@@ -29,11 +25,25 @@ extension StellarAccount {
         return minBalance.displayFormattedString
     }
 
+    var availableAssets: [StellarAsset] {
+        let existing = Set(assets)
+        let staticAssets = Set(Assets.AssetType.allCases.map {
+            StellarAsset(assetCode: $0.shortForm, issuer: $0.issuerAccount)
+        })
+
+        return Array(staticAssets.subtracting(existing))
+    }
+
     func formattedAvailableBalance(for asset: StellarAsset) -> String {
         let balance = availableBalance(for: asset)
         return String(format: "AVAILABLE_BALANCE_FORMAT_STRING".localized(),
                       balance.tradeFormattedString,
                       asset.shortCode
         )
+    }
+
+    func firstAssetExcluding(_ asset: StellarAsset?) -> StellarAsset? {
+        let filteredAssets = assets.filter { $0 != asset }
+        return filteredAssets.first
     }
 }

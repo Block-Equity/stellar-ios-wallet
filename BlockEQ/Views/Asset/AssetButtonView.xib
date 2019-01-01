@@ -35,9 +35,6 @@
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b1b-Xp-KOT" userLabel="Third Button" customClass="AssetButton" customModule="BlockEQ" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="115" height="25"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="25" id="cFK-Xs-xdf"/>
-                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                     <state key="normal" title="Button 3">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -48,9 +45,6 @@
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z7d-JB-WJd" userLabel="Second Button" customClass="AssetButton" customModule="BlockEQ" customModuleProvider="target">
                                     <rect key="frame" x="130" y="0.0" width="115" height="25"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="25" id="8nE-aU-vfm"/>
-                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                     <state key="normal" title="Button 2">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -61,9 +55,6 @@
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A3W-Tp-vl2" userLabel="First Button" customClass="AssetButton" customModule="BlockEQ" customModuleProvider="target">
                                     <rect key="frame" x="260" y="0.0" width="115" height="25"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="25" id="lM9-W8-mka"/>
-                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                     <state key="normal" title="Button 1">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -75,7 +66,7 @@
                             </subviews>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="KMJ-rO-cvA" firstAttribute="top" secondItem="lqw-oL-qRe" secondAttribute="top" id="9Vc-Gk-lVN"/>
                         <constraint firstAttribute="bottom" secondItem="KMJ-rO-cvA" secondAttribute="bottom" id="JFm-aO-f6M"/>

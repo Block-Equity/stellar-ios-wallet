@@ -8,7 +8,7 @@
 
 import StellarHub
 
-final class AccountAssetListDataSource: NSObject {
+final class AccountAssetListDataSource: NSObject, AssetListDataSource {
     private var assets: [String: [StellarAsset]] = [:]
     private var inflationSet: Bool = false
 
@@ -18,7 +18,9 @@ final class AccountAssetListDataSource: NSObject {
     private var templateHeader: AssetListHeader!
 
     init(accountAssets: [StellarAsset], availableAssets: [StellarAsset], inflationSet: Bool = false) {
-        assets[Section.account.name] = accountAssets
+        super.init()
+
+        assets[Section.account.name] = sortedAssetList(with: accountAssets)
         assets[Section.available.name] = availableAssets
 
         self.inflationSet = inflationSet
@@ -28,9 +30,32 @@ final class AccountAssetListDataSource: NSObject {
         templateHeader.sizeToFit()
     }
 
+    func sortedAssetList(with assets: [StellarAsset]) -> [StellarAsset] {
+        var assetsToSort = assets
+        var result: [StellarAsset] = []
+
+        // Always insert Lumens first
+        if assetsToSort.count > 0 {
+            result.append(assetsToSort.removeFirst())
+        }
+
+        // Sort remaining assets by balance
+        result.append(contentsOf:
+            assetsToSort.sorted(by: { (first, second) -> Bool in
+                guard let firstBalance = Decimal(string: first.balance) else { return false }
+                guard let secondBalance = Decimal(string: second.balance)  else { return false }
+                return firstBalance > secondBalance
+            })
+        )
+
+        return result
+    }
+
     func asset(for indexPath: IndexPath) -> StellarAsset? {
-        guard let section = Section(rawValue: indexPath.section), let sectionAssets = assets[section.name] else {
-            return nil
+        guard let section = Section(rawValue: indexPath.section),
+            let sectionAssets = assets[section.name],
+            indexPath.row < sectionAssets.count else {
+                return nil
         }
 
         return sectionAssets[indexPath.row]
@@ -172,7 +197,7 @@ extension AccountAssetListDataSource: AssetManageCellDelegate {
         case .add:
             actionDelegate?.requestedAdd(asset: asset)
         case .remove:
-            actionDelegate?.requestedAdd(asset: asset)
+            actionDelegate?.requestedRemove(asset: asset)
         }
     }
 }
@@ -193,6 +218,10 @@ extension AccountAssetListDataSource: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let asset = self.asset(for: indexPath) else {
             return
+        }
+
+        if let cell = collectionView.cellForItem(at: indexPath) as? StylableCardCell {
+            cell.select()
         }
 
         selectionDelegate?.selected(asset)

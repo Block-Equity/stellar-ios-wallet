@@ -32,7 +32,7 @@ final class ChainedOperationPair<FirstType: ChainableOperation, SecondType: Chai
     private let adapter: BlockOperation
 
     var operationChain: [Operation] {
-        return [firstOperation, secondOperation, adapter]
+        return [firstOperation, adapter, secondOperation]
     }
 
     init(first: FirstType, second: SecondType) {

@@ -24,19 +24,22 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="8b2-kq-jKn">
-            <rect key="frame" x="0.0" y="0.0" width="325" height="100"/>
+            <rect key="frame" x="0.0" y="0.0" width="325" height="90"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YuB-d9-OEJ" userLabel="Card">
-                    <rect key="frame" x="0.0" y="0.0" width="325" height="100"/>
+                    <rect key="frame" x="0.0" y="0.0" width="325" height="90"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mXc-TR-w5l" userLabel="Header Container" customClass="AssetHeaderView" customModule="BlockEQ" customModuleProvider="target">
-                            <rect key="frame" x="15" y="15" width="250" height="70"/>
+                        <view contentMode="scaleToFill" verticalHuggingPriority="252" translatesAutoresizingMaskIntoConstraints="NO" id="mXc-TR-w5l" userLabel="Header Container" customClass="AssetHeaderView" customModule="BlockEQ" customModuleProvider="target">
+                            <rect key="frame" x="15" y="15" width="250" height="60"/>
                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="FTu-BX-FAT"/>
+                            </constraints>
                             <viewLayoutGuide key="safeArea" id="syu-lW-zml"/>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aw7-Qo-CIa" userLabel="Action Button">
-                            <rect key="frame" x="280" y="35" width="30" height="30"/>
+                            <rect key="frame" x="280" y="30" width="30" height="30"/>
                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="Aw7-Qo-CIa" secondAttribute="height" multiplier="1:1" id="bXc-wJ-21o"/>

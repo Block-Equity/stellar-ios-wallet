@@ -83,13 +83,13 @@ extension InflationViewController {
     }
 
     func showHud() {
-        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.label.text = "SETTING_INFLATION_DESTINATION".localized()
         hud.mode = .indeterminate
     }
 
     func hideHud() {
-        MBProgressHUD.hide(for: UIApplication.shared.keyWindow!, animated: true)
+        MBProgressHUD.hide(for: self.view, animated: true)
     }
 
     func dismissView() {
@@ -128,28 +128,27 @@ extension InflationViewController {
     }
 }
 
+// MARK: - ManageAssetDisplayable
+extension InflationViewController: ManageAssetDisplayable {
+    func displayLoading(for asset: StellarAsset? = nil) {
+        showHud()
+    }
+
+    func hideLoading() {
+        hideHud()
+    }
+
+    func displayError(error: FrameworkError) {
+        hideHud()
+        displayFrameworkError(error, fallbackData: (title: "INFLATION_ERROR_TITLE", message: "INFLATION_ERROR_MESSAGE"))
+    }
+}
+
+extension InflationViewController: FrameworkErrorPresentable { }
+
 // MARK: - ScanViewControllerDelegate
 extension InflationViewController: ScanViewControllerDelegate {
     func setQR(value: String) {
         destinationAddressTextField.text = value
-    }
-}
-
-// MARK: - SetInflationResponseDelegate
-extension InflationViewController: SetInflationResponseDelegate {
-    func failed(error: FrameworkError) {
-        self.hideHud()
-        let alert = UIAlertController(title: "INFLATION_ERROR_TITLE".localized(),
-                                      message: "INFLATION_ERROR_MESSAGE".localized(),
-                                      preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(), style: .default, handler: nil))
-
-        self.present(alert, animated: true, completion: nil)
-    }
-
-    func setInflation(destination: StellarAddress) {
-        self.hideHud()
-        self.displayInflationSuccess()
     }
 }

@@ -9,7 +9,7 @@
 import StellarHub
 
 public struct Assets {
-    enum AssetType: String {
+    enum AssetType: String, CaseIterable {
         case points = "PTS"
         case cad = "CAD"
 
@@ -24,8 +24,6 @@ public struct Assets {
             }
         }
     }
-
-    static let all: [AssetType] = [.points, .cad]
 
     static func cellDisplay(shortCode: String?) -> String {
         if let assetCode = shortCode {
@@ -120,9 +118,9 @@ extension StellarAsset {
     }
 
     var priceViewModel: AssetPriceView.ViewModel {
-        let assetBalance = self.hasZeroBalance ? "N/A" : balance
-        let assetPrice = self.hasZeroBalance ? "---" : "$123,456.78"
-        return AssetPriceView.ViewModel(amount: assetBalance, price: assetPrice)
+        let assetBalance = self.hasZeroBalance ? "NOT_AVAILABLE_SHORTFORM".localized() : balance
+        let assetPrice = ""
+        return AssetPriceView.ViewModel(amount: assetBalance.displayFormatted, price: assetPrice)
     }
 
     var primaryColor: UIColor {

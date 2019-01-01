@@ -49,6 +49,8 @@ final class AssetActionCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
         priceContainer.backgroundColor = .clear
         buttonContainer.backgroundColor = .clear
 
+        buttonContainer.delegate = self
+
         applyCardStyle()
     }
 
