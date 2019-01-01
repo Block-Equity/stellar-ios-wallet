@@ -93,7 +93,7 @@ final class MockInflationResponseDelegate: SetInflationResponseDelegate {
         setInflationCompletion?(destination)
     }
 
-    func failed(error: FrameworkError) {
+    func inflationFailed(error: FrameworkError) {
         self.error = error
         self.errorCompletion?(error)
     }

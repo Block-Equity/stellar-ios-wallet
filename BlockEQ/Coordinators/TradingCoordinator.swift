@@ -13,8 +13,18 @@ protocol TradingCoordinatorDelegate: AnyObject {
     func setScroll(offset: CGFloat, page: Int)
 }
 
+protocol TradeAssetListDisplayable: AnyObject {
+    func requestedDisplayAssetList(for: TradeViewController.TradeField)
+}
+
 final class TradingCoordinator {
     static let orderbookUpdateInterval: TimeInterval = 10
+
+    let tradeService: TradeService
+
+    let updateService: AccountUpdateService
+
+    let accountService: AccountManagementService
 
     let segmentController: TradeSegmentViewController
 
@@ -24,33 +34,25 @@ final class TradingCoordinator {
 
     let myOffersViewController: MyOffersViewController
 
-    private var account: StellarAccount? {
-        didSet {
-            guard let account = self.account else { return }
+    var assetCoordinator: AssetCoordinator?
 
-            segmentController.updated(account: account)
-            tradeViewController.updated(account: account)
-            myOffersViewController.setOffers(account.tradeOffers)
-        }
-    }
+    var assetPair: StellarAssetPair?
 
-    var tradeService: TradeService?
+    var selectedTradeField: TradeViewController.TradeField?
 
-    var updateService: AccountUpdateService?
+    var tradeFromDataSource: TradeAssetListDataSource?
 
-    var accountService: AccountManagementService?
-
-    var addAssetViewController: AddAssetViewController?
-
-    var walletSwitchingViewController: WalletSwitchingViewController?
-
-    var wrappingNavController: AppNavigationController?
+    var tradeToDataSource: TradeAssetListDataSource?
 
     var timer: Timer?
 
     weak var delegate: TradingCoordinatorDelegate?
 
-    init() {
+    init(core: CoreService) {
+        self.tradeService = core.tradeService
+        self.updateService = core.updateService
+        self.accountService = core.accountService
+
         let tradeVC = TradeViewController()
         let orderBookVC = OrderBookViewController()
         let offersVC = MyOffersViewController()
@@ -65,33 +67,18 @@ final class TradingCoordinator {
                                                        totalPages: CGFloat(TradeSegment.all.count))
         segmentController.tradeSegmentDelegate = self
         tradeViewController.delegate = self
+        tradeViewController.assetDelegate = self
         myOffersViewController.delegate = self
 
         let interval = TradingCoordinator.orderbookUpdateInterval
         timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true, block: { _ in
-            guard let assetPair = self.tradeViewController.assetPair else { return }
-            self.tradeService?.updateOrders(for: assetPair, delegate: self)
+            guard let assetPair = self.assetPair else { return }
+            self.tradeService.updateOrders(for: assetPair, delegate: self)
         })
     }
 
     func switchedSegment(_ type: TradeSegment) {
         segmentController.switchSegment(type)
-    }
-
-    func displayAssetViewController() {
-        if let account = self.account {
-            let walletSwitchVC = WalletSwitchingViewController()
-            walletSwitchVC.delegate = self
-            walletSwitchingViewController = walletSwitchVC
-
-            let container = AppNavigationController(rootViewController: walletSwitchVC)
-            wrappingNavController = container
-            wrappingNavController?.navigationBar.prefersLargeTitles = true
-
-            walletSwitchVC.updateMenu(account: account)
-
-            segmentController.present(container, animated: true, completion: nil)
-        }
     }
 
     deinit {
@@ -102,9 +89,109 @@ final class TradingCoordinator {
     }
 }
 
+extension TradingCoordinator: TradeAssetListDisplayable {
+    func requestedDisplayAssetList(for field: TradeViewController.TradeField) {
+        guard let acct = self.accountService.account else {
+            return
+        }
+
+        selectedTradeField = field
+
+        let assetCoordinator = self.assetCoordinator ?? AssetCoordinator(accountService: accountService, account: acct)
+        assetCoordinator.delegate = self
+
+        self.assetCoordinator = assetCoordinator
+
+        let navController = assetCoordinator.displayAssetList()
+        segmentController.present(navController, animated: true, completion: nil)
+    }
+}
+
+extension TradingCoordinator: AssetCoordinatorDelegate {
+    func dataSource() -> AssetListDataSource? {
+        guard let account = accountService.account else {
+            return nil
+        }
+
+        let defaultDataSource = TradeAssetListDataSource(assets: account.assets, selected: nil, excluding: nil)
+
+        guard let field = selectedTradeField else {
+            return defaultDataSource
+        }
+
+        let accountAssets = account.assets
+
+        switch field {
+        case .fromAsset:
+            return TradeAssetListDataSource(assets: accountAssets,
+                                            selected: assetPair?.selling,
+                                            excluding: nil)
+        case .toAsset:
+            return TradeAssetListDataSource(assets: accountAssets,
+                                            selected: assetPair?.buying,
+                                            excluding: assetPair?.selling)
+        }
+    }
+
+    func selected(asset: StellarAsset) {
+        defer {
+            assetCoordinator = nil
+            selectedTradeField = nil
+            tradeFromDataSource = nil
+            tradeToDataSource = nil
+        }
+
+        guard let tradeField = selectedTradeField, let account = accountService.account else {
+            return
+        }
+
+        let previousFromAsset: StellarAsset? = assetPair?.selling
+        let previousToAsset: StellarAsset? = assetPair?.buying
+        var fromAsset: StellarAsset?
+        var toAsset: StellarAsset?
+
+        switch tradeField {
+        case .fromAsset:
+            fromAsset = asset
+            toAsset = previousToAsset == asset ? account.firstAssetExcluding(fromAsset) : previousToAsset
+        case .toAsset:
+            toAsset = asset
+            fromAsset = previousFromAsset == asset ? account.firstAssetExcluding(toAsset) : previousFromAsset
+        }
+
+        if let fromAsset = fromAsset, let toAsset = toAsset {
+            let pair = StellarAssetPair(buying: toAsset, selling: fromAsset)
+
+            getOrderBook(for: pair)
+            tradeViewController.refreshView(pair: pair)
+
+            assetPair = pair
+        }
+    }
+
+    func dismissed(coordinator: AssetCoordinator, viewController: UIViewController) {
+        assetCoordinator = nil
+    }
+}
+
 extension TradingCoordinator: AccountUpdatable {
     func updated(account: StellarAccount) {
-        self.account = account
+
+        if assetPair == nil, let account = accountService.account, account.assets.count > 1 {
+            assetPair = StellarAssetPair(buying: account.assets[1], selling: account.assets[0])
+
+            tradeFromDataSource = TradeAssetListDataSource(assets: account.assets,
+                                                           selected: assetPair?.selling,
+                                                           excluding: nil)
+
+            tradeToDataSource = TradeAssetListDataSource(assets: account.assets,
+                                                         selected: assetPair?.buying,
+                                                         excluding: assetPair?.buying)
+        }
+
+        tradeViewController.refreshView(pair: assetPair)
+        segmentController.updated(account: account)
+        myOffersViewController.setOffers(account.tradeOffers)
     }
 }
 
@@ -113,72 +200,54 @@ extension TradingCoordinator: TradeSegmentControllerDelegate {
         delegate?.setScroll(offset: offset, page: page)
     }
 
-    func displayAddAsset() {
-        displayAssetViewController()
+    func displayAssetList() {
+        self.requestedDisplayAssetList(for: .fromAsset)
     }
 }
 
 extension TradingCoordinator: TradeViewControllerDelegate {
-    func postTrade(data: StellarTradeOfferData) {
-        tradeService?.postTrade(with: data, delegate: self)
+    func scaledBalance(type: TradeViewController.BalanceType) -> Decimal {
+        guard let asset = assetPair?.selling else { return 0 }
+        return availableBalance(for: asset) * type.decimal
+    }
+
+    func availableBalance(for asset: StellarAsset) -> Decimal {
+        guard let account = self.accountService.account else {
+            return 0
+        }
+
+        return account.availableTradeBalance(for: asset)
+    }
+
+    func requestedRefresh() {
+        tradeViewController.refreshView(pair: assetPair)
+    }
+
+    func requestTrade(type: StellarTradeOfferData.TradeType,
+                      toAmount: String,
+                      fromAmount: String,
+                      numerator: Decimal,
+                      denominator: Decimal) {
+        guard let pair = assetPair else { return }
+
+        let offerData = StellarTradeOfferData(type: type,
+                                              assetPair: pair,
+                                              price: Price(numerator: numerator, denominator: denominator),
+                                              numerator: numerator,
+                                              denominator: denominator,
+                                              offerId: nil)
+
+        tradeViewController.displayTradeConfirmation(fromAmount: fromAmount,
+                                                     toAmount: toAmount,
+                                                     pair: pair) {
+            self.tradeViewController.showHud()
+            self.tradeService.postTrade(with: offerData, delegate: self)
+        }
     }
 
     func getOrderBook(for pair: StellarAssetPair) {
-        tradeService?.updateOrders(for: pair, delegate: self)
-    }
-
-    func displayAddAssetForTrade() {
-        displayAssetViewController()
-    }
-}
-
-extension TradingCoordinator: WalletSwitchingViewControllerDelegate {
-    func createTrustLine(to address: StellarAddress, for asset: StellarAsset) { }
-    func switchWallet(to asset: StellarAsset) { }
-    func reloadAssets() { }
-
-    func remove(asset: StellarAsset) {
-        guard let account = account else { return }
-        accountService?.changeTrust(account: account, asset: asset, remove: true, delegate: self)
-    }
-
-    func add(asset: StellarAsset) {
-        guard let account = account else { return }
-        accountService?.changeTrust(account: account, asset: asset, remove: false, delegate: self)
-    }
-
-    func updateInflation() {
-        guard let account = self.account else { return }
-
-        let inflationViewController = InflationViewController(account: account)
-
-        wrappingNavController?.pushViewController(inflationViewController, animated: true)
-    }
-
-    func selectedAddAsset() {
-        let addAssetViewController = AddAssetViewController()
-        addAssetViewController.delegate = self
-        self.addAssetViewController = addAssetViewController
-
-        wrappingNavController?.pushViewController(addAssetViewController, animated: true)
-    }
-}
-
-extension TradingCoordinator: InflationViewControllerDelegate {
-    func updateAccountInflation(_ viewController: InflationViewController, destination: StellarAddress) {
-        guard let account = self.account else { return }
-
-        accountService?.setInflationDestination(account: account, address: destination, delegate: viewController)
-    }
-}
-
-extension TradingCoordinator: AddAssetViewControllerDelegate {
-    func requestedAdd(_ viewController: AddAssetViewController, asset: StellarAsset) {
-        guard let walletVC = walletSwitchingViewController, let account = self.account else { return }
-
-        walletVC.displayAddPrompt()
-
-        accountService?.changeTrust(account: account, asset: asset, remove: false, delegate: walletVC)
+        guard pair.selling != pair.buying else { return }
+        tradeService.updateOrders(for: pair, delegate: self)
     }
 }
 
@@ -188,7 +257,7 @@ extension TradingCoordinator: TradeResponseDelegate {
     }
 
     func posted(trade: StellarTradeOfferData) {
-        self.updateService?.update()
+        self.updateService.update()
         self.tradeViewController.displayTradeSuccess()
     }
 
@@ -208,31 +277,13 @@ extension TradingCoordinator: OfferResponseDelegate {
 
     func updated(orders: StellarOrderbook) {
         self.orderBookViewController.setOrderBook(orderbook: orders)
-        self.tradeViewController.setMarketPrice(orderbook: orders)
+        self.tradeViewController.setMarketPrice(orderbook: orders, assetPair: assetPair)
     }
 }
 
 extension TradingCoordinator: MyOffersViewControllerDelegate {
     func cancelTrade(offerId: Int, assetPair: StellarAssetPair, price: Price) {
         let tradeData = StellarTradeOfferData(offerId: offerId, assetPair: assetPair, price: price)
-        tradeService?.cancelTrade(with: offerId, data: tradeData, delegate: self)
-    }
-}
-
-extension TradingCoordinator: ManageAssetResponseDelegate {
-    func added(asset: StellarAsset, account: StellarAccount) {
-        self.segmentController.updated(account: account)
-        self.walletSwitchingViewController?.updateMenu(account: account)
-        self.tradeViewController.updated(account: account)
-    }
-
-    func removed(asset: StellarAsset, account: StellarAccount) {
-        self.segmentController.updated(account: account)
-        self.walletSwitchingViewController?.updateMenu(account: account)
-    }
-
-    func failed(error: FrameworkError) {
-        self.walletSwitchingViewController?.hideHud()
-        self.walletSwitchingViewController?.displayAssetActivationError(error)
+        tradeService.cancelTrade(with: offerId, data: tradeData, delegate: self)
     }
 }

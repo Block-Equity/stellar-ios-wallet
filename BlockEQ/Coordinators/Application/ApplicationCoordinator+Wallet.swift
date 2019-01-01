@@ -11,17 +11,16 @@ import StellarHub
 // MARK: - WalletViewControllerDelegate
 extension ApplicationCoordinator: WalletViewControllerDelegate {
     func selectedWalletSwitch(_ viewController: WalletViewController) {
-        guard let account = core?.accountService.account else { return }
+        guard let core = self.core, let account = core.accountService.account else {
+            return
+        }
 
-        let walletSwitchVC = WalletSwitchingViewController()
-        let container = AppNavigationController(rootViewController: walletSwitchVC)
-        container.navigationBar.prefersLargeTitles = true
-        walletViewController.navigationContainer = container
+        assetCoordinator = AssetCoordinator(accountService: core.accountService, account: account)
+        assetCoordinator?.delegate = self
 
-        walletSwitchingViewController = walletSwitchVC
-
-        walletSwitchVC.delegate = self
-        walletSwitchVC.updateMenu(account: account)
+        guard let container = assetCoordinator?.displayAssetList() else {
+            return
+        }
 
         tabController.present(container, animated: true, completion: nil)
     }
@@ -72,82 +71,24 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
     }
 }
 
-// MARK: - WalletSwitchingViewControllerDelegate
-extension ApplicationCoordinator: WalletSwitchingViewControllerDelegate {
-    func selectedAddAsset() {
-        let addAssetViewController = AddAssetViewController()
-        self.addAssetViewController = addAssetViewController
-        addAssetViewController.delegate = self
-
-        if let container = walletViewController.navigationContainer {
-            container.pushViewController(addAssetViewController, animated: true)
-        } else {
-            wrappingNavController?.pushViewController(addAssetViewController, animated: true)
-        }
-    }
-
-    func updateInflation() {
-        guard let account = core?.accountService.account else { return }
-
-        let inflationViewController = InflationViewController(account: account)
-        self.inflationViewController = inflationViewController
-        self.inflationViewController?.delegate = self
-
-        if let container = walletViewController.navigationContainer {
-            container.pushViewController(inflationViewController, animated: true)
-        } else {
-            wrappingNavController?.pushViewController(inflationViewController, animated: true)
-        }
-    }
-
-    func switchWallet(to asset: StellarAsset) {
+extension ApplicationCoordinator: AssetCoordinatorDelegate {
+    func selected(asset: StellarAsset) {
         guard let account = core?.accountService.account else { return }
         walletViewController.update(with: account, asset: asset)
     }
 
-    func createTrustLine(to address: StellarAddress, for asset: StellarAsset) { }
-
-    func reloadAssets() { }
-
-    func remove(asset: StellarAsset) {
-        guard let account = core?.accountService.account, let walletVC = walletSwitchingViewController else {
-            return
-        }
-
-        core?.accountService.changeTrust(account: account, asset: asset, remove: true, delegate: walletVC)
+    func dismissed(coordinator: AssetCoordinator, viewController: UIViewController) {
+        assetCoordinator = nil
     }
 
-    func add(asset: StellarAsset) {
-        guard let account = core?.accountService.account, let walletVC = walletSwitchingViewController  else {
-            return
-        }
-
-        core?.accountService.changeTrust(account: account, asset: asset, remove: false, delegate: walletVC)
-    }
-}
-
-// MARK: - AddAssetViewControllerDelegate
-extension ApplicationCoordinator: AddAssetViewControllerDelegate {
-    func requestedAdd(_ viewController: AddAssetViewController, asset: StellarAsset) {
-
-        guard let account = core?.accountService.account, let walletVC = walletSwitchingViewController  else {
-            return
-        }
-
-        walletVC.displayAddPrompt()
-
-        core?.accountService.changeTrust(account: account, asset: asset, remove: false, delegate: walletVC)
-    }
-}
-
-// MARK: - InflationViewControllerDelegate
-extension ApplicationCoordinator: InflationViewControllerDelegate {
-    func updateAccountInflation(_ viewController: InflationViewController, destination: StellarAddress) {
+    func dataSource() -> AssetListDataSource? {
         guard let account = core?.accountService.account else {
-            return
+            return nil
         }
 
-        core?.accountService.setInflationDestination(account: account, address: destination, delegate: viewController)
+        return AccountAssetListDataSource(accountAssets: account.assets,
+                                          availableAssets: account.availableAssets,
+                                          inflationSet: account.inflationAddress != nil)
     }
 }
 

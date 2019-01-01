@@ -76,7 +76,7 @@ final class BalanceViewController: UIViewController {
 
         totalBalanceTitleLabel.text = "TOTAL_BALANCE_TITLE".localized()
         availableBalanceTitleLabel.text = "AVAILABLE_BALANCE_TITLE".localized()
-        baseReserveTitleLabel.text = "BASE_RESERVE_TITLE".localized()
+        baseReserveTitleLabel.text = "BASE_AMOUNT_TITLE".localized()
         trustlinesTitleLabel.text = "TRUSTLINES_TITLE".localized()
         offersTitleLabel.text = "OFFERS_TITLE".localized()
         signersTitleLabel.text = "SIGNERS_TITLE".localized()
@@ -95,8 +95,8 @@ final class BalanceViewController: UIViewController {
 
         totalBalanceLabel.text = stellarAsset.balance.tradeFormatted
         availableBalanceLabel.text = stellarAccount.availableBalance(for: stellarAsset).tradeFormattedString
-        baseReserveAmountLabel.text = String(describing: stellarAccount.totalBaseReserve)
-        baseReserveValueLabel.text = stellarAccount.formattedBaseReserve
+        baseReserveAmountLabel.text = String(describing: stellarAccount.totalBaseAmount)
+        baseReserveValueLabel.text = stellarAccount.baseAmount.displayFormattedString
         trustlinesAmountLabel.text = String(describing: stellarAccount.totalTrustlines)
         trustlinesValueLabel.text = stellarAccount.formattedTrustlines
         offersAmountLabel.text = String(describing: stellarAccount.totalOffers)

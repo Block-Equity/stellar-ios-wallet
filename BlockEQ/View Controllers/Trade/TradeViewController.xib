@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TradeViewController" customModule="BlockEQ" customModuleProvider="target">
             <connections>
-                <outlet property="addAssetButton" destination="PeU-hl-vwR" id="iBA-U0-6pZ"/>
                 <outlet property="arrowImageView" destination="nhs-c8-I59" id="J63-EX-qi5"/>
                 <outlet property="balanceLabel" destination="aUb-m6-PGb" id="wxf-rE-IT6"/>
                 <outlet property="buttonHolderView" destination="HDD-pI-3Vz" id="kO5-CO-3O9"/>
@@ -20,14 +20,11 @@
                 <outlet property="segmentControl" destination="r8u-ja-pQs" id="SdF-YX-fh9"/>
                 <outlet property="tableview" destination="XET-5A-Yb6" id="epX-Ih-Inw"/>
                 <outlet property="tradeFromButton" destination="Q6Q-Sv-VEU" id="87b-AC-IBq"/>
-                <outlet property="tradeFromInputAccessoryView" destination="vgp-ge-fgE" id="ej9-zj-YOh"/>
-                <outlet property="tradeFromSelectorAccessoryInputView" destination="69y-Bf-N69" id="8x0-8V-zmc"/>
                 <outlet property="tradeFromSelectorTextField" destination="qEf-Ya-GG5" id="Azl-UB-L0q"/>
                 <outlet property="tradeFromTextField" destination="rPZ-dd-K2L" id="ge3-P3-Kno"/>
                 <outlet property="tradeFromView" destination="cUe-53-uu5" id="Zyo-fo-uzB"/>
+                <outlet property="tradeTextInputAccessoryView" destination="hEf-NK-Snj" id="mZL-aE-d5P"/>
                 <outlet property="tradeToButton" destination="IVq-2o-YRs" id="wZJ-sh-vvq"/>
-                <outlet property="tradeToInputAccessoryView" destination="A4C-qy-7Li" id="CGx-kS-LNh"/>
-                <outlet property="tradeToSelectorAccessoryInputView" destination="HQq-3L-TqQ" id="TG9-GP-Qx5"/>
                 <outlet property="tradeToSelectorTextField" destination="nCE-B6-50A" id="SgH-Br-V5j"/>
                 <outlet property="tradeToTextField" destination="RhF-cC-TcE" id="upI-r0-hkB"/>
                 <outlet property="tradeToView" destination="z1o-Fr-aQc" id="MWI-JJ-sbc"/>
@@ -274,7 +271,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down-arrow-trade" translatesAutoresizingMaskIntoConstraints="NO" id="nhs-c8-I59">
-                                <rect key="frame" x="168" y="223" width="40" height="20"/>
+                                <rect key="frame" x="167.5" y="223" width="40" height="20"/>
                                 <color key="tintColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="Du2-qm-Cki"/>
@@ -394,22 +391,22 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="48.5" y="65.5"/>
         </view>
-        <view contentMode="scaleToFill" id="vgp-ge-fgE">
+        <view contentMode="scaleToFill" id="hEf-NK-Snj">
             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wML-ft-l7i">
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pdC-zg-mhK">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                    <color key="backgroundColor" red="0.81568627450980391" green="0.83921568627450982" blue="0.86274509803921573" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.81568627449999997" green="0.83921568629999999" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <items/>
-                    <color key="barTintColor" red="0.81568627450980391" green="0.83921568627450982" blue="0.86274509803921573" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <color key="barTintColor" red="0.81568627449999997" green="0.83921568629999999" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 </toolbar>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Umj-M6-M8j">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="80T-fd-gTb">
                     <rect key="frame" x="314" y="10" width="55" height="30"/>
-                    <color key="backgroundColor" red="0.42745098039215684" green="0.46666666666666667" blue="0.52549019607843139" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.42745098040000001" green="0.46666666670000001" blue="0.52549019610000003" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="55" id="jMR-cP-JcQ"/>
-                        <constraint firstAttribute="height" constant="30" id="slW-1D-8cM"/>
+                        <constraint firstAttribute="height" constant="30" id="Rux-u9-P4i"/>
+                        <constraint firstAttribute="width" constant="55" id="weX-4h-WZR"/>
                     </constraints>
                     <state key="normal" title="Done">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -420,176 +417,26 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <action selector="dismissKeyboard" destination="-1" eventType="touchUpInside" id="kYS-VI-PI2"/>
+                        <action selector="dismissKeyboard" destination="-1" eventType="touchUpInside" id="Lpf-Ys-wER"/>
                     </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="wML-ft-l7i" firstAttribute="leading" secondItem="H6w-wf-LCy" secondAttribute="leading" id="122-Ud-aY6"/>
-                <constraint firstItem="wML-ft-l7i" firstAttribute="trailing" secondItem="H6w-wf-LCy" secondAttribute="trailing" id="15T-Db-vez"/>
-                <constraint firstItem="H6w-wf-LCy" firstAttribute="bottom" secondItem="Umj-M6-M8j" secondAttribute="bottom" constant="4" id="1hQ-jN-X2P"/>
-                <constraint firstItem="H6w-wf-LCy" firstAttribute="trailing" secondItem="Umj-M6-M8j" secondAttribute="trailing" constant="6" id="Dp6-c4-vdv"/>
-                <constraint firstItem="wML-ft-l7i" firstAttribute="bottom" secondItem="H6w-wf-LCy" secondAttribute="bottom" id="Wsn-NR-6Tr"/>
-                <constraint firstItem="wML-ft-l7i" firstAttribute="top" secondItem="H6w-wf-LCy" secondAttribute="top" id="tpn-Pa-wyN"/>
+                <constraint firstItem="pdC-zg-mhK" firstAttribute="trailing" secondItem="9ZQ-sW-yzi" secondAttribute="trailing" id="7oj-Yb-kzh"/>
+                <constraint firstItem="9ZQ-sW-yzi" firstAttribute="trailing" secondItem="80T-fd-gTb" secondAttribute="trailing" constant="6" id="DTZ-II-mHE"/>
+                <constraint firstItem="9ZQ-sW-yzi" firstAttribute="bottom" secondItem="80T-fd-gTb" secondAttribute="bottom" constant="4" id="FCS-8q-ydJ"/>
+                <constraint firstItem="pdC-zg-mhK" firstAttribute="leading" secondItem="9ZQ-sW-yzi" secondAttribute="leading" id="Qa8-ko-17V"/>
+                <constraint firstItem="pdC-zg-mhK" firstAttribute="top" secondItem="9ZQ-sW-yzi" secondAttribute="top" id="Yf2-EY-eAV"/>
+                <constraint firstItem="pdC-zg-mhK" firstAttribute="bottom" secondItem="9ZQ-sW-yzi" secondAttribute="bottom" id="yII-Xn-ORZ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="H6w-wf-LCy"/>
+            <viewLayoutGuide key="safeArea" id="9ZQ-sW-yzi"/>
             <point key="canvasLocation" x="49" y="480"/>
-        </view>
-        <view contentMode="scaleToFill" id="A4C-qy-7Li">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <subviews>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pgB-QO-5rB">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                    <color key="backgroundColor" red="0.81568627449999997" green="0.83921568629999999" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <items/>
-                    <color key="barTintColor" red="0.81568627449999997" green="0.83921568629999999" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                </toolbar>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e9I-9C-bZV">
-                    <rect key="frame" x="314" y="10" width="55" height="30"/>
-                    <color key="backgroundColor" red="0.42745098039215684" green="0.46666666666666667" blue="0.52549019607843139" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="0Dn-53-TNG"/>
-                        <constraint firstAttribute="width" constant="55" id="BbP-yd-gHj"/>
-                    </constraints>
-                    <state key="normal" title="Done">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                            <integer key="value" value="5"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                    <connections>
-                        <action selector="dismissKeyboard" destination="-1" eventType="touchUpInside" id="lmP-lc-Omn"/>
-                    </connections>
-                </button>
-            </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-            <constraints>
-                <constraint firstItem="pgB-QO-5rB" firstAttribute="trailing" secondItem="uM8-fE-cfk" secondAttribute="trailing" id="EiR-v2-5KY"/>
-                <constraint firstItem="uM8-fE-cfk" firstAttribute="trailing" secondItem="e9I-9C-bZV" secondAttribute="trailing" constant="6" id="GUd-CY-Au7"/>
-                <constraint firstItem="pgB-QO-5rB" firstAttribute="leading" secondItem="uM8-fE-cfk" secondAttribute="leading" id="Y6P-qE-ZOI"/>
-                <constraint firstItem="uM8-fE-cfk" firstAttribute="bottom" secondItem="e9I-9C-bZV" secondAttribute="bottom" constant="4" id="gy2-vH-wPN"/>
-                <constraint firstItem="pgB-QO-5rB" firstAttribute="bottom" secondItem="uM8-fE-cfk" secondAttribute="bottom" id="q4N-aB-gVb"/>
-                <constraint firstItem="pgB-QO-5rB" firstAttribute="top" secondItem="uM8-fE-cfk" secondAttribute="top" id="wNr-DA-CSg"/>
-            </constraints>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="uM8-fE-cfk"/>
-            <point key="canvasLocation" x="49" y="682"/>
-        </view>
-        <view contentMode="scaleToFill" id="HQq-3L-TqQ">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <subviews>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h55-uh-xuX">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                    <color key="backgroundColor" red="0.81568627449999997" green="0.83921568629999999" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <items/>
-                    <color key="barTintColor" red="0.81568627449999997" green="0.83921568629999999" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                </toolbar>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9c-Xf-gWG">
-                    <rect key="frame" x="314" y="10" width="55" height="30"/>
-                    <color key="backgroundColor" red="0.42745098039215684" green="0.46666666666666667" blue="0.52549019607843139" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="S0z-Yf-AcS"/>
-                        <constraint firstAttribute="width" constant="55" id="l18-1i-vUj"/>
-                    </constraints>
-                    <state key="normal" title="Done">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                            <integer key="value" value="5"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                    <connections>
-                        <action selector="dismissKeyboard" destination="-1" eventType="touchUpInside" id="kk8-2F-FEp"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PeU-hl-vwR">
-                    <rect key="frame" x="219" y="10" width="85" height="30"/>
-                    <color key="backgroundColor" red="0.42745098039215684" green="0.46666666666666667" blue="0.52549019607843139" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="CRX-JU-62Z"/>
-                        <constraint firstAttribute="width" constant="85" id="WVo-2N-S43"/>
-                    </constraints>
-                    <state key="normal" title="Add asset">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                            <integer key="value" value="5"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                    <connections>
-                        <action selector="addAsset" destination="-1" eventType="touchUpInside" id="qrl-fO-8fo"/>
-                    </connections>
-                </button>
-            </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-            <constraints>
-                <constraint firstItem="My6-Ve-vtL" firstAttribute="trailing" secondItem="F9c-Xf-gWG" secondAttribute="trailing" constant="6" id="2bK-kK-6dB"/>
-                <constraint firstItem="My6-Ve-vtL" firstAttribute="bottom" secondItem="PeU-hl-vwR" secondAttribute="bottom" constant="4" id="CIf-cc-E3G"/>
-                <constraint firstItem="My6-Ve-vtL" firstAttribute="bottom" secondItem="F9c-Xf-gWG" secondAttribute="bottom" constant="4" id="Is7-Dn-GfI"/>
-                <constraint firstItem="h55-uh-xuX" firstAttribute="leading" secondItem="My6-Ve-vtL" secondAttribute="leading" id="N8W-tu-WJq"/>
-                <constraint firstItem="F9c-Xf-gWG" firstAttribute="leading" secondItem="PeU-hl-vwR" secondAttribute="trailing" constant="10" id="VG3-hN-oJt"/>
-                <constraint firstItem="h55-uh-xuX" firstAttribute="bottom" secondItem="My6-Ve-vtL" secondAttribute="bottom" id="jSz-Gw-Okx"/>
-                <constraint firstItem="h55-uh-xuX" firstAttribute="top" secondItem="My6-Ve-vtL" secondAttribute="top" id="nfB-lt-7ph"/>
-                <constraint firstItem="h55-uh-xuX" firstAttribute="trailing" secondItem="My6-Ve-vtL" secondAttribute="trailing" id="s0t-9h-Zfz"/>
-            </constraints>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="My6-Ve-vtL"/>
-            <point key="canvasLocation" x="41" y="766"/>
-        </view>
-        <view contentMode="scaleToFill" id="69y-Bf-N69">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <subviews>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="925-tR-PYS">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                    <color key="backgroundColor" red="0.81568627449999997" green="0.83921568629999999" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <items/>
-                    <color key="barTintColor" red="0.81568627449999997" green="0.83921568629999999" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                </toolbar>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ba1-5K-HRA">
-                    <rect key="frame" x="314" y="10" width="55" height="30"/>
-                    <color key="backgroundColor" red="0.42745098039215684" green="0.46666666666666667" blue="0.52549019607843139" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="55" id="RSj-tc-v5t"/>
-                        <constraint firstAttribute="height" constant="30" id="neX-pg-U8m"/>
-                    </constraints>
-                    <state key="normal" title="Done">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                            <integer key="value" value="5"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                    <connections>
-                        <action selector="dismissKeyboard" destination="-1" eventType="touchUpInside" id="pnU-Fy-pmC"/>
-                    </connections>
-                </button>
-            </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-            <constraints>
-                <constraint firstItem="Q2N-xw-FGW" firstAttribute="trailing" secondItem="Ba1-5K-HRA" secondAttribute="trailing" constant="6" id="1NE-YL-lEq"/>
-                <constraint firstItem="Q2N-xw-FGW" firstAttribute="bottom" secondItem="Ba1-5K-HRA" secondAttribute="bottom" constant="4" id="22v-pY-yRJ"/>
-                <constraint firstItem="925-tR-PYS" firstAttribute="leading" secondItem="Q2N-xw-FGW" secondAttribute="leading" id="2ZV-dq-XUv"/>
-                <constraint firstItem="925-tR-PYS" firstAttribute="top" secondItem="Q2N-xw-FGW" secondAttribute="top" id="lUk-gi-8gh"/>
-                <constraint firstItem="925-tR-PYS" firstAttribute="bottom" secondItem="Q2N-xw-FGW" secondAttribute="bottom" id="lsn-x2-TAj"/>
-                <constraint firstItem="925-tR-PYS" firstAttribute="trailing" secondItem="Q2N-xw-FGW" secondAttribute="trailing" id="npr-mn-0Go"/>
-            </constraints>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="Q2N-xw-FGW"/>
-            <point key="canvasLocation" x="49" y="575"/>
         </view>
     </objects>
     <resources>
         <image name="arrow-down" width="24" height="24"/>
-        <image name="down-arrow-trade" width="40" height="40"/>
+        <image name="down-arrow-trade" width="64" height="64"/>
     </resources>
 </document>

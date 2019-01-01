@@ -53,6 +53,7 @@ final class AssetManageCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
 
     func setupStyle() {
         view.backgroundColor = .clear
+        headerContainer.backgroundColor = .clear
 
         actionButton.layer.cornerRadius = actionButton.frame.width / 2
         actionButton.contentVerticalAlignment = .center

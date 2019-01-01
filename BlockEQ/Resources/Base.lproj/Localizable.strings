@@ -87,11 +87,11 @@
 "GENERIC_OK_TEXT" = "Ok";
 
 "ACTIVATION_ERROR_TITLE" = "Activation Error";
-"NO_BALANCE_ERROR_TITLE" = "No Balance Error";
+"NO_BALANCE_ERROR_TITLE" = "Balance Error";
 "PEER_ERROR_MESSAGE" = "Sorry this peer could not be added at this time. Please try again later.";
 "ASSET_ERROR_MESSAGE" = "Sorry your asset could not be added at this time. Please try again later.";
 "ASSET_BALANCE_ERROR_MESSAGE" = "Sorry your asset could not be added at this time. You may need to add more Lumens(XLM) to your wallet and try again as each action costs 0.5 XLM.";
-"LOW_BALANCE_ERROR_MESSAGE" = "You must have more than 1 Lumen (XLM) in order to perform this action.";
+"LOW_BALANCE_ERROR_MESSAGE" = "Your must have an total balance of %@ Lumens (XLM) or greater in order to add a new asset.";
 
 "ASSET_REMOVE_ERROR_MESSAGE" = "Sorry your asset could not be removed at this time. Please try again later.";
 "TOKEN_ERROR_MESSAGE" = "Sorry your personal token could not be added at this time. Please try again later.";
@@ -182,7 +182,6 @@
 "INFLATION_DESTINATION_INVALID" = "Unable to update the inflation destination to your own account, or the account it's already set to.";
 "CRYPTO_DUST_FORMAT_STRING" = "< %@";
 "AVAILABLE_BALANCE_FORMAT_STRING" = "Available: %@ %@";
-"TRADE_PICKER_FORMAT_STRING" = "%@ (%@)";
 "MEMO_TITLE" = "Memo";
 "MEMO_TITLE_FORMAT_STRING" = "Memo (%@)";
 "XLM_FORMAT_STRING" = "%@ XLM";
@@ -290,7 +289,7 @@
 
 "TOTAL_BALANCE_TITLE" = "Total Balance";
 "AVAILABLE_BALANCE_TITLE" = "Available Balance";
-"BASE_RESERVE_TITLE" = "Base Reserve";
+"BASE_AMOUNT_TITLE" = "Base Amount";
 "TRUSTLINES_TITLE" = "Trustlines";
 "OFFERS_TITLE" = "Open Offers";
 "SIGNERS_TITLE" = "Signers";
@@ -301,5 +300,6 @@
 "XLM_HEADER_TITLE" = "XLM";
 
 "BLOCKEQ_ASSET_TITLE" = "BlockEQ Assets";
-"NO_ASSETS_TITLE" = "Your account has no assets";
-"NO_ASSETS_DESCRIPTION" = "When you add assets, you will see them displayed here.";
+"NO_ASSETS_TITLE" = "No Wallet Assets";
+"NO_ASSETS_DESCRIPTION" = "When you add assets to your wallet, they will be displayed here.";
+"NOT_AVAILABLE_SHORTFORM" = "N/A";

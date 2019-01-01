@@ -24,11 +24,12 @@ final class ApplicationCoordinator {
     var currentViewController = UIViewController()
 
     // The coordinator responsible for the trading flow
-    let tradingCoordinator = TradingCoordinator()
+    var tradingCoordinator: TradingCoordinator?
 
-    // The coordinator responsible for the peer to peer flow
-    let p2pCoordinator = P2PCoordinator()
+    // The coordinator responsible for listing, managing, and displaying assets
+    var assetCoordinator: AssetCoordinator?
 
+    // The coordinator responsible for managing application diagnostics
     let diagnosticCoordinator = DiagnosticCoordinator()
 
     /// The view that handles all switching in the header
@@ -80,23 +81,14 @@ final class ApplicationCoordinator {
             coreService.updateService.startPeriodicUpdates()
             coreService.updateService.update()
 
-            tradingCoordinator.tradeService = coreService.tradeService
-            tradingCoordinator.updateService = coreService.updateService
-            tradingCoordinator.accountService = coreService.accountService
+            let tradingCoordinator = TradingCoordinator(core: coreService)
+            tradingCoordinator.delegate = self
+            self.tradingCoordinator = tradingCoordinator
         }
     }
 
-    /// The view controller used to switch which wallet is currently displayed, deallocated once finished using
-    var walletSwitchingViewController: WalletSwitchingViewController?
-
     /// The view controller that allows users to send funds, deallocated once finished using
     var sendViewController: SendViewController?
-
-    /// The view controller used to set the user's inflation pool, deallocated once finished using
-    var inflationViewController: InflationViewController?
-
-    /// The view controller used to set to add an asset, deallocated once finished using
-    var addAssetViewController: AddAssetViewController?
 
     /// The view controller used to display the minimum balance, deallocated once finished using
     var balanceViewController: BalanceViewController?
@@ -116,6 +108,7 @@ final class ApplicationCoordinator {
     /// The completion handler to call when the pin view controller completes successfully
     var authCompletion: PinEntryCompletion?
 
+    /// The coordinator responsible for authenticating when the user needs to confirm their PIN
     var authenticationCoordinator: AuthenticationCoordinator?
 
     var temporaryPinSetting: Bool!
@@ -129,7 +122,6 @@ final class ApplicationCoordinator {
         walletVC.delegate = self
 
         tabController.tabDelegate = self
-        tradingCoordinator.delegate = self
 
         AddressResolver.fetchExchangeData()
     }
@@ -169,7 +161,7 @@ final class ApplicationCoordinator {
 
 extension ApplicationCoordinator: TradeHeaderViewDelegate {
     func switchedSegment(_ type: TradeSegment) {
-        tradingCoordinator.switchedSegment(type)
+        tradingCoordinator?.switchedSegment(type)
     }
 }
 
@@ -186,10 +178,11 @@ extension ApplicationCoordinator: AppTabControllerDelegate {
 
         switch appTab {
         case .assets: viewController = walletViewController
-        case .trading: viewController = tradingCoordinator.segmentController
+        case .trading:
+            guard let tradeVC = tradingCoordinator?.segmentController else { return }
+            viewController = tradeVC
         case .contacts: viewController = contactsViewController
         case .settings: viewController = settingsViewController
-        case .p2p: viewController = p2pCoordinator.p2pViewController
         }
 
         if currentViewController != viewController {

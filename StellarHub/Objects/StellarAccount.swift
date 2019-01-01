@@ -11,21 +11,31 @@ import stellarsdk
 public final class StellarAccount {
     public internal(set) var accountId = ""
     public internal(set) var inflationDestination: String?
+
+    public let totalBaseAmount: Int = 2
     public internal(set) var totalTrustlines: Int = 0
-    public internal(set) var totalOffers: Int = 0
     public internal(set) var totalSigners: Int = 0
-    public internal(set) var totalBaseReserve: Int = 1
-    public internal(set) var isStub: Bool = false
+    public internal(set) var totalDataEntries: Int = 0
+    public internal(set) var totalSubentries: Int = 0
+
+    // See https://www.stellar.org/developers/guides/concepts/ledger.html#ledger-entries
+    // Offers are computed as the number of subentries minus trustlines, minus data entries (not signers, base amount)
+    public var totalOffers: Int {
+        return self.totalSubentries - self.totalTrustlines - self.totalDataEntries
+    }
+
     public internal(set) var assets: [StellarAsset] = []
     public internal(set) var mappedEffects: [String: StellarEffect] = [:]
     public internal(set) var mappedTransactions: [String: StellarTransaction] = [:]
     public internal(set) var mappedOperations: [String: StellarOperation] = [:]
     public internal(set) var mappedOffers: [Int: StellarAccountOffer] = [:]
     public internal(set) var outstandingTradeAmounts: [StellarAsset: Decimal] = [:]
+
     internal var rawResponse: AccountResponse?
 
-    internal weak var sendResponseDelegate: SendAmountResponseDelegate?
-    internal weak var manageAssetResponseDelegate: ManageAssetResponseDelegate?
+    public var isStub: Bool {
+        return rawResponse == nil
+    }
 
     public var address: StellarAddress {
         return StellarAddress(accountId)!
@@ -60,9 +70,12 @@ public final class StellarAccount {
     public init(_ response: AccountResponse) {
         self.accountId = response.accountId
         self.inflationDestination = response.inflationDestination
+
         self.totalTrustlines = response.balances.count - 1
         self.totalSigners = response.signers.count
-        self.totalOffers = Int(response.subentryCount) - self.totalTrustlines
+        self.totalDataEntries = response.data.count
+        self.totalSubentries = Int(response.subentryCount)
+
         self.assets = response.balances
             .map { return StellarAsset(response: $0) }
             .sorted(by: { first, second -> Bool in
@@ -73,40 +86,80 @@ public final class StellarAccount {
     // Creates a stub account that can be used, but has not yet been fetched from the Horizon API
     internal init(accountId: String) {
         self.accountId = accountId
-        self.isStub = true
         self.assets.insert(StellarAsset.lumens, at: 0)
     }
 
     internal func update(withRaw response: AccountResponse) {
         let account = StellarAccount(response)
-        self.rawResponse = response
-        self.accountId = account.accountId
-        self.inflationDestination = account.inflationDestination
-        self.totalTrustlines = account.totalTrustlines
-        self.totalSigners = account.totalSigners
-        self.totalOffers = account.totalOffers
-        self.assets = account.assets
-        self.isStub = false
+
+        rawResponse = response
+        accountId = account.accountId
+        inflationDestination = account.inflationDestination
+        totalTrustlines = account.totalTrustlines
+        totalSigners = account.totalSigners
+        totalDataEntries = account.totalDataEntries
+        totalSubentries = account.totalSubentries
+        assets = account.assets
     }
 
     public var baseReserve: Decimal {
-        return Decimal(totalBaseReserve) * 0.5
+        return 0.5
+    }
+
+    public var baseFee: Decimal {
+        return 0.00001
+    }
+
+    public var baseAmount: Decimal {
+        return Decimal(totalBaseAmount) * baseReserve
     }
 
     public var trustlines: Decimal {
-        return Decimal(totalTrustlines) * 0.5
+        return Decimal(totalTrustlines) * baseReserve
     }
 
     public var offers: Decimal {
-        return Decimal(totalOffers) * 0.5
+        return Decimal(totalOffers) * baseReserve
+    }
+
+    public var dataEntries: Decimal {
+        return Decimal(totalDataEntries) * baseReserve
     }
 
     public var signers: Decimal {
-        return Decimal(totalSigners) * 0.5
+        return Decimal(totalSigners) * baseReserve
     }
 
     public var minBalance: Decimal {
-        return baseReserve + trustlines + offers + signers
+        let subentryBalance = Decimal(totalBaseAmount + totalSubentries) * baseReserve
+        return subentryBalance + signers
+    }
+
+    public var newEntryMinBalance: Decimal {
+        return minBalance + baseReserve
+    }
+
+    public var hasRequiredNativeBalanceForNewEntry: Bool {
+        return availableTradeBalance(for: nativeAsset) - baseReserve > 0
+    }
+
+    public var hasRequiredNativeBalanceForTrade: Bool {
+        return availableTradeBalance(for: nativeAsset) > 0
+    }
+
+    public var hasRequiredNativeBalanceForSend: Bool {
+        return availableSendBalance(for: nativeAsset) > 0
+    }
+
+    /**
+     Returns the native asset of the network for this account.
+     */
+    var nativeAsset: StellarAsset {
+        guard let lumens = assets.first(where: { $0.assetType == AssetTypeAsString.NATIVE }) else {
+            return StellarAsset.lumens
+        }
+
+        return lumens
     }
 
     /**
@@ -115,13 +168,7 @@ public final class StellarAccount {
      - Note: This amount does not consider amounts locked up in trades.
      */
     public var availableNativeBalance: Decimal {
-        var totalBalance = Decimal(0.00)
-        for asset in assets where asset.assetType == AssetTypeAsString.NATIVE {
-            if let assetBalance = Decimal(string: asset.balance) {
-                totalBalance = assetBalance
-            }
-        }
-
+        let totalBalance = Decimal(string: nativeAsset.balance) ?? Decimal(0.00)
         let calculatedBalance = totalBalance - minBalance
         return calculatedBalance >= 0.0 ? calculatedBalance : totalBalance
     }
@@ -148,6 +195,42 @@ public final class StellarAccount {
         let outstandingTradeAmount = outstandingTradeAmounts[asset] ?? 0
         return subtractTradeAmounts ? balance - outstandingTradeAmount : balance
     }
+
+    /**
+     This method computes the allowed amount of an asset to trade.
+
+     - Parameter asset: The asset to calculate the trade balance for.
+     - Returns: The amount the user is eligible to post for trade.
+     - Note: If the requested asset is native, the returned amount incorporates the additional entry to the user's
+     minimum balance (0.5 XLM)
+     */
+    public func availableTradeBalance(for asset: StellarAsset) -> Decimal {
+        let availableBalance = self.availableBalance(for: asset)
+
+        if asset.isNative {
+            let availableTotal = availableBalance - baseFee - baseReserve
+            return availableTotal > 0 ? availableTotal : 0
+        } else {
+            return availableBalance
+        }
+    }
+
+    /**
+     This method computes the allowed amount of a given asset to send.
+
+     - Parameter asset: The asset to calculate the send balance for.
+     - Returns: The amount the user is eligible to send.
+     */
+    public func availableSendBalance(for asset: StellarAsset) -> Decimal {
+        let availableBalance = self.availableBalance(for: asset)
+
+        if asset.isNative {
+            let availableTotal = availableBalance - baseFee - baseReserve
+            return availableTotal > 0 ? availableTotal : 0
+        } else {
+            return availableBalance
+        }
+    }
 }
 
 extension StellarAccount: Hashable {
@@ -158,10 +241,7 @@ extension StellarAccount: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(accountId)
         hasher.combine(inflationDestination)
-        hasher.combine(baseReserve)
-        hasher.combine(trustlines)
-        hasher.combine(offers)
-        hasher.combine(signers)
+        hasher.combine(totalSubentries)
 
         transactions.forEach { hasher.combine($0.hash) }
         effects.forEach { hasher.combine($0.operationId) }

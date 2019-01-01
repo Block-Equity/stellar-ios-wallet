@@ -19,6 +19,7 @@ protocol StylableCardCell: AnyObject {
     var cardRightInset: NSLayoutConstraint! { get }
 
     func applyCardStyle()
+    func select()
 }
 
 extension StylableCardCell where Self: UICollectionViewCell {
@@ -28,7 +29,7 @@ extension StylableCardCell where Self: UICollectionViewCell {
         cardView.clipsToBounds = false
         cardView.layer.shadowColor = Colors.black.cgColor
         cardView.layer.masksToBounds = false
-        cardView.layer.shadowRadius = 6
+        cardView.layer.shadowRadius = 4
         cardView.layer.shadowOffset = CGSize(width: 0, height: 3)
         cardView.layer.shadowOpacity = 0.25
 
@@ -55,5 +56,13 @@ extension StylableCardCell where Self: UICollectionViewCell {
         attributes.frame = newFrame
 
         return attributes
+    }
+
+    func select() {
+        cardView.backgroundColor = Colors.lightGray
+
+        UIView.animate(withDuration: 0.25, animations: {
+            self.cardView.backgroundColor = .white
+        }, completion: nil)
     }
 }

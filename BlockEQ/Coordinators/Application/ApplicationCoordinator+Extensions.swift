@@ -75,7 +75,7 @@ extension ApplicationCoordinator: AccountUpdateServiceDelegate {
             self.walletViewController.updated(account: account)
         }
 
-        self.tradingCoordinator.updated(account: account)
+        self.tradingCoordinator?.updated(account: account)
     }
 }
 

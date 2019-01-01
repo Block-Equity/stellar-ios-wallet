@@ -37,6 +37,9 @@ final class AssetAmountCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
 
     func setupStyle() {
         view.backgroundColor = .clear
+        headerContainer.backgroundColor = .clear
+        priceContainer.backgroundColor = .clear
+
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 5
         cardView.clipsToBounds = false

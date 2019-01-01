@@ -56,13 +56,13 @@ public protocol SendAmountResponseDelegate: AnyObject {
 
 public protocol SetInflationResponseDelegate: AnyObject {
     func setInflation(destination: StellarAddress)
-    func failed(error: FrameworkError)
+    func inflationFailed(error: FrameworkError)
 }
 
 public protocol ManageAssetResponseDelegate: AnyObject {
     func added(asset: StellarAsset, account: StellarAccount)
     func removed(asset: StellarAsset, account: StellarAccount)
-    func failed(error: FrameworkError)
+    func manageFailed(error: FrameworkError)
 }
 
 // MARK: - TradeService

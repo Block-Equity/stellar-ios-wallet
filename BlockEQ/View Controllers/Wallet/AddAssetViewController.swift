@@ -46,16 +46,6 @@ class AddAssetViewController: UIViewController {
         view.backgroundColor = Colors.lightBackground
     }
 
-    func showHud() {
-        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
-        hud.label.text = "ADDING_ASSET".localized()
-        hud.mode = .indeterminate
-    }
-
-    func hideHud() {
-        MBProgressHUD.hide(for: UIApplication.shared.keyWindow!, animated: true)
-    }
-
     @IBAction func addAsset() {
         guard let assetCode = assetCodeTextField.text, !assetCode.isEmpty else {
             assetCodeTextField.shake()
@@ -69,15 +59,14 @@ class AddAssetViewController: UIViewController {
         }
 
         view.endEditing(true)
-        showHud()
 
         let asset = StellarAsset(assetCode: assetCode, issuer: issuer.string)
-        self.delegate?.requestedAdd(self, asset: asset)
+        delegate?.requestedAdd(self, asset: asset)
 
         if self.isBeingPresented {
-            self.navigationController?.dismiss(animated: true, completion: nil)
+            navigationController?.dismiss(animated: true, completion: nil)
         } else {
-            self.navigationController?.popViewController(animated: true)
+            navigationController?.popViewController(animated: true)
         }
     }
 }
