@@ -9,7 +9,6 @@
 "MENU_OPTION_WALLETS" = "Wallets";
 "MENU_OPTION_TRADING" = "Trading";
 "MENU_OPTION_SETTINGS" = "Settings";
-"MENU_OPTION_P2P" = "Peer to Peer";
 
 "SETTINGS_SECTION_WALLET" = "Wallet";
 "SETTINGS_SECTION_SECURITY" = "Security";
@@ -50,7 +49,6 @@
 "ITEM_SEND" = "Send";
 "TITLE_TAB_CONTACTS" = "Contacts";
 "TITLE_TAB_SETTINGS" = "Settings";
-"TITLE_TAB_P2P" = "P2P";
 
 "PIN_ENTER_TITLE" = "Please enter your PIN code";
 "PIN_CREATE_TITLE" = "Please create a PIN code";
@@ -88,7 +86,6 @@
 
 "ACTIVATION_ERROR_TITLE" = "Activation Error";
 "NO_BALANCE_ERROR_TITLE" = "Balance Error";
-"PEER_ERROR_MESSAGE" = "Sorry this peer could not be added at this time. Please try again later.";
 "ASSET_ERROR_MESSAGE" = "Sorry your asset could not be added at this time. Please try again later.";
 "ASSET_BALANCE_ERROR_MESSAGE" = "Sorry your asset could not be added at this time. You may need to add more Lumens(XLM) to your wallet and try again as each action costs 0.5 XLM.";
 "LOW_BALANCE_ERROR_MESSAGE" = "Your must have an total balance of %@ Lumens (XLM) or greater in order to add a new asset.";
@@ -102,9 +99,7 @@
 "TRANSACTION_ERROR_MESSAGE" = "There was an error processing this transaction. Please try again later.";
 "TRANSACTION_SUCCESS" = "Transaction successful.";
 
-"PEER_TO_PEER" = "Peer to Peer";
 "TOKEN_ADDRESS" = "Token Address";
-"TRUSTED_PEERS" = "Trusted Peers";
 "TRADE_SUBMITTED" = "Trade successfully submitted.";
 "TRADE_CURRENCY_PAIR_FORMAT" = "Trade %@ for %@";
 
@@ -122,9 +117,6 @@
 "NAVIGATE_BACK" = "Back";
 "SCANNING" = "Scanning...";
 "QR_DETECTED" = "Valid QR Code Found";
-"ADD_PEER" = "Add Peer";
-"ADDING_PEER" = "Adding Peer...";
-"PEER_ADDED" = "Peer successfully added.";
 "EXCHANGE_ADDRESS_PROMPT_FORMAT" = "This exchange address belongs to %@. Please enter a memo in order to send this transaction.";
 "REQUIRED_PLACEHOLDER" = "(Required)";
 "ADD_TRANSACTION" = "Add Transaction";

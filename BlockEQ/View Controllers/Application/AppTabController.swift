@@ -11,8 +11,8 @@ import Foundation
 enum ApplicationTab: Int {
     case assets
     case trading
-    case contacts
     case settings
+    case contacts
 
     var tabBarItem: UITabBarItem {
         return UITabBarItem(title: title,
