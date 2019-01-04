@@ -24,18 +24,7 @@
 		C414814021264C8B0057ED74 /* SelectAssetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C414813E21264C8B0057ED74 /* SelectAssetCell.swift */; };
 		C414814121264C8B0057ED74 /* SelectAssetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C414813F21264C8B0057ED74 /* SelectAssetCell.xib */; };
 		C4167B9221234E6C00F44136 /* SecurityOptionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52186B820C06B8100FF2A76 /* SecurityOptionHelper.swift */; };
-		C41713E521211A8800C29FE2 /* AddPeerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41713E321211A8800C29FE2 /* AddPeerViewController.swift */; };
-		C41713E621211A8800C29FE2 /* AddPeerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C41713E421211A8800C29FE2 /* AddPeerViewController.xib */; };
-		C439A22B211B6F9C0025C047 /* CreateTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C439A229211B6F9C0025C047 /* CreateTokenViewController.swift */; };
-		C439A22C211B6F9C0025C047 /* CreateTokenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C439A22A211B6F9C0025C047 /* CreateTokenViewController.xib */; };
-		C439A22F211B6FDC0025C047 /* P2PTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C439A22D211B6FDC0025C047 /* P2PTransactionViewController.swift */; };
-		C439A230211B6FDC0025C047 /* P2PTransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C439A22E211B6FDC0025C047 /* P2PTransactionViewController.xib */; };
 		C46CF29920F5284B003CBDA3 /* AddAssetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46CF29820F5284B003CBDA3 /* AddAssetViewController.swift */; };
-		C499755C2112255C00E2299C /* P2PViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C499755A2112255C00E2299C /* P2PViewController.swift */; };
-		C499755D2112255C00E2299C /* P2PViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C499755B2112255C00E2299C /* P2PViewController.xib */; };
-		C499755F211297BF00E2299C /* P2PCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C499755E211297BF00E2299C /* P2PCoordinator.swift */; };
-		C499756621129D2D00E2299C /* TrustedPartiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C499756421129D2D00E2299C /* TrustedPartiesViewController.swift */; };
-		C499756721129D2D00E2299C /* TrustedPartiesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C499756521129D2D00E2299C /* TrustedPartiesViewController.xib */; };
 		C4E9A77420F79F150028651F /* BalanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9A77220F79F150028651F /* BalanceViewController.swift */; };
 		C4E9A77520F79F150028651F /* BalanceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4E9A77320F79F150028651F /* BalanceViewController.xib */; };
 		C4EC5FF120F3E64300769E31 /* AddAssetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4EC5FEF20F3E64300769E31 /* AddAssetViewController.xib */; };
@@ -297,18 +286,7 @@
 		C414813B21264C210057ED74 /* SelectAssetViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectAssetViewController.xib; sourceTree = "<group>"; };
 		C414813E21264C8B0057ED74 /* SelectAssetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAssetCell.swift; sourceTree = "<group>"; };
 		C414813F21264C8B0057ED74 /* SelectAssetCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectAssetCell.xib; sourceTree = "<group>"; };
-		C41713E321211A8800C29FE2 /* AddPeerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPeerViewController.swift; sourceTree = "<group>"; };
-		C41713E421211A8800C29FE2 /* AddPeerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddPeerViewController.xib; sourceTree = "<group>"; };
-		C439A229211B6F9C0025C047 /* CreateTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTokenViewController.swift; sourceTree = "<group>"; };
-		C439A22A211B6F9C0025C047 /* CreateTokenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateTokenViewController.xib; sourceTree = "<group>"; };
-		C439A22D211B6FDC0025C047 /* P2PTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2PTransactionViewController.swift; sourceTree = "<group>"; };
-		C439A22E211B6FDC0025C047 /* P2PTransactionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = P2PTransactionViewController.xib; sourceTree = "<group>"; };
 		C46CF29820F5284B003CBDA3 /* AddAssetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAssetViewController.swift; sourceTree = "<group>"; };
-		C499755A2112255C00E2299C /* P2PViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2PViewController.swift; sourceTree = "<group>"; };
-		C499755B2112255C00E2299C /* P2PViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = P2PViewController.xib; sourceTree = "<group>"; };
-		C499755E211297BF00E2299C /* P2PCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2PCoordinator.swift; sourceTree = "<group>"; };
-		C499756421129D2D00E2299C /* TrustedPartiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustedPartiesViewController.swift; sourceTree = "<group>"; };
-		C499756521129D2D00E2299C /* TrustedPartiesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrustedPartiesViewController.xib; sourceTree = "<group>"; };
 		C4E9A77220F79F150028651F /* BalanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewController.swift; sourceTree = "<group>"; };
 		C4E9A77320F79F150028651F /* BalanceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BalanceViewController.xib; sourceTree = "<group>"; };
 		C4EC5FEF20F3E64300769E31 /* AddAssetViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddAssetViewController.xib; sourceTree = "<group>"; };
@@ -602,23 +580,6 @@
 			path = "Address Book";
 			sourceTree = "<group>";
 		};
-		C439A228211B6F7D0025C047 /* P2P */ = {
-			isa = PBXGroup;
-			children = (
-				C41713E321211A8800C29FE2 /* AddPeerViewController.swift */,
-				C41713E421211A8800C29FE2 /* AddPeerViewController.xib */,
-				C499755A2112255C00E2299C /* P2PViewController.swift */,
-				C499755B2112255C00E2299C /* P2PViewController.xib */,
-				C499756421129D2D00E2299C /* TrustedPartiesViewController.swift */,
-				C499756521129D2D00E2299C /* TrustedPartiesViewController.xib */,
-				C439A229211B6F9C0025C047 /* CreateTokenViewController.swift */,
-				C439A22A211B6F9C0025C047 /* CreateTokenViewController.xib */,
-				C439A22D211B6FDC0025C047 /* P2PTransactionViewController.swift */,
-				C439A22E211B6FDC0025C047 /* P2PTransactionViewController.xib */,
-			);
-			path = P2P;
-			sourceTree = "<group>";
-		};
 		C51441FA217E836A006C44F4 /* Data Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -847,7 +808,6 @@
 				C590B9BC21A0982E00B5262A /* Application */,
 				C5E8594F20AFF09800B77289 /* OnboardingCoordinator.swift */,
 				EC6EE89520B6043C0033C299 /* TradingCoordinator.swift */,
-				C499755E211297BF00E2299C /* P2PCoordinator.swift */,
 				C5FAA1ED211F42010020CB26 /* AuthenticationCoordinator.swift */,
 				C5D8CAC52180D809009F8624 /* AddressCoordinator.swift */,
 				C53E6289219A0175006BF2F1 /* DiagnosticCoordinator.swift */,
@@ -976,7 +936,6 @@
 				C5BB02472165268800E4AAD1 /* Keys */,
 				C5A5A876215E90AD00007787 /* Misc */,
 				C41165122123B7B500C4CB6E /* Address Book */,
-				C439A228211B6F7D0025C047 /* P2P */,
 				C5FDBC68211D36BF0051AB9F /* Security */,
 				C5E8594720AFB45000B77289 /* Application */,
 				C589FF2820902CAC00F5F308 /* Settings */,
@@ -1295,8 +1254,6 @@
 				C59AA3CC21D14F7A007E8362 /* AssetIssuerView.xib in Resources */,
 				C54EFE452179045C005FA6D3 /* TransactionDetailsBasicHeader.xib in Resources */,
 				C414813521248F5B0057ED74 /* StellarContactViewController.xib in Resources */,
-				C439A230211B6FDC0025C047 /* P2PTransactionViewController.xib in Resources */,
-				C41713E621211A8800C29FE2 /* AddPeerViewController.xib in Resources */,
 				C54ADD4B21781F990078F69E /* TransactionDetailsCell.xib in Resources */,
 				C58D374A21B06A23009B44C0 /* PillViewCell.xib in Resources */,
 				EC0B192320549B240052802C /* ReceiveViewController.xib in Resources */,
@@ -1306,7 +1263,6 @@
 				EC52B3D320BC951F006299A1 /* OffersCell.xib in Resources */,
 				C57053E4219F34B400E6B69E /* IndexingViewController.xib in Resources */,
 				C411651A2123C2D300C4CB6E /* ContactCell.xib in Resources */,
-				C499756721129D2D00E2299C /* TrustedPartiesViewController.xib in Resources */,
 				ECD3A353207D2CE5000609A0 /* WalletItemActivateCell.xib in Resources */,
 				EC6EE89420B6005D0033C299 /* MyOffersViewController.xib in Resources */,
 				EC52B3CF20BBB1CB006299A1 /* OrderBookCell.xib in Resources */,
@@ -1334,7 +1290,6 @@
 				C53E6295219A4432006BF2F1 /* DiagnosticDataCell.xib in Resources */,
 				C5BED3782162B9E700BEE464 /* exchanges.json in Resources */,
 				EC52B3CB20BB7476006299A1 /* OrderBookHeaderView.xib in Resources */,
-				C439A22C211B6F9C0025C047 /* CreateTokenViewController.xib in Resources */,
 				EC0B191F205486AB0052802C /* TransactionHistoryCell.xib in Resources */,
 				EC2015EE2052FD1A009A73C8 /* PinViewController.xib in Resources */,
 				C54ADD532178FB9B0078F69E /* TransactionSignatureCell.xib in Resources */,
@@ -1352,7 +1307,6 @@
 				C525C97920B79695006C138F /* KeyboardView.xib in Resources */,
 				C5401D362178007300A12AC2 /* TransactionDetailsViewController.xib in Resources */,
 				EC11062320C7062000FD3684 /* MyOffersHeaderView.xib in Resources */,
-				C499755D2112255C00E2299C /* P2PViewController.xib in Resources */,
 				C414813D21264C210057ED74 /* SelectAssetViewController.xib in Resources */,
 				EC2015EA2052EAC7009A73C8 /* WalletTitleViewController.xib in Resources */,
 				C5BB02492165269F00E4AAD1 /* SecretSeedViewController.xib in Resources */,
@@ -1602,7 +1556,6 @@
 				C58D374921B06A23009B44C0 /* PillViewCell.swift in Sources */,
 				ECD3A352207D2CE5000609A0 /* WalletItemActivateCell.swift in Sources */,
 				C53E62862199DC94006BF2F1 /* SendDiagnosticOperation.swift in Sources */,
-				C499755F211297BF00E2299C /* P2PCoordinator.swift in Sources */,
 				C5114DB7219548AC00C88E4F /* TransactionDetailsDataSource.swift in Sources */,
 				C51B6E5C21B9B553001DFEF7 /* UIViewController+Blurrable.swift in Sources */,
 				C5401D342178005B00A12AC2 /* TransactionDetailsViewController.swift in Sources */,
@@ -1624,10 +1577,8 @@
 				C4E9A77420F79F150028651F /* BalanceViewController.swift in Sources */,
 				C5E8595020AFF09800B77289 /* OnboardingCoordinator.swift in Sources */,
 				C59AA3C421D13C38007E8362 /* AssetPriceView.swift in Sources */,
-				C499756621129D2D00E2299C /* TrustedPartiesViewController.swift in Sources */,
 				C5E8594920AFB45E00B77289 /* ContainerViewController.swift in Sources */,
 				C5681BB921A779AB00ACEB21 /* Reachability.swift in Sources */,
-				C439A22F211B6FDC0025C047 /* P2PTransactionViewController.swift in Sources */,
 				C5D8CAC62180D809009F8624 /* AddressCoordinator.swift in Sources */,
 				EC0B19262054BC3B0052802C /* AppNavigationController.swift in Sources */,
 				C5AF7C8A2094B60A00F99835 /* UIImage+CALayer.swift in Sources */,
@@ -1636,7 +1587,6 @@
 				C54EFE4C217A2442005FA6D3 /* TransactionSection.swift in Sources */,
 				C5A5A878215E90BD00007787 /* WebViewController.swift in Sources */,
 				C5A4543221DA8C080096467A /* UIView+CardCell.swift in Sources */,
-				C439A22B211B6F9C0025C047 /* CreateTokenViewController.swift in Sources */,
 				C590B9C221A09A6000B5262A /* ApplicationCoordinator+Wallet.swift in Sources */,
 				EC1CEE5320577E880005F74E /* WordSuggestionCell.swift in Sources */,
 				C53E628D219A01C9006BF2F1 /* DiagnosticViewController.swift in Sources */,
@@ -1667,7 +1617,6 @@
 				EC2015E52052E8AA009A73C8 /* Constants.swift in Sources */,
 				C59AA3D521D15642007E8362 /* AssetIssuerCell.swift in Sources */,
 				C57053E6219F357300E6B69E /* IndexingViewController.swift in Sources */,
-				C499755C2112255C00E2299C /* P2PViewController.swift in Sources */,
 				EC4F65FE20C8CD2C0036293D /* Date+Format.swift in Sources */,
 				C5E8594620AFAFD100B77289 /* AppTabController.swift in Sources */,
 				EC2015ED2052FD1A009A73C8 /* PinViewController.swift in Sources */,
@@ -1729,7 +1678,6 @@
 				C414814021264C8B0057ED74 /* SelectAssetCell.swift in Sources */,
 				C55458FC2124BB1B00032699 /* AuthenticatingViewController.swift in Sources */,
 				C53E628A219A0175006BF2F1 /* DiagnosticCoordinator.swift in Sources */,
-				C41713E521211A8800C29FE2 /* AddPeerViewController.swift in Sources */,
 				C5E4980321D5F8E00013883A /* UICollectionViewCell+Reusable.swift in Sources */,
 				C57A8542217815410048A6B5 /* TransactionDetailsSectionHeader.swift in Sources */,
 				C414813421248F5B0057ED74 /* StellarContactViewController.swift in Sources */,
