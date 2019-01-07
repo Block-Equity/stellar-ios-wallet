@@ -70,7 +70,7 @@ enum TransactionSection: Int, RawRepresentable {
             basicHeader.rightLabel.text = data
             view = basicHeader
         default:
-            let expandingHeader: TransactionDetailsSectionHeader = collectionView.dequeueFooter(for: index)
+            let expandingHeader: TransactionDetailsSectionHeader = collectionView.dequeueHeader(for: index)
             expandingHeader.collapsed = collapsed
             expandingHeader.headerTitle.text = self.title
             expandingHeader.delegate = delegate
