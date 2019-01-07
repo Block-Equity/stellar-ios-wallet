@@ -105,7 +105,7 @@
 
 "NEW_WALLET" = "New Wallet";
 "MY_WALLET" = "My Wallet";
-"LUMEN_BALANCE" = "XLM Balance";
+"ASSET_BALANCE" = "Asset Balance";
 "SECRET_PHRASE" = "Mnemonic Phrase";
 "TOKEN_ADDRESS" = "Token Address";
 "YOUR_TOKEN_ADDRESS" = "Your Token Address";
@@ -282,16 +282,25 @@
 "TOTAL_BALANCE_TITLE" = "Total Balance";
 "AVAILABLE_BALANCE_TITLE" = "Available Balance";
 "BASE_AMOUNT_TITLE" = "Base Amount";
+"BASE_AMOUNT_SUBTITLE" = "A reserved amount on every account";
 "TRUSTLINES_TITLE" = "Trustlines";
+"TRUSTLINES_SUBTITLE" = "%@ active trustlines on your account";
 "OFFERS_TITLE" = "Open Offers";
+"OFFERS_SUBTITLE" = "%@ open trade offers on your account";
 "SIGNERS_TITLE" = "Signers";
+"SIGNERS_SUBTITLE" = "%@ authorized signers on your account";
 "OPEN_TRADES_TITLE" = "Offered Amount";
-"MINIMUM_BALANCE_TITLE" = "Total";
-"TYPE_HEADER_TITLE" = "Type";
-"AMOUNT_HEADER_TITLE" = "Amount";
-"XLM_HEADER_TITLE" = "XLM";
+"OPEN_TRADES_SUBTITLE" = "Amount posted in trades";
 
 "BLOCKEQ_ASSET_TITLE" = "BlockEQ Assets";
 "NO_ASSETS_TITLE" = "No Wallet Assets";
 "NO_ASSETS_DESCRIPTION" = "When you add assets to your wallet, they will be displayed here.";
 "NOT_AVAILABLE_SHORTFORM" = "N/A";
+
+"ISSUER_TITLE_FORMAT" = "Issued by %@";
+"DESCRIPTION_TITLE" = "Description";
+"NOTES_TITLE" = "Notes";
+"LUMEN_DESCRIPTION" = "Lumens are the native asset of the Stellar network.";
+"LUMEN_NOTES" = "One lumen (XLM) is a unit of digital currency, like a bitcoin.";
+"BALANCE_INFORMATION" = "Balance";
+"ISSUER_ADDRESS" = "Issuer Address";

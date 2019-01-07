@@ -17,10 +17,10 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WPQ-Fd-5zW">
-                    <rect key="frame" x="10" y="0.0" width="355" height="35"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="35"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BLOCKEQ ASSETS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GSt-px-BAX">
-                            <rect key="frame" x="15" y="10.5" width="325" height="14.5"/>
+                            <rect key="frame" x="15" y="10.5" width="345" height="14.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -36,9 +36,9 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="SfL-7J-LEs" firstAttribute="trailing" secondItem="WPQ-Fd-5zW" secondAttribute="trailing" constant="10" id="MHD-Rz-CZl"/>
+                <constraint firstItem="SfL-7J-LEs" firstAttribute="trailing" secondItem="WPQ-Fd-5zW" secondAttribute="trailing" id="MHD-Rz-CZl"/>
                 <constraint firstAttribute="bottom" secondItem="WPQ-Fd-5zW" secondAttribute="bottom" id="Tee-VW-Afp"/>
-                <constraint firstItem="WPQ-Fd-5zW" firstAttribute="leading" secondItem="SfL-7J-LEs" secondAttribute="leading" constant="10" id="hm0-1B-QoZ"/>
+                <constraint firstItem="WPQ-Fd-5zW" firstAttribute="leading" secondItem="SfL-7J-LEs" secondAttribute="leading" id="hm0-1B-QoZ"/>
                 <constraint firstItem="WPQ-Fd-5zW" firstAttribute="top" secondItem="q33-rw-8Ac" secondAttribute="top" id="rqp-hL-EbF"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="SfL-7J-LEs"/>

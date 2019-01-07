@@ -14,7 +14,6 @@ final class AssetIssuerCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
     @IBOutlet weak var headerContainer: AssetHeaderView!
     @IBOutlet weak var priceContainer: AssetPriceView!
     @IBOutlet weak var issuerContainer: AssetIssuerView!
-    @IBOutlet weak var assetContainer: UIView!
 
     @IBOutlet weak var cardBottomInset: NSLayoutConstraint!
     @IBOutlet weak var cardLeftInset: NSLayoutConstraint!
@@ -23,7 +22,9 @@ final class AssetIssuerCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
 
     var cardInset: UIEdgeInsets = .zero
     var preferredWidth: CGFloat?
+    var preferredHeight: CGFloat?
     var indexPath: IndexPath?
+    var cornerMask: CACornerMask?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,18 +38,32 @@ final class AssetIssuerCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
         setupStyle()
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        headerContainer.update(with: AssetHeaderView.ViewModel.empty)
+        issuerContainer.update(with: AssetIssuerView.ViewModel.empty)
+        priceContainer.update(with: AssetPriceView.ViewModel.empty)
+        preferredWidth = nil
+        preferredHeight = nil
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        let defaultMask: CACornerMask = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner,
+                                         .layerMinXMaxYCorner, .layerMinXMinYCorner]
+
+        cardView.layer.maskedCorners = cornerMask ?? defaultMask
+    }
+
     func setupStyle() {
         view.backgroundColor = .clear
-
-        cardView.backgroundColor = .white
-        cardView.layer.cornerRadius = 5
-        cardView.clipsToBounds = false
-        cardView.layer.masksToBounds = false
 
         headerContainer.backgroundColor = .clear
         priceContainer.backgroundColor = .clear
         issuerContainer.backgroundColor = .clear
-        assetContainer.backgroundColor = .clear
+
+        applyCardStyle()
     }
 
     func update(with viewModel: ViewModel, indexPath path: IndexPath) {

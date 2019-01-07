@@ -8,60 +8,57 @@
 
 import StellarHub
 
+protocol BalanceViewControllerDelegate: AnyObject {
+    func dismiss(_ viewController: BalanceViewController)
+}
+
 final class BalanceViewController: UIViewController {
-    @IBOutlet weak var availableBalanceView: UIView!
-    @IBOutlet weak var totalBalanceView: UIView!
+    @IBOutlet weak var collectionView: UICollectionView!
 
-    @IBOutlet weak var typeHeaderLabel: UILabel!
-    @IBOutlet weak var totalBalanceTitleLabel: UILabel!
-    @IBOutlet weak var availableBalanceTitleLabel: UILabel!
-    @IBOutlet weak var baseReserveTitleLabel: UILabel!
-    @IBOutlet weak var trustlinesTitleLabel: UILabel!
-    @IBOutlet weak var offersTitleLabel: UILabel!
-    @IBOutlet weak var signersTitleLabel: UILabel!
-    @IBOutlet weak var minimumBalanceTitleLabel: UILabel!
-    @IBOutlet weak var openTradesTitleLabel: UILabel!
+    private var asset: StellarAsset!
+    private var dataSource: AssetBalanceDataSource?
 
-    @IBOutlet weak var availableBalanceLabel: UILabel!
-    @IBOutlet weak var totalBalanceLabel: UILabel!
-    @IBOutlet weak var minimumBalanceLabel: UILabel!
-
-    @IBOutlet weak var xlmHeaderLabel: UILabel!
-    @IBOutlet weak var baseReserveValueLabel: UILabel!
-    @IBOutlet weak var offersValueLabel: UILabel!
-    @IBOutlet weak var signersValueLabel: UILabel!
-    @IBOutlet weak var trustlinesValueLabel: UILabel!
-    @IBOutlet weak var openTradesValueLabel: UILabel!
-
-    @IBOutlet weak var amountHeaderLabel: UILabel!
-    @IBOutlet weak var baseReserveAmountLabel: UILabel!
-    @IBOutlet weak var offersAmountLabel: UILabel!
-    @IBOutlet weak var signersAmountLabel: UILabel!
-    @IBOutlet weak var trustlinesAmountLabel: UILabel!
-    @IBOutlet weak var openTradesAmountLabel: UILabel!
-
-    var stellarAccount: StellarAccount!
-    var stellarAsset: StellarAsset!
-
-    init(stellarAccount: StellarAccount, stellarAsset: StellarAsset) {
-        super.init(nibName: String(describing: BalanceViewController.self), bundle: nil)
-        self.stellarAccount = stellarAccount
-        self.stellarAsset = stellarAsset
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+    weak var delegate: BalanceViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupView()
-        setLabelValues()
+        setupStyle()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.dataSource = self.dataSource
+        collectionView.reloadData()
+    }
+
+    func setupStyle() {
+        view.backgroundColor = Colors.collectionViewBackground
+
+        collectionView.backgroundColor = .clear
+        collectionView.alwaysBounceVertical = true
+        collectionView.showsHorizontalScrollIndicator = false
+
+        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.minimumLineSpacing = 0
+            layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+        }
+
+        collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
 
     func setupView() {
-        navigationItem.title = "LUMEN_BALANCE".localized()
+        setupNavHeader()
+
+        collectionView.register(cellType: AssetAmountCell.self)
+        collectionView.register(cellType: AssetIssuerCell.self)
+        collectionView.delegate = self
+    }
+
+    func setupNavHeader() {
+        navigationItem.title = "ASSET_BALANCE".localized()
 
         let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
                                                  style: .plain,
@@ -69,47 +66,32 @@ final class BalanceViewController: UIViewController {
                                                  action: #selector(self.dismissView))
 
         navigationItem.rightBarButtonItem = rightBarButtonItem
-
-        typeHeaderLabel.text = "TYPE_HEADER_TITLE".localized()
-        amountHeaderLabel.text = "AMOUNT_HEADER_TITLE".localized()
-        xlmHeaderLabel.text = "XLM_HEADER_TITLE".localized()
-
-        totalBalanceTitleLabel.text = "TOTAL_BALANCE_TITLE".localized()
-        availableBalanceTitleLabel.text = "AVAILABLE_BALANCE_TITLE".localized()
-        baseReserveTitleLabel.text = "BASE_AMOUNT_TITLE".localized()
-        trustlinesTitleLabel.text = "TRUSTLINES_TITLE".localized()
-        offersTitleLabel.text = "OFFERS_TITLE".localized()
-        signersTitleLabel.text = "SIGNERS_TITLE".localized()
-        minimumBalanceTitleLabel.text = "MINIMUM_BALANCE_TITLE".localized()
-        openTradesTitleLabel.text = "OPEN_TRADES_TITLE".localized()
-
-        availableBalanceView.backgroundColor = Colors.primaryDark
-        totalBalanceView.backgroundColor = Colors.primaryDark
     }
 
-    func setLabelValues() {
-        let lumenTrades = stellarAccount.tradeOffers.filter { $0.sellingAsset == StellarAsset.lumens }
-        let tradeValue = lumenTrades.reduce(0) { result, offer in
-            return result + offer.amount
-        }
+    func update(with asset: StellarAsset, account: StellarAccount) {
+        self.asset = asset
 
-        totalBalanceLabel.text = stellarAsset.balance.tradeFormatted
-        availableBalanceLabel.text = stellarAccount.availableBalance(for: stellarAsset).tradeFormattedString
-        baseReserveAmountLabel.text = String(describing: stellarAccount.totalBaseAmount)
-        baseReserveValueLabel.text = stellarAccount.baseAmount.displayFormattedString
-        trustlinesAmountLabel.text = String(describing: stellarAccount.totalTrustlines)
-        trustlinesValueLabel.text = stellarAccount.formattedTrustlines
-        offersAmountLabel.text = String(describing: stellarAccount.totalOffers)
-        offersValueLabel.text = stellarAccount.formattedOffers
-        signersAmountLabel.text = String(describing: stellarAccount.totalSigners)
-        signersValueLabel.text = stellarAccount.formattedSigners
-        openTradesValueLabel.text = tradeValue.tradeFormattedString
+        let dataSource = AssetBalanceDataSource(asset: asset, account: account)
+        self.dataSource = dataSource
 
-        let minBalance = stellarAccount.minBalance + tradeValue
-        minimumBalanceLabel.text = minBalance.tradeFormattedString
+        guard isViewLoaded else { return }
+        collectionView.dataSource = dataSource
+        collectionView.reloadData()
     }
 
     @objc func dismissView() {
-        dismiss(animated: true, completion: nil)
+        delegate?.dismiss(self)
+    }
+}
+
+extension BalanceViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+}
+
+extension BalanceViewController: AccountUpdatable {
+    func updated(account: StellarAccount) {
+        self.update(with: self.asset, account: account)
     }
 }

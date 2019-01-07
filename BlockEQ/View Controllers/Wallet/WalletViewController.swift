@@ -31,13 +31,14 @@ class WalletViewController: UIViewController {
     @IBOutlet var tableViewHeaderLeftLabel: UILabel!
     @IBOutlet var tableViewHeaderRightLabel: UILabel!
     @IBOutlet var logoImageView: UIImageView!
+    @IBOutlet var assetBalanceButton: UIButton!
 
     override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
 
     weak var delegate: WalletViewControllerDelegate?
     var navigationContainer: AppNavigationController?
     var dataSource: WalletDataSource?
-    var showNativeHeader: Bool = false
+    var showBalanceHeader: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,6 +79,8 @@ class WalletViewController: UIViewController {
         navigationItem.rightBarButtonItem = rightBarButtonItem
         navigationItem.leftBarButtonItem = leftBarButtonItem
         navigationItem.title = "TITLE_TAB_WALLET".localized()
+
+        assetBalanceButton.setTitle("BALANCE_INFORMATION".localized(), for: .normal)
 
         availableBalanceView.backgroundColor = Colors.backgroundDark
         headerBackgroundView.backgroundColor = Colors.primaryDark
@@ -123,8 +126,9 @@ class WalletViewController: UIViewController {
 
     func refreshAssetHeader() {
         if let asset = self.dataSource?.asset, let account = self.dataSource?.account {
-            self.showNativeHeader = asset.isNative
-            self.coinLabel.text = Assets.formattedDisplayTitle(asset: asset)
+            let metadata = AssetMetadata(shortCode: asset.shortCode)
+            self.showBalanceHeader = true //asset.isNative
+            self.coinLabel.text = metadata.displayNameWithShortCode
             self.balanceLabel.text = asset.balance.displayFormatted
             self.availableBalanceLabel.text = account.formattedAvailableBalance(for: asset)
         }
@@ -146,7 +150,7 @@ extension WalletViewController: UITableViewDelegate {
         guard let section = WalletDataSource.Section(rawValue: section) else { return nil }
 
         switch section {
-        case .assetHeader: return showNativeHeader ? availableBalanceView : nil
+        case .assetHeader: return showBalanceHeader ? availableBalanceView : nil
         case .effectList: return tableViewHeader
         default:
             let visible = !activityIndicator.isAnimating && dataSource?.effects.count == 0
@@ -158,7 +162,7 @@ extension WalletViewController: UITableViewDelegate {
         guard let section = WalletDataSource.Section(rawValue: section) else { return 0 }
 
         switch section {
-        case .assetHeader: return showNativeHeader ? availableBalanceView.frame.size.height : 0
+        case .assetHeader: return showBalanceHeader ? availableBalanceView.frame.size.height : 0
         case .effectList: return tableViewHeader.frame.size.height
         default:
             let visible = !activityIndicator.isAnimating && dataSource?.effects.count == 0

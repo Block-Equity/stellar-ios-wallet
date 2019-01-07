@@ -53,11 +53,13 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
     func selectBalance(_ viewController: WalletViewController, for asset: StellarAsset) {
         guard let account = core?.accountService.account else { return }
 
-        let balanceVC = BalanceViewController(stellarAccount: account, stellarAsset: asset)
+        let balanceVC = BalanceViewController()
         let container = AppNavigationController(rootViewController: balanceVC)
         container.navigationBar.prefersLargeTitles = true
 
         balanceViewController = balanceVC
+        balanceVC.delegate = self
+        balanceVC.update(with: asset, account: account)
 
         tabController.present(container, animated: true, completion: nil)
     }
@@ -105,5 +107,13 @@ extension ApplicationCoordinator: TransactionDetailsViewControllerDelegate {
         }
 
         return []
+    }
+}
+
+extension ApplicationCoordinator: BalanceViewControllerDelegate {
+    func dismiss(_ viewController: BalanceViewController) {
+        balanceViewController?.dismiss(animated: true, completion: {
+            self.balanceViewController = nil
+        })
     }
 }

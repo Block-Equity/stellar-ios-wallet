@@ -78,14 +78,15 @@ extension SelectAssetViewController: UITableViewDataSource {
         let item = allAssets[indexPath.row]
         let cell: SelectAssetCell = tableView.dequeueReusableCell(for: indexPath)
 
-        cell.titleLabel.text = Assets.displayTitle(shortCode: item.shortCode)
-        cell.iconImageView.backgroundColor = Assets.displayImageBackgroundColor(shortCode: item.shortCode)
-        if let image = Assets.displayImage(shortCode: item.shortCode) {
+        let metadata = AssetMetadata(shortCode: item.shortCode)
+        cell.titleLabel.text = metadata.displayName
+        cell.iconImageView.backgroundColor = metadata.primaryColor
+        if let image = metadata.image {
             cell.iconImageView.image = image
             cell.tokenInitialLabel.text = ""
         } else {
             cell.iconImageView.image = nil
-            let shortcode = Assets.displayTitle(shortCode: item.shortCode)
+            let shortcode = metadata.displayName
             cell.tokenInitialLabel.text = String(Array(shortcode)[0])
         }
 

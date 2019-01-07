@@ -28,7 +28,9 @@ final class AssetActionCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
 
     var indexPath: IndexPath?
     var preferredWidth: CGFloat?
+    var preferredHeight: CGFloat?
     var cardInset: UIEdgeInsets = .zero
+    var cornerMask: CACornerMask?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,6 +42,24 @@ final class AssetActionCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
         super.init(coder: aDecoder)
         loadNibContent()
         setupStyle()
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        headerContainer.update(with: AssetHeaderView.ViewModel.empty)
+        priceContainer.update(with: AssetPriceView.ViewModel.empty)
+        buttonContainer.update(with: AssetButtonView.ViewModel.empty)
+        preferredWidth = nil
+        preferredHeight = nil
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        let defaultMask: CACornerMask = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner,
+                                         .layerMinXMaxYCorner, .layerMinXMinYCorner]
+
+        cardView.layer.maskedCorners = cornerMask ?? defaultMask
     }
 
     func setupStyle() {
@@ -76,16 +96,8 @@ extension AssetActionCell {
 }
 
 extension AssetActionCell: AssetButtonsDelegate {
-    func selectedFirstButton(button: AssetButton) {
-        delegate?.selectedOption(optionIndex: 0, cellPath: indexPath)
-    }
-
-    func selectedSecondButton(button: AssetButton) {
-        delegate?.selectedOption(optionIndex: 1, cellPath: indexPath)
-    }
-
-    func selectedThirdButton(button: AssetButton) {
-        delegate?.selectedOption(optionIndex: 2, cellPath: indexPath)
+    func selectedButton(button: AssetButton, at index: Int) {
+        delegate?.selectedOption(optionIndex: index, cellPath: indexPath)
     }
 }
 

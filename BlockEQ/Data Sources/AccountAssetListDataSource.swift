@@ -83,14 +83,15 @@ final class AccountAssetListDataSource: NSObject, AssetListDataSource {
     func actionCell(collectionView: UICollectionView, for path: IndexPath, asset: StellarAsset) -> AssetActionCell {
         let cell: AssetActionCell = collectionView.dequeueReusableCell(for: path)
 
+        let metadata = AssetMetadata(shortCode: asset.shortCode)
         var buttonData = AssetButtonView.ViewModel(buttonData: [(title: "SET_INFLATION".localized(),
-                                                                 backgroundColor: asset.primaryColor,
+                                                                 backgroundColor: metadata.primaryColor,
                                                                  textColor: Colors.white,
                                                                  enabled: true)])
 
         if inflationSet {
             buttonData = AssetButtonView.ViewModel(buttonData: [(title: "UPDATE_INFLATION".localized(),
-                                                                 backgroundColor: asset.primaryColor,
+                                                                 backgroundColor: metadata.primaryColor,
                                                                  textColor: Colors.white,
                                                                  enabled: true)])
         }
@@ -167,8 +168,7 @@ extension AccountAssetListDataSource: UICollectionViewDataSource {
                 mCell.delegate = self
                 cell = mCell
             } else {
-                let bCell = amountCell(collectionView: collectionView, for: indexPath, asset: asset)
-                cell = bCell
+                cell = amountCell(collectionView: collectionView, for: indexPath, asset: asset)
             }
         case .available:
             let mCell = manageCell(collectionView: collectionView, for: indexPath, asset: asset, mode: .add)
@@ -176,9 +176,8 @@ extension AccountAssetListDataSource: UICollectionViewDataSource {
             cell = mCell
         }
 
-        if let styleCell = cell as? StylableCardCell,
-            let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            let inset = flowLayout.sectionInset.left + flowLayout.sectionInset.right
+        if var styleCell = cell as? StylableCardCell {
+            let inset = collectionView.contentInset.left + collectionView.contentInset.right
             styleCell.preferredWidth = collectionView.bounds.width - inset
         }
 
@@ -225,6 +224,14 @@ extension AccountAssetListDataSource: UICollectionViewDelegate {
         }
 
         selectionDelegate?.selected(asset)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        guard let section = Section(rawValue: indexPath.section), section == .account else {
+            return false
+        }
+
+        return true
     }
 
     @objc func collectionView(_ collectionView: UICollectionView,

@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WalletViewController" customModule="BlockEQ" customModuleProvider="target">
             <connections>
                 <outlet property="activityIndicator" destination="XTw-X2-zen" id="AGu-jf-2CW"/>
+                <outlet property="assetBalanceButton" destination="mdz-yg-UQ7" id="hZk-uv-GkV"/>
                 <outlet property="availableBalanceLabel" destination="Khb-1d-lP0" id="3E7-4P-15I"/>
                 <outlet property="availableBalanceView" destination="nbj-eA-uEM" id="zy4-oQ-x1I"/>
                 <outlet property="balanceLabel" destination="kKU-zV-Fep" id="9gB-hr-Gi5"/>

@@ -27,8 +27,10 @@ extension StellarAccount {
 
     var availableAssets: [StellarAsset] {
         let existing = Set(assets)
-        let staticAssets = Set(Assets.AssetType.allCases.map {
-            StellarAsset(assetCode: $0.shortForm, issuer: $0.issuerAccount)
+
+        let staticMetadataList = AssetMetadata.staticAssetCodes.map { AssetMetadata(shortCode: $0) }
+        let staticAssets = Set(staticMetadataList.map {
+            StellarAsset(assetCode: $0.shortCode, issuer: $0.issuerAddress ?? "")
         })
 
         return Array(staticAssets.subtracting(existing))
