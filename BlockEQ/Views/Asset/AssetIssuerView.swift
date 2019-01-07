@@ -10,7 +10,6 @@ import Reusable
 
 final class AssetIssuerView: UIView, NibOwnerLoadable {
     @IBOutlet var view: UIView!
-    @IBOutlet weak var labelContainer: UIStackView!
     @IBOutlet weak var issuedTitleLabel: UILabel!
     @IBOutlet weak var issuedDescriptionLabel: UILabel!
     @IBOutlet weak var addressTitleLabel: UILabel!
@@ -29,13 +28,14 @@ final class AssetIssuerView: UIView, NibOwnerLoadable {
     }
 
     func setupStyle() {
-        labelContainer.spacing = 10
-        issuedTitleLabel.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
-        addressTitleLabel.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        issuedTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        addressTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
 
-        issuedDescriptionLabel.font = UIFont.systemFont(ofSize: 11, weight: .regular)
-        addressDescriptionLabel.font = UIFont.systemFont(ofSize: 9, weight: .regular)
+        issuedDescriptionLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        addressDescriptionLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         addressDescriptionLabel.lineBreakMode = .byTruncatingMiddle
+        addressDescriptionLabel.textAlignment = .left
+        issuedDescriptionLabel.textAlignment = .left
     }
 
     func update(with viewModel: ViewModel) {
@@ -48,6 +48,8 @@ final class AssetIssuerView: UIView, NibOwnerLoadable {
 
 extension AssetIssuerView {
     struct ViewModel {
+        static let empty = ViewModel(issuerTitle: "", issuerDescription: "", addressTitle: "", addressDescription: "")
+
         var issuerTitle: String
         var issuerDescription: String
         var addressTitle: String

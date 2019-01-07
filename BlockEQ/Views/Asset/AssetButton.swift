@@ -10,10 +10,32 @@ import Reusable
 
 @IBDesignable
 final class AssetButton: UIButton {
+
+    override var isHighlighted: Bool {
+        didSet {
+            UIView.animate(withDuration: 0.15,
+                           delay: 0,
+                           options: [.beginFromCurrentState, .allowUserInteraction],
+                           animations: {
+                self.alpha = self.isHighlighted ? 0.5 : 1
+            }, completion: nil)
+        }
+    }
+
     var buttonColor: UIColor? {
         didSet {
             backgroundColor = buttonColor
         }
+    }
+
+    init() {
+        super.init(frame: .zero)
+        setupView()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupView()
     }
 
     override func awakeFromNib() {
@@ -24,6 +46,7 @@ final class AssetButton: UIButton {
     func setupView() {
         layer.cornerRadius = 5
         backgroundColor = Colors.stellarBlue
+        translatesAutoresizingMaskIntoConstraints = false
 
         setTitle("Button", for: .normal)
         setTitleColor(Colors.white, for: .normal)

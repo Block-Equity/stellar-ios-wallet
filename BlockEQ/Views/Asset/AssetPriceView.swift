@@ -38,22 +38,35 @@ final class AssetPriceView: UIView, NibOwnerLoadable {
         amountLabel.text = viewModel.amount
         priceLabel.text = viewModel.price
         priceLabel.isHidden = viewModel.hidePrice
+
+        amountLabel.textColor = viewModel.amountColor ?? Colors.priceDarkGray
+        priceLabel.textColor = viewModel.priceColor ?? Colors.priceLightGray
     }
 }
 
 extension AssetPriceView {
     struct ViewModel {
+        static let empty = ViewModel(amount: "", price: "", hidePrice: true)
+
         var amount: String
         var price: String
         var hidePrice: Bool
-
-        init(amount: String, price: String) {
-            self.amount = amount
-            self.price = price
-            self.hidePrice = price.isEmpty
-        }
+        var amountColor: UIColor?
+        var priceColor: UIColor?
 
         init(amount: String, price: String, hidePrice: Bool) {
+            self.init(amount: amount,
+                      price: price,
+                      hidePrice: hidePrice,
+                      amountColor: nil,
+                      priceColor: nil)
+        }
+
+        init(amount: String, price: String) {
+            self.init(amount: amount, price: price, hidePrice: price.isEmpty, amountColor: nil, priceColor: nil)
+        }
+
+        init(amount: String, price: String, hidePrice: Bool, amountColor: UIColor?, priceColor: UIColor?) {
             self.amount = amount
             self.price = price
             self.hidePrice = hidePrice

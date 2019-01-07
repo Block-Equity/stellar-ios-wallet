@@ -90,12 +90,14 @@ extension MyOffersViewController: UITableViewDataSource {
         cell.delegate = self
 
         let offer = offers[indexPath.row]
+        let sellingMetadata = AssetMetadata(shortCode: offer.sellingAsset.shortCode)
+        let buyingMetadata = AssetMetadata(shortCode: offer.buyingAsset.shortCode)
 
         let text = String(format: "SELL_SUMMARY_FORMAT".localized(),
                           offer.amount.displayFormattedString,
-                          Assets.cellDisplay(shortCode: offer.sellingAsset.assetCode),
+                          sellingMetadata.shortCode,
                           offer.value.displayFormattedString,
-                          Assets.cellDisplay(shortCode: offer.buyingAsset.assetCode),
+                          buyingMetadata.shortCode,
                           offer.price.displayFormatted)
 
         cell.offerLabel.text = text

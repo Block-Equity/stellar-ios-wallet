@@ -1,0 +1,65 @@
+[
+    {
+        "short_code": "XLM",
+        "display_name": "Stellar Lumens",
+        "primary_color": "#17b5e7",
+        "issuer_name": null,
+        "issuer_address": null
+    },
+    {
+        "short_code": "PTS",
+        "display_name": "Block Points",
+        "primary_color": "#062983",
+        "issuer_name": "Block Equity",
+        "issuer_address": "GBPG7KRYC3PTKHBXQGRD3GMZ5DB4C3D553ZN2ZLH57LBAQIULVY46Z5F"
+    },
+    {
+        "short_code": "CAD",
+        "display_name": "Canadian Dollars",
+        "primary_color": "#f70a0c",
+        "issuer_name": "Block Equity",
+        "issuer_address": "GABK2IHWW7BCRPP3BL6WMOMDBPHCBJR2SLP5HAUBYKNZG5J5RJSROS5S"
+    },
+    {
+        "short_code": "BTC",
+        "display_name": "Bitcoin",
+        "primary_color": "#f79218",
+        "issuer_name": null,
+        "issuer_address": null
+    },
+    {
+        "short_code": "ETH",
+        "display_name": "Etherum",
+        "primary_color": "#627ee9",
+        "issuer_name": null,
+        "issuer_address": null
+    },
+    {
+        "short_code": "LTC",
+        "display_name": "Litecoin",
+        "primary_color": "#bfbbbb",
+        "issuer_name": null,
+        "issuer_address": null
+    },
+    {
+        "short_code": "BCH",
+        "display_name": "Bitcoin Cash",
+        "primary_color": "#8cc351",
+        "issuer_name": null,
+        "issuer_address": null
+    },
+    {
+        "short_code": "BCHSV",
+        "display_name": "Bitcoin Cash SV",
+        "primary_color": "#8cc351",
+        "issuer_name": null,
+        "issuer_address": null
+    },
+    {
+        "short_code": "XRP",
+        "display_name": "Ripple",
+        "primary_color": "#242930",
+        "issuer_name": null,
+        "issuer_address": null
+    }
+]

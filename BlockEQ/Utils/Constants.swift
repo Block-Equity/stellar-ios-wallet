@@ -36,6 +36,10 @@ struct Colors {
     static let stellarBlue = UIColor(red: 205.0/255.0, green: 224.0/255.0, blue: 232.0/255.0, alpha: Alphas.opaque)
     static let transparent = UIColor.clear
 
+    static let priceDarkGray = UIColor(red: 0.251, green: 0.251, blue: 0.251, alpha: Alphas.opaque)
+    static let priceLightGray = UIColor(red: 0.627, green: 0.627, blue: 0.627, alpha: Alphas.opaque)
+
+    static let collectionViewBackground = UIColor(red: 0.936, green: 0.941, blue: 0.941, alpha: Alphas.opaque)
     static let transactionCellDarkGray = UIColor(red: 0.188, green: 0.188, blue: 0.188, alpha: Alphas.opaque)
     static let transactionCellMediumGray = UIColor(red: 0.565, green: 0.565, blue: 0.565, alpha: Alphas.opaque)
     static let transactionCellBorderGray = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: Alphas.opaque)

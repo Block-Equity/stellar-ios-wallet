@@ -23,9 +23,9 @@ final class AssetCardSnapshotTests: XCTestCase, SnapshotTest {
     override func setUp() {
         super.setUp()
 
-        headerData = AssetHeaderView.ViewModel(image: nil, assetTitle: "Block Points", assetSubtitle: "PTS")
-        longHeaderData = AssetHeaderView.ViewModel(image: nil, assetTitle: "Gene Source Code Chain", assetSubtitle: "GENE (Stronghold)")
-        priceData = AssetPriceView.ViewModel(amount: "123.45", price: "$13,456.78", hidePrice: false)
+        headerData = AssetHeaderView.ViewModel(image: UIImage(named: "pts"), assetTitle: "Block Points", assetSubtitle: "PTS")
+        longHeaderData = AssetHeaderView.ViewModel(image: UIImage(named: "pts"), assetTitle: "Gene Source Code Chain", assetSubtitle: "GENE (Stronghold)")
+        priceData = AssetPriceView.ViewModel(amount: "123.45", price: "$13,456.78", hidePrice: true)
         longPriceData = AssetPriceView.ViewModel(amount: "210,000,123.45", price: "$99,999,233,456.78")
         issuerData = AssetIssuerView.ViewModel(issuerTitle: "Issued by Block Equity",
                                                issuerDescription: "The official BlockPoints (PTS) token of BlockEQ",
@@ -35,79 +35,6 @@ final class AssetCardSnapshotTests: XCTestCase, SnapshotTest {
 
     override func tearDown() {
         super.tearDown()
-    }
-
-    func testAssetHeader() {
-        let assetHeader = AssetHeaderView(frame: CGRect(x: 0, y: 0, width: 200, height: 80))
-        assetHeader.update(with: headerData)
-        assertSnapshot(matching: assetHeader, as: .image, record: self.recordMode)
-    }
-
-    func testAssetAmount() {
-        let assetPrice = AssetPriceView(frame: CGRect(x: 0, y: 0, width: 50, height: 30))
-        assetPrice.update(with: priceData)
-        assertSnapshot(matching: assetPrice, as: .image, record: self.recordMode)
-    }
-
-    func testAssetAmountWithPrice() {
-        let assetPrice = AssetPriceView(frame: CGRect(x: 0, y: 0, width: 60, height: 30))
-
-        var priceData = self.priceData!
-        priceData.hidePrice = false
-
-        assetPrice.update(with: priceData)
-        assertSnapshot(matching: assetPrice, as: .image, record: self.recordMode)
-    }
-
-    func test1AssetButtons() {
-        let assetButtons = AssetButtonView()
-        assetButtons.frame = CGRect(x: 0, y: 0, width: 375, height: 40)
-
-        let data = (title: "Button", backgroundColor: Colors.stellarBlue, textColor: Colors.white, enabled: true)
-        let threeButtonData = Array<AssetButtonView.ViewModel.ButtonData>(repeating: data, count: 1)
-        assetButtons.update(with: AssetButtonView.ViewModel(buttonData: threeButtonData))
-
-        assertSnapshot(matching: assetButtons, as: .image, record: self.recordMode)
-    }
-
-    func test2AssetButtons() {
-        let assetButtons = AssetButtonView()
-        assetButtons.frame = CGRect(x: 0, y: 0, width: 375, height: 40)
-
-        let data = (title: "Button", backgroundColor: Colors.stellarBlue, textColor: Colors.white, enabled: true)
-        let threeButtonData = Array<AssetButtonView.ViewModel.ButtonData>(repeating: data, count: 2)
-        assetButtons.update(with: AssetButtonView.ViewModel(buttonData: threeButtonData))
-
-        assertSnapshot(matching: assetButtons, as: .image, record: self.recordMode)
-    }
-
-    func test3AssetButtons() {
-        let assetButtons = AssetButtonView()
-        assetButtons.frame = CGRect(x: 0, y: 0, width: 375, height: 40)
-
-        let data = (title: "Button", backgroundColor: Colors.stellarBlue, textColor: Colors.white, enabled: true)
-        let threeButtonData = Array<AssetButtonView.ViewModel.ButtonData>(repeating: data, count: 3)
-        assetButtons.update(with: AssetButtonView.ViewModel(buttonData: threeButtonData))
-
-        assertSnapshot(matching: assetButtons, as: .image, record: self.recordMode)
-    }
-
-    func testAssetIssuerView() {
-        let assetIssuer = AssetIssuerView()
-        assetIssuer.frame = CGRect(x: 0, y: 0, width: 350, height: 85)
-
-        assetIssuer.update(with: issuerData)
-
-        assertSnapshot(matching: assetIssuer, as: .image, record: self.recordMode)
-    }
-
-    func testNarrowAssetIssuerView() {
-        let assetIssuer = AssetIssuerView()
-        assetIssuer.frame = CGRect(x: 0, y: 0, width: 300, height: 85)
-
-        assetIssuer.update(with: issuerData)
-
-        assertSnapshot(matching: assetIssuer, as: .image, record: self.recordMode)
     }
 
     func testAssetAmountCell() {
@@ -127,6 +54,31 @@ final class AssetCardSnapshotTests: XCTestCase, SnapshotTest {
         var priceData = self.priceData!
         priceData.hidePrice = false
 
+        let model = AssetAmountCell.ViewModel(headerData: headerData, priceData: priceData)
+        assetAmountCell.update(with: model, indexPath: firstPath)
+
+        assertSnapshot(matching: assetAmountCell, as: .image, record: self.recordMode)
+    }
+
+    func testAssetAmountCellWithNoImage() {
+        let assetAmountCell = AssetAmountCell()
+        assetAmountCell.frame = cellFrame
+
+        let headerData = AssetHeaderView.ViewModel(image: nil, assetTitle: "Block Points", assetSubtitle: "PTS")
+        let model = AssetAmountCell.ViewModel(headerData: headerData, priceData: priceData)
+        assetAmountCell.update(with: model, indexPath: firstPath)
+
+        assertSnapshot(matching: assetAmountCell, as: .image, record: self.recordMode)
+    }
+
+    func testAssetAmountCellWithPriceAndNoImage() {
+        let assetAmountCell = AssetAmountCell()
+        assetAmountCell.frame = cellFrame
+
+        var priceData = self.priceData!
+        priceData.hidePrice = false
+
+        let headerData = AssetHeaderView.ViewModel(image: nil, assetTitle: "Block Points", assetSubtitle: "PTS")
         let model = AssetAmountCell.ViewModel(headerData: headerData, priceData: priceData)
         assetAmountCell.update(with: model, indexPath: firstPath)
 
@@ -217,7 +169,7 @@ final class AssetCardSnapshotTests: XCTestCase, SnapshotTest {
 
     func testAssetIssuerCell() {
         let issuerCell = AssetIssuerCell()
-        issuerCell.frame = CGRect(x: 0, y: 0, width: 375, height: 180)
+        issuerCell.frame = CGRect(x: 0, y: 0, width: 375, height: 200)
 
         let model = AssetIssuerCell.ViewModel(headerData: headerData, priceData: priceData, issuerData: issuerData)
         issuerCell.update(with: model, indexPath: firstPath)
@@ -227,7 +179,7 @@ final class AssetCardSnapshotTests: XCTestCase, SnapshotTest {
 
     func testAssetIssuerCellWithPrice() {
         let issuerCell = AssetIssuerCell()
-        issuerCell.frame = CGRect(x: 0, y: 0, width: 375, height: 180)
+        issuerCell.frame = CGRect(x: 0, y: 0, width: 375, height: 200)
 
         var priceData = self.priceData!
         priceData.hidePrice = false

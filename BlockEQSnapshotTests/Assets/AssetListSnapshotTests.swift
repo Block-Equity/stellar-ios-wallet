@@ -6,8 +6,8 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import StellarHub
 @testable import BlockEQ
+import StellarHub
 import SnapshotTesting
 import XCTest
 import stellarsdk

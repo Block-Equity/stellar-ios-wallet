@@ -58,7 +58,7 @@ final class AssetListViewController: UIViewController {
     }
 
     func setupStyle() {
-        view.backgroundColor = UIColor(red: 0.936, green: 0.941, blue: 0.941, alpha: 1.000)
+        view.backgroundColor = Colors.collectionViewBackground
 
         addAssetView.backgroundColor = .clear
         collectionView.backgroundColor = .clear
@@ -70,8 +70,10 @@ final class AssetListViewController: UIViewController {
             flowLayout.minimumLineSpacing = 20
             flowLayout.scrollDirection = .vertical
             flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-            flowLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 10)
+            flowLayout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0)
         }
+
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 
         emptyAssetImageView.image = UIImage(named: "wallet-large")
         emptyAssetImageView.tintColor = Colors.lightGray
@@ -84,6 +86,10 @@ final class AssetListViewController: UIViewController {
         emptyAssetDescriptionLabel.textColor = Colors.transactionCellMediumGray
         emptyAssetDescriptionLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
 
+        setupNavHeader()
+    }
+
+    func setupNavHeader() {
         let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
                                                  style: .plain,
                                                  target: self,

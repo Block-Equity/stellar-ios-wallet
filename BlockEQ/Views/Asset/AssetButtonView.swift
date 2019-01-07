@@ -9,23 +9,17 @@
 import Reusable
 
 protocol AssetButtonsDelegate: AnyObject {
-    func selectedFirstButton(button: AssetButton)
-    func selectedSecondButton(button: AssetButton)
-    func selectedThirdButton(button: AssetButton)
+    func selectedButton(button: AssetButton, at index: Int)
 }
 
 final class AssetButtonView: UIView, Reusable, NibOwnerLoadable {
-    static let ButtonSpacing = 15
+    static let ButtonCount = 3
+    static let ButtonSpacing = CGFloat(10)
 
     @IBOutlet var view: UIView!
     @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var button1: AssetButton!
-    @IBOutlet weak var button2: AssetButton!
-    @IBOutlet weak var button3: AssetButton!
-    @IBOutlet var buttonCollection: [AssetButton]!
 
     weak var delegate: AssetButtonsDelegate?
-    var buttonWidth = CGFloat(85)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,47 +34,50 @@ final class AssetButtonView: UIView, Reusable, NibOwnerLoadable {
     }
 
     func setupStyle() {
-        stackView.spacing = CGFloat(AssetButtonView.ButtonSpacing)
-        stackView.backgroundColor = .clear
-        view.backgroundColor = .clear
+        translatesAutoresizingMaskIntoConstraints = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+
         backgroundColor = .clear
+        view.backgroundColor = .clear
+        stackView.backgroundColor = .clear
+
+        stackView.spacing = AssetButtonView.ButtonSpacing
     }
 
     func update(with viewModel: ViewModel) {
-        for button in buttonCollection.enumerated() {
-            if button.offset < viewModel.buttonData.count {
-                let data = viewModel.buttonData[button.offset]
-                button.element.setTitle(data.title, for: .normal)
-                button.element.setTitleColor(data.textColor, for: .normal)
-                button.element.buttonColor = data.backgroundColor
-                button.element.isEnabled = data.enabled
+        stackView.removeAllArrangedSubviews()
+
+        for index in stride(from: AssetButtonView.ButtonCount - 1, to: -1, by: -1) {
+            let button = AssetButton()
+            if index < viewModel.buttonData.count {
+                let data = viewModel.buttonData[index]
+                button.setTitle(data.title, for: .normal)
+                button.setTitleColor(data.textColor, for: .normal)
+                button.buttonColor = data.backgroundColor
+                button.isEnabled = data.enabled
+                button.addTarget(self, action: #selector(selectedButton(_:)), for: .touchUpInside)
+                button.tag = index
             } else {
-                button.element.isEnabled = false
-                button.element.alpha = 0
+                button.alpha = 0
+                button.isEnabled = false
             }
+
+            stackView.addArrangedSubview(button)
         }
+    }
+
+    @objc func selectedButton(_ sender: AssetButton) {
+        delegate?.selectedButton(button: sender, at: sender.tag)
     }
 }
 
 //swiftlint:disable nesting
 extension AssetButtonView {
     struct ViewModel {
+        static let empty = ViewModel(buttonData: [])
+
         typealias ButtonData = (title: String, backgroundColor: UIColor, textColor: UIColor, enabled: Bool)
         var buttonData: [ButtonData]
     }
 }
 //swiftlint:enable nesting
-
-extension AssetButtonView {
-    @IBAction func selectedFirstButton(_ sender: Any) {
-        delegate?.selectedFirstButton(button: button1)
-    }
-
-    @IBAction func selectedSecondButton(_ sender: Any) {
-        delegate?.selectedSecondButton(button: button2)
-    }
-
-    @IBAction func selectedThirdButton(_ sender: Any) {
-        delegate?.selectedThirdButton(button: button3)
-    }
-}

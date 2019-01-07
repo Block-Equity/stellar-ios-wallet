@@ -8,10 +8,12 @@
 
 import Foundation
 
-protocol StylableCardCell: AnyObject {
+protocol StylableCardCell {
     var cardInset: UIEdgeInsets { get }
     var cardView: UIView! { get }
     var preferredWidth: CGFloat? { get set }
+    var preferredHeight: CGFloat? { get set }
+    var cornerMask: CACornerMask? { get }
 
     var cardLeftInset: NSLayoutConstraint! { get }
     var cardBottomInset: NSLayoutConstraint! { get }
@@ -26,12 +28,17 @@ extension StylableCardCell where Self: UICollectionViewCell {
     func applyCardStyle() {
         cardView.layer.cornerRadius = 5
         cardView.backgroundColor = .white
-        cardView.clipsToBounds = false
+        cardView.clipsToBounds = true
         cardView.layer.shadowColor = Colors.black.cgColor
         cardView.layer.masksToBounds = false
-        cardView.layer.shadowRadius = 4
+        cardView.layer.shadowRadius = 3
         cardView.layer.shadowOffset = CGSize(width: 0, height: 3)
-        cardView.layer.shadowOpacity = 0.25
+        cardView.layer.shadowOpacity = 0.05
+
+        let defaultMask: CACornerMask = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner,
+                                         .layerMinXMaxYCorner, .layerMinXMinYCorner]
+
+        cardView.layer.maskedCorners = cornerMask ?? defaultMask
 
         cardLeftInset.constant = cardInset.left
         cardRightInset.constant = cardInset.right
@@ -52,7 +59,12 @@ extension StylableCardCell where Self: UICollectionViewCell {
             newFrame.size.width = size.width
         }
 
-        newFrame.size.height = size.height
+        if let cellHeight = preferredHeight {
+            newFrame.size.height = cellHeight
+        } else {
+            newFrame.size.height = size.height
+        }
+
         attributes.frame = newFrame
 
         return attributes

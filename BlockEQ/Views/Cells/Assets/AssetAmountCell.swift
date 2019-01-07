@@ -21,7 +21,9 @@ final class AssetAmountCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
 
     var cardInset: UIEdgeInsets = .zero
     var preferredWidth: CGFloat?
+    var preferredHeight: CGFloat?
     var indexPath: IndexPath?
+    var cornerMask: CACornerMask?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,15 +37,27 @@ final class AssetAmountCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
         setupStyle()
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        headerContainer.update(with: AssetHeaderView.ViewModel.empty)
+        priceContainer.update(with: AssetPriceView.ViewModel.empty)
+        preferredWidth = nil
+        preferredHeight = nil
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        let defaultMask: CACornerMask = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner,
+                                         .layerMinXMaxYCorner, .layerMinXMinYCorner]
+
+        cardView.layer.maskedCorners = cornerMask ?? defaultMask
+    }
+
     func setupStyle() {
         view.backgroundColor = .clear
         headerContainer.backgroundColor = .clear
         priceContainer.backgroundColor = .clear
-
-        cardView.backgroundColor = .white
-        cardView.layer.cornerRadius = 5
-        cardView.clipsToBounds = false
-        cardView.layer.masksToBounds = false
 
         applyCardStyle()
     }

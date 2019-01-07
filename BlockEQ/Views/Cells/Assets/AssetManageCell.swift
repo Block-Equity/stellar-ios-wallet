@@ -20,7 +20,8 @@ final class AssetManageCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
     @IBOutlet var view: UIView!
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var headerContainer: AssetHeaderView!
-    @IBOutlet weak var actionButton: UIButton!
+    @IBOutlet weak var actionButton: UIRoundedButton!
+    @IBOutlet weak var buttonContainer: UIView!
 
     @IBOutlet weak var cardLeftInset: NSLayoutConstraint!
     @IBOutlet weak var cardBottomInset: NSLayoutConstraint!
@@ -32,7 +33,9 @@ final class AssetManageCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
     var mode: Mode = .add
     var indexPath: IndexPath?
     var preferredWidth: CGFloat?
+    var preferredHeight: CGFloat?
     var cardInset: UIEdgeInsets = .zero
+    var cornerMask: CACornerMask?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,14 +51,25 @@ final class AssetManageCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        actionButton.layer.cornerRadius = actionButton.frame.width / 2
+        headerContainer.update(with: AssetHeaderView.ViewModel.empty)
+        preferredWidth = nil
+        preferredHeight = nil
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        let defaultMask: CACornerMask = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner,
+                                         .layerMinXMaxYCorner, .layerMinXMinYCorner]
+
+        cardView.layer.maskedCorners = cornerMask ?? defaultMask
     }
 
     func setupStyle() {
         view.backgroundColor = .clear
         headerContainer.backgroundColor = .clear
+        buttonContainer.backgroundColor = .clear
 
-        actionButton.layer.cornerRadius = actionButton.frame.width / 2
         actionButton.contentVerticalAlignment = .center
         actionButton.titleLabel?.baselineAdjustment = .alignCenters
         actionButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)

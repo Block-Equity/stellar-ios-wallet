@@ -140,7 +140,7 @@ public final class StellarAccount {
     }
 
     public var hasRequiredNativeBalanceForNewEntry: Bool {
-        return availableTradeBalance(for: nativeAsset) - baseReserve > 0
+        return availableBalance(for: nativeAsset) - baseReserve > 0
     }
 
     public var hasRequiredNativeBalanceForTrade: Bool {

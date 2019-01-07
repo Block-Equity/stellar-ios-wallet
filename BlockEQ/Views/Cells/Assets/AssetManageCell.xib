@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AssetManageCell" customModule="BlockEQ" customModuleProvider="target">
             <connections>
                 <outlet property="actionButton" destination="Aw7-Qo-CIa" id="C2V-Rl-DY0"/>
+                <outlet property="buttonContainer" destination="hjT-UX-62P" id="NRM-ZA-Rpa"/>
                 <outlet property="cardBottomInset" destination="g2S-BS-WEm" id="GFr-k1-2xa"/>
                 <outlet property="cardLeftInset" destination="0YW-Lh-2A2" id="nAA-Nh-k4b"/>
                 <outlet property="cardRightInset" destination="r4Z-Hv-x0O" id="DXe-h9-gA2"/>
@@ -24,40 +25,52 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="8b2-kq-jKn">
-            <rect key="frame" x="0.0" y="0.0" width="325" height="90"/>
+            <rect key="frame" x="0.0" y="0.0" width="297" height="102"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YuB-d9-OEJ" userLabel="Card">
-                    <rect key="frame" x="0.0" y="0.0" width="325" height="90"/>
+                    <rect key="frame" x="0.0" y="0.0" width="297" height="102"/>
                     <subviews>
-                        <view contentMode="scaleToFill" verticalHuggingPriority="252" translatesAutoresizingMaskIntoConstraints="NO" id="mXc-TR-w5l" userLabel="Header Container" customClass="AssetHeaderView" customModule="BlockEQ" customModuleProvider="target">
-                            <rect key="frame" x="15" y="15" width="250" height="60"/>
+                        <view contentMode="scaleToFill" verticalHuggingPriority="252" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="mXc-TR-w5l" userLabel="Header Container" customClass="AssetHeaderView" customModule="BlockEQ" customModuleProvider="target">
+                            <rect key="frame" x="15" y="15" width="222" height="72"/>
                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="60" id="FTu-BX-FAT"/>
+                                <constraint firstAttribute="height" priority="999" constant="60" id="W4T-Nj-4hu"/>
                             </constraints>
                             <viewLayoutGuide key="safeArea" id="syu-lW-zml"/>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aw7-Qo-CIa" userLabel="Action Button">
-                            <rect key="frame" x="280" y="30" width="30" height="30"/>
-                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hjT-UX-62P" userLabel="Button Container">
+                            <rect key="frame" x="237" y="15" width="45" height="72"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aw7-Qo-CIa" userLabel="Action Button" customClass="UIRoundedButton" customModule="BlockEQ" customModuleProvider="target">
+                                    <rect key="frame" x="10" y="18.5" width="35" height="35"/>
+                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="Aw7-Qo-CIa" secondAttribute="height" multiplier="1:1" id="dUH-I4-K0U"/>
+                                        <constraint firstAttribute="width" constant="35" id="nSq-tv-chm"/>
+                                    </constraints>
+                                    <connections>
+                                        <action selector="selectedAction:" destination="-1" eventType="touchUpInside" id="gA3-vd-EIc"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="Aw7-Qo-CIa" secondAttribute="height" multiplier="1:1" id="bXc-wJ-21o"/>
-                                <constraint firstAttribute="width" constant="30" id="tbf-5e-RfK"/>
+                                <constraint firstItem="Aw7-Qo-CIa" firstAttribute="centerY" secondItem="hjT-UX-62P" secondAttribute="centerY" id="SKh-zo-JKO"/>
+                                <constraint firstItem="Aw7-Qo-CIa" firstAttribute="leading" secondItem="hjT-UX-62P" secondAttribute="leading" constant="10" id="aQ5-OK-4ux"/>
+                                <constraint firstAttribute="trailing" secondItem="Aw7-Qo-CIa" secondAttribute="trailing" id="v5e-iM-67W"/>
                             </constraints>
-                            <connections>
-                                <action selector="selectedAction:" destination="-1" eventType="touchUpInside" id="gA3-vd-EIc"/>
-                            </connections>
-                        </button>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="Yom-46-jbH" firstAttribute="trailing" secondItem="Aw7-Qo-CIa" secondAttribute="trailing" constant="15" id="7WG-xu-ihP"/>
-                        <constraint firstItem="mXc-TR-w5l" firstAttribute="top" secondItem="Yom-46-jbH" secondAttribute="top" constant="15" id="JA4-Is-uHp"/>
-                        <constraint firstItem="Yom-46-jbH" firstAttribute="bottom" secondItem="mXc-TR-w5l" secondAttribute="bottom" constant="15" id="UR4-et-WS3"/>
-                        <constraint firstItem="mXc-TR-w5l" firstAttribute="leading" secondItem="Yom-46-jbH" secondAttribute="leading" constant="15" id="YCN-gB-S15"/>
-                        <constraint firstItem="Aw7-Qo-CIa" firstAttribute="leading" secondItem="mXc-TR-w5l" secondAttribute="trailing" constant="15" id="ZyS-Uh-MXS"/>
-                        <constraint firstItem="Aw7-Qo-CIa" firstAttribute="centerY" secondItem="mXc-TR-w5l" secondAttribute="centerY" id="sP0-BY-fic"/>
+                        <constraint firstItem="hjT-UX-62P" firstAttribute="leading" secondItem="mXc-TR-w5l" secondAttribute="trailing" id="6sh-yo-x5s"/>
+                        <constraint firstItem="hjT-UX-62P" firstAttribute="top" secondItem="mXc-TR-w5l" secondAttribute="top" id="7aK-ci-Cew"/>
+                        <constraint firstItem="Yom-46-jbH" firstAttribute="trailing" secondItem="hjT-UX-62P" secondAttribute="trailing" constant="15" id="Oee-Gw-WXk"/>
+                        <constraint firstItem="hjT-UX-62P" firstAttribute="bottom" secondItem="mXc-TR-w5l" secondAttribute="bottom" id="eeU-jT-fu6"/>
+                        <constraint firstItem="Yom-46-jbH" firstAttribute="bottom" secondItem="mXc-TR-w5l" secondAttribute="bottom" constant="15" id="fa4-gq-IGl"/>
+                        <constraint firstItem="mXc-TR-w5l" firstAttribute="leading" secondItem="Yom-46-jbH" secondAttribute="leading" constant="15" id="qy9-E4-rC2"/>
+                        <constraint firstItem="mXc-TR-w5l" firstAttribute="top" secondItem="Yom-46-jbH" secondAttribute="top" constant="15" id="v5g-wL-mrL"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="Yom-46-jbH"/>
                 </view>
@@ -71,6 +84,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="lOS-VL-gd5"/>
+            <point key="canvasLocation" x="31.199999999999999" y="77.361319340329842"/>
         </view>
     </objects>
 </document>

@@ -17,45 +17,51 @@
                 <outlet property="cardRightInset" destination="uYB-ge-Yk3" id="BYO-kN-yaQ"/>
                 <outlet property="cardTopInset" destination="pBs-z0-nVZ" id="xbV-zz-7zU"/>
                 <outlet property="cardView" destination="jW7-3K-LMp" id="oLZ-x5-23H"/>
-                <outlet property="headerContainer" destination="Wi7-WM-e62" id="HEP-2T-tha"/>
-                <outlet property="priceContainer" destination="fAV-5Y-7hG" id="cIL-G4-3XT"/>
+                <outlet property="headerContainer" destination="Wi7-WM-e62" id="xym-fS-2De"/>
+                <outlet property="priceContainer" destination="fAV-5Y-7hG" id="ZkC-9q-GqD"/>
                 <outlet property="view" destination="ebD-mn-zYq" id="To9-c5-Quu"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="ebD-mn-zYq">
-            <rect key="frame" x="0.0" y="0.0" width="325" height="90"/>
+            <rect key="frame" x="0.0" y="0.0" width="408" height="114"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jW7-3K-LMp" userLabel="Card">
-                    <rect key="frame" x="0.0" y="0.0" width="325" height="90"/>
+                    <rect key="frame" x="0.0" y="0.0" width="408" height="114"/>
                     <subviews>
-                        <view contentMode="scaleToFill" verticalHuggingPriority="252" translatesAutoresizingMaskIntoConstraints="NO" id="Wi7-WM-e62" userLabel="Header Container" customClass="AssetHeaderView" customModule="BlockEQ" customModuleProvider="target">
-                            <rect key="frame" x="15" y="15" width="180" height="60"/>
-                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="njw-LC-Nxc">
+                            <rect key="frame" x="15" y="15" width="378" height="84"/>
+                            <subviews>
+                                <view verifyAmbiguity="ignoreSizes" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wi7-WM-e62" userLabel="Header Container" customClass="AssetHeaderView" customModule="BlockEQ" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="263" height="84"/>
+                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" priority="999" constant="60" id="P3W-rn-P7K"/>
+                                    </constraints>
+                                    <viewLayoutGuide key="safeArea" id="Cpc-eG-5GU"/>
+                                </view>
+                                <view verifyAmbiguity="ignoreSizes" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="749" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fAV-5Y-7hG" userLabel="Price Container" customClass="AssetPriceView" customModule="BlockEQ" customModuleProvider="target">
+                                    <rect key="frame" x="278" y="27" width="100" height="30"/>
+                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" priority="999" constant="30" id="s6l-IM-qYq"/>
+                                    </constraints>
+                                    <viewLayoutGuide key="safeArea" id="e4q-WA-2lf"/>
+                                </view>
+                            </subviews>
                             <constraints>
-                                <constraint firstAttribute="height" constant="60" id="4EC-u1-8Wz"/>
+                                <constraint firstAttribute="bottom" secondItem="Wi7-WM-e62" secondAttribute="bottom" id="2Wl-Qa-br6"/>
+                                <constraint firstItem="Wi7-WM-e62" firstAttribute="top" secondItem="njw-LC-Nxc" secondAttribute="top" id="iXL-kg-3I8"/>
                             </constraints>
-                            <viewLayoutGuide key="safeArea" id="Cpc-eG-5GU"/>
-                        </view>
-                        <view contentMode="scaleToFill" verticalHuggingPriority="252" translatesAutoresizingMaskIntoConstraints="NO" id="fAV-5Y-7hG" userLabel="Price Container" customClass="AssetPriceView" customModule="BlockEQ" customModuleProvider="target">
-                            <rect key="frame" x="210" y="30" width="100" height="30"/>
-                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="30" id="8jn-P5-l44"/>
-                                <constraint firstAttribute="width" constant="100" id="Hkn-TU-24F"/>
-                            </constraints>
-                            <viewLayoutGuide key="safeArea" id="e4q-WA-2lf"/>
-                        </view>
+                        </stackView>
                     </subviews>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="Wi7-WM-e62" firstAttribute="leading" secondItem="81Q-GF-vSL" secondAttribute="leading" constant="15" id="GpC-Nt-ruE"/>
-                        <constraint firstItem="81Q-GF-vSL" firstAttribute="trailing" secondItem="fAV-5Y-7hG" secondAttribute="trailing" constant="15" id="Jst-Ae-raT"/>
-                        <constraint firstItem="fAV-5Y-7hG" firstAttribute="centerY" secondItem="Wi7-WM-e62" secondAttribute="centerY" id="NHe-wm-4Q3"/>
-                        <constraint firstItem="81Q-GF-vSL" firstAttribute="bottom" secondItem="Wi7-WM-e62" secondAttribute="bottom" constant="15" id="NT5-w2-Ibg"/>
-                        <constraint firstItem="fAV-5Y-7hG" firstAttribute="leading" secondItem="Wi7-WM-e62" secondAttribute="trailing" constant="15" id="VI0-8t-6ea"/>
-                        <constraint firstItem="Wi7-WM-e62" firstAttribute="top" secondItem="81Q-GF-vSL" secondAttribute="top" constant="15" id="kp0-UT-pux"/>
+                        <constraint firstItem="81Q-GF-vSL" firstAttribute="trailing" secondItem="njw-LC-Nxc" secondAttribute="trailing" constant="15" id="0vD-UM-F7Z"/>
+                        <constraint firstItem="81Q-GF-vSL" firstAttribute="bottom" secondItem="njw-LC-Nxc" secondAttribute="bottom" constant="15" id="F7S-da-ezd"/>
+                        <constraint firstItem="njw-LC-Nxc" firstAttribute="top" secondItem="jW7-3K-LMp" secondAttribute="top" constant="15" id="IFq-db-QpK"/>
+                        <constraint firstItem="njw-LC-Nxc" firstAttribute="leading" secondItem="81Q-GF-vSL" secondAttribute="leading" constant="15" id="LXa-Jt-brP"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="81Q-GF-vSL"/>
                 </view>
@@ -69,7 +75,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="0tG-QN-a08"/>
-            <point key="canvasLocation" x="138.40000000000001" y="142.57871064467767"/>
+            <point key="canvasLocation" x="204.80000000000001" y="165.51724137931035"/>
         </view>
     </objects>
 </document>
