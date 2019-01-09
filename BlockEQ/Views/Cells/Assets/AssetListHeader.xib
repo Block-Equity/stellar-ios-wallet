@@ -13,14 +13,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AssetListHeader" id="q33-rw-8Ac" customClass="AssetListHeader" customModule="BlockEQ" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="35"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WPQ-Fd-5zW">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="35"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BLOCKEQ ASSETS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GSt-px-BAX">
-                            <rect key="frame" x="15" y="10.5" width="345" height="14.5"/>
+                            <rect key="frame" x="5" y="8" width="355" height="14.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -30,7 +30,7 @@
                     <constraints>
                         <constraint firstItem="GSt-px-BAX" firstAttribute="centerY" secondItem="WPQ-Fd-5zW" secondAttribute="centerY" id="E4h-tp-piq"/>
                         <constraint firstAttribute="trailing" secondItem="GSt-px-BAX" secondAttribute="trailing" constant="15" id="jtp-5G-kCI"/>
-                        <constraint firstItem="GSt-px-BAX" firstAttribute="leading" secondItem="WPQ-Fd-5zW" secondAttribute="leading" constant="15" id="sES-Oa-Sf2"/>
+                        <constraint firstItem="GSt-px-BAX" firstAttribute="leading" secondItem="WPQ-Fd-5zW" secondAttribute="leading" constant="5" id="sES-Oa-Sf2"/>
                     </constraints>
                 </view>
             </subviews>

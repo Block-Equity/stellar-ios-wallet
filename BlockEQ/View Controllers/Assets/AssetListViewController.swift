@@ -67,13 +67,13 @@ final class AssetListViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
 
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.minimumLineSpacing = 20
+            flowLayout.minimumLineSpacing = 15
             flowLayout.scrollDirection = .vertical
             flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-            flowLayout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0)
+            flowLayout.sectionInset = UIEdgeInsets(top: 5, left: 0, bottom: 20, right: 0)
         }
 
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        collectionView.contentInset = UIEdgeInsets(top: 5, left: 10, bottom: 0, right: 10)
 
         emptyAssetImageView.image = UIImage(named: "wallet-large")
         emptyAssetImageView.tintColor = Colors.lightGray

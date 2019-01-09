@@ -17,8 +17,7 @@ final class AssetListHeader: UICollectionReusableView, Reusable, NibLoadable {
         super.awakeFromNib()
 
         backgroundColor = .clear
-
-        container.backgroundColor = Colors.white
+        container.backgroundColor = .clear
         container.layer.cornerRadius = 5
 
         headerTitleLabel.text = "BLOCKEQ_ASSET_TITLE".localized()
