@@ -64,7 +64,7 @@ class SendAmountViewController: UIViewController {
 
         guard let asset = self.currentAsset, let account = accountService.account else { return }
 
-        let availableBalance = account.availableBalance(for: asset).tradeFormattedString
+        let availableBalance = account.availableSendBalance(for: asset).tradeFormattedString
         navigationItem.title = String(format: "TRADE_BALANCE_FORMAT".localized(), availableBalance, asset.shortCode)
     }
 
@@ -155,7 +155,7 @@ class SendAmountViewController: UIViewController {
     func isValidSendAmount(amount: String) -> Bool {
         guard let asset = self.currentAsset, let account = accountService.account else { return false }
 
-        let totalAvailableBalance = account.availableBalance(for: asset)
+        let totalAvailableBalance = account.availableSendBalance(for: asset)
         if let totalSendable = Decimal(string: amount) {
             return totalSendable.isZero ? false : totalSendable <= totalAvailableBalance
         }
