@@ -11,6 +11,7 @@ import StellarHub
 
 protocol InflationViewControllerDelegate: AnyObject {
     func updateAccountInflation(_ viewController: InflationViewController, destination: StellarAddress)
+    func dismiss(_ viewController: InflationViewController)
 }
 
 final class InflationViewController: UIViewController {
@@ -94,8 +95,7 @@ extension InflationViewController {
 
     func dismissView() {
         view.endEditing(true)
-
-        navigationController?.dismiss(animated: true, completion: nil)
+        delegate?.dismiss(self)
     }
 }
 

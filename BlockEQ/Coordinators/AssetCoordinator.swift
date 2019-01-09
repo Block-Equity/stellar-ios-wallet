@@ -135,6 +135,8 @@ extension AssetCoordinator: AssetActionDelegate {
             let inflationVC = inflationViewController ?? InflationViewController(account: account)
             inflationVC.delegate = self
 
+            self.inflationViewController = inflationVC
+
             assetNavController?.pushViewController(inflationVC, animated: true)
         }
     }
@@ -164,6 +166,21 @@ extension AssetCoordinator: AssetListDelegate {
 extension AssetCoordinator: InflationViewControllerDelegate {
     func updateAccountInflation(_ viewController: InflationViewController, destination: StellarAddress) {
         accountService.setInflationDestination(account: account, address: destination, delegate: self)
+    }
+
+    func dismiss(_ viewController: InflationViewController) {
+        assetNavController?.popViewController(animated: true)
+
+        if let dataSource = delegate?.dataSource() {
+            dataSource.actionDelegate = self
+            dataSource.selectionDelegate = self
+            self.assetListDataSource = dataSource
+
+            assetListViewController?.dataSource = dataSource
+            assetListViewController?.reload()
+        }
+
+        inflationViewController = nil
     }
 }
 
