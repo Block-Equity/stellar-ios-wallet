@@ -19,33 +19,7 @@ class SendViewController: UIViewController {
     var accountService: AccountManagementService
     var currentAsset: StellarAsset?
 
-    @IBAction func addAmount() {
-        guard let receiver = StellarAddress(sendAddressTextField.text),
-            receiver.string != KeychainHelper.accountId else {
-                sendAddressTextField.shake()
-                return
-        }
 
-        guard let asset = self.currentAsset else { return }
-
-        self.view.endEditing(true)
-
-        let exchange: Exchange? = AddressResolver.resolve(address: receiver)
-        let sendAmountViewController = SendAmountViewController(service: accountService,
-                                                                currentAsset: asset,
-                                                                receiver: receiver,
-                                                                exchangeName: exchange?.name)
-
-        self.navigationController?.pushViewController(sendAmountViewController, animated: true)
-    }
-
-    @IBAction func scanQRCode() {
-        let scanViewController = ScanViewController()
-        scanViewController.delegate = self
-
-        let navigationController = AppNavigationController(rootViewController: scanViewController)
-        present(navigationController, animated: true, completion: nil)
-    }
 
     init(service: AccountManagementService, asset: StellarAsset) {
         self.accountService = service
@@ -95,8 +69,8 @@ class SendViewController: UIViewController {
 
         guard let asset = self.currentAsset, let account = accountService.account else { return }
 
-        let availableBalance = account.availableBalance(for: asset).displayFormattedString
-        navigationItem.title = String(format: "TRADE_BALANCE_FORMAT".localized(), availableBalance, asset.shortCode)
+        let availableSendBalance = account.availableSendBalance(for: asset).displayFormattedString
+        navigationItem.title = String(format: "TRADE_BALANCE_FORMAT".localized(), availableSendBalance, asset.shortCode)
     }
 
     @objc func dismissView() {
@@ -112,6 +86,37 @@ class SendViewController: UIViewController {
 
     func hideHud() {
         MBProgressHUD.hide(for: (navigationController?.view)!, animated: true)
+    }
+}
+
+// MARK: - IBActions
+extension SendViewController {
+    @IBAction func addAmount() {
+        guard let receiver = StellarAddress(sendAddressTextField.text),
+            receiver.string != KeychainHelper.accountId else {
+                sendAddressTextField.shake()
+                return
+        }
+
+        guard let asset = self.currentAsset else { return }
+
+        self.view.endEditing(true)
+
+        let exchange: Exchange? = AddressResolver.resolve(address: receiver)
+        let sendAmountViewController = SendAmountViewController(service: accountService,
+                                                                currentAsset: asset,
+                                                                receiver: receiver,
+                                                                exchangeName: exchange?.name)
+
+        self.navigationController?.pushViewController(sendAmountViewController, animated: true)
+    }
+
+    @IBAction func scanQRCode() {
+        let scanViewController = ScanViewController()
+        scanViewController.delegate = self
+
+        let navigationController = AppNavigationController(rootViewController: scanViewController)
+        present(navigationController, animated: true, completion: nil)
     }
 }
 

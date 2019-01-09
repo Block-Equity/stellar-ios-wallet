@@ -319,4 +319,18 @@ class StellarAccountTests: XCTestCase {
         account.outstandingTradeAmounts[asset] = 90
         XCTAssertEqual(account.availableBalance(for: asset, subtractTradeAmounts: false), 100)
     }
+
+    func testAssetAvailableSendBalanceOnlyIncorporatesNetworkFee() {
+        let account = StellarAccount(accountId: "hello")
+        let asset = StellarAsset(assetType: AssetTypeAsString.NATIVE, assetCode: nil, assetIssuer: nil, balance: "100")
+        account.assets[0] = asset
+        XCTAssertEqual(account.availableSendBalance(for: asset), 98.99999)
+    }
+
+    func testAssetAvailableTradeBalanceIncorporatesBaseAndNetworkFee() {
+        let account = StellarAccount(accountId: "hello")
+        let asset = StellarAsset(assetType: AssetTypeAsString.NATIVE, assetCode: nil, assetIssuer: nil, balance: "100")
+        account.assets[0] = asset
+        XCTAssertEqual(account.availableTradeBalance(for: asset), 98.49999)
+    }
 }

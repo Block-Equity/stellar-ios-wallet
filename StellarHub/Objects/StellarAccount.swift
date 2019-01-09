@@ -225,7 +225,7 @@ public final class StellarAccount {
         let availableBalance = self.availableBalance(for: asset)
 
         if asset.isNative {
-            let availableTotal = availableBalance - baseFee - baseReserve
+            let availableTotal = availableBalance - baseFee
             return availableTotal > 0 ? availableTotal : 0
         } else {
             return availableBalance
