@@ -25,25 +25,25 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="K5R-DY-ai9">
-            <rect key="frame" x="0.0" y="0.0" width="325" height="170"/>
+            <rect key="frame" x="0.0" y="0.0" width="325" height="160"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dEf-10-lJE" userLabel="Card">
-                    <rect key="frame" x="0.0" y="0.0" width="325" height="170"/>
+                    <rect key="frame" x="0.0" y="0.0" width="325" height="160"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="2He-al-OFW">
-                            <rect key="frame" x="15" y="15" width="295" height="60"/>
+                            <rect key="frame" x="15" y="10" width="295" height="55"/>
                             <subviews>
                                 <view verifyAmbiguity="ignoreSizes" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eqt-VE-vIV" userLabel="Header Container" customClass="AssetHeaderView" customModule="BlockEQ" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="180" height="60"/>
+                                    <rect key="frame" x="0.0" y="2.5" width="180" height="50"/>
                                     <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" priority="999" constant="60" id="BKG-v2-hOa"/>
+                                        <constraint firstAttribute="height" priority="999" constant="50" id="BKG-v2-hOa"/>
                                     </constraints>
                                     <viewLayoutGuide key="safeArea" id="4jG-aV-CMq"/>
                                 </view>
                                 <view verifyAmbiguity="ignoreSizes" contentMode="scaleToFill" horizontalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wu1-tg-Ywp" userLabel="Price Container" customClass="AssetPriceView" customModule="BlockEQ" customModuleProvider="target">
-                                    <rect key="frame" x="195" y="15" width="100" height="30"/>
+                                    <rect key="frame" x="195" y="12.5" width="100" height="30"/>
                                     <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" priority="999" constant="30" id="nvy-oa-h45"/>
@@ -53,7 +53,7 @@
                             </subviews>
                         </stackView>
                         <view contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="X1U-dS-6jb" userLabel="Issuer Container" customClass="AssetIssuerView" customModule="BlockEQ" customModuleProvider="target">
-                            <rect key="frame" x="15" y="90" width="295" height="65"/>
+                            <rect key="frame" x="15" y="80" width="295" height="70"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" priority="998" constant="70" id="h4W-Tr-ZNv"/>
@@ -63,9 +63,9 @@
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="X1U-dS-6jb" firstAttribute="top" secondItem="2He-al-OFW" secondAttribute="bottom" constant="15" id="3J7-fR-Y8S"/>
-                        <constraint firstItem="Lcr-ZU-dJE" firstAttribute="bottom" secondItem="X1U-dS-6jb" secondAttribute="bottom" constant="15" id="6H0-Vd-nsd"/>
+                        <constraint firstItem="Lcr-ZU-dJE" firstAttribute="bottom" secondItem="X1U-dS-6jb" secondAttribute="bottom" constant="10" id="6H0-Vd-nsd"/>
                         <constraint firstItem="X1U-dS-6jb" firstAttribute="leading" secondItem="Lcr-ZU-dJE" secondAttribute="leading" constant="15" id="CBF-FD-rxI"/>
-                        <constraint firstItem="2He-al-OFW" firstAttribute="top" secondItem="Lcr-ZU-dJE" secondAttribute="top" constant="15" id="k8E-Gu-JHr"/>
+                        <constraint firstItem="2He-al-OFW" firstAttribute="top" secondItem="Lcr-ZU-dJE" secondAttribute="top" constant="10" id="k8E-Gu-JHr"/>
                         <constraint firstItem="2He-al-OFW" firstAttribute="leading" secondItem="Lcr-ZU-dJE" secondAttribute="leading" constant="15" id="q5n-3Q-LFi"/>
                         <constraint firstItem="Lcr-ZU-dJE" firstAttribute="trailing" secondItem="2He-al-OFW" secondAttribute="trailing" constant="15" id="tbl-00-EwP"/>
                         <constraint firstItem="Lcr-ZU-dJE" firstAttribute="trailing" secondItem="X1U-dS-6jb" secondAttribute="trailing" constant="15" id="v3s-lH-alN"/>

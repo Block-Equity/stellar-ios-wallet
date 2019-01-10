@@ -47,7 +47,7 @@ final class AssetHeaderView: UIView, NibOwnerLoadable {
 //            imageSpacingConstraint.constant = 0
         } else {
             assetImageView.isHidden = false
-            imageWidthConstraint.constant = 60
+            imageWidthConstraint.constant = 50
 //            imageSpacingConstraint.constant = 15
         }
 
