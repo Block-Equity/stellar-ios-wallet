@@ -83,18 +83,11 @@ final class AccountAssetListDataSource: NSObject, AssetListDataSource {
     func actionCell(collectionView: UICollectionView, for path: IndexPath, asset: StellarAsset) -> AssetActionCell {
         let cell: AssetActionCell = collectionView.dequeueReusableCell(for: path)
 
-        let metadata = AssetMetadata(shortCode: asset.shortCode)
-        var buttonData = AssetButtonView.ViewModel(buttonData: [(title: "SET_INFLATION".localized(),
-                                                                 backgroundColor: metadata.primaryColor,
+        let text = inflationSet ? "UPDATE_INFLATION".localized(): "SET_INFLATION".localized()
+        let buttonData = AssetButtonView.ViewModel(buttonData: [(title: text,
+                                                                 backgroundColor: Colors.primaryDark,
                                                                  textColor: Colors.white,
                                                                  enabled: true)])
-
-        if inflationSet {
-            buttonData = AssetButtonView.ViewModel(buttonData: [(title: "UPDATE_INFLATION".localized(),
-                                                                 backgroundColor: metadata.primaryColor,
-                                                                 textColor: Colors.white,
-                                                                 enabled: true)])
-        }
 
         let model = AssetActionCell.ViewModel(headerData: asset.headerViewModel,
                                               priceData: asset.priceViewModel,
