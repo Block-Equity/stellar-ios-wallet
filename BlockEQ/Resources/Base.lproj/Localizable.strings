@@ -282,15 +282,10 @@
 "TOTAL_BALANCE_TITLE" = "Total Balance";
 "AVAILABLE_BALANCE_TITLE" = "Available Balance";
 "BASE_AMOUNT_TITLE" = "Base Amount";
-"BASE_AMOUNT_SUBTITLE" = "A reserved amount on every account";
 "TRUSTLINES_TITLE" = "Trustlines";
-"TRUSTLINES_SUBTITLE" = "%@ active trustlines on your account";
 "OFFERS_TITLE" = "Open Offers";
-"OFFERS_SUBTITLE" = "%@ open trade offers on your account";
 "SIGNERS_TITLE" = "Signers";
-"SIGNERS_SUBTITLE" = "%@ authorized signers on your account";
-"OPEN_TRADES_TITLE" = "Offered Amount";
-"OPEN_TRADES_SUBTITLE" = "Amount posted in trades";
+"OPEN_TRADES_TITLE" = "Posted for Trade";
 
 "BLOCKEQ_ASSET_TITLE" = "BlockEQ Assets";
 "NO_ASSETS_TITLE" = "No Wallet Assets";
@@ -304,3 +299,7 @@
 "LUMEN_NOTES" = "One lumen (XLM) is a unit of digital currency, like a bitcoin.";
 "BALANCE_INFORMATION" = "Balance";
 "ISSUER_ADDRESS" = "Issuer Address";
+
+"TITLE_TITLE" = "Title";
+"AMOUNT_TITLE" = "Amount";
+"VALUE_TITLE" = "Value";

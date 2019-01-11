@@ -14,10 +14,6 @@
             <connections>
                 <outlet property="actionButton" destination="Aw7-Qo-CIa" id="C2V-Rl-DY0"/>
                 <outlet property="buttonContainer" destination="hjT-UX-62P" id="NRM-ZA-Rpa"/>
-                <outlet property="cardBottomInset" destination="g2S-BS-WEm" id="GFr-k1-2xa"/>
-                <outlet property="cardLeftInset" destination="0YW-Lh-2A2" id="nAA-Nh-k4b"/>
-                <outlet property="cardRightInset" destination="r4Z-Hv-x0O" id="DXe-h9-gA2"/>
-                <outlet property="cardTopInset" destination="XY1-gP-Qzu" id="nOz-Rm-MZI"/>
                 <outlet property="cardView" destination="YuB-d9-OEJ" id="rn3-b5-jHg"/>
                 <outlet property="headerContainer" destination="mXc-TR-w5l" id="WJ8-K9-vre"/>
                 <outlet property="view" destination="8b2-kq-jKn" id="BVy-zQ-cES"/>

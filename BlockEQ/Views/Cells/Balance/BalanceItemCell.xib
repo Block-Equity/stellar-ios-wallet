@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BalanceItemCell" customModule="BlockEQ" customModuleProvider="target">
+            <connections>
+                <outlet property="amountLabel" destination="WVW-1i-y3l" id="aM9-k8-1ar"/>
+                <outlet property="containerView" destination="Ybr-D2-aia" id="yLa-H3-MsP"/>
+                <outlet property="titleLabel" destination="fMR-py-Bt1" id="xPX-FV-7K8"/>
+                <outlet property="valueLabel" destination="G8l-j9-zex" id="sEB-du-oKX"/>
+                <outlet property="view" destination="KtQ-0P-RwR" id="i1K-6K-aK8"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="KtQ-0P-RwR">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="35"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ybr-D2-aia" userLabel="Container View">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="35"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMR-py-Bt1">
+                            <rect key="frame" x="25" y="0.0" width="178" height="35"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WVW-1i-y3l">
+                            <rect key="frame" x="218" y="0.0" width="42" height="35"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G8l-j9-zex">
+                            <rect key="frame" x="308" y="0.0" width="42" height="35"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="WVW-1i-y3l" firstAttribute="width" secondItem="G8l-j9-zex" secondAttribute="width" id="1KF-RQ-QuW"/>
+                        <constraint firstItem="fMR-py-Bt1" firstAttribute="top" secondItem="Ybr-D2-aia" secondAttribute="top" id="2s1-6u-ijb"/>
+                        <constraint firstItem="G8l-j9-zex" firstAttribute="top" secondItem="fMR-py-Bt1" secondAttribute="top" id="6D3-Ax-pFi"/>
+                        <constraint firstAttribute="bottom" secondItem="fMR-py-Bt1" secondAttribute="bottom" id="DJE-8E-AAk"/>
+                        <constraint firstItem="WVW-1i-y3l" firstAttribute="bottom" secondItem="fMR-py-Bt1" secondAttribute="bottom" id="Far-mY-mPS"/>
+                        <constraint firstItem="fMR-py-Bt1" firstAttribute="leading" secondItem="Ybr-D2-aia" secondAttribute="leading" constant="25" id="KHd-zv-vhe"/>
+                        <constraint firstAttribute="trailing" secondItem="G8l-j9-zex" secondAttribute="trailing" constant="25" id="Ngc-t5-ehy"/>
+                        <constraint firstItem="G8l-j9-zex" firstAttribute="bottom" secondItem="fMR-py-Bt1" secondAttribute="bottom" id="Pwb-Cj-AHY"/>
+                        <constraint firstItem="WVW-1i-y3l" firstAttribute="top" secondItem="fMR-py-Bt1" secondAttribute="top" id="QrQ-ir-NKz"/>
+                        <constraint firstItem="WVW-1i-y3l" firstAttribute="leading" secondItem="fMR-py-Bt1" secondAttribute="trailing" constant="15" id="W6H-vi-pCZ"/>
+                        <constraint firstItem="G8l-j9-zex" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="WVW-1i-y3l" secondAttribute="trailing" constant="15" id="YSD-72-OpI"/>
+                        <constraint firstAttribute="trailing" secondItem="WVW-1i-y3l" secondAttribute="trailing" constant="115" id="qS2-B3-cwA"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="PW7-rS-puo" firstAttribute="bottom" secondItem="Ybr-D2-aia" secondAttribute="bottom" id="8X0-IG-tpF"/>
+                <constraint firstItem="Ybr-D2-aia" firstAttribute="top" secondItem="PW7-rS-puo" secondAttribute="top" id="8wv-gY-BH0"/>
+                <constraint firstAttribute="trailing" secondItem="Ybr-D2-aia" secondAttribute="trailing" id="Njv-Gj-al2"/>
+                <constraint firstItem="Ybr-D2-aia" firstAttribute="leading" secondItem="KtQ-0P-RwR" secondAttribute="leading" id="Vnr-ze-RYn"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="PW7-rS-puo"/>
+        </view>
+    </objects>
+</document>

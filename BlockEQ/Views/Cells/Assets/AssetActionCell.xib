@@ -13,10 +13,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AssetActionCell" customModule="BlockEQ" customModuleProvider="target">
             <connections>
                 <outlet property="buttonContainer" destination="zXu-ob-hWJ" id="tYT-RP-hWF"/>
-                <outlet property="cardBottomInset" destination="c3G-tI-sNO" id="Hj6-bc-3P0"/>
-                <outlet property="cardLeftInset" destination="J4S-Rf-xbR" id="yWe-Em-JIo"/>
-                <outlet property="cardRightInset" destination="jtx-mQ-499" id="3Gc-sK-gYo"/>
-                <outlet property="cardTopInset" destination="KHq-er-UUW" id="nno-hL-3f1"/>
                 <outlet property="cardView" destination="ctw-SA-iHM" id="CeL-Es-k9n"/>
                 <outlet property="headerContainer" destination="l2r-CE-OWk" id="WHP-SV-EXa"/>
                 <outlet property="priceContainer" destination="0CA-Mt-iE0" id="kVU-t8-df9"/>

@@ -8,44 +8,37 @@
 
 import Foundation
 
-protocol StylableCardCell {
-    var cardInset: UIEdgeInsets { get }
+// MARK: - StylableCard
+protocol StylableCard {
     var cardView: UIView! { get }
-    var preferredWidth: CGFloat? { get set }
-    var preferredHeight: CGFloat? { get set }
-    var cornerMask: CACornerMask? { get }
-
-    var cardLeftInset: NSLayoutConstraint! { get }
-    var cardBottomInset: NSLayoutConstraint! { get }
-    var cardTopInset: NSLayoutConstraint! { get }
-    var cardRightInset: NSLayoutConstraint! { get }
-
-    func applyCardStyle()
-    func select()
+    func cardStyle(view: UIView)
 }
 
-extension StylableCardCell where Self: UICollectionViewCell {
-    func applyCardStyle() {
-        cardView.layer.cornerRadius = 5
-        cardView.backgroundColor = .white
-        cardView.clipsToBounds = true
-        cardView.layer.shadowColor = Colors.black.cgColor
-        cardView.layer.masksToBounds = false
-        cardView.layer.shadowRadius = 3
-        cardView.layer.shadowOffset = CGSize(width: 0, height: 3)
-        cardView.layer.shadowOpacity = 0.05
-
-        let defaultMask: CACornerMask = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner,
-                                         .layerMinXMaxYCorner, .layerMinXMinYCorner]
-
-        cardView.layer.maskedCorners = cornerMask ?? defaultMask
-
-        cardLeftInset.constant = cardInset.left
-        cardRightInset.constant = cardInset.right
-        cardTopInset.constant = cardInset.top
-        cardBottomInset.constant = cardInset.bottom
+extension StylableCard {
+    func cardStyle(view: UIView) {
+        view.backgroundColor = .white
+        view.clipsToBounds = true
+        view.layer.masksToBounds = false
+        view.layer.cornerRadius = 5
+        view.layer.shadowRadius = 3
+        view.layer.shadowColor = Colors.black.cgColor
+        view.layer.shadowOffset = CGSize(width: 0, height: 3)
+        view.layer.shadowOpacity = 0.05
     }
+}
 
+// MARK: - RoundableCardCell
+protocol RoundableCardCell {
+    var cornerMask: CACornerMask? { get }
+}
+
+// MARK: - SizeableCardCell
+protocol SizeableCardCell {
+    var preferredWidth: CGFloat? { get set }
+    var preferredHeight: CGFloat? { get set }
+}
+
+extension SizeableCardCell where Self: UICollectionViewCell {
     func cellLayoutAttributes(attributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         setNeedsLayout()
         layoutIfNeeded()
@@ -69,7 +62,17 @@ extension StylableCardCell where Self: UICollectionViewCell {
 
         return attributes
     }
+}
 
+// MARK: - StylableBalanceCell
+protocol StylableBalanceCell: StylableCard, SizeableCardCell, RoundableCardCell { }
+
+// MARK: - StylableAssetCell
+protocol StylableAssetCell: StylableCard, SizeableCardCell, RoundableCardCell {
+    func select()
+}
+
+extension StylableAssetCell where Self: UICollectionViewCell {
     func select() {
         cardView.backgroundColor = Colors.lightGray
 

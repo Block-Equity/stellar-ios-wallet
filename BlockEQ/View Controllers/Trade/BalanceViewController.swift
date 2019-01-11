@@ -41,9 +41,10 @@ final class BalanceViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
 
         if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.minimumLineSpacing = 0
             layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
             layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+            layout.scrollDirection = .vertical
+            layout.minimumLineSpacing = 0
         }
 
         collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
@@ -52,8 +53,11 @@ final class BalanceViewController: UIViewController {
     func setupView() {
         setupNavHeader()
 
-        collectionView.register(cellType: AssetAmountCell.self)
         collectionView.register(cellType: AssetIssuerCell.self)
+
+        collectionView.registerHeader(BalanceHeader.self)
+        collectionView.register(cellType: BalanceItemCell.self)
+
         collectionView.delegate = self
     }
 
@@ -81,6 +85,14 @@ final class BalanceViewController: UIViewController {
 
     @objc func dismissView() {
         delegate?.dismiss(self)
+    }
+}
+
+extension BalanceViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return section == 1 ? CGSize(width: collectionView.bounds.width, height: 75) : .zero
     }
 }
 

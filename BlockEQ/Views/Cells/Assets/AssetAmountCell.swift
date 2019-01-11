@@ -14,12 +14,6 @@ final class AssetAmountCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
     @IBOutlet weak var headerContainer: AssetHeaderView!
     @IBOutlet weak var priceContainer: AssetPriceView!
 
-    @IBOutlet weak var cardBottomInset: NSLayoutConstraint!
-    @IBOutlet weak var cardLeftInset: NSLayoutConstraint!
-    @IBOutlet weak var cardTopInset: NSLayoutConstraint!
-    @IBOutlet weak var cardRightInset: NSLayoutConstraint!
-
-    var cardInset: UIEdgeInsets = .zero
     var preferredWidth: CGFloat?
     var preferredHeight: CGFloat?
     var indexPath: IndexPath?
@@ -59,7 +53,7 @@ final class AssetAmountCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
         headerContainer.backgroundColor = .clear
         priceContainer.backgroundColor = .clear
 
-        applyCardStyle()
+        cardStyle(view: cardView)
     }
 
     func update(with viewModel: ViewModel, indexPath path: IndexPath) {
@@ -81,4 +75,4 @@ extension AssetAmountCell {
     }
 }
 
-extension AssetAmountCell: StylableCardCell { }
+extension AssetAmountCell: StylableAssetCell { }
