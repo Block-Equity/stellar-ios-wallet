@@ -53,7 +53,7 @@ extension TradeAssetListDataSource: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let asset = assets[indexPath.row]
 
-        if let cell = collectionView.cellForItem(at: indexPath) as? StylableCardCell {
+        if let cell = collectionView.cellForItem(at: indexPath) as? StylableAssetCell {
             cell.select()
         }
 

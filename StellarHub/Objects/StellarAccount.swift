@@ -174,6 +174,16 @@ public final class StellarAccount {
     }
 
     /**
+     Returns the unmodified balance for the input asset.
+
+     - Parameter asset: The balance of the requested asset.
+     - Returns: A decimal amount representing that asset's balance.
+     */
+    public func totalBalance(for asset: StellarAsset) -> Decimal {
+        return Decimal(string: asset.balance) ?? Decimal(0.00)
+    }
+
+    /**
      Returns the computed available balance for an asset, less any amount of that asset offered in trades.
 
      - Parameter asset: The balance of the requested asset.

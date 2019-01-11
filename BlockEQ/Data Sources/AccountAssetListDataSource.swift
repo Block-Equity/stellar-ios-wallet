@@ -169,7 +169,7 @@ extension AccountAssetListDataSource: UICollectionViewDataSource {
             cell = mCell
         }
 
-        if var styleCell = cell as? StylableCardCell {
+        if var styleCell = cell as? StylableAssetCell {
             let inset = collectionView.contentInset.left + collectionView.contentInset.right
             styleCell.preferredWidth = collectionView.bounds.width - inset
         }
@@ -212,7 +212,7 @@ extension AccountAssetListDataSource: UICollectionViewDelegate {
             return
         }
 
-        if let cell = collectionView.cellForItem(at: indexPath) as? StylableCardCell {
+        if let cell = collectionView.cellForItem(at: indexPath) as? StylableAssetCell {
             cell.select()
         }
 

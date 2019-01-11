@@ -50,6 +50,12 @@
 		C531E2FF21D133B400875B5E /* AssetHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C531E2FE21D133B400875B5E /* AssetHeaderView.xib */; };
 		C531E30121D133CA00875B5E /* AssetPriceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C531E30021D133CA00875B5E /* AssetPriceView.xib */; };
 		C531E30321D13B4400875B5E /* AssetHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C531E30221D13B4400875B5E /* AssetHeaderView.swift */; };
+		C538E58521E7C0D700986D71 /* BalanceHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538E58421E7C0D700986D71 /* BalanceHeader.swift */; };
+		C538E58721E7C0E500986D71 /* BalanceItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538E58621E7C0E500986D71 /* BalanceItemCell.swift */; };
+		C538E58921E7C1BF00986D71 /* BalanceItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C538E58821E7C1BF00986D71 /* BalanceItemCell.xib */; };
+		C538E58B21E7C1D000986D71 /* BalanceHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C538E58A21E7C1D000986D71 /* BalanceHeader.xib */; };
+		C538E58D21E7CA8C00986D71 /* BalanceItemCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538E58C21E7CA8C00986D71 /* BalanceItemCellSnapshotTests.swift */; };
+		C538E58F21E7CD4F00986D71 /* BalanceHeaderCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538E58E21E7CD4F00986D71 /* BalanceHeaderCellSnapshotTests.swift */; };
 		C53978CB20BF417100587D99 /* SettingsSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53978CA20BF417100587D99 /* SettingsSwitchCell.swift */; };
 		C53978CD20BF4EF000587D99 /* SettingsNormalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53978CC20BF4EF000587D99 /* SettingsNormalCell.swift */; };
 		C53C44BC2188D7F30095D1AD /* StellarAddress+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53C44BB2188D7F30095D1AD /* StellarAddress+Extensions.swift */; };
@@ -324,6 +330,12 @@
 		C531E2FE21D133B400875B5E /* AssetHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetHeaderView.xib; sourceTree = "<group>"; };
 		C531E30021D133CA00875B5E /* AssetPriceView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetPriceView.xib; sourceTree = "<group>"; };
 		C531E30221D13B4400875B5E /* AssetHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetHeaderView.swift; sourceTree = "<group>"; };
+		C538E58421E7C0D700986D71 /* BalanceHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceHeader.swift; sourceTree = "<group>"; };
+		C538E58621E7C0E500986D71 /* BalanceItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceItemCell.swift; sourceTree = "<group>"; };
+		C538E58821E7C1BF00986D71 /* BalanceItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BalanceItemCell.xib; sourceTree = "<group>"; };
+		C538E58A21E7C1D000986D71 /* BalanceHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BalanceHeader.xib; sourceTree = "<group>"; };
+		C538E58C21E7CA8C00986D71 /* BalanceItemCellSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceItemCellSnapshotTests.swift; sourceTree = "<group>"; };
+		C538E58E21E7CD4F00986D71 /* BalanceHeaderCellSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceHeaderCellSnapshotTests.swift; sourceTree = "<group>"; };
 		C53978CA20BF417100587D99 /* SettingsSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSwitchCell.swift; sourceTree = "<group>"; };
 		C53978CC20BF4EF000587D99 /* SettingsNormalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNormalCell.swift; sourceTree = "<group>"; };
 		C53C44BB2188D7F30095D1AD /* StellarAddress+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarAddress+Extensions.swift"; sourceTree = "<group>"; };
@@ -639,6 +651,17 @@
 			path = Asset;
 			sourceTree = "<group>";
 		};
+		C538E58321E7C07C00986D71 /* Balance */ = {
+			isa = PBXGroup;
+			children = (
+				C538E58421E7C0D700986D71 /* BalanceHeader.swift */,
+				C538E58621E7C0E500986D71 /* BalanceItemCell.swift */,
+				C538E58821E7C1BF00986D71 /* BalanceItemCell.xib */,
+				C538E58A21E7C1D000986D71 /* BalanceHeader.xib */,
+			);
+			path = Balance;
+			sourceTree = "<group>";
+		};
 		C53E628B219A01B5006BF2F1 /* Diagnostics */ = {
 			isa = PBXGroup;
 			children = (
@@ -860,6 +883,8 @@
 			isa = PBXGroup;
 			children = (
 				C5FDC40221E3EDF500C911F0 /* BalanceViewControllerSnapshotTests.swift */,
+				C538E58C21E7CA8C00986D71 /* BalanceItemCellSnapshotTests.swift */,
+				C538E58E21E7CD4F00986D71 /* BalanceHeaderCellSnapshotTests.swift */,
 			);
 			path = Balance;
 			sourceTree = "<group>";
@@ -867,6 +892,7 @@
 		EC0B1917205463DC0052802C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C538E58321E7C07C00986D71 /* Balance */,
 				C59AA3CF21D15618007E8362 /* Assets */,
 				C53E629E219B5A6E006BF2F1 /* Diagnostics */,
 				C58D374721B06A22009B44C0 /* PillViewCell.swift */,
@@ -1320,6 +1346,7 @@
 				EC2015DE2052E071009A73C8 /* WalletViewController.xib in Resources */,
 				C414812F21246A1B0057ED74 /* StellarContactCell.xib in Resources */,
 				C57A8540217814EF0048A6B5 /* TransactionDetailsSectionHeader.xib in Resources */,
+				C538E58921E7C1BF00986D71 /* BalanceItemCell.xib in Resources */,
 				C414814121264C8B0057ED74 /* SelectAssetCell.xib in Resources */,
 				C4EC5FF120F3E64300769E31 /* AddAssetViewController.xib in Resources */,
 				ECF9F44C208937E400160843 /* InflationViewController.xib in Resources */,
@@ -1353,6 +1380,7 @@
 				EC2015EA2052EAC7009A73C8 /* WalletTitleViewController.xib in Resources */,
 				C5BB02492165269F00E4AAD1 /* SecretSeedViewController.xib in Resources */,
 				EC64CF5020BF05F5007FE199 /* OrderBookEmptyCell.xib in Resources */,
+				C538E58B21E7C1D000986D71 /* BalanceHeader.xib in Resources */,
 				C589FF2C20902CE300F5F308 /* SettingsViewController.xib in Resources */,
 				EC2015B02052D968009A73C8 /* Assets.xcassets in Resources */,
 			);
@@ -1585,6 +1613,8 @@
 				C5ADC57921D598F100DDAF1E /* AssetListSnapshotTests.swift in Sources */,
 				C5B0A5E621D57FA700E87DD3 /* AssetCardSnapshotTests.swift in Sources */,
 				C5B0A5E721D57FA700E87DD3 /* SnapshotTest.swift in Sources */,
+				C538E58F21E7CD4F00986D71 /* BalanceHeaderCellSnapshotTests.swift in Sources */,
+				C538E58D21E7CA8C00986D71 /* BalanceItemCellSnapshotTests.swift in Sources */,
 				C5FDC40121E3CBBB00C911F0 /* AssetIssuerViewSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1696,6 +1726,8 @@
 				EC2015D92052DB6D009A73C8 /* LaunchViewController.swift in Sources */,
 				C53978CD20BF4EF000587D99 /* SettingsNormalCell.swift in Sources */,
 				C5211AA221DBF3E300970473 /* AssetCoordinator.swift in Sources */,
+				C538E58721E7C0E500986D71 /* BalanceItemCell.swift in Sources */,
+				C538E58521E7C0D700986D71 /* BalanceHeader.swift in Sources */,
 				C53E628421989050006BF2F1 /* Diagnostic.swift in Sources */,
 				C5FDBC6A211D384C0051AB9F /* BlankAuthenticationViewController.swift in Sources */,
 				C531E30321D13B4400875B5E /* AssetHeaderView.swift in Sources */,

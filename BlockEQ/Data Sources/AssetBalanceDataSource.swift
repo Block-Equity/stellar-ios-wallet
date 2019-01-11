@@ -61,6 +61,30 @@ extension AssetBalanceDataSource: UICollectionViewDataSource {
             return UICollectionViewCell(frame: .zero)
         }
     }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let section = BalanceSection(rawValue: indexPath.section), section == .reductions else {
+            return UICollectionReusableView(frame: .zero)
+        }
+
+        let header: BalanceHeader = collectionView.dequeueHeader(for: indexPath)
+
+        let totalBalance = account.totalBalance(for: asset).displayFormattedString
+        let availableBalance = account.availableBalance(for: asset).displayFormattedString
+
+        let inset = collectionView.contentInset.left + collectionView.contentInset.right
+        header.preferredWidth = collectionView.bounds.width - inset
+        header.cornerMask = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+
+        header.update(with: BalanceHeader.ViewModel(totalTitle: "TOTAL_BALANCE_TITLE".localized(),
+                                                    totalDescription: totalBalance,
+                                                    availableTitle: "AVAILABLE_BALANCE_TITLE".localized(),
+                                                    availableDescription: availableBalance))
+
+        return header
+    }
 }
 
 extension AssetBalanceDataSource {
@@ -93,50 +117,48 @@ extension AssetBalanceDataSource {
     enum BalanceReduction: Int, CaseIterable {
         typealias CellText = (title: String, subtitle: String, balance: String)
 
-        case totalAmount
+        case header
         case baseReserve
         case signerEntries
         case trustlineEntries
         case offerEntries
         case openLiabilites
-        case availableBalance
 
         static var nativeReductions: [BalanceReduction] {
-            return allCases
+            return [.header, .baseReserve, .signerEntries, .trustlineEntries, .offerEntries, .openLiabilites]
         }
 
         static var nonNativeReductions: [BalanceReduction] {
-            return [BalanceReduction.totalAmount, BalanceReduction.openLiabilites, BalanceReduction.availableBalance]
+            return [.header, .openLiabilites]
         }
 
         func cell(_ collectionView: UICollectionView,
                   indexPath: IndexPath,
                   account: StellarAccount,
                   asset: StellarAsset) -> UICollectionViewCell {
-            let cell: AssetAmountCell = collectionView.dequeueReusableCell(for: indexPath)
+            let cell: BalanceItemCell = collectionView.dequeueReusableCell(for: indexPath)
 
             let data = cellText(for: account, asset: asset)
-            var priceData = AssetPriceView.ViewModel(amount: data.balance, price: "", hidePrice: true)
-
             let inset = collectionView.contentInset.left + collectionView.contentInset.right
+            var viewModel = BalanceItemCell.ViewModel(title: data.title,
+                                                      amount: data.subtitle,
+                                                      value: data.balance,
+                                                      weight: nil)
+
+            cell.preferredHeight = 35
             cell.preferredWidth = collectionView.bounds.width - inset
-            cell.preferredHeight = 65
+            cell.cornerMask = []
 
             if indexPath.row == 0 {
-                cell.cornerMask = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-                priceData.amountColor = Colors.black
+                viewModel = BalanceItemCell.ViewModel(title: data.title,
+                                                      amount: data.subtitle,
+                                                      value: data.balance,
+                                                      weight: .bold)
             } else if indexPath.row == collectionView.numberOfItems(inSection: indexPath.section) - 1 {
                 cell.cornerMask = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-                priceData.amountColor = Colors.black
-            } else {
-                cell.cornerMask = []
-                priceData.amountColor = Colors.red
             }
 
-            let headerData = AssetHeaderView.ViewModel(image: nil, assetTitle: data.title, assetSubtitle: data.subtitle)
-            let viewModel = AssetAmountCell.ViewModel(headerData: headerData, priceData: priceData)
-
-            cell.update(with: viewModel, indexPath: indexPath)
+            cell.update(with: viewModel)
 
             return cell
         }
@@ -145,27 +167,25 @@ extension AssetBalanceDataSource {
             var title, subtitle, balance: String
 
             switch self {
-            case .totalAmount:
-                title = "TOTAL_BALANCE_TITLE".localized()
-                balance = asset.balance.tradeFormatted
-                subtitle = ""
+            case .header:
+                title = "TITLE_TITLE".localized()
+                subtitle = "AMOUNT_TITLE".localized()
+                balance = "VALUE_TITLE".localized()
             case .baseReserve:
                 title = "BASE_AMOUNT_TITLE".localized()
-                subtitle = String(format: "BASE_AMOUNT_SUBTITLE".localized(),
-                                  String(describing: account.totalBaseAmount))
+                subtitle = String(describing: account.totalBaseAmount)
                 balance = account.baseAmount.displayFormattedString
             case .signerEntries:
                 title = "SIGNERS_TITLE".localized()
-                subtitle = String(format: "SIGNERS_SUBTITLE".localized(), String(describing: account.totalSigners))
+                subtitle = String(describing: account.totalSigners)
                 balance = account.formattedSigners
             case .offerEntries:
                 title = "OFFERS_TITLE".localized()
-                subtitle = String(format: "OFFERS_SUBTITLE".localized(), String(describing: account.totalOffers))
+                subtitle = String(describing: account.totalOffers)
                 balance = account.formattedOffers
             case .trustlineEntries:
                 title = "TRUSTLINES_TITLE".localized()
-                subtitle = String(format: "TRUSTLINES_SUBTITLE".localized(),
-                                  String(describing: account.totalTrustlines))
+                subtitle = String(describing: account.totalTrustlines)
                 balance = account.formattedTrustlines
             case .openLiabilites:
                 let assetTrades = account.tradeOffers.filter { $0.sellingAsset == asset }
@@ -174,11 +194,7 @@ extension AssetBalanceDataSource {
                 }
 
                 title = "OPEN_TRADES_TITLE".localized()
-                subtitle = "OPEN_TRADES_SUBTITLE".localized()
                 balance = tradeValue.tradeFormattedString
-            case .availableBalance:
-                title = "AVAILABLE_BALANCE_TITLE".localized()
-                balance = account.availableBalance(for: asset).tradeFormattedString
                 subtitle = ""
             }
 

@@ -44,11 +44,9 @@ final class AssetHeaderView: UIView, NibOwnerLoadable {
         if viewModel.image == nil {
             assetImageView.isHidden = true
             imageWidthConstraint.constant = 0
-//            imageSpacingConstraint.constant = 0
         } else {
             assetImageView.isHidden = false
             imageWidthConstraint.constant = 50
-//            imageSpacingConstraint.constant = 15
         }
 
         if viewModel.assetSubtitle.isEmpty {

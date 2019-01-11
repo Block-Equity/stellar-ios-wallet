@@ -53,6 +53,12 @@ extension UICollectionView {
                       ofKind: UICollectionView.elementKindSectionHeader)
     }
 
+    final func registerHeader<T: UICollectionReusableView>(_ supplementaryViewType: T.Type)
+        where T: Reusable & NibOwnerLoadable {
+            self.register(supplementaryViewType: supplementaryViewType,
+                          ofKind: UICollectionView.elementKindSectionHeader)
+    }
+
     final func registerFooter<T: UICollectionReusableView>(_ supplementaryViewType: T.Type)
         where T: Reusable & NibLoadable {
             self.register(supplementaryViewType: supplementaryViewType,

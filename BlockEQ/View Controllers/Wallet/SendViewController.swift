@@ -19,8 +19,6 @@ class SendViewController: UIViewController {
     var accountService: AccountManagementService
     var currentAsset: StellarAsset?
 
-
-
     init(service: AccountManagementService, asset: StellarAsset) {
         self.accountService = service
         self.currentAsset = asset

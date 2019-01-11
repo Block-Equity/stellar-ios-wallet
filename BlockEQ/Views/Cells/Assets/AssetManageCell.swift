@@ -23,18 +23,12 @@ final class AssetManageCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
     @IBOutlet weak var actionButton: UIRoundedButton!
     @IBOutlet weak var buttonContainer: UIView!
 
-    @IBOutlet weak var cardLeftInset: NSLayoutConstraint!
-    @IBOutlet weak var cardBottomInset: NSLayoutConstraint!
-    @IBOutlet weak var cardTopInset: NSLayoutConstraint!
-    @IBOutlet weak var cardRightInset: NSLayoutConstraint!
-
     weak var delegate: AssetManageCellDelegate?
 
     var mode: Mode = .add
     var indexPath: IndexPath?
     var preferredWidth: CGFloat?
     var preferredHeight: CGFloat?
-    var cardInset: UIEdgeInsets = .zero
     var cornerMask: CACornerMask?
 
     override init(frame: CGRect) {
@@ -75,7 +69,7 @@ final class AssetManageCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
         actionButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         actionButton.tintColor = .white
 
-        applyCardStyle()
+        cardStyle(view: cardView)
     }
 
     func update(with viewModel: ViewModel, indexPath path: IndexPath) {
@@ -108,8 +102,8 @@ extension AssetManageCell {
     }
 }
 
-// MARK: - StylableCardCell
-extension AssetManageCell: StylableCardCell { }
+// MARK: - StylableAssetCell
+extension AssetManageCell: StylableAssetCell { }
 
 extension AssetManageCell {
     enum Mode {

@@ -19,17 +19,11 @@ final class AssetActionCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
     @IBOutlet weak var priceContainer: AssetPriceView!
     @IBOutlet weak var buttonContainer: AssetButtonView!
 
-    @IBOutlet weak var cardLeftInset: NSLayoutConstraint!
-    @IBOutlet weak var cardRightInset: NSLayoutConstraint!
-    @IBOutlet weak var cardBottomInset: NSLayoutConstraint!
-    @IBOutlet weak var cardTopInset: NSLayoutConstraint!
-
     weak var delegate: AssetActionCellDelegate?
 
     var indexPath: IndexPath?
     var preferredWidth: CGFloat?
     var preferredHeight: CGFloat?
-    var cardInset: UIEdgeInsets = .zero
     var cornerMask: CACornerMask?
 
     override init(frame: CGRect) {
@@ -71,7 +65,7 @@ final class AssetActionCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
 
         buttonContainer.delegate = self
 
-        applyCardStyle()
+        cardStyle(view: cardView)
     }
 
     func update(with viewModel: ViewModel, indexPath path: IndexPath) {
@@ -101,5 +95,5 @@ extension AssetActionCell: AssetButtonsDelegate {
     }
 }
 
-// MARK: - StylableCardCell
-extension AssetActionCell: StylableCardCell { }
+// MARK: - StylableAssetCell
+extension AssetActionCell: StylableAssetCell { }

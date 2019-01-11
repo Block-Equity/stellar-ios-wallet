@@ -12,10 +12,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AssetIssuerCell" customModule="BlockEQ" customModuleProvider="target">
             <connections>
-                <outlet property="cardBottomInset" destination="5Os-m1-vvX" id="BCW-vi-RtA"/>
-                <outlet property="cardLeftInset" destination="EGj-Lh-ir6" id="077-KW-enZ"/>
-                <outlet property="cardRightInset" destination="QSQ-Hr-u2n" id="3Rf-rr-Cz9"/>
-                <outlet property="cardTopInset" destination="lAv-IP-2nU" id="1Nz-jZ-y6p"/>
                 <outlet property="cardView" destination="dEf-10-lJE" id="108-11-UB4"/>
                 <outlet property="headerContainer" destination="eqt-VE-vIV" id="JDV-9z-1Gd"/>
                 <outlet property="issuerContainer" destination="X1U-dS-6jb" id="PJU-4K-SQf"/>
