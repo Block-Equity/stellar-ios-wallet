@@ -36,10 +36,8 @@ extension TradeAssetListDataSource: UICollectionViewDataSource {
 
         cell.update(with: model, indexPath: indexPath)
 
-        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            let inset = flowLayout.sectionInset.left + flowLayout.sectionInset.right
-            cell.preferredWidth = collectionView.bounds.width - inset
-        }
+        let inset = collectionView.contentInset.left + collectionView.contentInset.right
+        cell.preferredWidth = collectionView.bounds.width - inset
 
         return cell
     }
