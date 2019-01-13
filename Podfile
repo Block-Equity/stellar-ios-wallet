@@ -18,7 +18,8 @@ target 'BlockEQ' do
   shared_pods
   pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift', :branch => 'master'
   pod 'Whisper', :git => 'https://github.com/freeubi/Whisper.git', :branch => 'swift-4.2-support'
-  pod 'Kingfisher', '~> 4.10'
+  pod 'Cache', '~> 5.2'
+  pod 'Imaginary', '~> 4.2'
 
   target 'BlockEQTests' do
     inherit! :search_paths

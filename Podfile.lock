@@ -1,7 +1,9 @@
 PODS:
   - Alamofire (4.8.0)
+  - Cache (5.2.0)
+  - Imaginary (4.2.0):
+    - Cache (~> 5.0)
   - KeychainSwift (10.0.0)
-  - Kingfisher (4.10.1)
   - Repeat (0.5.7)
   - Reusable (4.0.5):
     - Reusable/Storyboard (= 4.0.5)
@@ -15,8 +17,9 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
+  - Cache (~> 5.2)
+  - Imaginary (~> 4.2)
   - KeychainSwift (~> 10.0)
-  - Kingfisher (~> 4.10)
   - Repeat (~> 0.5)
   - Reusable (~> 4.0)
   - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift`, branch `master`)
@@ -27,8 +30,9 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - Cache
+    - Imaginary
     - KeychainSwift
-    - Kingfisher
     - Repeat
     - Reusable
     - SnapshotTesting
@@ -56,8 +60,9 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
+  Imaginary: dae33d06dbc2ada22f98afef5eb45cc061311a2c
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
-  Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   Repeat: 73c5ee602aed8f3c7bf1aa12d4cd0d3dc3edea0a
   Reusable: 188be1a54ac0691bc66e5bb24ec6eb91971b315b
   SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
@@ -65,6 +70,6 @@ SPEC CHECKSUMS:
   stellar-ios-mac-sdk: 7a49cbb604d6ec8e0e3fefddf34d0d9340db2f1c
   Whisper: 8c499b08f3b56d5c80162d775e3462318ad7f4fe
 
-PODFILE CHECKSUM: 4c68b0beba69c0e968a19d5fe7325db741227842
+PODFILE CHECKSUM: ecb842f4ce1d9a47777e7f42c4c162edde6a6c69
 
 COCOAPODS: 1.5.3
