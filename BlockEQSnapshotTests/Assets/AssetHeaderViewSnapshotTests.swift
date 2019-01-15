@@ -17,6 +17,7 @@ final class AssetHeaderViewSnapshotTests: XCTestCase, SnapshotTest {
     override func setUp() {
         super.setUp()
         headerData = AssetHeaderView.ViewModel(image: UIImage(named: "pts"),
+                                               imageURL: BlockEQURL.assetIcon("pts").url,
                                                assetTitle: "Block Points",
                                                assetSubtitle: "PTS")
     }

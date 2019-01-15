@@ -11,7 +11,9 @@ import StellarHub
 extension StellarAsset {
     var headerViewModel: AssetHeaderView.ViewModel {
         let metadata = AssetMetadata(shortCode: shortCode)
+        let lowerShortcode = shortCode.lowercased()
         return AssetHeaderView.ViewModel(image: metadata.image,
+                                         imageURL: BlockEQURL.assetIcon(lowerShortcode).url,
                                          assetTitle: metadata.displayName,
                                          assetSubtitle: metadata.subtitleWithIssuer)
     }

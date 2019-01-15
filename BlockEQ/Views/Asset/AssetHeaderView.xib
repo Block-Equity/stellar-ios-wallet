@@ -28,7 +28,7 @@
                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="uoa-Ex-Kk5">
                     <rect key="frame" x="0.0" y="0.0" width="200" height="60"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="eth" translatesAutoresizingMaskIntoConstraints="NO" id="6rd-MH-qdV" userLabel="Asset Image">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="generic" translatesAutoresizingMaskIntoConstraints="NO" id="6rd-MH-qdV" userLabel="Asset Image">
                             <rect key="frame" x="0.0" y="5" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="6rd-MH-qdV" secondAttribute="height" multiplier="1:1" id="JCD-Pp-Zf4"/>
@@ -73,6 +73,6 @@
         </view>
     </objects>
     <resources>
-        <image name="eth" width="128" height="128"/>
+        <image name="generic" width="128" height="128"/>
     </resources>
 </document>
