@@ -7,8 +7,11 @@
 //
 
 import Reusable
+import Imaginary
 
 final class AssetHeaderView: UIView, NibOwnerLoadable {
+    static let defaultCurrencyIcon = UIImage(named: "currency-generic")
+
     @IBOutlet var view: UIView!
     @IBOutlet var assetImageView: UIImageView!
     @IBOutlet var assetNameLabel: UILabel!
@@ -31,7 +34,7 @@ final class AssetHeaderView: UIView, NibOwnerLoadable {
     func setupStyle() {
         view.backgroundColor = .clear
 
-        assetImageView.image = UIImage(named: "eth")
+        assetImageView.image = AssetHeaderView.defaultCurrencyIcon
         assetNameLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         assetCodeLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
     }
@@ -41,12 +44,17 @@ final class AssetHeaderView: UIView, NibOwnerLoadable {
         assetNameLabel.text = viewModel.assetTitle
         assetCodeLabel.text = viewModel.assetSubtitle
 
-        if viewModel.image == nil {
+        assetImageView.image = AssetHeaderView.defaultCurrencyIcon
+        assetImageView.isHidden = false
+        imageWidthConstraint.constant = 50
+
+        if viewModel.imageURL == nil && viewModel.image == nil {
             assetImageView.isHidden = true
             imageWidthConstraint.constant = 0
-        } else {
-            assetImageView.isHidden = false
-            imageWidthConstraint.constant = 50
+        } else if let url = viewModel.imageURL {
+            assetImageView.setImage(url: url, placeholder: AssetHeaderView.defaultCurrencyIcon)
+        } else if let image = viewModel.image {
+            assetImageView.image = image
         }
 
         if viewModel.assetSubtitle.isEmpty {
@@ -59,9 +67,13 @@ final class AssetHeaderView: UIView, NibOwnerLoadable {
 
 extension AssetHeaderView {
     struct ViewModel {
-        static let empty = ViewModel(image: nil, assetTitle: "", assetSubtitle: "")
+        static let empty = ViewModel(image: AssetHeaderView.defaultCurrencyIcon,
+                                     imageURL: nil,
+                                     assetTitle: "",
+                                     assetSubtitle: "")
 
         var image: UIImage?
+        var imageURL: URL?
         var assetTitle: String
         var assetSubtitle: String
     }

@@ -55,6 +55,7 @@ enum BlockEQURL {
     case diagnosticReport
     case termsAndConditions
     case privacyPolicy
+    case assetIcon(String)
 
     var url: URL { return URL(string: self.string)! }
 
@@ -66,6 +67,8 @@ enum BlockEQURL {
         case .diagnosticReport: return "\(apiEnv.string)/diagnostic"
         case .privacyPolicy: return "\(siteEnv.string)/privacy.html"
         case .termsAndConditions: return "\(siteEnv.string)/terms.html"
+        case .assetIcon(let shortCode):
+            return "https://s3.amazonaws.com/blockeq-wallet-shared/icons/128/color/\(shortCode).png"
         }
     }
 }

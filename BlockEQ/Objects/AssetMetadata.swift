@@ -10,12 +10,17 @@ import StellarHub
 
 public struct AssetMetadata: Hashable {
     static let staticAssetCodes = ["PTS", "CAD"]
+    static let commonAssetCodes = ["XLM", "BTC", "BCH", "ETH", "XMR", "LTC", "DOGE"]
 
     let shortCode: String
     let displayName: String
     let primaryColor: UIColor
     let issuerName: String?
     let issuerAddress: String?
+
+    init(asset: StellarAsset) {
+        self.init(shortCode: asset.shortCode)
+    }
 
     init(shortCode: String) {
         let code = shortCode.uppercased()

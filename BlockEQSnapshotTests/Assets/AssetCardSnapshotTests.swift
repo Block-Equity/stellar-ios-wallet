@@ -23,8 +23,8 @@ final class AssetCardSnapshotTests: XCTestCase, SnapshotTest {
     override func setUp() {
         super.setUp()
 
-        headerData = AssetHeaderView.ViewModel(image: UIImage(named: "pts"), assetTitle: "Block Points", assetSubtitle: "PTS")
-        longHeaderData = AssetHeaderView.ViewModel(image: UIImage(named: "pts"), assetTitle: "Gene Source Code Chain", assetSubtitle: "GENE (Stronghold)")
+        headerData = AssetHeaderView.ViewModel(image: UIImage(named: "pts"), imageURL: BlockEQURL.assetIcon("pts").url, assetTitle: "Block Points", assetSubtitle: "PTS")
+        longHeaderData = AssetHeaderView.ViewModel(image: UIImage(named: "pts"), imageURL: BlockEQURL.assetIcon("pts").url, assetTitle: "Gene Source Code Chain", assetSubtitle: "GENE (Stronghold)")
         priceData = AssetPriceView.ViewModel(amount: "123.45", price: "$13,456.78", hidePrice: true)
         longPriceData = AssetPriceView.ViewModel(amount: "210,000,123.45", price: "$99,999,233,456.78")
         issuerData = AssetIssuerView.ViewModel(issuerTitle: "Issued by Block Equity",
@@ -64,7 +64,7 @@ final class AssetCardSnapshotTests: XCTestCase, SnapshotTest {
         let assetAmountCell = AssetAmountCell()
         assetAmountCell.frame = cellFrame
 
-        let headerData = AssetHeaderView.ViewModel(image: nil, assetTitle: "Block Points", assetSubtitle: "PTS")
+        let headerData = AssetHeaderView.ViewModel(image: nil, imageURL: nil, assetTitle: "Block Points", assetSubtitle: "PTS")
         let model = AssetAmountCell.ViewModel(headerData: headerData, priceData: priceData)
         assetAmountCell.update(with: model, indexPath: firstPath)
 
@@ -78,7 +78,7 @@ final class AssetCardSnapshotTests: XCTestCase, SnapshotTest {
         var priceData = self.priceData!
         priceData.hidePrice = false
 
-        let headerData = AssetHeaderView.ViewModel(image: nil, assetTitle: "Block Points", assetSubtitle: "PTS")
+        let headerData = AssetHeaderView.ViewModel(image: nil, imageURL: nil, assetTitle: "Block Points", assetSubtitle: "PTS")
         let model = AssetAmountCell.ViewModel(headerData: headerData, priceData: priceData)
         assetAmountCell.update(with: model, indexPath: firstPath)
 
