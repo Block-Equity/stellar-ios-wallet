@@ -111,7 +111,6 @@
 "YOUR_TOKEN_ADDRESS" = "Your Token Address";
 "YOUR_WALLET_ADDRESS" = "Your Wallet Address";
 "ADD_CONTACT" = "Add Contact";
-"UPDATE_CONTACT" = "Update Contact";
 "STELLAR" = "Stellar";
 "SELECT_ASSET" = "Select Asset";
 "NAVIGATE_BACK" = "Back";
@@ -303,3 +302,4 @@
 "TITLE_TITLE" = "Title";
 "AMOUNT_TITLE" = "Amount";
 "VALUE_TITLE" = "Value";
+"EMPTY_OFFERS" = "There are no open offers at the moment.";

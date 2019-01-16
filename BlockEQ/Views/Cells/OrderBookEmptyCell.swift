@@ -8,7 +8,7 @@
 
 import Reusable
 
-class OrderBookEmptyCell: UITableViewCell, Reusable {
+class OrderBookEmptyCell: UITableViewCell, Reusable, NibLoadable {
     @IBOutlet weak var label: UILabel!
 
     static let rowHeight: CGFloat = 100.0
@@ -17,5 +17,6 @@ class OrderBookEmptyCell: UITableViewCell, Reusable {
         super.awakeFromNib()
 
         label.textColor = Colors.darkGrayTransparent
+        label.text = "EMPTY_OFFERS".localized()
     }
 }
