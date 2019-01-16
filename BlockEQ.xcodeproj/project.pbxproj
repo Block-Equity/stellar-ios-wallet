@@ -78,6 +78,8 @@
 		C54ADD4F2178CFC70078F69E /* TransactionOperationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C54ADD4E2178CFC70078F69E /* TransactionOperationCell.xib */; };
 		C54ADD512178FB8F0078F69E /* TransactionSignatureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54ADD502178FB8F0078F69E /* TransactionSignatureCell.swift */; };
 		C54ADD532178FB9B0078F69E /* TransactionSignatureCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C54ADD522178FB9B0078F69E /* TransactionSignatureCell.xib */; };
+		C54BB76F21EEE89C004396DE /* FetchAssetIconsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BB76E21EEE89C004396DE /* FetchAssetIconsOperation.swift */; };
+		C54BB77121EEF071004396DE /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BB77021EEF071004396DE /* CacheManager.swift */; };
 		C54EFE432179043B005FA6D3 /* TransactionDetailsBasicHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EFE422179043B005FA6D3 /* TransactionDetailsBasicHeader.swift */; };
 		C54EFE452179045C005FA6D3 /* TransactionDetailsBasicHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C54EFE442179045C005FA6D3 /* TransactionDetailsBasicHeader.xib */; };
 		C54EFE4821796B61005FA6D3 /* UIInsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EFE4721796B61005FA6D3 /* UIInsetLabel.swift */; };
@@ -358,6 +360,8 @@
 		C54ADD4E2178CFC70078F69E /* TransactionOperationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionOperationCell.xib; sourceTree = "<group>"; };
 		C54ADD502178FB8F0078F69E /* TransactionSignatureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSignatureCell.swift; sourceTree = "<group>"; };
 		C54ADD522178FB9B0078F69E /* TransactionSignatureCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionSignatureCell.xib; sourceTree = "<group>"; };
+		C54BB76E21EEE89C004396DE /* FetchAssetIconsOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAssetIconsOperation.swift; sourceTree = "<group>"; };
+		C54BB77021EEF071004396DE /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 		C54EFE422179043B005FA6D3 /* TransactionDetailsBasicHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailsBasicHeader.swift; sourceTree = "<group>"; };
 		C54EFE442179045C005FA6D3 /* TransactionDetailsBasicHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionDetailsBasicHeader.xib; sourceTree = "<group>"; };
 		C54EFE4721796B61005FA6D3 /* UIInsetLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIInsetLabel.swift; sourceTree = "<group>"; };
@@ -1052,6 +1056,7 @@
 				C524DFCE2167F1AB0068D111 /* AppleAutoFillProvider.swift */,
 				C5681BB821A779AB00ACEB21 /* Reachability.swift */,
 				C5DB5A1221E45BD300EB2AAB /* AssetMetadataManager.swift */,
+				C54BB77021EEF071004396DE /* CacheManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1111,6 +1116,7 @@
 			children = (
 				C514420F217ED86F006C44F4 /* FetchExchangesOperation.swift */,
 				C53E62852199DC94006BF2F1 /* SendDiagnosticOperation.swift */,
+				C54BB76E21EEE89C004396DE /* FetchAssetIconsOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -1641,6 +1647,7 @@
 				EC2015F720532F4B009A73C8 /* AppButton.swift in Sources */,
 				C5A4543021DA84D40096467A /* AssetListHeader.swift in Sources */,
 				C51441FC217E839E006C44F4 /* WalletDataSource.swift in Sources */,
+				C54BB77121EEF071004396DE /* CacheManager.swift in Sources */,
 				ECB1D958207E966D0088826D /* MBProgressHUD.m in Sources */,
 				C54EFE4A21798668005FA6D3 /* UIView+Layer.swift in Sources */,
 				C59AA3C621D14444007E8362 /* AssetButtonView.swift in Sources */,
@@ -1741,6 +1748,7 @@
 				EC72C0B420597CA600141D6F /* StellarAccount+Extensions.swift in Sources */,
 				C59AA3D721D15653007E8362 /* AssetAmountCell.swift in Sources */,
 				EC3DE29F20B8F98C00A6EC3C /* TradeHeaderView.swift in Sources */,
+				C54BB76F21EEE89C004396DE /* FetchAssetIconsOperation.swift in Sources */,
 				C53C44BC2188D7F30095D1AD /* StellarAddress+Extensions.swift in Sources */,
 				C5CDE376215A9F3200DB5C90 /* Strings.swift in Sources */,
 				EC6EE89620B6043C0033C299 /* TradingCoordinator.swift in Sources */,
