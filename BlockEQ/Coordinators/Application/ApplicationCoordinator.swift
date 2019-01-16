@@ -9,7 +9,6 @@
 import StellarHub
 import WebKit
 import os.log
-import Imaginary
 
 protocol ApplicationCoordinatorDelegate: AnyObject {
     func switchToOnboarding()
@@ -143,20 +142,13 @@ final class ApplicationCoordinator {
     }
 
     func prefetchAssetImages() {
-        let multipleFetcher = MultipleImageFetcher(fetcherMaker: {
-            let downloader = ImageDownloader(modifyRequest: {
-                return $0
-            })
+        let queue = OperationQueue()
+        queue.qualityOfService = .userInitiated
 
-            return ImageFetcher(downloader: downloader, storage: nil)
-        })
+        let codes = AssetMetadata.staticAssetCodes + AssetMetadata.commonAssetCodes
+        let fetchOperation = FetchAssetIconsOperation(assetCodes: codes)
 
-        let assetShortCodes = AssetMetadata.commonAssetCodes + AssetMetadata.staticAssetCodes
-        let imageUrls = assetShortCodes.map { BlockEQURL.assetIcon($0.lowercased()).url }
-
-        multipleFetcher.fetch(urls: imageUrls, each: { result in
-        }, completion: { _ in
-        })
+        queue.addOperation(fetchOperation)
     }
 
     func didBecomeActive() {
