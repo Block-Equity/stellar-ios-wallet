@@ -40,11 +40,9 @@ final class AssetHeaderView: UIView, NibOwnerLoadable {
     }
 
     func update(with viewModel: ViewModel) {
-        assetImageView.image = viewModel.image
         assetNameLabel.text = viewModel.assetTitle
         assetCodeLabel.text = viewModel.assetSubtitle
 
-        assetImageView.image = AssetHeaderView.defaultCurrencyIcon
         assetImageView.isHidden = false
         imageWidthConstraint.constant = 50
 
@@ -55,6 +53,8 @@ final class AssetHeaderView: UIView, NibOwnerLoadable {
             assetImageView.setImage(url: url, placeholder: AssetHeaderView.defaultCurrencyIcon)
         } else if let image = viewModel.image {
             assetImageView.image = image
+        } else if viewModel.image == nil {
+            assetImageView.image = AssetHeaderView.defaultCurrencyIcon
         }
 
         if viewModel.assetSubtitle.isEmpty {

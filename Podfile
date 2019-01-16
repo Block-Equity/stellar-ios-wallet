@@ -7,6 +7,7 @@ def shared_pods
   pod 'Alamofire', '~> 4.7'
   pod 'Repeat', '~> 0.5'
   pod 'Reusable', '~> 4.0'
+  pod 'Cache', '~> 5.2'
 end
 
 target 'BlockEQ' do
@@ -18,8 +19,7 @@ target 'BlockEQ' do
   shared_pods
   pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift', :branch => 'master'
   pod 'Whisper', :git => 'https://github.com/freeubi/Whisper.git', :branch => 'swift-4.2-support'
-  pod 'Cache', '~> 5.2'
-  pod 'Imaginary', '~> 4.2'
+  pod 'Imaginary', :git => 'https://github.com/hyperoslo/Imaginary.git', :branch => 'master'
 
   target 'BlockEQTests' do
     inherit! :search_paths

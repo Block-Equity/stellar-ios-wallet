@@ -31,14 +31,6 @@ final class AssetAmountCell: UICollectionViewCell, Reusable, NibOwnerLoadable, I
         setupStyle()
     }
 
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        headerContainer.update(with: AssetHeaderView.ViewModel.empty)
-        priceContainer.update(with: AssetPriceView.ViewModel.empty)
-        preferredWidth = nil
-        preferredHeight = nil
-    }
-
     override func layoutSubviews() {
         super.layoutSubviews()
 
