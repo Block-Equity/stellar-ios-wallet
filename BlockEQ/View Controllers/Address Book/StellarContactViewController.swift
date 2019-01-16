@@ -7,7 +7,7 @@
 //
 
 import Contacts
-import UIKit
+import StellarHub
 
 class StellarContactViewController: UIViewController {
 
@@ -16,46 +16,12 @@ class StellarContactViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var addressTitleLabel: UILabel!
     @IBOutlet var addressTextField: UITextField!
-    @IBOutlet var nameTitleLabel: UILabel!
-    @IBOutlet var nameTextField: UITextField!
 
     var identifier: String = ""
     var name: String = ""
     var address: String = ""
 
     override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
-
-    @IBAction func addAddress() {
-        guard let name = nameTextField.text, !name.isEmpty else {
-            nameTextField.shake()
-            return
-        }
-
-        guard let address = addressTextField.text, !address.isEmpty, address.count > 20 else {
-            addressTextField.shake()
-            return
-        }
-
-        if identifier.isEmpty {
-            createContact(name: name, address: address)
-        } else {
-            updateContact(name: name, address: address)
-        }
-    }
-
-    @IBAction func scanQRCode() {
-        let scanViewController = ScanViewController()
-        scanViewController.delegate = self
-
-        let navigationController = AppNavigationController(rootViewController: scanViewController)
-        present(navigationController, animated: true, completion: nil)
-    }
-
-    @IBAction func dismissView() {
-        view.endEditing(true)
-
-        dismiss(animated: true, completion: nil)
-    }
 
     init(identifier: String, name: String, address: String) {
         super.init(nibName: String(describing: StellarContactViewController.self), bundle: nil)
@@ -75,26 +41,22 @@ class StellarContactViewController: UIViewController {
     }
 
     func setupView() {
-
         let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
                                                  style: .plain,
                                                  target: self,
                                                  action: #selector(self.dismissView))
 
         navigationItem.rightBarButtonItem = rightBarButtonItem
-        navigationItem.title = identifier.isEmpty ? "ADD_CONTACT".localized() : "UPDATE_CONTACT".localized()
+        title = name
 
         addressTitleLabel.textColor = Colors.darkGrayTransparent
         addressTextField.textColor = Colors.darkGray
-        nameTitleLabel.textColor = Colors.darkGrayTransparent
-        nameTextField.textColor = Colors.darkGray
         addressHolderView.backgroundColor = Colors.lightBackground
         holdingView.backgroundColor = Colors.lightBackground
         view.backgroundColor = Colors.lightBackground
         tableView.backgroundColor = Colors.lightBackground
 
         addressTextField.text = address
-        nameTextField.text = name
     }
 
     func createContact(name: String, address: String) {
@@ -117,8 +79,9 @@ class StellarContactViewController: UIViewController {
         }
     }
 
-    func updateContact(name: String, address: String) {
+    func updateContact(name: String, address: String, remove: Bool = false) {
         let contactsStore = CNContactStore()
+
         contactsStore.requestAccess(for: .contacts) { (granted, error) in
             if let fetchError = error {
                 print("ERROR: Unable to get contacts", fetchError)
@@ -158,7 +121,9 @@ class StellarContactViewController: UIViewController {
                         }
                     }
 
-                    if previousEmailFound {
+                    if previousEmailFound && remove {
+                        mutableContact.emailAddresses.remove(at: previousEmailIndex)
+                    } else if previousEmailFound && !remove {
                         mutableContact.emailAddresses[previousEmailIndex] = stellarEmail
                         mutableContact.emailAddresses.append(stellarEmail)
                     } else {
@@ -201,6 +166,40 @@ class StellarContactViewController: UIViewController {
             let err = error as NSError
             print(err)
         }
+    }
+}
+
+// MARK: - IBActions
+extension StellarContactViewController {
+    @IBAction func addAddress() {
+
+        let stellarAddress = StellarAddress(addressTextField.text)
+
+        if identifier.isEmpty {
+            guard let address = stellarAddress else {
+                addressTextField.shake()
+                return
+            }
+
+            createContact(name: name, address: address.string)
+        } else {
+            let address = stellarAddress?.string ?? self.address
+            updateContact(name: name, address: address, remove: stellarAddress == nil)
+        }
+    }
+
+    @IBAction func scanQRCode() {
+        let scanViewController = ScanViewController()
+        scanViewController.delegate = self
+
+        let navigationController = AppNavigationController(rootViewController: scanViewController)
+        present(navigationController, animated: true, completion: nil)
+    }
+
+    @IBAction func dismissView() {
+        view.endEditing(true)
+
+        dismiss(animated: true, completion: nil)
     }
 }
 
