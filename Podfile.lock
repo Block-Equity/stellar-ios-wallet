@@ -18,7 +18,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.7)
   - Cache (~> 5.2)
-  - Imaginary (~> 4.2)
+  - Imaginary (from `https://github.com/hyperoslo/Imaginary.git`, branch `master`)
   - KeychainSwift (~> 10.0)
   - Repeat (~> 0.5)
   - Reusable (~> 4.0)
@@ -31,13 +31,15 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - Cache
-    - Imaginary
     - KeychainSwift
     - Repeat
     - Reusable
     - SnapshotTesting
 
 EXTERNAL SOURCES:
+  Imaginary:
+    :branch: master
+    :git: https://github.com/hyperoslo/Imaginary.git
   SCLAlertView:
     :branch: master
     :git: https://github.com/vikmeup/SCLAlertView-Swift
@@ -48,6 +50,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/freeubi/Whisper.git
 
 CHECKOUT OPTIONS:
+  Imaginary:
+    :commit: a56a54daafe2b3ab6d8e57df12068d96b77b3cba
+    :git: https://github.com/hyperoslo/Imaginary.git
   SCLAlertView:
     :commit: 86ea7613c99cd4896765fabfa773b39b40bc8590
     :git: https://github.com/vikmeup/SCLAlertView-Swift
@@ -70,6 +75,6 @@ SPEC CHECKSUMS:
   stellar-ios-mac-sdk: 7a49cbb604d6ec8e0e3fefddf34d0d9340db2f1c
   Whisper: 8c499b08f3b56d5c80162d775e3462318ad7f4fe
 
-PODFILE CHECKSUM: ecb842f4ce1d9a47777e7f42c4c162edde6a6c69
+PODFILE CHECKSUM: c16c3a1f64d010dfff91b5763b95469e7be09cbd
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0.beta.2
