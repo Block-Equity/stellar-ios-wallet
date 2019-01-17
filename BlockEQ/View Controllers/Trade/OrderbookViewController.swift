@@ -9,7 +9,11 @@
 import stellarsdk
 import StellarHub
 
-class OrderBookViewController: UIViewController {
+protocol OrderbookViewControllerDelegate: AnyObject {
+    func requestedTogglePeriodicUpdates(enabled: Bool)
+}
+
+final class OrderbookViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var tableHeaderLabel: UILabel!
     @IBOutlet var tableHeaderView: UIView!
@@ -24,6 +28,7 @@ class OrderBookViewController: UIViewController {
         }
     }
 
+    weak var delegate: OrderbookViewControllerDelegate?
     var bids: [StellarOrderbookOffer] = []
     var asks: [StellarOrderbookOffer] = []
     var buyAsset = StellarAsset.lumens
@@ -31,13 +36,18 @@ class OrderBookViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         refreshView()
+        delegate?.requestedTogglePeriodicUpdates(enabled: true)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        delegate?.requestedTogglePeriodicUpdates(enabled: true)
     }
 
     func setupView() {
@@ -62,7 +72,7 @@ class OrderBookViewController: UIViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension OrderBookViewController: UITableViewDataSource {
+extension OrderbookViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return StellarOrderbook.OrderBookType.all.count
     }
@@ -144,7 +154,7 @@ extension OrderBookViewController: UITableViewDataSource {
 }
 
 // MARK: - UITableViewDelegate
-extension OrderBookViewController: UITableViewDelegate {
+extension OrderbookViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let section = StellarOrderbook.OrderBookType(rawValue: indexPath.section) else { return 0 }
 

@@ -49,6 +49,10 @@ public final class CoreService: CoreServiceProtocol {
         accService.registerForUpdates(streamService)
         accService.registerForUpdates(updateService)
     }
+
+    public func stopSubservices() {
+        services.forEach { $0.stop() }
+    }
 }
 
 extension CoreService {

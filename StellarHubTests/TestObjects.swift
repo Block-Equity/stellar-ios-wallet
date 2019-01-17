@@ -53,6 +53,9 @@ final class StubAccountService: AccountManagementServiceProtocol {
         self.subscribers = subscribers
         self.state = state
     }
+
+    func stop() {
+    }
 }
 
 final class StubSecretManager: SecretManagerProtocol {

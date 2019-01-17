@@ -163,6 +163,13 @@ extension AccountManagementService {
     }
 }
 
+// MARK: - Subservice
+extension AccountManagementService {
+    func stop() {
+        accountQueue.cancelAllOperations()
+    }
+}
+
 #if DEBUG
 extension AccountManagementService {
     /// This method perminantly writes the provided account data to the keychain with no public key. It's used for

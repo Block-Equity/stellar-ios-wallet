@@ -23,7 +23,7 @@ extension ApplicationCoordinator: SettingsDelegate {
     func processNode(with identifier: String, setting: SettingNode) {
         switch identifier {
         case "wallet-clear":
-            clearWallet()
+            clearWalletPrompt()
         case let keys where keys.contains("keys-"):
             manageWallet(with: setting)
         case "about-application":
@@ -159,7 +159,7 @@ extension ApplicationCoordinator: SettingsDelegate {
         self.wrappingNavController?.present(controller, animated: true, completion: nil)
     }
 
-    func clearWallet() {
+    func clearWalletPrompt() {
         let alertController = UIAlertController(title: "CLEAR_WALLET_TITLE".localized(),
                                                 message: nil,
                                                 preferredStyle: .alert)
@@ -167,13 +167,7 @@ extension ApplicationCoordinator: SettingsDelegate {
         let yesButton = UIAlertAction(title: "CLEAR_WALLET_ACTION".localized(),
                                       style: .destructive,
                                       handler: { (_) -> Void in
-                                        self.displayAuth {
-                                            KeychainHelper.clearAll()
-                                            SecurityOptionHelper.clear()
-                                            self.core?.accountService.clear()
-                                            self.core = nil
-                                            self.delegate?.switchToOnboarding()
-                                        }
+                                        self.clearWallet()
         })
 
         let cancelButton = UIAlertAction(title: "CANCEL_ACTION".localized(),
@@ -184,6 +178,21 @@ extension ApplicationCoordinator: SettingsDelegate {
         alertController.addAction(yesButton)
 
         wrappingNavController?.present(alertController, animated: true, completion: nil)
+    }
+
+    func clearWallet() {
+        self.displayAuth {
+            self.tradingCoordinator?.stopPeriodicOrderbookUpdates()
+
+            KeychainHelper.clearAll()
+            SecurityOptionHelper.clear()
+
+            self.delegate?.switchToOnboarding()
+            self.core?.accountService.clear()
+            self.switchedTabs(.assets)
+            self.walletViewController.clear()
+            self.core = nil
+        }
     }
 
     func displayAuth(_ completion: PinEntryCompletion? = nil) {

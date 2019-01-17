@@ -19,6 +19,7 @@ protocol CoreServiceProtocol {
 
 protocol Subservice {
     var core: CoreServiceProtocol { get }
+    func stop()
 }
 
 // MARK: - AccountUpdateService
@@ -112,7 +113,7 @@ protocol StreamServiceProtocol: AnyObject, Subservice {
 
 public protocol StreamServiceDelegate: AnyObject {
     func receivedObjects(stream: StreamService.StreamType)
-    func streamError(stream: StreamService.StreamType, error: FrameworkError)
+    func streamError(service: StreamService, stream: StreamService.StreamType, error: FrameworkError)
 }
 
 // MARK: - SecretManager
