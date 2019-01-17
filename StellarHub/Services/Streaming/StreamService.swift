@@ -46,10 +46,6 @@ public final class StreamService: StreamServiceProtocol {
 
     public weak var delegate: StreamServiceDelegate?
 
-    private static let debounceInterval = Repeater.Interval.seconds(5)
-    private let delegateDebouncer: Debouncer = Debouncer(StreamService.debounceInterval)
-    private let errorDebouncer: Debouncer = Debouncer(StreamService.debounceInterval)
-
     /**
      Initializer for StreamService
 
@@ -164,37 +160,36 @@ extension StreamService: AccountManagementServiceDelegate {
 
 extension StreamService: StreamDelegate {
     func streamError<ProcessedDataType>(dataType: ProcessedDataType, error: Error) {
-        errorDebouncer.callback = { [unowned self] in
-            let frameworkError = FrameworkError(error: error)
-            switch dataType {
-            case is StellarOperation:
-                self.delegate?.streamError(stream: .operations, error: frameworkError)
-            case is StellarTransaction:
-                self.delegate?.streamError(stream: .transactions, error: frameworkError)
-            case is StellarEffect:
-                self.delegate?.streamError(stream: .effects, error: frameworkError)
-            default:
-                break
-            }
+        let frameworkError = FrameworkError(error: error)
+        switch dataType {
+        case is StellarOperation.Type:
+            self.delegate?.streamError(service: self, stream: .operations, error: frameworkError)
+        case is StellarTransaction.Type:
+            self.delegate?.streamError(service: self, stream: .transactions, error: frameworkError)
+        case is StellarEffect.Type:
+            self.delegate?.streamError(service: self, stream: .effects, error: frameworkError)
+        default:
+            break
         }
-
-        errorDebouncer.call()
     }
 
     func updated<ProcessedDataType>(data: ProcessedDataType) where ProcessedDataType: StreamableStellarObject {
-        delegateDebouncer.callback = { [unowned self] in
-            switch data {
-            case is StellarOperation:
-                self.delegate?.receivedObjects(stream: .operations)
-            case is StellarEffect:
-                self.delegate?.receivedObjects(stream: .effects)
-            case is StellarTransaction:
-                self.delegate?.receivedObjects(stream: .transactions)
-            default:
-                break
-            }
+        switch data {
+        case is StellarOperation:
+            self.delegate?.receivedObjects(stream: .operations)
+        case is StellarEffect:
+            self.delegate?.receivedObjects(stream: .effects)
+        case is StellarTransaction:
+            self.delegate?.receivedObjects(stream: .transactions)
+        default:
+            break
         }
+    }
+}
 
-        delegateDebouncer.call()
+// MARK: - Subservice
+extension StreamService {
+    func stop() {
+        unsubscribeAll()
     }
 }

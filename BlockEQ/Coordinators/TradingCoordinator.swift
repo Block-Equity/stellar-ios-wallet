@@ -30,7 +30,7 @@ final class TradingCoordinator {
 
     let tradeViewController: TradeViewController
 
-    let orderBookViewController: OrderBookViewController
+    let orderbookViewController: OrderbookViewController
 
     let myOffersViewController: MyOffersViewController
 
@@ -49,26 +49,39 @@ final class TradingCoordinator {
     weak var delegate: TradingCoordinatorDelegate?
 
     init(core: CoreService) {
-        self.tradeService = core.tradeService
-        self.updateService = core.updateService
-        self.accountService = core.accountService
-
         let tradeVC = TradeViewController()
-        let orderBookVC = OrderBookViewController()
+        let orderBookVC = OrderbookViewController()
         let offersVC = MyOffersViewController()
 
-        self.tradeViewController = tradeVC
-        self.orderBookViewController = orderBookVC
-        self.myOffersViewController = offersVC
+        tradeService = core.tradeService
+        updateService = core.updateService
+        accountService = core.accountService
+
+        tradeViewController = tradeVC
+        orderbookViewController = orderBookVC
+        myOffersViewController = offersVC
+
+        _ = tradeVC.view
+        _ = orderBookVC.view
+        _ = offersVC.view
 
         segmentController = TradeSegmentViewController(leftViewController: tradeViewController,
-                                                       middleViewController: orderBookViewController,
+                                                       middleViewController: orderbookViewController,
                                                        rightViewController: myOffersViewController,
                                                        totalPages: CGFloat(TradeSegment.all.count))
         segmentController.tradeSegmentDelegate = self
         tradeViewController.delegate = self
         tradeViewController.assetDelegate = self
         myOffersViewController.delegate = self
+        orderbookViewController.delegate = self
+    }
+
+    func switchedSegment(_ type: TradeSegment) {
+        segmentController.switchSegment(type)
+    }
+
+    func startPeriodicOrderbookUpdates() {
+        guard timer == nil else { return }
 
         let interval = TradingCoordinator.orderbookUpdateInterval
         timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true, block: { _ in
@@ -77,15 +90,13 @@ final class TradingCoordinator {
         })
     }
 
-    func switchedSegment(_ type: TradeSegment) {
-        segmentController.switchSegment(type)
+    func stopPeriodicOrderbookUpdates() {
+        timer?.invalidate()
+        timer = nil
     }
 
     deinit {
-        if let timer = self.timer {
-            timer.invalidate()
-            self.timer = nil
-        }
+        stopPeriodicOrderbookUpdates()
     }
 }
 
@@ -276,7 +287,7 @@ extension TradingCoordinator: OfferResponseDelegate {
     }
 
     func updated(orders: StellarOrderbook) {
-        self.orderBookViewController.setOrderBook(orderbook: orders)
+        self.orderbookViewController.setOrderBook(orderbook: orders)
         self.tradeViewController.setMarketPrice(orderbook: orders, assetPair: assetPair)
     }
 }
@@ -285,5 +296,11 @@ extension TradingCoordinator: MyOffersViewControllerDelegate {
     func cancelTrade(offerId: Int, assetPair: StellarAssetPair, price: Price) {
         let tradeData = StellarTradeOfferData(offerId: offerId, assetPair: assetPair, price: price)
         tradeService.cancelTrade(with: offerId, data: tradeData, delegate: self)
+    }
+}
+
+extension TradingCoordinator: OrderbookViewControllerDelegate {
+    func requestedTogglePeriodicUpdates(enabled: Bool) {
+        enabled ? startPeriodicOrderbookUpdates() : stopPeriodicOrderbookUpdates()
     }
 }

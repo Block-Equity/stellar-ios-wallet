@@ -15,9 +15,10 @@ protocol WalletViewControllerDelegate: AnyObject {
     func selectedReceive(_ viewController: WalletViewController)
     func selectedSend(_ viewController: WalletViewController, for asset: StellarAsset)
     func selectBalance(_ viewController: WalletViewController, for asset: StellarAsset)
+    func selectLearnMore(_ viewController: WalletViewController)
 }
 
-class WalletViewController: UIViewController {
+final class WalletViewController: UIViewController {
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var availableBalanceLabel: UILabel!
     @IBOutlet var balanceLabel: UILabel!
@@ -26,23 +27,32 @@ class WalletViewController: UIViewController {
     @IBOutlet var headerBackgroundView: UIView!
     @IBOutlet var availableBalanceView: UIView!
     @IBOutlet var emptyView: UIView!
-    @IBOutlet var tableView: UITableView?
+    @IBOutlet var tableView: UITableView!
     @IBOutlet var tableViewHeader: UIView!
     @IBOutlet var tableViewHeaderLeftLabel: UILabel!
     @IBOutlet var tableViewHeaderRightLabel: UILabel!
     @IBOutlet var logoImageView: UIImageView!
     @IBOutlet var assetBalanceButton: UIButton!
+    @IBOutlet weak var assetListButton: UIButton!
+
+    @IBOutlet weak var inactiveStateView: UIView!
+    @IBOutlet weak var inactiveImageView: UIImageView!
+    @IBOutlet weak var inactiveDescriptionLabel: UILabel!
 
     override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
 
     weak var delegate: WalletViewControllerDelegate?
     var navigationContainer: AppNavigationController?
-    var dataSource: WalletDataSource?
-    var showBalanceHeader: Bool = false
+    var state: WalletState = .inactive(StellarAccount.stub)
+
+    var dataSource: WalletDataSource? {
+        didSet {
+            toggleInactiveState(dataSource != nil)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupView()
     }
 
@@ -52,19 +62,17 @@ class WalletViewController: UIViewController {
         navigationItem.setHidesBackButton(true, animated: false)
         navigationController?.setNavigationBarHidden(false, animated: true)
 
-        self.refreshAssetHeader()
-
-        if self.dataSource != nil {
-            activityIndicator.stopAnimating()
-        }
-
         tableView?.dataSource = self.dataSource
         tableView?.reloadData()
+
+        if self.dataSource == nil {
+            update(with: WalletState.inactive(StellarAccount.stub).viewModel)
+        }
     }
 
     func setupView() {
-        tableView?.delegate = self
-        tableView?.register(cellType: TransactionHistoryCell.self)
+        tableView.delegate = self
+        tableView.register(cellType: TransactionHistoryCell.self)
 
         let leftBarButtonItem = UIBarButtonItem(title: "ITEM_RECEIVE".localized(),
                                                 style: .plain,
@@ -81,6 +89,12 @@ class WalletViewController: UIViewController {
         navigationItem.title = "TITLE_TAB_WALLET".localized()
 
         assetBalanceButton.setTitle("BALANCE_INFORMATION".localized(), for: .normal)
+        inactiveDescriptionLabel.text = "NEW_ACCOUNT_DESCRIPTION".localized()
+        inactiveDescriptionLabel.textColor = Colors.darkGrayTransparent
+
+        inactiveImageView.image = UIImage(named: "wallet-large")
+        inactiveImageView.tintColor = Colors.lightGrayTransparent
+        inactiveImageView.contentMode = .scaleAspectFit
 
         availableBalanceView.backgroundColor = Colors.backgroundDark
         headerBackgroundView.backgroundColor = Colors.primaryDark
@@ -93,9 +107,70 @@ class WalletViewController: UIViewController {
         tableView?.separatorStyle = .none
     }
 
-    @IBAction func selectBalance() {
-        guard let asset = dataSource?.asset else { return }
-        delegate?.selectBalance(self, for: asset)
+    func toggleInactiveState(_ hidden: Bool, animated: Bool = true) {
+        let interval: TimeInterval = animated ? 0.2 : 0
+        UIView.animate(withDuration: interval, animations: {
+            self.inactiveStateView.alpha = hidden ? 0 : 1
+        }, completion: { _ in
+            self.inactiveStateView.isHidden = hidden
+        })
+
+        hidden ? activityIndicator.stopAnimating() : activityIndicator.startAnimating()
+    }
+
+    func clear() {
+        dataSource = nil
+        tableView?.reloadData()
+
+        state = WalletState.inactive(StellarAccount.stub)
+        update(with: state.viewModel)
+    }
+
+    func update(with viewModel: ViewModel, animated: Bool = true) {
+        let interval: TimeInterval = animated ? 0.2 : 0
+
+        UIView.animate(withDuration: interval) {
+            self.headerBackgroundView.backgroundColor = viewModel.headerBackgroundColor
+
+            self.coinLabel.text = viewModel.assetText
+            self.balanceLabel.text = viewModel.balanceText
+            self.availableBalanceLabel.text = viewModel.balanceHeaderText
+            self.inactiveDescriptionLabel.text = viewModel.inactiveDescriptionText
+            self.assetBalanceButton.setTitle(viewModel.balanceButtonTitle, for: .normal)
+
+            self.availableBalanceView.isHidden = !viewModel.showBalanceHeader
+            self.assetListButton.isHidden = !viewModel.showAssetListButton
+            self.assetBalanceButton.isHidden = !viewModel.showBalanceButton
+        }
+    }
+
+    func update(with account: StellarAccount, asset: StellarAsset) {
+        guard self.isViewLoaded else { return }
+
+        if account.isStub {
+            state = WalletState.inactive(account)
+        } else {
+            dataSource = WalletDataSource(account: account, asset: asset)
+            state = WalletState.active(asset, account)
+        }
+
+        update(with: state.viewModel)
+
+        tableView?.dataSource = dataSource
+        tableView?.reloadData()
+    }
+}
+
+// MARK: Interface Actions
+extension WalletViewController {
+    @IBAction func selectHeaderButton() {
+        switch state {
+        case .active:
+            guard let asset = dataSource?.asset else { return }
+            delegate?.selectBalance(self, for: asset)
+        case .inactive:
+            delegate?.selectLearnMore(self)
+        }
     }
 
     @IBAction func displayWalletSwitcher() {
@@ -110,28 +185,64 @@ class WalletViewController: UIViewController {
     @objc func receiveFunds() {
         delegate?.selectedReceive(self)
     }
+}
 
-    func update(with account: StellarAccount, asset: StellarAsset) {
-        dataSource = WalletDataSource(account: account, asset: asset)
+extension WalletViewController {
+    enum WalletState {
+        case inactive(StellarAccount)
+        case active(StellarAsset, StellarAccount)
 
-        guard self.isViewLoaded else { return }
-
-        self.refreshAssetHeader()
-
-        activityIndicator.stopAnimating()
-
-        tableView?.dataSource = dataSource
-        tableView?.reloadData()
+        var viewModel: ViewModel {
+            switch self {
+            case .inactive(let account):
+                if KeychainHelper.hasFetchedData {
+                return ViewModel(headerBackgroundColor: Colors.primaryDark,
+                                 assetText: "EXISTING_ACCOUNT_REFRESHING".localized(),
+                                 balanceText: "EXISTING_ACCOUNT_UPDATING".localized(),
+                                 balanceHeaderText: "",
+                                 balanceButtonTitle: "",
+                                 inactiveDescriptionText: "EXISTING_ACCOUNT_INACTIVE".localized(),
+                                 showBalanceHeader: false,
+                                 showAssetListButton: false,
+                                 showBalanceButton: false)
+                } else {
+                    return ViewModel(headerBackgroundColor: Colors.transactionCellMediumGray,
+                                     assetText: "NEW_ACCOUNT_FUNDING_REQUIRED".localized(),
+                                     balanceText: Decimal(0).displayFormattedString,
+                                     balanceHeaderText: "NEW_ACCOUNT_MINIMUM_BALANCE".localized(),
+                                     balanceButtonTitle: "",
+                                     inactiveDescriptionText: "NEW_ACCOUNT_INACTIVE".localized(),
+                                     showBalanceHeader: true,
+                                     showAssetListButton: false,
+                                     showBalanceButton: false)
+                }
+            case .active(let asset, let account):
+                let metadata = AssetMetadata(shortCode: asset.shortCode)
+                return ViewModel(headerBackgroundColor: Colors.primaryDark,
+                                 assetText: metadata.displayNameWithShortCode,
+                                 balanceText: asset.balance.displayFormatted,
+                                 balanceHeaderText: account.formattedAvailableBalance(for: asset),
+                                 balanceButtonTitle: "BALANCE_INFORMATION".localized(),
+                                 inactiveDescriptionText: "",
+                                 showBalanceHeader: true,
+                                 showAssetListButton: true,
+                                 showBalanceButton: true)
+            }
+        }
     }
 
-    func refreshAssetHeader() {
-        if let asset = self.dataSource?.asset, let account = self.dataSource?.account {
-            let metadata = AssetMetadata(shortCode: asset.shortCode)
-            self.showBalanceHeader = true //asset.isNative
-            self.coinLabel.text = metadata.displayNameWithShortCode
-            self.balanceLabel.text = asset.balance.displayFormatted
-            self.availableBalanceLabel.text = account.formattedAvailableBalance(for: asset)
-        }
+    struct ViewModel {
+        var headerBackgroundColor: UIColor
+
+        var assetText: String
+        var balanceText: String
+        var balanceHeaderText: String
+        var balanceButtonTitle: String
+        var inactiveDescriptionText: String
+
+        var showBalanceHeader: Bool
+        var showAssetListButton: Bool
+        var showBalanceButton: Bool
     }
 }
 
@@ -150,10 +261,12 @@ extension WalletViewController: UITableViewDelegate {
         guard let section = WalletDataSource.Section(rawValue: section) else { return nil }
 
         switch section {
-        case .assetHeader: return showBalanceHeader ? availableBalanceView : nil
-        case .effectList: return tableViewHeader
+        case .assetHeader:
+            return availableBalanceView
+        case .effectList:
+            return tableViewHeader
         default:
-            let visible = !activityIndicator.isAnimating && dataSource?.effects.count == 0
+            let visible = dataSource?.effects.count == 0
             return visible ? emptyView : nil
         }
     }
@@ -162,10 +275,12 @@ extension WalletViewController: UITableViewDelegate {
         guard let section = WalletDataSource.Section(rawValue: section) else { return 0 }
 
         switch section {
-        case .assetHeader: return showBalanceHeader ? availableBalanceView.frame.size.height : 0
-        case .effectList: return tableViewHeader.frame.size.height
+        case .assetHeader:
+            return availableBalanceView.isHidden ? 0 : availableBalanceView.frame.size.height
+        case .effectList:
+            return tableViewHeader.frame.size.height
         default:
-            let visible = !activityIndicator.isAnimating && dataSource?.effects.count == 0
+            let visible = dataSource?.effects.count == 0
             return visible ? emptyView.frame.size.height : 0
         }
     }

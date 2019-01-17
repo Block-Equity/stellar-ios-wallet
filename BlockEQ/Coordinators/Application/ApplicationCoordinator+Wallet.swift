@@ -71,6 +71,10 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
 
         wrappingNavController?.pushViewController(transactionVC, animated: true)
     }
+
+    func selectLearnMore(_ viewController: WalletViewController) {
+        print("Learn more")
+    }
 }
 
 extension ApplicationCoordinator: AssetCoordinatorDelegate {

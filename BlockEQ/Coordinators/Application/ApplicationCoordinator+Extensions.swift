@@ -72,11 +72,12 @@ extension ApplicationCoordinator: AccountUpdateServiceDelegate {
                         account: StellarAccount,
                         options: AccountUpdateService.UpdateOptions) {
         if options.contains(.effects) || options.contains(.account) {
-            self.walletViewController.updated(account: account)
+            walletViewController.updated(account: account)
+            KeychainHelper.setHasFetchedData()
         }
 
-        self.tradingCoordinator?.updated(account: account)
-        self.balanceViewController?.updated(account: account)
+        tradingCoordinator?.updated(account: account)
+        balanceViewController?.updated(account: account)
     }
 }
 
@@ -88,7 +89,10 @@ extension ApplicationCoordinator: DiagnosticCoordinatorDelegate {
 
 // MARK: - StreamServiceDelegate
 extension ApplicationCoordinator: StreamServiceDelegate {
-    func streamError(stream: StreamService.StreamType, error: FrameworkError) {
+    func streamError(service: StreamService, stream: StreamService.StreamType, error: FrameworkError) {
+        if error.errorCategory == .stellar {
+            try? service.unsubscribe(from: stream)
+        }
     }
 
     func receivedObjects(stream: StreamService.StreamType) {

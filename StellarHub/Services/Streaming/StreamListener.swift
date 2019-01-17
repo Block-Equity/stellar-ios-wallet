@@ -91,8 +91,8 @@ where
 
     /// Generic stream processor and notification callback
     var handler: (StreamResponseEnum<ResponseType>) -> Void {
-        return { [unowned self] response in
-            guard self.status == .listening else { return }
+        return { [weak self] response in
+            guard let self = self, self.status == .listening else { return }
 
             switch response {
             case .open:

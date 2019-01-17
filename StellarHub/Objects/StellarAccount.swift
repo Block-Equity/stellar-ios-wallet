@@ -9,6 +9,8 @@
 import stellarsdk
 
 public final class StellarAccount {
+    public static let stub = StellarAccount(accountId: "")
+
     public internal(set) var accountId = ""
     public internal(set) var inflationDestination: String?
 
@@ -18,12 +20,6 @@ public final class StellarAccount {
     public internal(set) var totalDataEntries: Int = 0
     public internal(set) var totalSubentries: Int = 0
 
-    // See https://www.stellar.org/developers/guides/concepts/ledger.html#ledger-entries
-    // Offers are computed as the number of subentries minus trustlines, minus data entries (not signers, base amount)
-    public var totalOffers: Int {
-        return self.totalSubentries - self.totalTrustlines - self.totalDataEntries
-    }
-
     public internal(set) var assets: [StellarAsset] = []
     public internal(set) var mappedEffects: [String: StellarEffect] = [:]
     public internal(set) var mappedTransactions: [String: StellarTransaction] = [:]
@@ -32,6 +28,12 @@ public final class StellarAccount {
     public internal(set) var outstandingTradeAmounts: [StellarAsset: Decimal] = [:]
 
     internal var rawResponse: AccountResponse?
+
+    // See https://www.stellar.org/developers/guides/concepts/ledger.html#ledger-entries
+    // Offers are computed as the number of subentries minus trustlines, minus data entries (not signers, base amount)
+    public var totalOffers: Int {
+        return self.totalSubentries - self.totalTrustlines - self.totalDataEntries
+    }
 
     public var isStub: Bool {
         return rawResponse == nil

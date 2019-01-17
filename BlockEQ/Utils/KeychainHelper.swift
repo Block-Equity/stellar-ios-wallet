@@ -13,6 +13,7 @@ final class KeychainHelper {
     static let mnemonicKey = "mnemonic"
     static let secretSeedKey = "secretSeed"
     static let accountIdKey = "accountId"
+    static let hasFetchedDataKey = "fetchedData"
     static let publicSeedKey = "publicKey"
     static let privateSeedKey = "privateKey"
     static let pinKey = "pin"
@@ -62,7 +63,15 @@ final class KeychainHelper {
         return hasAccount && hasKeys && hasRecovery
     }
 
-    public static var isExistingInstance: Bool {
+    public static var hasFetchedData: Bool {
+        return UserDefaults.standard.bool(forKey: hasFetchedDataKey)
+    }
+
+    public static func setHasFetchedData() {
+        UserDefaults.standard.set(true, forKey: hasFetchedDataKey)
+    }
+
+    public static var hasExistingInstance: Bool {
         return UserDefaults.standard.bool(forKey: isFreshInstallKey)
     }
 
@@ -90,6 +99,7 @@ final class KeychainHelper {
 
     public static func clearAll() {
         UserDefaults.standard.set(false, forKey: isFreshInstallKey)
+        UserDefaults.standard.set(false, forKey: hasFetchedDataKey)
         self.clearStellarSecrets()
         KeychainSwift().delete(accountIdKey)
         KeychainSwift().delete(pinKey)

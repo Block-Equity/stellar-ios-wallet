@@ -13,7 +13,6 @@ public final class TradeService: TradeServiceProtocol {
     typealias CancelTradeOperationPair = ChainedOperationPair<FetchAccountDataOperation, CancelTradeOperation>
 
     public static let defaultRecordCount = 200
-    public static let defaultTimeInterval = TimeInterval(30)
 
     let core: CoreServiceProtocol
 
@@ -26,6 +25,13 @@ public final class TradeService: TradeServiceProtocol {
 
     internal init(with core: CoreService) {
         self.core = core
+    }
+}
+
+// MARK: - Subservice
+extension TradeService {
+    func stop() {
+        tradeQueue.cancelAllOperations()
     }
 }
 

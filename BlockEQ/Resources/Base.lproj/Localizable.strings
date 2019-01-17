@@ -303,3 +303,10 @@
 "AMOUNT_TITLE" = "Amount";
 "VALUE_TITLE" = "Value";
 "EMPTY_OFFERS" = "There are no open offers at the moment.";
+
+"NEW_ACCOUNT_INACTIVE" = "This account requires activation. Send 1 XLM to fund and activate the account.";
+"NEW_ACCOUNT_FUNDING_REQUIRED" = "Account Funding Required";
+"NEW_ACCOUNT_MINIMUM_BALANCE" = "Minimum Balance: 1.00 XLM";
+"EXISTING_ACCOUNT_REFRESHING" = "Refreshing Wallet";
+"EXISTING_ACCOUNT_UPDATING" = "Updating...";
+"EXISTING_ACCOUNT_INACTIVE" = "Fetching account transactions, please wait.";

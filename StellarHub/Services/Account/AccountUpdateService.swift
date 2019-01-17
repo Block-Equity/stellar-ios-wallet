@@ -169,3 +169,10 @@ extension AccountUpdateService: AccountManagementServiceDelegate {
         self.account = account
     }
 }
+
+// MARK: - Subservice
+extension AccountUpdateService {
+    func stop() {
+        stopPeriodicUpdates()
+    }
+}

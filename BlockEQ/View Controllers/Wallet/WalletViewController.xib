@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="activityIndicator" destination="XTw-X2-zen" id="AGu-jf-2CW"/>
                 <outlet property="assetBalanceButton" destination="mdz-yg-UQ7" id="hZk-uv-GkV"/>
+                <outlet property="assetListButton" destination="RhP-ph-wS7" id="8cK-aS-SkY"/>
                 <outlet property="availableBalanceLabel" destination="Khb-1d-lP0" id="3E7-4P-15I"/>
                 <outlet property="availableBalanceView" destination="nbj-eA-uEM" id="zy4-oQ-x1I"/>
                 <outlet property="balanceLabel" destination="kKU-zV-Fep" id="9gB-hr-Gi5"/>
@@ -21,6 +22,9 @@
                 <outlet property="emptyView" destination="vYT-Yd-cac" id="JER-rO-97v"/>
                 <outlet property="emptyViewTitleLabel" destination="usa-Ff-oFo" id="TgW-rh-yDQ"/>
                 <outlet property="headerBackgroundView" destination="waF-WU-V1I" id="qwi-KJ-Pq1"/>
+                <outlet property="inactiveDescriptionLabel" destination="WAS-Qw-Q3D" id="VQh-pD-vjf"/>
+                <outlet property="inactiveImageView" destination="ggN-Ez-aO5" id="0GY-K1-caq"/>
+                <outlet property="inactiveStateView" destination="89I-9N-Fzf" id="1fo-Lb-Alw"/>
                 <outlet property="logoImageView" destination="PSG-hA-d0V" id="lIG-qn-FiV"/>
                 <outlet property="tableView" destination="RND-qr-8sK" id="KCK-vC-wWn"/>
                 <outlet property="tableViewHeader" destination="4NM-Ce-BUW" id="OYB-C5-0dx"/>
@@ -44,6 +48,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="waF-WU-V1I">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="122"/>
                                 <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="XTw-X2-zen">
+                                        <rect key="frame" x="334" y="61" width="20" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="20" id="T6Q-BM-bwb"/>
+                                            <constraint firstAttribute="height" constant="20" id="TF2-9F-wYu"/>
+                                        </constraints>
+                                    </activityIndicatorView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwt-08-vjb">
                                         <rect key="frame" x="16" y="40" width="297" height="30"/>
                                         <constraints>
@@ -90,6 +101,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="nwt-08-vjb" firstAttribute="top" secondItem="AjD-5v-7aZ" secondAttribute="top" constant="20" id="2U7-mR-eBM"/>
+                                    <constraint firstItem="XTw-X2-zen" firstAttribute="centerY" secondItem="AjD-5v-7aZ" secondAttribute="centerY" id="3X3-Jc-d7G"/>
                                     <constraint firstItem="RhP-ph-wS7" firstAttribute="leading" secondItem="kKU-zV-Fep" secondAttribute="trailing" constant="16" id="7Cp-g5-Y5N"/>
                                     <constraint firstItem="RhP-ph-wS7" firstAttribute="leading" secondItem="nwt-08-vjb" secondAttribute="trailing" constant="16" id="JXW-sf-P65"/>
                                     <constraint firstItem="RhP-ph-wS7" firstAttribute="centerY" secondItem="waF-WU-V1I" secondAttribute="centerY" id="KVO-2C-7Bh"/>
@@ -97,38 +109,61 @@
                                     <constraint firstItem="AjD-5v-7aZ" firstAttribute="bottom" secondItem="6hf-LR-dPl" secondAttribute="bottom" id="atD-RE-Lbw"/>
                                     <constraint firstItem="AjD-5v-7aZ" firstAttribute="trailing" secondItem="RhP-ph-wS7" secondAttribute="trailing" constant="16" id="atG-vX-LYD"/>
                                     <constraint firstItem="nwt-08-vjb" firstAttribute="leading" secondItem="AjD-5v-7aZ" secondAttribute="leading" constant="16" id="d8b-0i-8OV"/>
+                                    <constraint firstItem="XTw-X2-zen" firstAttribute="centerX" secondItem="RhP-ph-wS7" secondAttribute="centerX" id="jXL-U1-Q67"/>
                                     <constraint firstItem="kKU-zV-Fep" firstAttribute="top" secondItem="nwt-08-vjb" secondAttribute="bottom" constant="7" id="nIQ-a1-gLA"/>
                                     <constraint firstAttribute="trailing" secondItem="6hf-LR-dPl" secondAttribute="trailing" id="sdX-Iz-ZXC"/>
                                     <constraint firstItem="kKU-zV-Fep" firstAttribute="leading" secondItem="AjD-5v-7aZ" secondAttribute="leading" constant="16" id="tA9-fP-qcL"/>
                                 </constraints>
                                 <viewLayoutGuide key="safeArea" id="AjD-5v-7aZ"/>
                             </view>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="XTw-X2-zen">
-                                <rect key="frame" x="177.5" y="51" width="20" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="20" id="T6Q-BM-bwb"/>
-                                    <constraint firstAttribute="height" constant="20" id="TF2-9F-wYu"/>
-                                </constraints>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="waF-WU-V1I" firstAttribute="leading" secondItem="jUg-o4-zFw" secondAttribute="leading" id="K7o-JY-Ycr"/>
                             <constraint firstAttribute="trailing" secondItem="waF-WU-V1I" secondAttribute="trailing" id="ccO-dj-dfH"/>
-                            <constraint firstItem="XTw-X2-zen" firstAttribute="centerX" secondItem="jUg-o4-zFw" secondAttribute="centerX" id="kgc-6R-yMf"/>
-                            <constraint firstItem="XTw-X2-zen" firstAttribute="centerY" secondItem="jUg-o4-zFw" secondAttribute="centerY" id="qG1-d0-aoU"/>
                             <constraint firstItem="waF-WU-V1I" firstAttribute="top" secondItem="jUg-o4-zFw" secondAttribute="top" id="xIt-Lf-hYF"/>
                             <constraint firstAttribute="bottom" secondItem="waF-WU-V1I" secondAttribute="bottom" id="yzb-Sv-mSe"/>
                         </constraints>
                     </view>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="89I-9N-Fzf" userLabel="Inactive State View">
+                    <rect key="frame" x="0.0" y="174" width="375" height="493"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wallet-large" translatesAutoresizingMaskIntoConstraints="NO" id="ggN-Ez-aO5">
+                            <rect key="frame" x="125.5" y="184.5" width="124" height="124"/>
+                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="ggN-Ez-aO5" secondAttribute="height" multiplier="1:1" id="6Z3-VN-ViD"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Wallet Description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WAS-Qw-Q3D">
+                            <rect key="frame" x="20" y="323.5" width="335" height="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="WAS-Qw-Q3D" firstAttribute="top" secondItem="ggN-Ez-aO5" secondAttribute="bottom" constant="15" id="7Ed-Tj-56f"/>
+                        <constraint firstItem="WAS-Qw-Q3D" firstAttribute="leading" secondItem="89I-9N-Fzf" secondAttribute="leading" constant="20" id="Evs-km-BeB"/>
+                        <constraint firstItem="ggN-Ez-aO5" firstAttribute="centerX" secondItem="89I-9N-Fzf" secondAttribute="centerX" id="Kif-9u-5Xi"/>
+                        <constraint firstItem="ggN-Ez-aO5" firstAttribute="centerY" secondItem="89I-9N-Fzf" secondAttribute="centerY" id="ZbD-ML-MTN"/>
+                        <constraint firstItem="ggN-Ez-aO5" firstAttribute="width" secondItem="89I-9N-Fzf" secondAttribute="width" multiplier="0.33" id="dbp-9U-yiV"/>
+                        <constraint firstAttribute="trailing" secondItem="WAS-Qw-Q3D" secondAttribute="trailing" constant="20" id="hsH-xU-rJt"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="RND-qr-8sK" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="2Ei-U5-020"/>
+                <constraint firstItem="89I-9N-Fzf" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="7Iv-gx-DJ6"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="RND-qr-8sK" secondAttribute="bottom" id="DdX-PD-8FN"/>
                 <constraint firstItem="RND-qr-8sK" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Jai-af-t3o"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="89I-9N-Fzf" secondAttribute="trailing" id="Jcf-S5-61H"/>
                 <constraint firstItem="RND-qr-8sK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="UHY-bw-I7y"/>
+                <constraint firstItem="89I-9N-Fzf" firstAttribute="centerY" secondItem="RND-qr-8sK" secondAttribute="centerY" constant="77" id="dh6-hY-l3I"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="89I-9N-Fzf" secondAttribute="bottom" id="tCa-7c-iNH"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="-94.5" y="47.5"/>
@@ -239,7 +274,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <action selector="selectBalance" destination="-1" eventType="touchUpInside" id="Ede-0w-oFj"/>
+                        <action selector="selectHeaderButton" destination="-1" eventType="touchUpInside" id="gjZ-uy-Ce5"/>
                     </connections>
                 </button>
             </subviews>
@@ -260,5 +295,6 @@
     <resources>
         <image name="arrow-down" width="24" height="24"/>
         <image name="logo" width="100" height="135"/>
+        <image name="wallet-large" width="171" height="171"/>
     </resources>
 </document>

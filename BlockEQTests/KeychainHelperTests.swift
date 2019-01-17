@@ -38,14 +38,14 @@ class KeychainHelperTests: XCTestCase {
 
         XCTAssertEqual(KeychainHelper.pin, "1234")
         XCTAssertEqual(KeychainHelper.accountId, "G1234")
-        XCTAssertTrue(KeychainHelper.isExistingInstance)
+        XCTAssertTrue(KeychainHelper.hasExistingInstance)
         XCTAssertTrue(KeychainHelper.hasPin)
 
         KeychainHelper.clearAll()
 
         XCTAssertNil(KeychainHelper.pin)
         XCTAssertNil(KeychainHelper.accountId)
-        XCTAssertFalse(KeychainHelper.isExistingInstance)
+        XCTAssertFalse(KeychainHelper.hasExistingInstance)
         XCTAssertFalse(KeychainHelper.hasPin)
     }
 

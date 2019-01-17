@@ -62,7 +62,7 @@ class LaunchViewController: UIViewController {
     }
 
     func checkForExistingAccount() {
-        if KeychainHelper.accountId != nil, KeychainHelper.isExistingInstance {
+        if KeychainHelper.accountId != nil, KeychainHelper.hasExistingInstance {
             hideButtons()
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {

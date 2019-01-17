@@ -65,10 +65,12 @@ final class ApplicationCoordinator {
     /// The service object that manages the current stellar account
     var core: CoreService? {
         didSet {
-            guard let coreService = core,
-                let accountId = KeychainHelper.accountId,
-                let address = StellarAddress(accountId) else {
-                    return
+            guard let coreService = core else {
+                return
+            }
+
+            guard let accountId = KeychainHelper.accountId, let address = StellarAddress(accountId) else {
+                return
             }
 
             coreService.accountService.registerForUpdates(self)
@@ -84,6 +86,9 @@ final class ApplicationCoordinator {
             let tradingCoordinator = TradingCoordinator(core: coreService)
             tradingCoordinator.delegate = self
             self.tradingCoordinator = tradingCoordinator
+
+            guard let account = coreService.accountService.account else { return }
+            walletViewController.update(with: account, asset: StellarAsset.lumens)
         }
     }
 
@@ -120,6 +125,7 @@ final class ApplicationCoordinator {
         let walletVC = WalletViewController()
         self.walletViewController = walletVC
         walletVC.delegate = self
+        _ = walletVC.view
 
         tabController.tabDelegate = self
 
