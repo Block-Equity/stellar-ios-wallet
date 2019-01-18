@@ -29,6 +29,7 @@ protocol AccountUpdateServiceProtocol: AnyObject, Subservice {
 }
 
 public protocol AccountUpdateServiceDelegate: AnyObject {
+    func firstAccountUpdate(_ service: AccountUpdateService, account: StellarAccount)
     func accountUpdated(_ service: AccountUpdateService,
                         account: StellarAccount,
                         options: AccountUpdateService.UpdateOptions)

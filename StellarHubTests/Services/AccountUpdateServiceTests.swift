@@ -15,6 +15,9 @@ final class TestAccountUpdateServiceDelegate: AccountUpdateServiceDelegate {
     var callbackOptions: AccountUpdateService.UpdateOptions?
     let asyncUpdateExpectation = XCTestExpectation(description: "Update is called")
 
+    func firstAccountUpdate(_ service: AccountUpdateService, account: StellarAccount) {
+    }
+
     func accountUpdated(_ service: AccountUpdateService,
                         account: StellarAccount,
                         options: AccountUpdateService.UpdateOptions) {

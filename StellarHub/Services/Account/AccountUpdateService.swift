@@ -9,7 +9,7 @@
 import stellarsdk
 
 public final class AccountUpdateService: AccountUpdateServiceProtocol {
-    static let accountUpdateInterval: TimeInterval = 180
+    static let accountUpdateInterval: TimeInterval = 90
 
     let core: CoreServiceProtocol
     var account: StellarAccount?
@@ -41,11 +41,17 @@ public final class AccountUpdateService: AccountUpdateServiceProtocol {
     public func update() {
         guard let account = self.account else { return }
 
+        let previousRawData = account.rawResponse
+
         // Trigger an account update notifying the delegate on the main thread
         self.update(account: account, using: core.sdk) { account, options in
             DispatchQueue.main.async {
                 self.lastFetch = Date().timeIntervalSinceReferenceDate
                 self.subscribers.invoke(invocation: { $0.accountUpdated(self, account: account, options: options) })
+
+                if previousRawData == nil && account.rawResponse != nil {
+                    self.subscribers.invoke(invocation: { $0.firstAccountUpdate(self, account: account) })
+                }
             }
         }
     }

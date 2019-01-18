@@ -199,6 +199,9 @@ extension StellarDataGraph {
 }
 
 extension IndexingService: AccountUpdateServiceDelegate {
+    public func firstAccountUpdate(_ service: AccountUpdateService, account: StellarAccount) {
+    }
+
     public func accountUpdated(_ service: AccountUpdateService,
                                account: StellarAccount,
                                options: AccountUpdateService.UpdateOptions) {
