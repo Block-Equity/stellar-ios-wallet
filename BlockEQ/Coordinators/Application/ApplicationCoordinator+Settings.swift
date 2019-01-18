@@ -183,6 +183,7 @@ extension ApplicationCoordinator: SettingsDelegate {
     func clearWallet() {
         self.displayAuth {
             self.tradingCoordinator?.stopPeriodicOrderbookUpdates()
+            self.core?.updateService.stopPeriodicUpdates()
 
             KeychainHelper.clearAll()
             SecurityOptionHelper.clear()

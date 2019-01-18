@@ -62,6 +62,9 @@ final class WalletViewController: UIViewController {
         navigationItem.setHidesBackButton(true, animated: false)
         navigationController?.setNavigationBarHidden(false, animated: true)
 
+        inactiveStateView.isHidden = false
+        inactiveStateView.alpha = 1
+
         tableView?.dataSource = self.dataSource
         tableView?.reloadData()
 
@@ -114,8 +117,6 @@ final class WalletViewController: UIViewController {
         }, completion: { _ in
             self.inactiveStateView.isHidden = hidden
         })
-
-        hidden ? activityIndicator.stopAnimating() : activityIndicator.startAnimating()
     }
 
     func clear() {
@@ -141,6 +142,12 @@ final class WalletViewController: UIViewController {
             self.availableBalanceView.isHidden = !viewModel.showBalanceHeader
             self.assetListButton.isHidden = !viewModel.showAssetListButton
             self.assetBalanceButton.isHidden = !viewModel.showBalanceButton
+
+            if viewModel.showActivityIndicator {
+                self.activityIndicator.startAnimating()
+            } else {
+                self.activityIndicator.stopAnimating()
+            }
         }
     }
 
@@ -202,6 +209,7 @@ extension WalletViewController {
                                  balanceHeaderText: "",
                                  balanceButtonTitle: "",
                                  inactiveDescriptionText: "EXISTING_ACCOUNT_INACTIVE".localized(),
+                                 showActivityIndicator: true,
                                  showBalanceHeader: false,
                                  showAssetListButton: false,
                                  showBalanceButton: false)
@@ -212,6 +220,7 @@ extension WalletViewController {
                                      balanceHeaderText: "NEW_ACCOUNT_MINIMUM_BALANCE".localized(),
                                      balanceButtonTitle: "",
                                      inactiveDescriptionText: "NEW_ACCOUNT_INACTIVE".localized(),
+                                     showActivityIndicator: false,
                                      showBalanceHeader: true,
                                      showAssetListButton: false,
                                      showBalanceButton: false)
@@ -224,6 +233,7 @@ extension WalletViewController {
                                  balanceHeaderText: account.formattedAvailableBalance(for: asset),
                                  balanceButtonTitle: "BALANCE_INFORMATION".localized(),
                                  inactiveDescriptionText: "",
+                                 showActivityIndicator: false,
                                  showBalanceHeader: true,
                                  showAssetListButton: true,
                                  showBalanceButton: true)
@@ -240,6 +250,7 @@ extension WalletViewController {
         var balanceButtonTitle: String
         var inactiveDescriptionText: String
 
+        var showActivityIndicator: Bool
         var showBalanceHeader: Bool
         var showAssetListButton: Bool
         var showBalanceButton: Bool

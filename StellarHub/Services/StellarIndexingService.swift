@@ -229,6 +229,6 @@ extension IndexingService: NodeIndexingDelegate {
 // MARK: - Subservice
 extension IndexingService {
     func stop() {
-        haltIndexing()
+        reset()
     }
 }
