@@ -43,7 +43,7 @@ final class WalletViewController: UIViewController {
 
     weak var delegate: WalletViewControllerDelegate?
     var navigationContainer: AppNavigationController?
-    var state: WalletState = .inactive(StellarAccount.stub)
+    var state: WalletState = .inactive
 
     var dataSource: WalletDataSource? {
         didSet {
@@ -66,7 +66,7 @@ final class WalletViewController: UIViewController {
         tableView?.reloadData()
 
         if self.dataSource == nil {
-            update(with: WalletState.inactive(StellarAccount.stub).viewModel)
+            update(with: WalletState.inactive.viewModel)
         }
     }
 
@@ -122,7 +122,7 @@ final class WalletViewController: UIViewController {
         dataSource = nil
         tableView?.reloadData()
 
-        state = WalletState.inactive(StellarAccount.stub)
+        state = WalletState.inactive
         update(with: state.viewModel)
     }
 
@@ -148,7 +148,7 @@ final class WalletViewController: UIViewController {
         guard self.isViewLoaded else { return }
 
         if account.isStub {
-            state = WalletState.inactive(account)
+            state = WalletState.inactive
         } else {
             dataSource = WalletDataSource(account: account, asset: asset)
             state = WalletState.active(asset, account)
@@ -189,12 +189,12 @@ extension WalletViewController {
 
 extension WalletViewController {
     enum WalletState {
-        case inactive(StellarAccount)
+        case inactive
         case active(StellarAsset, StellarAccount)
 
         var viewModel: ViewModel {
             switch self {
-            case .inactive(let account):
+            case .inactive:
                 if KeychainHelper.hasFetchedData {
                 return ViewModel(headerBackgroundColor: Colors.primaryDark,
                                  assetText: "EXISTING_ACCOUNT_REFRESHING".localized(),
@@ -217,7 +217,7 @@ extension WalletViewController {
                                      showBalanceButton: false)
                 }
             case .active(let asset, let account):
-                let metadata = AssetMetadata(shortCode: asset.shortCode)
+                let metadata = AssetMetadata(shortCode: asset.shortCode, issuer: asset.assetIssuer)
                 return ViewModel(headerBackgroundColor: Colors.primaryDark,
                                  assetText: metadata.displayNameWithShortCode,
                                  balanceText: asset.balance.displayFormatted,

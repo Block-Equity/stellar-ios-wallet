@@ -28,10 +28,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="325" height="160"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="2He-al-OFW">
-                            <rect key="frame" x="15" y="10" width="295" height="55"/>
+                            <rect key="frame" x="15" y="10" width="295" height="50"/>
                             <subviews>
                                 <view verifyAmbiguity="ignoreSizes" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eqt-VE-vIV" userLabel="Header Container" customClass="AssetHeaderView" customModule="BlockEQ" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="2.5" width="180" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="180" height="50"/>
                                     <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" priority="999" constant="50" id="BKG-v2-hOa"/>
@@ -39,7 +39,7 @@
                                     <viewLayoutGuide key="safeArea" id="4jG-aV-CMq"/>
                                 </view>
                                 <view verifyAmbiguity="ignoreSizes" contentMode="scaleToFill" horizontalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wu1-tg-Ywp" userLabel="Price Container" customClass="AssetPriceView" customModule="BlockEQ" customModuleProvider="target">
-                                    <rect key="frame" x="195" y="12.5" width="100" height="30"/>
+                                    <rect key="frame" x="195" y="10" width="100" height="30"/>
                                     <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" priority="999" constant="30" id="nvy-oa-h45"/>
@@ -49,11 +49,8 @@
                             </subviews>
                         </stackView>
                         <view contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="X1U-dS-6jb" userLabel="Issuer Container" customClass="AssetIssuerView" customModule="BlockEQ" customModuleProvider="target">
-                            <rect key="frame" x="15" y="80" width="295" height="70"/>
+                            <rect key="frame" x="15" y="75" width="295" height="75"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="height" priority="998" constant="70" id="h4W-Tr-ZNv"/>
-                            </constraints>
                         </view>
                     </subviews>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

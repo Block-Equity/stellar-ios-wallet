@@ -10,7 +10,7 @@ import StellarHub
 
 extension StellarAsset {
     var headerViewModel: AssetHeaderView.ViewModel {
-        let metadata = AssetMetadata(shortCode: shortCode)
+        let metadata = AssetMetadata(shortCode: shortCode, issuer: assetIssuer)
         let lowerShortcode = shortCode.lowercased()
         return AssetHeaderView.ViewModel(image: metadata.image,
                                          imageURL: BlockEQURL.assetIcon(lowerShortcode).url,
@@ -25,16 +25,22 @@ extension StellarAsset {
     }
 
     var issuerViewModel: AssetIssuerView.ViewModel {
+        let metadata = AssetMetadata(shortCode: shortCode, issuer: assetIssuer)
+
+        let issuerName = metadata.issuerName ?? ""
+        var titleString = String(format: "ISSUER_TITLE_FORMAT".localized(), issuerName)
+
+        if issuerName.isEmpty {
+            titleString = "ASSET_NAME_TITLE".localized()
+        }
+
         let nativeModel = AssetIssuerView.ViewModel(issuerTitle: "DESCRIPTION_TITLE".localized(),
-                                                    issuerDescription: "LUMEN_DESCRIPTION".localized(),
+                                                    issuerDescription: metadata.description ?? metadata.displayName,
                                                     addressTitle: "NOTES_TITLE".localized(),
                                                     addressDescription: "LUMEN_NOTES".localized())
 
-        let metadata = AssetMetadata(shortCode: self.shortCode)
-        let issuerTitle = String(format: "ISSUER_TITLE_FORMAT".localized(), metadata.issuerName ?? "")
-
-        let nonNativeModel = AssetIssuerView.ViewModel(issuerTitle: issuerTitle,
-                                                       issuerDescription: metadata.displayName,
+        let nonNativeModel = AssetIssuerView.ViewModel(issuerTitle: titleString,
+                                                       issuerDescription: metadata.description ?? metadata.displayName,
                                                        addressTitle: "ISSUER_ADDRESS".localized(),
                                                        addressDescription: metadata.issuerAddress ?? "")
 
