@@ -68,6 +68,10 @@ extension ApplicationCoordinator: AccountManagementServiceDelegate {
 
 // MARK: - AccountUpdateServiceDelegate
 extension ApplicationCoordinator: AccountUpdateServiceDelegate {
+    func firstAccountUpdate(_ service: AccountUpdateService, account: StellarAccount) {
+        core?.streamService.subscribeAll(account: account)
+    }
+
     func accountUpdated(_ service: AccountUpdateService,
                         account: StellarAccount,
                         options: AccountUpdateService.UpdateOptions) {
