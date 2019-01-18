@@ -80,6 +80,8 @@ final class ApplicationCoordinator {
 
             migrateIfEligible(using: coreService.accountService)
             try? coreService.accountService.restore(with: address)
+
+            coreService.updateService.accountUpdateInterval = AccountUpdateService.shortUpdateInterval
             coreService.updateService.startPeriodicUpdates()
             coreService.updateService.update()
 
