@@ -103,6 +103,7 @@
 		C590B9BE21A0984400B5262A /* ApplicationCoordinator+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = C590B9BD21A0984400B5262A /* ApplicationCoordinator+Debug.swift */; };
 		C590B9C021A098B600B5262A /* ApplicationCoordinator+Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C590B9BF21A098B600B5262A /* ApplicationCoordinator+Settings.swift */; };
 		C590B9C221A09A6000B5262A /* ApplicationCoordinator+Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C590B9C121A09A6000B5262A /* ApplicationCoordinator+Wallet.swift */; };
+		C592CC6121F28B630062CE97 /* CacheAccountQROperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C592CC6021F28B630062CE97 /* CacheAccountQROperation.swift */; };
 		C593C46E2092E51A00D6047F /* NavigationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593C46D2092E51A00D6047F /* NavigationCell.swift */; };
 		C595115620BB2B1B00843D33 /* PinDotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C595115520BB2B1B00843D33 /* PinDotView.swift */; };
 		C599F3D621BEE8B400749AF8 /* StellarHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C599F3D521BEE8B400749AF8 /* StellarHub.framework */; };
@@ -387,6 +388,7 @@
 		C590B9BD21A0984400B5262A /* ApplicationCoordinator+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ApplicationCoordinator+Debug.swift"; sourceTree = "<group>"; };
 		C590B9BF21A098B600B5262A /* ApplicationCoordinator+Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ApplicationCoordinator+Settings.swift"; sourceTree = "<group>"; };
 		C590B9C121A09A6000B5262A /* ApplicationCoordinator+Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ApplicationCoordinator+Wallet.swift"; sourceTree = "<group>"; };
+		C592CC6021F28B630062CE97 /* CacheAccountQROperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheAccountQROperation.swift; sourceTree = "<group>"; };
 		C593C46D2092E51A00D6047F /* NavigationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCell.swift; sourceTree = "<group>"; };
 		C595115520BB2B1B00843D33 /* PinDotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinDotView.swift; sourceTree = "<group>"; };
 		C599F3D521BEE8B400749AF8 /* StellarHub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = StellarHub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1120,6 +1122,7 @@
 				C514420F217ED86F006C44F4 /* FetchExchangesOperation.swift */,
 				C53E62852199DC94006BF2F1 /* SendDiagnosticOperation.swift */,
 				C54BB76E21EEE89C004396DE /* FetchAssetIconsOperation.swift */,
+				C592CC6021F28B630062CE97 /* CacheAccountQROperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -1643,6 +1646,7 @@
 				C5681BBB21A8B9BD00ACEB21 /* UIViewController+AdvancedSecurity.swift in Sources */,
 				C58D374921B06A23009B44C0 /* PillViewCell.swift in Sources */,
 				ECD3A352207D2CE5000609A0 /* WalletItemActivateCell.swift in Sources */,
+				C592CC6121F28B630062CE97 /* CacheAccountQROperation.swift in Sources */,
 				C53E62862199DC94006BF2F1 /* SendDiagnosticOperation.swift in Sources */,
 				C5114DB7219548AC00C88E4F /* TransactionDetailsDataSource.swift in Sources */,
 				C51B6E5C21B9B553001DFEF7 /* UIViewController+Blurrable.swift in Sources */,

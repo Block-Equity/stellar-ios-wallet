@@ -23,7 +23,10 @@ final class QRMap {
 
     func scaledTemplateImage(scale: CGFloat) -> UIImage? {
         guard let ciImage = self.scaledImage(scaleX: scale, scaleY: scale) else { return nil }
-        let image = UIImage(ciImage: ciImage, scale: UIScreen.main.scale, orientation: .up)
+
+        let context = CIContext.init(options: nil)
+        let image = UIImage(cgImage: context.createCGImage(ciImage, from: ciImage.extent)!)
+
         return image.withRenderingMode(.alwaysTemplate)
     }
 

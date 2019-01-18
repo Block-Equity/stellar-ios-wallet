@@ -9,7 +9,6 @@
 import UIKit
 
 class ReceiveViewController: UIViewController {
-
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var addressLabel: UILabel!
     @IBOutlet var addressTitleLabel: UILabel!
@@ -21,26 +20,15 @@ class ReceiveViewController: UIViewController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
 
-    var address: String = ""
-    var isPersonalToken: Bool = false
+    let address: String
 
-    @IBAction func copyAddress() {
-        if let addressText = addressLabel.text, !addressText.isEmpty {
-            UIPasteboard.general.string = addressLabel.text
-            UIAlertController.simpleAlert(title: "ADDRESS_COPIED".localized(),
-                                          message: nil,
-                                          presentingViewController: self)
-        }
-
-    }
-
-    init(address: String, isPersonalToken: Bool) {
-        super.init(nibName: String(describing: ReceiveViewController.self), bundle: nil)
+    init(address: String) {
         self.address = address
-        self.isPersonalToken = isPersonalToken
+        super.init(nibName: String(describing: ReceiveViewController.self), bundle: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
+        self.address = ""
         super.init(coder: aDecoder)
     }
 
@@ -50,50 +38,79 @@ class ReceiveViewController: UIViewController {
         setupView()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        displayGeneratedAddress(value: address)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        displayAccountAddress(address: address)
     }
 
     func setupView() {
-        if isPersonalToken {
-            navigationItem.title = "TOKEN_ADDRESS".localized()
-            addressTitleLabel.text = "YOUR_TOKEN_ADDRESS".localized().uppercased()
-        } else {
-            navigationItem.title = "ITEM_RECEIVE".localized()
-            addressTitleLabel.text = "YOUR_WALLET_ADDRESS".localized().uppercased()
-        }
-
         let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
                                                  style: .plain,
                                                  target: self,
                                                  action: #selector(self.dismissView))
 
         navigationItem.rightBarButtonItem = rightBarButtonItem
+        navigationItem.title = "ITEM_RECEIVE".localized()
 
         imageViewHolder.layer.shadowColor = Colors.shadowGray.cgColor
         imageViewHolder.layer.shadowOpacity = Float(Alphas.transparent)
         imageViewHolder.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
         imageViewHolder.layer.shadowRadius = 4.0
 
-        addressLabel.textColor = Colors.darkGray
+        addressTitleLabel.text = "YOUR_WALLET_ADDRESS".localized().uppercased()
         addressTitleLabel.textColor = Colors.darkGrayTransparent
-        addressHolderView.backgroundColor = Colors.lightBackground
-        view.backgroundColor = Colors.lightBackground
-        tableView.backgroundColor = Colors.lightBackground
-        qrHolderView.backgroundColor = Colors.primaryDark
 
+        view.backgroundColor = Colors.lightBackground
+
+        tableView.backgroundColor = Colors.lightBackground
+        addressHolderView.backgroundColor = Colors.lightBackground
+        qrHolderView.backgroundColor = Colors.primaryDark
+        imageView.tintColor = Colors.primaryDark
+
+        addressLabel.textColor = Colors.darkGray
         addressLabel.text = address
+    }
+
+    func displayCachedQRImage(address: String) -> Bool {
+        guard let qrImage = try? CacheManager.shared.qrCodes.object(forKey: address) else {
+            return false
+        }
+
+        activityIndicator.stopAnimating()
+        imageView.image = qrImage.withRenderingMode(.alwaysTemplate)
+        return true
+    }
+
+    func displayAccountAddress(address: String) {
+        guard displayCachedQRImage(address: address) else {
+            let operationQueue = OperationQueue()
+            operationQueue.qualityOfService = .userInitiated
+
+            let operation = CacheAccountQROperation(accountId: address)
+            operation.completionBlock = {
+                _ = self.displayCachedQRImage(address: address)
+            }
+
+            operationQueue.addOperation(operation)
+            return
+        }
+    }
+}
+
+// MARK: Actions
+extension ReceiveViewController {
+    @IBAction func copyAddress() {
+        guard let addressText = addressLabel.text, !addressText.isEmpty else {
+            return
+        }
+
+        UIPasteboard.general.string = addressLabel.text
+        UIAlertController.simpleAlert(title: "ADDRESS_COPIED".localized(),
+                                      message: nil,
+                                      presentingViewController: self)
     }
 
     @objc func dismissView() {
         dismiss(animated: true, completion: nil)
-    }
-
-    func displayGeneratedAddress(value: String) {
-        let map = QRMap(with: value, correctionLevel: .full)
-        imageView.image = map.scaledTemplateImage(scale: 10)
-        activityIndicator.stopAnimating()
     }
 }

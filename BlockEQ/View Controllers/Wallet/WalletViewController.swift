@@ -33,23 +33,17 @@ final class WalletViewController: UIViewController {
     @IBOutlet var tableViewHeaderRightLabel: UILabel!
     @IBOutlet var logoImageView: UIImageView!
     @IBOutlet var assetBalanceButton: UIButton!
-    @IBOutlet weak var assetListButton: UIButton!
-
-    @IBOutlet weak var inactiveStateView: UIView!
-    @IBOutlet weak var inactiveImageView: UIImageView!
-    @IBOutlet weak var inactiveDescriptionLabel: UILabel!
+    @IBOutlet var assetListButton: UIButton!
+    @IBOutlet var inactiveStateView: UIView!
+    @IBOutlet var inactiveImageView: UIImageView!
+    @IBOutlet var inactiveDescriptionLabel: UILabel!
 
     override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
 
     weak var delegate: WalletViewControllerDelegate?
     var navigationContainer: AppNavigationController?
-    var state: WalletState = .inactive
-
-    var dataSource: WalletDataSource? {
-        didSet {
-            toggleInactiveState(dataSource != nil)
-        }
-    }
+    var state: WalletState = .inactive(StellarAccount.stub)
+    var dataSource: WalletDataSource?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,15 +56,11 @@ final class WalletViewController: UIViewController {
         navigationItem.setHidesBackButton(true, animated: false)
         navigationController?.setNavigationBarHidden(false, animated: true)
 
-        inactiveStateView.isHidden = false
+        toggleInactiveState(dataSource != nil)
         inactiveStateView.alpha = 1
 
         tableView?.dataSource = self.dataSource
         tableView?.reloadData()
-
-        if self.dataSource == nil {
-            update(with: WalletState.inactive.viewModel)
-        }
     }
 
     func setupView() {
@@ -93,10 +83,10 @@ final class WalletViewController: UIViewController {
 
         assetBalanceButton.setTitle("BALANCE_INFORMATION".localized(), for: .normal)
         inactiveDescriptionLabel.text = "NEW_ACCOUNT_DESCRIPTION".localized()
-        inactiveDescriptionLabel.textColor = Colors.darkGrayTransparent
+        inactiveDescriptionLabel.textColor = Colors.darkGray
 
         inactiveImageView.image = UIImage(named: "wallet-large")
-        inactiveImageView.tintColor = Colors.lightGrayTransparent
+        inactiveImageView.tintColor = Colors.darkGrayTransparent
         inactiveImageView.contentMode = .scaleAspectFit
 
         availableBalanceView.backgroundColor = Colors.backgroundDark
@@ -111,11 +101,25 @@ final class WalletViewController: UIViewController {
     }
 
     func toggleInactiveState(_ hidden: Bool, animated: Bool = true) {
+        var targetAlpha: CGFloat
+
+        if hidden {
+            targetAlpha = CGFloat(0)
+        } else {
+            targetAlpha = CGFloat(1)
+            tableView?.backgroundView = inactiveStateView
+            inactiveStateView.alpha = 0
+        }
+
+        inactiveStateView.isHidden = hidden
+
         let interval: TimeInterval = animated ? 0.2 : 0
+
         UIView.animate(withDuration: interval, animations: {
-            self.inactiveStateView.alpha = hidden ? 0 : 1
+            if !hidden { self.tableView?.backgroundView = self.inactiveStateView }
+            self.inactiveStateView.alpha = targetAlpha
         }, completion: { _ in
-            self.inactiveStateView.isHidden = hidden
+            if hidden { self.tableView?.backgroundView = nil }
         })
     }
 
@@ -123,7 +127,7 @@ final class WalletViewController: UIViewController {
         dataSource = nil
         tableView?.reloadData()
 
-        state = WalletState.inactive
+        state = WalletState.inactive(StellarAccount.stub)
         update(with: state.viewModel)
     }
 
@@ -132,6 +136,8 @@ final class WalletViewController: UIViewController {
 
         UIView.animate(withDuration: interval) {
             self.headerBackgroundView.backgroundColor = viewModel.headerBackgroundColor
+            self.inactiveImageView.tintColor = viewModel.imageTint
+            self.inactiveImageView.image = viewModel.emptyImage
 
             self.coinLabel.text = viewModel.assetText
             self.balanceLabel.text = viewModel.balanceText
@@ -155,7 +161,7 @@ final class WalletViewController: UIViewController {
         guard self.isViewLoaded else { return }
 
         if account.isStub {
-            state = WalletState.inactive
+            state = WalletState.inactive(account)
         } else {
             dataSource = WalletDataSource(account: account, asset: asset)
             state = WalletState.active(asset, account)
@@ -165,6 +171,8 @@ final class WalletViewController: UIViewController {
 
         tableView?.dataSource = dataSource
         tableView?.reloadData()
+
+        tableView.isUserInteractionEnabled = dataSource != nil
     }
 }
 
@@ -196,38 +204,18 @@ extension WalletViewController {
 
 extension WalletViewController {
     enum WalletState {
-        case inactive
+        case inactive(StellarAccount)
         case active(StellarAsset, StellarAccount)
 
         var viewModel: ViewModel {
             switch self {
-            case .inactive:
-                if KeychainHelper.hasFetchedData {
-                return ViewModel(headerBackgroundColor: Colors.primaryDark,
-                                 assetText: "EXISTING_ACCOUNT_REFRESHING".localized(),
-                                 balanceText: "EXISTING_ACCOUNT_UPDATING".localized(),
-                                 balanceHeaderText: "",
-                                 balanceButtonTitle: "",
-                                 inactiveDescriptionText: "EXISTING_ACCOUNT_INACTIVE".localized(),
-                                 showActivityIndicator: true,
-                                 showBalanceHeader: false,
-                                 showAssetListButton: false,
-                                 showBalanceButton: false)
-                } else {
-                    return ViewModel(headerBackgroundColor: Colors.transactionCellMediumGray,
-                                     assetText: "NEW_ACCOUNT_FUNDING_REQUIRED".localized(),
-                                     balanceText: Decimal(0).displayFormattedString,
-                                     balanceHeaderText: "NEW_ACCOUNT_MINIMUM_BALANCE".localized(),
-                                     balanceButtonTitle: "",
-                                     inactiveDescriptionText: "NEW_ACCOUNT_INACTIVE".localized(),
-                                     showActivityIndicator: false,
-                                     showBalanceHeader: true,
-                                     showAssetListButton: false,
-                                     showBalanceButton: false)
-                }
+            case .inactive(let account):
+                return inactiveViewModel(account: account)
             case .active(let asset, let account):
                 let metadata = AssetMetadata(shortCode: asset.shortCode, issuer: asset.assetIssuer)
                 return ViewModel(headerBackgroundColor: Colors.primaryDark,
+                                 emptyImage: UIImage(named: "wallet-large"),
+                                 imageTint: Colors.lightGray,
                                  assetText: metadata.displayNameWithShortCode,
                                  balanceText: asset.balance.displayFormatted,
                                  balanceHeaderText: account.formattedAvailableBalance(for: asset),
@@ -239,10 +227,56 @@ extension WalletViewController {
                                  showBalanceButton: true)
             }
         }
+
+        func inactiveViewModel(account: StellarAccount) -> ViewModel {
+            var image = UIImage(named: "wallet-large")
+            var color = Colors.lightGray
+
+            if let cachedQRCode = try? CacheManager.shared.qrCodes.object(forKey: account.accountId) {
+                image = cachedQRCode.withRenderingMode(.alwaysTemplate)
+                color = Colors.darkGrayTransparent
+            }
+
+            var backgroundColor = Colors.primaryDark
+            var assetText = ""
+            var balanceText = ""
+            var balanceHeaderText = ""
+            var inactiveDescriptionText = ""
+            var showActivityIndicator = false
+
+            if KeychainHelper.hasFetchedData {
+                assetText = "EXISTING_ACCOUNT_REFRESHING".localized()
+                balanceText = "EXISTING_ACCOUNT_UPDATING".localized()
+                inactiveDescriptionText = "EXISTING_ACCOUNT_INACTIVE".localized()
+                showActivityIndicator = true
+            } else {
+                backgroundColor = Colors.darkGrayTransparent
+                assetText = "NEW_ACCOUNT_FUNDING_REQUIRED".localized()
+                balanceText = Decimal(0).displayFormattedString
+                balanceHeaderText = "NEW_ACCOUNT_MINIMUM_BALANCE".localized()
+                inactiveDescriptionText = "NEW_ACCOUNT_INACTIVE".localized()
+                showActivityIndicator = false
+            }
+
+            return ViewModel(headerBackgroundColor: backgroundColor,
+                             emptyImage: image,
+                             imageTint: color,
+                             assetText: assetText,
+                             balanceText: balanceText,
+                             balanceHeaderText: balanceHeaderText,
+                             balanceButtonTitle: "",
+                             inactiveDescriptionText: inactiveDescriptionText,
+                             showActivityIndicator: showActivityIndicator,
+                             showBalanceHeader: false,
+                             showAssetListButton: false,
+                             showBalanceButton: false)
+        }
     }
 
     struct ViewModel {
         var headerBackgroundColor: UIColor
+        var emptyImage: UIImage?
+        var imageTint: UIColor
 
         var assetText: String
         var balanceText: String

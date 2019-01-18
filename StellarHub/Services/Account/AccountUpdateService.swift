@@ -166,8 +166,7 @@ extension AccountUpdateService {
     internal func startPeriodicTimer() {
         guard self.timer == nil else { return }
 
-        let interval = accountUpdateInterval
-        self.timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true, block: { _ in
+        self.timer = Timer.scheduledTimer(withTimeInterval: accountUpdateInterval, repeats: true, block: { _ in
             self.update()
         })
     }

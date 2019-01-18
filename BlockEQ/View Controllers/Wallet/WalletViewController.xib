@@ -22,9 +22,9 @@
                 <outlet property="emptyView" destination="vYT-Yd-cac" id="JER-rO-97v"/>
                 <outlet property="emptyViewTitleLabel" destination="usa-Ff-oFo" id="TgW-rh-yDQ"/>
                 <outlet property="headerBackgroundView" destination="waF-WU-V1I" id="qwi-KJ-Pq1"/>
-                <outlet property="inactiveDescriptionLabel" destination="WAS-Qw-Q3D" id="VQh-pD-vjf"/>
-                <outlet property="inactiveImageView" destination="ggN-Ez-aO5" id="0GY-K1-caq"/>
-                <outlet property="inactiveStateView" destination="89I-9N-Fzf" id="1fo-Lb-Alw"/>
+                <outlet property="inactiveDescriptionLabel" destination="WAS-Qw-Q3D" id="Q4t-qZ-sQg"/>
+                <outlet property="inactiveImageView" destination="ggN-Ez-aO5" id="yaO-LD-YqR"/>
+                <outlet property="inactiveStateView" destination="89I-9N-Fzf" id="lxs-Gp-bFL"/>
                 <outlet property="logoImageView" destination="PSG-hA-d0V" id="lIG-qn-FiV"/>
                 <outlet property="tableView" destination="RND-qr-8sK" id="KCK-vC-wWn"/>
                 <outlet property="tableViewHeader" destination="4NM-Ce-BUW" id="OYB-C5-0dx"/>
@@ -126,44 +126,13 @@
                         </constraints>
                     </view>
                 </tableView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="89I-9N-Fzf" userLabel="Inactive State View">
-                    <rect key="frame" x="0.0" y="174" width="375" height="493"/>
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wallet-large" translatesAutoresizingMaskIntoConstraints="NO" id="ggN-Ez-aO5">
-                            <rect key="frame" x="125.5" y="184.5" width="124" height="124"/>
-                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="ggN-Ez-aO5" secondAttribute="height" multiplier="1:1" id="6Z3-VN-ViD"/>
-                            </constraints>
-                        </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Wallet Description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WAS-Qw-Q3D">
-                            <rect key="frame" x="20" y="323.5" width="335" height="17"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstItem="WAS-Qw-Q3D" firstAttribute="top" secondItem="ggN-Ez-aO5" secondAttribute="bottom" constant="15" id="7Ed-Tj-56f"/>
-                        <constraint firstItem="WAS-Qw-Q3D" firstAttribute="leading" secondItem="89I-9N-Fzf" secondAttribute="leading" constant="20" id="Evs-km-BeB"/>
-                        <constraint firstItem="ggN-Ez-aO5" firstAttribute="centerX" secondItem="89I-9N-Fzf" secondAttribute="centerX" id="Kif-9u-5Xi"/>
-                        <constraint firstItem="ggN-Ez-aO5" firstAttribute="centerY" secondItem="89I-9N-Fzf" secondAttribute="centerY" id="ZbD-ML-MTN"/>
-                        <constraint firstItem="ggN-Ez-aO5" firstAttribute="width" secondItem="89I-9N-Fzf" secondAttribute="width" multiplier="0.33" id="dbp-9U-yiV"/>
-                        <constraint firstAttribute="trailing" secondItem="WAS-Qw-Q3D" secondAttribute="trailing" constant="20" id="hsH-xU-rJt"/>
-                    </constraints>
-                </view>
             </subviews>
             <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="RND-qr-8sK" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="2Ei-U5-020"/>
-                <constraint firstItem="89I-9N-Fzf" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="7Iv-gx-DJ6"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="RND-qr-8sK" secondAttribute="bottom" id="DdX-PD-8FN"/>
                 <constraint firstItem="RND-qr-8sK" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Jai-af-t3o"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="89I-9N-Fzf" secondAttribute="trailing" id="Jcf-S5-61H"/>
                 <constraint firstItem="RND-qr-8sK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="UHY-bw-I7y"/>
-                <constraint firstItem="89I-9N-Fzf" firstAttribute="centerY" secondItem="RND-qr-8sK" secondAttribute="centerY" constant="77" id="dh6-hY-l3I"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="89I-9N-Fzf" secondAttribute="bottom" id="tCa-7c-iNH"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="-94.5" y="47.5"/>
@@ -290,6 +259,49 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="DWu-Gg-PDD"/>
             <point key="canvasLocation" x="33.5" y="786"/>
+        </view>
+        <view contentMode="scaleToFill" id="89I-9N-Fzf" userLabel="Inactive State View">
+            <rect key="frame" x="0.0" y="0.0" width="282" height="323"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UK7-Hq-OKk">
+                    <rect key="frame" x="61" y="113.5" width="160" height="192"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wallet-large" translatesAutoresizingMaskIntoConstraints="NO" id="ggN-Ez-aO5">
+                            <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
+                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="ggN-Ez-aO5" secondAttribute="height" multiplier="1:1" id="6Z3-VN-ViD"/>
+                                <constraint firstAttribute="width" constant="160" id="HKI-KX-jW8"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Wallet Description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WAS-Qw-Q3D">
+                            <rect key="frame" x="-41" y="175" width="242" height="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="WAS-Qw-Q3D" firstAttribute="top" secondItem="ggN-Ez-aO5" secondAttribute="bottom" constant="15" id="C7P-1X-4rP"/>
+                        <constraint firstItem="ggN-Ez-aO5" firstAttribute="width" secondItem="UK7-Hq-OKk" secondAttribute="width" id="CFK-iD-kkf"/>
+                        <constraint firstItem="ggN-Ez-aO5" firstAttribute="centerY" secondItem="UK7-Hq-OKk" secondAttribute="centerY" constant="-16" id="gOI-by-fdx"/>
+                        <constraint firstItem="ggN-Ez-aO5" firstAttribute="centerX" secondItem="UK7-Hq-OKk" secondAttribute="centerX" id="id7-o0-P6F"/>
+                        <constraint firstItem="ggN-Ez-aO5" firstAttribute="top" secondItem="UK7-Hq-OKk" secondAttribute="top" id="sqf-Kt-s6v"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="UK7-Hq-OKk" firstAttribute="centerX" secondItem="2fW-C4-msL" secondAttribute="centerX" id="DXF-vo-CW2"/>
+                <constraint firstItem="WAS-Qw-Q3D" firstAttribute="leading" secondItem="2fW-C4-msL" secondAttribute="leading" constant="20" id="bNQ-Fs-HxW"/>
+                <constraint firstItem="UK7-Hq-OKk" firstAttribute="centerY" secondItem="2fW-C4-msL" secondAttribute="centerY" constant="48" id="rvb-tY-e07"/>
+                <constraint firstItem="2fW-C4-msL" firstAttribute="trailing" secondItem="WAS-Qw-Q3D" secondAttribute="trailing" constant="20" id="s1N-ee-BD0"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="2fW-C4-msL"/>
+            <point key="canvasLocation" x="-688" y="716.49175412293857"/>
         </view>
     </objects>
     <resources>

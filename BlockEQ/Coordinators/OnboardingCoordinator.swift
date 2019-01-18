@@ -73,6 +73,10 @@ extension OnboardingCoordinator: MnemonicViewControllerDelegate {
                                   passphrase: StellarMnemonicPassphrase?) {
         do {
             try core.accountService.initializeAccount(with: mnemonic, passphrase: passphrase)
+
+            if let account = core.accountService?.account {
+                CacheManager.cacheAccountQRCode(account)
+            }
         } catch {
             core.accountService.clear()
             UIAlertController.simpleAlert(title: "ERROR_TITLE".localized(),
@@ -146,6 +150,11 @@ extension OnboardingCoordinator {
     func save(mnemonic: StellarRecoveryMnemonic, recovered: Bool, passphrase: StellarMnemonicPassphrase?) {
         do {
             try core.accountService.initializeAccount(with: mnemonic, passphrase: passphrase)
+
+            if let account = core.accountService?.account {
+                CacheManager.cacheAccountQRCode(account)
+            }
+
             recordWalletDiagnostic(mnemonic: mnemonic, recovered: recovered, passphrase: passphrase != nil)
         } catch {
             // error
@@ -156,9 +165,14 @@ extension OnboardingCoordinator {
         do {
             try core.accountService.initializeAccount(with: secret)
 
-            guard let accountId = core.accountService.account?.accountId else { return }
+            guard let account = core.accountService.account else { return }
 
-            let diagnostic = WalletDiagnostic(address: accountId, creationMethod: .recoveredSeed, usesPassphrase: false)
+            CacheManager.cacheAccountQRCode(account)
+
+            let diagnostic = WalletDiagnostic(address: account.accountId,
+                                              creationMethod: .recoveredSeed,
+                                              usesPassphrase: false)
+
             KeychainHelper.setDiagnostic(diagnostic)
         } catch {
             // error
