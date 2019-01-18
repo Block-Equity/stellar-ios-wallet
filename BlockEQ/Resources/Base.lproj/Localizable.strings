@@ -292,10 +292,10 @@
 "NOT_AVAILABLE_SHORTFORM" = "N/A";
 
 "ISSUER_TITLE_FORMAT" = "Issued by %@";
+"ASSET_NAME_TITLE" = "Asset Name";
 "DESCRIPTION_TITLE" = "Description";
 "NOTES_TITLE" = "Notes";
-"LUMEN_DESCRIPTION" = "Lumens are the native asset of the Stellar network.";
-"LUMEN_NOTES" = "One lumen (XLM) is a unit of digital currency, like a bitcoin.";
+"LUMEN_NOTES" = "Native means that lumens are built into the network, and asset is how the network refers to an item of value that is stored on the ledger. \n\nWhile you can’t hold a lumen in your hand, they are essential to the Stellar network—they contribute to the ability to move money around the world and to conduct transactions between different currencies quickly and securely.";
 "BALANCE_INFORMATION" = "Balance";
 "ISSUER_ADDRESS" = "Issuer Address";
 

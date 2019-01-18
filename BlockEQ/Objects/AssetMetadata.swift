@@ -17,20 +17,22 @@ public struct AssetMetadata: Hashable {
     let primaryColor: UIColor
     let issuerName: String?
     let issuerAddress: String?
+    let description: String?
 
     init(asset: StellarAsset) {
         self.init(shortCode: asset.shortCode)
     }
 
-    init(shortCode: String) {
-        let code = shortCode.uppercased()
-        self.shortCode = code
+    init(shortCode code: String, issuer: String? = nil) {
+        let code = code.uppercased()
+        shortCode = code
 
         let asset = AssetMetadataManager.shared.assets[code]
-        self.displayName = asset?.displayName ?? shortCode
-        self.primaryColor = asset?.primaryColor ?? Colors.stellarBlue
-        self.issuerName = asset?.issuerName
-        self.issuerAddress = asset?.issuerAddress
+        displayName = asset?.displayName ?? code
+        primaryColor = asset?.primaryColor ?? Colors.stellarBlue
+        issuerName = asset?.issuerName
+        description = asset?.description
+        issuerAddress = issuer ?? asset?.issuerAddress
     }
 
     var image: UIImage? {
@@ -54,6 +56,7 @@ extension AssetMetadata: Decodable {
         case primaryColor = "primary_color"
         case issuerName = "issuer_name"
         case issuerAddress = "issuer_address"
+        case description
     }
 
     public init(from decoder: Decoder) throws {
@@ -62,6 +65,7 @@ extension AssetMetadata: Decodable {
         self.displayName = try container.decode(String.self, forKey: .displayName)
         self.issuerAddress = try container.decodeIfPresent(String.self, forKey: .issuerAddress)
         self.issuerName = try container.decodeIfPresent(String.self, forKey: .issuerName)
+        self.description = try container.decodeIfPresent(String.self, forKey: .description)
 
         let colorString = try container.decode(String.self, forKey: .primaryColor)
         self.primaryColor = UIColor(hex: colorString)
