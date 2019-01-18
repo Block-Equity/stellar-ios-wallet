@@ -41,7 +41,7 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
         guard let account = core?.accountService.account else { return }
 
         let address = account.accountId
-        let receiveVC = ReceiveViewController(address: address, isPersonalToken: false)
+        let receiveVC = ReceiveViewController(address: address)
         let container = AppNavigationController(rootViewController: receiveVC)
         container.navigationBar.prefersLargeTitles = true
 

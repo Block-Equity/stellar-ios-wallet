@@ -187,6 +187,7 @@ extension ApplicationCoordinator: SettingsDelegate {
 
             KeychainHelper.clearAll()
             SecurityOptionHelper.clear()
+            CacheManager.shared.clearAccountCache()
 
             self.delegate?.switchToOnboarding()
             self.core?.accountService.clear()
