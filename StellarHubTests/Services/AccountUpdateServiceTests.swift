@@ -86,7 +86,7 @@ class AccountUpdateServiceTests: XCTestCase {
 
     func testThatStoppingPeriodicUpdatesRemovesTheTimer() {
         XCTAssertNil(accountService.timer)
-        accountService.startPeriodicTimer()
+        accountService.startPeriodicUpdates()
         XCTAssertNotNil(accountService.timer)
         accountService.stopPeriodicUpdates()
     }
