@@ -11,8 +11,7 @@ import stellarsdk
 public final class StellarConfig {
     internal struct HorizonHostURLs {
         static let production = "https://horizon.stellar.org"
-        static let test = "https://horizon-testnet.stellar.org"
-        static let local = "localhost:3030"
+        static let testnet = "https://horizon-testnet.stellar.org"
     }
 
     public enum HorizonURL {
@@ -29,8 +28,8 @@ public final class StellarConfig {
 
     public enum HorizonAPI {
         case production
-        case test
-        case local
+        case testnet
+        case custom(String)
 
         public var url: URL {
             return URL(string: self.urlString)!
@@ -39,16 +38,33 @@ public final class StellarConfig {
         public var urlString: String {
             switch self {
             case .production: return HorizonHostURLs.production
-            case .test: return HorizonHostURLs.test
-            case .local: return HorizonHostURLs.local
+            case .testnet: return HorizonHostURLs.testnet
+            case .custom(let host):
+                guard let customHost = URL(string: host) else {
+                    return HorizonHostURLs.testnet
+                }
+
+                return customHost.absoluteString
             }
         }
 
         public var network: Network {
             switch self {
             case .production: return Network.public
-            case .test: return Network.testnet
-            case .local: return Network.testnet
+            case .testnet: return Network.testnet
+            case .custom: return Network.testnet
+            }
+        }
+
+        public static func from(string: String?) -> HorizonAPI {
+            guard let networkName = string else { return .production }
+
+            if networkName.lowercased().contains("production") {
+                return .production
+            } else if networkName.lowercased().contains("testnet") {
+                return .testnet
+            } else {
+                return .custom(networkName)
             }
         }
     }

@@ -704,6 +704,15 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		C56185D221F61262007B6E98 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C53978CA20BF417100587D99 /* SettingsSwitchCell.swift */,
+				C53978CC20BF4EF000587D99 /* SettingsNormalCell.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		C57A853E217814D40048A6B5 /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
@@ -878,6 +887,7 @@
 		EC0B1917205463DC0052802C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C56185D221F61262007B6E98 /* Settings */,
 				C538E58321E7C07C00986D71 /* Balance */,
 				C59AA3CF21D15618007E8362 /* Assets */,
 				C53E629E219B5A6E006BF2F1 /* Diagnostics */,
@@ -904,8 +914,6 @@
 				EC52B3D120BC951F006299A1 /* OffersCell.xib */,
 				EC64CF4D20BF05F5007FE199 /* OrderBookEmptyCell.swift */,
 				EC64CF4E20BF05F5007FE199 /* OrderBookEmptyCell.xib */,
-				C53978CA20BF417100587D99 /* SettingsSwitchCell.swift */,
-				C53978CC20BF4EF000587D99 /* SettingsNormalCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";

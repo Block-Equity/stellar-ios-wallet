@@ -56,6 +56,12 @@ final class WalletViewController: UIViewController {
         navigationItem.setHidesBackButton(true, animated: false)
         navigationController?.setNavigationBarHidden(false, animated: true)
 
+        if let network = UserDefaults.standard.string(forKey: "setting.network"), network == "Testnet" {
+            navigationItem.title = network
+        } else {
+            navigationItem.title = "TITLE_TAB_WALLET".localized()
+        }
+
         inactiveStateView.alpha = 1
         toggleInactiveState(dataSource != nil)
 
@@ -79,7 +85,6 @@ final class WalletViewController: UIViewController {
 
         navigationItem.rightBarButtonItem = rightBarButtonItem
         navigationItem.leftBarButtonItem = leftBarButtonItem
-        navigationItem.title = "TITLE_TAB_WALLET".localized()
 
         assetBalanceButton.setTitle("BALANCE_INFORMATION".localized(), for: .normal)
         inactiveDescriptionLabel.text = "NEW_ACCOUNT_DESCRIPTION".localized()

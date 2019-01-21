@@ -31,10 +31,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        let bundleURL = Bundle.main.url(forResource: "Root", withExtension: "plist", subdirectory: "Settings.bundle")
+        readSettings(from: bundleURL)
+
         blockEQWallet.becameActive()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         blockEQWallet.enterBackground()
+    }
+}
+
+extension AppDelegate {
+    func readSettings(from bundle: URL?) {
+        let userDefaults = UserDefaults.standard
+        if let url = bundle, let settings = NSDictionary(contentsOf: url),
+            let preferences = settings["PreferenceSpecifiers"] as? [NSDictionary] {
+
+            var defaultsToRegister = [String: AnyObject]()
+            for preference in preferences.enumerated() {
+                let item = preference.element
+                guard let key = item["Key"] as? String, let value = item["DefaultValue"] else {
+                    continue
+                }
+
+                defaultsToRegister[key] = value as AnyObject
+            }
+
+            userDefaults.register(defaults: defaultsToRegister)
+        }
     }
 }

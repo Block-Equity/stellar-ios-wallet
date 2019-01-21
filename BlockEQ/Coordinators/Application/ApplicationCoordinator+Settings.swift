@@ -38,6 +38,8 @@ extension ApplicationCoordinator: SettingsDelegate {
             presentIndexingStatus()
         case "debug-mimic-account":
             presentMimicAccount()
+        case let network where network.contains("network-"):
+            switchNetwork(with: setting)
         default:
             print("Selected Node: \(String(describing: setting.name)) \(setting.identifier)")
         }
@@ -46,9 +48,11 @@ extension ApplicationCoordinator: SettingsDelegate {
     func processSection(with identifier: String, setting: SettingNode) {
         switch identifier {
         case "section-security":
-            pushAdvancedPinControl(with: setting)
+            pushSubsettings(with: setting)
         case "section-keys":
-            pushKeyManagement(with: setting)
+            pushSubsettings(with: setting)
+        case "section-network":
+            pushSubsettings(with: setting)
         default:
             print("Selected Section: \(String(describing: setting.name)) \(setting.identifier)")
         }
@@ -70,8 +74,17 @@ extension ApplicationCoordinator: SettingsDelegate {
             return String(SecurityOptionHelper.optionSetting(for: .pinOnTrade))
         case .node(_, let identifier, _, _) where identifier == "security-pin-mnemonic":
             return String(SecurityOptionHelper.optionSetting(for: .pinOnMnemonic))
+        case .node(_, let identifier, _, _) where identifier.contains("network-"):
+            return UserDefaults.standard.string(forKey: "setting.network") ?? "Production"
         default: return ""
         }
+    }
+
+    func switchNetwork(with node: SettingNode) {
+        UserDefaults.standard.set(node.name, forKey: "setting.network")
+        UIAlertController.simpleAlert(title: "RESTART_REQUIRED".localized(),
+                                      message: "CLEAR_WALLET_MESSAGE".localized(),
+                                      presentingViewController: wrappingNavController!)
     }
 
     func manageWallet(with node: SettingNode) {
@@ -95,13 +108,7 @@ extension ApplicationCoordinator: SettingsDelegate {
         }
     }
 
-    func pushKeyManagement(with node: SettingNode) {
-        let viewController = SettingsViewController(options: [node], customTitle: node.name)
-        viewController.delegate = self
-        wrappingNavController?.pushViewController(viewController, animated: true)
-    }
-
-    func pushAdvancedPinControl(with node: SettingNode) {
+    func pushSubsettings(with node: SettingNode) {
         let viewController = SettingsViewController(options: [node], customTitle: node.name)
         viewController.delegate = self
         wrappingNavController?.pushViewController(viewController, animated: true)
