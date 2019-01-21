@@ -58,4 +58,7 @@ extension SettingsSwitchCell: UpdatableCell {
 
         settingNode = node
     }
+
+    func setValue(node: SettingNode, value: String) {
+    }
 }

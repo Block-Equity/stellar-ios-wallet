@@ -12,13 +12,21 @@ import os.log
 
 final class BlockEQWallet {
     let container = WrapperVC()
-    let core = CoreService(with: .production)
     let onboardingCoordinator = OnboardingCoordinator()
     var appCoordinator = ApplicationCoordinator()
+
     var authenticationCoordinator: AuthenticationCoordinator?
     var onboardingContainer: Bool = false
+    var core: CoreService!
+
+    var network: StellarConfig.HorizonAPI {
+        let network = UserDefaults.standard.string(forKey: "setting.network")
+        return StellarConfig.HorizonAPI.from(string: network)
+    }
 
     init() {
+        core = CoreService(with: network)
+
         onboardingCoordinator.delegate = self
         appCoordinator.delegate = self
 
@@ -47,6 +55,10 @@ final class BlockEQWallet {
         }
     }
 
+    func reset() {
+        core = CoreService(with: network)
+    }
+
     func start() {
         if !KeychainHelper.hasExistingInstance {
             onboardingContainer = true
@@ -69,10 +81,6 @@ final class BlockEQWallet {
         }
     }
 
-    func shutdown() {
-
-    }
-
     func authenticate(_ style: AuthenticationCoordinator.AuthenticationStyle? = nil) {
         guard SecurityOptionHelper.check(.pinOnLaunch) else {
             return
@@ -93,6 +101,8 @@ final class BlockEQWallet {
 
 extension BlockEQWallet: ApplicationCoordinatorDelegate {
     func switchToOnboarding() {
+        reset()
+
         onboardingContainer = true
         onboardingCoordinator.navController.popToRootViewController(animated: false)
         container.moveToViewController(onboardingCoordinator.navController,

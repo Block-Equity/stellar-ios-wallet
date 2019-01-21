@@ -10,13 +10,38 @@ import Foundation
 
 /// The settings that should appear in the settings menu for BlockEQ.
 struct EQSettings {
+    static let settingsBundleDevelopmentKey = "setting.development-mode"
+
     /// This initalizer populates options based on the scheme selected. Debug options are only included in debug builds.
     static var options: [SettingNode] {
+        var mutableOptions = [walletSection, securitySection, supportSection, aboutSection]
+
+        if UserDefaults.standard.bool(forKey: EQSettings.settingsBundleDevelopmentKey) {
+            mutableOptions.append(developmentSection)
+        }
+
         #if DEBUG
-        return [debugSettings, walletSection, securitySection, supportSection, aboutSection]
-        #else
-        return [walletSection, securitySection, supportSection, aboutSection]
+        mutableOptions.append(debugSection)
         #endif
+
+        return mutableOptions
+    }
+
+    static var networkItems: [SettingNode] {
+        return [
+            SettingNode.node(name: "SETTINGS_OPTION_NETWORK_PRODUCTION".localized(),
+                             identifier: "network-production",
+                             enabled: true,
+                             type: .select),
+            SettingNode.node(name: "SETTINGS_OPTION_NETWORK_TESTNET".localized(),
+                             identifier: "network-testnet",
+                             enabled: true,
+                             type: .select),
+            SettingNode.node(name: "SETTINGS_OPTION_NETWORK_CUSTOM".localized(),
+                             identifier: "network-custom",
+                             enabled: false,
+                             type: .select)
+        ]
     }
 
     static var walletItems: [SettingNode] {
@@ -103,6 +128,7 @@ struct EQSettings {
 
     static var debugItems: [SettingNode] {
         return [
+            networkSection,
             SettingNode.node(name: "SETTINGS_OPTION_MIMIC".localized(),
                              identifier: "debug-mimic-account",
                              enabled: true,
@@ -132,6 +158,12 @@ struct EQSettings {
                                    items: pinItems)
     }
 
+    static var networkSection: SettingNode {
+        return SettingNode.section(name: "SETTINGS_OPTION_NETWORK".localized(),
+                                   identifier: "section-network",
+                                   items: networkItems)
+    }
+
     static var securitySection: SettingNode {
         return SettingNode.section(name: "SETTINGS_SECTION_SECURITY".localized(),
                                    identifier: "section-security",
@@ -150,9 +182,15 @@ struct EQSettings {
                                    items: aboutItems)
     }
 
-    static var debugSettings: SettingNode {
+    static var debugSection: SettingNode {
         return SettingNode.section(name: "SETTINGS_SECTION_DEBUG".localized(),
                                    identifier: "section-debug",
                                    items: debugItems)
+    }
+
+    static var developmentSection: SettingNode {
+        return SettingNode.section(name: "SETTINGS_SECTION_DEVELOPMENT".localized(),
+                                   identifier: "section-development",
+                                   items: [networkSection])
     }
 }

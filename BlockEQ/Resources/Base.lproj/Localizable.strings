@@ -15,6 +15,7 @@
 "SETTINGS_SECTION_ABOUT" = "About";
 "SETTINGS_SECTION_DEBUG" = "Debug";
 "SETTINGS_SECTION_SUPPORT" = "Support";
+"SETTINGS_SECTION_DEVELOPMENT" = "Development";
 
 "SETTINGS_OPTION_SEED_PHRASE" = "View Mnemonic Phrase";
 "SETTINGS_OPTION_CLEAR_WALLET" = "Clear Wallet";
@@ -39,6 +40,10 @@
 "SETTINGS_OPTION_DIAGNOSTICS" = "Send Diagnostic";
 "SETTINGS_OPTION_INDEXING" = "Indexing Service";
 "SETTINGS_OPTION_MIMIC" = "Mimic Account";
+"SETTINGS_OPTION_NETWORK" = "Network";
+"SETTINGS_OPTION_NETWORK_PRODUCTION" = "Production";
+"SETTINGS_OPTION_NETWORK_TESTNET" = "Testnet";
+"SETTINGS_OPTION_NETWORK_CUSTOM" = "Custom";
 
 "BIOMETRIC_AUTH_TITLE" = "Unlock your wallet";
 "AUTHENTICATE_TITLE" = "Authenticate";
@@ -313,3 +318,5 @@
 "EXISTING_ACCOUNT_REFRESHING" = "Refreshing Wallet";
 "EXISTING_ACCOUNT_UPDATING" = "Updating...";
 "EXISTING_ACCOUNT_INACTIVE" = "Fetching account transactions, please wait.";
+"CLEAR_WALLET_MESSAGE" = "Please clear your wallet and restart the application for the network switch to take effect.";
+"RESTART_REQUIRED" = "Restart Required";

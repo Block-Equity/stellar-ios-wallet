@@ -38,7 +38,7 @@ class IndexingServiceTests: XCTestCase {
                                                   secretSeed: seed,
                                                   mnemonic: mnemonic)
 
-        let env = StellarConfig.HorizonAPI.local
+        let env = StellarConfig.HorizonAPI.custom("localhost")
         let sdk = StellarSDK(withHorizonUrl: env.urlString)
         let core = StubCoreService(sdk: sdk, api: env, secretManager: stubSecretManager, keyPair: stubKeyPair)
 

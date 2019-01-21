@@ -53,17 +53,6 @@ public struct Alphas {
     static let transparent = CGFloat(0.2)
 }
 
-public struct HorizonServer {
-    static let production = "https://horizon.stellar.org"
-    static let test = "https://horizon-testnet.stellar.org"
-    static let url = HorizonServer.production
-}
-
-public struct Stellar {
-    static let sdk = StellarSDK(withHorizonUrl: HorizonServer.url)
-    static let network = Network.public
-}
-
 enum MenuItem {
     case wallet
     case trading

@@ -10,7 +10,7 @@ import Reusable
 
 protocol UpdatableCell {
     func update(for node: SettingNode)
-    func setValue(_ value: String)
+    func setValue(node: SettingNode, value: String)
 }
 
 final class SettingsNormalCell: UITableViewCell, Reusable {
@@ -40,7 +40,9 @@ extension SettingsNormalCell: UpdatableCell {
         textLabel?.text = node.name()
     }
 
-    func setValue(_ value: String) {
-        // noop
+    func setValue(node: SettingNode, value: String) {
+        if node.type == .select && value == node.name {
+            accessoryType = .checkmark
+        }
     }
 }

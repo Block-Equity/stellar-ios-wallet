@@ -16,6 +16,7 @@ enum SettingNode {
     enum NodeType {
         case normal
         case toggle
+        case select
     }
 
     case node(name: String, identifier: String, enabled: Bool, type: NodeType)
