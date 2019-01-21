@@ -12,14 +12,21 @@ import StellarHub
 class StellarContactViewController: UIViewController {
 
     @IBOutlet var addressHolderView: UIView!
-    @IBOutlet var holdingView: UIView!
-    @IBOutlet var tableView: UITableView!
+    @IBOutlet var nameHolderView: UIView!
     @IBOutlet var addressTitleLabel: UILabel!
     @IBOutlet var addressTextField: UITextField!
+    @IBOutlet var nameTitleLabel: UILabel!
+    @IBOutlet var fieldsStackView: UIStackView!
+    @IBOutlet var nameFields: UIStackView!
+    @IBOutlet var addressFields: UIStackView!
+    @IBOutlet var nameTextField: UITextField!
+    @IBOutlet var containerView: UIView!
 
     var identifier: String = ""
     var name: String = ""
     var address: String = ""
+
+    var displayName: Bool = false
 
     override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
 
@@ -36,8 +43,12 @@ class StellarContactViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupView()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configure()
     }
 
     func setupView() {
@@ -47,16 +58,32 @@ class StellarContactViewController: UIViewController {
                                                  action: #selector(self.dismissView))
 
         navigationItem.rightBarButtonItem = rightBarButtonItem
-        title = name
 
         addressTitleLabel.textColor = Colors.darkGrayTransparent
         addressTextField.textColor = Colors.darkGray
         addressHolderView.backgroundColor = Colors.lightBackground
-        holdingView.backgroundColor = Colors.lightBackground
-        view.backgroundColor = Colors.lightBackground
-        tableView.backgroundColor = Colors.lightBackground
+        nameTitleLabel.textColor = Colors.darkGrayTransparent
+        nameTextField.textColor = Colors.darkGray
+        nameHolderView.backgroundColor = Colors.lightBackground
+        fieldsStackView.backgroundColor = .clear
+        containerView.backgroundColor = Colors.white
 
+        view.backgroundColor = Colors.lightBackground
+
+        addressTitleLabel.text = "PUBLIC_ADDRESS".localized().uppercased()
+        nameTitleLabel.text = "FULL_NAME".localized().uppercased()
+    }
+
+    func configure() {
         addressTextField.text = address
+        nameTextField.text = ""
+
+        if name.isEmpty {
+            title = "ADD_CONTACT".localized()
+        } else {
+            nameFields.isHidden = true
+            title = name
+        }
     }
 
     func createContact(name: String, address: String) {
@@ -176,12 +203,17 @@ extension StellarContactViewController {
         let stellarAddress = StellarAddress(addressTextField.text)
 
         if identifier.isEmpty {
+            guard let contactName = nameTextField.text else {
+                addressTextField.shake()
+                return
+            }
+
             guard let address = stellarAddress else {
                 addressTextField.shake()
                 return
             }
 
-            createContact(name: name, address: address.string)
+            createContact(name: contactName, address: address.string)
         } else {
             let address = stellarAddress?.string ?? self.address
             updateContact(name: name, address: address, remove: stellarAddress == nil)

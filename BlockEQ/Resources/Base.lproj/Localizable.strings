@@ -103,6 +103,8 @@
 "TRADE_SUBMITTED" = "Trade successfully submitted.";
 "TRADE_CURRENCY_PAIR_FORMAT" = "Trade %@ for %@";
 
+"PUBLIC_ADDRESS" = "Public Address";
+"FULL_NAME" = "Full Name";
 "NEW_WALLET" = "New Wallet";
 "MY_WALLET" = "My Wallet";
 "ASSET_BALANCE" = "Asset Balance";
