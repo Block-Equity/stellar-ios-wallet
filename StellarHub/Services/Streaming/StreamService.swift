@@ -189,7 +189,8 @@ extension StreamService: StreamDelegate {
 
 // MARK: - Subservice
 extension StreamService {
-    func stop() {
+    func reset() {
         unsubscribeAll()
+        account = nil
     }
 }

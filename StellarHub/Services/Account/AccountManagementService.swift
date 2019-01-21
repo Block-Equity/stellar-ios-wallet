@@ -165,8 +165,9 @@ extension AccountManagementService {
 
 // MARK: - Subservice
 extension AccountManagementService {
-    func stop() {
+    func reset() {
         accountQueue.cancelAllOperations()
+        account = nil
     }
 }
 

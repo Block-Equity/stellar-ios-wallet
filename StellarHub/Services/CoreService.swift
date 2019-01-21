@@ -13,7 +13,7 @@ public final class CoreService: CoreServiceProtocol {
     let api: StellarConfig.HorizonAPI
 
     var services: [Subservice] {
-        return [accountService, tradeService]
+        return [accountService, updateService, indexingService, streamService, tradeService]
     }
 
     internal var secretManager: SecretManagerProtocol? {
@@ -42,16 +42,20 @@ public final class CoreService: CoreServiceProtocol {
         self.streamService = streamService
         self.updateService = updateService
 
+        start()
+    }
+
+    func start() {
         // Register the services to be notified when the account data is updated
-        updateService.registerForUpdates(idxService)
+        updateService.registerForUpdates(indexingService)
 
         // Register the services to be notified when the current account is changed
-        accService.registerForUpdates(streamService)
-        accService.registerForUpdates(updateService)
+        accountService.registerForUpdates(streamService)
+        accountService.registerForUpdates(updateService)
     }
 
     public func stopSubservices() {
-        services.forEach { $0.stop() }
+        services.forEach { $0.reset() }
     }
 }
 

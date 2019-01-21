@@ -23,6 +23,10 @@ internal final class MulticastDelegate <T> {
         }
     }
 
+    func clear() {
+        delegates.removeAllObjects()
+    }
+
     func invoke(invocation: (T) -> Void) {
         for delegate in delegates.allObjects.reversed() {
             guard let delegate = delegate as? T else { continue }
