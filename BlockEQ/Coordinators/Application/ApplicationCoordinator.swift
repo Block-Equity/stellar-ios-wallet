@@ -81,8 +81,6 @@ final class ApplicationCoordinator {
             migrateIfEligible(using: coreService.accountService)
             try? coreService.accountService.restore(with: address)
 
-            coreService.updateService.accountUpdateInterval = AccountUpdateService.shortUpdateInterval
-            coreService.updateService.startPeriodicUpdates()
             coreService.updateService.update()
 
             let tradingCoordinator = TradingCoordinator(core: coreService)
@@ -90,6 +88,11 @@ final class ApplicationCoordinator {
             self.tradingCoordinator = tradingCoordinator
 
             guard let account = coreService.accountService.account else { return }
+
+            if account.isStub {
+                coreService.updateService.accountUpdateInterval = AccountUpdateService.shortUpdateInterval
+            }
+
             walletViewController.update(with: account, asset: StellarAsset.lumens)
         }
     }

@@ -35,7 +35,7 @@ final class NodeIndexingOperation: Operation {
     var transactionEdgeProgress: Progress!
 
     private var indexingWasCancelled: Bool {
-        guard !isCancelled else {
+        if isCancelled {
             result = Result.failure(NodeIndexingOperationError.cancelled)
             return true
         }
@@ -149,7 +149,7 @@ final class NodeIndexingOperation: Operation {
 
             operationEdgeProgress.completedUnitCount += 1
 
-            reportProgress()
+//            reportProgress() // FIXME
 
             let key = item.element.key
             guard let effect = effectMap[key], let operationList = operationMap[key] else { continue }
@@ -172,7 +172,7 @@ final class NodeIndexingOperation: Operation {
 
             transactionEdgeProgress.completedUnitCount += 1
 
-            reportProgress()
+//            reportProgress() // FIXME
 
             let key = item.element.key
             guard let operationList = operationMap[key], let transaction = transactionMap[key] else { continue }
@@ -218,6 +218,11 @@ final class NodeIndexingOperation: Operation {
 //        let total = self.overallProgress.totalUnitCount
 //        print("completed: \(amount) currentUnits: \(completed) totalUnits: \(total)")
         self.delegate?.updatedProgress(self, fractionCompleted: amount)
+    }
+
+    override func cancel() {
+        self.delegate = nil
+        super.cancel()
     }
 }
 

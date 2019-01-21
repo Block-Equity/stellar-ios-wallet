@@ -19,7 +19,7 @@ protocol CoreServiceProtocol {
 
 protocol Subservice {
     var core: CoreServiceProtocol { get }
-    func stop()
+    func reset()
 }
 
 // MARK: - AccountUpdateService

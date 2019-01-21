@@ -183,16 +183,18 @@ extension ApplicationCoordinator: SettingsDelegate {
     func clearWallet() {
         self.displayAuth {
             self.tradingCoordinator?.stopPeriodicOrderbookUpdates()
-            self.core?.updateService.stopPeriodicUpdates()
 
             KeychainHelper.clearAll()
             SecurityOptionHelper.clear()
             CacheManager.shared.clearAccountCache()
 
             self.delegate?.switchToOnboarding()
-            self.core?.accountService.clear()
+
             self.switchedTabs(.assets)
             self.walletViewController.clear()
+
+            self.core?.accountService.clear()
+            self.core?.stopSubservices()
             self.core = nil
         }
     }

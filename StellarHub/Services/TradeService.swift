@@ -30,7 +30,7 @@ public final class TradeService: TradeServiceProtocol {
 
 // MARK: - Subservice
 extension TradeService {
-    func stop() {
+    func reset() {
         tradeQueue.cancelAllOperations()
     }
 }

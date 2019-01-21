@@ -17,7 +17,12 @@ public final class AccountUpdateService: AccountUpdateServiceProtocol {
     var lastFetch: TimeInterval?
     var timer: Timer?
 
-    public var accountUpdateInterval: TimeInterval = longUpdateInterval
+    public var accountUpdateInterval: TimeInterval = longUpdateInterval {
+        didSet {
+            stopPeriodicUpdates()
+            startPeriodicUpdates()
+        }
+    }
 
     var subscribers: MulticastDelegate<AccountUpdateServiceDelegate>
 
@@ -153,7 +158,7 @@ extension AccountUpdateService {
 // MARK: - Periodic updates
 extension AccountUpdateService {
     public func startPeriodicUpdates() {
-        startPeriodicTimer()
+        setPeriodicTimer()
     }
 
     public func stopPeriodicUpdates() {
@@ -163,10 +168,11 @@ extension AccountUpdateService {
         }
     }
 
-    internal func startPeriodicTimer() {
+    internal func setPeriodicTimer() {
         guard self.timer == nil else { return }
 
         self.timer = Timer.scheduledTimer(withTimeInterval: accountUpdateInterval, repeats: true, block: { _ in
+            print("Update happened: \(self.timer!.timeInterval)")
             self.update()
         })
     }
@@ -180,7 +186,11 @@ extension AccountUpdateService: AccountManagementServiceDelegate {
 
 // MARK: - Subservice
 extension AccountUpdateService {
-    func stop() {
+    func reset() {
+        subscribers.clear()
+
+        account = nil
+        lastFetch = nil
         stopPeriodicUpdates()
     }
 }

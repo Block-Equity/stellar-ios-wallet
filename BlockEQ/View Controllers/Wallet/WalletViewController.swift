@@ -56,8 +56,8 @@ final class WalletViewController: UIViewController {
         navigationItem.setHidesBackButton(true, animated: false)
         navigationController?.setNavigationBarHidden(false, animated: true)
 
-        toggleInactiveState(dataSource != nil)
         inactiveStateView.alpha = 1
+        toggleInactiveState(dataSource != nil)
 
         tableView?.dataSource = self.dataSource
         tableView?.reloadData()
@@ -115,8 +115,11 @@ final class WalletViewController: UIViewController {
 
         let interval: TimeInterval = animated ? 0.2 : 0
 
+        if !hidden {
+            self.tableView?.backgroundView = self.inactiveStateView
+        }
+
         UIView.animate(withDuration: interval, animations: {
-            if !hidden { self.tableView?.backgroundView = self.inactiveStateView }
             self.inactiveStateView.alpha = targetAlpha
         }, completion: { _ in
             if hidden { self.tableView?.backgroundView = nil }
@@ -168,6 +171,7 @@ final class WalletViewController: UIViewController {
         }
 
         update(with: state.viewModel)
+        toggleInactiveState(dataSource != nil)
 
         tableView?.dataSource = dataSource
         tableView?.reloadData()
@@ -232,11 +236,6 @@ extension WalletViewController {
             var image = UIImage(named: "wallet-large")
             var color = Colors.lightGray
 
-            if let cachedQRCode = try? CacheManager.shared.qrCodes.object(forKey: account.accountId) {
-                image = cachedQRCode.withRenderingMode(.alwaysTemplate)
-                color = Colors.darkGrayTransparent
-            }
-
             var backgroundColor = Colors.primaryDark
             var assetText = ""
             var balanceText = ""
@@ -250,6 +249,11 @@ extension WalletViewController {
                 inactiveDescriptionText = "EXISTING_ACCOUNT_INACTIVE".localized()
                 showActivityIndicator = true
             } else {
+                if let cachedQRCode = try? CacheManager.shared.qrCodes.object(forKey: account.accountId) {
+                    image = cachedQRCode.withRenderingMode(.alwaysTemplate)
+                    color = Colors.darkGrayTransparent
+                }
+
                 backgroundColor = Colors.darkGrayTransparent
                 assetText = "NEW_ACCOUNT_FUNDING_REQUIRED".localized()
                 balanceText = Decimal(0).displayFormattedString
