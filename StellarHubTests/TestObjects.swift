@@ -54,7 +54,7 @@ final class StubAccountService: AccountManagementServiceProtocol {
         self.state = state
     }
 
-    func stop() {
+    func reset() {
     }
 }
 
