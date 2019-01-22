@@ -149,7 +149,7 @@ final class NodeIndexingOperation: Operation {
 
             operationEdgeProgress.completedUnitCount += 1
 
-//            reportProgress() // FIXME
+            reportProgress()
 
             let key = item.element.key
             guard let effect = effectMap[key], let operationList = operationMap[key] else { continue }
@@ -172,7 +172,7 @@ final class NodeIndexingOperation: Operation {
 
             transactionEdgeProgress.completedUnitCount += 1
 
-//            reportProgress() // FIXME
+            reportProgress()
 
             let key = item.element.key
             guard let operationList = operationMap[key], let transaction = transactionMap[key] else { continue }
