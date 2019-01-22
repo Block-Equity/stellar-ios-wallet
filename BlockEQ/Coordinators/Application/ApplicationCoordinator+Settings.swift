@@ -205,7 +205,7 @@ extension ApplicationCoordinator: SettingsDelegate {
         temporaryBiometricSetting = SecurityOptionHelper.optionSetting(for: .useBiometrics)
         authCompletion = completion
 
-        authenticationCoordinator?.authenticate()
+        authenticationCoordinator.authenticate()
     }
 
     func displayMnemonic() {
