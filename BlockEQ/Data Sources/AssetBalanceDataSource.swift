@@ -177,7 +177,7 @@ extension AssetBalanceDataSource {
                 balance = account.baseAmount.displayFormattedString
             case .signerEntries:
                 title = "SIGNERS_TITLE".localized()
-                subtitle = String(describing: account.totalSigners)
+                subtitle = String(describing: account.additionalSigners)
                 balance = account.formattedSigners
             case .offerEntries:
                 title = "OFFERS_TITLE".localized()

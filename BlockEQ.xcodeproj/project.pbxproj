@@ -19,10 +19,6 @@
 		C41481312124709B0057ED74 /* LocalContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41481302124709B0057ED74 /* LocalContact.swift */; };
 		C414813421248F5B0057ED74 /* StellarContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C414813221248F5B0057ED74 /* StellarContactViewController.swift */; };
 		C414813521248F5B0057ED74 /* StellarContactViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C414813321248F5B0057ED74 /* StellarContactViewController.xib */; };
-		C414813C21264C210057ED74 /* SelectAssetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C414813A21264C210057ED74 /* SelectAssetViewController.swift */; };
-		C414813D21264C210057ED74 /* SelectAssetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C414813B21264C210057ED74 /* SelectAssetViewController.xib */; };
-		C414814021264C8B0057ED74 /* SelectAssetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C414813E21264C8B0057ED74 /* SelectAssetCell.swift */; };
-		C414814121264C8B0057ED74 /* SelectAssetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C414813F21264C8B0057ED74 /* SelectAssetCell.xib */; };
 		C4167B9221234E6C00F44136 /* SecurityOptionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52186B820C06B8100FF2A76 /* SecurityOptionHelper.swift */; };
 		C46CF29920F5284B003CBDA3 /* AddAssetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46CF29820F5284B003CBDA3 /* AddAssetViewController.swift */; };
 		C4E9A77420F79F150028651F /* BalanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9A77220F79F150028651F /* BalanceViewController.swift */; };
@@ -89,6 +85,9 @@
 		C5518B3F219CCD0C00E60AD4 /* DeviceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5518B3E219CCD0C00E60AD4 /* DeviceData.swift */; };
 		C55458FC2124BB1B00032699 /* AuthenticatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55458FB2124BB1B00032699 /* AuthenticatingViewController.swift */; };
 		C55660492165D30C00DDAAA5 /* QRMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55660482165D30C00DDAAA5 /* QRMap.swift */; };
+		C56185D621F6B330007B6E98 /* PaymentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56185D521F6B330007B6E98 /* PaymentCoordinator.swift */; };
+		C56185D821F6D232007B6E98 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56185D721F6D232007B6E98 /* Types.swift */; };
+		C56185DC21F6E1D6007B6E98 /* ApplicationCoordinator+AccountExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56185DB21F6E1D6007B6E98 /* ApplicationCoordinator+AccountExtensions.swift */; };
 		C564059F219DC1900084CD5E /* Diagnostic+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C564059E219DC1900084CD5E /* Diagnostic+Extensions.swift */; };
 		C5681BB921A779AB00ACEB21 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5681BB821A779AB00ACEB21 /* Reachability.swift */; };
 		C5681BBB21A8B9BD00ACEB21 /* UIViewController+AdvancedSecurity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5681BBA21A8B9BD00ACEB21 /* UIViewController+AdvancedSecurity.swift */; };
@@ -212,8 +211,8 @@
 		EC360A032056181E00FC31F9 /* VerificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC360A012056181E00FC31F9 /* VerificationViewController.xib */; };
 		EC3DE29F20B8F98C00A6EC3C /* TradeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3DE29E20B8F98C00A6EC3C /* TradeHeaderView.swift */; };
 		EC3DE2A120B8F9C300A6EC3C /* TradeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC3DE2A020B8F9C300A6EC3C /* TradeHeaderView.xib */; };
-		EC42584B2054E346000941B5 /* SendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4258492054E346000941B5 /* SendViewController.swift */; };
-		EC42584C2054E346000941B5 /* SendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC42584A2054E346000941B5 /* SendViewController.xib */; };
+		EC42584B2054E346000941B5 /* AddressEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4258492054E346000941B5 /* AddressEntryViewController.swift */; };
+		EC42584C2054E346000941B5 /* AddressEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC42584A2054E346000941B5 /* AddressEntryViewController.xib */; };
 		EC42584F2054EE76000941B5 /* SendAmountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC42584D2054EE76000941B5 /* SendAmountViewController.swift */; };
 		EC4258502054EE76000941B5 /* SendAmountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC42584E2054EE76000941B5 /* SendAmountViewController.xib */; };
 		EC4BB64920BE4176008252AD /* String+DecimalFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4BB64820BE4176008252AD /* String+DecimalFormatter.swift */; };
@@ -303,10 +302,6 @@
 		C41481302124709B0057ED74 /* LocalContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalContact.swift; sourceTree = "<group>"; };
 		C414813221248F5B0057ED74 /* StellarContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarContactViewController.swift; sourceTree = "<group>"; };
 		C414813321248F5B0057ED74 /* StellarContactViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StellarContactViewController.xib; sourceTree = "<group>"; };
-		C414813A21264C210057ED74 /* SelectAssetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAssetViewController.swift; sourceTree = "<group>"; };
-		C414813B21264C210057ED74 /* SelectAssetViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectAssetViewController.xib; sourceTree = "<group>"; };
-		C414813E21264C8B0057ED74 /* SelectAssetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAssetCell.swift; sourceTree = "<group>"; };
-		C414813F21264C8B0057ED74 /* SelectAssetCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectAssetCell.xib; sourceTree = "<group>"; };
 		C46CF29820F5284B003CBDA3 /* AddAssetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAssetViewController.swift; sourceTree = "<group>"; };
 		C4E9A77220F79F150028651F /* BalanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewController.swift; sourceTree = "<group>"; };
 		C4E9A77320F79F150028651F /* BalanceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BalanceViewController.xib; sourceTree = "<group>"; };
@@ -374,6 +369,9 @@
 		C553ACBB2091572800B2379B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C55458FB2124BB1B00032699 /* AuthenticatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatingViewController.swift; sourceTree = "<group>"; };
 		C55660482165D30C00DDAAA5 /* QRMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRMap.swift; sourceTree = "<group>"; };
+		C56185D521F6B330007B6E98 /* PaymentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCoordinator.swift; sourceTree = "<group>"; };
+		C56185D721F6D232007B6E98 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
+		C56185DB21F6E1D6007B6E98 /* ApplicationCoordinator+AccountExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ApplicationCoordinator+AccountExtensions.swift"; sourceTree = "<group>"; };
 		C564059E219DC1900084CD5E /* Diagnostic+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Diagnostic+Extensions.swift"; sourceTree = "<group>"; };
 		C5681BB821A779AB00ACEB21 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		C5681BBA21A8B9BD00ACEB21 /* UIViewController+AdvancedSecurity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+AdvancedSecurity.swift"; sourceTree = "<group>"; };
@@ -506,8 +504,8 @@
 		EC360A012056181E00FC31F9 /* VerificationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VerificationViewController.xib; sourceTree = "<group>"; };
 		EC3DE29E20B8F98C00A6EC3C /* TradeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradeHeaderView.swift; sourceTree = "<group>"; };
 		EC3DE2A020B8F9C300A6EC3C /* TradeHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TradeHeaderView.xib; sourceTree = "<group>"; };
-		EC4258492054E346000941B5 /* SendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewController.swift; sourceTree = "<group>"; };
-		EC42584A2054E346000941B5 /* SendViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendViewController.xib; sourceTree = "<group>"; };
+		EC4258492054E346000941B5 /* AddressEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressEntryViewController.swift; sourceTree = "<group>"; };
+		EC42584A2054E346000941B5 /* AddressEntryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressEntryViewController.xib; sourceTree = "<group>"; };
 		EC42584D2054EE76000941B5 /* SendAmountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendAmountViewController.swift; sourceTree = "<group>"; };
 		EC42584E2054EE76000941B5 /* SendAmountViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendAmountViewController.xib; sourceTree = "<group>"; };
 		EC4BB64820BE4176008252AD /* String+DecimalFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+DecimalFormatter.swift"; sourceTree = "<group>"; };
@@ -616,8 +614,6 @@
 				C41165142123B7CB00C4CB6E /* ContactsViewController.xib */,
 				C414813221248F5B0057ED74 /* StellarContactViewController.swift */,
 				C414813321248F5B0057ED74 /* StellarContactViewController.xib */,
-				C414813A21264C210057ED74 /* SelectAssetViewController.swift */,
-				C414813B21264C210057ED74 /* SelectAssetViewController.xib */,
 			);
 			path = "Address Book";
 			sourceTree = "<group>";
@@ -768,6 +764,7 @@
 				C590B9BD21A0984400B5262A /* ApplicationCoordinator+Debug.swift */,
 				C590B9BF21A098B600B5262A /* ApplicationCoordinator+Settings.swift */,
 				C590B9C121A09A6000B5262A /* ApplicationCoordinator+Wallet.swift */,
+				C56185DB21F6E1D6007B6E98 /* ApplicationCoordinator+AccountExtensions.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -872,6 +869,7 @@
 				C5D8CAC52180D809009F8624 /* AddressCoordinator.swift */,
 				C53E6289219A0175006BF2F1 /* DiagnosticCoordinator.swift */,
 				C5211AA121DBF3E300970473 /* AssetCoordinator.swift */,
+				C56185D521F6B330007B6E98 /* PaymentCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -905,8 +903,6 @@
 				C53E629E219B5A6E006BF2F1 /* Diagnostics */,
 				C58D374721B06A22009B44C0 /* PillViewCell.swift */,
 				C58D374821B06A22009B44C0 /* PillViewCell.xib */,
-				C414813E21264C8B0057ED74 /* SelectAssetCell.swift */,
-				C414813F21264C8B0057ED74 /* SelectAssetCell.xib */,
 				C414812C21246A1B0057ED74 /* StellarContactCell.swift */,
 				C414812D21246A1B0057ED74 /* StellarContactCell.xib */,
 				C41165172123C2D300C4CB6E /* ContactCell.swift */,
@@ -1062,6 +1058,7 @@
 				C5681BB821A779AB00ACEB21 /* Reachability.swift */,
 				C5DB5A1221E45BD300EB2AAB /* AssetMetadataManager.swift */,
 				C54BB77021EEF071004396DE /* CacheManager.swift */,
+				C56185D721F6D232007B6E98 /* Types.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1079,8 +1076,8 @@
 				EC360A012056181E00FC31F9 /* VerificationViewController.xib */,
 				EC0B192020549B240052802C /* ReceiveViewController.swift */,
 				EC0B192120549B240052802C /* ReceiveViewController.xib */,
-				EC4258492054E346000941B5 /* SendViewController.swift */,
-				EC42584A2054E346000941B5 /* SendViewController.xib */,
+				EC4258492054E346000941B5 /* AddressEntryViewController.swift */,
+				EC42584A2054E346000941B5 /* AddressEntryViewController.xib */,
 				EC42584D2054EE76000941B5 /* SendAmountViewController.swift */,
 				EC42584E2054EE76000941B5 /* SendAmountViewController.xib */,
 				EC3609FB20560FDB00FC31F9 /* ScanViewController.swift */,
@@ -1359,7 +1356,6 @@
 				C414812F21246A1B0057ED74 /* StellarContactCell.xib in Resources */,
 				C57A8540217814EF0048A6B5 /* TransactionDetailsSectionHeader.xib in Resources */,
 				C538E58921E7C1BF00986D71 /* BalanceItemCell.xib in Resources */,
-				C414814121264C8B0057ED74 /* SelectAssetCell.xib in Resources */,
 				C4EC5FF120F3E64300769E31 /* AddAssetViewController.xib in Resources */,
 				ECF9F44C208937E400160843 /* InflationViewController.xib in Resources */,
 				C41165162123B7CB00C4CB6E /* ContactsViewController.xib in Resources */,
@@ -1377,7 +1373,7 @@
 				C5A4542E21DA84B30096467A /* AssetListHeader.xib in Resources */,
 				EC360A032056181E00FC31F9 /* VerificationViewController.xib in Resources */,
 				EC581C7920769E0A003A397E /* WalletItemCell.xib in Resources */,
-				EC42584C2054E346000941B5 /* SendViewController.xib in Resources */,
+				EC42584C2054E346000941B5 /* AddressEntryViewController.xib in Resources */,
 				EC6EE89020B6004B0033C299 /* OrderbookViewController.xib in Resources */,
 				C59AA3C821D14475007E8362 /* AssetButtonView.xib in Resources */,
 				EC1CEE5420577E880005F74E /* WordSuggestionCell.xib in Resources */,
@@ -1388,7 +1384,6 @@
 				C525C97920B79695006C138F /* KeyboardView.xib in Resources */,
 				C5401D362178007300A12AC2 /* TransactionDetailsViewController.xib in Resources */,
 				EC11062320C7062000FD3684 /* MyOffersHeaderView.xib in Resources */,
-				C414813D21264C210057ED74 /* SelectAssetViewController.xib in Resources */,
 				EC2015EA2052EAC7009A73C8 /* WalletTitleViewController.xib in Resources */,
 				C5BB02492165269F00E4AAD1 /* SecretSeedViewController.xib in Resources */,
 				EC64CF5020BF05F5007FE199 /* OrderBookEmptyCell.xib in Resources */,
@@ -1670,6 +1665,7 @@
 				C4E9A77420F79F150028651F /* BalanceViewController.swift in Sources */,
 				C5E8595020AFF09800B77289 /* OnboardingCoordinator.swift in Sources */,
 				C59AA3C421D13C38007E8362 /* AssetPriceView.swift in Sources */,
+				C56185D821F6D232007B6E98 /* Types.swift in Sources */,
 				C5E8594920AFB45E00B77289 /* ContainerViewController.swift in Sources */,
 				C5681BB921A779AB00ACEB21 /* Reachability.swift in Sources */,
 				C5D8CAC62180D809009F8624 /* AddressCoordinator.swift in Sources */,
@@ -1685,7 +1681,7 @@
 				C53E628D219A01C9006BF2F1 /* DiagnosticViewController.swift in Sources */,
 				C41165152123B7CB00C4CB6E /* ContactsViewController.swift in Sources */,
 				C5ADFFCF2190C8CC004EA646 /* TradeAssetListDataSource.swift in Sources */,
-				EC42584B2054E346000941B5 /* SendViewController.swift in Sources */,
+				EC42584B2054E346000941B5 /* AddressEntryViewController.swift in Sources */,
 				EC52B3C920BB746C006299A1 /* OrderBookHeaderView.swift in Sources */,
 				C593C46E2092E51A00D6047F /* NavigationCell.swift in Sources */,
 				C590B9C021A098B600B5262A /* ApplicationCoordinator+Settings.swift in Sources */,
@@ -1738,6 +1734,7 @@
 				C5AB41332090369000096A29 /* EQSettings.swift in Sources */,
 				C4F4938A211E19EA000B0800 /* String+Base64.swift in Sources */,
 				C46CF29920F5284B003CBDA3 /* AddAssetViewController.swift in Sources */,
+				C56185D621F6B330007B6E98 /* PaymentCoordinator.swift in Sources */,
 				EC2015A92052D968009A73C8 /* AppDelegate.swift in Sources */,
 				C564059F219DC1900084CD5E /* Diagnostic+Extensions.swift in Sources */,
 				EC2015D92052DB6D009A73C8 /* LaunchViewController.swift in Sources */,
@@ -1760,6 +1757,7 @@
 				C53C44BC2188D7F30095D1AD /* StellarAddress+Extensions.swift in Sources */,
 				C5CDE376215A9F3200DB5C90 /* Strings.swift in Sources */,
 				EC6EE89620B6043C0033C299 /* TradingCoordinator.swift in Sources */,
+				C56185DC21F6E1D6007B6E98 /* ApplicationCoordinator+AccountExtensions.swift in Sources */,
 				C54ADD4D2178CFB90078F69E /* TransactionOperationCell.swift in Sources */,
 				EC581C7820769E0A003A397E /* WalletItemCell.swift in Sources */,
 				EC2015DD2052E071009A73C8 /* WalletViewController.swift in Sources */,
@@ -1768,7 +1766,6 @@
 				C59AA3CE21D14F88007E8362 /* AssetIssuerView.swift in Sources */,
 				C59AA3D921D15661007E8362 /* AssetActionCell.swift in Sources */,
 				C5A5A87A215E91F500007787 /* UIView+Autolayout.swift in Sources */,
-				C414813C21264C210057ED74 /* SelectAssetViewController.swift in Sources */,
 				EC72C0B22059742900141D6F /* KeychainHelper.swift in Sources */,
 				C50F390220C0AE8100DABB14 /* KeyboardHelper.swift in Sources */,
 				C51441F7217E64A8006C44F4 /* StellarSeed+Extensions.swift in Sources */,
@@ -1777,7 +1774,6 @@
 				C59AA3CA21D1450A007E8362 /* AssetButton.swift in Sources */,
 				EC6EE88620B5C1320033C299 /* TradeSegmentViewController.swift in Sources */,
 				C5DB5A1121E45BA500EB2AAB /* AssetMetadata.swift in Sources */,
-				C414814021264C8B0057ED74 /* SelectAssetCell.swift in Sources */,
 				C55458FC2124BB1B00032699 /* AuthenticatingViewController.swift in Sources */,
 				C53E628A219A0175006BF2F1 /* DiagnosticCoordinator.swift in Sources */,
 				C5E4980321D5F8E00013883A /* UICollectionViewCell+Reusable.swift in Sources */,

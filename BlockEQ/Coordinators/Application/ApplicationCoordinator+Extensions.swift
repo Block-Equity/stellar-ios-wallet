@@ -6,8 +6,6 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import StellarHub
-
 // MARK: - AuthenticationCoordinatorDelegate
 extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
     func authenticationCancelled(_ coordinator: AuthenticationCoordinator,
@@ -32,14 +30,10 @@ extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
         SecurityOptionHelper.clear()
 
         self.delegate?.switchToOnboarding()
-
-        authenticationCoordinator = nil
     }
 
     func authenticationCompleted(_ coordinator: AuthenticationCoordinator,
                                  options: AuthenticationCoordinator.AuthenticationContext?) {
-        authenticationCoordinator = nil
-
         authCompletion?()
         authCompletion = nil
     }
@@ -47,6 +41,21 @@ extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
 
 // MARK: - ContactsViewControllerDelegate
 extension ApplicationCoordinator: ContactsViewControllerDelegate {
+    func requestedSendPayment(contact: LocalContact) {
+        guard let accountService = core?.accountService, let account = accountService.account else { return }
+
+        let paymentCoordinator = PaymentCoordinator(accountService: accountService,
+                                                    account: account,
+                                                    type: .contact(contact))
+        paymentCoordinator?.delegate = self
+
+        self.paymentCoordinator = paymentCoordinator
+
+        guard let container = paymentCoordinator?.pay() else { return }
+
+        tabController.present(container, animated: true, completion: nil)
+    }
+
     func selectedAddToAddressBook(identifier: String, name: String, address: String) {
         let stellarContactVC = StellarContactViewController(identifier: identifier, name: name, address: address)
         let container = AppNavigationController(rootViewController: stellarContactVC)
@@ -59,49 +68,16 @@ extension ApplicationCoordinator: ContactsViewControllerDelegate {
     }
 }
 
-// MARK: - AccountManagementServiceDelegate
-extension ApplicationCoordinator: AccountManagementServiceDelegate {
-    func accountSwitched(_ service: AccountManagementService, account: StellarAccount) {
-        // ?
-    }
-}
-
-// MARK: - AccountUpdateServiceDelegate
-extension ApplicationCoordinator: AccountUpdateServiceDelegate {
-    func firstAccountUpdate(_ service: AccountUpdateService, account: StellarAccount) {
-        service.accountUpdateInterval = AccountUpdateService.longUpdateInterval
-        core?.streamService.subscribeAll(account: account)
-        core?.indexingService.rebuildIndex()
-    }
-
-    func accountUpdated(_ service: AccountUpdateService,
-                        account: StellarAccount,
-                        options: AccountUpdateService.UpdateOptions) {
-        if options.contains(.effects) || options.contains(.account) {
-            walletViewController.updated(account: account)
-            KeychainHelper.setHasFetchedData()
-        }
-
-        tradingCoordinator?.updated(account: account)
-        balanceViewController?.updated(account: account)
+// MARK: - PaymentCoordinatorDelegate
+extension ApplicationCoordinator: PaymentCoordinatorDelegate {
+    func dismiss(_ coordinator: PaymentCoordinator, container: UIViewController) {
+        container.dismiss(animated: true, completion: nil)
+        paymentCoordinator = nil
     }
 }
 
 // MARK: - DiagnosticCoordinatorDelegate
 extension ApplicationCoordinator: DiagnosticCoordinatorDelegate {
     func completedDiagnostic(_ coordinator: DiagnosticCoordinator) {
-    }
-}
-
-// MARK: - StreamServiceDelegate
-extension ApplicationCoordinator: StreamServiceDelegate {
-    func streamError(service: StreamService, stream: StreamService.StreamType, error: FrameworkError) {
-        if error.errorCategory == .stellar {
-            try? service.unsubscribe(from: stream)
-        }
-    }
-
-    func receivedObjects(stream: StreamService.StreamType) {
-        core?.updateService.update()
     }
 }

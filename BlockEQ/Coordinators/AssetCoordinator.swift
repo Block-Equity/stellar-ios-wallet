@@ -91,18 +91,14 @@ final class AssetCoordinator {
         assetListDataSource = dataSource
     }
 
-    func displayAssetList(addEnabled: Bool = true, largeTitle: Bool = true) -> UINavigationController {
+    func assetList(addEnabled: Bool = true) -> AssetListViewController {
         let assetVC = assetListViewController ?? AssetListViewController()
         assetVC.delegate = self
 
-        let navController = UINavigationController(rootViewController: assetVC)
-        navController.navigationBar.prefersLargeTitles = largeTitle
-
-        assetNavController = navController
-        assetListViewController = assetVC
-
-        // Force the view hierarchy to load in order to set the collection view's data source
+        // Force the view hierarchy to load in order to set the collection view's outlets
         _ = assetVC.view
+
+        assetVC.addAssetView.isHidden = !addEnabled
 
         if let dataSource = delegate?.dataSource() {
             dataSource.actionDelegate = self
@@ -111,6 +107,18 @@ final class AssetCoordinator {
             assetVC.dataSource = dataSource
             assetListDataSource = dataSource
         }
+
+        return assetVC
+    }
+
+    func displayAssetList(addEnabled: Bool = true, largeTitle: Bool = true) -> AppNavigationController {
+        let assetVC = self.assetList(addEnabled: addEnabled)
+
+        let navController = AppNavigationController(rootViewController: assetVC)
+        navController.navigationBar.prefersLargeTitles = largeTitle
+
+        assetNavController = navController
+        assetListViewController = assetVC
 
         return navController
     }
@@ -143,7 +151,7 @@ extension AssetCoordinator: AssetActionDelegate {
 }
 
 // MARK: - AssetListDelegate
-extension AssetCoordinator: AssetListDelegate {
+extension AssetCoordinator: AssetListViewControllerDelegate {
     func requestedAddNewAsset(_ viewController: UIViewController) {
 
         guard account.hasRequiredNativeBalanceForNewEntry else {

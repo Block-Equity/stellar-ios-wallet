@@ -26,13 +26,14 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
     }
 
     func selectedSend(_ viewController: WalletViewController, for asset: StellarAsset) {
-        guard let service = core?.accountService else { return }
+        guard let service = core?.accountService, let account = service.account else { return }
 
-        let sendVC = SendViewController(service: service, asset: asset)
-        let container = AppNavigationController(rootViewController: sendVC)
-        container.navigationBar.prefersLargeTitles = true
+        let paymentCoordinator = PaymentCoordinator(accountService: service, account: account, type: .wallet(asset))
+        paymentCoordinator?.delegate = self
 
-        sendViewController = sendVC
+        self.paymentCoordinator = paymentCoordinator
+
+        guard let container = paymentCoordinator?.pay() else { return }
 
         tabController.present(container, animated: true, completion: nil)
     }

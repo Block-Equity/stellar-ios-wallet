@@ -16,7 +16,7 @@ public final class StellarAccount {
 
     public let totalBaseAmount: Int = 2
     public internal(set) var totalTrustlines: Int = 0
-    public internal(set) var totalSigners: Int = 0
+    public internal(set) var additionalSigners: Int = 0
     public internal(set) var totalDataEntries: Int = 0
     public internal(set) var totalSubentries: Int = 0
 
@@ -74,7 +74,7 @@ public final class StellarAccount {
         self.inflationDestination = response.inflationDestination
 
         self.totalTrustlines = response.balances.count - 1
-        self.totalSigners = response.signers.count
+        self.additionalSigners = response.signers.count - 1
         self.totalDataEntries = response.data.count
         self.totalSubentries = Int(response.subentryCount)
 
@@ -98,7 +98,7 @@ public final class StellarAccount {
         accountId = account.accountId
         inflationDestination = account.inflationDestination
         totalTrustlines = account.totalTrustlines
-        totalSigners = account.totalSigners
+        additionalSigners = account.additionalSigners
         totalDataEntries = account.totalDataEntries
         totalSubentries = account.totalSubentries
         assets = account.assets
@@ -129,7 +129,7 @@ public final class StellarAccount {
     }
 
     public var signers: Decimal {
-        return Decimal(totalSigners) * baseReserve
+        return Decimal(additionalSigners) * baseReserve
     }
 
     public var minBalance: Decimal {

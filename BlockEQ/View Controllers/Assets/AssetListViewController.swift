@@ -9,7 +9,7 @@
 import StellarHub
 import Reusable
 
-protocol AssetListDelegate: AnyObject {
+protocol AssetListViewControllerDelegate: AnyObject {
     func requestedAddNewAsset(_ viewController: UIViewController)
     func requestedDismiss(_ viewController: UIViewController)
 }
@@ -29,7 +29,7 @@ final class AssetListViewController: UIViewController {
     @IBOutlet weak var emptyAssetTitleLabel: UILabel!
     @IBOutlet weak var emptyAssetDescriptionLabel: UILabel!
 
-    weak var delegate: AssetListDelegate?
+    weak var delegate: AssetListViewControllerDelegate?
 
     weak var dataSource: AssetListDataSource? {
         didSet {
