@@ -134,7 +134,7 @@ public final class StellarAccount {
 
     public var minBalance: Decimal {
         let subentryBalance = Decimal(totalBaseAmount + totalSubentries) * baseReserve
-        return subentryBalance + signers
+        return subentryBalance
     }
 
     public var newEntryMinBalance: Decimal {
@@ -170,9 +170,9 @@ public final class StellarAccount {
      - Note: This amount does not consider amounts locked up in trades.
      */
     public var availableNativeBalance: Decimal {
-        let totalBalance = Decimal(string: nativeAsset.balance) ?? Decimal(0.00)
+        let totalBalance = Decimal(string: nativeAsset.balance) ?? Decimal(0)
         let calculatedBalance = totalBalance - minBalance
-        return calculatedBalance >= 0.0 ? calculatedBalance : totalBalance
+        return calculatedBalance >= 0.0 ? calculatedBalance : Decimal(0)
     }
 
     /**
