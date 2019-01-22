@@ -12,8 +12,10 @@ protocol FrameworkErrorPresentable {
     func displayFrameworkError(_ error: FrameworkError?, fallbackData: (title: String, message: String))
 }
 
-extension FrameworkErrorPresentable where Self: UIViewController {
-    func displayFrameworkError(_ error: FrameworkError?, fallbackData: (title: String, message: String)) {
+extension FrameworkErrorPresentable {
+    func display(_ error: FrameworkError?,
+                 viewController: UIViewController,
+                 fallbackData: (title: String, message: String)) {
         var title = fallbackData.title
         var message = fallbackData.message
 
@@ -22,6 +24,12 @@ extension FrameworkErrorPresentable where Self: UIViewController {
             message = error.displayData.messageKey.localized()
         }
 
-        UIAlertController.simpleAlert(title: title, message: message, presentingViewController: self)
+        UIAlertController.simpleAlert(title: title, message: message, presentingViewController: viewController)
+    }
+}
+
+extension FrameworkErrorPresentable where Self: UIViewController {
+    func displayFrameworkError(_ error: FrameworkError?, fallbackData: (title: String, message: String)) {
+        display(error, viewController: self, fallbackData: fallbackData)
     }
 }

@@ -9,7 +9,7 @@
 import Reusable
 
 protocol StellarContactCellDelegate: class {
-    func didSendPayment(indexPath: IndexPath)
+    func didRequestPayment(indexPath: IndexPath)
 }
 
 class StellarContactCell: UITableViewCell, NibReusable {
@@ -51,7 +51,7 @@ class StellarContactCell: UITableViewCell, NibReusable {
 extension StellarContactCell {
     @IBAction func sendPayment() {
         if let currentIndexPath = indexPath {
-            delegate?.didSendPayment(indexPath: currentIndexPath)
+            delegate?.didRequestPayment(indexPath: currentIndexPath)
         }
     }
 }

@@ -12,6 +12,7 @@ import Contacts
 
 protocol ContactsViewControllerDelegate: AnyObject {
     func selectedAddToAddressBook(identifier: String, name: String, address: String)
+    func requestedSendPayment(contact: LocalContact)
 }
 
 final class ContactsViewController: UIViewController {
@@ -211,20 +212,8 @@ extension ContactsViewController: ContactCellDelegate {
 }
 
 extension ContactsViewController: StellarContactCellDelegate {
-    func didSendPayment(indexPath: IndexPath) {
-        guard let item = dataSource?.filteredStellarContacts[indexPath.row],
-            let receiver = StellarAddress.from(contactAddress: item.address) else {
-                return
-        }
-
-        let exchange: Exchange? = AddressResolver.resolve(address: receiver)
-        let selectAssetViewController = SelectAssetViewController(service: accountService,
-                                                                  receiver: receiver,
-                                                                  exchangeName: exchange?.name)
-
-        let navigationController = AppNavigationController(rootViewController: selectAssetViewController)
-        navigationController.navigationBar.prefersLargeTitles = true
-
-        present(navigationController, animated: true, completion: nil)
+    func didRequestPayment(indexPath: IndexPath) {
+        guard let item = dataSource?.filteredStellarContacts[indexPath.row] else { return }
+        delegate?.requestedSendPayment(contact: item)
     }
 }

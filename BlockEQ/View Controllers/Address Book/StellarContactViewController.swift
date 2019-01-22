@@ -236,7 +236,7 @@ extension StellarContactViewController {
 }
 
 extension StellarContactViewController: ScanViewControllerDelegate {
-    func setQR(value: String) {
+    func setQR(_ viewController: ScanViewController, value: String) {
         addressTextField.text = value
     }
 }

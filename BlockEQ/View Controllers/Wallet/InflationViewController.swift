@@ -148,7 +148,7 @@ extension InflationViewController: FrameworkErrorPresentable { }
 
 // MARK: - ScanViewControllerDelegate
 extension InflationViewController: ScanViewControllerDelegate {
-    func setQR(value: String) {
+    func setQR(_ viewController: ScanViewController, value: String) {
         destinationAddressTextField.text = value
     }
 }

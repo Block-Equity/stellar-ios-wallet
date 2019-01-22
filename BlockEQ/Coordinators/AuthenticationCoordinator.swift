@@ -331,10 +331,10 @@ extension AuthenticationCoordinator {
     private func pushPresentOrMove(_ viewController: UIViewController,
                                    on container: UIViewController,
                                    animated: Bool = false) {
-        if let navController = container as? UINavigationController {
-            navController.pushViewController(viewController, animated: animated)
-        } else if options.presentVC {
+        if options.presentVC {
             container.present(viewController, animated: true, completion: nil)
+        } else if let navController = container as? UINavigationController {
+            navController.pushViewController(viewController, animated: animated)
         } else {
             container.moveToViewController(viewController, fromViewController: nil, animated: animated, completion: nil)
         }

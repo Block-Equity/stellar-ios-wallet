@@ -199,13 +199,13 @@ extension ApplicationCoordinator: SettingsDelegate {
         }
     }
 
-    func displayAuth(_ completion: PinEntryCompletion? = nil) {
+    func displayAuth(_ completion: EmptyCompletion? = nil) {
         // Temporarily store the toggled settings and trigger authentication to verify
         temporaryPinSetting = SecurityOptionHelper.optionSetting(for: .pinEnabled)
         temporaryBiometricSetting = SecurityOptionHelper.optionSetting(for: .useBiometrics)
         authCompletion = completion
 
-        authenticate()
+        authenticationCoordinator?.authenticate()
     }
 
     func displayMnemonic() {
@@ -229,18 +229,5 @@ extension ApplicationCoordinator: SettingsDelegate {
         }
 
         wrappingNavController?.pushViewController(viewController, animated: true)
-    }
-
-    func authenticate(_ style: AuthenticationCoordinator.AuthenticationStyle? = nil) {
-        let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true,
-                                                                   presentVC: true,
-                                                                   forcedStyle: style,
-                                                                   limitPinEntries: true)
-
-        let authCoordinator = AuthenticationCoordinator(container: self.tabController, options: opts)
-        authCoordinator.delegate = self
-        authenticationCoordinator = authCoordinator
-
-        authCoordinator.authenticate()
     }
 }

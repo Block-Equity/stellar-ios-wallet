@@ -15,8 +15,6 @@ protocol ApplicationCoordinatorDelegate: AnyObject {
 }
 
 final class ApplicationCoordinator {
-    typealias PinEntryCompletion = () -> Void
-
     /// The controller class that directs which view controller is currently displayed
     let tabController = AppTabController(tab: .assets)
 
@@ -28,6 +26,9 @@ final class ApplicationCoordinator {
 
     // The coordinator responsible for listing, managing, and displaying assets
     var assetCoordinator: AssetCoordinator?
+
+    // The coordinator responsible for managing the payment flow
+    var paymentCoordinator: PaymentCoordinator?
 
     // The coordinator responsible for managing application diagnostics
     let diagnosticCoordinator = DiagnosticCoordinator()
@@ -97,9 +98,6 @@ final class ApplicationCoordinator {
         }
     }
 
-    /// The view controller that allows users to send funds, deallocated once finished using
-    var sendViewController: SendViewController?
-
     /// The view controller used to display the minimum balance, deallocated once finished using
     var balanceViewController: BalanceViewController?
 
@@ -116,10 +114,20 @@ final class ApplicationCoordinator {
     var indexingViewController: IndexingViewController?
 
     /// The completion handler to call when the pin view controller completes successfully
-    var authCompletion: PinEntryCompletion?
+    var authCompletion: EmptyCompletion?
 
     /// The coordinator responsible for authenticating when the user needs to confirm their PIN
-    var authenticationCoordinator: AuthenticationCoordinator?
+    var authenticationCoordinator: AuthenticationCoordinator? {
+        let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true,
+                                                                   presentVC: true,
+                                                                   forcedStyle: nil,
+                                                                   limitPinEntries: true)
+
+        let authCoordinator = AuthenticationCoordinator(container: self.tabController, options: opts)
+        authCoordinator.delegate = self
+
+        return authCoordinator
+    }
 
     var temporaryPinSetting: Bool!
     var temporaryBiometricSetting: Bool!

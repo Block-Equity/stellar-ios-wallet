@@ -9,8 +9,8 @@
 import AVFoundation
 import UIKit
 
-protocol ScanViewControllerDelegate: class {
-    func setQR(value: String)
+protocol ScanViewControllerDelegate: AnyObject {
+    func setQR(_ viewController: ScanViewController, value: String)
 }
 
 class ScanViewController: UIViewController {
@@ -125,7 +125,7 @@ extension ScanViewController: AVCaptureMetadataOutputObjectsDelegate {
             if let qrValue =  metadataObj.stringValue {
                 if !hasIdentifiedQR {
                     hasIdentifiedQR = true
-                    delegate?.setQR(value: qrValue)
+                    delegate?.setQR(self, value: qrValue)
 
                     navigationItem.title = "QR_DETECTED".localized()
                     perform(#selector(self.dismissView), with: nil, afterDelay: 0.6)

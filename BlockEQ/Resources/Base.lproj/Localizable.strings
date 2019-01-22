@@ -285,7 +285,7 @@
 "BASE_AMOUNT_TITLE" = "Base Amount";
 "TRUSTLINES_TITLE" = "Trustlines";
 "OFFERS_TITLE" = "Open Offers";
-"SIGNERS_TITLE" = "Signers";
+"SIGNERS_TITLE" = "Additional Signers";
 "OPEN_TRADES_TITLE" = "Posted for Trade";
 
 "BLOCKEQ_ASSET_TITLE" = "BlockEQ Assets";
