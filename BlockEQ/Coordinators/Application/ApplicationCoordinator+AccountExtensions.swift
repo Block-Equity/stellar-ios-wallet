@@ -19,7 +19,6 @@ extension ApplicationCoordinator: AccountUpdateServiceDelegate {
     func firstAccountUpdate(_ service: AccountUpdateService, account: StellarAccount) {
         service.accountUpdateInterval = AccountUpdateService.longUpdateInterval
         core?.streamService.subscribeAll(account: account)
-        core?.indexingService.rebuildIndex()
     }
 
     func accountUpdated(_ service: AccountUpdateService,

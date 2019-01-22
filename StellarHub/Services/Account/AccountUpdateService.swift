@@ -172,7 +172,6 @@ extension AccountUpdateService {
         guard self.timer == nil else { return }
 
         self.timer = Timer.scheduledTimer(withTimeInterval: accountUpdateInterval, repeats: true, block: { _ in
-            print("Update happened: \(self.timer!.timeInterval)")
             self.update()
         })
     }
