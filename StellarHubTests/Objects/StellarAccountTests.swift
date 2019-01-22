@@ -53,9 +53,15 @@ class StellarAccountTests: XCTestCase {
     }
 
     func testNewEntryMinimumBalanceCalculatesCorrectAmount() {
-        stubAccount.totalSigners = 3
-        stubAccount.totalSubentries = 2
-        XCTAssertEqual(stubAccount.newEntryMinBalance, 4)
+        stubAccount.totalTrustlines = 1
+        stubAccount.totalSubentries = 3
+        stubAccount.outstandingTradeAmounts[thousandLumens] = 100
+        stubAccount.outstandingTradeAmounts[thousandLumens] = 200
+
+        XCTAssertEqual(stubAccount.totalSubentries, 3)
+        XCTAssertEqual(stubAccount.totalOffers, 2)
+        XCTAssertEqual(stubAccount.minBalance, 2.5)
+        XCTAssertEqual(stubAccount.newEntryMinBalance, 3)
     }
 
     func testHasRequiredNativeBalanceForNewEntryReturnsFalseWhenNoBalance() {
@@ -195,8 +201,9 @@ class StellarAccountTests: XCTestCase {
         XCTAssertEqual(account.totalSigners, 1)
         XCTAssertEqual(account.totalOffers, 1)
         XCTAssertEqual(account.totalTrustlines, 2)
+        XCTAssertEqual(account.totalSubentries, 3)
         XCTAssertEqual(account.totalDataEntries, 0)
-        XCTAssertEqual(account.minBalance, 3)
+        XCTAssertEqual(account.minBalance, 2.5)
     }
 
     func testAvailableBalanceCalculation() {
@@ -206,8 +213,9 @@ class StellarAccountTests: XCTestCase {
         XCTAssertEqual(account.totalSigners, 1)
         XCTAssertEqual(account.totalOffers, 1)
         XCTAssertEqual(account.totalTrustlines, 2)
+        XCTAssertEqual(account.totalSubentries, 3)
         XCTAssertEqual(account.totalDataEntries, 0)
-        XCTAssertEqual(balance.description, "1712.8672173")
+        XCTAssertEqual(balance.description, "1713.3672173")
     }
 
     func testOfferCalculation() {
@@ -253,7 +261,14 @@ class StellarAccountTests: XCTestCase {
         XCTAssertEqual(account.totalDataEntries, 0)
         XCTAssertEqual(account.totalTrustlines, 3)
 
-        XCTAssertEqual(account.availableNativeBalance, 995)
+        XCTAssertEqual(account.availableNativeBalance, 995.5)
+    }
+
+    func testAvailableNativeBalanceReturnsZeroIfLessThanMinBalance() {
+        stubAccount.totalSigners = 1
+        stubAccount.totalSubentries = 4
+        stubAccount.assets[0] = StellarAsset(assetType: AssetTypeAsString.NATIVE, assetCode: nil, assetIssuer: nil, balance: "2")
+        XCTAssertEqual(stubAccount.availableNativeBalance, 0)
     }
 
     func testAvailableBalanceForAssetReturnsZeroIfNoAsset() {
@@ -287,7 +302,7 @@ class StellarAccountTests: XCTestCase {
         XCTAssertEqual(account.totalOffers, 2)
         XCTAssertEqual(account.totalTrustlines, 1)
         XCTAssertEqual(account.totalSigners, 1)
-        XCTAssertEqual(account.availableBalance(for: thousandLumens), 97)
+        XCTAssertEqual(account.availableBalance(for: thousandLumens), 97.5)
     }
 
     func testAssetAvailableBalanceReturnsFullAmountIfNoTrades() {
