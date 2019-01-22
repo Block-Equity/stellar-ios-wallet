@@ -117,7 +117,7 @@ final class ApplicationCoordinator {
     var authCompletion: EmptyCompletion?
 
     /// The coordinator responsible for authenticating when the user needs to confirm their PIN
-    var authenticationCoordinator: AuthenticationCoordinator? {
+    lazy var authenticationCoordinator: AuthenticationCoordinator = {
         let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true,
                                                                    presentVC: true,
                                                                    forcedStyle: nil,
@@ -127,7 +127,7 @@ final class ApplicationCoordinator {
         authCoordinator.delegate = self
 
         return authCoordinator
-    }
+    }()
 
     var temporaryPinSetting: Bool!
     var temporaryBiometricSetting: Bool!
