@@ -6,6 +6,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Please keep this human readable! Omit classnames and technical details where possible.
 
+## [2.6.0] - 2019-01-23
+### Added
+- The asset list has been visually redesigned to allow for more asset details
+- The trade screen now uses the redesigned asset list
+- The balance view controller now is visible for Lumens and non-native assets
+- The balance view controller has an updated visual appearance
+- New asset icons have been added
+- Added the ability to use the app with Testnet
+- Added support to remove the inflation destination on a wallet
+- Public address QR code is now cached when generating or recovering a new wallet
+- New stream service in StellarHub
+
+### Changed
+- Moved all the code into one place for the asset selection functionality
+- Moved all the code into one place for the send payment functionality
+- Improved how the wallet balance is communicated for unfunded wallets
+- Improved how the wallet balance is communicated when relaunching the wallet
+- The application now refreshes at dynamic intervals depending if streaming is active or not
+- Many view controllers have been refactored to simplify how they operate
+- Refactored how account balances are computed to be more in line with Stellar documentation
+- Separated streaming from account updating service
+
+### Fixed
+- The amount displayed on the send screen now includes the network fee
+- The amount displayed on the trade screen now includes the network fee and new entry fee
+- Corrected memory leaks for streaming payments
+- The contact list now dynamically hides the name field if you are adding a contact
+- Removing an address from a contact now works correctly
+- Fixed an issue where the initial asset pair in the order book was XLM / XLM
+
+### Removed
+- Unused BlockEQUITest
+- Unused P2P trustline code
+
 ## [2.5.0] - 2018-12-05
 ### Changed
 - The available balance for all assets is now inclusive of amounts locked up in offered trades
