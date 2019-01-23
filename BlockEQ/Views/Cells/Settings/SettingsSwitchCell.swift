@@ -38,10 +38,6 @@ final class SettingsSwitchCell: UITableViewCell, Reusable {
         switchControl.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
     }
 
-    func setValue(_ value: String) {
-        switchControl.isOn = Bool(value) ?? false
-    }
-
     @objc func switchChanged(switch: UISwitch) {
         guard let node = settingNode else { return }
         delegate?.toggledSwitch(for: node, enabled: `switch`.isOn)
@@ -60,5 +56,6 @@ extension SettingsSwitchCell: UpdatableCell {
     }
 
     func setValue(node: SettingNode, value: String) {
+        switchControl.isOn = Bool(value) ?? false
     }
 }
