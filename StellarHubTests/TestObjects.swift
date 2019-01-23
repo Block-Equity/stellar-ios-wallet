@@ -89,11 +89,17 @@ final class MockInflationResponseDelegate: SetInflationResponseDelegate {
     var error: FrameworkError?
 
     var setInflationCompletion: ((StellarAddress) -> Void)?
+    var clearInflationCompletion: (() -> Void)?
     var errorCompletion: (ServiceErrorCompletion)?
 
     func setInflation(destination: StellarAddress) {
         setInflationAddress = destination
         setInflationCompletion?(destination)
+    }
+
+    func clearInflation() {
+        setInflationAddress = nil
+        clearInflationCompletion?()
     }
 
     func inflationFailed(error: FrameworkError) {

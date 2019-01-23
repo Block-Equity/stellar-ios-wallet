@@ -170,6 +170,7 @@
 "SEND_TO_FORMAT" = "To: %@";
 "SENDING_PAYMENT" = "Sending Payment...";
 "SETTING_INFLATION_DESTINATION" = "Setting Inflation Destination...";
+"CLEARING_INFLATION_DESTINATION" = "Clearing Inflation Destination...";
 "INFLATION_SUCCESSFULLY_UPDATED" = "Inflation successfully updated.";
 "INVALID_DESTINATION_TITLE" = "Invalid Destination";
 "INFLATION_DESTINATION_INVALID" = "Unable to update the inflation destination to your own account, or the account it's already set to.";

@@ -11,6 +11,7 @@ import StellarHub
 
 protocol InflationViewControllerDelegate: AnyObject {
     func updateAccountInflation(_ viewController: InflationViewController, destination: StellarAddress)
+    func clearAccountInflation(_ viewController: InflationViewController)
     func dismiss(_ viewController: InflationViewController)
 }
 
@@ -54,6 +55,11 @@ final class InflationViewController: UIViewController {
         }
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        view.endEditing(true)
+    }
+
     func setupView() {
         navigationItem.title = "SET_INFLATION".localized()
         tableView.backgroundColor = Colors.lightBackground
@@ -62,40 +68,8 @@ final class InflationViewController: UIViewController {
         destinationAddressTextField.textColor = Colors.darkGray
         addressHolderView.backgroundColor = Colors.lightBackground
         holdingView.backgroundColor = Colors.lightBackground
+        destinationAddressTextField.clearButtonMode = .whileEditing
         view.backgroundColor = Colors.lightBackground
-    }
-}
-
-// MARK: - Prompts
-extension InflationViewController {
-    func displayInflationSuccess() {
-        self.view.endEditing(true)
-
-        let message = Message(title: "INFLATION_SUCCESSFULLY_UPDATED".localized(), backgroundColor: Colors.green)
-        Whisper.show(whisper: message, to: navigationController!, action: .show)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            Whisper.hide(whisperFrom: self.navigationController!)
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.dismissView()
-            }
-        }
-    }
-
-    func showHud() {
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud.label.text = "SETTING_INFLATION_DESTINATION".localized()
-        hud.mode = .indeterminate
-    }
-
-    func hideHud() {
-        MBProgressHUD.hide(for: self.view, animated: true)
-    }
-
-    func dismissView() {
-        view.endEditing(true)
-        delegate?.dismiss(self)
     }
 }
 
@@ -110,37 +84,17 @@ extension InflationViewController {
     }
 
     @IBAction func addInflationDestination() {
-        guard let inflationDestination = StellarAddress(destinationAddressTextField.text) else {
+        guard let addressText = destinationAddressTextField.text, !addressText.isEmpty else {
+            delegate?.clearAccountInflation(self)
+            return
+        }
+
+        guard let inflationDestination = StellarAddress(addressText) else {
             destinationAddressTextField.shake()
             return
         }
 
-        let inflationString = inflationDestination.string
-        guard inflationString != account.accountId, inflationString != account.inflationDestination else {
-            UIAlertController.simpleAlert(title: "INVALID_DESTINATION_TITLE".localized(),
-                                          message: "INFLATION_DESTINATION_INVALID".localized(),
-                                          presentingViewController: self)
-            return
-        }
-
-        showHud()
         delegate?.updateAccountInflation(self, destination: inflationDestination)
-    }
-}
-
-// MARK: - ManageAssetDisplayable
-extension InflationViewController: ManageAssetDisplayable {
-    func displayLoading(for asset: StellarAsset? = nil) {
-        showHud()
-    }
-
-    func hideLoading() {
-        hideHud()
-    }
-
-    func displayError(error: FrameworkError) {
-        hideHud()
-        displayFrameworkError(error, fallbackData: (title: "INFLATION_ERROR_TITLE", message: "INFLATION_ERROR_MESSAGE"))
     }
 }
 

@@ -25,10 +25,6 @@ target 'BlockEQ' do
     inherit! :search_paths
   end
 
-  target 'BlockEQUITests' do
-    inherit! :search_paths
-  end
-
   target 'BlockEQSnapshotTests' do
     inherit! :search_paths
     pod 'SnapshotTesting'

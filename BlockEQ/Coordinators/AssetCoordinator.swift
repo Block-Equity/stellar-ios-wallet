@@ -7,12 +7,7 @@
 //
 
 import StellarHub
-
-protocol ManageAssetDisplayable: AnyObject {
-    func displayLoading(for asset: StellarAsset?)
-    func hideLoading()
-    func displayError(error: FrameworkError)
-}
+import Whisper
 
 protocol AssetCoordinatorDelegate: AnyObject {
     func selected(asset: StellarAsset)
@@ -36,91 +31,97 @@ protocol AssetListDataSource: (UICollectionViewDelegate & UICollectionViewDataSo
 }
 
 final class AssetCoordinator {
-    private var account: StellarAccount
-
     private let accountService: AccountManagementService
+    private var account: StellarAccount
+    private var addEnabled: Bool
 
-    private var assetNavController: UINavigationController?
+    private lazy var navController: AppNavigationController = {
+        let navController = AppNavigationController(rootViewController: assetListViewController)
+        navController.navigationBar.prefersLargeTitles = true
 
-    private var addAssetViewController: AddAssetViewController?
+        return navController
+    }()
 
-    private var assetListViewController: AssetListViewController?
+    private lazy var addAssetViewController: AddAssetViewController = {
+        let addVC = AddAssetViewController()
+        addVC.delegate = self
 
-    private var assetListDataSource: AssetListDataSource? {
-        didSet {
-            assetListViewController?.dataSource = assetListDataSource
-        }
-    }
+        return addVC
+    }()
 
-    /// The view controller used to set the user's inflation pool, deallocated once finished using
-    var inflationViewController: InflationViewController?
-
-    weak var delegate: AssetCoordinatorDelegate?
-
-    init(accountService: AccountManagementService, account: StellarAccount) {
-        self.account = account
-        self.accountService = accountService
-    }
-
-    func dismiss() {
-        guard let viewController = assetNavController else {
-            return
-        }
-
-        viewController.dismiss(animated: true) {
-            self.delegate?.dismissed(coordinator: self, viewController: viewController)
-        }
-    }
-
-    func add(_ asset: StellarAsset, to account: StellarAccount) {
-        assetListViewController?.displayLoading(for: nil)
-        accountService.changeTrust(account: account, asset: asset, remove: false, delegate: self)
-    }
-
-    func remove(_ asset: StellarAsset, from account: StellarAccount) {
-        assetListViewController?.displayLoading(for: asset)
-        accountService.changeTrust(account: account, asset: asset, remove: true, delegate: self)
-    }
-
-    private func reload() {
-        guard let dataSource = delegate?.dataSource() else { return }
-        dataSource.actionDelegate = self
-        dataSource.selectionDelegate = self
-
-        assetListViewController?.dataSource = dataSource
-        assetListDataSource = dataSource
-    }
-
-    func assetList(addEnabled: Bool = true) -> AssetListViewController {
-        let assetVC = assetListViewController ?? AssetListViewController()
+    private lazy var assetListViewController: AssetListViewController = {
+        let assetVC = AssetListViewController()
         assetVC.delegate = self
 
         // Force the view hierarchy to load in order to set the collection view's outlets
         _ = assetVC.view
 
-        assetVC.addAssetView.isHidden = !addEnabled
-
-        if let dataSource = delegate?.dataSource() {
-            dataSource.actionDelegate = self
-            dataSource.selectionDelegate = self
-
-            assetVC.dataSource = dataSource
-            assetListDataSource = dataSource
+        if !addEnabled {
+            assetVC.hideAddAsset()
         }
 
         return assetVC
+    }()
+
+    /// The view controller used to set the user's inflation pool, deallocated once finished using
+    private lazy var inflationViewController: InflationViewController = {
+        let inflationVC = InflationViewController(account: self.account)
+        inflationVC.delegate = self
+
+        return inflationVC
+    }()
+
+    private var assetListDataSource: AssetListDataSource? {
+        didSet {
+            assetListDataSource?.actionDelegate = self
+            assetListDataSource?.selectionDelegate = self
+            assetListViewController.dataSource = assetListDataSource
+        }
     }
 
-    func displayAssetList(addEnabled: Bool = true, largeTitle: Bool = true) -> AppNavigationController {
-        let assetVC = self.assetList(addEnabled: addEnabled)
+    weak var delegate: AssetCoordinatorDelegate?
 
-        let navController = AppNavigationController(rootViewController: assetVC)
-        navController.navigationBar.prefersLargeTitles = largeTitle
+    init(accountService: AccountManagementService, account: StellarAccount, addEnabled: Bool = true) {
+        self.account = account
+        self.accountService = accountService
+        self.addEnabled = addEnabled
+    }
 
-        assetNavController = navController
-        assetListViewController = assetVC
+    func dismiss() {
+        navController.dismiss(animated: true) {
+            self.delegate?.dismissed(coordinator: self, viewController: self.navController)
+        }
+    }
 
+    func add(_ asset: StellarAsset, to account: StellarAccount) {
+        showHud(message: "ADDING_ASSET".localized())
+        accountService.changeTrust(account: account, asset: asset, remove: false, delegate: self)
+    }
+
+    func remove(_ asset: StellarAsset, from account: StellarAccount) {
+        showHud(message: "REMOVING_ASSET".localized())
+        accountService.changeTrust(account: account, asset: asset, remove: true, delegate: self)
+    }
+
+    private func reload() {
+        guard let dataSource = delegate?.dataSource() else { return }
+        assetListDataSource = dataSource
+        assetListViewController.reload()
+    }
+
+    func displayAssetList() -> AppNavigationController {
+        reload()
         return navController
+    }
+
+    func showHud(message: String) {
+        let hud = MBProgressHUD.showAdded(to: navController.view, animated: true)
+        hud.label.text = message
+        hud.mode = .indeterminate
+    }
+
+    func hideHud() {
+        MBProgressHUD.hide(for: navController.view, animated: true)
     }
 }
 
@@ -139,13 +140,7 @@ extension AssetCoordinator: AssetActionDelegate {
     func requestedAction(_ actionIndex: Int, for asset: StellarAsset) {
         if asset.isNative {
             guard actionIndex == 0 else { return }
-
-            let inflationVC = inflationViewController ?? InflationViewController(account: account)
-            inflationVC.delegate = self
-
-            self.inflationViewController = inflationVC
-
-            assetNavController?.pushViewController(inflationVC, animated: true)
+            navController.pushViewController(inflationViewController, animated: true)
         }
     }
 }
@@ -153,17 +148,13 @@ extension AssetCoordinator: AssetActionDelegate {
 // MARK: - AssetListDelegate
 extension AssetCoordinator: AssetListViewControllerDelegate {
     func requestedAddNewAsset(_ viewController: UIViewController) {
-
         guard account.hasRequiredNativeBalanceForNewEntry else {
             let minimumBalance = account.newEntryMinBalance.displayFormattedString
-            assetListViewController?.displayLowBalanceError(minimum: minimumBalance)
+            assetListViewController.displayLowBalanceError(minimum: minimumBalance)
             return
         }
 
-        let addVC = addAssetViewController ?? AddAssetViewController()
-        addVC.delegate = self
-
-        assetNavController?.pushViewController(addVC, animated: true)
+        navController.pushViewController(addAssetViewController, animated: true)
     }
 
     func requestedDismiss(_ viewController: UIViewController) {
@@ -173,22 +164,38 @@ extension AssetCoordinator: AssetListViewControllerDelegate {
 
 extension AssetCoordinator: InflationViewControllerDelegate {
     func updateAccountInflation(_ viewController: InflationViewController, destination: StellarAddress) {
+        guard destination.string != account.accountId, destination.string != account.inflationDestination else {
+            UIAlertController.simpleAlert(title: "INVALID_DESTINATION_TITLE".localized(),
+                                          message: "INFLATION_DESTINATION_INVALID".localized(),
+                                          presentingViewController: inflationViewController)
+            return
+        }
+
+        showHud(message: "SETTING_INFLATION_DESTINATION".localized())
         accountService.setInflationDestination(account: account, address: destination, delegate: self)
     }
 
+    func clearAccountInflation(_ viewController: InflationViewController) {
+        showHud(message: "CLEARING_INFLATION_DESTINATION".localized())
+        accountService.setInflationDestination(account: account, address: nil, delegate: self)
+    }
+
     func dismiss(_ viewController: InflationViewController) {
-        assetNavController?.popViewController(animated: true)
+        navController.popViewController(animated: true)
+        reload()
+    }
 
-        if let dataSource = delegate?.dataSource() {
-            dataSource.actionDelegate = self
-            dataSource.selectionDelegate = self
-            self.assetListDataSource = dataSource
+    func inflationUpdateSuccess() {
+        let message = Message(title: "INFLATION_SUCCESSFULLY_UPDATED".localized(), backgroundColor: Colors.green)
+        Whisper.show(whisper: message, to: navController, action: .show)
 
-            assetListViewController?.dataSource = dataSource
-            assetListViewController?.reload()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            Whisper.hide(whisperFrom: self.navController)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.dismiss(self.inflationViewController)
+            }
         }
-
-        inflationViewController = nil
     }
 }
 
@@ -211,29 +218,37 @@ extension AssetCoordinator: AddAssetViewControllerDelegate {
 extension AssetCoordinator: ManageAssetResponseDelegate {
     func added(asset: StellarAsset, account: StellarAccount) {
         reload()
-        assetListViewController?.hideLoading()
-        assetListViewController?.reload()
+        hideHud()
+        assetListViewController.reload()
     }
 
     func removed(asset: StellarAsset, account: StellarAccount) {
         reload()
-        assetListViewController?.hideLoading()
-        assetListViewController?.reload()
+        hideHud()
+        assetListViewController.reload()
     }
 
     func manageFailed(error: FrameworkError) {
-        assetListViewController?.displayError(error: error)
+        assetListViewController.displayFrameworkError(error, fallbackData: (title: "", message: ""))
     }
 }
 
 // MARK: - SetInflationResponseDelegate
 extension AssetCoordinator: SetInflationResponseDelegate {
+    func clearInflation() {
+        hideHud()
+        inflationUpdateSuccess()
+    }
+
     func setInflation(destination: StellarAddress) {
-        inflationViewController?.displayInflationSuccess()
+        hideHud()
+        inflationUpdateSuccess()
     }
 
     func inflationFailed(error: FrameworkError) {
-        inflationViewController?.displayError(error: error)
+        hideHud()
+        let fallback = (title: "INFLATION_ERROR_TITLE".localized(), message: "INFLATION_ERROR_MESSAGE".localized())
+        inflationViewController.displayFrameworkError(error, fallbackData: fallback)
     }
 }
 

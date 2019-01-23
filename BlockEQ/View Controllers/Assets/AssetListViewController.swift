@@ -30,7 +30,6 @@ final class AssetListViewController: UIViewController {
     @IBOutlet weak var emptyAssetDescriptionLabel: UILabel!
 
     weak var delegate: AssetListViewControllerDelegate?
-
     weak var dataSource: AssetListDataSource? {
         didSet {
             collectionView.dataSource = dataSource
@@ -163,25 +162,6 @@ final class AssetListViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "GENERIC_OK_TEXT".localized(), style: .default, handler: nil))
 
         self.present(alert, animated: true, completion: nil)
-    }
-}
-
-// MARK: - ManageAssetDisplayable
-extension AssetListViewController: ManageAssetDisplayable {
-    func displayLoading(for asset: StellarAsset? = nil) {
-        let message = asset != nil ? "REMOVING_ASSET".localized() : "ADDING_ASSET".localized()
-        showHud(message: message)
-    }
-
-    func hideLoading() {
-        hideHud()
-    }
-
-    func displayError(error: FrameworkError) {
-        hideHud()
-
-        // fixme
-        self.displayFrameworkError(error, fallbackData: (title: "", message: ""))
     }
 }
 
