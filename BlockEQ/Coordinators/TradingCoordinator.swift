@@ -8,6 +8,7 @@
 
 import StellarHub
 import stellarsdk
+import Whisper
 
 protocol TradingCoordinatorDelegate: AnyObject {
     func setScroll(offset: CGFloat, page: Int)
@@ -202,6 +203,62 @@ extension TradingCoordinator: AssetCoordinatorDelegate {
     }
 }
 
+// MARK: - Prompts
+extension TradingCoordinator {
+    func showHud() {
+        let hud = MBProgressHUD.showAdded(to: segmentController.view, animated: true)
+        hud.label.text = "TRADE_SUBMITTING_MESSAGE".localized()
+        hud.mode = .indeterminate
+    }
+
+    func hideHud() {
+        MBProgressHUD.hide(for: segmentController.view, animated: true)
+    }
+
+    func displayTradeSuccess() {
+        hideHud()
+
+        guard let navController = segmentController.navigationController else { return }
+
+        let message = Message(title: "TRADE_SUBMITTED".localized(), backgroundColor: Colors.green)
+        Whisper.show(whisper: message, to: navController, action: .show)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            Whisper.hide(whisperFrom: navController)
+        }
+    }
+
+    func displayTradeError(_ error: FrameworkError) {
+        hideHud()
+
+        let fallbackTitle = "TRANSACTION_ERROR_TITLE".localized()
+        let fallbackMessage = "TRANSACTION_ERROR_MESSAGE".localized()
+
+        tradeViewController.displayFrameworkError(error, fallbackData: (title: fallbackTitle, message: fallbackMessage))
+    }
+
+    func displayTradeConfirmation(fromAmount: String,
+                                  toAmount: String,
+                                  pair: StellarAssetPair,
+                                  confirmed: @escaping () -> Void) {
+        let format = "SUBMIT_TRADE_FORMAT".localized()
+        let alertMessage = String(format: format, fromAmount, pair.selling.shortCode, toAmount, pair.buying.shortCode)
+        let cancelAction = UIAlertAction(title: "CANCEL_ACTION".localized(), style: .cancel, handler: nil)
+        let submitAction = UIAlertAction(title: "TRADE_TITLE".localized(), style: .default, handler: { _ in
+            confirmed()
+        })
+
+        let alert = UIAlertController(title: "SUBMIT_TRADE_TITLE".localized(),
+                                      message: alertMessage,
+                                      preferredStyle: .alert)
+
+        alert.addAction(cancelAction)
+        alert.addAction(submitAction)
+
+        tradeViewController.present(alert, animated: true, completion: nil)
+    }
+}
+
 extension TradingCoordinator: AccountUpdatable {
     func updated(account: StellarAccount) {
 
@@ -270,10 +327,8 @@ extension TradingCoordinator: TradeViewControllerDelegate {
                                               denominator: denominator,
                                               offerId: nil)
 
-        tradeViewController.displayTradeConfirmation(fromAmount: fromAmount,
-                                                     toAmount: toAmount,
-                                                     pair: pair) {
-            self.tradeViewController.showHud()
+        displayTradeConfirmation(fromAmount: fromAmount, toAmount: toAmount, pair: pair) {
+            self.showHud()
             self.tradeService.postTrade(with: offerData, delegate: self)
         }
     }
@@ -286,26 +341,27 @@ extension TradingCoordinator: TradeViewControllerDelegate {
 
 extension TradingCoordinator: TradeResponseDelegate {
     func cancelled(offerId: Int, trade: StellarTradeOfferData) {
-        self.myOffersViewController.remove(offerId: offerId)
+        myOffersViewController.remove(offerId: offerId)
     }
 
     func posted(trade: StellarTradeOfferData) {
-        self.updateService.update()
-        self.tradeViewController.displayTradeSuccess()
+        tradeViewController.clearTradeFields()
+        updateService.update()
+        displayTradeSuccess()
     }
 
     func cancellationFailed(error: FrameworkError) {
-        self.myOffersViewController.displayCancelFailure(error)
+        myOffersViewController.displayCancelFailure(error)
     }
 
     func postingFailed(error: FrameworkError) {
-        self.tradeViewController.displayTradeError(error)
+        displayTradeError(error)
     }
 }
 
 extension TradingCoordinator: OfferResponseDelegate {
     func updated(offers: [StellarAccountOffer]) {
-        self.myOffersViewController.setOffers(offers)
+        myOffersViewController.setOffers(offers)
     }
 
     func updated(orders: StellarOrderbook) {
