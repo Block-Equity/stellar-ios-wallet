@@ -8,53 +8,52 @@
 
 import StellarHub
 
-final class TradeAssetListDataSource: NSObject, AssetListDataSource {
+final class TradeAssetListDataSource: ExtendableAssetListDataSource, AssetManageCellDelegate {
     var selected: StellarAsset?
     var excludingAsset: StellarAsset?
     var assets: [StellarAsset] = []
+    var availableAssets: [StellarAsset] = []
 
-    weak var actionDelegate: AssetActionDelegate?
-    weak var selectionDelegate: AssetSelectionDelegate?
+    init(assets: [StellarAsset], availableAssets: [StellarAsset], selected: StellarAsset?, excluding: StellarAsset?) {
+        super.init()
 
-    init(assets: [StellarAsset], selected: StellarAsset?, excluding: StellarAsset?) {
-        self.assets = assets.filter { $0 != excluding }
+        self.assets = sortedAssetList(with: assets).filter { $0 != excluding }
+        self.availableAssets = availableAssets.filter { $0 != excluding }
         self.selected = selected
         self.excludingAsset = excluding
     }
-}
 
-extension TradeAssetListDataSource: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: AssetAmountCell = collectionView.dequeueReusableCell(for: indexPath)
-
-        let asset = assets[indexPath.row]
-
-        let amount = asset.hasZeroBalance ? "0" : asset.balance
-        let priceDataModel = AssetPriceView.ViewModel(amount: amount.tradeFormatted, price: "")
-        let model = AssetAmountCell.ViewModel(headerData: asset.headerViewModel, priceData: priceDataModel)
-
-        cell.update(with: model, indexPath: indexPath)
-
-        let inset = collectionView.contentInset.left + collectionView.contentInset.right
-        cell.preferredWidth = collectionView.bounds.width - inset
-
-        return cell
+    override func asset(for indexPath: IndexPath) -> StellarAsset? {
+        return indexPath.section == 0 ? assets[indexPath.row] : availableAssets[indexPath.row]
     }
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return assets.count
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
     }
-}
 
-extension TradeAssetListDataSource: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let asset = assets[indexPath.row]
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return section == 0 ? assets.count : availableAssets.count
+    }
 
-        if let cell = collectionView.cellForItem(at: indexPath) as? StylableAssetCell {
-            cell.select()
+    override func collectionView(_ collectionView: UICollectionView,
+                                 cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        var cell: UICollectionViewCell
+        guard let asset = self.asset(for: indexPath) else { return UICollectionViewCell() }
+
+        if !asset.hasZeroBalance {
+            cell = self.amountCell(collectionView: collectionView, for: indexPath, asset: asset)
+        } else {
+            let mode: AssetManageCell.Mode = availableAssets.contains(asset) ? .add : .remove
+            let manageCell = self.manageCell(collectionView: collectionView, for: indexPath, asset: asset, mode: mode)
+            manageCell.delegate = self
+            cell = manageCell
         }
 
-        selectionDelegate?.selected(asset)
+        if var styleCell = cell as? StylableAssetCell {
+            let inset = collectionView.contentInset.left + collectionView.contentInset.right
+            styleCell.preferredWidth = collectionView.bounds.width - inset
+        }
+
+        return cell
     }
 }

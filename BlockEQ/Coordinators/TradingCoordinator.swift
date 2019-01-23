@@ -124,21 +124,24 @@ extension TradingCoordinator: AssetCoordinatorDelegate {
             return nil
         }
 
-        let defaultDataSource = TradeAssetListDataSource(assets: account.assets, selected: nil, excluding: nil)
+        let defaultDataSource = TradeAssetListDataSource(assets: account.assets,
+                                                         availableAssets: [],
+                                                         selected: nil,
+                                                         excluding: nil)
 
         guard let field = selectedTradeField else {
             return defaultDataSource
         }
 
-        let accountAssets = account.assets
-
         switch field {
         case .fromAsset:
-            return TradeAssetListDataSource(assets: accountAssets,
+            return TradeAssetListDataSource(assets: account.assets,
+                                            availableAssets: account.availableAssets,
                                             selected: assetPair?.selling,
                                             excluding: nil)
         case .toAsset:
-            return TradeAssetListDataSource(assets: accountAssets,
+            return TradeAssetListDataSource(assets: account.assets,
+                                            availableAssets: account.availableAssets,
                                             selected: assetPair?.buying,
                                             excluding: assetPair?.selling)
         }
@@ -193,10 +196,12 @@ extension TradingCoordinator: AccountUpdatable {
             assetPair = pair
 
             tradeFromDataSource = TradeAssetListDataSource(assets: account.assets,
+                                                           availableAssets: account.availableAssets,
                                                            selected: pair.selling,
                                                            excluding: nil)
 
             tradeToDataSource = TradeAssetListDataSource(assets: account.assets,
+                                                         availableAssets: account.availableAssets,
                                                          selected: pair.buying,
                                                          excluding: pair.buying)
 

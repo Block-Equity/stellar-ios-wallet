@@ -24,6 +24,7 @@
 		C4E9A77520F79F150028651F /* BalanceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4E9A77320F79F150028651F /* BalanceViewController.xib */; };
 		C4EC5FF120F3E64300769E31 /* AddAssetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4EC5FEF20F3E64300769E31 /* AddAssetViewController.xib */; };
 		C4F4938A211E19EA000B0800 /* String+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F49389211E19EA000B0800 /* String+Base64.swift */; };
+		C50EB18D21F8F7DF006C4167 /* ConcreteAssetListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50EB18C21F8F7DF006C4167 /* ConcreteAssetListDataSource.swift */; };
 		C50F390220C0AE8100DABB14 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F390120C0AE8100DABB14 /* KeyboardHelper.swift */; };
 		C5114DB7219548AC00C88E4F /* TransactionDetailsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5114DB6219548AC00C88E4F /* TransactionDetailsDataSource.swift */; };
 		C51441F5217E5802006C44F4 /* StellarEffect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51441F4217E5802006C44F4 /* StellarEffect+Extensions.swift */; };
@@ -298,6 +299,7 @@
 		C4E9A77320F79F150028651F /* BalanceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BalanceViewController.xib; sourceTree = "<group>"; };
 		C4EC5FEF20F3E64300769E31 /* AddAssetViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddAssetViewController.xib; sourceTree = "<group>"; };
 		C4F49389211E19EA000B0800 /* String+Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Base64.swift"; sourceTree = "<group>"; };
+		C50EB18C21F8F7DF006C4167 /* ConcreteAssetListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteAssetListDataSource.swift; sourceTree = "<group>"; };
 		C50F390120C0AE8100DABB14 /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
 		C5114DB6219548AC00C88E4F /* TransactionDetailsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailsDataSource.swift; sourceTree = "<group>"; };
 		C51441F4217E5802006C44F4 /* StellarEffect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StellarEffect+Extensions.swift"; sourceTree = "<group>"; };
@@ -607,6 +609,7 @@
 				C5ADFFCE2190C8CC004EA646 /* TradeAssetListDataSource.swift */,
 				C5ADC57621D58D7100DDAF1E /* AccountAssetListDataSource.swift */,
 				C5FDC3F421E3B0F200C911F0 /* AssetBalanceDataSource.swift */,
+				C50EB18C21F8F7DF006C4167 /* ConcreteAssetListDataSource.swift */,
 			);
 			path = "Data Sources";
 			sourceTree = "<group>";
@@ -1596,6 +1599,7 @@
 				C414812E21246A1B0057ED74 /* StellarContactCell.swift in Sources */,
 				ECF9F44B208937E400160843 /* InflationViewController.swift in Sources */,
 				C54EFE4C217A2442005FA6D3 /* TransactionSection.swift in Sources */,
+				C50EB18D21F8F7DF006C4167 /* ConcreteAssetListDataSource.swift in Sources */,
 				C5A5A878215E90BD00007787 /* WebViewController.swift in Sources */,
 				C5A4543221DA8C080096467A /* UIView+CardCell.swift in Sources */,
 				C590B9C221A09A6000B5262A /* ApplicationCoordinator+Wallet.swift in Sources */,
