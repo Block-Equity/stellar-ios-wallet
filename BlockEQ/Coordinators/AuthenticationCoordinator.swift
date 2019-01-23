@@ -114,10 +114,31 @@ final class AuthenticationCoordinator {
     private let authContext: LAContext
 
     /// The view controller to display when using pin entry
-    private var pinViewController: PinViewController?
+    private lazy var pinViewController: PinViewController = {
+        let pinVC = PinViewController()
+        _ = pinVC.view
+        pinVC.delegate = self
+
+        return pinVC
+    }()
+
+    /// The view controller to display when using pin entry
+    private lazy var confirmPinViewController: PinViewController = {
+        let pinVC = PinViewController()
+        _ = pinVC.view
+        pinVC.delegate = self
+
+        return pinVC
+    }()
 
     /// The view controller to display when using biometric authentication
-    private var blankAuthController: BlankAuthenticationViewController?
+    private lazy var blankAuthController: BlankAuthenticationViewController = {
+        let authVC = BlankAuthenticationViewController()
+        _ = authVC.view
+        authVC.delegate = self
+
+        return authVC
+    }()
 
     /// A container that the authentication view controllres may be added to
     private var container: UIViewController
@@ -186,19 +207,10 @@ final class AuthenticationCoordinator {
 
     deinit {
         self.failedPinAttempts = 0
-
-        if let blankAuthVC = self.blankAuthController {
-            removeAuthentication(viewController: blankAuthVC,
-                                 with: AuthenticationContext(savedPin: false, mode: .pin, cancelled: false))
-        }
-
-        if let pinVC = self.pinViewController {
-            removeAuthentication(viewController: pinVC,
-                                 with: AuthenticationContext(savedPin: false, mode: .biometric, cancelled: false))
-        }
-
-        self.blankAuthController = nil
-        self.pinViewController = nil
+        removeAuthentication(viewController: blankAuthController,
+                             with: AuthenticationContext(savedPin: false, mode: .pin, cancelled: false))
+        removeAuthentication(viewController: pinViewController,
+                             with: AuthenticationContext(savedPin: false, mode: .biometric, cancelled: false))
     }
 }
 
@@ -223,43 +235,27 @@ extension AuthenticationCoordinator {
         }
     }
 
-    private func hasAuthenticationVCs() -> Bool {
-        return blankAuthController != nil || pinViewController != nil
-    }
-
     private func presentBiometricAuth() {
-        guard blankAuthController == nil else {
-            biometricChallenge()
-            return
-        }
-
-        let authVC = BlankAuthenticationViewController()
-        authVC.delegate = self
-
-        blankAuthController = authVC
-
-        pushPresentOrMove(authVC, on: container, animated: false)
+        pushPresentOrMove(blankAuthController, on: container, animated: false)
         biometricChallenge()
     }
 
     private func presentPinAuth() {
-        guard pinViewController == nil else { return }
+        pinViewController.update(with: PinViewController.ViewModel(isCreating: false,
+                                                                   isCloseDisplayed: options.cancellable,
+                                                                   mode: .dark))
 
-        let pinVC = PinViewController(mode: .dark, creating: false, isCloseDisplayed: options.cancellable)
-        pinVC.delegate = self
-        pinViewController = pinVC
-
-        pushPresentOrMove(pinVC, on: container, animated: false)
+        pushPresentOrMove(pinViewController, on: container, animated: false)
     }
 
     private func setNewAuthenticationPin() {
         confirmPin = true
 
-        let pinVC = PinViewController(mode: .light, creating: confirmPin, isCloseDisplayed: false)
-        pinVC.delegate = self
-        pinViewController = pinVC
+        pinViewController.update(with: PinViewController.ViewModel(isCreating: confirmPin,
+                                                                   isCloseDisplayed: false,
+                                                                   mode: .light))
 
-        pushPresentOrMove(pinVC, on: container, animated: true)
+        pushPresentOrMove(pinViewController, on: container, animated: true)
     }
 
     private static func evaluateLAPolicy(_ policy: LAPolicy, context: LAContext) -> AuthenticationError? {
@@ -310,12 +306,10 @@ extension AuthenticationCoordinator {
                         self.options.forcedStyle = .pin
                         self.removeAuthentication(viewController: self.blankAuthController,
                                                   with: context,
-                                                  animated: false) { _ in
-                            self.blankAuthController = nil
-                        }
+                                                  animated: false, completion: nil)
                         self.authenticate()
                     } else if authError == .biometryUserCancelled || authError == .biometryCancelled {
-                        self.blankAuthController?.displayAuthButton()
+                        self.blankAuthController.displayAuthButton()
                         self.delegate?.authenticationCancelled(self, options: context)
                     } else {
                         self.removeAuthentication(viewController: self.blankAuthController,
@@ -364,14 +358,14 @@ extension AuthenticationCoordinator {
 extension AuthenticationCoordinator: PinViewControllerDelegate {
     func pinEntryCompleted(_ viewController: PinViewController, pin: String) {
         if mode == .setPin && confirmPin {
-            let pinVC = PinViewController(mode: .light, creating: false, isCloseDisplayed: false)
-            pinVC.delegate = self
+            confirmPinViewController.update(with: PinViewController.ViewModel(isCreating: false,
+                                                                              isCloseDisplayed: false,
+                                                                              mode: .light))
 
-            pinViewController = pinVC
             confirmPin = false
             firstPin = pin
 
-            pushPresentOrMove(pinVC, on: container, animated: true)
+            pushPresentOrMove(confirmPinViewController, on: container, animated: true)
         } else if mode == .setPin && !confirmPin {
             if KeychainHelper.check(pin: pin, comparePin: firstPin) {
                 firstPin = nil
