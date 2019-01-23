@@ -8,7 +8,6 @@
 
 import StellarHub
 import stellarsdk
-import Whisper
 
 protocol TradeViewControllerDelegate: AnyObject {
     func getOrderBook(for pair: StellarAssetPair)
@@ -86,6 +85,11 @@ final class TradeViewController: UIViewController {
         view.endEditing(true)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        delegate?.requestedRefresh()
+    }
+
     func setupView() {
         tradeFromView.layer.borderWidth = 0.5
         tradeFromView.layer.borderColor = Colors.red.cgColor
@@ -121,11 +125,6 @@ final class TradeViewController: UIViewController {
         }
 
         setTradeViews()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        delegate?.requestedRefresh()
     }
 
     func refreshView(pair: StellarAssetPair?) {
@@ -195,67 +194,12 @@ final class TradeViewController: UIViewController {
         let toValue = tradeFromValue * currentMarketPrice
         tradeToTextField.text = toValue.tradeFormattedString
     }
-}
 
-// MARK: - Prompts
-extension TradeViewController {
-    func showHud() {
-        let hud = MBProgressHUD.showAdded(to: (navigationController?.view)!, animated: true)
-        hud.label.text = "TRADE_SUBMITTING_MESSAGE".localized()
-        hud.mode = .indeterminate
-    }
-
-    func hideHud() {
-        MBProgressHUD.hide(for: (navigationController?.view)!, animated: true)
-    }
-
-    func displayTradeSuccess() {
-        hideHud()
-
+    func clearTradeFields() {
         self.tradeFromTextField.text = ""
         self.tradeToTextField.text = ""
-
-        let message = Message(title: "TRADE_SUBMITTED".localized(), backgroundColor: Colors.green)
-        Whisper.show(whisper: message, to: navigationController!, action: .show)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            Whisper.hide(whisperFrom: self.navigationController!)
-        }
-    }
-
-    func displayTradeError(_ error: FrameworkError) {
-        self.hideHud()
-
-        let fallbackTitle = "TRANSACTION_ERROR_TITLE".localized()
-        let fallbackMessage = "TRANSACTION_ERROR_MESSAGE".localized()
-
-        self.displayFrameworkError(error, fallbackData: (title: fallbackTitle, message: fallbackMessage))
-    }
-
-    func displayTradeConfirmation(fromAmount: String,
-                                  toAmount: String,
-                                  pair: StellarAssetPair,
-                                  confirmed: @escaping () -> Void) {
-        let format = "SUBMIT_TRADE_FORMAT".localized()
-        let alertMessage = String(format: format, fromAmount, pair.selling.shortCode, toAmount, pair.buying.shortCode)
-        let cancelAction = UIAlertAction(title: "CANCEL_ACTION".localized(), style: .cancel, handler: nil)
-        let submitAction = UIAlertAction(title: "TRADE_TITLE".localized(), style: .default, handler: { _ in
-            confirmed()
-        })
-
-        let alert = UIAlertController(title: "SUBMIT_TRADE_TITLE".localized(),
-                                      message: alertMessage,
-                                      preferredStyle: .alert)
-
-        alert.addAction(cancelAction)
-        alert.addAction(submitAction)
-
-        self.present(alert, animated: true, completion: nil)
     }
 }
-
-// MARK: - FrameworkErrorPresentable
-extension TradeViewController: FrameworkErrorPresentable { }
 
 // MARK: - IBActions
 extension TradeViewController {
@@ -329,3 +273,6 @@ extension TradeViewController {
                                denominator: denominator)
     }
 }
+
+// MARK: - FrameworkErrorPresentable
+extension TradeViewController: FrameworkErrorPresentable { }
