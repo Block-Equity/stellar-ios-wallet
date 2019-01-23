@@ -11,6 +11,8 @@ import Whisper
 
 protocol AssetCoordinatorDelegate: AnyObject {
     func selected(asset: StellarAsset)
+    func added(asset: StellarAsset, account: StellarAccount)
+    func removed(asset: StellarAsset, account: StellarAccount)
     func dismissed(coordinator: AssetCoordinator, viewController: UIViewController)
     func dataSource() -> AssetListDataSource?
 }
@@ -214,13 +216,13 @@ extension AssetCoordinator: ManageAssetResponseDelegate {
     func added(asset: StellarAsset, account: StellarAccount) {
         reload()
         hideHud()
-        assetListViewController.reload()
+        delegate?.added(asset: asset, account: account)
     }
 
     func removed(asset: StellarAsset, account: StellarAccount) {
         reload()
         hideHud()
-        assetListViewController.reload()
+        delegate?.removed(asset: asset, account: account)
     }
 
     func manageFailed(error: FrameworkError) {

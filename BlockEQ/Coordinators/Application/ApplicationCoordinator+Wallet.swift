@@ -79,6 +79,12 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
 }
 
 extension ApplicationCoordinator: AssetCoordinatorDelegate {
+    func added(asset: StellarAsset, account: StellarAccount) {
+    }
+
+    func removed(asset: StellarAsset, account: StellarAccount) {
+    }
+
     func selected(asset: StellarAsset) {
         guard let account = core?.accountService.account else { return }
         walletViewController.update(with: account, asset: asset)

@@ -28,7 +28,7 @@ final class TradeAssetListDataSource: ExtendableAssetListDataSource, AssetManage
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return assets == availableAssets ? 1 : 2
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -37,16 +37,15 @@ final class TradeAssetListDataSource: ExtendableAssetListDataSource, AssetManage
 
     override func collectionView(_ collectionView: UICollectionView,
                                  cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell: UICollectionViewCell
-        guard let asset = self.asset(for: indexPath) else { return UICollectionViewCell() }
+        var cell = UICollectionViewCell()
+        guard let asset = self.asset(for: indexPath) else { return cell }
 
-        if !asset.hasZeroBalance {
-            cell = self.amountCell(collectionView: collectionView, for: indexPath, asset: asset)
-        } else {
-            let mode: AssetManageCell.Mode = availableAssets.contains(asset) ? .add : .remove
-            let manageCell = self.manageCell(collectionView: collectionView, for: indexPath, asset: asset, mode: mode)
+        if availableAssets.contains(asset) {
+            let manageCell = self.manageCell(collectionView: collectionView, for: indexPath, asset: asset, mode: .add)
             manageCell.delegate = self
             cell = manageCell
+        } else {
+            cell = self.amountCell(collectionView: collectionView, for: indexPath, asset: asset)
         }
 
         if var styleCell = cell as? StylableAssetCell {

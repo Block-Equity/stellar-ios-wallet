@@ -106,7 +106,15 @@ final class AssetListViewController: UIViewController {
             collectionView.reloadData()
         }
 
-        if let dataSource = dataSource, dataSource.collectionView(collectionView, numberOfItemsInSection: 0) == 0 {
+        guard let dataSource = dataSource else {
+            showEmptyAssets()
+            return
+        }
+
+        let assetItems = dataSource.collectionView(collectionView, numberOfItemsInSection: 0)
+        let availableItems = dataSource.collectionView(collectionView, numberOfItemsInSection: 1)
+
+        if assetItems == 0, availableItems == 0 {
             showEmptyAssets()
         } else {
             hideEmptyAssets()
