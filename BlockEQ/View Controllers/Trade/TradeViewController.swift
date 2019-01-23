@@ -47,6 +47,7 @@ extension TradeViewController {
     enum TradeField {
         case fromAsset
         case toAsset
+        case firstTimeAdd
     }
 }
 

@@ -58,6 +58,7 @@ extension PassphrasePromptable where Self: UIViewController {
 
     func clearPassphrase() {
         passphraseButton.setTitle("ADVANCED_SECURITY_TITLE".localized(), for: .normal)
+        self.temporaryPassphrase = nil
         self.mnemonicPassphrase = nil
     }
 

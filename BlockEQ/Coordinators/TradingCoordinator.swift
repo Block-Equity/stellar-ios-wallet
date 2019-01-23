@@ -119,6 +119,13 @@ extension TradingCoordinator: TradeAssetListDisplayable {
 }
 
 extension TradingCoordinator: AssetCoordinatorDelegate {
+    func added(asset: StellarAsset, account: StellarAccount) {
+        updated(account: account)
+    }
+
+    func removed(asset: StellarAsset, account: StellarAccount) {
+    }
+
     func dataSource() -> AssetListDataSource? {
         guard let account = accountService.account else {
             return nil
@@ -144,6 +151,12 @@ extension TradingCoordinator: AssetCoordinatorDelegate {
                                             availableAssets: account.availableAssets,
                                             selected: assetPair?.buying,
                                             excluding: assetPair?.selling)
+        case .firstTimeAdd:
+            let assets = account.assets.count > 1 ? account.assets : account.availableAssets
+            return TradeAssetListDataSource(assets: assets,
+                                            availableAssets: account.availableAssets,
+                                            selected: nil,
+                                            excluding: account.assets.first)
         }
     }
 
@@ -171,6 +184,7 @@ extension TradingCoordinator: AssetCoordinatorDelegate {
         case .toAsset:
             toAsset = asset
             fromAsset = previousFromAsset == asset ? account.firstAssetExcluding(toAsset) : previousFromAsset
+        default: break
         }
 
         if let fromAsset = fromAsset, let toAsset = toAsset {
@@ -220,7 +234,7 @@ extension TradingCoordinator: TradeSegmentControllerDelegate {
     }
 
     func displayAssetList() {
-        self.requestedDisplayAssetList(for: .fromAsset)
+        self.requestedDisplayAssetList(for: .firstTimeAdd)
     }
 }
 
