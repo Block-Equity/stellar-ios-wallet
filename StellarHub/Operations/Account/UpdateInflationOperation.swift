@@ -14,7 +14,7 @@ internal final class UpdateInflationOperation: AsyncOperation, ChainableOperatio
 
     let horizon: StellarSDK
     let api: StellarConfig.HorizonAPI
-    let address: StellarAddress
+    let address: StellarAddress?
     let userKeys: KeyPair
     let completion: ServiceErrorCompletion
 
@@ -24,12 +24,13 @@ internal final class UpdateInflationOperation: AsyncOperation, ChainableOperatio
     var result: Result<SubmitTransactionResponse> = Result.failure(AsyncOperationError.responseUnset)
 
     private var inflationKeyPair: KeyPair? {
-        return try? KeyPair(accountId: self.address.string)
+        guard let addressString = address?.string else { return nil }
+        return try? KeyPair(accountId: addressString)
     }
 
     init(horizon: StellarSDK,
          api: StellarConfig.HorizonAPI,
-         address: StellarAddress,
+         address: StellarAddress?,
          userKeys: KeyPair,
          completion: @escaping ServiceErrorCompletion) {
         self.horizon = horizon
@@ -44,10 +45,12 @@ internal final class UpdateInflationOperation: AsyncOperation, ChainableOperatio
     override func main() {
         super.main()
 
-        guard let inflationKeyPair = self.inflationKeyPair, let accountResponse = self.inData else {
+        guard let accountResponse = self.inData else {
             finish()
             return
         }
+
+        let inflationKeyPair = self.inflationKeyPair
 
         do {
             let setOptionsOperation = try SetOptionsOperation(sourceAccount: self.userKeys,

@@ -58,6 +58,7 @@ public protocol SendAmountResponseDelegate: AnyObject {
 
 public protocol SetInflationResponseDelegate: AnyObject {
     func setInflation(destination: StellarAddress)
+    func clearInflation()
     func inflationFailed(error: FrameworkError)
 }
 

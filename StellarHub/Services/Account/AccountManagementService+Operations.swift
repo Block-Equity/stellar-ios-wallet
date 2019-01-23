@@ -13,15 +13,18 @@ extension AccountManagementService {
     typealias SetInflationOperationPair = ChainedOperationPair<FetchAccountDataOperation, UpdateInflationOperation>
 
     public func setInflationDestination(account: StellarAccount,
-                                        address: StellarAddress,
+                                        address: StellarAddress?,
                                         delegate: SetInflationResponseDelegate) {
         let completion: ServiceErrorCompletion = { error in
             DispatchQueue.main.async {
                 if let error = error {
                     delegate.inflationFailed(error: error)
+                } else if let inflationAddress = address {
+                    account.inflationDestination = inflationAddress.string
+                    delegate.setInflation(destination: inflationAddress)
                 } else {
-                    account.inflationDestination = address.string
-                    delegate.setInflation(destination: address)
+                    account.inflationDestination = nil
+                    delegate.clearInflation()
                 }
             }
         }
