@@ -189,15 +189,18 @@ extension TradingCoordinator: AccountUpdatable {
     func updated(account: StellarAccount) {
 
         if assetPair == nil, let account = accountService.account, account.assets.count > 1 {
-            assetPair = StellarAssetPair(buying: account.assets[1], selling: account.assets[0])
+            let pair = StellarAssetPair(buying: account.assets[1], selling: account.assets[0])
+            assetPair = pair
 
             tradeFromDataSource = TradeAssetListDataSource(assets: account.assets,
-                                                           selected: assetPair?.selling,
+                                                           selected: pair.selling,
                                                            excluding: nil)
 
             tradeToDataSource = TradeAssetListDataSource(assets: account.assets,
-                                                         selected: assetPair?.buying,
-                                                         excluding: assetPair?.buying)
+                                                         selected: pair.buying,
+                                                         excluding: pair.buying)
+
+            tradeService.updateOrders(for: pair, delegate: self)
         }
 
         tradeViewController.refreshView(pair: assetPair)
