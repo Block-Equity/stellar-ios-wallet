@@ -78,7 +78,10 @@ final class PaymentCoordinator {
     }()
 
     private lazy var assetListDataSource: AssetListDataSource = {
-        let dataSource = TradeAssetListDataSource(assets: account.assets, selected: nil, excluding: nil)
+        let dataSource = TradeAssetListDataSource(assets: account.assets,
+                                                  availableAssets: [],
+                                                  selected: nil,
+                                                  excluding: nil)
         dataSource.selectionDelegate = self
         dataSource.actionDelegate = self
 

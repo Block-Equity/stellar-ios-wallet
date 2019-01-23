@@ -13,7 +13,6 @@ protocol AddAssetViewControllerDelegate: class {
 }
 
 class AddAssetViewController: UIViewController {
-
     @IBOutlet var assetCodeTextField: UITextField!
     @IBOutlet var issuerTextField: UITextField!
     @IBOutlet var holdingView: UIView!
@@ -35,6 +34,8 @@ class AddAssetViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        issuerTextField.text = ""
+        assetCodeTextField.text = ""
         view.endEditing(true)
     }
 

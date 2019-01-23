@@ -25,11 +25,6 @@ protocol AssetSelectionDelegate: AnyObject {
     func selected(_ asset: StellarAsset)
 }
 
-protocol AssetListDataSource: (UICollectionViewDelegate & UICollectionViewDataSource) {
-    var actionDelegate: AssetActionDelegate? { get set }
-    var selectionDelegate: AssetSelectionDelegate? { get set }
-}
-
 final class AssetCoordinator {
     private let accountService: AccountManagementService
     private var account: StellarAccount
