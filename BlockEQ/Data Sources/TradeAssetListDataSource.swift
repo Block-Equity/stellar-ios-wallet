@@ -9,12 +9,19 @@
 import StellarHub
 
 final class TradeAssetListDataSource: ExtendableAssetListDataSource, AssetManageCellDelegate {
+    let account: StellarAccount
     var selected: StellarAsset?
     var excludingAsset: StellarAsset?
     var assets: [StellarAsset] = []
     var availableAssets: [StellarAsset] = []
 
-    init(assets: [StellarAsset], availableAssets: [StellarAsset], selected: StellarAsset?, excluding: StellarAsset?) {
+    init(account: StellarAccount,
+         assets: [StellarAsset],
+         availableAssets: [StellarAsset],
+         selected: StellarAsset?,
+         excluding: StellarAsset?) {
+        self.account = account
+
         super.init()
 
         self.assets = sortedAssetList(with: assets).filter { $0 != excluding }
@@ -52,6 +59,17 @@ final class TradeAssetListDataSource: ExtendableAssetListDataSource, AssetManage
             let inset = collectionView.contentInset.left + collectionView.contentInset.right
             styleCell.preferredWidth = collectionView.bounds.width - inset
         }
+
+        return cell
+    }
+
+    func amountCell(collectionView: UICollectionView, for path: IndexPath, asset: StellarAsset) -> AssetAmountCell {
+        let cell: AssetAmountCell = collectionView.dequeueReusableCell(for: path)
+        let amount = account.availableSendBalance(for: asset).displayFormattedString
+        let priceViewModel = AssetPriceView.ViewModel(amount: amount, price: "", hidePrice: true)
+        let model = AssetAmountCell.ViewModel(headerData: asset.headerViewModel, priceData: priceViewModel)
+
+        cell.update(with: model, indexPath: path)
 
         return cell
     }

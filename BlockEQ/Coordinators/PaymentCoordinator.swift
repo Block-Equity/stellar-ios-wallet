@@ -78,7 +78,8 @@ final class PaymentCoordinator {
     }()
 
     private lazy var assetListDataSource: AssetListDataSource = {
-        let dataSource = TradeAssetListDataSource(assets: account.assets,
+        let dataSource = TradeAssetListDataSource(account: account,
+                                                  assets: account.assets,
                                                   availableAssets: [],
                                                   selected: nil,
                                                   excluding: nil)
@@ -205,6 +206,16 @@ extension PaymentCoordinator: AssetSelectionDelegate {
 
 // MARK: - SendAmountViewControllerDelegate
 extension PaymentCoordinator: SendAmountViewControllerDelegate {
+    func validateSendAmount(amount: String) -> Bool {
+        guard let asset = asset else { return false }
+
+        if let totalSendable = Decimal(string: amount) {
+            return totalSendable.isZero ? false : totalSendable <= account.availableSendBalance(for: asset)
+        }
+
+        return false
+    }
+
     func requestedSendAmount(_ viewController: SendAmountViewController, amount: Decimal, memo: String?) {
         guard let address = self.address, let asset = self.asset else { return }
 
