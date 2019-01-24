@@ -19,7 +19,7 @@ enum TradeSegment: Int {
 }
 
 protocol TradeHeaderViewDelegate: AnyObject {
-    func switchedSegment(_ type: TradeSegment)
+    func switchedSegment(_ type: TradeSegment) -> Bool
 }
 
 class TradeHeaderView: UIView, NibOwnerLoadable {
@@ -67,8 +67,9 @@ class TradeHeaderView: UIView, NibOwnerLoadable {
     }
 
     func setSelected(selectedButton: UIButton, animated: Bool) {
-        setTitleSelected(index: selectedButton.tag)
-
-        tradeHeaderViewDelegate?.switchedSegment(TradeSegment.all[selectedButton.tag])
+        let segment = TradeSegment.all[selectedButton.tag]
+        if tradeHeaderViewDelegate?.switchedSegment(segment) == true {
+            setTitleSelected(index: selectedButton.tag)
+        }
     }
 }

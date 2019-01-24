@@ -95,9 +95,12 @@ final class TradeSegmentViewController: UIViewController {
         scrollView.showsHorizontalScrollIndicator = false
     }
 
-    func switchSegment(_ type: TradeSegment) {
+    func switchSegment(_ type: TradeSegment) -> Bool {
+        guard displayNoAssetOverlay != true else { return false }
+
         let offset = CGPoint(x: scrollView.frame.size.width * CGFloat(type.rawValue), y: 0.0)
         scrollView.setContentOffset(offset, animated: true)
+        return true
     }
 
     func displayNoAssetOverlayView() {
