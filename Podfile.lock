@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.8.0)
+  - Alamofire (4.8.1)
   - Cache (5.2.0)
   - Imaginary (4.2.0):
     - Cache (~> 5.0)
@@ -57,14 +57,14 @@ CHECKOUT OPTIONS:
     :commit: 86ea7613c99cd4896765fabfa773b39b40bc8590
     :git: https://github.com/vikmeup/SCLAlertView-Swift
   stellar-ios-mac-sdk:
-    :commit: 94c125b446ba5e1f6aeac7979338d2b6abb41268
+    :commit: 600d39b633f6227dd908a7b8b9638925a36dbd42
     :git: https://github.com/Soneso/stellar-ios-mac-sdk.git
   Whisper:
     :commit: 86880dea149a871ec5cb909cc3b93e7fb5804788
     :git: https://github.com/freeubi/Whisper.git
 
 SPEC CHECKSUMS:
-  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
   Imaginary: dae33d06dbc2ada22f98afef5eb45cc061311a2c
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
@@ -75,6 +75,6 @@ SPEC CHECKSUMS:
   stellar-ios-mac-sdk: 7a49cbb604d6ec8e0e3fefddf34d0d9340db2f1c
   Whisper: 8c499b08f3b56d5c80162d775e3462318ad7f4fe
 
-PODFILE CHECKSUM: c16c3a1f64d010dfff91b5763b95469e7be09cbd
+PODFILE CHECKSUM: a20b2a55a46db8619698bfc60bab052b3593e01e
 
 COCOAPODS: 1.6.0.beta.2
