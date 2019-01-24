@@ -132,7 +132,8 @@ extension TradingCoordinator: AssetCoordinatorDelegate {
             return nil
         }
 
-        let defaultDataSource = TradeAssetListDataSource(assets: account.assets,
+        let defaultDataSource = TradeAssetListDataSource(account: account,
+                                                         assets: account.assets,
                                                          availableAssets: [],
                                                          selected: nil,
                                                          excluding: nil)
@@ -143,18 +144,21 @@ extension TradingCoordinator: AssetCoordinatorDelegate {
 
         switch field {
         case .fromAsset:
-            return TradeAssetListDataSource(assets: account.assets,
+            return TradeAssetListDataSource(account: account,
+                                            assets: account.assets,
                                             availableAssets: account.availableAssets,
                                             selected: assetPair?.selling,
                                             excluding: nil)
         case .toAsset:
-            return TradeAssetListDataSource(assets: account.assets,
+            return TradeAssetListDataSource(account: account,
+                                            assets: account.assets,
                                             availableAssets: account.availableAssets,
                                             selected: assetPair?.buying,
                                             excluding: assetPair?.selling)
         case .firstTimeAdd:
             let assets = account.assets.count > 1 ? account.assets : account.availableAssets
-            return TradeAssetListDataSource(assets: assets,
+            return TradeAssetListDataSource(account: account,
+                                            assets: assets,
                                             availableAssets: account.availableAssets,
                                             selected: nil,
                                             excluding: account.assets.first)
@@ -261,17 +265,18 @@ extension TradingCoordinator {
 
 extension TradingCoordinator: AccountUpdatable {
     func updated(account: StellarAccount) {
-
         if assetPair == nil, let account = accountService.account, account.assets.count > 1 {
             let pair = StellarAssetPair(buying: account.assets[1], selling: account.assets[0])
             assetPair = pair
 
-            tradeFromDataSource = TradeAssetListDataSource(assets: account.assets,
+            tradeFromDataSource = TradeAssetListDataSource(account: account,
+                                                           assets: account.assets,
                                                            availableAssets: account.availableAssets,
                                                            selected: pair.selling,
                                                            excluding: nil)
 
-            tradeToDataSource = TradeAssetListDataSource(assets: account.assets,
+            tradeToDataSource = TradeAssetListDataSource(account: account,
+                                                         assets: account.assets,
                                                          availableAssets: account.availableAssets,
                                                          selected: pair.buying,
                                                          excluding: pair.buying)

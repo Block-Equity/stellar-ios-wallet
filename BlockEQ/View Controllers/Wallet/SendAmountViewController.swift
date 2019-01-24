@@ -10,6 +10,7 @@ import stellarsdk
 import StellarHub
 
 protocol SendAmountViewControllerDelegate: AnyObject {
+    func validateSendAmount(amount: String) -> Bool
     func requestedSendAmount(_ viewController: SendAmountViewController, amount: Decimal, memo: String?)
     func cancelledSendAmount(_ viewController: SendAmountViewController)
 }
@@ -91,14 +92,6 @@ final class SendAmountViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
-    func validateSendAmount(amount: String, available: Decimal) -> Bool {
-        if let totalSendable = Decimal(string: amount) {
-            return totalSendable.isZero ? false : totalSendable <= available
-        }
-
-        return false
-    }
-
     func update(with viewModel: ViewModel) {
         availableAmount = viewModel.availableSendBalance
 
@@ -122,6 +115,11 @@ final class SendAmountViewController: UIViewController {
 extension SendAmountViewController {
     @IBAction func sendPayment() {
         guard let amountText = amountLabel.text, !amountText.isEmpty, let amount = Decimal(string: amountText) else {
+            amountLabel.shake()
+            return
+        }
+
+        guard delegate?.validateSendAmount(amount: amountText) == true else {
             amountLabel.shake()
             return
         }
@@ -167,7 +165,7 @@ extension SendAmountViewController: KeyboardViewDelegate {
 
         sendingAmount = restrictDecimalPlaces(amount: sendingAmount)
 
-        if validateSendAmount(amount: sendingAmount, available: availableAmount) || sendingAmount == "0" {
+        if delegate?.validateSendAmount(amount: sendingAmount) == true || sendingAmount == "0" {
             amountLabel.textColor = Colors.primaryDark
         } else {
             amountLabel.textColor = Colors.red
