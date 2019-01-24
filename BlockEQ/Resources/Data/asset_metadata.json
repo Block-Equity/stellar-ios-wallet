@@ -13,7 +13,7 @@
         "primary_color": "#062983",
         "issuer_name": "Block Equity",
         "issuer_address": "GBPG7KRYC3PTKHBXQGRD3GMZ5DB4C3D553ZN2ZLH57LBAQIULVY46Z5F",
-        "description": "The official BlockPoints (PTS) token of BlockEQ https://blockeq.com"
+        "description": "The official BlockPoints (PTS) token of BlockEQ https://blockeq.com."
     },
     {
         "short_code": "CAD",
@@ -21,7 +21,7 @@
         "primary_color": "#f70a0c",
         "issuer_name": "Block Equity",
         "issuer_address": "GABK2IHWW7BCRPP3BL6WMOMDBPHCBJR2SLP5HAUBYKNZG5J5RJSROS5S",
-        "description": "Asset backed Canadian Dollar. All CAD is fully backed by deposits at a bank."
+        "description": "Canadian Dollar token."
     },
     {
         "short_code": "BTC",
