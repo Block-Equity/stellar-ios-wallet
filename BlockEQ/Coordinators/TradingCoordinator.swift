@@ -77,8 +77,8 @@ final class TradingCoordinator {
         orderbookViewController.delegate = self
     }
 
-    func switchedSegment(_ type: TradeSegment) {
-        segmentController.switchSegment(type)
+    func switchedSegment(_ type: TradeSegment) -> Bool {
+        return segmentController.switchSegment(type)
     }
 
     func startPeriodicOrderbookUpdates() {

@@ -190,8 +190,8 @@ final class ApplicationCoordinator {
 }
 
 extension ApplicationCoordinator: TradeHeaderViewDelegate {
-    func switchedSegment(_ type: TradeSegment) {
-        tradingCoordinator?.switchedSegment(type)
+    func switchedSegment(_ type: TradeSegment) -> Bool {
+        return tradingCoordinator?.switchedSegment(type) ?? false
     }
 }
 
