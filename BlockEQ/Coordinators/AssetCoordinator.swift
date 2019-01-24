@@ -91,6 +91,12 @@ final class AssetCoordinator {
     }
 
     func add(_ asset: StellarAsset, to account: StellarAccount) {
+        guard account.hasRequiredNativeBalanceForNewEntry else {
+            let minimumBalance = account.newEntryMinBalance.displayFormattedString
+            assetListViewController.displayLowBalanceError(minimum: minimumBalance)
+            return
+        }
+
         showHud(message: "ADDING_ASSET".localized())
         accountService.changeTrust(account: account, asset: asset, remove: false, delegate: self)
     }
