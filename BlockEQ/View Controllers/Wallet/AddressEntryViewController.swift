@@ -70,8 +70,26 @@ final class AddressEntryViewController: UIViewController {
         let availableSendBalance = account.availableSendBalance(for: asset).displayFormattedString
         navigationItem.title = String(format: "TRADE_BALANCE_FORMAT".localized(), availableSendBalance, asset.shortCode)
     }
+    
+    @IBAction func textFieldEditingDidChange(_ sender: Any) {
+        let text = sendAddressTextField.text!
+        if (text.contains("*") && text.contains(".com")) {
+            Federation.resolve(stellarAddress: text) { (response) -> (Void) in
+                switch(response) {
+                case .success(let response) :
+                    DispatchQueue.main.async {
+                      print(response.accountId)
+                      self.sendAddressTextField.text = response.accountId
+                    }
+                case .failure(let error) :
+                    print("error " + error.localizedDescription)
+                }
+            }
+        }
+      
+    }
+    
 }
-
 // MARK: - IBActions
 extension AddressEntryViewController {
     @IBAction func addAmount() {
