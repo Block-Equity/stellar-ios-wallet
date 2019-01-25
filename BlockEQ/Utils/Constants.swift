@@ -48,6 +48,7 @@ struct Colors {
 struct TextColors {
     static let greyLabelText = UIColor(hex: "#93979D")
     static let greyTextFieldText = UIColor(hex: "#5C5C5C")
+    static let greyTest = UIColor(hex: "#909090")
 }
 
 struct ViewColors {

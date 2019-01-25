@@ -20,6 +20,7 @@ extension ApplicationCoordinator: SettingsDelegate {
         }
     }
 
+    //swiftlint:disable cyclomatic_complexity
     func processNode(with identifier: String, setting: SettingNode) {
         switch identifier {
         case "wallet-clear":
@@ -46,6 +47,7 @@ extension ApplicationCoordinator: SettingsDelegate {
             print("Selected Node: \(String(describing: setting.name)) \(setting.identifier)")
         }
     }
+    //swiftlint:enable cyclomatic_complexity
 
     func processSection(with identifier: String, setting: SettingNode) {
         switch identifier {
