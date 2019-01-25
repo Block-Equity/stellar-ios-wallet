@@ -20,7 +20,8 @@
 "SETTINGS_SECTION_DEVELOPMENT" = "Development";
 
 "SETTINGS_OPTION_SEED_PHRASE" = "View Mnemonic Phrase";
-"SETTINGS_OPTION_CLEAR_WALLET" = "Clear Wallet";
+"SETTINGS_OPTION_CLEAR_WALLET" = "Remove Wallet from Device";
+"SETTINGS_OPTION_MERGE_ACCOUNT" = "Close Account";
 "SETTINGS_OPTION_REVIEW" = "Review App";
 "SETTINGS_OPTION_SHARE" = "Share";
 "SETTINGS_OPTION_APPLICATION" = "App Information";
@@ -325,7 +326,9 @@
 "RESTART_REQUIRED" = "Restart Required";
 "SEND_TO" = "Send To";
 "ADDRESS_ENTRY_BUTTON_LABEL" = "Next";
-"DESTINATION_ADDRESS" = "Destination Address";
-"CLOSE_ACCOUNT_CONFIRM_DESCRIPTION" = "Please verify that the address below is the account you intend to close.";
+"DESTINATION_ADDRESS_TITLE" = "Fund Destination";
+"DESTINATION_ADDRESS_PLACEHOLDER" = "Enter destination address";
+"VERIFICATION_DESCRIPTION" = "Please verify that the address below is the account you intend to close.";
 "UNRECOGNIZED_ADDRESS_ERROR_TITLE" = "Unrecognized Address";
 "UNRECOGNIZED_ADDRESS_ERROR_MESSAGE" = "The provided QR code could not be processed for a valid Stellar address.";
+"CLOSE_ACCOUNT_BUTTON_TITLE" = "Close Account";

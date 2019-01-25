@@ -21,7 +21,8 @@ final class AddressEntryViewSnapshotTests: XCTestCase, SnapshotTest {
                                                    primaryButtonTitle: "Make It So",
                                                    addressFieldPlaceholder: "Placeholder Text",
                                                    addressFieldPrefilledText: nil,
-                                                   addressButtonIcon: nil)
+                                                   addressButtonIcon: nil,
+                                                   buttonColor: Colors.primaryDark)
 
         entryView.update(with: viewModel)
 
@@ -35,7 +36,8 @@ final class AddressEntryViewSnapshotTests: XCTestCase, SnapshotTest {
                                                    primaryButtonTitle: "Close Account",
                                                    addressFieldPlaceholder: nil,
                                                    addressFieldPrefilledText: "GBDBJNAZDG7UGK6XR3AQ2AAPGNTSQ3BPKBJFJMMYUIEDJ45ZFLMPH4G2",
-                                                   addressButtonIcon: nil)
+                                                   addressButtonIcon: nil,
+                                                   buttonColor: Colors.primaryDark)
 
         entryView.update(with: viewModel)
 
@@ -49,7 +51,8 @@ final class AddressEntryViewSnapshotTests: XCTestCase, SnapshotTest {
                                                    primaryButtonTitle: "Close Account",
                                                    addressFieldPlaceholder: "Placeholder Text",
                                                    addressFieldPrefilledText: nil,
-                                                   addressButtonIcon: nil)
+                                                   addressButtonIcon: nil,
+                                                   buttonColor: Colors.primaryDark)
 
         entryView.update(with: viewModel)
 
@@ -63,7 +66,8 @@ final class AddressEntryViewSnapshotTests: XCTestCase, SnapshotTest {
                                                    primaryButtonTitle: "Close Account",
                                                    addressFieldPlaceholder: "Placeholder Text",
                                                    addressFieldPrefilledText: "GBDBJNAZDG7UGK6XR3AQ2AAPGNTSQ3BPKBJFJMMYUIEDJ45ZFLMPH4G2",
-                                                   addressButtonIcon: nil)
+                                                   addressButtonIcon: nil,
+                                                   buttonColor: Colors.primaryDark)
 
         entryView.update(with: viewModel)
 
@@ -77,7 +81,8 @@ final class AddressEntryViewSnapshotTests: XCTestCase, SnapshotTest {
                                                    primaryButtonTitle: "Close Account",
                                                    addressFieldPlaceholder: "Placeholder Text",
                                                    addressFieldPrefilledText: nil,
-                                                   addressButtonIcon: UIImage(named: "send"))
+                                                   addressButtonIcon: UIImage(named: "send"),
+                                                   buttonColor: Colors.red)
 
         entryView.update(with: viewModel)
 
@@ -91,7 +96,8 @@ final class AddressEntryViewSnapshotTests: XCTestCase, SnapshotTest {
                                                    primaryButtonTitle: "Close Account",
                                                    addressFieldPlaceholder: "Placeholder Text",
                                                    addressFieldPrefilledText: nil,
-                                                   addressButtonIcon: UIImage(named: "send"))
+                                                   addressButtonIcon: UIImage(named: "send"),
+                                                   buttonColor: Colors.primaryDark)
 
         entryView.update(with: viewModel)
 

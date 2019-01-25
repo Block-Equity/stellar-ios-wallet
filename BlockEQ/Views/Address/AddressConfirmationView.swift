@@ -34,7 +34,7 @@ final class AddressConfirmationView: UIView, NibOwnerLoadable {
         topBorder(with: ViewColors.viewBorderColor, width: 1)
         bottomBorder(with: ViewColors.viewBorderColor, width: 1)
 
-        descriptionLabel.text = "CLOSE_ACCOUNT_CONFIRM_DESCRIPTION".localized()
+        descriptionLabel.text = "VERIFICATION_DESCRIPTION".localized()
         descriptionLabel.textColor = TextColors.greyLabelText
         descriptionLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
     }
@@ -46,7 +46,7 @@ final class AddressConfirmationView: UIView, NibOwnerLoadable {
 
     override func prepareForInterfaceBuilder() {
         setupView()
-        update(with: ViewModel(labelText: "CLOSE_ACCOUNT_CONFIRM_DESCRIPTION".localized(),
+        update(with: ViewModel(labelText: "VERIFICATION_DESCRIPTION".localized(),
                                addressText: "TEST_ADDRESS".localized()))
     }
 }

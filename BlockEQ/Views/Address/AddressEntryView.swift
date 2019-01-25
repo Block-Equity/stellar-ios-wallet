@@ -52,7 +52,7 @@ final class AddressEntryView: UIView, NibOwnerLoadable {
         nextButton.setTitle("ADDRESS_ENTRY_BUTTON_LABEL".localized(), for: .normal)
         addressButton.setImage(UIImage(named: "camera"), for: .normal)
 
-        addressTextField.placeholder = "DESTINATION_ADDRESS".localized()
+        addressTextField.placeholder = "DESTINATION_ADDRESS_PLACEHOLDER".localized()
         addressTextField.clearButtonMode = .whileEditing
     }
 
@@ -65,6 +65,12 @@ final class AddressEntryView: UIView, NibOwnerLoadable {
 
         addressButton.setImage(image, for: .normal)
         nextButton.setTitle(viewModel.primaryButtonTitle, for: .normal)
+
+        nextButton.backgroundColor = viewModel.buttonColor
+    }
+
+    func togglePrimaryAction(enabled: Bool) {
+        nextButton.isEnabled = enabled
     }
 }
 
@@ -94,5 +100,6 @@ extension AddressEntryView {
         let addressFieldPlaceholder: String?
         let addressFieldPrefilledText: String?
         let addressButtonIcon: UIImage?
+        let buttonColor: UIColor?
     }
 }
