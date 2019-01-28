@@ -44,6 +44,16 @@ struct Colors {
     static let transactionCellMediumGray = UIColor(red: 0.565, green: 0.565, blue: 0.565, alpha: Alphas.opaque)
     static let transactionCellBorderGray = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: Alphas.opaque)
 }
+
+struct TextColors {
+    static let greyLabelText = UIColor(hex: "#93979D")
+    static let greyTextFieldText = UIColor(hex: "#5C5C5C")
+}
+
+struct ViewColors {
+    static let viewBorderColor = UIColor(hex: "#E6E6E6")
+    static let disabledPrimaryButton = UIColor(hex: "#AEAEAE")
+}
 //swiftlint:enable line_length
 
 public struct Alphas {
