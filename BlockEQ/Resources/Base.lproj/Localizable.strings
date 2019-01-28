@@ -320,3 +320,6 @@
 "EXISTING_ACCOUNT_INACTIVE" = "Fetching account transactions, please wait.";
 "CLEAR_WALLET_MESSAGE" = "Please clear your wallet and restart the application for the network switch to take effect.";
 "RESTART_REQUIRED" = "Restart Required";
+"SEND_TO" = "Send To";
+"ADDRESS_ENTRY_BUTTON_LABEL" = "Next";
+"DESTINATION_ADDRESS" = "Destination Address";
