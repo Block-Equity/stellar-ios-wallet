@@ -33,10 +33,10 @@ class UIInsetLabel: UILabel {
     var edgeInsets: UIEdgeInsets = .zero
 
     override func drawText(in rect: CGRect) {
-        let insets = UIEdgeInsets.init(top: edgeInsets.top,
-                                       left: edgeInsets.left,
-                                       bottom: edgeInsets.bottom,
-                                       right: edgeInsets.right)
+        let insets = UIEdgeInsets(top: edgeInsets.top,
+                                  left: edgeInsets.left,
+                                  bottom: edgeInsets.bottom,
+                                  right: edgeInsets.right)
 
         super.drawText(in: rect.inset(by: insets))
     }

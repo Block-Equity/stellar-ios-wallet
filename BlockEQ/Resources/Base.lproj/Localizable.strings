@@ -6,6 +6,8 @@
   Copyright © 2018 BlockEQ. All rights reserved.
 */
 
+"TEST_ADDRESS" = "GCCD6AJOYZCUAQLX32ZJF2MKFFAUJ53PVCFQI3RHWKL3V47QYE2BNAUT";
+
 "MENU_OPTION_WALLETS" = "Wallets";
 "MENU_OPTION_TRADING" = "Trading";
 "MENU_OPTION_SETTINGS" = "Settings";
@@ -323,3 +325,4 @@
 "SEND_TO" = "Send To";
 "ADDRESS_ENTRY_BUTTON_LABEL" = "Next";
 "DESTINATION_ADDRESS" = "Destination Address";
+"CLOSE_ACCOUNT_CONFIRM_DESCRIPTION" = "Please verify that the address below is the account you intend to close.";

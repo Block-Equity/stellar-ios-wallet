@@ -100,6 +100,10 @@
 		C57A8542217815410048A6B5 /* TransactionDetailsSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57A8541217815410048A6B5 /* TransactionDetailsSectionHeader.swift */; };
 		C589FF2A20902CCC00F5F308 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C589FF2920902CCC00F5F308 /* SettingsViewController.swift */; };
 		C589FF2C20902CE300F5F308 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C589FF2B20902CE300F5F308 /* SettingsViewController.xib */; };
+		C58B698B21FFA04A00D467EA /* AddressConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58B698A21FFA04A00D467EA /* AddressConfirmationView.swift */; };
+		C58B698D21FFA09200D467EA /* AddressConfirmationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58B698C21FFA09200D467EA /* AddressConfirmationView.xib */; };
+		C58B698F21FFA1DD00D467EA /* AddressLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58B698E21FFA1DD00D467EA /* AddressLabel.swift */; };
+		C58B699121FFA6DF00D467EA /* AddressConfirmationViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58B699021FFA6DF00D467EA /* AddressConfirmationViewSnapshotTests.swift */; };
 		C58D374921B06A23009B44C0 /* PillViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58D374721B06A22009B44C0 /* PillViewCell.swift */; };
 		C58D374A21B06A23009B44C0 /* PillViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58D374821B06A22009B44C0 /* PillViewCell.xib */; };
 		C590B9BE21A0984400B5262A /* ApplicationCoordinator+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = C590B9BD21A0984400B5262A /* ApplicationCoordinator+Debug.swift */; };
@@ -380,6 +384,10 @@
 		C57A8541217815410048A6B5 /* TransactionDetailsSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailsSectionHeader.swift; sourceTree = "<group>"; };
 		C589FF2920902CCC00F5F308 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C589FF2B20902CE300F5F308 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		C58B698A21FFA04A00D467EA /* AddressConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressConfirmationView.swift; sourceTree = "<group>"; };
+		C58B698C21FFA09200D467EA /* AddressConfirmationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressConfirmationView.xib; sourceTree = "<group>"; };
+		C58B698E21FFA1DD00D467EA /* AddressLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressLabel.swift; sourceTree = "<group>"; };
+		C58B699021FFA6DF00D467EA /* AddressConfirmationViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressConfirmationViewSnapshotTests.swift; sourceTree = "<group>"; };
 		C58D374721B06A22009B44C0 /* PillViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PillViewCell.swift; sourceTree = "<group>"; };
 		C58D374821B06A22009B44C0 /* PillViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PillViewCell.xib; sourceTree = "<group>"; };
 		C590B9BD21A0984400B5262A /* ApplicationCoordinator+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ApplicationCoordinator+Debug.swift"; sourceTree = "<group>"; };
@@ -631,6 +639,9 @@
 		C5189BA621FF8774003A794B /* Address */ = {
 			isa = PBXGroup;
 			children = (
+				C58B698E21FFA1DD00D467EA /* AddressLabel.swift */,
+				C58B698A21FFA04A00D467EA /* AddressConfirmationView.swift */,
+				C58B698C21FFA09200D467EA /* AddressConfirmationView.xib */,
 				C5189BA721FF8784003A794B /* AddressEntryView.swift */,
 				C5189BA921FF87A3003A794B /* AddressEntryView.xib */,
 			);
@@ -641,6 +652,7 @@
 			isa = PBXGroup;
 			children = (
 				C5189BAC21FF8C06003A794B /* AddressEntryViewSnapshotTests.swift */,
+				C58B699021FFA6DF00D467EA /* AddressConfirmationViewSnapshotTests.swift */,
 			);
 			path = Address;
 			sourceTree = "<group>";
@@ -1363,6 +1375,7 @@
 				C531E30121D133CA00875B5E /* AssetPriceView.xib in Resources */,
 				C525C97920B79695006C138F /* KeyboardView.xib in Resources */,
 				C5401D362178007300A12AC2 /* TransactionDetailsViewController.xib in Resources */,
+				C58B698D21FFA09200D467EA /* AddressConfirmationView.xib in Resources */,
 				EC11062320C7062000FD3684 /* MyOffersHeaderView.xib in Resources */,
 				EC2015EA2052EAC7009A73C8 /* WalletTitleViewController.xib in Resources */,
 				C5BB02492165269F00E4AAD1 /* SecretSeedViewController.xib in Resources */,
@@ -1568,6 +1581,7 @@
 			files = (
 				C5FDC3FD21E3CB6600C911F0 /* AssetPriceViewSnapshotTests.swift in Sources */,
 				C5FDC3FF21E3CB9300C911F0 /* AssetButtonViewSnapshotTests.swift in Sources */,
+				C58B699121FFA6DF00D467EA /* AddressConfirmationViewSnapshotTests.swift in Sources */,
 				C5FDC3FB21E3CB3300C911F0 /* AssetHeaderViewSnapshotTests.swift in Sources */,
 				C5189BAD21FF8C06003A794B /* AddressEntryViewSnapshotTests.swift in Sources */,
 				C5FDC40321E3EDF500C911F0 /* BalanceViewControllerSnapshotTests.swift in Sources */,
@@ -1596,6 +1610,7 @@
 				C592CC6121F28B630062CE97 /* CacheAccountQROperation.swift in Sources */,
 				C53E62862199DC94006BF2F1 /* SendDiagnosticOperation.swift in Sources */,
 				C5114DB7219548AC00C88E4F /* TransactionDetailsDataSource.swift in Sources */,
+				C58B698B21FFA04A00D467EA /* AddressConfirmationView.swift in Sources */,
 				C51B6E5C21B9B553001DFEF7 /* UIViewController+Blurrable.swift in Sources */,
 				C5401D342178005B00A12AC2 /* TransactionDetailsViewController.swift in Sources */,
 				EC2015F720532F4B009A73C8 /* AppButton.swift in Sources */,
@@ -1691,6 +1706,7 @@
 				C56185D621F6B330007B6E98 /* PaymentCoordinator.swift in Sources */,
 				EC2015A92052D968009A73C8 /* AppDelegate.swift in Sources */,
 				C564059F219DC1900084CD5E /* Diagnostic+Extensions.swift in Sources */,
+				C58B698F21FFA1DD00D467EA /* AddressLabel.swift in Sources */,
 				EC2015D92052DB6D009A73C8 /* LaunchViewController.swift in Sources */,
 				C53978CD20BF4EF000587D99 /* SettingsNormalCell.swift in Sources */,
 				C5211AA221DBF3E300970473 /* AssetCoordinator.swift in Sources */,
