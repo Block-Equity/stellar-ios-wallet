@@ -87,7 +87,7 @@ final class WalletViewController: UIViewController {
         navigationItem.leftBarButtonItem = leftBarButtonItem
 
         assetBalanceButton.setTitle("BALANCE_INFORMATION".localized(), for: .normal)
-        inactiveDescriptionLabel.text = "NEW_ACCOUNT_DESCRIPTION".localized()
+        inactiveDescriptionLabel.text = "EXISTING_ACCOUNT_INACTIVE".localized()
         inactiveDescriptionLabel.textColor = Colors.darkGray
 
         inactiveImageView.image = UIImage(named: "wallet-large")
@@ -103,6 +103,8 @@ final class WalletViewController: UIViewController {
         tableViewHeaderRightLabel.textColor = Colors.darkGrayTransparent
         tableView?.backgroundColor = Colors.lightBackground
         tableView?.separatorStyle = .none
+
+        update(with: state.viewModel)
     }
 
     func toggleInactiveState(_ hidden: Bool, animated: Bool = true) {
