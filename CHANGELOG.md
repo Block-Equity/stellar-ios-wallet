@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Please keep this human readable! Omit classnames and technical details where possible.
 
+## [2.6.1] - 2019-01-28
+### Fixed
+- Corrected an issue that was preventing addresses being filled in after scanning from a QR code
+- Corrected an issue that was causing the wallet screen from being refreshed when first launched in some cases
+
 ## [2.6.0] - 2019-01-23
 ### Added
 - The asset list has been visually redesigned to allow for more asset details
