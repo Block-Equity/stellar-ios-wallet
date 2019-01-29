@@ -11,7 +11,7 @@ import StellarHub
 // MARK: - WalletViewControllerDelegate
 extension ApplicationCoordinator: WalletViewControllerDelegate {
     func selectedWalletSwitch(_ viewController: WalletViewController) {
-        guard let core = self.core, let account = core.accountService.account else {
+        guard let account = core.accountService.account else {
             return
         }
 
@@ -26,7 +26,7 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
     }
 
     func selectedSend(_ viewController: WalletViewController, for asset: StellarAsset) {
-        guard let service = core?.accountService, let account = service.account else { return }
+        guard let service = core.accountService, let account = service.account else { return }
 
         let paymentCoordinator = PaymentCoordinator(accountService: service, account: account, type: .wallet(asset))
         paymentCoordinator?.delegate = self
@@ -39,7 +39,7 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
     }
 
     func selectedReceive(_ viewController: WalletViewController) {
-        guard let account = core?.accountService.account else { return }
+        guard let account = core.accountService.account else { return }
 
         let address = account.accountId
         let receiveVC = ReceiveViewController(address: address)
@@ -52,7 +52,7 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
     }
 
     func selectBalance(_ viewController: WalletViewController, for asset: StellarAsset) {
-        guard let account = core?.accountService.account else { return }
+        guard let account = core.accountService.account else { return }
 
         let balanceVC = BalanceViewController()
         let container = AppNavigationController(rootViewController: balanceVC)
@@ -86,7 +86,7 @@ extension ApplicationCoordinator: AssetCoordinatorDelegate {
     }
 
     func selected(asset: StellarAsset) {
-        guard let account = core?.accountService.account else { return }
+        guard let account = core.accountService.account else { return }
         walletViewController.update(with: account, asset: asset)
     }
 
@@ -95,7 +95,7 @@ extension ApplicationCoordinator: AssetCoordinatorDelegate {
     }
 
     func dataSource() -> AssetListDataSource? {
-        guard let account = core?.accountService.account else {
+        guard let account = core.accountService.account else {
             return nil
         }
 
@@ -108,12 +108,12 @@ extension ApplicationCoordinator: AssetCoordinatorDelegate {
 extension ApplicationCoordinator: TransactionDetailsViewControllerDelegate {
     func requestedTransaction(_ viewController: TransactionDetailsViewController,
                               for effect: StellarEffect) -> StellarTransaction? {
-        return core?.indexingService.relatedObject(startingAt: effect)
+        return core.indexingService.relatedObject(startingAt: effect)
     }
 
     func requestedOperations(_ viewController: TransactionDetailsViewController,
                              for transaction: StellarTransaction) -> [StellarOperation] {
-        if let accountOperations = core?.accountService.account?.operations {
+        if let accountOperations = core.accountService.account?.operations {
             return accountOperations.filter { $0.transactionHash == transaction.hash }
         }
 

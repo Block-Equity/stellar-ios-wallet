@@ -38,6 +38,8 @@ extension ApplicationCoordinator: SettingsDelegate {
             presentIndexingStatus()
         case "debug-mimic-account":
             presentMimicAccount()
+        case "debug-fund-testnet-acc":
+            fundTestnetAccount()
         case let network where network.contains("network-"):
             switchNetwork(with: setting)
         default:
@@ -89,7 +91,7 @@ extension ApplicationCoordinator: SettingsDelegate {
 
     func manageWallet(with node: SettingNode) {
         if node.identifier == "keys-display-secret-seed" {
-            displayAuth { self.displaySecretSeet() }
+            displayAuth { self.displaySecretSeed() }
         } else if node.identifier == "keys-view-mnemonic" {
             displayAuth { self.displayMnemonic() }
         } else if node.identifier == "keys-export-private-key" {
@@ -142,8 +144,8 @@ extension ApplicationCoordinator: SettingsDelegate {
             #if DEBUG
             if let accountId = controller.textFields![0].text {
                 KeychainHelper.save(accountId: accountId)
-                self.core?.accountService.overrideWithAccount(id: accountId)
-                self.core?.updateService.update()
+                self.core.accountService.overrideWithAccount(id: accountId)
+                self.core.updateService.update()
             }
             #endif
         }, presentingViewController: viewController, placeholder: "Account ID")
@@ -164,6 +166,16 @@ extension ApplicationCoordinator: SettingsDelegate {
         controller.addAction(dismissAction)
 
         self.wrappingNavController?.present(controller, animated: true, completion: nil)
+    }
+
+    func fundTestnetAccount() {
+        let operationQueue = OperationQueue()
+        operationQueue.qualityOfService = .userInitiated
+
+        guard let account = self.core.accountService.account else { return }
+        let fundOperation = FundTestnetAccountOperation(address: account.accountId)
+
+        operationQueue.addOperation(fundOperation)
     }
 
     func clearWalletPrompt() {
@@ -189,7 +201,7 @@ extension ApplicationCoordinator: SettingsDelegate {
 
     func clearWallet() {
         self.displayAuth {
-            self.tradingCoordinator?.stopPeriodicOrderbookUpdates()
+            self.tradingCoordinator.stopPeriodicOrderbookUpdates()
 
             KeychainHelper.clearAll()
             SecurityOptionHelper.clear()
@@ -200,9 +212,8 @@ extension ApplicationCoordinator: SettingsDelegate {
             self.switchedTabs(.assets)
             self.walletViewController.clear()
 
-            self.core?.accountService.clear()
-            self.core?.stopSubservices()
-            self.core = nil
+            self.core.accountService.clear()
+            self.core.stopSubservices()
         }
     }
 
@@ -210,26 +221,29 @@ extension ApplicationCoordinator: SettingsDelegate {
         // Temporarily store the toggled settings and trigger authentication to verify
         temporaryPinSetting = SecurityOptionHelper.optionSetting(for: .pinEnabled)
         temporaryBiometricSetting = SecurityOptionHelper.optionSetting(for: .useBiometrics)
+
         authCompletion = completion
 
-        authenticationCoordinator.authenticate()
+        delegate?.requestedAuthentication(self,
+                                          container: tabController,
+                                          options: AuthenticationCoordinator.defaultConfirmationOptions)
     }
 
     func displayMnemonic() {
-        let mnemonic = core?.accountService.accountMnemonic()
-        let phrase = core?.accountService.accountPassphrase()
+        let mnemonic = core.accountService.accountMnemonic()
+        let phrase = core.accountService.accountPassphrase()
         let mnemonicViewController = MnemonicViewController(mnemonic: mnemonic, passphrase: phrase, mode: .view)
 
         wrappingNavController?.pushViewController(mnemonicViewController, animated: true)
     }
 
-    func displaySecretSeet() {
+    func displaySecretSeed() {
         var viewController: SecretSeedViewController
 
-        if let seed = core?.accountService.accountSecretSeed() {
+        if let seed = core.accountService.accountSecretSeed() {
             viewController = SecretSeedViewController(seed)
-        } else if let mnemonic = core?.accountService.accountMnemonic() {
-            let passphrase = core?.accountService.accountPassphrase()
+        } else if let mnemonic = core.accountService.accountMnemonic() {
+            let passphrase = core.accountService.accountPassphrase()
             viewController = SecretSeedViewController(mnemonic: mnemonic, passphrase: passphrase)
         } else {
             return

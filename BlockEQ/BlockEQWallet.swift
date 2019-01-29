@@ -10,14 +10,29 @@ import stellarsdk
 import StellarHub
 import os.log
 
-final class BlockEQWallet {
-    let container = WrapperVC()
-    let onboardingCoordinator = OnboardingCoordinator()
-    var appCoordinator = ApplicationCoordinator()
+protocol DelegateResponder: AnyObject {
+    func willEnterForeground()
+    func didBecomeActive()
+    func didEnterBackground()
+}
 
-    var authenticationCoordinator: AuthenticationCoordinator?
-    var onboardingContainer: Bool = false
-    var core: CoreService!
+final class BlockEQWallet {
+    let authenticationCoordinator: AuthenticationCoordinator
+    let container = WrapperVC()
+
+    var isOnboarding: Bool {
+        return onboardingCoordinator != nil
+    }
+
+    var isInWallet: Bool {
+        return appCoordinator != nil
+    }
+
+    var onboardingCoordinator: OnboardingCoordinator?
+    var appCoordinator: ApplicationCoordinator?
+    var core: CoreService?
+
+    public weak var currentResponder: DelegateResponder?
 
     var network: StellarConfig.HorizonAPI {
         let network = UserDefaults.standard.string(forKey: "setting.network")
@@ -25,122 +40,119 @@ final class BlockEQWallet {
     }
 
     init() {
-        core = CoreService(with: network)
+        authenticationCoordinator = AuthenticationCoordinator()
 
-        onboardingCoordinator.delegate = self
-        appCoordinator.delegate = self
-
-        onboardingCoordinator.core = self.core
+        restartCore()
     }
 
-    func willEnterForeground() {
-        if let presentedController = appCoordinator.tabController.presentedViewController {
-            presentedController.dismiss(animated: false, completion: nil)
-        }
-
-        authenticate()
-
-        appCoordinator.willEnterForeground()
-    }
-
-    func becameActive() {
-        if !onboardingContainer {
-            appCoordinator.didBecomeActive()
-        }
-    }
-
-    func enterBackground() {
-        if !onboardingContainer {
-            appCoordinator.didEnterBackground()
-        }
-    }
-
-    func reset() {
-        core = CoreService(with: network)
-    }
-
-    func start() {
-        if !KeychainHelper.hasExistingInstance {
-            onboardingContainer = true
-            container.moveToViewController(onboardingCoordinator.navController,
-                                           fromViewController: nil,
-                                           animated: false,
-                                           completion: nil)
-        } else {
-            appCoordinator.core = self.core
-
-            onboardingContainer = false
-            container.moveToViewController(appCoordinator.tabController,
-                                           fromViewController: nil,
-                                           animated: false,
-                                           completion: {
-                                            self.appCoordinator.tabController.moveTo(tab: .assets)
-            })
-
-            authenticate()
-        }
-    }
-
-    func authenticate(_ style: AuthenticationCoordinator.AuthenticationStyle? = nil) {
-        guard SecurityOptionHelper.check(.pinOnLaunch) else {
+    func createAppCoordinator() {
+        guard let coreService = core else {
+            // log error
             return
         }
 
-        let container = onboardingContainer ? onboardingCoordinator.navController : self.container
-        let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: false,
-                                                                   presentVC: false,
-                                                                   forcedStyle: style,
-                                                                   limitPinEntries: true)
-        let authCoordinator = AuthenticationCoordinator(container: container, options: opts)
-        authCoordinator.delegate = self
-        authenticationCoordinator = authCoordinator
+        appCoordinator = ApplicationCoordinator(with: coreService)
+        appCoordinator?.delegate = self
+    }
 
-        authCoordinator.authenticate()
+    func createOnboarding() {
+        guard let coreService = core else {
+            // log error
+            return
+        }
+
+        let coord = OnboardingCoordinator(with: coreService)
+        onboardingCoordinator = coord
+        onboardingCoordinator?.delegate = self
+    }
+
+    func cleanupOnboarding() {
+        onboardingCoordinator = nil
+    }
+
+    func cleanupAppCoordinator() {
+        appCoordinator = nil
+    }
+
+    func restartCore() {
+        self.core = CoreService(with: network)
+    }
+
+    func start() {
+        if KeychainHelper.hasExistingInstance {
+            createAppCoordinator()
+
+            guard let coordinator = appCoordinator else {
+                // log error
+                return
+            }
+
+            let tabController = coordinator.tabController
+            container.moveToViewController(tabController, fromViewController: nil, animated: false, completion: {
+                tabController.moveTo(tab: .assets)
+                self.currentResponder = coordinator
+
+            })
+
+            if SecurityOptionHelper.check(.pinOnLaunch) {
+                authenticationCoordinator.authenticate(with: AuthenticationCoordinator.defaultStartupOptions,
+                                                       container: container)
+            }
+        } else {
+            createOnboarding()
+
+            guard let navController = onboardingCoordinator?.navController else {
+                // log error
+                return
+            }
+
+            container.moveToViewController(navController, fromViewController: nil, animated: false, completion: nil)
+        }
     }
 }
 
+// MARK: - ApplicationCoordinatorDelegate
 extension BlockEQWallet: ApplicationCoordinatorDelegate {
     func switchToOnboarding() {
-        reset()
+        createOnboarding()
 
-        onboardingContainer = true
-        onboardingCoordinator.navController.popToRootViewController(animated: false)
-        container.moveToViewController(onboardingCoordinator.navController,
-                                       fromViewController: appCoordinator.tabController,
-                                       animated: true,
-                                       completion: nil)
-    }
-}
+        guard let onboardingVC = onboardingCoordinator?.navController, let appTab = appCoordinator?.tabController else {
+            // log error
+            return
+        }
 
-extension BlockEQWallet: OnboardingCoordinatorDelegate {
-    func onboardingCompleted(service: CoreService) {
-        onboardingContainer = false
-        appCoordinator.core = service
-        container.moveToViewController(appCoordinator.tabController,
-                                       fromViewController: onboardingCoordinator.navController,
-                                       animated: true,
-                                       completion: {
-                                        self.appCoordinator.tabController.moveTo(tab: .assets)
+        container.moveToViewController(onboardingVC, fromViewController: appTab, animated: true, completion: {
+            self.cleanupAppCoordinator()
+            self.currentResponder = nil
         })
     }
+
+    func requestedAuthentication(_ coordinator: AuthenticationCoordinatorDelegate,
+                                 container: UIViewController,
+                                 options: AuthenticationCoordinator.AuthenticationOptions) {
+        authenticationCoordinator.delegate = coordinator
+        authenticationCoordinator.authenticate(with: options, container: container)
+    }
 }
 
-extension BlockEQWallet: AuthenticationCoordinatorDelegate {
-    func authenticationCancelled(_ coordinator: AuthenticationCoordinator,
-                                 options: AuthenticationCoordinator.AuthenticationContext) {
-    }
+// MARK: - OnboardingCoordinatorDelegate
+extension BlockEQWallet: OnboardingCoordinatorDelegate {
+    func onboardingCompleted(service: CoreService) {
+        createAppCoordinator()
 
-    func authenticationFailed(_ coordinator: AuthenticationCoordinator,
-                              error: AuthenticationCoordinator.AuthenticationError?,
-                              options: AuthenticationCoordinator.AuthenticationContext) {
-        switchToOnboarding()
+        guard let appCoordinator = self.appCoordinator, let onboardingCoordinator = self.onboardingCoordinator else {
+            // log error
+            return
+        }
 
-        // Setting the authentication coordinator to nil forces it to remove authentication views from the hierarchy
-        authenticationCoordinator = nil
-    }
+        let onboardingNav = onboardingCoordinator.navController
+        let appTabVC = appCoordinator.tabController
 
-    func authenticationCompleted(_ coordinator: AuthenticationCoordinator,
-                                 options: AuthenticationCoordinator.AuthenticationContext?) {
-        authenticationCoordinator = nil
+        container.moveToViewController(appTabVC, fromViewController: onboardingNav, animated: true, completion: {
+            appTabVC.moveTo(tab: .assets)
+            self.currentResponder = appCoordinator
+
+            self.cleanupOnboarding()
+        })
     }
 }

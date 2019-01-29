@@ -29,6 +29,16 @@ final class CacheManager {
 
     private init() { }
 
+    static func prefetchAssetImages() {
+        let queue = OperationQueue()
+        queue.qualityOfService = .userInitiated
+
+        let codes = AssetMetadata.staticAssetCodes + AssetMetadata.commonAssetCodes
+        let fetchOperation = FetchAssetIconsOperation(assetCodes: codes)
+
+        queue.addOperation(fetchOperation)
+    }
+
     static func cacheAccountQRCode(_ account: StellarAccount) {
         let queue = OperationQueue()
         queue.qualityOfService = .userInitiated

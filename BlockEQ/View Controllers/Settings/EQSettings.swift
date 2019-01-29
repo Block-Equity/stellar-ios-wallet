@@ -136,6 +136,10 @@ struct EQSettings {
             SettingNode.node(name: "SETTINGS_OPTION_INDEXING".localized(),
                              identifier: "debug-check-indexing",
                              enabled: true,
+                             type: .normal),
+            SettingNode.node(name: "SETTINGS_OPTION_FUND_TESTNET".localized(),
+                             identifier: "debug-fund-testnet-acc",
+                             enabled: true,
                              type: .normal)
         ]
     }

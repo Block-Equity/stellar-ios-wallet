@@ -125,6 +125,7 @@
 		C59AA3D721D15653007E8362 /* AssetAmountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59AA3D621D15653007E8362 /* AssetAmountCell.swift */; };
 		C59AA3D921D15661007E8362 /* AssetActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59AA3D821D15661007E8362 /* AssetActionCell.swift */; };
 		C59AA3DB21D15691007E8362 /* AssetAmountCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C59AA3DA21D15691007E8362 /* AssetAmountCell.xib */; };
+		C59C296C2201664E000ECF7B /* FundTestnetAccountOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59C296B2201664E000ECF7B /* FundTestnetAccountOperation.swift */; };
 		C5A4542C21D67E890096467A /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A4542B21D67E890096467A /* UICollectionView+Extensions.swift */; };
 		C5A4542E21DA84B30096467A /* AssetListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5A4542D21DA84B30096467A /* AssetListHeader.xib */; };
 		C5A4543021DA84D40096467A /* AssetListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A4542F21DA84D40096467A /* AssetListHeader.swift */; };
@@ -409,6 +410,7 @@
 		C59AA3D821D15661007E8362 /* AssetActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetActionCell.swift; sourceTree = "<group>"; };
 		C59AA3DA21D15691007E8362 /* AssetAmountCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetAmountCell.xib; sourceTree = "<group>"; };
 		C59AA3DD21D15D69007E8362 /* AssetCardSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCardSnapshotTests.swift; sourceTree = "<group>"; };
+		C59C296B2201664E000ECF7B /* FundTestnetAccountOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FundTestnetAccountOperation.swift; sourceTree = "<group>"; };
 		C5A4542B21D67E890096467A /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
 		C5A4542D21DA84B30096467A /* AssetListHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetListHeader.xib; sourceTree = "<group>"; };
 		C5A4542F21DA84D40096467A /* AssetListHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetListHeader.swift; sourceTree = "<group>"; };
@@ -1137,6 +1139,7 @@
 				C53E62852199DC94006BF2F1 /* SendDiagnosticOperation.swift */,
 				C54BB76E21EEE89C004396DE /* FetchAssetIconsOperation.swift */,
 				C592CC6021F28B630062CE97 /* CacheAccountQROperation.swift */,
+				C59C296B2201664E000ECF7B /* FundTestnetAccountOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -1620,6 +1623,7 @@
 				ECB1D958207E966D0088826D /* MBProgressHUD.m in Sources */,
 				C54EFE4A21798668005FA6D3 /* UIView+Layer.swift in Sources */,
 				C59AA3C621D14444007E8362 /* AssetButtonView.swift in Sources */,
+				C59C296C2201664E000ECF7B /* FundTestnetAccountOperation.swift in Sources */,
 				C5173A8621A4A94800B5272F /* CenteredCollectionViewFlowLayout.swift in Sources */,
 				C595115620BB2B1B00843D33 /* PinDotView.swift in Sources */,
 				EC6EE88B20B600070033C299 /* TradeViewController.swift in Sources */,

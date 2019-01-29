@@ -12,6 +12,9 @@ import os.log
 
 protocol ApplicationCoordinatorDelegate: AnyObject {
     func switchToOnboarding()
+    func requestedAuthentication(_ coordinator: AuthenticationCoordinatorDelegate,
+                                 container: UIViewController,
+                                 options: AuthenticationCoordinator.AuthenticationOptions)
 }
 
 final class ApplicationCoordinator {
@@ -21,9 +24,6 @@ final class ApplicationCoordinator {
     /// The current visible view controller
     var currentViewController = UIViewController()
 
-    // The coordinator responsible for the trading flow
-    var tradingCoordinator: TradingCoordinator?
-
     // The coordinator responsible for listing, managing, and displaying assets
     var assetCoordinator: AssetCoordinator?
 
@@ -32,6 +32,17 @@ final class ApplicationCoordinator {
 
     // The coordinator responsible for managing application diagnostics
     let diagnosticCoordinator = DiagnosticCoordinator()
+
+    /// The service object that manages interactions with the Stellar network
+    var core: CoreService
+
+    // The coordinator responsible for the trading flow
+    lazy var tradingCoordinator: TradingCoordinator = {
+        let tradingCoordinator = TradingCoordinator(core: core)
+        tradingCoordinator.delegate = self
+
+        return tradingCoordinator
+    }()
 
     /// The view that handles all switching in the header
     lazy var tradeHeaderView: TradeHeaderView = {
@@ -45,11 +56,20 @@ final class ApplicationCoordinator {
     var receiveViewController: ReceiveViewController?
 
     /// The view controller used to list out the user's assets
-    var walletViewController: WalletViewController
+    lazy var walletViewController: WalletViewController = {
+        let walletVC = WalletViewController()
+        self.walletViewController = walletVC
+
+        _ = walletVC.view
+
+        walletVC.delegate = self
+
+        return walletVC
+    }()
 
     //The view controller responsible for displaying contacts
     lazy var contactsViewController: ContactsViewController = {
-        let contactsVC = ContactsViewController(service: core!.accountService)
+        let contactsVC = ContactsViewController(service: core.accountService)
         contactsVC.delegate = self
 
         return contactsVC
@@ -61,41 +81,6 @@ final class ApplicationCoordinator {
                                                     customTitle: "MENU_OPTION_SETTINGS".localized())
         viewController.delegate = self
         return viewController
-    }
-
-    /// The service object that manages the current stellar account
-    var core: CoreService? {
-        didSet {
-            guard let coreService = core else {
-                return
-            }
-
-            guard let accountId = KeychainHelper.accountId, let address = StellarAddress(accountId) else {
-                return
-            }
-
-            coreService.accountService.registerForUpdates(self)
-            coreService.updateService.registerForUpdates(self)
-            coreService.indexingService.delegate = self
-            coreService.streamService.delegate = self
-
-            migrateIfEligible(using: coreService.accountService)
-            try? coreService.accountService.restore(with: address)
-
-            coreService.updateService.update()
-
-            let tradingCoordinator = TradingCoordinator(core: coreService)
-            tradingCoordinator.delegate = self
-            self.tradingCoordinator = tradingCoordinator
-
-            guard let account = coreService.accountService.account else { return }
-
-            if account.isStub {
-                coreService.updateService.accountUpdateInterval = AccountUpdateService.shortUpdateInterval
-            }
-
-            walletViewController.update(with: account, asset: StellarAsset.lumens)
-        }
     }
 
     /// The view controller used to display the minimum balance, deallocated once finished using
@@ -116,33 +101,37 @@ final class ApplicationCoordinator {
     /// The completion handler to call when the pin view controller completes successfully
     var authCompletion: EmptyCompletion?
 
-    /// The coordinator responsible for authenticating when the user needs to confirm their PIN
-    lazy var authenticationCoordinator: AuthenticationCoordinator = {
-        let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true,
-                                                                   presentVC: true,
-                                                                   forcedStyle: nil,
-                                                                   limitPinEntries: true)
-
-        let authCoordinator = AuthenticationCoordinator(container: self.tabController, options: opts)
-        authCoordinator.delegate = self
-
-        return authCoordinator
-    }()
-
     var temporaryPinSetting: Bool!
     var temporaryBiometricSetting: Bool!
 
     weak var delegate: ApplicationCoordinatorDelegate?
 
-    init() {
-        let walletVC = WalletViewController()
-        self.walletViewController = walletVC
-        walletVC.delegate = self
-        _ = walletVC.view
+    init(with coreService: CoreService) {
+        core = coreService
+
+        guard let accountId = KeychainHelper.accountId, let address = StellarAddress(accountId) else {
+            return
+        }
+
+        core.accountService.registerForUpdates(self)
+        core.updateService.registerForUpdates(self)
+        core.indexingService.delegate = self
+        core.streamService.delegate = self
+
+        migrateIfEligible(using: core.accountService)
+        try? core.accountService.restore(with: address)
+
+        core.updateService.update()
+
+        guard let account = core.accountService.account else { return }
+
+        if account.isStub {
+            core.updateService.accountUpdateInterval = AccountUpdateService.shortUpdateInterval
+        }
 
         tabController.tabDelegate = self
 
-        AddressResolver.fetchExchangeData()
+        walletViewController.update(with: account, asset: StellarAsset.lumens)
     }
 
     func migrateIfEligible(using service: AccountManagementService) {
@@ -159,39 +148,11 @@ final class ApplicationCoordinator {
             KeychainHelper.clearStellarSecrets()
         }
     }
-
-    func prefetchAssetImages() {
-        let queue = OperationQueue()
-        queue.qualityOfService = .userInitiated
-
-        let codes = AssetMetadata.staticAssetCodes + AssetMetadata.commonAssetCodes
-        let fetchOperation = FetchAssetIconsOperation(assetCodes: codes)
-
-        queue.addOperation(fetchOperation)
-    }
-
-    func didBecomeActive() {
-        refreshAccount()
-        prefetchAssetImages()
-    }
-
-    func willEnterForeground() {
-        guard let account = core?.accountService.account else { return }
-        core?.streamService.subscribeAll(account: account)
-    }
-
-    func didEnterBackground() {
-        core?.streamService.unsubscribeAll()
-    }
-
-    func refreshAccount() {
-        core?.updateService.update()
-    }
 }
 
 extension ApplicationCoordinator: TradeHeaderViewDelegate {
     func switchedSegment(_ type: TradeSegment) -> Bool {
-        return tradingCoordinator?.switchedSegment(type) ?? false
+        return tradingCoordinator.switchedSegment(type)
     }
 }
 
@@ -208,9 +169,7 @@ extension ApplicationCoordinator: AppTabControllerDelegate {
 
         switch appTab {
         case .assets: viewController = walletViewController
-        case .trading:
-            guard let tradeVC = tradingCoordinator?.segmentController else { return }
-            viewController = tradeVC
+        case .trading: viewController = tradingCoordinator.segmentController
         case .contacts: viewController = contactsViewController
         case .settings: viewController = settingsViewController
         }
@@ -256,5 +215,38 @@ extension ApplicationCoordinator: IndexingServiceDelegate {
 
     func updatedProgress(_ service: IndexingService, completed: Double) {
         indexingViewController?.update(with: completed, error: nil)
+    }
+}
+
+extension ApplicationCoordinator: DelegateResponder {
+    func didBecomeActive() {
+        AddressResolver.fetchExchangeData()
+        CacheManager.prefetchAssetImages()
+
+        refreshAccount()
+    }
+
+    func willEnterForeground() {
+        if SecurityOptionHelper.check(.pinOnLaunch) {
+            if let presentedController = tabController.presentedViewController {
+                presentedController.dismiss(animated: false, completion: nil)
+            }
+
+            delegate?.requestedAuthentication(self,
+                                              container: tabController,
+                                              options: AuthenticationCoordinator.defaultStartupOptions)
+        }
+
+        guard let account = core.accountService.account else { return }
+        core.streamService.subscribeAll(account: account)
+    }
+
+    func didEnterBackground() {
+        core.streamService.unsubscribeAll()
+        authCompletion = nil
+    }
+
+    func refreshAccount() {
+        core.updateService.update()
     }
 }

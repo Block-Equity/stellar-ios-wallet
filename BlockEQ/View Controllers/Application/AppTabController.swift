@@ -129,12 +129,14 @@ final class AppTabController: ContainerViewController {
     }
 
     private func updateCurrentTab(with item: UITabBarItem) {
-        if let type = ApplicationTab.matchingTabType(for: item) {
-            select(type)
-            tabDelegate?.switchedTabs(type)
-            currentTab = type
-            currentViewController?.setNeedsStatusBarAppearanceUpdate()
+        guard let type = ApplicationTab.matchingTabType(for: item) else {
+            return
         }
+
+        select(type)
+        tabDelegate?.switchedTabs(type)
+        currentTab = type
+        currentViewController?.setNeedsStatusBarAppearanceUpdate()
     }
 
     override func viewDidLoad() {
