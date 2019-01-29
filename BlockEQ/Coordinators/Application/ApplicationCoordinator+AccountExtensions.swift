@@ -18,7 +18,7 @@ extension ApplicationCoordinator: AccountManagementServiceDelegate {
 extension ApplicationCoordinator: AccountUpdateServiceDelegate {
     func firstAccountUpdate(_ service: AccountUpdateService, account: StellarAccount) {
         service.accountUpdateInterval = AccountUpdateService.longUpdateInterval
-        core?.streamService.subscribeAll(account: account)
+        core.streamService.subscribeAll(account: account)
     }
 
     func accountUpdated(_ service: AccountUpdateService,
@@ -29,7 +29,7 @@ extension ApplicationCoordinator: AccountUpdateServiceDelegate {
             KeychainHelper.setHasFetchedData()
         }
 
-        tradingCoordinator?.updated(account: account)
+        tradingCoordinator.updated(account: account)
         balanceViewController?.updated(account: account)
     }
 }
@@ -43,6 +43,6 @@ extension ApplicationCoordinator: StreamServiceDelegate {
     }
 
     func receivedObjects(stream: StreamService.StreamType) {
-        core?.updateService.update()
+        core.updateService.update()
     }
 }

@@ -11,6 +11,8 @@ import StellarHub
 
 protocol PaymentCoordinatorDelegate: AnyObject {
     func dismiss(_ coordinator: PaymentCoordinator, container: UIViewController)
+    func requestedAuthentication(_ coordinator: AuthenticationCoordinatorDelegate,
+                                 with options: AuthenticationCoordinator.AuthenticationOptions)
 }
 
 extension PaymentCoordinator {
@@ -36,7 +38,7 @@ final class PaymentCoordinator {
     /// The delegate to notify for payment events
     weak var delegate: PaymentCoordinatorDelegate?
 
-    private lazy var navController: AppNavigationController = {
+    lazy var navController: AppNavigationController = {
         var navController: AppNavigationController
 
         switch type {
@@ -52,18 +54,6 @@ final class PaymentCoordinator {
         navController.navigationBar.prefersLargeTitles = true
 
         return navController
-    }()
-
-    private lazy var authenticationCoordinator: AuthenticationCoordinator = {
-        let opts = AuthenticationCoordinator.AuthenticationOptions(cancellable: true,
-                                                                   presentVC: true,
-                                                                   forcedStyle: nil,
-                                                                   limitPinEntries: true)
-
-        let authCoordinator = AuthenticationCoordinator(container: navController, options: opts)
-        authCoordinator.delegate = self
-
-        return authCoordinator
     }()
 
     private lazy var assetListViewController: AssetListViewController = {
@@ -119,7 +109,7 @@ final class PaymentCoordinator {
 
     private func displayAuth(_ completion: EmptyCompletion? = nil) {
         authCompletion = completion
-        authenticationCoordinator.authenticate()
+        delegate?.requestedAuthentication(self, with: AuthenticationCoordinator.defaultConfirmationOptions)
     }
 
     private func sendPayment(address: StellarAddress, asset: StellarAsset, amount: Decimal, memo: String?) {

@@ -8,12 +8,12 @@
 
 extension ApplicationCoordinator: IndexingViewControllerDelegate {
     func requestedCancelIndexing(_ viewController: IndexingViewController) {
-        core?.indexingService.haltIndexing()
+        core.indexingService.haltIndexing()
         indexingViewController?.update(with: nil, error: nil)
     }
 
     func requestedRestartIndexing(_ viewController: IndexingViewController) {
-        core?.indexingService.rebuildIndex()
+        core.indexingService.rebuildIndex()
         indexingViewController?.update(with: 0, error: nil)
     }
 }

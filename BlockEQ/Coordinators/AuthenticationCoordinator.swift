@@ -51,14 +51,17 @@ final class AuthenticationCoordinator {
         var cancelled: Bool = false
     }
 
+    /// A struct for options that may be passed into the authentication coordinator.
+    struct AuthenticationOptions {
+        var cancellable: Bool
+        var animated: Bool
+        var presentVC: Bool
+        var forcedStyle: AuthenticationStyle?
+        var limitPinEntries: Bool
+    }
+
     /// A typealias for the callback used when finalizing authentication.
     typealias AuthenticationCompletion = (AuthenticationContext) -> Void
-
-    /// A typealias for options that may be passed into the authentication coordinator.
-    typealias AuthenticationOptions = (cancellable: Bool,
-        presentVC: Bool,
-        forcedStyle: AuthenticationStyle?,
-        limitPinEntries: Bool)
 
     /// Errors relating to authenticating the user.
     ///
@@ -104,6 +107,18 @@ final class AuthenticationCoordinator {
         case setPin
     }
 
+    static let defaultConfirmationOptions = AuthenticationOptions(cancellable: true,
+                                                                  animated: true,
+                                                                  presentVC: true,
+                                                                  forcedStyle: nil,
+                                                                  limitPinEntries: true)
+
+    static let defaultStartupOptions = AuthenticationOptions(cancellable: false,
+                                                             animated: false,
+                                                             presentVC: true,
+                                                             forcedStyle: nil,
+                                                             limitPinEntries: true)
+
     // The maximum number of allowed pin entries before failing
     private static let maximumFailedPinAttempts: Int = 3
 
@@ -111,7 +126,9 @@ final class AuthenticationCoordinator {
     private static let authPolicy = LAPolicy.deviceOwnerAuthenticationWithBiometrics
 
     /// The authentication context used for biometric authorization
-    private let authContext: LAContext
+    private var authContext: LAContext?
+
+    private var _container: UIViewController!
 
     /// The view controller to display when using pin entry
     private lazy var pinViewController: PinViewController = {
@@ -140,9 +157,6 @@ final class AuthenticationCoordinator {
         return authVC
     }()
 
-    /// A container that the authentication view controllres may be added to
-    private var container: UIViewController
-
     /// The authentication operation mode for the coordinator
     private var mode: AuthenticationMode = .challenge
 
@@ -150,10 +164,7 @@ final class AuthenticationCoordinator {
     private var confirmPin: Bool = false
 
     /// Options that this authentication coordinator is configured with.
-    private var options: AuthenticationOptions = (cancellable: false,
-                                                  presentVC: false,
-                                                  forcedStyle: nil,
-                                                  limitPinEntries: true)
+    internal var options: AuthenticationOptions!
 
     /// Internal state to track the pin the user entered, when first creating a pin code
     private var firstPin: String?
@@ -170,14 +181,13 @@ final class AuthenticationCoordinator {
     ///   - container: A `UIViewController` that will be used to contain a hierarchy of authentication view controllers.
     ///   - present: A flag indicating if the coordinator should present on the container instead of transitioning.
     ///   - force: The mode in which the coordinator should operate, either pin entry, or biometric.
-    init(container: UIViewController, options: AuthenticationOptions) {
-        self.container = container
-        self.options = options
+    init() {
         authContext = LAContext()
     }
 
     /// The authenticate method begins the authentication process for the user's pin, or biometric identity.
-    func authenticate() {
+    func authenticate(with authOptions: AuthenticationOptions, container: UIViewController) {
+        options = authOptions
         mode = .challenge
 
         guard SecurityOptionHelper.check(.pinEnabled) && KeychainHelper.hasPin else {
@@ -185,13 +195,13 @@ final class AuthenticationCoordinator {
             return
         }
 
-        presentAuthenticationChallenge()
+        presentAuthenticationChallenge(container)
     }
 
     /// This method is responsible for starting the pin creation process.
-    func createPinAuthentication() {
+    func createPinAuthentication(_ container: UIViewController) {
         mode = .setPin
-        setNewAuthenticationPin()
+        setNewAuthenticationPin(container)
     }
 
     /// Used to determine if biometric authentication is available (FaceID / TouchID).
@@ -216,46 +226,52 @@ final class AuthenticationCoordinator {
 
 // MARK: - Private / internal methods
 extension AuthenticationCoordinator {
-    private func presentAuthenticationChallenge() {
-
+    private func presentAuthenticationChallenge(_ container: UIViewController) {
         dismissApplicationKeyboard()
+
+        let laContext = LAContext()
+        authContext = laContext
 
         var useBiometrics = SecurityOptionHelper.check(.useBiometrics)
         let biometricsAvailable = AuthenticationCoordinator.evaluateLAPolicy(AuthenticationCoordinator.authPolicy,
-                                                                             context: self.authContext) == nil
+                                                                             context: laContext) == nil
 
         if let mode = options.forcedStyle, mode == .pin {
             useBiometrics = false
         }
 
         if biometricsAvailable && useBiometrics {
-            presentBiometricAuth()
+            presentBiometricAuth(container)
         } else {
-            presentPinAuth()
+            presentPinAuth(container)
         }
     }
 
-    private func presentBiometricAuth() {
-        pushPresentOrMove(blankAuthController, on: container, animated: false)
+    private func presentBiometricAuth(_ container: UIViewController) {
+        _container = container
+        pushPresentOrMove(blankAuthController, on: container)
         biometricChallenge()
     }
 
-    private func presentPinAuth() {
+    private func presentPinAuth(_ container: UIViewController) {
+        _container = container
+
         pinViewController.update(with: PinViewController.ViewModel(isCreating: false,
                                                                    isCloseDisplayed: options.cancellable,
                                                                    mode: .dark))
 
-        pushPresentOrMove(pinViewController, on: container, animated: false)
+        pushPresentOrMove(pinViewController, on: container)
     }
 
-    private func setNewAuthenticationPin() {
+    private func setNewAuthenticationPin(_ container: UIViewController) {
         confirmPin = true
+        _container = container
 
         pinViewController.update(with: PinViewController.ViewModel(isCreating: confirmPin,
                                                                    isCloseDisplayed: false,
                                                                    mode: .light))
 
-        pushPresentOrMove(pinViewController, on: container, animated: true)
+        pushPresentOrMove(pinViewController, on: container)
     }
 
     private static func evaluateLAPolicy(_ policy: LAPolicy, context: LAContext) -> AuthenticationError? {
@@ -286,7 +302,7 @@ extension AuthenticationCoordinator {
     private func biometricChallenge() {
         let reasonString = "BIOMETRIC_AUTH_TITLE".localized()
         let policy = AuthenticationCoordinator.authPolicy
-        authContext.evaluatePolicy(policy, localizedReason: reasonString) { [unowned self] success, error in
+        authContext?.evaluatePolicy(policy, localizedReason: reasonString) { [unowned self] success, error in
             DispatchQueue.main.async {
                 if success {
                     let context = AuthenticationContext(savedPin: false, mode: .biometric, cancelled: false)
@@ -307,7 +323,7 @@ extension AuthenticationCoordinator {
                         self.removeAuthentication(viewController: self.blankAuthController,
                                                   with: context,
                                                   animated: false, completion: nil)
-                        self.authenticate()
+                        self.authenticate(with: self.options, container: self._container)
                     } else if authError == .biometryUserCancelled || authError == .biometryCancelled {
                         self.blankAuthController.displayAuthButton()
                         self.delegate?.authenticationCancelled(self, options: context)
@@ -322,15 +338,16 @@ extension AuthenticationCoordinator {
         }
     }
 
-    private func pushPresentOrMove(_ viewController: UIViewController,
-                                   on container: UIViewController,
-                                   animated: Bool = false) {
+    private func pushPresentOrMove(_ viewController: UIViewController, on container: UIViewController) {
         if options.presentVC {
-            container.present(viewController, animated: true, completion: nil)
+            container.present(viewController, animated: options.animated, completion: nil)
         } else if let navController = container as? UINavigationController {
-            navController.pushViewController(viewController, animated: animated)
+            navController.pushViewController(viewController, animated: options.animated)
         } else {
-            container.moveToViewController(viewController, fromViewController: nil, animated: animated, completion: nil)
+            container.moveToViewController(viewController,
+                                           fromViewController: nil,
+                                           animated: options.animated,
+                                           completion: nil)
         }
     }
 
@@ -347,7 +364,8 @@ extension AuthenticationCoordinator {
             completion?(context)
         }
 
-        container.setNeedsStatusBarAppearanceUpdate()
+        _container.setNeedsStatusBarAppearanceUpdate()
+        authContext = nil
     }
 
     private func dismissApplicationKeyboard() {
@@ -365,7 +383,7 @@ extension AuthenticationCoordinator: PinViewControllerDelegate {
             confirmPin = false
             firstPin = pin
 
-            pushPresentOrMove(confirmPinViewController, on: container, animated: true)
+            pushPresentOrMove(confirmPinViewController, on: _container)
         } else if mode == .setPin && !confirmPin {
             if KeychainHelper.check(pin: pin, comparePin: firstPin) {
                 firstPin = nil
@@ -416,7 +434,7 @@ extension AuthenticationCoordinator: PinViewControllerDelegate {
 
 extension AuthenticationCoordinator: BlankAuthenticationViewControllerDelegate {
     func authenticate(_ viewController: BlankAuthenticationViewController) {
-        self.authenticate()
+        biometricChallenge()
     }
 }
 

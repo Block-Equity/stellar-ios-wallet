@@ -67,6 +67,8 @@ final class WalletViewController: UIViewController {
 
         tableView?.dataSource = self.dataSource
         tableView?.reloadData()
+
+        setNeedsStatusBarAppearanceUpdate()
     }
 
     func setupView() {
@@ -105,6 +107,10 @@ final class WalletViewController: UIViewController {
         tableView?.separatorStyle = .none
 
         update(with: state.viewModel)
+    }
+
+    func toggleSendState(enabled: Bool) {
+        navigationItem.rightBarButtonItem?.isEnabled = !enabled
     }
 
     func toggleInactiveState(_ hidden: Bool, animated: Bool = true) {
@@ -158,6 +164,8 @@ final class WalletViewController: UIViewController {
             self.availableBalanceView.isHidden = !viewModel.showBalanceHeader
             self.assetListButton.isHidden = !viewModel.showAssetListButton
             self.assetBalanceButton.isHidden = !viewModel.showBalanceButton
+
+            self.navigationItem.rightBarButtonItem?.isEnabled = viewModel.sendButtonEnabled
 
             if viewModel.showActivityIndicator {
                 self.activityIndicator.startAnimating()
@@ -235,7 +243,8 @@ extension WalletViewController {
                                  showActivityIndicator: false,
                                  showBalanceHeader: true,
                                  showAssetListButton: true,
-                                 showBalanceButton: true)
+                                 showBalanceButton: true,
+                                 sendButtonEnabled: true)
             }
         }
 
@@ -280,7 +289,8 @@ extension WalletViewController {
                              showActivityIndicator: showActivityIndicator,
                              showBalanceHeader: false,
                              showAssetListButton: false,
-                             showBalanceButton: false)
+                             showBalanceButton: false,
+                             sendButtonEnabled: false)
         }
     }
 
@@ -299,6 +309,7 @@ extension WalletViewController {
         var showBalanceHeader: Bool
         var showAssetListButton: Bool
         var showBalanceButton: Bool
+        var sendButtonEnabled: Bool
     }
 }
 

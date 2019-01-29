@@ -18,27 +18,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = window ?? UIWindow(frame: CGRect(origin: CGPoint.zero, size: UIScreen.main.bounds.size))
 
         window?.rootViewController = blockEQWallet.container
+        window?.makeKeyAndVisible()
 
         blockEQWallet.start()
 
-        window?.makeKeyAndVisible()
-
         return true
-    }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        blockEQWallet.willEnterForeground()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         let bundleURL = Bundle.main.url(forResource: "Root", withExtension: "plist", subdirectory: "Settings.bundle")
         readSettings(from: bundleURL)
 
-        blockEQWallet.becameActive()
+        blockEQWallet.currentResponder?.didBecomeActive()
+    }
+
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        blockEQWallet.currentResponder?.willEnterForeground()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        blockEQWallet.enterBackground()
+        blockEQWallet.currentResponder?.didEnterBackground()
     }
 }
 
