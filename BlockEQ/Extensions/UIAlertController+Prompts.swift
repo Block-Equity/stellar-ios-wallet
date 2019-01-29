@@ -8,8 +8,15 @@
 
 extension UIAlertController {
     static func simpleAlert(title: String, message: String?, presentingViewController: UIViewController) {
+        callbackAlert(title: title, message: message, presentingViewController: presentingViewController, handler: nil)
+    }
+
+    static func callbackAlert(title: String,
+                              message: String?,
+                              presentingViewController: UIViewController,
+                              handler: ((UIAlertAction) -> Void)?) {
         let controller = UIAlertController.init(title: title, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "GENERIC_OK_TEXT".localized(), style: .default, handler: nil)
+        let action = UIAlertAction(title: "GENERIC_OK_TEXT".localized(), style: .default, handler: handler)
         controller.addAction(action)
 
         presentingViewController.present(controller, animated: true, completion: nil)
