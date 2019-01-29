@@ -70,6 +70,10 @@ final class AddressEntryViewController: UIViewController {
         let availableSendBalance = account.availableSendBalance(for: asset).displayFormattedString
         navigationItem.title = String(format: "TRADE_BALANCE_FORMAT".localized(), availableSendBalance, asset.shortCode)
     }
+
+    func update(with sendAddress: StellarAddress) {
+        sendAddressTextField.text = sendAddress.string
+    }
 }
 
 // MARK: - IBActions
@@ -93,11 +97,5 @@ extension AddressEntryViewController {
     @objc func dismissView() {
         view.endEditing(true)
         delegate?.cancelledAddressEntry(self)
-    }
-}
-
-extension AddressEntryViewController: ScanViewControllerDelegate {
-    func setQR(_ viewController: ScanViewController, value: String) {
-        sendAddressTextField.text = value
     }
 }

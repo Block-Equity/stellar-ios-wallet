@@ -222,6 +222,7 @@ extension StellarContactViewController {
 
     @IBAction func scanQRCode() {
         let scanViewController = ScanViewController()
+        scanViewController.addDismissButton()
         scanViewController.delegate = self
 
         let navigationController = AppNavigationController(rootViewController: scanViewController)
@@ -236,7 +237,13 @@ extension StellarContactViewController {
 }
 
 extension StellarContactViewController: ScanViewControllerDelegate {
+    func dismiss(_ viewController: ScanViewController) {
+        viewController.dismiss(animated: true, completion: nil)
+    }
+
     func setQR(_ viewController: ScanViewController, value: String) {
+        address = value
         addressTextField.text = value
+        viewController.dismiss(animated: true, completion: nil)
     }
 }

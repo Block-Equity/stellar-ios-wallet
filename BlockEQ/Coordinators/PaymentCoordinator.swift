@@ -186,10 +186,10 @@ extension PaymentCoordinator: AddressEntryViewControllerDelegate {
     }
 
     func requestedScanQRCode(_ viewController: AddressEntryViewController) {
-        let scanViewController = ScanViewController()
-        scanViewController.delegate = self
+        let scanVC = ScanViewController()
+        scanVC.delegate = self
 
-        navController.present(scanViewController, animated: true, completion: nil)
+        navController.pushViewController(scanVC, animated: true)
     }
 }
 
@@ -236,8 +236,15 @@ extension PaymentCoordinator: SendAmountViewControllerDelegate {
 // MARK: - ScanViewControllerDelegate
 extension PaymentCoordinator: ScanViewControllerDelegate {
     func setQR(_ viewController: ScanViewController, value: String) {
-        address = StellarAddress(value)
-        viewController.dismiss(animated: true, completion: nil)
+        if let address = StellarAddress(value) {
+            addressViewController.update(with: address)
+            navController.popViewController(animated: true)
+        } else {
+            viewController.presentInvalidQRCode()
+        }
+    }
+
+    func dismiss(_ viewController: ScanViewController) {
     }
 }
 

@@ -124,7 +124,7 @@
 "SELECT_ASSET" = "Select Asset";
 "NAVIGATE_BACK" = "Back";
 "SCANNING" = "Scanning...";
-"QR_DETECTED" = "Valid QR Code Found";
+"QR_DETECTED" = "QR Code Found";
 "EXCHANGE_ADDRESS_PROMPT_FORMAT" = "This exchange address belongs to %@. Please enter a memo in order to send this transaction.";
 "REQUIRED_PLACEHOLDER" = "(Required)";
 "ADD_TRANSACTION" = "Add Transaction";
@@ -326,3 +326,5 @@
 "ADDRESS_ENTRY_BUTTON_LABEL" = "Next";
 "DESTINATION_ADDRESS" = "Destination Address";
 "CLOSE_ACCOUNT_CONFIRM_DESCRIPTION" = "Please verify that the address below is the account you intend to close.";
+"UNRECOGNIZED_ADDRESS_ERROR_TITLE" = "Unrecognized Address";
+"UNRECOGNIZED_ADDRESS_ERROR_MESSAGE" = "The provided QR code could not be processed for a valid Stellar address.";

@@ -10,18 +10,11 @@ import AVFoundation
 import UIKit
 
 protocol ScanViewControllerDelegate: AnyObject {
+    func dismiss(_ viewController: ScanViewController)
     func setQR(_ viewController: ScanViewController, value: String)
 }
 
 class ScanViewController: UIViewController {
-    var captureSession = AVCaptureSession()
-    var videoPreviewLayer: AVCaptureVideoPreviewLayer?
-    var qrCodeFrameView: UIView?
-
-    var hasIdentifiedQR: Bool = false
-
-    weak var delegate: ScanViewControllerDelegate?
-
     private let supportedCodeTypes = [AVMetadataObject.ObjectType.upce,
                                       AVMetadataObject.ObjectType.code39,
                                       AVMetadataObject.ObjectType.code39Mod43,
@@ -36,6 +29,18 @@ class ScanViewController: UIViewController {
                                       AVMetadataObject.ObjectType.interleaved2of5,
                                       AVMetadataObject.ObjectType.qr]
 
+    var captureSession = AVCaptureSession()
+    var videoPreviewLayer: AVCaptureVideoPreviewLayer?
+    var qrCodeFrameView: UIView?
+
+    var hasIdentifiedQR: Bool = false
+    weak var delegate: ScanViewControllerDelegate?
+
+    deinit {
+        captureSession.stopRunning()
+        videoPreviewLayer?.removeFromSuperlayer()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -47,20 +52,29 @@ class ScanViewController: UIViewController {
     }
 
     func setupView() {
+        navigationItem.title = "SCANNING".localized()
+    }
+
+    func addDismissButton() {
         let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"),
                                                  style: .plain,
                                                  target: self,
                                                  action: #selector(self.dismissView))
 
         navigationItem.rightBarButtonItem = rightBarButtonItem
-        navigationItem.title = "SCANNING".localized()
     }
 
     @objc func dismissView() {
-        captureSession.stopRunning()
-        videoPreviewLayer?.removeFromSuperlayer()
+        delegate?.dismiss(self)
+    }
 
-        dismiss(animated: true, completion: nil)
+    func presentInvalidQRCode() {
+        UIAlertController.callbackAlert(title: "UNRECOGNIZED_ADDRESS_ERROR_TITLE".localized(),
+                                        message: "UNRECOGNIZED_ADDRESS_ERROR_MESSAGE".localized(),
+                                        presentingViewController: self, handler: { _ in
+                                            self.navigationItem.title = "SCANNING".localized()
+                                            self.hasIdentifiedQR = false
+        })
     }
 
     func setupCamera() {
@@ -122,14 +136,13 @@ extension ScanViewController: AVCaptureMetadataOutputObjectsDelegate {
             let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
             qrCodeFrameView?.frame = barCodeObject!.bounds
 
-            if let qrValue =  metadataObj.stringValue {
-                if !hasIdentifiedQR {
-                    hasIdentifiedQR = true
-                    delegate?.setQR(self, value: qrValue)
+            guard let qrValue = metadataObj.stringValue, !hasIdentifiedQR else { return }
 
-                    navigationItem.title = "QR_DETECTED".localized()
-                    perform(#selector(self.dismissView), with: nil, afterDelay: 0.6)
-                }
+            hasIdentifiedQR = true
+            navigationItem.title = "QR_DETECTED".localized()
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.delegate?.setQR(self, value: qrValue)
             }
         }
     }
