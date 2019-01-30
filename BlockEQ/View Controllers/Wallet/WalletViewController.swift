@@ -67,8 +67,6 @@ final class WalletViewController: UIViewController {
 
         tableView?.dataSource = self.dataSource
         tableView?.reloadData()
-
-        setNeedsStatusBarAppearanceUpdate()
     }
 
     func setupView() {

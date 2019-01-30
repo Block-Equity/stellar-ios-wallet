@@ -96,7 +96,9 @@ class PinViewController: UIViewController {
             pinView.reset()
         }
 
-        setNeedsStatusBarAppearanceUpdate()
+        UIView.animate(withDuration: 0.25) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {

@@ -136,13 +136,16 @@ final class AppTabController: ContainerViewController {
         select(type)
         tabDelegate?.switchedTabs(type)
         currentTab = type
-        currentViewController?.setNeedsStatusBarAppearanceUpdate()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupView()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        animateStatusBarAppearance()
     }
 
     func setupView() {
@@ -150,6 +153,12 @@ final class AppTabController: ContainerViewController {
         tabBar.tintColor = Colors.primaryDark
         tabBar.setItems(tabItems, animated: false)
         tabBar.selectedItem = tabItems.first
+    }
+
+    func animateStatusBarAppearance() {
+        UIView.animate(withDuration: 0.25) {
+            self.currentViewController?.setNeedsStatusBarAppearanceUpdate()
+        }
     }
 
     override func setViewController(_ viewController: UIViewController, animated: Bool, completion: (() -> Void)?) {
@@ -167,7 +176,7 @@ final class AppTabController: ContainerViewController {
 
         currentViewController = viewController
 
-        self.setNeedsStatusBarAppearanceUpdate()
+        animateStatusBarAppearance()
 
         completion?()
     }

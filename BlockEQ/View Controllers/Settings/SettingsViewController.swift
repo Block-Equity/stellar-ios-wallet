@@ -56,11 +56,6 @@ final class SettingsViewController: UIViewController {
         setupStyle()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.setNeedsStatusBarAppearanceUpdate()
-    }
-
     func setupView() {
         tableView.register(headerFooterViewType: UppercasedTableViewHeader.self)
         tableView.register(cellType: SettingsNormalCell.self)

@@ -40,7 +40,6 @@ class LaunchViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.setNeedsStatusBarAppearanceUpdate()
         navigationController?.isNavigationBarHidden = true
     }
 
