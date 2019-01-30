@@ -68,19 +68,19 @@ public final class StreamService: StreamServiceProtocol {
         switch stream {
         case .effects:
             guard effectsStream == nil else { return }
-            let eStream = EffectStreamListener(core: core, account: account)
+            let eStream = EffectStreamListener(core: core, account: account, cursor: "now")
             eStream.delegate = self
             streamObject = eStream
             self.effectsStream = streamObject
         case .operations:
             guard operationsStream == nil else { return }
-            let oStream = OperationStreamListener(core: core, account: account)
+            let oStream = OperationStreamListener(core: core, account: account, cursor: "now")
             oStream.delegate = self
             streamObject = oStream
             operationsStream = streamObject
         case .transactions:
             guard transactionsStream == nil else { return }
-            let tStream = TransactionStreamListener(core: core, account: account)
+            let tStream = TransactionStreamListener(core: core, account: account, cursor: "now")
             tStream.delegate = self
             streamObject = tStream
             transactionsStream = streamObject

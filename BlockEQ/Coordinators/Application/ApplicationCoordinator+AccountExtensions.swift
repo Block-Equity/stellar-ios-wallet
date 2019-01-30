@@ -43,6 +43,6 @@ extension ApplicationCoordinator: StreamServiceDelegate {
     }
 
     func receivedObjects(stream: StreamService.StreamType) {
-        core.updateService.update()
+        streamUpdateThrottler.call()
     }
 }
