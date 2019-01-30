@@ -8,6 +8,7 @@
 
 import StellarHub
 import WebKit
+import Repeat
 import os.log
 
 protocol ApplicationCoordinatorDelegate: AnyObject {
@@ -32,6 +33,13 @@ final class ApplicationCoordinator {
 
     // The coordinator responsible for managing application diagnostics
     let diagnosticCoordinator = DiagnosticCoordinator()
+
+    // A safety object to throttle how many requests to update data we make when receiving stream objects
+    lazy var streamUpdateThrottler: Throttler = {
+        return Throttler(time: .seconds(5), { [unowned self] in
+            self.core.updateService.update()
+        })
+    }()
 
     /// The service object that manages interactions with the Stellar network
     var core: CoreService
