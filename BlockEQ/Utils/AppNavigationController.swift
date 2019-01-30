@@ -11,7 +11,7 @@ import UIKit
 class AppNavigationController: UINavigationController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return visibleViewController?.preferredStatusBarStyle ?? .default
+        return topViewController?.preferredStatusBarStyle ?? .default
     }
 
     override func viewDidLoad() {

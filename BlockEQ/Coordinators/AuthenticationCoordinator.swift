@@ -364,7 +364,6 @@ extension AuthenticationCoordinator {
             completion?(context)
         }
 
-        _container.setNeedsStatusBarAppearanceUpdate()
         authContext = nil
     }
 

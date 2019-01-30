@@ -20,6 +20,10 @@ class WrapperVC: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return children.last?.preferredStatusBarStyle ?? .default
     }
+
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
+    }
 }
 
 // Simple class that contains a child view controller while keeping track of the current view controller. This class
@@ -51,7 +55,6 @@ class ContainerViewController: UIViewController, ContainerProtocol {
                              fromViewController: currentViewController,
                              animated: animated) {
                                 self.currentViewController = viewController
-                                viewController.setNeedsStatusBarAppearanceUpdate()
                                 completion?()
         }
     }
