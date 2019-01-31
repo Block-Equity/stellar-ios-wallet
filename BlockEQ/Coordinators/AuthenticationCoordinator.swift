@@ -187,6 +187,8 @@ final class AuthenticationCoordinator {
 
     /// The authenticate method begins the authentication process for the user's pin, or biometric identity.
     func authenticate(with authOptions: AuthenticationOptions, container: UIViewController) {
+        reset()
+
         options = authOptions
         mode = .challenge
 
@@ -215,8 +217,14 @@ final class AuthenticationCoordinator {
         return available
     }
 
+    func reset() {
+        failedPinAttempts = 0
+        authContext = nil
+    }
+
     deinit {
-        self.failedPinAttempts = 0
+        reset()
+
         removeAuthentication(viewController: blankAuthController,
                              with: AuthenticationContext(savedPin: false, mode: .pin, cancelled: false))
         removeAuthentication(viewController: pinViewController,
