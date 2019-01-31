@@ -50,7 +50,6 @@ public final class CoreService: CoreServiceProtocol {
         updateService.registerForUpdates(indexingService)
 
         // Register the services to be notified when the current account is changed
-        accountService.registerForUpdates(streamService)
         accountService.registerForUpdates(updateService)
     }
 
