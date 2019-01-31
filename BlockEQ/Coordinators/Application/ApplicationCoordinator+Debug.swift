@@ -13,7 +13,9 @@ extension ApplicationCoordinator: IndexingViewControllerDelegate {
     }
 
     func requestedRestartIndexing(_ viewController: IndexingViewController) {
-        core.indexingService.rebuildIndex()
+        guard let account = core.accountService.account else { return }
+
+        core.indexingService.rebuildIndex(for: account)
         indexingViewController?.update(with: 0, error: nil)
     }
 }

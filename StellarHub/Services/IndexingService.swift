@@ -65,7 +65,7 @@ public final class IndexingService: IndexingServiceProtocol {
     /// Updates the existing index with new incoming operations, transactions or effects.
     ///
     /// The update method will never remove items from its self since the Stellar blockchain is immutable.
-    internal func updateIndex() {
+    internal func updateIndex(for account: StellarAccount) {
         guard !indexQueue.isSuspended else { return }
 
         if let existingIndexOperation = indexQueue.operations.first as? NodeIndexingOperation,
@@ -83,9 +83,9 @@ public final class IndexingService: IndexingServiceProtocol {
         indexOperation.completionBlock = { [unowned self] in
             DispatchQueue.main.async {
                 if indexOperation.result.isSuccess {
-                    self.delegate?.finishedIndexing(self)
+                    self.finishedIndexing(for: account)
                 } else {
-                    self.delegate?.errorIndexing(self, error: indexOperation.result.error)
+                    self.errorIndexing(indexOperation.result.error)
                 }
             }
         }
@@ -94,9 +94,9 @@ public final class IndexingService: IndexingServiceProtocol {
     }
 
     /// Removes the previously built index and starts again.
-    public func rebuildIndex() {
+    public func rebuildIndex(for account: StellarAccount) {
         graph.clearEdges()
-        updateIndex()
+        updateIndex(for: account)
     }
 
     /// Immediately halts the indexing process.
@@ -108,6 +108,16 @@ public final class IndexingService: IndexingServiceProtocol {
     public func reset() {
         haltIndexing()
         graph.clear()
+    }
+
+    private func finishedIndexing(for account: StellarAccount) {
+        lastAccountIndexHash = account.hashValue
+        delegate?.finishedIndexing(self)
+
+    }
+
+    private func errorIndexing(_ error: Error?) {
+        self.delegate?.errorIndexing(self, error: error)
     }
 
     /// Prevents the execution of further indexing operations.
@@ -210,8 +220,7 @@ extension IndexingService: AccountUpdateServiceDelegate {
         graph.add(account.operations)
 
         if lastAccountIndexHash != account.hashValue {
-            lastAccountIndexHash = account.hashValue
-            updateIndex()
+            updateIndex(for: account)
         }
     }
 }
