@@ -208,29 +208,4 @@ class StreamServiceTests: XCTestCase {
             }
         }
     }
-
-    func testAccountSwitchedImplementationSubscribesToAllStreams() {
-        let managementService = AccountManagementService(with: streamService.core)
-
-        let account = StellarAccount(accountId: streamService.core.walletKeyPair!.accountId)
-        streamService.subscribeAll(account: account)
-
-        let stream1 = streamService.effectsStream
-        XCTAssertNotNil(stream1)
-
-        let stream2 = streamService.operationsStream
-        XCTAssertNotNil(stream2)
-
-        let stream3 = streamService.transactionsStream
-        XCTAssertNotNil(stream3)
-
-        streamService.accountSwitched(managementService, account: account)
-        XCTAssertNotNil(streamService.effectsStream)
-        XCTAssertNotNil(streamService.operationsStream)
-        XCTAssertNotNil(streamService.transactionsStream)
-
-        XCTAssertFalse(stream1 === streamService.effectsStream)
-        XCTAssertFalse(stream2 === streamService.operationsStream)
-        XCTAssertFalse(stream3 === streamService.transactionsStream)
-    }
 }

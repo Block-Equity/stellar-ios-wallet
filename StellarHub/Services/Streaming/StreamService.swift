@@ -39,7 +39,6 @@ extension StreamService {
 public final class StreamService: StreamServiceProtocol {
     let core: CoreServiceProtocol
 
-    internal var account: StellarAccount?
     internal var effectsStream: AnyStreamListener?
     internal var operationsStream: AnyStreamListener?
     internal var transactionsStream: AnyStreamListener?
@@ -151,13 +150,6 @@ public final class StreamService: StreamServiceProtocol {
     }
 }
 
-extension StreamService: AccountManagementServiceDelegate {
-    public func accountSwitched(_ service: AccountManagementService, account: StellarAccount) {
-        self.unsubscribeAll()
-        self.subscribeAll(account: account)
-    }
-}
-
 extension StreamService: StreamDelegate {
     func streamError<ProcessedDataType>(dataType: ProcessedDataType, error: Error) {
         let frameworkError = FrameworkError(error: error)
@@ -191,6 +183,5 @@ extension StreamService: StreamDelegate {
 extension StreamService {
     func reset() {
         unsubscribeAll()
-        account = nil
     }
 }
