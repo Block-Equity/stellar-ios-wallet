@@ -87,8 +87,8 @@ public protocol OfferResponseDelegate: AnyObject {
 
 // MARK: - IndexingService
 protocol IndexingServiceProtocol: Subservice {
-    func updateIndex()
-    func rebuildIndex()
+    func updateIndex(for account: StellarAccount)
+    func rebuildIndex(for account: StellarAccount)
     func reset()
     func pause()
     func resume()
