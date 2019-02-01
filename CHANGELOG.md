@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Please keep this human readable! Omit classnames and technical details where possible.
 
+## [2.6.2] - 2019-02-01
+### Added
+- Added smooth animations to transition the status bar between colours across the app
+- Added support for funding a testnet account for faster testing
+
+### Fixed
+- Corrected an issue where indexing would not run due to recording the completion too early
+- Fixed issue where the number of failed pin attempts was not being reset when authentcation was cancelled
+- Prevented account from updating an unreasonable number of times when stream updates received (hammering Horizon API)
+- Fixed an previous wallet data remaining when switching wallets 
+
+### Changed
+- Removed streaming service integration with account update service to avoid starting streams until first account update happens
+
 ## [2.6.1] - 2019-01-28
 ### Fixed
 - Corrected an issue that was preventing addresses being filled in after scanning from a QR code
