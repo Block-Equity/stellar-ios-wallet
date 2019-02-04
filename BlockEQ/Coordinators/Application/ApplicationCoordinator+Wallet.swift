@@ -70,7 +70,7 @@ extension ApplicationCoordinator: WalletViewControllerDelegate {
         transactionViewController = transactionVC
         transactionVC.delegate = self
 
-        wrappingNavController?.pushViewController(transactionVC, animated: true)
+        walletNavWrapper.pushViewController(transactionVC, animated: true)
     }
 
     func selectLearnMore(_ viewController: WalletViewController) {

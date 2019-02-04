@@ -47,6 +47,42 @@ extension AccountManagementService {
     }
 }
 
+// MARK: - Merge Account
+extension AccountManagementService {
+    public func mergeAccount(with destinationAddress: StellarAddress, delegate: MergeAccountResponseDelegate) {
+        guard let keyPair = core.walletKeyPair else {
+            let wrappedError = FrameworkError(error: FrameworkError.AccountServiceError.missingKeypair)
+            delegate.mergeFailed(with: wrappedError)
+            return
+        }
+
+        guard let account = self.account, let response = account.rawResponse else {
+            let wrappedError = FrameworkError(error: FrameworkError.AccountServiceError.nonExistentAccount)
+            delegate.mergeFailed(with: wrappedError)
+            return
+        }
+
+        let completion: AccountMergeOperation.AccountMergeCompletion = { errors in
+            DispatchQueue.main.async {
+                if let errors = errors, let error = errors.first {
+                    delegate.mergeFailed(with: error)
+                } else {
+                    delegate.merged(account: account, into: destinationAddress)
+                }
+            }
+        }
+
+        let mergeOperation = AccountMergeOperation(horizon: core.sdk,
+                                                   api: core.api,
+                                                   destination: destinationAddress.string,
+                                                   sourceAccount: response,
+                                                   userKeys: keyPair,
+                                                   completion: completion)
+
+        accountQueue.addOperation(mergeOperation)
+    }
+}
+
 // MARK: - Send Amount
 //swiftlint:disable function_body_length
 extension AccountManagementService {

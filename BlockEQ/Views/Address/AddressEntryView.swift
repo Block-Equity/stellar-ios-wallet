@@ -9,7 +9,7 @@
 import Reusable
 
 protocol AddressEntryViewDelegate: AnyObject {
-    func selectedPrimaryAction(_ view: AddressEntryView)
+    func selectedPrimaryAction(_ view: AddressEntryView, text: String?)
     func selectedAddressAction(_ view: AddressEntryView)
     func updatedAddressText(_ view: AddressEntryView, text: String?)
     func stoppedEditingAddress(_ view: AddressEntryView, text: String?)
@@ -72,6 +72,10 @@ final class AddressEntryView: UIView, NibOwnerLoadable {
     func togglePrimaryAction(enabled: Bool) {
         nextButton.isEnabled = enabled
     }
+
+    func invalid() {
+        addressTextField.shake()
+    }
 }
 
 // MARK: - IBActions
@@ -89,7 +93,7 @@ extension AddressEntryView {
     }
 
     @IBAction func selectedPrimaryButton(_ sender: Any) {
-        delegate?.selectedPrimaryAction(self)
+        delegate?.selectedPrimaryAction(self, text: addressTextField.text)
     }
 }
 

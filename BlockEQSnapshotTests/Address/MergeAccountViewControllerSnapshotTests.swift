@@ -6,6 +6,7 @@
 //  Copyright © 2019 BlockEQ. All rights reserved.
 //
 
+@testable import StellarHub
 @testable import BlockEQ
 import SnapshotTesting
 import XCTest
@@ -17,7 +18,8 @@ final class MergeAccountViewControllerSnapshotTests: XCTestCase, SnapshotTest {
         let mergeVC = MergeAccountViewController()
         _ = mergeVC.view
 
-        mergeVC.update(with: "TEST_ADDRESS".localized())
+        let address = StellarAddress("TEST_ADDRESS".localized())!
+        mergeVC.update(with: address, destinationAddress: nil)
 
         assertSnapshot(matching: mergeVC, as: .image, record: self.recordMode)
     }
@@ -28,7 +30,8 @@ final class MergeAccountViewControllerSnapshotTests: XCTestCase, SnapshotTest {
 
         mergeVC.view.frame = CGRect(x: 0, y: 0, width: 768, height: 1024)
 
-        mergeVC.update(with: "TEST_ADDRESS".localized())
+        let address = StellarAddress("TEST_ADDRESS".localized())!
+        mergeVC.update(with: address, destinationAddress: nil)
 
         assertSnapshot(matching: mergeVC, as: .image, record: self.recordMode)
     }

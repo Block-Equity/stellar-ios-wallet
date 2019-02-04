@@ -10,22 +10,15 @@
 extension ApplicationCoordinator: AuthenticationCoordinatorDelegate {
     func authenticationCancelled(_ coordinator: AuthenticationCoordinator,
                                  options: AuthenticationCoordinator.AuthenticationContext) {
-        // We need to re-set the previously switched setting, in the case the user cancels the authentication challenge
-        SecurityOptionHelper.set(option: .pinEnabled, value: temporaryPinSetting)
-        SecurityOptionHelper.set(option: .useBiometrics, value: temporaryBiometricSetting)
+        settingsCoordinator.restoreTemporaryPINSettings()
 
-        settingsViewController.tableView?.reloadData()
         authCompletion = nil
     }
 
     func authenticationFailed(_ coordinator: AuthenticationCoordinator,
                               error: AuthenticationCoordinator.AuthenticationError?,
                               options: AuthenticationCoordinator.AuthenticationContext) {
-        // We need to re-set the previously switched setting, in the case the user cancels the authentication challenge
-        SecurityOptionHelper.set(option: .pinEnabled, value: temporaryPinSetting)
-        SecurityOptionHelper.set(option: .useBiometrics, value: temporaryBiometricSetting)
-
-        settingsViewController.tableView?.reloadData()
+        settingsCoordinator.restoreTemporaryPINSettings()
 
         KeychainHelper.clearAll()
         SecurityOptionHelper.clear()
@@ -58,11 +51,11 @@ extension ApplicationCoordinator: ContactsViewControllerDelegate {
 
     func selectedAddToAddressBook(identifier: String, name: String, address: String) {
         let stellarContactVC = StellarContactViewController(identifier: identifier, name: name, address: address)
+
         let container = AppNavigationController(rootViewController: stellarContactVC)
+        container.navigationBar.prefersLargeTitles = true
 
         stellarContactViewController = stellarContactVC
-        wrappingNavController = container
-        wrappingNavController?.navigationBar.prefersLargeTitles = true
 
         tabController.present(container, animated: true, completion: nil)
     }

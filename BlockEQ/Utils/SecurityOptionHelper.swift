@@ -14,7 +14,7 @@ final class SecurityOptionHelper {
         case pinOnLaunch = "security-pin-launch"
         case pinOnTrade = "security-pin-trading"
         case pinOnPayment = "security-pin-payments"
-        case pinOnMnemonic = "security-pin-mnemonic"
+        case pinOnWallet = "security-pin-mnemonic"
         case useBiometrics = "security-use-biometrics"
     }
 
@@ -33,9 +33,9 @@ final class SecurityOptionHelper {
     static func clear() {
         set(option: .pinEnabled, value: true)
         set(option: .pinOnLaunch, value: true)
-        set(option: .pinOnTrade, value: true)
         set(option: .pinOnPayment, value: true)
-        set(option: .pinOnMnemonic, value: true)
+        set(option: .pinOnWallet, value: true)
+        set(option: .pinOnTrade, value: false)
         set(option: .useBiometrics, value: false)
     }
 }
