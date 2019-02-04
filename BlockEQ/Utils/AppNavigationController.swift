@@ -21,7 +21,9 @@ class AppNavigationController: UINavigationController {
 
     func setupView() {
         navigationBar.isTranslucent = true
+        navigationBar.prefersLargeTitles = true
         navigationBar.tintColor = Colors.primaryDark
+
         navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: Colors.black
         ]

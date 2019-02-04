@@ -53,6 +53,7 @@ class ScanViewController: UIViewController {
 
     func setupView() {
         navigationItem.title = "SCANNING".localized()
+        navigationController?.navigationBar.isTranslucent = false
     }
 
     func addDismissButton() {

@@ -12,7 +12,7 @@ PODS:
   - Reusable/View (4.0.5)
   - SCLAlertView (0.8.1)
   - SnapshotTesting (1.1.0)
-  - stellar-ios-mac-sdk (1.5.7)
+  - stellar-ios-mac-sdk (1.5.8)
   - Whisper (6.0.2)
 
 DEPENDENCIES:
@@ -57,7 +57,7 @@ CHECKOUT OPTIONS:
     :commit: 86ea7613c99cd4896765fabfa773b39b40bc8590
     :git: https://github.com/vikmeup/SCLAlertView-Swift
   stellar-ios-mac-sdk:
-    :commit: 600d39b633f6227dd908a7b8b9638925a36dbd42
+    :commit: 4bdf6ec2602475345f11f4b140c4e05891bb0013
     :git: https://github.com/Soneso/stellar-ios-mac-sdk.git
   Whisper:
     :commit: 86880dea149a871ec5cb909cc3b93e7fb5804788
@@ -72,9 +72,9 @@ SPEC CHECKSUMS:
   Reusable: 188be1a54ac0691bc66e5bb24ec6eb91971b315b
   SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
   SnapshotTesting: 8ed6a4dceee63f59a60e1bc86f9adbba54eb9287
-  stellar-ios-mac-sdk: 7a49cbb604d6ec8e0e3fefddf34d0d9340db2f1c
+  stellar-ios-mac-sdk: e330bf3cc9626b10e31bf1ac8169dbb1b3352903
   Whisper: 8c499b08f3b56d5c80162d775e3462318ad7f4fe
 
-PODFILE CHECKSUM: a20b2a55a46db8619698bfc60bab052b3593e01e
+PODFILE CHECKSUM: abe5899d9640cf23018ee061f7a8c87c5c5bbc76
 
 COCOAPODS: 1.6.0.rc.1

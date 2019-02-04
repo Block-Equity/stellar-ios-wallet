@@ -21,6 +21,7 @@ final class MergeAccountViewController: UIViewController {
 
     weak var delegate: MergeAccountViewControllerDelegate?
 
+    var sourceAddress: StellarAddress?
     var verificationAddress: StellarAddress?
 
     override func viewDidLoad() {
@@ -28,51 +29,103 @@ final class MergeAccountViewController: UIViewController {
         setupView()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        guard let address = sourceAddress else { return }
+        self.update(with: address, destinationAddress: verificationAddress)
+    }
+
     func setupView() {
         addressEntryView.delegate = self
         scrollView.alwaysBounceVertical = true
 
-        let defaultVerification = AddressConfirmationView.ViewModel(labelText: "VERIFICATION_DESCRIPTION".localized(),
-                                                                    addressText: "ACCOUNT ADDRESS")
+        informationLabel.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+        informationLabel.textColor = TextColors.greyTest
+
+        title = "MERGE_SCREEN_TITLE".localized()
+    }
+
+    func update(with source: StellarAddress, destinationAddress: StellarAddress?) {
+        sourceAddress = source
+        verificationAddress = destinationAddress
 
         let entryVM = AddressEntryView.ViewModel(labelText: "DESTINATION_ADDRESS_TITLE".localized().uppercased(),
                                                  primaryButtonTitle: "CLOSE_ACCOUNT_BUTTON_TITLE".localized(),
                                                  addressFieldPlaceholder: "DESTINATION_ADDRESS_PLACEHOLDER".localized(),
-                                                 addressFieldPrefilledText: nil,
+                                                 addressFieldPrefilledText: destinationAddress?.string,
                                                  addressButtonIcon: nil,
                                                  buttonColor: Colors.red)
 
-        verificationView.update(with: defaultVerification)
-        addressEntryView.update(with: entryVM)
+        let accountVM = AddressConfirmationView.ViewModel(labelText: "VERIFICATION_DESCRIPTION".localized(),
+                                                          addressText: source.string)
 
-        informationLabel.font = UIFont.systemFont(ofSize: 11, weight: .regular)
-        informationLabel.textColor = TextColors.greyTest
-    }
-
-    func update(with address: String) {
-        verificationView.update(with:
-            AddressConfirmationView.ViewModel(labelText: "VERIFICATION_DESCRIPTION".localized(), addressText: address)
-        )
+        addressEntryView?.update(with: entryVM)
+        verificationView?.update(with: accountVM)
     }
 
     func toggleCloseAction(enabled: Bool) {
         self.addressEntryView.togglePrimaryAction(enabled: enabled)
     }
 
-    func verify(address text: String?) {
-        verificationAddress = StellarAddress(text)
-        toggleCloseAction(enabled: verificationAddress != nil)
+    func verify(address text: String?) -> StellarAddress? {
+        return StellarAddress(text)
+    }
+
+    func displayConfirmation(for address: StellarAddress) {
+        let cancelAction = UIAlertAction(title: "CANCEL_ACTION".localized(), style: .cancel, handler: nil)
+        let submitAction = UIAlertAction(title: "MERGE_TITLE".localized(), style: .destructive, handler: { _ in
+            self.delegate?.requestedMergeAccount(self, destination: address)
+        })
+
+        let alert = UIAlertController(title: "MERGE_ACCOUNT_TITLE".localized(),
+                                      message: "MERGE_ACCOUNT_MESSAGE".localized(),
+                                      preferredStyle: .alert)
+
+        alert.addAction(cancelAction)
+        alert.addAction(submitAction)
+
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func showHud() {
+        let hud = MBProgressHUD.showAdded(to: view, animated: true)
+        hud.label.text = "MERGING_ACCOUNT_MESSAGE".localized()
+        hud.mode = .indeterminate
+    }
+
+    func hideHud() {
+        MBProgressHUD.hide(for: view, animated: true)
     }
 }
 
+// MARK: - AddressEntryViewDelegate
 extension MergeAccountViewController: AddressEntryViewDelegate {
-    func selectedPrimaryAction(_ view: AddressEntryView) {
+    func selectedPrimaryAction(_ view: AddressEntryView, text: String?) {
+        verificationAddress = verify(address: text)
+
         guard let address = verificationAddress else {
-            print("some error")
+            addressEntryView.invalid()
             return
         }
 
-        delegate?.requestedMergeAccount(self, destination: address)
+        guard sourceAddress != address else {
+            UIAlertController.simpleAlert(title: "ACCOUNT_MERGE_MALFORMED_TITLE".localized(),
+                                          message: "ACCOUNT_MERGE_MALFORMED_MESSAGE".localized(),
+                                          presentingViewController: self)
+            return
+        }
+
+        let exchange: Exchange? = AddressResolver.resolve(address: address)
+
+        guard exchange == nil else {
+            UIAlertController.simpleAlert(title: "ACCOUNT_MERGE_EXCHANGE_TITLE".localized(),
+                                          message: "ACCOUNT_MERGE_EXCHANGE_MESSAGE".localized(),
+                                          presentingViewController: self)
+            return
+        }
+
+        displayConfirmation(for: address)
     }
 
     func selectedAddressAction(_ view: AddressEntryView) {
@@ -80,10 +133,13 @@ extension MergeAccountViewController: AddressEntryViewDelegate {
     }
 
     func updatedAddressText(_ view: AddressEntryView, text: String?) {
-        verify(address: text)
+        verificationAddress = verify(address: text)
     }
 
     func stoppedEditingAddress(_ view: AddressEntryView, text: String?) {
-        verify(address: text)
+        verificationAddress = verify(address: text)
     }
 }
+
+// MARK: - FrameworkErrorPresentable
+extension MergeAccountViewController: FrameworkErrorPresentable { }

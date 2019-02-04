@@ -21,7 +21,7 @@
 
 "SETTINGS_OPTION_SEED_PHRASE" = "View Mnemonic Phrase";
 "SETTINGS_OPTION_CLEAR_WALLET" = "Remove Wallet from Device";
-"SETTINGS_OPTION_MERGE_ACCOUNT" = "Close Account";
+"SETTINGS_OPTION_MERGE_ACCOUNT" = "Merge Account";
 "SETTINGS_OPTION_REVIEW" = "Review App";
 "SETTINGS_OPTION_SHARE" = "Share";
 "SETTINGS_OPTION_APPLICATION" = "App Information";
@@ -34,12 +34,11 @@
 "SETTINGS_OPTION_PIN_PAYMENTS" = "When Sending Payments";
 "SETTINGS_OPTION_PIN_LAUNCH" = "On Launch";
 "SETTINGS_OPTION_PIN_TRADING" = "When Trading";
-"SETTINGS_OPTION_PIN_MNEMONIC" = "When Viewing Secrets";
+"SETTINGS_OPTION_PIN_WALLET" = "When Managing Wallet";
 "SETTINGS_OPTION_USE_FACEID" = "Use FaceID";
 "SETTINGS_OPTION_USE_TOUCHID" = "Use TouchID";
 "SETTINGS_OPTION_PRIVATE_KEY" = "Private Key";
 "SETTINGS_OPTION_DISPLAY_SECRET_SEED" = "Display Seed Information";
-"SETTINGS_OPTION_EXPORT_KEYPAIR" = "Export Key Pair";
 "SETTINGS_OPTION_DIAGNOSTICS" = "Send Diagnostic";
 "SETTINGS_OPTION_INDEXING" = "Indexing Service";
 "SETTINGS_OPTION_MIMIC" = "Mimic Account";
@@ -332,3 +331,23 @@
 "UNRECOGNIZED_ADDRESS_ERROR_TITLE" = "Unrecognized Address";
 "UNRECOGNIZED_ADDRESS_ERROR_MESSAGE" = "The provided QR code could not be processed for a valid Stellar address.";
 "CLOSE_ACCOUNT_BUTTON_TITLE" = "Close Account";
+"MERGE_ACCOUNT_TITLE" = "Confirm Merge";
+"MERGE_ACCOUNT_MESSAGE" = "This action will permanently and irreversibly close your account by merging it into the destination account.";
+"MERGE_TITLE" = "Merge";
+"MERGE_SCREEN_TITLE" = "Merge Account";
+"MERGING_ACCOUNT_MESSAGE" = "Merging Account...";
+"ACCOUNT_MERGED" = "Account was successfully merged.";
+"ACCOUNT_MERGE_MALFORMED_TITLE" = "Invalid Destination";
+"ACCOUNT_MERGE_MALFORMED_MESSAGE" = "The destination address cannot be the same as your address. Please enter a different destination address.";
+"ACCOUNT_MERGE_NO_DESTINATION_TITLE" = "Invalid Destination";
+"ACCOUNT_MERGE_NO_DESTINATION_MESSAGE" = "The destination account does not exist. Please ensure you've entered it correctly, and that it is funded on the network.";
+"ACCOUNT_MERGE_IMMUTABLE_TITLE" = "Account Immutable";
+"ACCOUNT_MERGE_IMMUTABLE_MESSAGE" = "Your account is locked. You can't merge this account without first unlocking it.";
+"ACCOUNT_MERGE_SUBENTRIES_TITLE" = "Open Trustlines";
+"ACCOUNT_MERGE_SUBENTRIES_MESSAGE" = "Your account has open offers and/or trustlines. You must remove these before you are able to proceed.";
+"ACCOUNT_MERGE_SEQNUM_TITLE" = "Invalid Account State";
+"ACCOUNT_MERGE_SEQNUM_MESSAGE" = "Your account has an invalid sequence number and cannot be merged.";
+"ACCOUNT_MERGE_DEST_FULL_TITLE" = "Destination Full";
+"ACCOUNT_MERGE_DEST_FULL_MESSAGE" = "The destination account cannot receive the balance of the source account and still satisfy its lumen buying liabilities";
+"ACCOUNT_MERGE_EXCHANGE_TITLE" = "Invalid Destination";
+"ACCOUNT_MERGE_EXCHANGE_MESSAGE" = "The provided destination is recognized as an exchange account. You will not receive any funds by merging your account to this destination.";

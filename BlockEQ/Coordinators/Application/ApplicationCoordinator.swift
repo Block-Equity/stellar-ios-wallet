@@ -31,8 +31,20 @@ final class ApplicationCoordinator {
     // The coordinator responsible for managing the payment flow
     var paymentCoordinator: PaymentCoordinator?
 
-    // The coordinator responsible for managing application diagnostics
-    let diagnosticCoordinator = DiagnosticCoordinator()
+    /// The service object that manages interactions with the Stellar network
+    var core: CoreService
+
+    /// The view controller used to display the minimum balance, deallocated once finished using
+    var balanceViewController: BalanceViewController?
+
+    /// The view controller used to display transaction details, deallocated once finished using
+    var transactionViewController: TransactionDetailsViewController?
+
+    /// The view controller responsible for adding and editing Stellar Contacts
+    var stellarContactViewController: StellarContactViewController?
+
+    /// The completion handler to call when the pin view controller completes successfully
+    var authCompletion: EmptyCompletion?
 
     // A safety object to throttle how many requests to update data we make when receiving stream objects
     lazy var streamUpdateThrottler: Throttler = {
@@ -40,9 +52,6 @@ final class ApplicationCoordinator {
             self.core.updateService.update()
         })
     }()
-
-    /// The service object that manages interactions with the Stellar network
-    var core: CoreService
 
     // The coordinator responsible for the trading flow
     lazy var tradingCoordinator: TradingCoordinator = {
@@ -52,12 +61,12 @@ final class ApplicationCoordinator {
         return tradingCoordinator
     }()
 
-    /// The view that handles all switching in the header
-    lazy var tradeHeaderView: TradeHeaderView = {
-        let rect = CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.size.width, height: 44.0))
-        let view = TradeHeaderView(frame: rect)
-        view.tradeHeaderViewDelegate = self
-        return view
+    // The coordinator responsible for helping manage settings
+    lazy var settingsCoordinator: SettingsCoordinator = {
+        let settingsCoordinator = SettingsCoordinator(core: core)
+        settingsCoordinator.delegate = self
+
+        return settingsCoordinator
     }()
 
     /// The view controller used for receiving funds
@@ -83,34 +92,17 @@ final class ApplicationCoordinator {
         return contactsVC
     }()
 
-    /// The view controller used to display settings options
-    var settingsViewController: SettingsViewController {
-        let viewController = SettingsViewController(options: EQSettings.options,
-                                                    customTitle: "MENU_OPTION_SETTINGS".localized())
-        viewController.delegate = self
-        return viewController
-    }
+    /// Wrapping navigation controller for wallet view controller (which doesn't have a coordinator yet)
+    lazy var contactsNavWrapper: AppNavigationController = {
+        let wrapper = AppNavigationController(rootViewController: self.contactsViewController)
+        return wrapper
+    }()
 
-    /// The view controller used to display the minimum balance, deallocated once finished using
-    var balanceViewController: BalanceViewController?
-
-    /// The view controller used to display transaction details, deallocated once finished using
-    var transactionViewController: TransactionDetailsViewController?
-
-    /// Most tabbed view controllers need the top navbar - so we wrap every tab in an inner AppNavigationController
-    var wrappingNavController: AppNavigationController?
-
-    //The view controller responsible for adding and editing Stellar Contacts
-    var stellarContactViewController: StellarContactViewController?
-
-    //The view controller responsible for adding and editing Stellar Contacts
-    var indexingViewController: IndexingViewController?
-
-    /// The completion handler to call when the pin view controller completes successfully
-    var authCompletion: EmptyCompletion?
-
-    var temporaryPinSetting: Bool!
-    var temporaryBiometricSetting: Bool!
+    /// Wrapping navigation controller for contacts view controller (which doesn't have a coordinator)
+    lazy var walletNavWrapper: AppNavigationController = {
+        let wrapper = AppNavigationController(rootViewController: self.walletViewController)
+        return wrapper
+    }()
 
     weak var delegate: ApplicationCoordinatorDelegate?
 
@@ -123,7 +115,6 @@ final class ApplicationCoordinator {
 
         core.accountService.registerForUpdates(self)
         core.updateService.registerForUpdates(self)
-        core.indexingService.delegate = self
         core.streamService.delegate = self
 
         migrateIfEligible(using: core.accountService)
@@ -156,73 +147,51 @@ final class ApplicationCoordinator {
             KeychainHelper.clearStellarSecrets()
         }
     }
-}
 
-extension ApplicationCoordinator: TradeHeaderViewDelegate {
-    func switchedSegment(_ type: TradeSegment) -> Bool {
-        return tradingCoordinator.switchedSegment(type)
+    func displayAuth(_ completion: EmptyCompletion? = nil) {
+        settingsCoordinator.storeTemporaryPINSettings()
+
+        authCompletion = completion
+
+        delegate?.requestedAuthentication(self,
+                                          container: tabController,
+                                          options: AuthenticationCoordinator.defaultConfirmationOptions)
     }
-}
 
-extension ApplicationCoordinator: TradingCoordinatorDelegate {
-    func setScroll(offset: CGFloat, page: Int) {
-        tradeHeaderView.sliderOriginConstraint.constant = offset
-        tradeHeaderView.setTitleSelected(index: page)
+    func clearedWallet() {
+        self.tradingCoordinator.stopPeriodicOrderbookUpdates()
+
+        KeychainHelper.clearAll()
+        SecurityOptionHelper.clear()
+        CacheManager.shared.clearAccountCache()
+
+        self.delegate?.switchToOnboarding()
+
+        self.switchedTabs(.assets)
+        self.walletViewController.clear()
+
+        self.core.accountService.clear()
+        self.core.stopSubservices()
     }
 }
 
 extension ApplicationCoordinator: AppTabControllerDelegate {
     func switchedTabs(_ appTab: ApplicationTab) {
-        var viewController: UIViewController
+        var viewController: AppNavigationController
 
         switch appTab {
-        case .assets: viewController = walletViewController
-        case .trading: viewController = tradingCoordinator.segmentController
-        case .contacts: viewController = contactsViewController
-        case .settings: viewController = settingsViewController
+        case .assets: viewController = walletNavWrapper
+        case .trading: viewController = tradingCoordinator.navWrapper
+        case .contacts: viewController = contactsNavWrapper
+        case .settings: viewController = settingsCoordinator.navWrapper
         }
 
         if currentViewController != viewController {
             currentViewController = viewController
 
-            let navWrapper = AppNavigationController(rootViewController: viewController)
-            wrappingNavController = navWrapper
-
-            if appTab != .trading {
-                navWrapper.navigationBar.prefersLargeTitles = true
-            }
-
-            setNavControllerHeader(type: appTab)
-
-            tabController.setViewController(navWrapper, animated: false, completion: nil)
+            viewController.popToRootViewController(animated: false)
+            tabController.setViewController(viewController, animated: false, completion: nil)
         }
-    }
-
-    func setNavControllerHeader(type: ApplicationTab) {
-        if type == .trading {
-            wrappingNavController?.navigationBar.addSubview(tradeHeaderView)
-        }
-    }
-}
-
-extension ApplicationCoordinator: IndexingServiceDelegate {
-    func finishedIndexing(_ service: IndexingService) {
-        print("Indexing finished!")
-        indexingViewController?.update(with: 1, error: nil)
-        transactionViewController?.requestData()
-    }
-
-    func errorIndexing(_ service: IndexingService, error: Error?) {
-        if let error = error {
-            print("Indexing Error:", error.localizedDescription)
-            indexingViewController?.update(with: nil, error: error)
-        } else {
-            print("Indexing Error with no reason specified.")
-        }
-    }
-
-    func updatedProgress(_ service: IndexingService, completed: Double) {
-        indexingViewController?.update(with: completed, error: nil)
     }
 }
 
@@ -258,3 +227,5 @@ extension ApplicationCoordinator: DelegateResponder {
         core.updateService.update()
     }
 }
+
+extension ApplicationCoordinator: TradingCoordinatorDelegate { }

@@ -6,7 +6,7 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-extension ApplicationCoordinator: IndexingViewControllerDelegate {
+extension SettingsCoordinator: IndexingViewControllerDelegate {
     func requestedCancelIndexing(_ viewController: IndexingViewController) {
         core.indexingService.haltIndexing()
         indexingViewController?.update(with: nil, error: nil)

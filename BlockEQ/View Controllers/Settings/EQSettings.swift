@@ -71,7 +71,11 @@ struct EQSettings {
                              identifier: "security-pin-payments",
                              enabled: true,
                              type: .toggle),
-            SettingNode.node(name: "SETTINGS_OPTION_PIN_MNEMONIC".localized(),
+            SettingNode.node(name: "SETTINGS_OPTION_PIN_TRADING".localized(),
+                             identifier: "security-pin-trading",
+                             enabled: true,
+                             type: .toggle),
+            SettingNode.node(name: "SETTINGS_OPTION_PIN_WALLET".localized(),
                              identifier: "security-pin-mnemonic",
                              enabled: false,
                              type: .toggle)
@@ -112,10 +116,6 @@ struct EQSettings {
             SettingNode.node(name: "SETTINGS_OPTION_DISPLAY_SECRET_SEED".localized(),
                              identifier: "keys-display-secret-seed",
                              enabled: true,
-                             type: .normal),
-            SettingNode.node(name: "SETTINGS_OPTION_EXPORT_KEYPAIR".localized(),
-                             identifier: "keys-export-private-key",
-                             enabled: false,
                              type: .normal)
         ]
     }

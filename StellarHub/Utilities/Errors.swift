@@ -129,6 +129,12 @@ extension FrameworkError {
         errorCategory = error.category
         errorKey = error.errorKey
     }
+
+    public init(error: Error, errorResponse: ErrorResponse) {
+        self.init(error: error)
+
+        // do something with the errorResponse
+    }
 }
 
 extension FrameworkError: LocalizedError {

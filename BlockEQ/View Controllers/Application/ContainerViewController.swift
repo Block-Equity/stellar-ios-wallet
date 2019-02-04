@@ -79,8 +79,8 @@ extension UIViewController {
     }
 
     func addContentView(_ contentView: UIView) {
-        adjustFrameForView(contentView)
         view.addSubview(contentView)
+        adjustFrameForView(contentView)
     }
 
     func adjustFrameForView(_ view: UIView) {

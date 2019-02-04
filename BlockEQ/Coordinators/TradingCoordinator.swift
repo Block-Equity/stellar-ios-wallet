@@ -11,7 +11,6 @@ import stellarsdk
 import Whisper
 
 protocol TradingCoordinatorDelegate: AnyObject {
-    func setScroll(offset: CGFloat, page: Int)
 }
 
 protocol TradeAssetListDisplayable: AnyObject {
@@ -47,6 +46,22 @@ final class TradingCoordinator {
 
     var timer: Timer?
 
+    /// The view that handles all switching in the header
+    lazy var tradeHeaderView: TradeHeaderView = {
+        let rect = CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.size.width, height: 44.0))
+        let view = TradeHeaderView(frame: rect)
+        view.tradeHeaderViewDelegate = self
+        return view
+    }()
+
+    lazy var navWrapper: AppNavigationController = {
+        let wrapper = AppNavigationController(rootViewController: segmentController)
+        wrapper.navigationBar.prefersLargeTitles = false
+        wrapper.navigationBar.addSubview(tradeHeaderView)
+
+        return wrapper
+    }()
+
     weak var delegate: TradingCoordinatorDelegate?
 
     init(core: CoreService) {
@@ -75,10 +90,6 @@ final class TradingCoordinator {
         tradeViewController.assetDelegate = self
         myOffersViewController.delegate = self
         orderbookViewController.delegate = self
-    }
-
-    func switchedSegment(_ type: TradeSegment) -> Bool {
-        return segmentController.switchSegment(type)
     }
 
     func startPeriodicOrderbookUpdates() {
@@ -292,7 +303,8 @@ extension TradingCoordinator: AccountUpdatable {
 
 extension TradingCoordinator: TradeSegmentControllerDelegate {
     func setScroll(offset: CGFloat, page: Int) {
-        delegate?.setScroll(offset: offset, page: page)
+        tradeHeaderView.sliderOriginConstraint.constant = offset
+        tradeHeaderView.setTitleSelected(index: page)
     }
 
     func displayAssetList() {
@@ -385,5 +397,11 @@ extension TradingCoordinator: MyOffersViewControllerDelegate {
 extension TradingCoordinator: OrderbookViewControllerDelegate {
     func requestedTogglePeriodicUpdates(enabled: Bool) {
         enabled ? startPeriodicOrderbookUpdates() : stopPeriodicOrderbookUpdates()
+    }
+}
+
+extension TradingCoordinator: TradeHeaderViewDelegate {
+    func switchedSegment(_ type: TradeSegment) -> Bool {
+        return segmentController.switchSegment(type)
     }
 }

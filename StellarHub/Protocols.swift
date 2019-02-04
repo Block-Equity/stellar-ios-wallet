@@ -68,6 +68,11 @@ public protocol ManageAssetResponseDelegate: AnyObject {
     func manageFailed(error: FrameworkError)
 }
 
+public protocol MergeAccountResponseDelegate: AnyObject {
+    func merged(account source: StellarAccount, into destination: StellarAddress)
+    func mergeFailed(with error: FrameworkError)
+}
+
 // MARK: - TradeService
 protocol TradeServiceProtocol: AnyObject, Subservice {
     var tradeQueue: OperationQueue { get }
