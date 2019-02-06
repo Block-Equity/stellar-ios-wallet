@@ -199,6 +199,27 @@ final class TradeViewController: UIViewController {
         self.tradeFromTextField.text = ""
         self.tradeToTextField.text = ""
     }
+
+    func displayTradeConfirmation(fromAmount: String,
+                                  toAmount: String,
+                                  pair: StellarAssetPair,
+                                  confirmed: @escaping () -> Void) {
+        let format = "SUBMIT_TRADE_FORMAT".localized()
+        let alertMessage = String(format: format, fromAmount, pair.selling.shortCode, toAmount, pair.buying.shortCode)
+        let cancelAction = UIAlertAction(title: "CANCEL_ACTION".localized(), style: .cancel, handler: nil)
+        let submitAction = UIAlertAction(title: "TRADE_TITLE".localized(), style: .default, handler: { _ in
+            confirmed()
+        })
+
+        let alert = UIAlertController(title: "SUBMIT_TRADE_TITLE".localized(),
+                                      message: alertMessage,
+                                      preferredStyle: .alert)
+
+        alert.addAction(cancelAction)
+        alert.addAction(submitAction)
+
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 // MARK: - IBActions
