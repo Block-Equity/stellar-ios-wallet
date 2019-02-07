@@ -8,7 +8,6 @@
 
 import StellarHub
 import stellarsdk
-import Whisper
 
 protocol TradeAssetListDisplayable: AnyObject {
     func requestedDisplayAssetList(for: TradeViewController.TradeField)

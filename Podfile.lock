@@ -13,7 +13,6 @@ PODS:
   - SCLAlertView (0.8.1)
   - SnapshotTesting (1.1.0)
   - stellar-ios-mac-sdk (1.5.8)
-  - Whisper (6.0.2)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
@@ -25,7 +24,6 @@ DEPENDENCIES:
   - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift`, branch `master`)
   - SnapshotTesting
   - stellar-ios-mac-sdk (from `https://github.com/Soneso/stellar-ios-mac-sdk.git`)
-  - Whisper (from `https://github.com/freeubi/Whisper.git`, branch `swift-4.2-support`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -45,9 +43,6 @@ EXTERNAL SOURCES:
     :git: https://github.com/vikmeup/SCLAlertView-Swift
   stellar-ios-mac-sdk:
     :git: https://github.com/Soneso/stellar-ios-mac-sdk.git
-  Whisper:
-    :branch: swift-4.2-support
-    :git: https://github.com/freeubi/Whisper.git
 
 CHECKOUT OPTIONS:
   Imaginary:
@@ -59,9 +54,6 @@ CHECKOUT OPTIONS:
   stellar-ios-mac-sdk:
     :commit: 4bdf6ec2602475345f11f4b140c4e05891bb0013
     :git: https://github.com/Soneso/stellar-ios-mac-sdk.git
-  Whisper:
-    :commit: 86880dea149a871ec5cb909cc3b93e7fb5804788
-    :git: https://github.com/freeubi/Whisper.git
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
@@ -73,8 +65,7 @@ SPEC CHECKSUMS:
   SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
   SnapshotTesting: 8ed6a4dceee63f59a60e1bc86f9adbba54eb9287
   stellar-ios-mac-sdk: e330bf3cc9626b10e31bf1ac8169dbb1b3352903
-  Whisper: 8c499b08f3b56d5c80162d775e3462318ad7f4fe
 
-PODFILE CHECKSUM: abe5899d9640cf23018ee061f7a8c87c5c5bbc76
+PODFILE CHECKSUM: aae2d908185495e02a9e7b76d8ef2f71775db614
 
 COCOAPODS: 1.6.0.rc.1
