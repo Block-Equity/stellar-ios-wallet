@@ -9,7 +9,6 @@
 import StellarHub
 
 protocol TradeSegmentControllerDelegate: AnyObject {
-    func setScroll(offset: CGFloat, page: Int)
     func displayAssetList()
 }
 
@@ -22,6 +21,13 @@ final class TradeSegmentViewController: UIViewController {
     var middleViewController: UIViewController!
     var totalPages: CGFloat!
     var displayNoAssetOverlay: Bool = true
+
+    lazy var tradeHeaderView: TradeHeaderView = {
+        let view = TradeHeaderView(frame: .zero)
+        view.tradeHeaderViewDelegate = self
+
+        return view
+    }()
 
     weak var tradeSegmentDelegate: TradeSegmentControllerDelegate?
 
@@ -69,6 +75,10 @@ final class TradeSegmentViewController: UIViewController {
     func setupView() {
         scrollView.backgroundColor = Colors.lightBackground
         noAssetView.isHidden = true
+
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.largeTitleDisplayMode = .never
+        navigationItem.titleView = tradeHeaderView
     }
 
     override func viewWillLayoutSubviews() {
@@ -134,6 +144,13 @@ extension TradeSegmentViewController: UIScrollViewDelegate {
         let scrollOffset = (scrollView.contentOffset.x / totalOffset) * scrollView.frame.size.width
         let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
 
-        tradeSegmentDelegate?.setScroll(offset: scrollOffset, page: page)
+        tradeHeaderView.sliderOriginConstraint.constant = scrollOffset - 5
+        tradeHeaderView.setTitleSelected(index: page)
+    }
+}
+
+extension TradeSegmentViewController: TradeHeaderViewDelegate {
+    func switchedSegment(_ type: TradeSegment) -> Bool {
+        return switchSegment(type)
     }
 }

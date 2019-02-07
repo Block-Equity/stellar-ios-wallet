@@ -43,19 +43,10 @@ final class TradingCoordinator {
 
     var timer: Timer?
 
-    /// The view that handles all switching in the header
-    lazy var tradeHeaderView: TradeHeaderView = {
-        let rect = CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.size.width, height: 44.0))
-        let view = TradeHeaderView(frame: rect)
-        view.tradeHeaderViewDelegate = self
-        return view
-    }()
-
     lazy var navWrapper: AppNavigationController = {
         let wrapper = AppNavigationController(rootViewController: segmentController)
+        wrapper.navigationItem.largeTitleDisplayMode = .never
         wrapper.navigationBar.prefersLargeTitles = false
-        wrapper.navigationBar.addSubview(tradeHeaderView)
-
         return wrapper
     }()
 
@@ -228,14 +219,11 @@ extension TradingCoordinator {
     func displayTradeSuccess() {
         hideHud()
 
-        guard let navController = segmentController.navigationController else { return }
-
-        let message = Message(title: "TRADE_SUBMITTED".localized(), backgroundColor: Colors.green)
-        Whisper.show(whisper: message, to: navController, action: .show)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            Whisper.hide(whisperFrom: navController)
-        }
+        let hud = MBProgressHUD.showAdded(to: segmentController.view, animated: true)
+        hud.mode = .text
+        hud.animationType = .zoom
+        hud.label.text = "TRADE_SUBMITTED".localized()
+        hud.hide(animated: true, afterDelay: 2)
     }
 
     func displayTradeError(_ error: FrameworkError) {
@@ -277,8 +265,7 @@ extension TradingCoordinator: AccountUpdatable {
 
 extension TradingCoordinator: TradeSegmentControllerDelegate {
     func setScroll(offset: CGFloat, page: Int) {
-        tradeHeaderView.sliderOriginConstraint.constant = offset
-        tradeHeaderView.setTitleSelected(index: page)
+
     }
 
     func displayAssetList() {
@@ -371,11 +358,5 @@ extension TradingCoordinator: MyOffersViewControllerDelegate {
 extension TradingCoordinator: OrderbookViewControllerDelegate {
     func requestedTogglePeriodicUpdates(enabled: Bool) {
         enabled ? startPeriodicOrderbookUpdates() : stopPeriodicOrderbookUpdates()
-    }
-}
-
-extension TradingCoordinator: TradeHeaderViewDelegate {
-    func switchedSegment(_ type: TradeSegment) -> Bool {
-        return segmentController.switchSegment(type)
     }
 }

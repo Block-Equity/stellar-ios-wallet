@@ -23,7 +23,6 @@ protocol TradeHeaderViewDelegate: AnyObject {
 }
 
 class TradeHeaderView: UIView, NibOwnerLoadable {
-
     @IBOutlet weak var view: UIView!
     @IBOutlet weak var tradeButton: UIButton!
     @IBOutlet weak var orderBookButton: UIButton!
@@ -33,21 +32,19 @@ class TradeHeaderView: UIView, NibOwnerLoadable {
     var buttons: [UIButton] = []
     weak var tradeHeaderViewDelegate: TradeHeaderViewDelegate?
 
-    fileprivate static let nibName = "TradeHeaderView"
-
-    @IBAction func selectedButton(sender: UIButton) {
-        setSelected(selectedButton: sender, animated: true)
+    override var intrinsicContentSize: CGSize {
+        return UIView.layoutFittingExpandedSize
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.loadNibContent()
+        loadNibContent()
         setupView()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.loadNibContent()
+        loadNibContent()
         setupView()
     }
 
@@ -71,5 +68,12 @@ class TradeHeaderView: UIView, NibOwnerLoadable {
         if tradeHeaderViewDelegate?.switchedSegment(segment) == true {
             setTitleSelected(index: selectedButton.tag)
         }
+    }
+}
+
+// MARK: IBActions
+extension TradeHeaderView {
+    @IBAction func selectedButton(sender: UIButton) {
+        setSelected(selectedButton: sender, animated: true)
     }
 }
