@@ -51,7 +51,7 @@ final class MergeAccountViewController: UIViewController {
         verificationAddress = destinationAddress
 
         let entryVM = AddressEntryView.ViewModel(labelText: "DESTINATION_ADDRESS_TITLE".localized().uppercased(),
-                                                 primaryButtonTitle: "CLOSE_ACCOUNT_BUTTON_TITLE".localized(),
+                                                 primaryButtonTitle: "MERGE_ACCOUNT_BUTTON_TITLE".localized(),
                                                  addressFieldPlaceholder: "DESTINATION_ADDRESS_PLACEHOLDER".localized(),
                                                  addressFieldPrefilledText: destinationAddress?.string,
                                                  addressButtonIcon: nil,
