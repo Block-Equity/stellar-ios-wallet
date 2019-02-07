@@ -14,7 +14,7 @@ struct EQSettings {
 
     /// This initalizer populates options based on the scheme selected. Debug options are only included in debug builds.
     static var options: [SettingNode] {
-        var mutableOptions = [securitySection, walletSection, supportSection, aboutSection]
+        var mutableOptions = [walletSection, securitySection, supportSection, aboutSection]
 
         if UserDefaults.standard.bool(forKey: EQSettings.settingsBundleDevelopmentKey) {
             mutableOptions.append(developmentSection)
@@ -46,6 +46,7 @@ struct EQSettings {
 
     static var walletItems: [SettingNode] {
         return [
+            keySection,
             SettingNode.node(name: "SETTINGS_OPTION_CLEAR_WALLET".localized(),
                              identifier: "wallet-clear",
                              enabled: true,
@@ -174,7 +175,7 @@ struct EQSettings {
     static var securitySection: SettingNode {
         return SettingNode.section(name: "SETTINGS_SECTION_SECURITY".localized(),
                                    identifier: "section-security",
-                                   items: [pinSection, keySection])
+                                   items: [pinSection])
     }
 
     static var supportSection: SettingNode {

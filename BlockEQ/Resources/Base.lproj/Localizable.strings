@@ -330,7 +330,7 @@
 "VERIFICATION_DESCRIPTION" = "Please verify that the address below is the account you intend to close.";
 "UNRECOGNIZED_ADDRESS_ERROR_TITLE" = "Unrecognized Address";
 "UNRECOGNIZED_ADDRESS_ERROR_MESSAGE" = "The provided QR code could not be processed for a valid Stellar address.";
-"CLOSE_ACCOUNT_BUTTON_TITLE" = "Close Account";
+"MERGE_ACCOUNT_BUTTON_TITLE" = "Merge Account";
 "MERGE_ACCOUNT_TITLE" = "Confirm Merge";
 "MERGE_ACCOUNT_MESSAGE" = "This action will permanently and irreversibly close your account by merging it into the destination account.";
 "MERGE_TITLE" = "Merge";
