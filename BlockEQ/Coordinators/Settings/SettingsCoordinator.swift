@@ -7,7 +7,6 @@
 //
 
 import StellarHub
-import Whisper
 
 protocol SettingsCoordinatorDelegate: AnyObject {
     func requestedAuthentication(_ coordinator: SettingsCoordinator,
@@ -248,11 +247,13 @@ extension SettingsCoordinator: MergeAccountResponseDelegate {
     func merged(account source: StellarAccount, into destination: StellarAddress) {
         mergeViewController?.hideHud()
 
-        let message = Message(title: "ACCOUNT_MERGED".localized(), backgroundColor: Colors.green)
-        Whisper.show(whisper: message, to: navWrapper, action: .show)
+        let hud = MBProgressHUD.showAdded(to: navWrapper.view, animated: true)
+        hud.label.text = "ACCOUNT_MERGED".localized()
+        hud.animationType = .zoom
+        hud.mode = .text
+        hud.hide(animated: true, afterDelay: 2)
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            Whisper.hide(whisperFrom: self.navWrapper)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
             self.delegate?.clearedWallet()
         }
     }

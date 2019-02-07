@@ -6,7 +6,6 @@
 //  Copyright © 2018 BlockEQ. All rights reserved.
 //
 
-import Whisper
 import StellarHub
 
 protocol InflationViewControllerDelegate: AnyObject {

@@ -7,7 +7,6 @@
 //
 
 import StellarHub
-import Whisper
 
 protocol AssetCoordinatorDelegate: AnyObject {
     func selected(asset: StellarAsset)
@@ -189,15 +188,14 @@ extension AssetCoordinator: InflationViewControllerDelegate {
     }
 
     func inflationUpdateSuccess() {
-        let message = Message(title: "INFLATION_SUCCESSFULLY_UPDATED".localized(), backgroundColor: Colors.green)
-        Whisper.show(whisper: message, to: navController, action: .show)
+        let hud = MBProgressHUD.showAdded(to: navController.view, animated: true)
+        hud.label.text = "INFLATION_SUCCESSFULLY_UPDATED".localized()
+        hud.animationType = .zoom
+        hud.mode = .text
+        hud.hide(animated: true, afterDelay: 2)
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            Whisper.hide(whisperFrom: self.navController)
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.dismiss(self.inflationViewController)
-            }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            self.dismiss(self.inflationViewController)
         }
     }
 }

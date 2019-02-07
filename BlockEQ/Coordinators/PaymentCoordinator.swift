@@ -6,7 +6,6 @@
 //  Copyright © 2019 BlockEQ. All rights reserved.
 //
 
-import Whisper
 import StellarHub
 
 protocol PaymentCoordinatorDelegate: AnyObject {
@@ -141,15 +140,14 @@ final class PaymentCoordinator {
     func displayTransactionSuccess() {
         hideHud()
 
-        let message = Message(title: "TRANSACTION_SUCCESS".localized(), backgroundColor: Colors.green)
-        Whisper.show(whisper: message, to: navController, action: .show)
+        let hud = MBProgressHUD.showAdded(to: navController.view, animated: true)
+        hud.label.text = "TRANSACTION_SUCCESS".localized()
+        hud.animationType = .zoom
+        hud.mode = .text
+        hud.hide(animated: true, afterDelay: 2)
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            Whisper.hide(whisperFrom: self.navController)
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.delegate?.dismiss(self, container: self.navController)
-            }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            self.delegate?.dismiss(self, container: self.navController)
         }
     }
 }

