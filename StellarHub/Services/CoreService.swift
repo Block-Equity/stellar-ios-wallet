@@ -45,7 +45,7 @@ public final class CoreService: CoreServiceProtocol {
         start()
     }
 
-    func start() {
+    public func start() {
         // Register the services to be notified when the account data is updated
         updateService.registerForUpdates(indexingService)
 

@@ -80,3 +80,11 @@ extension ApplicationCoordinator: DiagnosticCoordinatorDelegate {
     func completedDiagnostic(_ coordinator: DiagnosticCoordinator) {
     }
 }
+
+extension ApplicationCoordinator: TradingCoordinatorDelegate {
+    func requestedAuthentication(_ coordinator: TradingCoordinator, with options: AuthenticationCoordinator.AuthenticationOptions, authorized: EmptyCompletion?) {
+        displayAuth {
+            authorized?()
+        }
+    }
+}

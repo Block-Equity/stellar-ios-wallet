@@ -56,6 +56,8 @@ final class ApplicationCoordinator {
     // The coordinator responsible for the trading flow
     lazy var tradingCoordinator: TradingCoordinator = {
         let tradingCoordinator = TradingCoordinator(core: core)
+        tradingCoordinator.delegate = self
+
         return tradingCoordinator
     }()
 
