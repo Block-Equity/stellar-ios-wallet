@@ -96,6 +96,7 @@ public final class IndexingService: IndexingServiceProtocol {
     /// Removes the previously built index and starts again.
     public func rebuildIndex(for account: StellarAccount) {
         graph.clearEdges()
+        lastAccountIndexHash = 0
         updateIndex(for: account)
     }
 
@@ -108,6 +109,7 @@ public final class IndexingService: IndexingServiceProtocol {
     public func reset() {
         haltIndexing()
         graph.clear()
+        lastAccountIndexHash = 0
     }
 
     private func finishedIndexing(for account: StellarAccount) {

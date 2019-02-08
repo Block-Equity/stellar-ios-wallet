@@ -13,6 +13,12 @@ protocol TradeAssetListDisplayable: AnyObject {
     func requestedDisplayAssetList(for: TradeViewController.TradeField)
 }
 
+protocol TradingCoordinatorDelegate: AnyObject {
+    func requestedAuthentication(_ coordinator: TradingCoordinator,
+                                 with options: AuthenticationCoordinator.AuthenticationOptions,
+                                 authorized: EmptyCompletion?)
+}
+
 final class TradingCoordinator {
     static let orderbookUpdateInterval: TimeInterval = 10
 
@@ -30,6 +36,13 @@ final class TradingCoordinator {
 
     let myOffersViewController: MyOffersViewController
 
+    lazy var navWrapper: AppNavigationController = {
+        let wrapper = AppNavigationController(rootViewController: segmentController)
+        wrapper.navigationItem.largeTitleDisplayMode = .never
+        wrapper.navigationBar.prefersLargeTitles = false
+        return wrapper
+    }()
+
     var assetCoordinator: AssetCoordinator?
 
     var assetPair: StellarAssetPair?
@@ -42,12 +55,7 @@ final class TradingCoordinator {
 
     var timer: Timer?
 
-    lazy var navWrapper: AppNavigationController = {
-        let wrapper = AppNavigationController(rootViewController: segmentController)
-        wrapper.navigationItem.largeTitleDisplayMode = .never
-        wrapper.navigationBar.prefersLargeTitles = false
-        return wrapper
-    }()
+    weak var delegate: TradingCoordinatorDelegate?
 
     init(core: CoreService) {
         let tradeVC = TradeViewController()
@@ -305,8 +313,16 @@ extension TradingCoordinator: TradeViewControllerDelegate {
                                               offerId: nil)
 
         tradeViewController.displayTradeConfirmation(fromAmount: fromAmount, toAmount: toAmount, pair: pair) {
-            self.showHud()
-            self.tradeService.postTrade(with: offerData, delegate: self)
+            if SecurityOptionHelper.check(.pinOnTrade) {
+                self.delegate?.requestedAuthentication(self, with: AuthenticationCoordinator.defaultConfirmationOptions,
+                                                  authorized: {
+                    self.showHud()
+                    self.tradeService.postTrade(with: offerData, delegate: self)
+                })
+            } else {
+                self.showHud()
+                self.tradeService.postTrade(with: offerData, delegate: self)
+            }
         }
     }
 

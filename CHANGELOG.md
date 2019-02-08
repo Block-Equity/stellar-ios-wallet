@@ -6,12 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Please keep this human readable! Omit classnames and technical details where possible.
 
-## [2.7.0] - 2019-02-06
+## [2.7.0] - 2019-02-07
 ### Added
-- Support to merge an account to a destionation account
+- Support to merge an account to a destination account
 
 ### Changed
 - Refactored the settings code into it's own coordinator class
+
+### Fixed
+- Fixed Whisper notifications from not displaying correctly when trading
+- Fixed a missing call to resubscribe services to receive notifications after switching wallets
 
 ## [2.6.2] - 2019-02-01
 ### Added

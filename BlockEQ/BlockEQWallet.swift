@@ -72,10 +72,11 @@ final class BlockEQWallet {
 
     func cleanupAppCoordinator() {
         appCoordinator = nil
+        core?.start()
     }
 
     func restartCore() {
-        self.core = CoreService(with: network)
+        core = CoreService(with: network)
     }
 
     func start() {
