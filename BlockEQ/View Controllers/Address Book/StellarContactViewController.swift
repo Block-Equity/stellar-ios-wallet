@@ -203,8 +203,8 @@ extension StellarContactViewController {
         let stellarAddress = StellarAddress(addressTextField.text)
 
         if identifier.isEmpty {
-            guard let contactName = nameTextField.text else {
-                addressTextField.shake()
+            guard let contactName = nameTextField.text, !contactName.isEmpty else {
+                nameTextField.shake()
                 return
             }
 

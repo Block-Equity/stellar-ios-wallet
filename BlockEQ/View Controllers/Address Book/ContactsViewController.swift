@@ -69,6 +69,7 @@ final class ContactsViewController: UIViewController {
         checkContactAccess { contactStore in
             let dataSource = ContactsDataSource(contactStore: contactStore, account: account, cellDelegate: self)
             self.dataSource = dataSource
+            self.tableView.reloadData()
         }
 
         tableView.reloadData()
