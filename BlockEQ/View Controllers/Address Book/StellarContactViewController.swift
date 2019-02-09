@@ -76,7 +76,6 @@ class StellarContactViewController: UIViewController {
 
     func configure() {
         addressTextField.text = address
-        nameTextField.text = ""
 
         if name.isEmpty {
             title = "ADD_CONTACT".localized()
