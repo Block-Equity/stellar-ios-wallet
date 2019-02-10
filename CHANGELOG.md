@@ -16,6 +16,10 @@ Please keep this human readable! Omit classnames and technical details where pos
 ### Fixed
 - Fixed Whisper notifications from not displaying correctly when trading
 - Fixed a missing call to resubscribe services to receive notifications after switching wallets
+- Fixed an issue that was preventing users from scrolling when viewing their mnemonic
+- Fixed contacts not refreshing occasionally when adding a new contact
+- Fixed an issue that unintentionally cleared a contact name afer scanning a QR code when adding a contact
+- Fixed a missing settings option to enable a PIN prompt for trading assets 
 
 ## [2.6.2] - 2019-02-01
 ### Added
