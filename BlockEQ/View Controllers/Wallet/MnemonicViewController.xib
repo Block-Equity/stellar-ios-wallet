@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MnemonicViewController" customModule="BlockEQ" customModuleProvider="target">
             <connections>
+                <outlet property="advancedSecurityBottomConstraint" destination="SnM-J9-bhg" id="iOA-Mr-i1L"/>
                 <outlet property="advancedSecurityButton" destination="ade-cp-0Fg" id="kha-QP-gj3"/>
                 <outlet property="collectionView" destination="7kd-ui-elz" id="gAU-66-Kcs"/>
                 <outlet property="confirmationButton" destination="PsE-ef-7Q4" id="F97-e5-EWc"/>
@@ -92,6 +93,7 @@
             <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="3Jg-1T-pTn" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="5IZ-u1-1pV"/>
+                <constraint firstItem="PsE-ef-7Q4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="7kd-ui-elz" secondAttribute="bottom" constant="15" id="8ru-P3-h4B"/>
                 <constraint firstItem="3Jg-1T-pTn" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="-20" id="Khc-yH-aSO"/>
                 <constraint firstItem="PsE-ef-7Q4" firstAttribute="leading" secondItem="3Jg-1T-pTn" secondAttribute="leading" constant="16" id="XZu-8y-AyB"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="PsE-ef-7Q4" secondAttribute="bottom" constant="30" id="d9V-pH-aqD"/>
