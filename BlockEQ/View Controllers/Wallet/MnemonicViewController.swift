@@ -40,6 +40,7 @@ class MnemonicViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var advancedSecurityButton: UIButton!
     @IBOutlet weak var confirmationButton: AppButton!
+    @IBOutlet weak var advancedSecurityBottomConstraint: NSLayoutConstraint!
 
     weak var delegate: MnemonicViewControllerDelegate?
 
@@ -101,11 +102,14 @@ class MnemonicViewController: UIViewController {
         let navButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveToKeychain(_:)))
         navigationItem.rightBarButtonItem = navButton
 
+        let bottomContraintHeight = mode.hideAdvancedSecurity ? 0 : advancedSecurityBottomConstraint.constant
         advancedSecurityButton.isHidden = mode.hideAdvancedSecurity
+        advancedSecurityBottomConstraint.constant = bottomContraintHeight
 
         collectionView.register(cellType: PillViewCell.self)
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.isScrollEnabled = true
 
         if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.invalidateLayout()
@@ -114,9 +118,9 @@ class MnemonicViewController: UIViewController {
             layout.minimumInteritemSpacing = 4
 
             if !UIDevice.current.shortScreen {
-                collectionView.contentInset = UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40)
                 layout.minimumLineSpacing = 16
                 layout.minimumInteritemSpacing = 8
+                collectionView.contentInset = UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40)
             }
         }
 
@@ -127,6 +131,7 @@ class MnemonicViewController: UIViewController {
             holderView.constrainViewToAllEdges(concealingView)
             concealingView.backgroundColor = .clear
             concealingView.effect = blurEffect
+            concealingView.isUserInteractionEnabled = false
         }
     }
 }
