@@ -12,7 +12,7 @@ PODS:
   - Reusable/View (4.0.5)
   - SCLAlertView (0.8.1)
   - SnapshotTesting (1.1.0)
-  - stellar-ios-mac-sdk (1.5.8)
+  - stellar-ios-mac-sdk (1.6.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
@@ -52,7 +52,7 @@ CHECKOUT OPTIONS:
     :commit: 86ea7613c99cd4896765fabfa773b39b40bc8590
     :git: https://github.com/vikmeup/SCLAlertView-Swift
   stellar-ios-mac-sdk:
-    :commit: 4bdf6ec2602475345f11f4b140c4e05891bb0013
+    :commit: af6dc4ae4924fd97ebae40ee3330da24b9ea45b8
     :git: https://github.com/Soneso/stellar-ios-mac-sdk.git
 
 SPEC CHECKSUMS:
@@ -64,8 +64,8 @@ SPEC CHECKSUMS:
   Reusable: 188be1a54ac0691bc66e5bb24ec6eb91971b315b
   SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
   SnapshotTesting: 8ed6a4dceee63f59a60e1bc86f9adbba54eb9287
-  stellar-ios-mac-sdk: e330bf3cc9626b10e31bf1ac8169dbb1b3352903
+  stellar-ios-mac-sdk: da6e4623e6574e54b2755e2ff14a317385062f8a
 
 PODFILE CHECKSUM: aae2d908185495e02a9e7b76d8ef2f71775db614
 
-COCOAPODS: 1.6.0.rc.1
+COCOAPODS: 1.6.0
