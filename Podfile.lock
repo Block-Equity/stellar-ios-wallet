@@ -12,7 +12,7 @@ PODS:
   - Reusable/View (4.0.5)
   - SCLAlertView (0.8.1)
   - SnapshotTesting (1.1.0)
-  - stellar-ios-mac-sdk (1.6.0)
+  - stellar-ios-mac-sdk (1.6.6)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
@@ -23,7 +23,7 @@ DEPENDENCIES:
   - Reusable (~> 4.0)
   - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift`, branch `master`)
   - SnapshotTesting
-  - stellar-ios-mac-sdk (from `https://github.com/Soneso/stellar-ios-mac-sdk.git`)
+  - stellar-ios-mac-sdk (from `https://github.com/Soneso/stellar-ios-mac-sdk.git`, branch `master`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -42,6 +42,7 @@ EXTERNAL SOURCES:
     :branch: master
     :git: https://github.com/vikmeup/SCLAlertView-Swift
   stellar-ios-mac-sdk:
+    :branch: master
     :git: https://github.com/Soneso/stellar-ios-mac-sdk.git
 
 CHECKOUT OPTIONS:
@@ -52,7 +53,7 @@ CHECKOUT OPTIONS:
     :commit: 86ea7613c99cd4896765fabfa773b39b40bc8590
     :git: https://github.com/vikmeup/SCLAlertView-Swift
   stellar-ios-mac-sdk:
-    :commit: af6dc4ae4924fd97ebae40ee3330da24b9ea45b8
+    :commit: f1ba08d11d51a72b2000bee3a6b4c1c1841cb738
     :git: https://github.com/Soneso/stellar-ios-mac-sdk.git
 
 SPEC CHECKSUMS:
@@ -64,8 +65,8 @@ SPEC CHECKSUMS:
   Reusable: 188be1a54ac0691bc66e5bb24ec6eb91971b315b
   SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
   SnapshotTesting: 8ed6a4dceee63f59a60e1bc86f9adbba54eb9287
-  stellar-ios-mac-sdk: da6e4623e6574e54b2755e2ff14a317385062f8a
+  stellar-ios-mac-sdk: 6a44f931191278f780bc0e4444aa739751863900
 
-PODFILE CHECKSUM: aae2d908185495e02a9e7b76d8ef2f71775db614
+PODFILE CHECKSUM: 005efd5abac55d7a312294f98b684544717749f3
 
-COCOAPODS: 1.6.0
+COCOAPODS: 1.6.2

@@ -116,6 +116,8 @@
 		C5FE75A3218BF4BF0090E372 /* offer_asset_response.json in Resources */ = {isa = PBXBuildFile; fileRef = C5FE75A2218BF4BF0090E372 /* offer_asset_response.json */; };
 		C5FE75A5218BFB090090E372 /* StellarTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE75A4218BFB090090E372 /* StellarTransactionTests.swift */; };
 		C5FE75A7218BFCE30090E372 /* transaction_response.json in Resources */ = {isa = PBXBuildFile; fileRef = C5FE75A6218BFCE30090E372 /* transaction_response.json */; };
+		C658B5A922B0378300A0C8DA /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C658B5A822B0378300A0C8DA /* Data+Extensions.swift */; };
+		C658B5AB22B0383500A0C8DA /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C658B5AA22B0383500A0C8DA /* Array+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -244,6 +246,8 @@
 		C5FE75A2218BF4BF0090E372 /* offer_asset_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = offer_asset_response.json; sourceTree = "<group>"; };
 		C5FE75A4218BFB090090E372 /* StellarTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarTransactionTests.swift; sourceTree = "<group>"; };
 		C5FE75A6218BFCE30090E372 /* transaction_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = transaction_response.json; sourceTree = "<group>"; };
+		C658B5A822B0378300A0C8DA /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
+		C658B5AA22B0383500A0C8DA /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		F9808D031AB72A979316A798 /* Pods-StellarHub-StellarHubTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StellarHub-StellarHubTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-StellarHub-StellarHubTests/Pods-StellarHub-StellarHubTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -423,6 +427,8 @@
 				C5F1CA0B217A9F1E001C847A /* SecretManager.swift */,
 				C5114DB0219494AC00C88E4F /* MulticastDelegate.swift */,
 				C5B3F9BC21B5B0BD009375AC /* Errors.swift */,
+				C658B5A822B0378300A0C8DA /* Data+Extensions.swift */,
+				C658B5AA22B0383500A0C8DA /* Array+Extensions.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -837,10 +843,12 @@
 				C5F1C9F3217A7BEC001C847A /* StellarTransaction.swift in Sources */,
 				C5114DB1219494AC00C88E4F /* MulticastDelegate.swift in Sources */,
 				C512E69F217FC01B00D1AC74 /* AsynchronousOperation.swift in Sources */,
+				C658B5A922B0378300A0C8DA /* Data+Extensions.swift in Sources */,
 				C574D67422088E7A0048220C /* AccountMergeOperation.swift in Sources */,
 				C51441E3217AEDD9006C44F4 /* FetchOrderBookOperation.swift in Sources */,
 				C5144214217EDBCF006C44F4 /* ChangeTrustOperation.swift in Sources */,
 				C5F1C9F1217A7BE1001C847A /* StellarRecoveryMnemonic.swift in Sources */,
+				C658B5AB22B0383500A0C8DA /* Array+Extensions.swift in Sources */,
 				C5114DA4219217CA00C88E4F /* NodeIndexingOperation.swift in Sources */,
 				C5F1CA06217A9C3E001C847A /* UpdateInflationOperation.swift in Sources */,
 				C512E6A3217FCCB000D1AC74 /* Result.swift in Sources */,
