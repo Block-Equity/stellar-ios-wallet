@@ -69,7 +69,6 @@ class StellarEffectTests: XCTestCase {
     func testItComputesCorrectOperationId() {
         let testResponse: TradeEffectResponse = JSONLoader.decodableJSON(name: "trade_effect")
         let effect = StellarEffect(testResponse)
-        XCTAssertEqual(effect.pagingToken, "75053501230637057-1")
         XCTAssertEqual(effect.operationId, "75053501230637057")
     }
 
@@ -87,7 +86,6 @@ class StellarEffectTests: XCTestCase {
         XCTAssertEqual(effect.type, .accountCreated)
         XCTAssertEqual(effect.identifier, "123")
         XCTAssertEqual(effect.createdAt, "2018-12")
-        XCTAssertEqual(effect.pagingToken, "12345-1")
 
         let encodedBytes = try? JSONEncoder().encode(effect)
         XCTAssertNotNil(encodedBytes)

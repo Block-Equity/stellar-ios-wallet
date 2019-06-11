@@ -53,7 +53,7 @@ internal final class CancelTradeOperation: AsyncOperation, ChainableOperation {
                                                         buying: buyAsset,
                                                         amount: 0,
                                                         price: tradeData.price,
-                                                        offerId: UInt64(offerId))
+                                                        offerId: Int64(UInt64(offerId)))
 
         do {
             let transaction = try Transaction(sourceAccount: accountResponse,

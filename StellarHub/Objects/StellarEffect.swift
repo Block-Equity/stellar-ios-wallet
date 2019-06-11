@@ -10,7 +10,6 @@ import stellarsdk
 
 public struct StellarEffect {
     public let identifier: String
-    public let pagingToken: String
     public let type: EffectType
     public let createdAt: String
     public private(set) var amount = ""
@@ -20,15 +19,15 @@ public struct StellarEffect {
     public private(set) var assetPair = StellarAssetPair(buying: StellarAsset.lumens, selling: StellarAsset.lumens)
 
     public var operationId: String {
-        let parts = self.pagingToken.split(separator: "-")
-        return String(parts.first ?? "")
+        let parts = self.identifier.split(separator: "-")
+        let operationIdNumber = (Int64(String(parts.first ?? ""))) ?? 0
+        return String(describing: operationIdNumber)
     }
 
     init(_ response: EffectResponse) {
         self.identifier = response.id
         self.createdAt = response.createdAt
         self.type = response.effectType
-        self.pagingToken = response.pagingToken
 
         switch response.effectType {
         case .accountCreated: self.setUpdatedEffect(with: response)
@@ -109,7 +108,6 @@ extension StellarEffect: Decodable {
         case identifier
         case amount
         case asset
-        case pagingToken = "paging_token"
         case createdAt = "created_at"
         case soldAmount = "sold_amount"
         case boughtAmount = "bought_amount"
@@ -119,7 +117,6 @@ extension StellarEffect: Decodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(identifier, forKey: .identifier)
-        try container.encode(pagingToken, forKey: .pagingToken)
         try container.encode(type.rawValue, forKey: .type)
         try container.encode(createdAt, forKey: .createdAt)
     }
@@ -128,7 +125,6 @@ extension StellarEffect: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         identifier = try container.decode(String.self, forKey: .identifier)
         createdAt = try container.decode(String.self, forKey: .createdAt)
-        pagingToken = try container.decode(String.self, forKey: .pagingToken)
 
         let typeInt = try container.decode(Int.self, forKey: .type)
         type = EffectType(rawValue: typeInt) ?? .sequenceBumpedEffect
