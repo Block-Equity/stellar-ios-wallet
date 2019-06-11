@@ -176,7 +176,7 @@ final class WalletViewController: UIViewController {
     func update(with account: StellarAccount, asset: StellarAsset) {
         guard self.isViewLoaded else { return }
 
-        if account.isStub {
+        if account.accountId.isEmpty {
             state = WalletState.inactive(account)
         } else {
             dataSource = WalletDataSource(account: account, asset: asset)

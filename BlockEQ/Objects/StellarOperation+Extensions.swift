@@ -16,10 +16,10 @@ extension StellarOperation {
         case .allowTrust: return "OPERATION_ATRUST_TITLE".localized()
         case .bumpSequence: return "OPERATION_BUMP_TITLE".localized()
         case .changeTrust: return "OPERATION_CTRUST_TITLE".localized()
-        case .createPassiveOffer: return "OPERATION_POFFER_TITLE".localized()
+        case .createPassiveSellOffer: return "OPERATION_POFFER_TITLE".localized()
         case .inflation: return"OPERATION_INFLATION_TITLE".localized()
         case .manageData: return "OPERATION_MANAGEDATA_TITLE".localized()
-        case .manageOffer: return "OPERATION_MOFFER_TITLE".localized()
+        case .manageSellOffer, .manageBuyOffer: return "OPERATION_MOFFER_TITLE".localized()
         case .pathPayment: return "OPERATION_PATHPAYMENT_TITLE".localized()
         case .payment: return"OPERATION_PAYMENT_TITLE".localized()
         case .setOptions: return "OPERATION_OPTIONS_TITLE".localized()
@@ -48,7 +48,7 @@ extension StellarOperation {
             return String(format: "OPERATION_CTRUST_DESCRIPTION".localized(),
                           trustData.asset.shortCode,
                           trustData.trustee)
-        case .manageOffer:
+        case .manageSellOffer, .manageBuyOffer:
             guard let manageData = self.manageData else { return "" }
             return String(format: "OPERATION_MOFFER_DESCRIPTION".localized(),
                           manageData.pair.selling.shortCode,
@@ -74,7 +74,7 @@ extension StellarOperation {
             return "OPERATION_PATHPAYMENT_DESCRIPTION".localized()
         case .bumpSequence:
             return "OPERATION_BUMP_DESCRIPTION".localized()
-        case .createPassiveOffer:
+        case .createPassiveSellOffer:
             return "OPERATION_POFFER_DESCRIPTION".localized()
         case .inflation:
             return "OPERATION_INFLATION_DESCRIPTION".localized()
