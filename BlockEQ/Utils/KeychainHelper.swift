@@ -19,6 +19,7 @@ final class KeychainHelper {
     static let pinKey = "pin"
     static let isFreshInstallKey = "isFreshInstall"
     static let walletDiagnosticKey = "walletDiagnostic"
+    static let alwaysHideSunsetMessageKey = "alwaysHideSunsetMessage"
 
     public static func save(pin: String) {
         KeychainSwift().set(pin, forKey: pinKey)

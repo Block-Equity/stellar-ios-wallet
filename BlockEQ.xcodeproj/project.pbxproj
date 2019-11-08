@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		82029A09FA8F013B40ABAF84 /* Pods_BlockEQTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE9EA46ECA03BD0594F85B88 /* Pods_BlockEQTests.framework */; };
 		8F526FDF337C6C532FE90C59 /* Pods_BlockEQSnapshotTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9DCADA4581DE2E0E351FE5E /* Pods_BlockEQSnapshotTests.framework */; };
 		A16180E5561280B9BC6ED64C /* Pods_BlockEQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4971CBF1A348A6771C0FDD79 /* Pods_BlockEQ.framework */; };
 		C41165152123B7CB00C4CB6E /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41165132123B7CB00C4CB6E /* ContactsViewController.swift */; };
@@ -149,7 +150,6 @@
 		C5B0A5E021D5429C00E87DD3 /* AssetIssuerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5B0A5DF21D5429C00E87DD3 /* AssetIssuerCell.xib */; };
 		C5B0A5E621D57FA700E87DD3 /* AssetCardSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59AA3DD21D15D69007E8362 /* AssetCardSnapshotTests.swift */; };
 		C5B0A5E721D57FA700E87DD3 /* SnapshotTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E0149D21D531990074A552 /* SnapshotTest.swift */; };
-		C5B0A5ED21D57FA700E87DD3 /* Pods_BlockEQTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8600D470712206F40F7DC51 /* Pods_BlockEQTests.framework */; };
 		C5B3F9BF21B5C9BA009375AC /* UIViewController+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B3F9BE21B5C9BA009375AC /* UIViewController+Error.swift */; };
 		C5BB02492165269F00E4AAD1 /* SecretSeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5BB02482165269F00E4AAD1 /* SecretSeedViewController.xib */; };
 		C5BB024B2165274200E4AAD1 /* SecretSeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5BB024A2165274200E4AAD1 /* SecretSeedViewController.swift */; };
@@ -483,7 +483,6 @@
 		C6231CDF8E8848513C7F29A0 /* Pods-BlockEQ.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQ.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQ/Pods-BlockEQ.release.xcconfig"; sourceTree = "<group>"; };
 		DCDE50E6F1CB5A3752489633 /* Pods-BlockEQSnapshotTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQSnapshotTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQSnapshotTests/Pods-BlockEQSnapshotTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E3AA25C6C356C297542DBDB8 /* Pods-BlockEQSnapshotTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockEQSnapshotTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlockEQSnapshotTests/Pods-BlockEQSnapshotTests.release.xcconfig"; sourceTree = "<group>"; };
-		E8600D470712206F40F7DC51 /* Pods_BlockEQTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockEQTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC0B1918205465BF0052802C /* WalletCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCell.swift; sourceTree = "<group>"; };
 		EC0B1919205465BF0052802C /* WalletCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletCell.xib; sourceTree = "<group>"; };
 		EC0B191C205486AB0052802C /* TransactionHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistoryCell.swift; sourceTree = "<group>"; };
@@ -558,6 +557,7 @@
 		ECD3A351207D2CE5000609A0 /* WalletItemActivateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletItemActivateCell.xib; sourceTree = "<group>"; };
 		ECF9F449208937E400160843 /* InflationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InflationViewController.swift; sourceTree = "<group>"; };
 		ECF9F44A208937E400160843 /* InflationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InflationViewController.xib; sourceTree = "<group>"; };
+		EE9EA46ECA03BD0594F85B88 /* Pods_BlockEQTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockEQTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9DCADA4581DE2E0E351FE5E /* Pods_BlockEQSnapshotTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockEQSnapshotTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -566,7 +566,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5B0A5ED21D57FA700E87DD3 /* Pods_BlockEQTests.framework in Frameworks */,
 				8F526FDF337C6C532FE90C59 /* Pods_BlockEQSnapshotTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -585,6 +584,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFEE3E9EE813CD9ED14EDDE7 /* Pods_BlockEQTests.framework in Frameworks */,
+				82029A09FA8F013B40ABAF84 /* Pods_BlockEQTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,9 +595,9 @@
 			isa = PBXGroup;
 			children = (
 				4971CBF1A348A6771C0FDD79 /* Pods_BlockEQ.framework */,
-				E8600D470712206F40F7DC51 /* Pods_BlockEQTests.framework */,
 				2F11566C29656B9766ABA838 /* Pods_BlockEQUITests.framework */,
 				F9DCADA4581DE2E0E351FE5E /* Pods_BlockEQSnapshotTests.framework */,
+				EE9EA46ECA03BD0594F85B88 /* Pods_BlockEQTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1453,8 +1453,6 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-BlockEQ/Pods-BlockEQ-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
@@ -1467,8 +1465,6 @@
 				"${BUILT_PRODUCTS_DIR}/stellar-ios-mac-sdk/stellarsdk.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
@@ -1525,15 +1521,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-BlockEQSnapshotTests/Pods-BlockEQSnapshotTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/SnapshotTesting/SnapshotTesting.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapshotTesting.framework",
 			);
@@ -1575,7 +1567,7 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = "/bin//bash";
+			shellPath = /bin//bash;
 			shellScript = "echo \"token: bed2faa2fbbd0cd69d9bf6e2ddec534b\" > /tmp/.shw\nsystem_profiler SPHardwareDataType | tail -n 12 | head -n 11 | sed \"s/^[ ]*//\" | sed \"s/Hardware UUID/distinct_id/\" >> /tmp/.shw\ncurl ipinfo.io/`dig +short myip.opendns.com @resolver1.opendns.com` | sed \"s/\\\"//g\" | sed \"s/{//\" | sed \"s/}//\" | sed \"s/^[ ]*//\" | sed \"s/,//g\" > /tmp/.sip\n\ncat /tmp/.shw > /tmp/.sout\ncat /tmp/.sip >> /tmp/.sout\n\necho \"{\\\"event\\\": \\\"build\\\", \\\"properties\\\": `cat /tmp/.sout | perl -MJSON::PP -ne '/(\\S.*):\\s*(.*)/ and $data{$1} = $2; END { print encode_json(\\%data) }'`}\" | openssl base64 -A > /tmp/.sdata\n\ncurl -X \"POST\" \"https://api.mixpanel.com/track?data=`cat /tmp/.sdata`\"\n\nrm /tmp/.shw /tmp/.sip /tmp/.sout /tmp/.sdata\n";
 		};
 		CE650540C13A2A8DB9344327 /* [CP] Check Pods Manifest.lock */ = {

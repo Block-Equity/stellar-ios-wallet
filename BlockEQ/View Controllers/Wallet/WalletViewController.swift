@@ -67,6 +67,27 @@ final class WalletViewController: UIViewController {
 
         tableView?.dataSource = self.dataSource
         tableView?.reloadData()
+
+        let hideSunsetMessage = UserDefaults.standard.bool(forKey: KeychainHelper.alwaysHideSunsetMessageKey)
+        if !hideSunsetMessage {
+
+            let downloadAction = UIAlertAction(title: "Download StellarX", style: .default, handler: { _ in
+                UIApplication.shared.open(URL(string: "https://apps.apple.com/us/app/stellarx/id1459181040")!)
+            })
+
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            let neverShowAction = UIAlertAction(title: "Never show again", style: .destructive, handler: {_ in
+                UserDefaults.standard.set(true, forKey: KeychainHelper.alwaysHideSunsetMessageKey)
+            })
+
+            let alert = UIAlertController(title: "App Deprecated",
+                                          message: "ALERT_BLOCKEQ_DEPRECATED".localized(),
+                                          preferredStyle: .alert)
+            alert.addAction(downloadAction)
+            alert.addAction(cancelAction)
+            alert.addAction(neverShowAction)
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 
     func setupView() {
