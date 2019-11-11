@@ -17,8 +17,6 @@ class WalletItemCell: UITableViewCell, NibReusable {
     enum ButtonMode {
         case none
         case removeAsset
-        case updateInflation
-        case setInflation
     }
 
     struct ViewModel {
@@ -39,8 +37,6 @@ class WalletItemCell: UITableViewCell, NibReusable {
     @IBOutlet var amountLabel: UILabel!
     @IBOutlet var tokenInitialLabel: UILabel!
     @IBOutlet var iconImageView: UIImageView!
-    @IBOutlet var setInflationButton: UIButton!
-    @IBOutlet var updateInflationButton: UIButton!
     @IBOutlet var removeAssetButton: UIButton!
 
     weak var delegate: WalletItemCellDelegate?
@@ -65,12 +61,7 @@ class WalletItemCell: UITableViewCell, NibReusable {
 
     func setupView() {
         removeAssetButton.backgroundColor = Colors.red
-        setInflationButton.backgroundColor = Colors.green
-        updateInflationButton.backgroundColor = Colors.secondaryDark
-
         removeAssetButton.setTitle("REMOVE_ASSET".localized(), for: .normal)
-        setInflationButton.setTitle("SET_INFLATION".localized(), for: .normal)
-        updateInflationButton.setTitle("UPDATE_INFLATION".localized(), for: .normal)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -91,14 +82,10 @@ class WalletItemCell: UITableViewCell, NibReusable {
         self.tokenInitialLabel.text = viewModel.tokenText ?? ""
 
         self.removeAssetButton.isHidden = true
-        self.setInflationButton.isHidden = true
-        self.updateInflationButton.isHidden = true
 
         switch viewModel.mode {
         case .none: break
         case .removeAsset: self.removeAssetButton.isHidden = false
-        case .setInflation: self.setInflationButton.isHidden = false
-        case .updateInflation: self.updateInflationButton.isHidden = false
         }
     }
 
