@@ -63,10 +63,10 @@ SPEC CHECKSUMS:
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
   Repeat: 73c5ee602aed8f3c7bf1aa12d4cd0d3dc3edea0a
   Reusable: 188be1a54ac0691bc66e5bb24ec6eb91971b315b
-  SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
+  SCLAlertView: f46fff9c4f44cf06bd60e17370b020428a0d964a
   SnapshotTesting: 8ed6a4dceee63f59a60e1bc86f9adbba54eb9287
-  stellar-ios-mac-sdk: 6a44f931191278f780bc0e4444aa739751863900
+  stellar-ios-mac-sdk: ed1d2a48774d3c703e8743bdde2bd03ac196b2df
 
 PODFILE CHECKSUM: 005efd5abac55d7a312294f98b684544717749f3
 
-COCOAPODS: 1.6.2
+COCOAPODS: 1.7.4

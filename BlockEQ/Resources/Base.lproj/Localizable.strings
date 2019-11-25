@@ -351,3 +351,4 @@
 "ACCOUNT_MERGE_DEST_FULL_MESSAGE" = "The destination account cannot receive the balance of the source account and still satisfy its lumen buying liabilities";
 "ACCOUNT_MERGE_EXCHANGE_TITLE" = "Invalid Destination";
 "ACCOUNT_MERGE_EXCHANGE_MESSAGE" = "The provided destination is recognized as an exchange account. You will not receive any funds by merging your account to this destination.";
+"ALERT_BLOCKEQ_DEPRECATED" = "BlockEQ is now deprecated and will remain available to the open source community; we recommend you export your account to our friends at StellarX!";

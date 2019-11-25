@@ -107,6 +107,11 @@ class PinViewController: UIViewController {
     }
 
     func setupView() {
+        if #available(iOS 13, *) {
+            self.isModalInPresentation = true
+            self.modalPresentationStyle = .fullScreen
+        }
+
         logoImageView.image = UIImage(named: "logo")
 
         if isCloseDisplayed {

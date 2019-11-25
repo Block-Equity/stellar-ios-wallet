@@ -23,6 +23,11 @@ final class BlankAuthenticationViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
 
     func setupView() {
+        if #available(iOS 13, *) {
+            self.isModalInPresentation = true
+            self.modalPresentationStyle = .fullScreen
+        }
+
         self.view.backgroundColor = Colors.backgroundDark
         self.authLogo.image = UIImage(named: "logo")
         self.authLogo.contentMode = .top
